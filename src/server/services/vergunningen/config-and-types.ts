@@ -213,7 +213,8 @@ export type WoningVergunningDecos =
   | SamenvoegingsvergunningDecos
   | OnttrekkingsvergunningDecos
   | OnttrekkingsvergunningSloopDecos
-  | VormenVanWoonruimteDecos;
+  | VormenVanWoonruimteDecos
+  | SplitsingsvergunningDecos; // TODO: MIJN-12357: DO NOT REMOVE SplitsingsvergunningDecos UNTIL IT IS MIGRATED TO PB
 
 // TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
 type VTHVergunningDecos =
