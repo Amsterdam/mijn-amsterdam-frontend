@@ -348,16 +348,10 @@ export type OnttrekkingsvergunningTweedeWoning = PowerBrowserZaakBase &
     caseType: GetCaseTypePB<'OnttrekkingsvergunningTweedeWoning'>;
   };
 
-export type Splitsingsvergunning = PowerBrowserZaakBase &
-  WithLocation & {
-    caseType: GetCaseTypePB<'Splitsingsvergunning'>;
-  };
-
 export type WoningVergunning =
   | Samenvoegingsvergunning
   | Onttrekkingsvergunning
   | OnttrekkingsvergunningSloop
-  | Splitsingsvergunning
   | VormenVanWoonruimte
   | OnttrekkingsvergunningTweedeWoning;
 
