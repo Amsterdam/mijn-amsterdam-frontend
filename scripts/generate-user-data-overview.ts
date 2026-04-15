@@ -224,7 +224,7 @@ function sheetZaken(resultsByUser: ResultsByUser): SheetData {
   const rows = results.map(([username, data]) => {
     let zaken: any = [];
     for (const serviceName of decosZaakServices) {
-      const cont = data[serviceName].content;
+      const cont = data[serviceName]?.content || {};
       const unpacked = unpackZaken(cont);
       for (const zaak of unpacked) {
         zaken.push({ ...zaak, serviceName });
@@ -251,18 +251,18 @@ function sheetZaken(resultsByUser: ResultsByUser): SheetData {
   };
 }
 
-function unpackZaken(content: object): object[] {
+type WithIdentifier = { identifier: string };
+
+function unpackZaken(
+  content: WithIdentifier[] | Record<string, WithIdentifier[] | unknown>
+): WithIdentifier[] {
   if (Array.isArray(content) && content.some((v) => !!v.identifier)) {
     return content;
   }
-  const arrays = Object.values(content).filter((v) => Array.isArray(v));
-  if (arrays) {
-    return arrays.flat();
-  }
-  if (!(typeof content !== 'object')) {
-    return [];
-  }
-  return unpackZaken(Object.values(content));
+  return Object.values(content)
+    .filter((v) => Array.isArray(v))
+    .map((v) => unpackZaken(v))
+    .flat();
 }
 
 async function getServiceResults(): Promise<ResultsByUser> {

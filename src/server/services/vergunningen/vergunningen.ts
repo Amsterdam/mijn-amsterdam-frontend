@@ -11,7 +11,6 @@ import { decosZaakTransformers } from './decos-zaken.ts';
 import { getStatusStepsPB } from './pb-status-steps.ts';
 import { pbZaakTransformers } from './pb-zaken.ts';
 import { themaConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
-import { FeatureToggle } from '../../../universal/config/feature-toggles.ts';
 import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
   apiErrorResult,
@@ -21,6 +20,7 @@ import {
 } from '../../../universal/helpers/api.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
@@ -72,7 +72,9 @@ function getStatusSteps(vergunning: DecosVergunning): StatusLineItem[] {
 }
 
 // TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
-const activeTransformersDecos = FeatureToggle.VTHOnPowerbrowserActive
+const activeTransformersDecos = isEnabled(
+  'VERGUNNINGEN.VTHOnPowerbrowserActive'
+)
   ? decosZaakTransformers.filter(
       (transformer) =>
         !(
@@ -89,7 +91,7 @@ const activeTransformersDecos = FeatureToggle.VTHOnPowerbrowserActive
   : decosZaakTransformers;
 
 // TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
-const activeTransformersPB = FeatureToggle.VTHOnPowerbrowserActive
+const activeTransformersPB = isEnabled('VERGUNNINGEN.VTHOnPowerbrowserActive')
   ? pbZaakTransformers
   : [];
 

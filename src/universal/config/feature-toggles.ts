@@ -77,10 +77,4 @@ export const FeatureToggle = {
   zorgnedDocumentDecisionDateActive: true,
   // Zorg thema actief
   zorgv2ThemapaginaActive: true,
-
-  // Cobrowse widget
-  cobrowseIsActive: true,
-
-  // VTH vergunningen move from decos to powerbrowser (ligplaats/kameromzettingen/woningvormingen)
-  VTHOnPowerbrowserActive: !IS_PRODUCTION,
 } as const;

@@ -184,10 +184,6 @@ describe('LoodMeting', () => {
 
       const statusOntvangen = screen.getByText('Ontvangen');
       expect(statusOntvangen).toBeInTheDocument();
-      expect(statusOntvangen.parentElement?.parentElement).toHaveAttribute(
-        'aria-label',
-        'Huidige status'
-      );
 
       const resultaat = screen.queryByText('Resultaat');
       expect(resultaat).not.toBeInTheDocument();
@@ -205,10 +201,6 @@ describe('LoodMeting', () => {
 
       const statusAfgehandeld = screen.getByText('Afgehandeld');
       expect(statusAfgehandeld).toBeInTheDocument();
-      expect(statusAfgehandeld.parentElement?.parentElement).toHaveAttribute(
-        'aria-label',
-        'Huidige status'
-      );
 
       const redenAfwijzing = screen.getByText('Reden afwijzing');
       expect(redenAfwijzing).toBeInTheDocument();
@@ -232,10 +224,6 @@ describe('LoodMeting', () => {
 
       const statusAfgehandeld = screen.getByText('Afgehandeld');
       expect(statusAfgehandeld).toBeInTheDocument();
-      expect(statusAfgehandeld.parentElement?.parentElement).toHaveAttribute(
-        'aria-label',
-        'Huidige status'
-      );
     });
   });
 

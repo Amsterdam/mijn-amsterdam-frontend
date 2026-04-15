@@ -7,24 +7,27 @@ import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
 import { routeConfig } from '../Profile-thema-config.ts';
 
 export function useProfileData() {
-  const { BRP } = useAppStateGetter();
+  const { BRP, WONEN } = useAppStateGetter();
   const aantalIngeschrevenPersonen = useIngeschrevenPersonenOpAdres(
     BRP.content?.fetchUrlAantalIngeschrevenPersonen ?? null
   );
 
   let profileData: BrpProfileData | null;
 
-  if (typeof aantalIngeschrevenPersonen === 'string' && BRP.content?.adres) {
+  if (!BRP.content) {
+    profileData = null;
+  } else if (!BRP.content.adres) {
+    profileData = formatBrpProfileData(BRP.content);
+  } else {
     const brpContent = {
       ...BRP.content,
       adres: {
         ...BRP.content.adres,
+        vveNaam: WONEN?.content?.vve?.name,
         aantalIngeschrevenPersonen,
       },
     };
     profileData = formatBrpProfileData(brpContent);
-  } else {
-    profileData = BRP.content ? formatBrpProfileData(BRP.content) : BRP.content;
   }
 
   return {

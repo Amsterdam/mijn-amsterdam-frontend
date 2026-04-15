@@ -3,11 +3,13 @@ import { BuildingsIcon } from '@amsterdam/design-system-react-icons';
 import { MijnBedrijfsGegevensThema } from './commercial/ProfileCommercial.tsx';
 import { ContactmomentenListPage } from './private/ContactmomentenListPage.tsx';
 import { MijnGegevensThema } from './private/ProfilePrivate.tsx';
+import { VvEDetail } from './private/VvEDetail.tsx';
 import {
   routeConfig,
   themaTitle,
   themaIdBRP,
   themaIdKVK,
+  featureToggle,
 } from './Profile-thema-config.ts';
 import { default as ProfilePrivateIcon } from './ProfilePrivateIcon.svg?react';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles.ts';
@@ -20,6 +22,11 @@ export const ProfileRoutes = [
   {
     route: routeConfig.themaPageKVK.path,
     Component: MijnBedrijfsGegevensThema,
+  },
+  {
+    route: routeConfig.detailPageVvE.path,
+    Component: VvEDetail,
+    isActive: featureToggle[themaIdBRP].wonenActive,
   },
   {
     route: routeConfig.listPageContactmomenten.path,

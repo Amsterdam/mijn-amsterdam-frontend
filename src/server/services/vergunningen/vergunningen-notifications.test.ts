@@ -2,7 +2,10 @@ import MockDate from 'mockdate';
 import type { Mock } from 'vitest';
 import { describe, it, expect, vi } from 'vitest';
 
-import type { DecosZaakFrontend } from './config-and-types.ts';
+import {
+  caseTypeVergunningen,
+  type DecosZaakFrontend,
+} from './config-and-types.ts';
 import {
   createNotificationDefault,
   getVergunningNotifications,
@@ -20,12 +23,16 @@ vi.mock('./vergunningen', () => ({
   fetchVergunningen: vi.fn(),
 }));
 
-vi.mock('./vergunningen-helpers', () => ({
-  isExpiryNotificationDue: vi.fn(),
-}));
-
 describe('vergunningen-notifications', () => {
   describe('createVergunningNotification', () => {
+    beforeAll(() => {
+      MockDate.set('2023-01-10');
+    });
+
+    afterAll(() => {
+      MockDate.reset();
+    });
+
     it('should create a notification with valid labels', () => {
       const vergunning = {
         id: '1',
@@ -70,6 +77,70 @@ describe('vergunningen-notifications', () => {
         themaTitle: themaConfig.title,
       });
       expect(notification).toBeNull();
+    });
+
+    describe('expiry notifications', () => {
+      const vergunning = {
+        id: '1',
+        caseType: caseTypeVergunningen.RVVSloterweg,
+        identifier: 'Z/123/456',
+        title: 'Test case',
+        link: { to: '/test', title: 'Test' },
+        dateStart: '2022-12-10',
+        dateEnd: '2023-01-15',
+        isExpired: false,
+        steps: [
+          {
+            status: 'Ontvangen',
+            datePublished: '2022-11-10',
+            isActive: false,
+          },
+          {
+            status: 'In behandeling',
+            datePublished: '2022-11-10',
+            isActive: false,
+          },
+          {
+            status: 'Afgehandeld',
+            datePublished: '2022-11-17',
+            isActive: true,
+          },
+        ],
+      } as unknown as DecosZaakFrontend;
+
+      it('should create an expiry notification with "vraag zonodig een nieuwe aan" link if end date is near', () => {
+        const notification = createNotificationDefault(vergunning, {
+          themaID: themaConfig.id,
+          themaTitle: themaConfig.title,
+        });
+        expect(notification).toHaveProperty('title', 'Uw Test case loopt af');
+        expect(notification).toHaveProperty(
+          'description',
+          'Uw vergunning Test case met zaaknummer Z/123/456 loopt binnenkort af, <a href="https://www.amsterdam.nl/vergunningen-ontheffingen/verlengen-ontheffing-sloterweg-laan/" rel="noopener noreferrer">vraag zonodig een nieuwe aan</a>.'
+        );
+        expect(notification).toHaveProperty(
+          'datePublished',
+          '2023-01-08T00:00:00.000Z'
+        );
+        expect(notification).toHaveProperty('link', {
+          to: '/test',
+          title: 'Bekijk details',
+        });
+      });
+
+      it('should create an expiry notification without "vraag zonodig een nieuwe aan" link if end date is near', () => {
+        const notification = createNotificationDefault(
+          { ...vergunning, caseType: 'BlaBla' },
+          {
+            themaID: themaConfig.id,
+            themaTitle: themaConfig.title,
+          }
+        );
+        expect(notification).toHaveProperty(
+          'description',
+          'Uw vergunning Test case met zaaknummer Z/123/456 loopt binnenkort af, vraag zonodig een nieuwe aan.'
+        );
+      });
     });
   });
 

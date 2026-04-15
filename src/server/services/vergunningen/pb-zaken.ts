@@ -4,7 +4,6 @@ import {
   type Onttrekkingsvergunning,
   type OnttrekkingsvergunningSloop,
   type Samenvoegingsvergunning,
-  type Splitsingsvergunning,
   type OnttrekkingsvergunningTweedeWoning,
   type VormenVanWoonruimte,
   type LigplaatsBedrijfsvaartuigvergunning,
@@ -207,30 +206,10 @@ const OnttrekkingsvergunningTweedeWoningZaakTransformer: PowerBrowserZaakTransfo
     filterValidDocumentPredicate: isValidVTHDocument,
   };
 
-const SplitsingsvergunningZaakTransformer: PowerBrowserZaakTransformer<Splitsingsvergunning> =
-  {
-    caseType: caseTypePB.Splitsingsvergunning,
-    title: caseTypePB.Splitsingsvergunning,
-    isVerleend: isVTHZaakVerleend,
-    fetchZaakFilter: (pbZaakFields) =>
-      hasCaseTypeInFMT_CAPTION(
-        SplitsingsvergunningZaakTransformer.title,
-        pbZaakFields
-      ),
-    transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
-    },
-    transformFieldValues: {
-      result: transformVTHZaakResult,
-    },
-    filterValidDocumentPredicate: isValidVTHDocument,
-  };
-
 const pbZaakTransformers_ = [
   OmzettingsvergunningZaakTransformer,
   LigplaatsWoonbootVergunningZaakTransformer,
   LigplaatsBedrijfsvaartuigVergunningZaakTransformer,
-  SplitsingsvergunningZaakTransformer,
   SamenvoegingsvergunningZaakTransformer,
   VormenVanWoonruimteZaakTransformer,
   OnttrekkingsvergunningZaakTransformer,
