@@ -7,9 +7,11 @@ import type {
 type WithListPageContactmomenten = PageConfig<'listPageContactmomenten'>;
 type WithDetailPageVvE = PageConfig<'detailPageVvE'>;
 
-type ProfileThemaConfig<ID = string> = ThemaConfigBase<ID> &
-  Partial<WithListPageContactmomenten> &
-  Partial<WithDetailPageVvE>;
+type ProfileBRPThemaConfig = ThemaConfigBase<typeof THEMA_ID_BRP> &
+  WithListPageContactmomenten &
+  WithDetailPageVvE;
+
+type ProfileKVKThemaConfig = ThemaConfigBase<typeof THEMA_ID_KVK>;
 
 const THEMA_ID_BRP = 'BRP' as const;
 const THEMA_ID_KVK = 'KVK' as const;
@@ -61,7 +63,8 @@ export const themaConfig = {
         trackingUrl: null,
       },
     },
-  } satisfies ProfileThemaConfig<typeof THEMA_ID_BRP>,
+  } satisfies ProfileBRPThemaConfig,
+
   [THEMA_ID_KVK]: {
     id: THEMA_ID_KVK,
     title: THEMA_TITLE_KVK,
@@ -82,7 +85,7 @@ export const themaConfig = {
       documentTitle: `${THEMA_TITLE_KVK} | Mijn Amsterdam`,
       trackingUrl: null,
     },
-  } satisfies ProfileThemaConfig<typeof THEMA_ID_KVK>,
+  } satisfies ProfileKVKThemaConfig,
 };
 
 export const profileLinks = {
