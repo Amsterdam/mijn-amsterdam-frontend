@@ -17,12 +17,25 @@ import {
 import { requestData } from '../../helpers/source-api-request.ts';
 
 async function fetchSalesforceData<T>(
-  dataRequestConfigSpecific: DataRequestConfig
+  dataRequestConfigSpecific: DataRequestConfig,
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  const dataRequestConfigBase = getApiConfig(
-    'SALESFORCE',
-    dataRequestConfigSpecific
+  const base64encodedPK = getFromEnv(
+    'BFF_CONTACTMOMENTEN_PRIVATE_ENCRYPTION_KEY',
+    true
+  )!;
+  const [, encryptedBSN, iv] = encrypt(
+    authProfileAndToken.profile.id,
+    Buffer.from(base64encodedPK, 'base64')
   );
+  const dataRequestConfigBase = getApiConfig('SALESFORCE', {
+    ...dataRequestConfigSpecific,
+    params: {
+      hadBetrokkene__uuid: encryptedBSN.toString('base64'),
+      iv: iv.toString('base64'),
+      pageSize: 100,
+    },
+  });
   return requestData<T>(dataRequestConfigBase);
 }
 
@@ -48,31 +61,17 @@ function transformContactmomentenResponse(
 export async function fetchContactmomenten(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const base64encodedPK = getFromEnv(
-    'BFF_CONTACTMOMENTEN_PRIVATE_ENCRYPTION_KEY'
-  );
-  if (!base64encodedPK) {
-    throw new Error('BFF_CONTACTMOMENTEN_PRIVATE_ENCRYPTION_KEY not found');
-  }
-
-  const [, encryptedBSN, iv] = encrypt(
-    authProfileAndToken.profile.id,
-    Buffer.from(base64encodedPK, 'base64')
-  );
-
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
       return `${url}/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
-    },
-    params: {
-      hadBetrokkene__uuid: encryptedBSN.toString('base64'),
-      iv: iv.toString('base64'),
-      pageSize: 100,
     },
     transformResponse: transformContactmomentenResponse,
     cacheKey_UNSAFE: createSessionBasedCacheKey(
       authProfileAndToken.profile.sid
     ),
   };
-  return fetchSalesforceData<ContactMoment[]>(requestConfig);
+  return fetchSalesforceData<ContactMoment[]>(
+    requestConfig,
+    authProfileAndToken
+  );
 }
