@@ -84,7 +84,7 @@
       "get-pom-emandate-sign-request-status:standard",
       "get-pom-mandate-page:standard",
       "get-salesforce-klantcontacten:standard",
-      "get-salesforce-afspraken-stadsloket:standard",
+      "get-salesforce-appointments-stadsloket:standard",
       "post-powerbrowser-personen-zaken:standard",
       "post-zorgned-persoonsgegevens:standard",
       "post-zorgned-aanvragen:standard",

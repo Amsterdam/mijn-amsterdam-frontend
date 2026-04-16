@@ -19,7 +19,7 @@ module.exports = [
     ],
   },
   {
-    id: 'get-salesforce-afspraken-stadsloket',
+    id: 'get-salesforce-appointments-stadsloket',
     url: `${settings.MOCK_BASE_PATH}/salesforce/contactmomenten/services/apexrest/klantinteracties/v1.0/appointments`,
     method: 'GET',
     variants: [
