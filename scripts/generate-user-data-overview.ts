@@ -78,8 +78,6 @@ import { themaConfig as themaBelastingen } from '../src/client/pages/Thema/Belas
 import { themaConfig as themaMilieuzone } from '../src/client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
 import { themaConfig as themaSubsidies } from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
 
-// const { BRP, KVK } = profileThemaTitles;
-
 /** Extra hardcoded additions are to display certain services like they're their own thema.
  */
 const themas = [
