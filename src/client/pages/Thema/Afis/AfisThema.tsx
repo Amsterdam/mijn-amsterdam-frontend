@@ -111,14 +111,14 @@ export function AfisThema() {
     isThemaPaginaError,
     isThemaPaginaLoading,
     listPageTitle,
-    routeConfig,
-    linkListItems,
+    pageLinks,
     belastingenLinkListItem,
     title,
     themaId,
+    themaConfig,
   } = useAfisThemaData();
 
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const isPartialError = entries(dependencyErrors).some(
     ([, hasError]) => hasError
@@ -129,7 +129,7 @@ export function AfisThema() {
       <MaButtonRouterLink
         className="ams-mb-m"
         variant="secondary"
-        href={routeConfig.betaalVoorkeuren.path}
+        href={themaConfig.betaalVoorkeurenPage.route.path}
       >
         Betaalvoorkeuren
       </MaButtonRouterLink>
@@ -158,7 +158,7 @@ export function AfisThema() {
       isPartialError={isPartialError}
       errorAlertContent={pageContentErrorAlert}
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
-      pageLinks={linkListItems}
+      pageLinks={pageLinks}
       pageContentTop={
         <PageContentTop urlNaarBelastingen={belastingenLinkListItem.to} />
       }

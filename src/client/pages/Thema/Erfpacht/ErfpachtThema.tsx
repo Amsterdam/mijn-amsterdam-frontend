@@ -102,8 +102,8 @@ function MissingFacturenDescription() {
       <Paragraph className="ams-mb-m">
         U ziet hier openstaande facturen vanaf 1 januari 2025. Zoekt u een
         andere factuur? Kijk dan bij{' '}
-        <MaRouterLink href={afis.routeConfig.themaPage.path}>
-          {afis.themaTitle}
+        <MaRouterLink href={afis.themaConfig.route.path}>
+          {afis.themaConfig.title}
         </MaRouterLink>{' '}
         of stuur een e-mail naar{' '}
         <Link

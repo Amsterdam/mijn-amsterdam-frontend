@@ -14,7 +14,7 @@ import {
   compareThemas,
   useAllThemaMenuItemsByThemaID,
 } from '../../hooks/useThemaMenuItems.ts';
-import { afisSectionProps } from '../Thema/Afis/InfoSection.tsx';
+import { themaConfig as afisThemaConfig } from '../Thema/Afis/Afis-thema-config.ts';
 import { themaConfig as afvalThemaConfig } from '../Thema/Afval/Afval-thema-config.ts';
 import { themaConfig as avgThemaConfig } from '../Thema/AVG/AVG-thema-config.ts';
 import { themaConfig as belastingenThemaConfig } from '../Thema/Belastingen/Belastingen-thema-config.ts';
@@ -67,10 +67,6 @@ export type SectionProps = {
 const sections: InfoSection_DEPRECATED[] = [
   profileSectionProps,
   myAreaSectionProps,
-
-  afisSectionProps,
-
-  afisSectionProps,
   ...createDeprecatedInfoSection(afvalThemaConfig),
   ...createDeprecatedInfoSection(avgThemaConfig),
   ...createDeprecatedInfoSection(belastingenThemaConfig),
@@ -87,7 +83,7 @@ const sections: InfoSection_DEPRECATED[] = [
   ...createDeprecatedInfoSection(milieuThemaConfig),
   ...createDeprecatedInfoSection(overtredingenThemaConfig),
   ...createDeprecatedInfoSection(parkerenThemaConfig),
-
+  ...createDeprecatedInfoSection(afisThemaConfig),
   ...createDeprecatedInfoSection(toeristischeVerhuurThemaConfig),
   ...createDeprecatedInfoSection(varenThemaConfig),
   ...createDeprecatedInfoSection(vergunningenThemaConfig),
