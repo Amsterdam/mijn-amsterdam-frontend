@@ -28,7 +28,7 @@ import { logger } from '../logging.ts';
  *   --header 'x-ma-pass-api-key-for-target-server: x'
  */
 export async function devProxyHandler(req: Request, res: Response) {
-  const proxyApiKey = getFromEnv('MA_DEV_API_KEY', false);
+  const proxyApiKey = getFromEnv('MA_DEV_API_KEY', true);
 
   const apiKeyName = 'x-ma-dev-api-key';
   const apiKey = req.headers[apiKeyName];
