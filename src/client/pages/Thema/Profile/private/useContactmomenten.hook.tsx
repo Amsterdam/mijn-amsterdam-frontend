@@ -8,8 +8,7 @@ import {
 } from '@amsterdam/design-system-react-icons';
 import { generatePath, useParams } from 'react-router';
 
-import type {
-  ContactMomentFrontend} from './Contactmomenten.config.ts';
+import type { ContactMomentFrontend } from './Contactmomenten.config.ts';
 import {
   contactmomentenDisplayProps,
   mapperContactmomentToMenuItem,
@@ -82,7 +81,7 @@ export function useContactmomenten() {
   const routeParams = useParams();
 
   const contactmomenten: ContactMomentFrontend[] =
-    KLANT_CONTACT?.content?.map((contactMomentItem) => {
+    KLANT_CONTACT?.content?.klantcontacten.map((contactMomentItem) => {
       const menuItemId = // getMenuItem can not be used because it is dependend on the user having the thema at the current moment
         mapperContactmomentToMenuItem[
           contactMomentItem.subject as keyof typeof mapperContactmomentToMenuItem

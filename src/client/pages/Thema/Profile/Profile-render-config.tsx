@@ -49,7 +49,7 @@ export const menuItems: [
       return (
         (!isLoading(appState.BRP) && !!appState.BRP.content?.persoon) ||
         (!isLoading(appState.KLANT_CONTACT) &&
-          !!appState.KLANT_CONTACT.content?.length)
+          !!appState.KLANT_CONTACT.content?.klantcontacten.length)
       );
     },
     IconSVG: ProfilePrivateIcon,

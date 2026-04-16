@@ -1,4 +1,4 @@
-const AFSPRAKEN_STADSLOKET_RESPONSE = require('../fixtures/salesforce-afspraken-stadsloken.json');
+const APPOINTMENTS_RESPONSE = require('../fixtures/salesforce-appointments-stadsloket.json');
 const KLANTCONTACTEN_RESPONSE = require('../fixtures/salesforce-contactmomenten.json');
 const settings = require('../settings.cjs');
 
@@ -28,7 +28,7 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: AFSPRAKEN_STADSLOKET_RESPONSE,
+          body: APPOINTMENTS_RESPONSE,
         },
       },
     ],

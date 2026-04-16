@@ -1,7 +1,17 @@
 import type {
   ContactMomentenResponseSource,
   ContactMoment,
+  AppointmentResponseSource,
+  ContactmomentAppointment,
+  ContactmonentResponseData,
 } from './contactmomenten.types.ts';
+import {
+  apiSuccessResult,
+  getFailedDependencies,
+  getSettledResult,
+  type ApiResponse,
+  type ApiSuccessResponse,
+} from '../../../universal/helpers/api.ts';
 import {
   dateSort,
   defaultDateFormat,
@@ -17,8 +27,8 @@ import {
 import { requestData } from '../../helpers/source-api-request.ts';
 
 async function requestContactmomentenData<T>(
-  dataRequestConfigSpecific: DataRequestConfig,
-  authProfileAndToken: AuthProfileAndToken
+  authProfileAndToken: AuthProfileAndToken,
+  dataRequestConfigSpecific: DataRequestConfig
 ) {
   const base64encodedPK = getFromEnv(
     'BFF_CONTACTMOMENTEN_PRIVATE_ENCRYPTION_KEY',
@@ -34,9 +44,46 @@ async function requestContactmomentenData<T>(
       hadBetrokkene__uuid: encryptedBSN.toString('base64'),
       iv: iv.toString('base64'),
       pageSize: 100,
+      ...dataRequestConfigSpecific.params,
     },
   });
   return requestData<T>(dataRequestConfigBase);
+}
+
+async function fetchAppointments(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<ApiResponse<ContactmomentAppointment[]>> {
+  const requestConfig: DataRequestConfig = {
+    formatUrl({ url }) {
+      return `${url}/services/apexrest/klantinteracties/v1.0/appointments`;
+    },
+    transformResponse: (
+      data: AppointmentResponseSource
+    ): ContactmomentAppointment[] => {
+      const results = data.results.map((result) => {
+        const [appointmentDate, startTime] = result.startDate.split(' ');
+        const [, endTime] = result.endDate.split(' ');
+        const HOUR_MINUTE_FORMAT_END = 5;
+        return {
+          appointmentDate,
+          appointmentDateFormatted: defaultDateFormat(appointmentDate),
+          startTime: startTime.slice(0, HOUR_MINUTE_FORMAT_END),
+          endTime: endTime.slice(0, HOUR_MINUTE_FORMAT_END),
+          subject: result.subject,
+          status: result.status,
+          qrCode: result.qrCode,
+          location: result.location,
+          cancellationLink: result.cancellationLink,
+        };
+      });
+      return results;
+    },
+    cacheKey_UNSAFE: createSessionBasedCacheKey(
+      authProfileAndToken.profile.sid,
+      'salesforce-contactmomenten-appointments'
+    ),
+  };
+  return requestContactmomentenData(authProfileAndToken, requestConfig);
 }
 
 function transformContactmomentenResponse(
@@ -58,7 +105,7 @@ function transformContactmomentenResponse(
   return [];
 }
 
-export async function fetchContactmomenten(
+export async function fetchKlantcontacten(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const requestConfig: DataRequestConfig = {
@@ -67,27 +114,36 @@ export async function fetchContactmomenten(
     },
     transformResponse: transformContactmomentenResponse,
     cacheKey_UNSAFE: createSessionBasedCacheKey(
-      authProfileAndToken.profile.sid
+      authProfileAndToken.profile.sid,
+      'salesforce-contactmomenten-klantcontacten'
     ),
   };
   return requestContactmomentenData<ContactMoment[]>(
-    requestConfig,
-    authProfileAndToken
+    authProfileAndToken,
+    requestConfig
   );
 }
 
-async function fetchAppointments(authProfileAndToken: AuthProfileAndToken) {
-  const requestConfig: DataRequestConfig = {
-    formatUrl({ url }) {
-      return `${url}/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
+export async function fetchContactmomenten(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<ApiSuccessResponse<ContactmonentResponseData>> {
+  const [klantcontactenResponse, appointmentsResponse] =
+    await Promise.allSettled([
+      fetchKlantcontacten(authProfileAndToken),
+      fetchAppointments(authProfileAndToken),
+    ]);
+
+  const klantcontactenSettled = getSettledResult(klantcontactenResponse);
+  const appointmentsSettled = getSettledResult(appointmentsResponse);
+
+  return apiSuccessResult(
+    {
+      klantcontacten: klantcontactenSettled.content ?? [],
+      appointments: appointmentsSettled.content ?? [],
     },
-    transformResponse: transformContactmomentenResponse,
-    cacheKey_UNSAFE: createSessionBasedCacheKey(
-      authProfileAndToken.profile.sid
-    ),
-  };
-  return requestContactmomentenData<ContactMoment[]>(
-    requestConfig,
-    authProfileAndToken
+    getFailedDependencies({
+      klantcontacten: klantcontactenSettled,
+      appointments: appointmentsSettled,
+    })
   );
 }
