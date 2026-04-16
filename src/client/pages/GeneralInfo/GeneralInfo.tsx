@@ -83,6 +83,7 @@ const sections: InfoSection_DEPRECATED[] = [
   ...createDeprecatedInfoSection(overtredingenThemaConfig),
   ...createDeprecatedInfoSection(parkerenThemaConfig),
   ...createDeprecatedInfoSection(profileThemaConfig.BRP),
+  ...createDeprecatedInfoSection(profileThemaConfig.KVK),
   ...createDeprecatedInfoSection(afisThemaConfig),
   ...createDeprecatedInfoSection(toeristischeVerhuurThemaConfig),
   ...createDeprecatedInfoSection(varenThemaConfig),

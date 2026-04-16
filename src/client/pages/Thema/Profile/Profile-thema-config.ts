@@ -79,7 +79,7 @@ export const themaConfig = {
         title: 'Geef wijzigingen door aan de Kamer van Koophandel',
       },
     ],
-    uitlegPageSections: [], // TO DO now also no text, so maybe in the future?
+    uitlegPageSections: [],
     route: {
       path: '/gegevens-handelsregister',
       documentTitle: `${THEMA_TITLE_KVK} | Mijn Amsterdam`,
