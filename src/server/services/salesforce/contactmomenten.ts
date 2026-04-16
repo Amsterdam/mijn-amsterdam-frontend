@@ -88,7 +88,7 @@ async function fetchAppointments(
   return requestContactmomentenData(authProfileAndToken, requestConfig);
 }
 
-function transformContactmomentenResponse(
+function transformKlantcontactenResponse(
   responseData: ContactMomentenResponseSource
 ) {
   if (responseData.results) {
@@ -114,7 +114,7 @@ export async function fetchKlantcontacten(
     formatUrl({ url }) {
       return `${url}/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
     },
-    transformResponse: transformContactmomentenResponse,
+    transformResponse: transformKlantcontactenResponse,
     cacheKey_UNSAFE: createSessionBasedCacheKey(
       authProfileAndToken.profile.sid,
       'salesforce-contactmomenten-klantcontacten'
