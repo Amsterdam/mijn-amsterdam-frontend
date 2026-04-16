@@ -2,8 +2,6 @@ import type {
   ContactMomentenResponseSource,
   ContactMoment,
 } from './contactmomenten.types.ts';
-import { FeatureToggle } from '../../../universal/config/feature-toggles.ts';
-import { apiPostponeResult } from '../../../universal/helpers/api.ts';
 import {
   dateSort,
   defaultDateFormat,
@@ -50,10 +48,6 @@ function transformContactmomentenResponse(
 export async function fetchContactmomenten(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  if (!FeatureToggle.contactmomentenActive) {
-    return apiPostponeResult(null);
-  }
-
   const base64encodedPK = getFromEnv(
     'BFF_CONTACTMOMENTEN_PRIVATE_ENCRYPTION_KEY'
   );
