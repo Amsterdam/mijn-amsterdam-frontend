@@ -1,5 +1,5 @@
-const KLANTCONTACTEN_RESPONSE = require('../fixtures/salesforce-contactmomenten.json');
 const AFSPRAKEN_STADSLOKET_RESPONSE = require('../fixtures/salesforce-afspraken-stadsloken.json');
+const KLANTCONTACTEN_RESPONSE = require('../fixtures/salesforce-contactmomenten.json');
 const settings = require('../settings.cjs');
 
 module.exports = [

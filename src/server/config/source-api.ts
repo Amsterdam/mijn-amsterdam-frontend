@@ -277,8 +277,8 @@ const ApiConfig_ = {
       apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
     },
   },
-  CONTACTMOMENTEN: {
-    url: `${getFromEnv('BFF_CONTACTMOMENTEN_BASE_URL')}`,
+  SALESFORCE: {
+    url: `${getFromEnv('BFF_SALESFORCE_API_BASE_URL')}`,
     postponeFetch: postponeFetchContactmomenten,
     headers: {
       apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),

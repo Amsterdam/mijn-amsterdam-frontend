@@ -4,7 +4,10 @@ import type {
 } from './contactmomenten.types.ts';
 import { FeatureToggle } from '../../../universal/config/feature-toggles.ts';
 import { apiPostponeResult } from '../../../universal/helpers/api.ts';
-import { dateSort, defaultDateFormat } from '../../../universal/helpers/date.ts';
+import {
+  dateSort,
+  defaultDateFormat,
+} from '../../../universal/helpers/date.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
 import { encrypt } from '../../helpers/encrypt-decrypt.ts';
@@ -19,7 +22,7 @@ async function fetchSalesforceData<T>(
   dataRequestConfigSpecific: DataRequestConfig
 ) {
   const dataRequestConfigBase = getApiConfig(
-    'CONTACTMOMENTEN',
+    'SALESFORCE',
     dataRequestConfigSpecific
   );
   return requestData<T>(dataRequestConfigBase);
@@ -65,7 +68,7 @@ export async function fetchContactmomenten(
 
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
-      return `${url}/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
+      return `${url}/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
     },
     params: {
       hadBetrokkene__uuid: encryptedBSN.toString('base64'),
