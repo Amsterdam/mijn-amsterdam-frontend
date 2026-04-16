@@ -25,6 +25,7 @@ import {
   getApiConfig,
 } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
+import { isEnabled } from '../../config/azure-appconfiguration.ts';
 
 async function requestContactmomentenData<T>(
   authProfileAndToken: AuthProfileAndToken,
@@ -54,6 +55,7 @@ async function fetchAppointments(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<ContactmomentAppointment[]>> {
   const requestConfig: DataRequestConfig = {
+    postponeFetch: !isEnabled('KLANT_CONTACT.appointments'),
     formatUrl({ url }) {
       return `${url}/services/apexrest/klantinteracties/v1.0/appointments`;
     },
