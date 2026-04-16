@@ -69,7 +69,7 @@ export async function devProxyHandler(req: Request, res: Response) {
         res
           .status(HttpStatusCode.BadRequest)
           .send(
-            `Proxy: Request send to ${url} but no response has been recieved`
+            `Proxy: Request send to ${url} but no response has been received`
           );
       } else {
         logger.error(err);
