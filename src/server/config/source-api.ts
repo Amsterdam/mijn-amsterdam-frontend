@@ -133,14 +133,6 @@ const postponeFetchAfis =
     ? afisFeatureToggle === 'false'
     : !featureToggleAfis.AfisActive;
 
-const contactmomentenFeatureToggle = getFromEnv(
-  'BFF_CONTACTMOMENTEN_FEATURE_TOGGLE_ACTIVE'
-);
-const postponeFetchContactmomenten =
-  typeof contactmomentenFeatureToggle !== 'undefined'
-    ? contactmomentenFeatureToggle === 'false'
-    : !FeatureToggle.contactmomentenActive;
-
 const httpsAgentConfigBFF = {
   cert: getCert('BFF_SERVER_CLIENT_CERT'),
   key: getCert('BFF_SERVER_CLIENT_KEY'),
@@ -279,7 +271,6 @@ const ApiConfig_ = {
   },
   SALESFORCE: {
     url: `${getFromEnv('BFF_SALESFORCE_API_BASE_URL')}`,
-    postponeFetch: postponeFetchContactmomenten,
     headers: {
       apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
     },
