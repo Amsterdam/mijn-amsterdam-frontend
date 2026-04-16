@@ -17,6 +17,7 @@ import {
   defaultDateFormat,
 } from '../../../universal/helpers/date.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
 import { encrypt } from '../../helpers/encrypt-decrypt.ts';
 import { getFromEnv } from '../../helpers/env.ts';
@@ -25,7 +26,6 @@ import {
   getApiConfig,
 } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
-import { isEnabled } from '../../config/azure-appconfiguration.ts';
 
 async function requestContactmomentenData<T>(
   authProfileAndToken: AuthProfileAndToken,
