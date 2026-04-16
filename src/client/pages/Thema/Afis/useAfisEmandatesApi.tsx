@@ -5,11 +5,10 @@ import { useParams } from 'react-router';
 
 import { generateApiUrl } from './Afis-helpers.ts';
 import {
-  routeConfig,
+  themaConfig,
   eMandateTableConfig,
   titleBetaalvoorkeurenPage,
   titleEMandaatPage,
-  featureToggle,
 } from './Afis-thema-config.ts';
 import {
   CheckStatus,
@@ -55,7 +54,7 @@ export function useAfisEMandatesApi() {
   } = useBffApi<AfisEMandateFrontend[]>(
     generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES'),
     {
-      fetchImmediately: featureToggle.emandatesActive,
+      fetchImmediately: themaConfig.featureToggle.emandates.active,
     }
   );
 
@@ -85,7 +84,10 @@ export function useAfisEMandatesApi() {
 
   const breadcrumbs = [
     ...useThemaBreadcrumbs(themaId),
-    { to: routeConfig.betaalVoorkeuren.path, title: titleBetaalvoorkeurenPage },
+    {
+      to: themaConfig.betaalVoorkeurenPage.route.path,
+      title: titleBetaalvoorkeurenPage,
+    },
   ];
   const { id } = useParams<{ id: AfisEMandateFrontend['id'] }>();
   const eMandate = eMandates.find((mandate) => mandate.id === id);

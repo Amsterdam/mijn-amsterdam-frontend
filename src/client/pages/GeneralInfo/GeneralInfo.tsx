@@ -4,6 +4,7 @@ import {
   UnorderedList,
 } from '@amsterdam/design-system-react';
 
+import { GENERAL_INFO_PAGE_DOCUMENT_TITLE } from './GeneralInfo-routes.ts';
 import { MaLink, MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 import { myAreaSectionProps } from '../../components/MyArea/InfoSection.tsx';
 import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
@@ -13,7 +14,7 @@ import {
   compareThemas,
   useAllThemaMenuItemsByThemaID,
 } from '../../hooks/useThemaMenuItems.ts';
-import { afisSectionProps } from '../Thema/Afis/InfoSection.tsx';
+import { themaConfig as afisThemaConfig } from '../Thema/Afis/Afis-thema-config.ts';
 import { themaConfig as afvalThemaConfig } from '../Thema/Afval/Afval-thema-config.ts';
 import { themaConfig as avgThemaConfig } from '../Thema/AVG/AVG-thema-config.ts';
 import { themaConfig as belastingenThemaConfig } from '../Thema/Belastingen/Belastingen-thema-config.ts';
@@ -65,10 +66,6 @@ export type SectionProps = {
 
 const sections: InfoSection_DEPRECATED[] = [
   myAreaSectionProps,
-
-  afisSectionProps,
-
-  afisSectionProps,
   ...createDeprecatedInfoSection(afvalThemaConfig),
   ...createDeprecatedInfoSection(avgThemaConfig),
   ...createDeprecatedInfoSection(belastingenThemaConfig),
@@ -86,6 +83,7 @@ const sections: InfoSection_DEPRECATED[] = [
   ...createDeprecatedInfoSection(overtredingenThemaConfig),
   ...createDeprecatedInfoSection(parkerenThemaConfig),
   ...createDeprecatedInfoSection(profileThemaConfig.BRP),
+  ...createDeprecatedInfoSection(afisThemaConfig),
   ...createDeprecatedInfoSection(toeristischeVerhuurThemaConfig),
   ...createDeprecatedInfoSection(varenThemaConfig),
   ...createDeprecatedInfoSection(vergunningenThemaConfig),
@@ -164,7 +162,7 @@ export function GeneralInfo() {
     });
   return (
     <PageV2
-      heading="Dit ziet u in Mijn Amsterdam"
+      heading={GENERAL_INFO_PAGE_DOCUMENT_TITLE}
       redactedScope="full"
       showUserFeedback
       userFeedbackDetails={{

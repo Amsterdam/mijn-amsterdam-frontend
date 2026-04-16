@@ -45,6 +45,7 @@ export const caseTypeVergunningen = {
   OnttrekkingsvergunningSloop: 'Onttrekkingsvergunning voor sloop',
   VormenVanWoonruimte: 'Woningvormingsvergunning',
   VOB: 'VOB',
+  Splitsingsvergunning: 'Splitsingsvergunning',
 
   TVMRVVObject: 'TVM - RVV - Object',
   EvenementMelding: 'Evenement melding',
@@ -202,12 +203,18 @@ export type VormenVanWoonruimteDecos = DecosZaakBase &
     caseType: GetCaseType<'VormenVanWoonruimte'>;
   };
 
+export type SplitsingsvergunningDecos = DecosZaakBase &
+  WithLocation & {
+    caseType: GetCaseType<'Splitsingsvergunning'>;
+  };
+
 // TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
 export type WoningVergunningDecos =
   | SamenvoegingsvergunningDecos
   | OnttrekkingsvergunningDecos
   | OnttrekkingsvergunningSloopDecos
-  | VormenVanWoonruimteDecos;
+  | VormenVanWoonruimteDecos
+  | SplitsingsvergunningDecos; // TODO: MIJN-12357: DO NOT REMOVE SplitsingsvergunningDecos UNTIL IT IS MIGRATED TO PB
 
 // TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
 type VTHVergunningDecos =
@@ -243,7 +250,6 @@ export const caseTypePB = {
   OnttrekkingsvergunningSloop: 'Onttrekkingsvergunning voor sloop',
   VormenVanWoonruimte: 'Woningvormingsvergunning',
   OnttrekkingsvergunningTweedeWoning: 'Voorraadvergunning tweede woning',
-  Splitsingsvergunning: 'Splitsingsvergunning',
 } as const;
 
 export type CaseTypeVergunningenOrPB = CaseTypeVergunningen | CaseTypePB;
@@ -342,16 +348,10 @@ export type OnttrekkingsvergunningTweedeWoning = PowerBrowserZaakBase &
     caseType: GetCaseTypePB<'OnttrekkingsvergunningTweedeWoning'>;
   };
 
-export type Splitsingsvergunning = PowerBrowserZaakBase &
-  WithLocation & {
-    caseType: GetCaseTypePB<'Splitsingsvergunning'>;
-  };
-
 export type WoningVergunning =
   | Samenvoegingsvergunning
   | Onttrekkingsvergunning
   | OnttrekkingsvergunningSloop
-  | Splitsingsvergunning
   | VormenVanWoonruimte
   | OnttrekkingsvergunningTweedeWoning;
 

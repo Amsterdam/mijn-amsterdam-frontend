@@ -10,53 +10,93 @@ import type {
   AfisFactuurStateFrontend,
   AfisFactuurTermijn,
 } from '../../../../server/services/afis/afis-types.ts';
-import type { LinkProps } from '../../../../universal/types/App.types.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
-import { isEnabled } from '../../../config/feature-toggles.ts';
-import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
+import {
+  isEnabled,
+  propagateFeatureToggles,
+} from '../../../config/feature-toggles.ts';
+import type {
+  PageConfig,
+  ThemaConfigBase,
+  WithDetailPage,
+  WithListPage,
+} from '../../../config/thema-types.ts';
 
-export const featureToggle = {
-  AfisActive: true,
-  emandatesActive: isEnabled('AFIS.EMandates'),
-};
+const THEMA_ID = 'AFIS';
+const THEMA_TITLE = 'Facturen en betalen';
+
+type WithBetaalVoorkeurenPage = PageConfig<'betaalVoorkeurenPage'>;
+type WithEmandatenPage = PageConfig<'detailEMandatePage'>;
+
+type AfisThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
+  WithListPage &
+  WithDetailPage &
+  WithBetaalVoorkeurenPage &
+  WithEmandatenPage;
+
+export const themaConfig = {
+  id: THEMA_ID,
+  title: THEMA_TITLE,
+  redactedScope: 'full',
+  profileTypes: ['private', 'commercial'],
+  pageLinks: [
+    {
+      to: 'https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa',
+      title: 'Meer over betalen aan de gemeente',
+    },
+  ],
+  route: {
+    path: '/facturen-en-betalen',
+    documentTitle: `${THEMA_TITLE} | overzicht`,
+    trackingUrl: null,
+  },
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: ['Overzicht van facturen', 'Betalen van facturen'],
+    },
+  ],
+  featureToggle: propagateFeatureToggles({
+    active: true,
+    emandates: { active: isEnabled('AFIS.EMandates') },
+  }),
+
+  listPage: {
+    route: {
+      path: '/facturen-en-betalen/facturen/lijst/:state/:page?',
+      documentTitle: getAfisListPageDocumentTitle,
+      trackingUrl: null,
+    },
+  },
+  detailPage: {
+    route: {
+      path: '/facturen-en-betalen/factuur/:state/:factuurNummer',
+      documentTitle: `Factuurgegevens | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
+  betaalVoorkeurenPage: {
+    route: {
+      path: '/facturen-en-betalen/betaalvoorkeuren',
+      documentTitle: `Betaalvoorkeuren | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
+  detailEMandatePage: {
+    route: {
+      path: '/facturen-en-betalen/betaalvoorkeuren/emandate/:id',
+      documentTitle: `E-Mandaat | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
+} as const satisfies AfisThemaConfig;
 
 // E-Mandates are always recurring and have a default date far in the future!
 export const EMANDATE_ENDDATE_INDICATOR = '9999';
 
-export const themaId = 'AFIS' as const;
-export const themaTitle = 'Facturen en betalen';
-
 export const titleBetaalvoorkeurenPage = 'Betaalvoorkeuren';
 export const titleEMandaatPage = 'E-Mandaat';
-
-export const routeConfig = {
-  detailPage: {
-    path: '/facturen-en-betalen/factuur/:state/:factuurNummer',
-    documentTitle: `Factuurgegevens | ${themaTitle}`,
-    trackingUrl: null,
-  },
-  betaalVoorkeuren: {
-    path: '/facturen-en-betalen/betaalvoorkeuren',
-    documentTitle: `Betaalvoorkeuren | ${themaTitle}`,
-    trackingUrl: null,
-  },
-  detailPageEMandate: {
-    path: '/facturen-en-betalen/betaalvoorkeuren/emandate/:id',
-    documentTitle: `E-Mandaat | ${themaTitle}`,
-    trackingUrl: null,
-  },
-  listPage: {
-    path: '/facturen-en-betalen/facturen/lijst/:state/:page?',
-    documentTitle: getAfisListPageDocumentTitle,
-    trackingUrl: null,
-  },
-  themaPage: {
-    path: '/facturen-en-betalen',
-    documentTitle: `${themaTitle} | overzicht`,
-    trackingUrl: null,
-  },
-} as const satisfies ThemaRoutesConfig;
 
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN = 5;
@@ -141,7 +181,7 @@ type FacturenTableConfigParams = {
 };
 
 export function getFacturenTableConfig(params?: FacturenTableConfigParams) {
-  const { listPagePath = routeConfig.listPage.path, mergeConfig } =
+  const { listPagePath = themaConfig.listPage.route.path, mergeConfig } =
     params || {};
   return {
     open: {
@@ -204,25 +244,18 @@ export const eMandateTableConfig = {
   displayProps: displayPropsEMandates,
 } as const;
 
-export const linkListItems: LinkProps[] = [
-  {
-    to: 'https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa',
-    title: 'Meer over betalen aan de gemeente',
-  },
-];
-
 export function getAfisListPageDocumentTitle<T extends Params<string>>(
   params: T | null
 ) {
   switch (params?.state) {
     case 'open':
-      return `Open facturen | ${themaTitle}`;
+      return `Open facturen | ${THEMA_TITLE}`;
     case 'afgehandeld':
-      return `Afgehandelde facturen | ${themaTitle}`;
+      return `Afgehandelde facturen | ${THEMA_TITLE}`;
     case 'overgedragen':
-      return `Overgedragen aan belastingen facturen | ${themaTitle}`;
+      return `Overgedragen aan belastingen facturen | ${THEMA_TITLE}`;
     default:
-      return `Facturen | ${themaTitle}`;
+      return `Facturen | ${THEMA_TITLE}`;
   }
 }
 
