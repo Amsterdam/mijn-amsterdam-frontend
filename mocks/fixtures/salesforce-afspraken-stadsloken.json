@@ -1,6 +1,28 @@
 {
   "results": [
     {
+      "__comment": "RP TODO: Replace this for a real case, it is unsure what status is for an open case",
+      "subject": "Fictief",
+      "status": "Open",
+      "startDate": "2050-01-01 10:30:00",
+      "qrCode": "a35e003d235841327843",
+      "products": [
+        {
+          "name": "Fictief"
+        }
+      ],
+      "location": {
+        "street": "Amstel 1",
+        "postalCode": "1011 PN",
+        "name": "Centrum",
+        "countryCode": "NL",
+        "city": "Amsterdam"
+      },
+      "endDate": "2050-01-01 11:00:00",
+      "caseReference": "06157415",
+      "cancellationLink": "https://formulieren.acc.amsterdam.nl/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=30b5ebfc-e6d7-4858-980e-11792634ec57"
+    },
+    {
       "subject": "Blauwe zone",
       "status": "No show",
       "startDate": "2026-02-13 10:30:00",
