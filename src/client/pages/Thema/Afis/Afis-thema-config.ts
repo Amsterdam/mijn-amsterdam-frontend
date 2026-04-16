@@ -27,7 +27,7 @@ const THEMA_ID = 'AFIS';
 const THEMA_TITLE = 'Facturen en betalen';
 
 type WithBetaalVoorkeurenPage = PageConfig<'betaalVoorkeurenPage'>;
-type WithEmandatenPage = PageConfig<'detailPageEMandatePage'>;
+type WithEmandatenPage = PageConfig<'detailEMandatePage'>;
 
 type AfisThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
   WithListPage &
@@ -83,7 +83,7 @@ export const themaConfig = {
       trackingUrl: null,
     },
   },
-  detailPageEMandatePage: {
+  detailEMandatePage: {
     route: {
       path: '/facturen-en-betalen/betaalvoorkeuren/emandate/:id',
       documentTitle: `E-Mandaat | ${THEMA_TITLE}`,

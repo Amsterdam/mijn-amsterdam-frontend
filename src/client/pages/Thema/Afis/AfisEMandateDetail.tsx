@@ -171,7 +171,7 @@ function EMandate({ eMandate }: EMandateProps) {
 }
 
 export function AfisEMandateDetail() {
-  useHTMLDocumentTitle(themaConfig.detailPageEMandatePage.route);
+  useHTMLDocumentTitle(themaConfig.detailEMandatePage.route);
 
   const {
     title,
