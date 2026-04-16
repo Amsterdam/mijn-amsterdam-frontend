@@ -269,8 +269,8 @@ const ApiConfig_ = {
       apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
     },
   },
-  SALESFORCE: {
-    url: `${getFromEnv('BFF_SALESFORCE_API_BASE_URL')}`,
+  CONTACTMOMENTEN: {
+    url: `${getFromEnv('BFF_CONTACTMOMENTEN_BASE_URL')}`,
     headers: {
       apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
     },

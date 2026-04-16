@@ -16,7 +16,7 @@ import {
 } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 
-async function fetchSalesforceData<T>(
+async function requestContactmomentenData<T>(
   dataRequestConfigSpecific: DataRequestConfig,
   authProfileAndToken: AuthProfileAndToken
 ) {
@@ -28,7 +28,7 @@ async function fetchSalesforceData<T>(
     authProfileAndToken.profile.id,
     Buffer.from(base64encodedPK, 'base64')
   );
-  const dataRequestConfigBase = getApiConfig('SALESFORCE', {
+  const dataRequestConfigBase = getApiConfig('CONTACTMOMENTEN', {
     ...dataRequestConfigSpecific,
     params: {
       hadBetrokkene__uuid: encryptedBSN.toString('base64'),
@@ -63,14 +63,30 @@ export async function fetchContactmomenten(
 ) {
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
-      return `${url}/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
+      return `${url}/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
     },
     transformResponse: transformContactmomentenResponse,
     cacheKey_UNSAFE: createSessionBasedCacheKey(
       authProfileAndToken.profile.sid
     ),
   };
-  return fetchSalesforceData<ContactMoment[]>(
+  return requestContactmomentenData<ContactMoment[]>(
+    requestConfig,
+    authProfileAndToken
+  );
+}
+
+async function fetchAppointments(authProfileAndToken: AuthProfileAndToken) {
+  const requestConfig: DataRequestConfig = {
+    formatUrl({ url }) {
+      return `${url}/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
+    },
+    transformResponse: transformContactmomentenResponse,
+    cacheKey_UNSAFE: createSessionBasedCacheKey(
+      authProfileAndToken.profile.sid
+    ),
+  };
+  return requestContactmomentenData<ContactMoment[]>(
     requestConfig,
     authProfileAndToken
   );
