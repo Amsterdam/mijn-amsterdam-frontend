@@ -48,7 +48,7 @@ export function AfisFacturenTables({
         } else if (state === 'afgehandeld') {
           contentAfterTheTitle = (
             <Paragraph className="ams-mb-m">
-              {getVragenOverFactuurText(`Vraag over factuur [factuurNummer]`)}
+              {getVragenOverFactuurText(`Vraag over factuur [factuurnummer]`)}
             </Paragraph>
           );
         }
