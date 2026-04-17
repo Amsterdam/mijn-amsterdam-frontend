@@ -260,7 +260,7 @@ router.all(
 );
 
 if (!IS_PRODUCTION) {
-  router.all(`${BffEndpoints.PROXY}/{*splat}`, devProxyHandler);
+  router.all(new RegExp(`^${BffEndpoints.PROXY}/?.*$`), devProxyHandler);
 }
 
 export const legacyRouter = express.Router();
