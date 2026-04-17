@@ -1,5 +1,10 @@
+import { Paragraph } from '@amsterdam/design-system-react';
+
 import type { AfisFactuurFrontend } from './Afis-thema-config.ts';
-import { AfisDisclaimerOvergedragenFacturen } from './AfisThema.tsx';
+import {
+  AfisDisclaimerOvergedragenFacturen,
+  getVragenOverAfgehandeldeFactuurText,
+} from './AfisThema.tsx';
 import {
   type AfisFacturenThemaContextParams,
   useAfisFacturenData,
@@ -37,10 +42,18 @@ export function AfisFacturenTables({
               themaContextParams.factuurMapFn?.(factuur, state) ?? factuur
           );
         }
-        const contentAfterTheTitle =
-          state === 'overgedragen' && !!facturen.length ? (
-            <AfisDisclaimerOvergedragenFacturen />
-          ) : null;
+        let contentAfterTheTitle = null;
+        if (state === 'overgedragen' && !!facturen.length) {
+          contentAfterTheTitle = <AfisDisclaimerOvergedragenFacturen />;
+        } else if (state === 'afgehandeld') {
+          contentAfterTheTitle = (
+            <Paragraph className="ams-mb-m">
+              {getVragenOverAfgehandeldeFactuurText(
+                `Vraag over factuur [factuurnummer]`
+              )}
+            </Paragraph>
+          );
+        }
         return (
           <ThemaPaginaTable<AfisFactuurFrontend>
             key={state}

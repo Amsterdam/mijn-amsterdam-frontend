@@ -16,21 +16,40 @@ import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
-export function getVragenOverFactuurText(
+export function getVragenOverAfgehandeldeFactuurText(
   mailSubject: string = 'Vraag over facturen en betaalvoorkeuren'
 ) {
   return (
     <>
-      Mist u een factuur of heeft u een vraag over één van uw facturen? Stuur
-      een e-mail naar{' '}
-      <Link
-        href={`mailto:debiteurenadministratie@amsterdam.nl?subject=${encodeURIComponent(mailSubject)}`}
-      >
-        debiteurenadministratie@amsterdam.nl
-      </Link>{' '}
-      met de details van de factuur, zoals het factuurnummer of andere relevante
-      informatie, zodat zij u verder kunnen helpen.
+      Afgehandelde facturen van vóór 1 januari 2025 kunnen niet getoond worden.
+      Heeft u vragen over deze of andere facturen? Mail dan naar{' '}
+      <VragenOverFactuurLink mailSubject={mailSubject} />.
     </>
+  );
+}
+
+export function getVragenOverFactuurText(
+  mailSubject: string = 'Vraag over factuur'
+) {
+  return (
+    <>
+      Mist u een factuur of heeft u een vraag over één van uw facturen? Stuur
+      een e-mail naar <VragenOverFactuurLink mailSubject={mailSubject} />.
+    </>
+  );
+}
+
+function VragenOverFactuurLink({
+  mailSubject = 'Vraag over facturen en betaalvoorkeuren',
+}: {
+  mailSubject?: string;
+}) {
+  return (
+    <Link
+      href={`mailto:debiteurenadministratie@amsterdam.nl?subject=${encodeURIComponent(mailSubject)}`}
+    >
+      debiteurenadministratie@amsterdam.nl
+    </Link>
   );
 }
 
@@ -42,8 +61,9 @@ function PageContentTop({
   return (
     <PageContentCell spanWide={8}>
       <Paragraph className="ams-mb-m">
-        Hieronder ziet u een overzicht van uw facturen.{' '}
-        {getVragenOverFactuurText()}
+        Heeft u een vraag over één van uw facturen? Mail dan naar{' '}
+        <VragenOverFactuurLink mailSubject="Vraag over facturen en betaalvoorkeuren" />
+        .
       </Paragraph>
       <Paragraph>
         U ziet hier niet de facturen over Gemeentebelastingen. Deze vindt u
