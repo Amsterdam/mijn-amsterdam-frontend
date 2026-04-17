@@ -3,7 +3,7 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import type { AfisFactuurFrontend } from './Afis-thema-config.ts';
 import {
   AfisDisclaimerOvergedragenFacturen,
-  getVragenOverFactuurText,
+  getVragenOverAfgehandeldeFactuurText,
 } from './AfisThema.tsx';
 import {
   type AfisFacturenThemaContextParams,
@@ -48,7 +48,9 @@ export function AfisFacturenTables({
         } else if (state === 'afgehandeld') {
           contentAfterTheTitle = (
             <Paragraph className="ams-mb-m">
-              {getVragenOverFactuurText(`Vraag over factuur [factuurnummer]`)}
+              {getVragenOverAfgehandeldeFactuurText(
+                `Vraag over factuur [factuurnummer]`
+              )}
             </Paragraph>
           );
         }
