@@ -10,16 +10,13 @@ import {
   type RequestWithQueryParams,
 } from './route-helpers.ts';
 import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config.ts';
-import { OTAP_ENV } from '../../universal/config/env.ts';
+import { IS_PRODUCTION, OTAP_ENV } from '../../universal/config/env.ts';
 import {
   DATASETS,
   getDatasetCategoryId,
 } from '../../universal/config/myarea-datasets.ts';
-import type {
-  ApiResponse_DEPRECATED} from '../../universal/helpers/api.ts';
-import {
-  apiSuccessResult,
-} from '../../universal/helpers/api.ts';
+import type { ApiResponse_DEPRECATED } from '../../universal/helpers/api.ts';
+import { apiSuccessResult } from '../../universal/helpers/api.ts';
 import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config.ts';
 import {
   getAuth,
@@ -38,9 +35,13 @@ import {
 } from '../services/buurt/buurt.ts';
 import { getDatasetEndpointConfig } from '../services/buurt/helpers.ts';
 import { loadClusterDatasets } from '../services/buurt/supercluster.ts';
-import { fetchCmsFooter, fetchSearchConfig } from '../services/cms/cms-content.ts';
+import {
+  fetchCmsFooter,
+  fetchSearchConfig,
+} from '../services/cms/cms-content.ts';
 import { fetchActiveMaintenanceNotifications } from '../services/cms/cms-maintenance-notifications.ts';
 import type { QueryParamsMaintenanceNotifications } from '../services/cms/cms-types.ts';
+import { devProxyHandler } from '../services/dev-proxy.ts';
 
 export const router = express.Router();
 
@@ -257,6 +258,10 @@ router.all(
     },
   })
 );
+
+if (!IS_PRODUCTION) {
+  router.all(new RegExp(`^${BffEndpoints.PROXY}/?.*$`), devProxyHandler);
+}
 
 export const legacyRouter = express.Router();
 
