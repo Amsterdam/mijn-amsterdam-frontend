@@ -26,7 +26,7 @@ import { logger } from '../logging.ts';
  * x-ma-proxy-target for where to send the request.
  *
  * Optional headers passed through to the target server start with 'x-ma-pass-'.
- * When recieving these, we will send everything after that prefix as is.
+ * When receiving these, we will send everything after that prefix as is.
  * For example: 'x-ma-pass-foo: bar' will be send as 'foo: bar'.
  *
  * ## Example request
@@ -37,7 +37,7 @@ import { logger } from '../logging.ts';
  *   --header 'x-ma-pass-api-key-for-target-server: x'
  */
 export async function devProxyHandler(req: Request, res: Response) {
-  const proxyApiKey = getFromEnv('MA_DEV_API_KEY', false);
+  const proxyApiKey = getFromEnv('MA_DEV_API_KEY', true);
 
   const apiKeyName = 'x-ma-dev-api-key';
   const apiKey = req.headers[apiKeyName];
@@ -104,7 +104,7 @@ export async function devProxyHandler(req: Request, res: Response) {
         res
           .status(HttpStatusCode.BadRequest)
           .send(
-            `Proxy: Request send to ${proxyTarget.href} but no response has been recieved`
+            `Proxy: Request send to ${proxyTarget.href} but no response has been received`
           );
       } else {
         logger.error(err);
