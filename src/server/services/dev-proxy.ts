@@ -5,6 +5,7 @@ import type { Request, Response } from 'express';
 
 import { getFromEnv } from '../helpers/env.ts';
 import { logger } from '../logging.ts';
+import { BffEndpoints } from '../routing/bff-routes.ts';
 
 // Controls which headers get filtered out by supplying a prefix or a full name.
 const EXCLUDED_HEADERS = [
@@ -23,6 +24,8 @@ const EXCLUDED_HEADERS = [
  * # Usage
  *
  * Send a request to the proxy route and most things are like sending it to the target directly.
+ * Everything after this endpoints route will be cut off and sent as the path to the target host -
+ * including url parameters.
  *
  * Just supply the required headers:
  * x-ma-dev-api-key for authentication.
@@ -31,7 +34,7 @@ const EXCLUDED_HEADERS = [
  *
  * ## Example request
  *
- * curl https://bff-server.nl/api/v1/proxy /
+ * curl https://bff-server.nl/api/v1/proxy/path/foo/bar/baz?a=1&b=2 /
  *   --header 'x-ma-dev-api-key: x'
  *   --header 'x-ma-proxy-target: https://someserver.com/foo/bar/data'
  */
@@ -46,13 +49,13 @@ export async function devProxyHandler(req: Request, res: Response) {
       .send(`Invalid or missing header '${apiKeyName}'`);
   }
 
-  const proxyTargetHeaderName = 'x-ma-proxy-target';
+  const proxyTargetHeaderName = 'x-ma-proxy-target-host';
   const proxyTargetHeader = req.headers[proxyTargetHeaderName];
   if (!proxyTargetHeader || typeof proxyTargetHeader !== 'string') {
     return res
       .status(HttpStatusCode.BadRequest)
       .send(
-        `Url to send request to was not found in header: '${proxyTargetHeaderName}'`
+        `Host to send request to was not found in header: '${proxyTargetHeaderName}'`
       );
   }
   let proxyTarget;
@@ -82,8 +85,9 @@ export async function devProxyHandler(req: Request, res: Response) {
       );
   }
 
+  const targetPath = req.url.replace(BffEndpoints.PROXY, '');
   axios({
-    url: proxyTarget.href,
+    url: proxyTarget.origin + targetPath,
     method: req.method,
     headers: getPassthroughHeaders(req),
     data: req.body,
