@@ -21,15 +21,13 @@ export function getVragenOverFactuurText(
 ) {
   return (
     <>
-      Mist u een factuur of heeft u een vraag over één van uw facturen? Stuur
-      een e-mail naar{' '}
+      Afgehandelde facturen van vóór 1 januari 2025 kunnen niet getoond worden.
+      Heeft u vragen over deze of andere facturen? Mail dan naar{' '}
       <Link
         href={`mailto:debiteurenadministratie@amsterdam.nl?subject=${encodeURIComponent(mailSubject)}`}
       >
         debiteurenadministratie@amsterdam.nl
       </Link>{' '}
-      met de details van de factuur, zoals het factuurnummer of andere relevante
-      informatie, zodat zij u verder kunnen helpen.
     </>
   );
 }
@@ -42,8 +40,12 @@ function PageContentTop({
   return (
     <PageContentCell spanWide={8}>
       <Paragraph className="ams-mb-m">
-        Hieronder ziet u een overzicht van uw facturen.{' '}
-        {getVragenOverFactuurText()}
+        Heeft u een vraag over één van uw facturen? Mail dan naar{' '}
+        <Link
+          href={`mailto:debiteurenadministratie@amsterdam.nl?subject=${encodeURIComponent('Vraag over facturen en betaalvoorkeuren')}`}
+        >
+          debiteurenadministratie@amsterdam.nl
+        </Link>{' '}
       </Paragraph>
       <Paragraph>
         U ziet hier niet de facturen over Gemeentebelastingen. Deze vindt u
