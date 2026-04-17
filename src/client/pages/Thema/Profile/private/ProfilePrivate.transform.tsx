@@ -19,7 +19,7 @@ import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import {
   BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN,
   profileLinks,
-  routeConfig,
+  themaConfig,
 } from '../Profile-thema-config.ts';
 import type { ProfileLabels } from '../profileDataFormatter.ts';
 import { formatProfileSectionData } from '../profileDataFormatter.ts';
@@ -184,7 +184,7 @@ const adres: ProfileLabels<
       if (adres?.vveNaam) {
         return (
           <MaRouterLink
-            href={routeConfig.detailPageVvE.path}
+            href={themaConfig.BRP.detailPageVvE.route.path}
             rel="noopener noreferrer"
           >
             {adres.vveNaam}

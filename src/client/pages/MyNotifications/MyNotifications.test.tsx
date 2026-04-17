@@ -8,7 +8,7 @@ import type { AppState } from '../../../universal/types/App.types.ts';
 import { themaId as themaIdDashboard } from '../Dashboard/Dashboard-config.ts';
 import { themaConfig as themaInkomen } from '../Thema/Inkomen/Inkomen-thema-config.ts';
 import { themaConfig as themaParkeren } from '../Thema/Parkeren/Parkeren-thema-config.ts';
-import { themaIdBRP } from '../Thema/Profile/Profile-thema-config.ts';
+import { themaConfig as themaProfiles } from '../Thema/Profile/Profile-thema-config.ts';
 
 const testState = {
   NOTIFICATIONS: {
@@ -31,7 +31,7 @@ const testState = {
         title: 'Notification',
         description: 'Notificatie2',
         datePublished: '2020-07-24',
-        themaID: themaIdBRP,
+        themaID: themaProfiles.BRP.id,
         themaTitle: 'Mijn gegevens',
         link: {
           to: '/item-2',

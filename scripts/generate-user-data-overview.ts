@@ -52,11 +52,7 @@ import type {
 } from '../src/server/services/brp/brp-types.ts';
 
 import { themaConfig as themaInkomen } from '../src/client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
-import {
-  themaIdBRP,
-  themaIdKVK,
-  themaTitle as profileThemaTitles,
-} from '../src/client/pages/Thema/Profile/Profile-thema-config.ts';
+import { themaConfig as themaProfiles } from '../src/client/pages/Thema/Profile/Profile-thema-config.ts';
 import { themaConfig as themaZorg } from '../src/client/pages/Thema/Zorg/Zorg-thema-config.ts';
 import { themaConfig as themaAfval } from '../src/client/pages/Thema/Afval/Afval-thema-config.ts';
 import { themaConfig as themaVergunningen } from '../src/client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
@@ -82,13 +78,11 @@ import { themaConfig as themaBelastingen } from '../src/client/pages/Thema/Belas
 import { themaConfig as themaMilieuzone } from '../src/client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
 import { themaConfig as themaSubsidies } from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
 
-const { BRP, KVK } = profileThemaTitles;
-
 /** Extra hardcoded additions are to display certain services like they're their own thema.
  */
 const themas = [
-  { id: themaIdBRP, title: BRP },
-  { id: themaIdKVK, title: KVK },
+  { id: themaProfiles.BRP.id, title: themaProfiles.BRP.title },
+  { id: themaProfiles.KVK.id, title: themaProfiles.KVK.title },
   { id: 'KLANT_CONTACT', title: 'Contactmomenten' },
   { id: themaInkomen.id, title: themaInkomen.title },
   { id: themaZorg.id, title: themaZorg.title },

@@ -9,8 +9,8 @@ import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts'
 import { ProfileSectionPanel } from '../ProfileSectionPanel.tsx';
 
 function ProfileCommercialSectionPanels() {
-  const { KVK, profileData, routeConfig } = useProfileData();
-  useHTMLDocumentTitle(routeConfig.themaPageKVK);
+  const { KVK, profileData, themaConfig } = useProfileData();
+  useHTMLDocumentTitle(themaConfig.KVK.route);
 
   return (
     <>
@@ -105,16 +105,14 @@ function CommercialPageContentTop({
   );
 }
 export function MijnBedrijfsGegevensThema() {
-  const { isLoading, isError, linkListItems, id, title, KVK } =
-    useProfileData();
-
+  const { isLoading, isError, pageLinks, id, title, KVK } = useProfileData();
   return (
     <ThemaPagina
       id={id}
       title={title}
       isError={isError && !isLoading}
       isLoading={isLoading && !isError}
-      pageLinks={linkListItems}
+      pageLinks={pageLinks}
       pageContentTop={
         <CommercialPageContentTop
           kvkTranslation={KVK?.content?.kvkTranslation}

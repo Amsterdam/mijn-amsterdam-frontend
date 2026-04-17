@@ -6,10 +6,9 @@ import {
   MailIcon,
   PhoneIcon,
 } from '@amsterdam/design-system-react-icons';
-import { generatePath, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
-import type {
-  ContactMomentFrontend} from './Contactmomenten.config.ts';
+import type { ContactMomentFrontend } from './Contactmomenten.config.ts';
 import {
   contactmomentenDisplayProps,
   mapperContactmomentToMenuItem,
@@ -24,7 +23,7 @@ import {
   useThemaBreadcrumbs,
   useActiveThemaMenuItems,
 } from '../../../../hooks/useThemaMenuItems.ts';
-import { routeConfig, themaIdBRP } from '../Profile-thema-config.ts';
+import { themaConfig } from '../Profile-thema-config.ts';
 
 function getMenuItem(
   onderwerp: string,
@@ -78,7 +77,7 @@ function addIcon(type: string) {
 export function useContactmomenten() {
   const { KLANT_CONTACT } = useAppStateGetter();
   const { items: myThemasMenuItems } = useActiveThemaMenuItems();
-  const breadcrumbs = useThemaBreadcrumbs(themaIdBRP);
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.BRP.id);
   const routeParams = useParams();
 
   const contactmomenten: ContactMomentFrontend[] =
@@ -100,15 +99,13 @@ export function useContactmomenten() {
 
   return {
     contactmomenten,
-    themaId: themaIdBRP,
+    themaId: themaConfig.BRP.id,
     displayProps: contactmomentenDisplayProps,
     isError: isError(KLANT_CONTACT),
     isLoading: isLoading(KLANT_CONTACT),
     title: 'Contactmomenten',
     breadcrumbs,
     routeParams,
-    listPageRoute: generatePath(routeConfig.listPageContactmomenten.path, {
-      page: null,
-    }),
+    listPageRoute: themaConfig.BRP.listPageContactmomenten.route.path,
   };
 }

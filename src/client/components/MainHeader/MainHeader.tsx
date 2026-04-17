@@ -13,12 +13,7 @@ import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes.ts';
 import { SearchPageRoute } from '../../pages/Search/Search-routes.ts';
-import {
-  routeConfig as profileRouteConfig,
-  themaIdBRP,
-  themaIdKVK,
-} from '../../pages/Thema/Profile/Profile-thema-config.ts';
-import { themaTitle } from '../../pages/Thema/Profile/Profile-thema-config.ts';
+import { themaConfig } from '../../pages/Thema/Profile/Profile-thema-config.ts';
 import { MainMenu } from '../MainMenu/MainMenu.tsx';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 import { Search } from '../Search/Search.tsx';
@@ -51,14 +46,14 @@ export function MainHeaderSecondaryLinks({
   const profileData: ProfileData =
     profileType === 'private'
       ? {
-          displayName: themaTitle[themaIdBRP],
+          displayName: themaConfig.BRP.title,
           title: 'Ga naar persoonlijke gegevens',
-          path: profileRouteConfig.themaPageBRP.path,
+          path: themaConfig.BRP.route.path,
         }
       : {
-          displayName: themaTitle[themaIdKVK],
+          displayName: themaConfig.KVK.title,
           title: 'Ga naar zakelijke gegevens',
-          path: profileRouteConfig.themaPageKVK.path,
+          path: themaConfig.KVK.route.path,
         };
 
   return (

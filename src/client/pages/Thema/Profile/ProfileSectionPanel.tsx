@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 import { LinkList, Grid, Paragraph } from '@amsterdam/design-system-react';
 
-import { themaIdBRP } from './Profile-thema-config.ts';
+import { themaConfig } from './Profile-thema-config.ts';
 import styles from './ProfileSectionPanel.module.scss';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
@@ -62,7 +62,7 @@ function getRows(sectionData: ProfileSectionData) {
       content: value,
       isVisible: !!value,
       classNameLabel: styles.Label,
-      classNameContent: `${styles.Content} ${getRedactedClass(themaIdBRP, 'content')}`,
+      classNameContent: `${styles.Content} ${getRedactedClass(themaConfig.BRP.id, 'content')}`,
     };
   });
 }

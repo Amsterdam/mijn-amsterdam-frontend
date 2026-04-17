@@ -1,11 +1,7 @@
 import { ADRES_IN_ONDERZOEK_A } from './brp-config.ts';
 import type { BrpFrontend } from './brp-types.ts';
 import { fetchBrpByBsnTransformed } from './brp.ts';
-import {
-  themaIdBRP,
-  themaTitle,
-  routeConfig as routeConfigBrp,
-} from '../../../client/pages/Thema/Profile/Profile-thema-config.ts';
+import { themaConfig } from '../../../client/pages/Thema/Profile/Profile-thema-config.ts';
 import {
   apiSuccessResult,
   apiDependencyError,
@@ -28,8 +24,8 @@ export function transformBRPNotifications(
 
   if (adresInOnderzoek) {
     notifications.push({
-      themaID: themaIdBRP,
-      themaTitle: themaTitle.BRP,
+      themaID: themaConfig.BRP.id,
+      themaTitle: themaConfig.BRP.title,
       datePublished: compareDate.toISOString(),
       isAlert: true,
       id: 'brpAdresInOnderzoek',
@@ -39,7 +35,7 @@ export function transformBRPNotifications(
           ? 'Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.'
           : 'Op dit moment onderzoeken wij op welk adres u nu woont.',
       link: {
-        to: routeConfigBrp.themaPageBRP.path,
+        to: themaConfig.BRP.route.path,
         title: 'Meer informatie',
       },
     });
@@ -47,15 +43,15 @@ export function transformBRPNotifications(
 
   if (isOnbekendWaarheen) {
     notifications.push({
-      themaID: themaIdBRP,
-      themaTitle: themaTitle.BRP,
+      themaID: themaConfig.BRP.id,
+      themaTitle: themaConfig.BRP.title,
       datePublished: compareDate.toISOString(),
       isAlert: true,
       id: 'brpVertrokkenOnbekendWaarheen',
       title: 'Vertrokken Onbekend Waarheen (VOW)',
       description: `U staat sinds ${dateLeft} in de Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.`,
       link: {
-        to: routeConfigBrp.themaPageBRP.path,
+        to: themaConfig.BRP.route.path,
         title: 'Meer informatie',
       },
     });

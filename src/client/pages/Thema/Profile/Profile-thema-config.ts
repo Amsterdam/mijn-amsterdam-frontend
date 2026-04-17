@@ -1,52 +1,92 @@
 import { isEnabled } from '../../../config/feature-toggles.ts';
-import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
+import type {
+  PageConfig,
+  ThemaConfigBase,
+} from '../../../config/thema-types.ts';
 
-export const themaIdKVK = 'KVK' as const;
-export const themaIdBRP = 'BRP' as const;
+type WithListPageContactmomenten = PageConfig<'listPageContactmomenten'>;
+type WithDetailPageVvE = PageConfig<'detailPageVvE'>;
 
-export const featureToggle = {
-  [themaIdBRP]: {
-    themaActive: true,
-    wonenActive: isEnabled('WONEN.vve'),
-    get aantalBewonersOpAdresTonenActive() {
-      return (
-        featureToggle[themaIdBRP].themaActive &&
-        isEnabled('BRP.aantalBewonersOpAdresTonen')
-      );
+type ProfileBRPThemaConfig = ThemaConfigBase<typeof THEMA_ID_BRP> &
+  WithListPageContactmomenten &
+  WithDetailPageVvE;
+
+type ProfileKVKThemaConfig = ThemaConfigBase<typeof THEMA_ID_KVK>;
+
+const THEMA_ID_BRP = 'BRP' as const;
+const THEMA_ID_KVK = 'KVK' as const;
+const THEMA_TITLE_BRP = 'Mijn gegevens' as const;
+const THEMA_TITLE_KVK = 'Mijn onderneming' as const;
+
+export const themaConfig = {
+  [THEMA_ID_BRP]: {
+    id: THEMA_ID_BRP,
+    title: THEMA_TITLE_BRP,
+    featureToggle: {
+      active: true,
+      wonenActive: isEnabled('WONEN.vve'),
+      get aantalBewonersOpAdresTonenActive(): boolean {
+        return (
+          themaConfig[THEMA_ID_BRP].featureToggle.active &&
+          isEnabled('BRP.aantalBewonersOpAdresTonen')
+        );
+      },
     },
-  },
-  [themaIdKVK]: {
-    themaActive: true,
-  },
+    profileTypes: ['private'],
+    redactedScope: 'content',
+    pageLinks: [],
+    uitlegPageSections: [
+      {
+        title: THEMA_TITLE_BRP,
+        listItems: [
+          'Uw inschrijving bij de gemeente',
+          'Uw contactmomenten met de gemeente',
+        ],
+      },
+    ],
+    route: {
+      path: '/persoonlijke-gegevens',
+      documentTitle: `${THEMA_TITLE_BRP} | Mijn Amsterdam`,
+      trackingUrl: null,
+    },
+    listPageContactmomenten: {
+      route: {
+        path: '/contactmomenten/:page?',
+        documentTitle: `Alle contactmomenten | ${THEMA_TITLE_BRP}`,
+        trackingUrl: null,
+      },
+    },
+    detailPageVvE: {
+      route: {
+        path: '/persoonlijke-gegevens/vve',
+        documentTitle: `Mijn VvE | Mijn Amsterdam`,
+        trackingUrl: null,
+      },
+    },
+  } satisfies ProfileBRPThemaConfig,
+
+  [THEMA_ID_KVK]: {
+    id: THEMA_ID_KVK,
+    title: THEMA_TITLE_KVK,
+    featureToggle: {
+      active: true,
+    },
+    profileTypes: ['private', 'commercial'],
+    redactedScope: 'content',
+    pageLinks: [
+      {
+        to: 'https://www.kvk.nl/inschrijven-en-wijzigen/wijziging-doorgeven/',
+        title: 'Geef wijzigingen door aan de Kamer van Koophandel',
+      },
+    ],
+    uitlegPageSections: [],
+    route: {
+      path: '/gegevens-handelsregister',
+      documentTitle: `${THEMA_TITLE_KVK} | Mijn Amsterdam`,
+      trackingUrl: null,
+    },
+  } satisfies ProfileKVKThemaConfig,
 };
-
-export const themaTitle = {
-  [themaIdBRP]: 'Mijn gegevens',
-  [themaIdKVK]: 'Mijn onderneming',
-} as const;
-
-export const routeConfig = {
-  themaPageBRP: {
-    path: '/persoonlijke-gegevens',
-    documentTitle: `${themaTitle.BRP} | Mijn Amsterdam`,
-    trackingUrl: null,
-  },
-  themaPageKVK: {
-    path: '/gegevens-handelsregister',
-    documentTitle: `${themaTitle.KVK} | Mijn Amsterdam`,
-    trackingUrl: null,
-  },
-  detailPageVvE: {
-    path: '/persoonlijke-gegevens/vve',
-    documentTitle: `Mijn VvE | Mijn Amsterdam`,
-    trackingUrl: null,
-  },
-  listPageContactmomenten: {
-    path: '/contactmomenten/:page?',
-    documentTitle: `Alle contactmomenten | ${themaTitle.BRP}`,
-    trackingUrl: null,
-  },
-} as const satisfies ThemaRoutesConfig;
 
 export const profileLinks = {
   CHANGE_PERSONAL_DATA:

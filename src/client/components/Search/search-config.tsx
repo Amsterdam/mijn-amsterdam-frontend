@@ -52,7 +52,7 @@ import { themaConfig as themaConfigBodem } from '../../pages/Thema/Bodem/Bodem-t
 import { themaConfig as themaConfigHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config.ts';
 import { themaConfig as themaConfigKlachten } from '../../pages/Thema/Klachten/Klachten-thema-config.ts';
 import { themaConfig as themaConfigKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config.ts';
-import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config.ts';
+import { themaConfig } from '../../pages/Thema/Profile/Profile-thema-config.ts';
 import { themaConfig as toeristischeVerhuurThemaConfig } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import { themaConfig as themaConfigVaren } from '../../pages/Thema/Varen/Varen-thema-config.ts';
 
@@ -422,14 +422,14 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
         {
           title: name || 'Mijn naam',
           link: {
-            to: routeConfigProfile.themaPageBRP.path,
+            to: themaConfig.BRP.route.path,
             title: `Mijn naam | ${name}`,
           },
         },
         {
           title: address || 'Mijn adres',
           link: {
-            to: routeConfigProfile.themaPageBRP.path,
+            to: themaConfig.BRP.route.path,
             title: `Mijn adres | ${address}`,
           },
         },
