@@ -6,34 +6,34 @@ import type { Request, Response } from 'express';
 import { getFromEnv } from '../helpers/env.ts';
 import { logger } from '../logging.ts';
 
-// TODO
-// - pass headers, filter current
-// - disable localhost (might be overkill)
+// Controls which headers get filtered out by supplying a prefix or a full name.
+const EXCLUDED_HEADERS = [
+  'x-ma-', // Functional headers for the route handler.
+  'host', // Overwriting the host will cause the target to not send the request back to the BFF.
+  'cookie', // Part of this is for application proxy authentication. For simplicity the whole cookie is stripped.
+];
 
 /** This proxy route handler is for sending requests to external systems -
  * that have us specifically whitelisted.
- * All functional headers needed are prefixed with 'x-ma-' to prevent conflicts.
  *
- * Specify in environment variable `MA_PROXY_TARGET_HOST_ALLOWLIST` what hosts to allow -
+ * Specify in the environment variable `MA_PROXY_TARGET_HOST_ALLOWLIST` what hosts to allow -
  * seperated by semicolons. For example: foo.com;bar.dev;baz.nl.
  * Or use a wildcard to allow all: '*', but it is better to explicitly set hosts for security reasons.
  *
  * # Usage
  *
- * Supply the required headers:
+ * Send a request to the proxy route and most things are like sending it to the target directly.
+ *
+ * Just supply the required headers:
  * x-ma-dev-api-key for authentication.
  * x-ma-proxy-target for where to send the request.
- *
- * Optional headers passed through to the target server start with 'x-ma-pass-'.
- * When receiving these, we will send everything after that prefix as is.
- * For example: 'x-ma-pass-foo: bar' will be send as 'foo: bar'.
+ * And add any other header you need as usual, these will be passed through unless they are in EXCLUDED_HEADERS.
  *
  * ## Example request
  *
  * curl https://bff-server.nl/api/v1/proxy /
  *   --header 'x-ma-dev-api-key: x'
  *   --header 'x-ma-proxy-target: https://someserver.com/foo/bar/data'
- *   --header 'x-ma-pass-api-key-for-target-server: x'
  */
 export async function devProxyHandler(req: Request, res: Response) {
   const proxyApiKey = getFromEnv('MA_DEV_API_KEY', true);
@@ -101,6 +101,7 @@ export async function devProxyHandler(req: Request, res: Response) {
         .send(incomingResponse.data);
     })
     .catch((err) => {
+      logger.error(err);
       if (err.request) {
         res
           .status(HttpStatusCode.BadRequest)
@@ -114,13 +115,8 @@ export async function devProxyHandler(req: Request, res: Response) {
 }
 
 function getPassthroughHeaders(req: Request): IncomingHttpHeaders {
-  const passthroughPrefix = 'x-ma-pass-';
-  const headers = Object.entries(req.headers)
-    .filter(([name]) => {
-      return name.startsWith(passthroughPrefix);
-    })
-    .map(([name, val]) => {
-      return [name.replace(passthroughPrefix, ''), val];
-    });
+  const headers = Object.entries(req.headers).filter(
+    ([name]) => !EXCLUDED_HEADERS.some((h) => name.startsWith(h))
+  );
   return Object.fromEntries(headers);
 }
