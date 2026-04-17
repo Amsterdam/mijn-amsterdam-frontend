@@ -20,7 +20,7 @@
       },
       "endDate": "2050-01-01 11:00:00",
       "caseReference": "06157415",
-      "cancellationLink": "https://formulieren.acc.amsterdam.nl/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=30b5ebfc-e6d7-4858-980e-11792634ec57"
+      "cancellationLink": "https://external-api.nl/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
     },
     {
       "subject": "Blauwe zone",
@@ -41,7 +41,7 @@
       },
       "endDate": "2026-02-13 11:00:00",
       "caseReference": "00157515",
-      "cancellationLink": "https://formulieren.acc.amsterdam.nl/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=30b5ebfc-e6d7-4858-980e-11792634ec57"
+      "cancellationLink": "https://external-api.nl/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
     },
     {
       "subject": "Vaarvignet",
@@ -62,7 +62,7 @@
       },
       "endDate": "2026-02-26 09:20:00",
       "caseReference": "00157783",
-      "cancellationLink": "https://formulieren.acc.amsterdam.nl/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=b68967eb-3c70-434c-94a4-28fdf8161d3d"
+      "cancellationLink": "https://external-api.nl/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
     },
     {
       "subject": "Briefadres aanvulling",
@@ -83,7 +83,7 @@
       },
       "endDate": "2026-04-03 11:00:00",
       "caseReference": "00157784",
-      "cancellationLink": "https://formulieren.acc.amsterdam.nl/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=16f8d85f-37ca-487a-a3ee-b9c379afaf24"
+      "cancellationLink": "https://external-api.nl/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
     }
   ],
   "previous": null,
