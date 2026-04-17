@@ -27,7 +27,8 @@ export function getVragenOverFactuurText(
         href={`mailto:debiteurenadministratie@amsterdam.nl?subject=${encodeURIComponent(mailSubject)}`}
       >
         debiteurenadministratie@amsterdam.nl
-      </Link>{' '}
+      </Link>
+      .
     </>
   );
 }
@@ -45,7 +46,8 @@ function PageContentTop({
           href={`mailto:debiteurenadministratie@amsterdam.nl?subject=${encodeURIComponent('Vraag over facturen en betaalvoorkeuren')}`}
         >
           debiteurenadministratie@amsterdam.nl
-        </Link>{' '}
+        </Link>
+        .
       </Paragraph>
       <Paragraph>
         U ziet hier niet de facturen over Gemeentebelastingen. Deze vindt u
