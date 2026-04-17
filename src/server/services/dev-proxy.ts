@@ -36,7 +36,7 @@ const EXCLUDED_HEADERS = [
  *
  * curl https://bff-server.nl/api/v1/proxy/path/foo/bar/baz?a=1&b=2 /
  *   --header 'x-ma-dev-api-key: x'
- *   --header 'x-ma-proxy-target: https://someserver.com/foo/bar/data'
+ *   --header 'x-ma-proxy-target: https://someserver.com'
  */
 export async function devProxyHandler(req: Request, res: Response) {
   const proxyApiKey = getFromEnv('MA_DEV_API_KEY', true);
