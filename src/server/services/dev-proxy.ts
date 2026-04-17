@@ -9,7 +9,6 @@ import { logger } from '../logging.ts';
 // TODO
 // - pass headers, filter current
 // - disable localhost (might be overkill)
-// - disable redirects
 
 /** This proxy route handler is for sending requests to external systems -
  * that have us specifically whitelisted.
@@ -92,6 +91,8 @@ export async function devProxyHandler(req: Request, res: Response) {
     transformResponse: (res) => res,
     // No errors, all statuscodes are valid and will be sent back. This also prevents json parsing on data when erroring.
     validateStatus: () => true,
+    // Disable redirects to prevent bypassing the allowlist.
+    maxRedirects: 0,
   })
     .then((incomingResponse) => {
       res
