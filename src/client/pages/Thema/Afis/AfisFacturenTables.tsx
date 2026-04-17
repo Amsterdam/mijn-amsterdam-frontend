@@ -29,7 +29,7 @@ export function AfisFacturenTables({
         { title, displayProps, maxItems, listPageLinkLabel, listPageRoute },
       ]) => {
         let totalItems = facturenByState?.[state]?.count ?? 0;
-        let facturen = [] as AfisFactuurFrontend[]; //facturenByState?.[state]?.facturen ?? [];
+        let facturen = facturenByState?.[state]?.facturen ?? [];
         if (themaContextParams?.factuurFilterFn && facturen.length) {
           facturen = facturen.filter((factuur) =>
             themaContextParams.factuurFilterFn?.(factuur, state)
