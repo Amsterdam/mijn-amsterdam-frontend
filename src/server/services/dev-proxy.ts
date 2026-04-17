@@ -6,9 +6,18 @@ import type { Request, Response } from 'express';
 import { getFromEnv } from '../helpers/env.ts';
 import { logger } from '../logging.ts';
 
+// TODO
+// - pass headers, filter current
+// - disable localhost (might be overkill)
+// - disable redirects
+
 /** This proxy route handler is for sending requests to external systems -
  * that have us specifically whitelisted.
  * All functional headers needed are prefixed with 'x-ma-' to prevent conflicts.
+ *
+ * Specify in environment variable `MA_PROXY_TARGET_HOST_ALLOWLIST` what hosts to allow -
+ * seperated by semicolons. For example: foo.com;bar.dev;baz.nl.
+ * Or use a wildcard to allow all: '*', but it is better to explicitly set hosts for security reasons.
  *
  * # Usage
  *
@@ -38,18 +47,44 @@ export async function devProxyHandler(req: Request, res: Response) {
       .send(`Invalid or missing header '${apiKeyName}'`);
   }
 
-  const urlHeaderName = 'x-ma-proxy-target';
-  const url = req.headers[urlHeaderName];
-  if (!url || typeof url !== 'string') {
+  const proxyTargetHeaderName = 'x-ma-proxy-target';
+  const proxyTargetHeader = req.headers[proxyTargetHeaderName];
+  if (!proxyTargetHeader || typeof proxyTargetHeader !== 'string') {
     return res
       .status(HttpStatusCode.BadRequest)
       .send(
-        `Url to send request to was not found in header: '${urlHeaderName}'`
+        `Url to send request to was not found in header: '${proxyTargetHeaderName}'`
+      );
+  }
+  let proxyTarget;
+  try {
+    proxyTarget = new URL(proxyTargetHeader);
+  } catch (_) {
+    return res
+      .status(HttpStatusCode.BadRequest)
+      .send(`Invalid URL in: '${proxyTargetHeaderName}'`);
+  }
+
+  const allowListedHosts = getFromEnv(
+    'MA_PROXY_TARGET_HOST_ALLOWLIST',
+    true
+  )!.split(';');
+  if (
+    !(
+      allowListedHosts.length &&
+      (allowListedHosts.includes('*') ||
+        allowListedHosts.includes(proxyTarget.host))
+    )
+  ) {
+    return res
+      .status(HttpStatusCode.Forbidden)
+      .send(
+        `'${proxyTargetHeaderName}: ${proxyTarget}' does not contain an allowed host. Allowed hosts are: ${allowListedHosts}`
       );
   }
 
   axios({
-    url,
+    url: proxyTarget.href,
     method: req.method,
     headers: getPassthroughHeaders(req),
     data: req.body,
@@ -69,7 +104,7 @@ export async function devProxyHandler(req: Request, res: Response) {
         res
           .status(HttpStatusCode.BadRequest)
           .send(
-            `Proxy: Request send to ${url} but no response has been recieved`
+            `Proxy: Request send to ${proxyTarget.href} but no response has been recieved`
           );
       } else {
         logger.error(err);
