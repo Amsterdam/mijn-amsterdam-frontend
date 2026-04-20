@@ -44,7 +44,8 @@ export function MissingDocumentMailto({ config }: MissingDocumentMailtoProps) {
 
   return (
     <Paragraph>
-      <strong>Ziet u niet het juiste document?</strong> Stuur een mail naar:{' '}
+      <strong>Ziet u niet het juiste document?</strong> Stuur dan een e-mail
+      naar:{' '}
       <Link href={mailtoWithSubjectAndBody} rel="noreferrer">
         {config.linkText ?? config.to}
       </Link>{' '}

@@ -72,10 +72,14 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
           <p
             class="ams-paragraph ams-mb-m"
           >
-            Heeft u een vraag over één van uw facturen? Mail dan naar 
+            Hieronder ziet u een overzicht van uw facturen.
+            <br />
+            Heeft u een vraag over één van uw facturen?
+            <br />
+            Stuur dan een e-mail naar 
             <a
               class="ams-link"
-              href="mailto:debiteurenadministratie@amsterdam.nl?subject=Vraag%20over%20facturen%20en%20betaalvoorkeuren"
+              href="mailto:debiteurenadministratie@amsterdam.nl?subject=Vraag%20over%20factuur%20Vraag%20over%20facturen%20en%20betaalvoorkeuren"
             >
               debiteurenadministratie@amsterdam.nl
             </a>
@@ -84,7 +88,9 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
           <p
             class="ams-paragraph"
           >
-            U ziet hier niet de facturen over Gemeentebelastingen. Deze vindt u terug bij 
+            U ziet hier niet de facturen over Gemeentebelastingen
+            <br />
+            Deze vindt u terug bij 
             <a
               class="ams-link"
               href="https://belastingbalie.amsterdam.nl/digid.saml.php?start"
@@ -385,7 +391,9 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
           <p
             class="ams-paragraph ams-mb-m"
           >
-            Afgehandelde facturen van vóór 1 januari 2025 kunnen niet getoond worden. Heeft u vragen over deze of andere facturen? Mail dan naar 
+            Afgehandelde facturen van vóór 1 januari 2025 kunnen wij hier niet laten zien.
+            <br />
+            Heeft u vragen over deze of andere facturen? Stuur dan een e-mail naar 
             <a
               class="ams-link"
               href="mailto:debiteurenadministratie@amsterdam.nl?subject=Vraag%20over%20factuur%20%5Bfactuurnummer%5D"
