@@ -9,14 +9,13 @@ import {
 import type { RequestWithSession } from './admin-types.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { apiErrorResult } from '../../../universal/helpers/api.ts';
-import { BFF_API_ADMIN_BASE_URL } from '../../config/app.ts';
 import { getFromEnv } from '../../helpers/env.ts';
-import { BFF_BASE_PATH_ADMIN } from '../../routing/bff-routes.ts';
 import {
   sendResponseHTML,
   sendUnauthorized,
 } from '../../routing/route-helpers.ts';
 import { captureException } from '../monitoring.ts';
+import { getAdminRedirectUrl } from './admin-helpers.ts';
 
 const cryptoProvider = new msal.CryptoProvider();
 const msalApp = new msal.ConfidentialClientApplication({
@@ -37,11 +36,7 @@ export async function handleLogin(req: Request, res: Response) {
       // Encode the original URL the user was trying to access so we can redirect them back to it after logging in.
       state: cryptoProvider.base64Encode(
         JSON.stringify({
-          originalUrl:
-            url.startsWith(BFF_API_ADMIN_BASE_URL) ||
-            url.startsWith(BFF_BASE_PATH_ADMIN)
-              ? url
-              : BFF_API_ADMIN_BASE_URL,
+          originalUrl: getAdminRedirectUrl(url),
         })
       ),
     });
@@ -102,15 +97,13 @@ export async function handleCallback(req: Request, res: Response) {
   session.username = authResponse.account?.username ?? 'no-name';
 
   // Check if we need to redirect back to the original url the user was trying to access.
-  const successRedirectUrl = JSON.parse(atob(req.body.state)).originalUrl;
-  res.redirect(successRedirectUrl || '/');
+  const originalUrl = JSON.parse(atob(req.body.state)).originalUrl ?? '';
+  const redirectToUrl = getAdminRedirectUrl(originalUrl);
+  res.redirect(redirectToUrl);
 }
 
 export async function handleLogout(req: Request, res: Response) {
-  req.session.destroy((err) => {
-    if (err) {
-      console.error('Error destroying session during logout:', err);
-    }
+  req.session.destroy(() => {
     res.redirect(getFromEnv('BFF_ADMIN_AUTH_POST_LOGOUT_REDIRECT_URI') ?? '/');
   });
 }
