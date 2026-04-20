@@ -7,7 +7,7 @@ import {
   themaConfig,
 } from './Afis-thema-config.ts';
 import styles from './AfisFactuur.module.scss';
-import { getVragenOverFactuurText } from './AfisThema.tsx';
+import { getVragenOverFactuurText } from './AfisVragenOverFactuurLink.tsx';
 import { getDocumentLink } from './useAfisFacturenApi.tsx';
 import { useAfisListPageData } from './useAfisListPageData.tsx';
 import {
