@@ -1,9 +1,22 @@
 import * as msal from '@azure/msal-node'; // MSAL App Configuration
 import type { Request, Response } from 'express';
 
-import { REDIRECT_URI } from './admin-service-config.ts';
+import {
+  MSAL_AUTH_SCOPES,
+  OAUTH_ROLE_APPLICATION_ADMIN,
+  REDIRECT_URI,
+} from './admin-service-config.ts';
+import type { RequestWithSession } from './admin-types.ts';
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
+import { apiErrorResult } from '../../../universal/helpers/api.ts';
 import { BFF_API_ADMIN_BASE_URL } from '../../config/app.ts';
 import { getFromEnv } from '../../helpers/env.ts';
+import { BFF_BASE_PATH_ADMIN } from '../../routing/bff-routes.ts';
+import {
+  sendResponseHTML,
+  sendUnauthorized,
+} from '../../routing/route-helpers.ts';
+import { captureException } from '../monitoring.ts';
 
 const cryptoProvider = new msal.CryptoProvider();
 const msalApp = new msal.ConfidentialClientApplication({
@@ -14,10 +27,9 @@ const msalApp = new msal.ConfidentialClientApplication({
   },
 });
 
-const MSAL_AUTH_SCOPES = ['User.read'];
-
 export async function handleLogin(req: Request, res: Response) {
   try {
+    const url = (req.query.originalUrl as string) ?? '';
     const redirectUrl = await msalApp.getAuthCodeUrl({
       responseMode: 'form_post',
       redirectUri: REDIRECT_URI,
@@ -25,22 +37,29 @@ export async function handleLogin(req: Request, res: Response) {
       // Encode the original URL the user was trying to access so we can redirect them back to it after logging in.
       state: cryptoProvider.base64Encode(
         JSON.stringify({
-          originalUrl: req.query.originalUrl || BFF_API_ADMIN_BASE_URL,
+          originalUrl:
+            url.startsWith(BFF_API_ADMIN_BASE_URL) ||
+            url.startsWith(BFF_BASE_PATH_ADMIN)
+              ? url
+              : BFF_API_ADMIN_BASE_URL,
         })
       ),
     });
 
     res.redirect(redirectUrl);
   } catch (error) {
-    console.error('Error generating auth code URL:', error);
-    res.status(500).send('Error generating authentication URL');
+    captureException(error);
+    sendResponseHTML(
+      res,
+      apiErrorResult('Error generating authentication URL', null, 500)
+    );
   }
 }
 
 export async function handleCallback(req: Request, res: Response) {
-  console.log('Received auth code callback with query:', req.query, req.body);
+  let authResponse: msal.AuthenticationResult | null = null;
   try {
-    const authResponse = await msalApp.acquireTokenByCode(
+    authResponse = await msalApp.acquireTokenByCode(
       {
         code: req.body.code,
         scopes: MSAL_AUTH_SCOPES,
@@ -48,20 +67,43 @@ export async function handleCallback(req: Request, res: Response) {
       },
       req.body
     );
-    console.log('authResponse', authResponse);
-    const session = req.session as any; // Type assertion to avoid TypeScript errors - in a real implementation, you would want to properly type your session object
-    session.isAuthenticated = true;
-    session.account = authResponse.account;
-    session.idToken = authResponse.idToken;
-    session.user = authResponse.account?.username ?? 'no-name';
-
-    // Check if we need to redirect back to the original url the user was trying to access.
-    const successRedirectUrl = JSON.parse(atob(req.body.state)).originalUrl;
-    res.redirect(successRedirectUrl || '/');
+    if (!authResponse) {
+      throw new Error('Could not acquire token by code');
+    }
   } catch (error) {
-    console.error('Error handling auth code callback:', error);
-    res.status(500).send('Error handling authentication callback');
+    captureException(error);
+    return sendResponseHTML(
+      res,
+      apiErrorResult(
+        `Error handling authentication callback${!IS_PRODUCTION ? `: ${error}` : ''}`,
+        null,
+        500
+      )
+    );
   }
+
+  const req_ = req as RequestWithSession;
+
+  const idTokenRoles: string[] =
+    authResponse.account?.idTokenClaims?.roles ?? [];
+
+  if (!idTokenRoles.includes(OAUTH_ROLE_APPLICATION_ADMIN)) {
+    return sendUnauthorized(res, 'User access denied: missing required role');
+  }
+  if (!req_.session) {
+    return sendResponseHTML(
+      res,
+      apiErrorResult('User access denied: session is not available', null, 500)
+    );
+  }
+
+  const session = req_.session;
+  session.isAuthenticated = true;
+  session.username = authResponse.account?.username ?? 'no-name';
+
+  // Check if we need to redirect back to the original url the user was trying to access.
+  const successRedirectUrl = JSON.parse(atob(req.body.state)).originalUrl;
+  res.redirect(successRedirectUrl || '/');
 }
 
 export async function handleLogout(req: Request, res: Response) {

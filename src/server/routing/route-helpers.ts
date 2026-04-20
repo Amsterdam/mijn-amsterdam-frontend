@@ -7,7 +7,7 @@ import z from 'zod';
 
 import { IS_PRODUCTION } from '../../universal/config/env.ts';
 import {
-  type ApiResponse_DEPRECATED,
+  type ApiResponse,
   apiErrorResult,
 } from '../../universal/helpers/api.ts';
 import type { AuthProfileAndToken } from '../auth/auth-types.ts';
@@ -97,7 +97,8 @@ export function generateFullApiAdminUrlBFF(
 /** Sets the right statuscode and sends a response. */
 export function sendResponse(
   res: Response,
-  apiResponse: ApiResponse_DEPRECATED<unknown>
+  apiResponse: ApiResponse<unknown>,
+  templateName: string = ''
 ) {
   if (apiResponse.status === 'ERROR') {
     res.status(
@@ -107,7 +108,19 @@ export function sendResponse(
     );
   }
 
-  return res.send(apiResponse);
+  return templateName
+    ? res.render(templateName, {
+        apiResponse,
+      })
+    : res.send(apiResponse);
+}
+
+export function sendResponseHTML(
+  res: Response,
+  apiResponse: ApiResponse<unknown>,
+  templateName: string = 'api-response-html'
+) {
+  return sendResponse(res, apiResponse, templateName);
 }
 
 export function sendBadRequest(res: Response, reason: string) {

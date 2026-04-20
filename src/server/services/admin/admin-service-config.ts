@@ -30,26 +30,8 @@ export const POST_LOGOUT_REDIRECT_URI = getFromEnv(
   'BFF_ADMIN_AUTH_POST_LOGOUT_REDIRECT_URI'
 );
 export const GRAPH_ME_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
-
-export const MSAL2 = {
-  authOptions: {
-    clientId: MA_ADMIN_MSAL_CONFIG.auth.clientId,
-    authority: MA_ADMIN_MSAL_CONFIG.auth.authority,
-  },
-  request: {
-    authCodeUrlParameters: {
-      scopes: ['user.read'],
-      redirectUri: REDIRECT_URI ?? '',
-    },
-    tokenRequest: {
-      redirectUri: REDIRECT_URI ?? '',
-      scopes: ['user.read'],
-    },
-  },
-  resourceApi: {
-    endpoint: 'https://graph.microsoft.com/v1.0/me',
-  },
-};
+export const MSAL_AUTH_SCOPES = ['User.read'];
+export const OAUTH_ROLE_APPLICATION_ADMIN = 'ApplicationAdmin';
 
 export const IS_ADMIN_ROUTER_ENABLED = isEnabled('MA_ADMIN.router');
 
