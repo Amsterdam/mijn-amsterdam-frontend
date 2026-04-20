@@ -46,10 +46,6 @@ export async function adminIndexHandler(req: Request, res: Response) {
               cacheOverview: generateFullApiAdminUrlBFF(
                 adminRoutesGeneric.protected.CACHE_OVERVIEW
               ),
-              loginStats: generateFullApiAdminUrlBFF(
-                adminRoutesGeneric.protected.visitors.STATS,
-                { authMethod: '' }
-              ),
               loginStatsTable: generateFullApiAdminUrlBFF(
                 adminRoutesGeneric.protected.visitors.STATS_TABLE
               ),
