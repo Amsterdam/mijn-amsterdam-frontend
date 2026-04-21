@@ -10,10 +10,7 @@ import type { RequestWithSession } from './admin-types.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { apiErrorResult } from '../../../universal/helpers/api.ts';
 import { getFromEnv } from '../../helpers/env.ts';
-import {
-  sendResponseHTML,
-  sendUnauthorized,
-} from '../../routing/route-helpers.ts';
+import { sendResponseHTML } from '../../routing/route-helpers.ts';
 import { captureException } from '../monitoring.ts';
 import { getAdminRedirectUrl } from './admin-helpers.ts';
 
@@ -83,7 +80,10 @@ export async function handleCallback(req: Request, res: Response) {
     authResponse.account?.idTokenClaims?.roles ?? [];
 
   if (!idTokenRoles.includes(OAUTH_ROLE_APPLICATION_ADMIN)) {
-    return sendUnauthorized(res, 'User access denied: missing required role');
+    return sendResponseHTML(
+      res,
+      apiErrorResult('User access denied: missing required role', null, 403)
+    );
   }
   if (!req_.session) {
     return sendResponseHTML(
@@ -97,7 +97,9 @@ export async function handleCallback(req: Request, res: Response) {
   session.username = authResponse.account?.username ?? 'no-name';
 
   // Check if we need to redirect back to the original url the user was trying to access.
-  const originalUrl = JSON.parse(atob(req.body.state)).originalUrl ?? '';
+  const originalUrl =
+    JSON.parse(Buffer.from(req.body.state, 'base64').toString('utf-8'))
+      .originalUrl ?? '';
   const redirectToUrl = getAdminRedirectUrl(originalUrl);
   res.redirect(redirectToUrl);
 }
@@ -107,3 +109,7 @@ export async function handleLogout(req: Request, res: Response) {
     res.redirect(getFromEnv('BFF_ADMIN_AUTH_POST_LOGOUT_REDIRECT_URI') ?? '/');
   });
 }
+
+export const forTesting = {
+  msalApp,
+};
