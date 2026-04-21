@@ -11,7 +11,7 @@ import { createBFFRouter } from '../../routing/route-helpers.ts';
 // Public routes that don't require authentication.
 // Don't use this router for routes that should be protected, as these routes are mounted before the authentication middleware in router-admin.ts
 const maAdminAuthRouterPublic = createBFFRouter({
-  id: 'ma-admin-auth-router',
+  id: 'ma-admin-router-public',
 });
 
 maAdminAuthRouterPublic.get(routes.public.auth.SIGNIN, handleLogin);

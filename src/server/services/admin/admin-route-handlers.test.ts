@@ -1,10 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-// Mock external msal package to avoid side effects
-vi.mock('msal', () => ({
-  PublicClientApplication: vi.fn(),
-}));
-
 // Mock cacheOverview for the cacheOverviewHandler
 vi.mock('../../helpers/file-cache.ts', () => ({
   cacheOverview: vi.fn(() => Promise.resolve(['file-a.json', 'file-b.json'])),
