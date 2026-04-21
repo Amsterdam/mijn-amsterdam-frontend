@@ -116,8 +116,16 @@ export async function handleCallback(req: Request, res: Response) {
 }
 
 export async function handleLogout(req: Request, res: Response) {
+  function redirect() {
+    return res.redirect(
+      getFromEnv('BFF_ADMIN_AUTH_POST_LOGOUT_REDIRECT_URI') ?? '/'
+    );
+  }
+  if (!req.session) {
+    return redirect();
+  }
   req.session.destroy(() => {
-    res.redirect(getFromEnv('BFF_ADMIN_AUTH_POST_LOGOUT_REDIRECT_URI') ?? '/');
+    return redirect();
   });
 }
 
