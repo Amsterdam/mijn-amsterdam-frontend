@@ -97,9 +97,20 @@ export async function handleCallback(req: Request, res: Response) {
   session.username = authResponse.account?.username ?? 'no-name';
 
   // Check if we need to redirect back to the original url the user was trying to access.
-  const originalUrl =
-    JSON.parse(Buffer.from(req.body.state, 'base64').toString('utf-8'))
-      .originalUrl ?? '';
+  let originalUrl = '/';
+  try {
+    originalUrl = JSON.parse(
+      Buffer.from(req.body.state, 'base64').toString('utf-8')
+    ).originalUrl;
+  } catch (error) {
+    captureException(error, {
+      properties: {
+        message: 'Error parsing state from authentication callback',
+        state: req.body.state,
+      },
+    });
+  }
+
   const redirectToUrl = getAdminRedirectUrl(originalUrl);
   res.redirect(redirectToUrl);
 }
