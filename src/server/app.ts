@@ -127,7 +127,7 @@ if (IS_AP && !IS_OT) {
 app.use(BFF_BASE_PATH, nocache, routerPublicExternalConsumer);
 
 // Routes mounted at BFF_BASE_PATH_ADMIN are for the admin panel.
-// These routes require authentication but are separate from the other protected routes, and have their own authentication middleware defined in router-admin.ts
+// These routes require authentication but are separate from the other protected routes, and have their own authentication middleware defined in app-router-admin.ts
 app.use(BFF_BASE_PATH_ADMIN, nocache, adminRouter);
 
 // Routers mounted at BFF_BASE_PATH all need authentication.
