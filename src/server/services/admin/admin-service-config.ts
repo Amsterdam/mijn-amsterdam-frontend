@@ -16,9 +16,6 @@ export const MA_ADMIN_MSAL_CONFIG: Configuration = {
   },
   system: {
     loggerOptions: {
-      loggerCallback(loglevel, message, containsPii) {
-        console.log(message);
-      },
       piiLoggingEnabled: false,
       logLevel: 3,
     },

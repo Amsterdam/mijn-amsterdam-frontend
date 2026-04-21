@@ -1,4 +1,4 @@
-import * as msal from '@azure/msal-node'; // MSAL App Configuration
+import * as msal from '@azure/msal-node';
 import type { Request, Response } from 'express';
 
 import {

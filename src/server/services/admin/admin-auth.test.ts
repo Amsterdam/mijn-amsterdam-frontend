@@ -17,9 +17,9 @@ vi.mock('./admin-service-config.ts', async (importOriginal) => {
   };
 });
 
-const msal = vi.hoisted(() => {
+const mocks = vi.hoisted(() => {
   const getAuthCodeUrl = vi.fn(async ({ redirectUri }) => redirectUri);
-  const acquireTokenByCode = vi.fn(async () => null);
+  const acquireTokenByCode = vi.fn();
   return { getAuthCodeUrl, acquireTokenByCode };
 });
 
@@ -32,8 +32,8 @@ vi.mock('@azure/msal-node', () => {
   }
 
   class ConfidentialClientApplication {
-    getAuthCodeUrl = msal.getAuthCodeUrl;
-    acquireTokenByCode = msal.acquireTokenByCode;
+    getAuthCodeUrl = mocks.getAuthCodeUrl;
+    acquireTokenByCode = mocks.acquireTokenByCode;
     constructor() {}
   }
 
@@ -74,7 +74,7 @@ describe('admin-auth handlers', () => {
 
     await handleLogin(req.get(), res);
 
-    expect(msal.getAuthCodeUrl).toHaveBeenCalledWith({
+    expect(mocks.getAuthCodeUrl).toHaveBeenCalledWith({
       redirectUri: '/oauth/redirect',
       responseMode: 'form_post',
       scopes: ['User.read'],
@@ -91,7 +91,7 @@ describe('admin-auth handlers', () => {
         username: 'bob',
       },
     };
-    msal.acquireTokenByCode.mockResolvedValue(mockAuth);
+    mocks.acquireTokenByCode.mockResolvedValue(mockAuth);
 
     const state = base64EncodeJson({ originalUrl: '/api/v1/admin/xyz' });
     const reqBase = RequestMock.new();
@@ -103,7 +103,7 @@ describe('admin-auth handlers', () => {
 
     await handleCallback(req, res);
 
-    expect(msal.acquireTokenByCode).toHaveBeenCalledWith(
+    expect(mocks.acquireTokenByCode).toHaveBeenCalledWith(
       {
         code: 'c',
         redirectUri: '/oauth/redirect',
@@ -122,7 +122,7 @@ describe('admin-auth handlers', () => {
 
   it('handleCallback denies access when role missing', async () => {
     const mockAuth = { account: { idTokenClaims: { roles: [] } } };
-    msal.acquireTokenByCode.mockResolvedValue(mockAuth);
+    mocks.acquireTokenByCode.mockResolvedValue(mockAuth);
 
     const state = base64EncodeJson({ originalUrl: '/api/v1/admin/xyz' });
 
@@ -142,7 +142,7 @@ describe('admin-auth handlers', () => {
   });
 
   it('handleCallback reports error when acquireTokenByCode does not respond with a valid token', async () => {
-    msal.acquireTokenByCode.mockResolvedValue(null);
+    mocks.acquireTokenByCode.mockResolvedValue(null);
 
     const reqBase = RequestMock.new();
     reqBase.body = { code: 'c', state: '' };
@@ -164,7 +164,7 @@ describe('admin-auth handlers', () => {
   });
 
   it('handleCallback reports error when acquireTokenByCode throws', async () => {
-    msal.acquireTokenByCode.mockRejectedValue(new Error('boom'));
+    mocks.acquireTokenByCode.mockRejectedValue(new Error('boom'));
 
     const reqBase = RequestMock.new();
     reqBase.body = { code: 'c', state: '' };
