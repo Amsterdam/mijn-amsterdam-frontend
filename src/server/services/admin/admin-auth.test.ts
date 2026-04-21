@@ -12,8 +12,8 @@ import { sendResponseHTML } from '../../routing/route-helpers.ts';
 vi.mock('./admin-service-config.ts', async (importOriginal) => {
   return {
     ...(await importOriginal()),
-    REDIRECT_URI: '/oauth/redirect',
-    POST_LOGOUT_REDIRECT_URI: '/oauth/logout/redirect',
+    BFF_ADMIN_AUTH_REDIRECT_URI: '/oauth/redirect',
+    BFF_ADMIN_AUTH_POST_LOGOUT_REDIRECT_URI: '/oauth/logout/redirect',
   };
 });
 
@@ -47,12 +47,6 @@ vi.mock('../../routing/route-helpers.ts', async (importOrgininal) => ({
   ...(await importOrgininal()),
   sendResponseHTML: vi.fn(),
   sendUnauthorized: vi.fn(),
-}));
-
-vi.mock('../../helpers/env.ts', () => ({
-  getFromEnv: vi.fn((k: string) =>
-    k === 'BFF_ADMIN_AUTH_POST_LOGOUT_REDIRECT_URI' ? '/logout-redirect' : ''
-  ),
 }));
 
 vi.mock('../monitoring.ts', () => ({ captureException: vi.fn() }));
@@ -197,6 +191,6 @@ describe('admin-auth handlers', () => {
     handleLogout(req, res);
 
     expect(req.session.destroy).toHaveBeenCalled();
-    expect(res.redirect).toHaveBeenCalledWith('/logout-redirect');
+    expect(res.redirect).toHaveBeenCalledWith('/oauth/logout/redirect');
   });
 });
