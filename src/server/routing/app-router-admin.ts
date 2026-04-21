@@ -3,10 +3,12 @@ import session from 'express-session';
 import { createBFFRouter } from './route-helpers.ts';
 import { IS_PRODUCTION } from '../../universal/config/env.ts';
 import { ADMIN_SESSION_COOKIE_NAME } from '../auth/auth-config.ts';
-import { getFromEnv } from '../helpers/env.ts';
 import { isAuthenticatedAdmin } from '../services/admin/admin-route-handlers.ts';
 import { router as adminRouter } from '../services/admin/admin-router.ts';
-import { IS_ADMIN_ROUTER_ENABLED } from '../services/admin/admin-service-config.ts';
+import {
+  BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET,
+  IS_ADMIN_ROUTER_ENABLED,
+} from '../services/admin/admin-service-config.ts';
 import { amsappNotificationsRouter } from '../services/amsapp/notifications/amsapp-notifications-router.ts';
 import { userFeedbackRouter } from '../services/user-feedback/user-feedback.router.ts';
 
@@ -15,18 +17,11 @@ export const router = createBFFRouter({
   isEnabled: IS_ADMIN_ROUTER_ENABLED,
 });
 
-const SECRET = getFromEnv('BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET');
-if (!SECRET) {
-  throw new Error(
-    'BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET environment variable is required when admin router is enabled'
-  );
-}
-
 router.use(
   ...(IS_ADMIN_ROUTER_ENABLED
     ? [
         session({
-          secret: SECRET,
+          secret: BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET,
           resave: false,
           saveUninitialized: false,
           name: ADMIN_SESSION_COOKIE_NAME,

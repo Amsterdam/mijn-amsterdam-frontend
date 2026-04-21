@@ -100,7 +100,7 @@ export async function handleCallback(req: Request, res: Response) {
   session.username = authResponse.account?.username ?? 'no-name';
 
   // Check if we need to redirect back to the original url the user was trying to access.
-  let originalUrl = '/';
+  let originalUrl = '';
   try {
     originalUrl = JSON.parse(
       Buffer.from(req.body.state, 'base64').toString('utf-8')

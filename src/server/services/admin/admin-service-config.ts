@@ -1,7 +1,7 @@
 import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 
-export function getAdminAuthEnv(key: string): string {
+function getAdminAuthEnv(key: string): string {
   return (
     getFromEnv(
       `BFF_ADMIN_AUTH_${key}`,
@@ -23,6 +23,9 @@ export const BFF_ADMIN_AUTH_POST_LOGOUT_REDIRECT_URI = getAdminAuthEnv(
 export const BFF_ADMIN_AUTH_CLIENT_ID = getAdminAuthEnv('CLIENT_ID');
 export const BFF_ADMIN_AUTH_TENANT_ID = getAdminAuthEnv('TENANT_ID');
 export const BFF_ADMIN_AUTH_CLIENT_SECRET = getAdminAuthEnv('CLIENT_SECRET');
+export const BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET = getAdminAuthEnv(
+  'EXPRESS_SESSION_SECRET'
+);
 
 export const routes = {
   public: {
