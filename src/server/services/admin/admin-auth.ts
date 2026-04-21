@@ -19,7 +19,7 @@ const msalApp = new msal.ConfidentialClientApplication({
   auth: {
     clientId: getFromEnv('BFF_ADMIN_AUTH_CLIENT_ID') ?? '', // 'Application (client) ID' of app registration in Azure portal - this value is a GUID
     authority: `https://login.microsoftonline.com/${getFromEnv('BFF_ADMIN_AUTH_TENANT_ID') ?? ''}`, // Full directory URL, in the form of https://login.microsoftonline.com/<tenant>
-    clientSecret: getFromEnv('BFF_ADMIN_AUTH_CLIENT_SECRET'), // Client secret generated from the app registration in Azure portal
+    clientSecret: getFromEnv('BFF_ADMIN_AUTH_CLIENT_SECRET', true, true), // Client secret generated from the app registration in Azure portal
   },
 });
 

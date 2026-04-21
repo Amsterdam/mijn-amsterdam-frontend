@@ -14,7 +14,7 @@ export const ADMIN_SESSION_COOKIE_NAME = '__MA-adminSession';
 
 export const OIDC_SESSION_MAX_AGE_SECONDS = ONE_MINUTE_SECONDS * 15; // 15 minutes
 export const OIDC_SESSION_COOKIE_NAME = '__MA-appSession';
-export const OIDC_COOKIE_ENCRYPTION_KEY = `${getFromEnv('BFF_GENERAL_ENCRYPTION_KEY')}`;
+export const OIDC_COOKIE_ENCRYPTION_KEY = `${getFromEnv('BFF_GENERAL_ENCRYPTION_KEY', true, true)}`;
 export const OIDC_ID_TOKEN_EXP = '1 hours'; // Arbitrary, MA wants a token to be valid for a maximum of 1 hours.
 export const OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED = true;
 
@@ -32,7 +32,7 @@ export const oidcConfigBase: ConfigParams = {
   // Cookie encryption
   secret: OIDC_COOKIE_ENCRYPTION_KEY,
   // Client secret
-  clientSecret: getFromEnv('BFF_OIDC_SECRET', true),
+  clientSecret: getFromEnv('BFF_OIDC_SECRET', true, true),
   clientID: 'x', // Set in configs for digid and eherkenning, required by ConfigParams type.
   baseURL: BFF_OIDC_BASE_URL,
   issuerBaseURL: BFF_OIDC_ISSUER_BASE_URL,

@@ -1,26 +1,5 @@
-import type { Configuration } from '@azure/msal-node';
-
 import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import { getFromEnv } from '../../helpers/env.ts';
-
-/**
- * Configuration object to be passed to MSAL instance on creation.
- * For a full list of MSAL Node configuration parameters, visit:
- * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-node/docs/configuration.md
- */
-export const MA_ADMIN_MSAL_CONFIG: Configuration = {
-  auth: {
-    clientId: getFromEnv('BFF_ADMIN_AUTH_CLIENT_ID') ?? '', // 'Application (client) ID' of app registration in Azure portal - this value is a GUID
-    authority: `https://login.microsoftonline.com/${getFromEnv('BFF_ADMIN_AUTH_TENANT_ID') ?? ''}`, // Full directory URL, in the form of https://login.microsoftonline.com/<tenant>
-    clientSecret: getFromEnv('BFF_ADMIN_AUTH_CLIENT_SECRET'), // Client secret generated from the app registration in Azure portal
-  },
-  system: {
-    loggerOptions: {
-      piiLoggingEnabled: false,
-      logLevel: 3,
-    },
-  },
-};
 
 export const REDIRECT_URI = getFromEnv('BFF_ADMIN_AUTH_REDIRECT_URI') ?? '';
 export const POST_LOGOUT_REDIRECT_URI = getFromEnv(

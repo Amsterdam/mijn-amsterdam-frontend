@@ -15,11 +15,18 @@ export const router = createBFFRouter({
   isEnabled: IS_ADMIN_ROUTER_ENABLED,
 });
 
+const SECRET = getFromEnv('BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET');
+if (!SECRET) {
+  throw new Error(
+    'BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET environment variable is required when admin router is enabled'
+  );
+}
+
 router.use(
   ...(IS_ADMIN_ROUTER_ENABLED
     ? [
         session({
-          secret: getFromEnv('BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET') ?? '',
+          secret: SECRET,
           resave: false,
           saveUninitialized: false,
           name: ADMIN_SESSION_COOKIE_NAME,
