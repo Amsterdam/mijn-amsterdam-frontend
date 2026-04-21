@@ -2,9 +2,9 @@ import session from 'express-session';
 
 import { createBFFRouter } from './route-helpers.ts';
 import { IS_PRODUCTION } from '../../universal/config/env.ts';
-import { ADMIN_SESSION_COOKIE_NAME } from '../auth/auth-config.ts';
 import { isAuthenticatedAdmin } from '../services/admin/admin-route-handlers.ts';
 import { router as adminRouter } from '../services/admin/admin-router.ts';
+import { BFF_ADMIN_AUTH_SESSION_COOKIE_NAME } from '../services/admin/admin-service-config.ts';
 import {
   BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET,
   IS_ADMIN_ROUTER_ENABLED,
@@ -24,7 +24,7 @@ router.use(
           secret: BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET,
           resave: false,
           saveUninitialized: false,
-          name: ADMIN_SESSION_COOKIE_NAME,
+          name: BFF_ADMIN_AUTH_SESSION_COOKIE_NAME,
           cookie: {
             httpOnly: true,
             secure: IS_PRODUCTION,

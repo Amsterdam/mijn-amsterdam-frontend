@@ -26,7 +26,7 @@ export const BFF_ADMIN_AUTH_CLIENT_SECRET = getAdminAuthEnv('CLIENT_SECRET');
 export const BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET = getAdminAuthEnv(
   'EXPRESS_SESSION_SECRET'
 );
-
+export const BFF_ADMIN_AUTH_SESSION_COOKIE_NAME = '__MA-adminSession';
 export const routes = {
   public: {
     INDEX: '/',
