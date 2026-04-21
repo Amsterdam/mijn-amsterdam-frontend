@@ -19,7 +19,7 @@ export function isAuthenticatedAdmin(
       generateFullApiAdminUrlBFF(adminRoutesGeneric.public.auth.SIGNIN, [
         { originalUrl: req.originalUrl },
       ])
-    ); // redirect to sign-in route
+    );
   }
 
   next();
