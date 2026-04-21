@@ -1,25 +1,28 @@
 import * as msal from '@azure/msal-node';
 import type { Request, Response } from 'express';
 
+import { getAdminRedirectUrl } from './admin-helpers.ts';
 import {
+  BFF_ADMIN_AUTH_CLIENT_ID,
+  BFF_ADMIN_AUTH_CLIENT_SECRET,
+  BFF_ADMIN_AUTH_TENANT_ID,
   MSAL_AUTH_SCOPES,
   OAUTH_ROLE_APPLICATION_ADMIN,
-  REDIRECT_URI,
+  BFF_ADMIN_AUTH_POST_LOGOUT_REDIRECT_URI,
+  BFF_ADMIN_AUTH_REDIRECT_URI,
 } from './admin-service-config.ts';
 import type { RequestWithSession } from './admin-types.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { apiErrorResult } from '../../../universal/helpers/api.ts';
-import { getFromEnv } from '../../helpers/env.ts';
 import { sendResponseHTML } from '../../routing/route-helpers.ts';
 import { captureException } from '../monitoring.ts';
-import { getAdminRedirectUrl } from './admin-helpers.ts';
 
 const cryptoProvider = new msal.CryptoProvider();
 const msalApp = new msal.ConfidentialClientApplication({
   auth: {
-    clientId: getFromEnv('BFF_ADMIN_AUTH_CLIENT_ID') ?? '', // 'Application (client) ID' of app registration in Azure portal - this value is a GUID
-    authority: `https://login.microsoftonline.com/${getFromEnv('BFF_ADMIN_AUTH_TENANT_ID') ?? ''}`, // Full directory URL, in the form of https://login.microsoftonline.com/<tenant>
-    clientSecret: getFromEnv('BFF_ADMIN_AUTH_CLIENT_SECRET', true, true), // Client secret generated from the app registration in Azure portal
+    clientId: BFF_ADMIN_AUTH_CLIENT_ID, // 'Application (client) ID' of app registration in Azure portal - this value is a GUID
+    authority: `https://login.microsoftonline.com/${BFF_ADMIN_AUTH_TENANT_ID}`, // Full directory URL, in the form of https://login.microsoftonline.com/<tenant>
+    clientSecret: BFF_ADMIN_AUTH_CLIENT_SECRET, // Client secret generated from the app registration in Azure portal
   },
 });
 
@@ -28,7 +31,7 @@ export async function handleLogin(req: Request, res: Response) {
     const url = (req.query.originalUrl as string) ?? '';
     const redirectUrl = await msalApp.getAuthCodeUrl({
       responseMode: 'form_post',
-      redirectUri: REDIRECT_URI,
+      redirectUri: BFF_ADMIN_AUTH_REDIRECT_URI,
       scopes: MSAL_AUTH_SCOPES,
       // Encode the original URL the user was trying to access so we can redirect them back to it after logging in.
       state: cryptoProvider.base64Encode(
@@ -55,7 +58,7 @@ export async function handleCallback(req: Request, res: Response) {
       {
         code: req.body.code,
         scopes: MSAL_AUTH_SCOPES,
-        redirectUri: REDIRECT_URI,
+        redirectUri: BFF_ADMIN_AUTH_REDIRECT_URI,
       },
       req.body
     );
@@ -117,9 +120,7 @@ export async function handleCallback(req: Request, res: Response) {
 
 export async function handleLogout(req: Request, res: Response) {
   function redirect() {
-    return res.redirect(
-      getFromEnv('BFF_ADMIN_AUTH_POST_LOGOUT_REDIRECT_URI') ?? '/'
-    );
+    return res.redirect(BFF_ADMIN_AUTH_POST_LOGOUT_REDIRECT_URI ?? '/');
   }
   if (!req.session) {
     return redirect();
