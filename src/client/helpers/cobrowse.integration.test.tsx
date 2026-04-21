@@ -10,11 +10,8 @@ import { DashboardRoute } from '../pages/Dashboard/Dashboard-routes.ts';
 import { Dashboard } from '../pages/Dashboard/Dashboard.tsx';
 import MockApp from '../pages/MockApp.tsx';
 import { MyNotificationsPage } from '../pages/MyNotifications/MyNotifications.tsx';
-import {
-  themaId as themaIdAfis,
-  themaTitle as themaTitleAfis,
-} from '../pages/Thema/Afis/Afis-thema-config.ts';
-import { themaConfig as themaConfigBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
+import { themaConfig as themaAfis } from '../pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig as themaBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
 import { BezwarenDetail } from '../pages/Thema/Bezwaren/BezwarenDetail.tsx';
 import { BezwarenList } from '../pages/Thema/Bezwaren/BezwarenList.tsx';
 import { BezwarenThema } from '../pages/Thema/Bezwaren/BezwarenThema.tsx';
@@ -29,9 +26,9 @@ const testState = {
     content: [
       {
         subject: Object.entries(mapperContactmomentToMenuItem).find(
-          ([_, themaId]) => themaId === themaIdAfis
+          ([_, themaId]) => themaId === themaAfis.id
         )?.[0],
-        themaKanaal: themaTitleAfis, // We misuse this to keep things together
+        themaKanaal: themaAfis.title, // We misuse this to keep things together
       },
       {
         subject: themaVergunningen.id,
@@ -58,11 +55,11 @@ const testState = {
     content: [
       {
         id: 'Not1',
-        title: `Notification ${themaConfigBezwaren.title}`,
+        title: `Notification ${themaBezwaren.title}`,
         description: 'Notificatie1',
         datePublished: '2020-07-24',
-        themaID: themaConfigBezwaren.id,
-        themaTitle: themaConfigBezwaren.title,
+        themaID: themaBezwaren.id,
+        themaTitle: themaBezwaren.title,
         link: {
           to: '/item-1',
           title: 'Linkje!',
@@ -150,9 +147,7 @@ describe('Cobrowse redacted components', () => {
     describe('Dashboard', () => {
       it('<MyThemasPanel />', async () => {
         await act(() => render(<Component component={Dashboard} />));
-        expect(screen.getByTestId(themaConfigBezwaren.title)).toHaveClass(
-          'redacted'
-        );
+        expect(screen.getByTestId(themaBezwaren.title)).toHaveClass('redacted');
         expect(screen.getByTestId(themaVergunningen.title)).not.toHaveClass(
           'redacted'
         );
@@ -162,7 +157,7 @@ describe('Cobrowse redacted components', () => {
         await act(() => render(<Component component={Dashboard} />));
         const listItems = screen.getAllByRole('listitem');
         const redactedNotification = listItems.find((li) =>
-          li.textContent?.includes(themaConfigBezwaren.title)
+          li.textContent?.includes(themaBezwaren.title)
         );
         expect(redactedNotification).toHaveClass('redacted');
         const nonRedactedNotification = listItems.find((li) =>
@@ -176,7 +171,7 @@ describe('Cobrowse redacted components', () => {
       await act(() => render(<Component component={MyNotificationsPage} />));
       const listItems = screen.getAllByRole('listitem');
       const redactedNotification = listItems.find((li) =>
-        li.textContent?.includes(themaConfigBezwaren.title)
+        li.textContent?.includes(themaBezwaren.title)
       );
       expect(redactedNotification).toHaveClass('redacted');
       const nonRedactedNotification = listItems.find((li) =>
@@ -198,7 +193,7 @@ describe('Cobrowse redacted components', () => {
 
       // Make sure the redacted is on the correct element and redacts the page content
       const cobrowseElemText = cobrowseElem?.innerText;
-      const textOnlyInElem = themaConfigBezwaren.title;
+      const textOnlyInElem = themaBezwaren.title;
       expect(cobrowseElemText).toContain(textOnlyInElem);
 
       const fullDocumentText = document.body.innerText;

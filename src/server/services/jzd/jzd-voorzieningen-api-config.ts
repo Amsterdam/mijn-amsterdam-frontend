@@ -132,7 +132,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
       },
     },
     match: {
-      leveringsVorm: '',
+      leveringsVorm: (voorziening) => voorziening.leveringsVorm !== 'PGB',
       isActueel: true,
       productsoortCode: [
         'AO1',

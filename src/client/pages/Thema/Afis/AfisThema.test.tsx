@@ -1,7 +1,7 @@
 import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Afis-thema-config.ts';
+import { themaConfig } from './Afis-thema-config.ts';
 import { AfisThema } from './AfisThema.tsx';
 import type {
   AfisBusinessPartnerDetailsTransformed,
@@ -138,8 +138,8 @@ describe('<Afis />', () => {
       status: 'OK',
     });
 
-  const routeEntry = generatePath(routeConfig.themaPage.path);
-  const routePath = routeConfig.themaPage.path;
+  const routeEntry = generatePath(themaConfig.route.path);
+  const routePath = themaConfig.route.path;
 
   function Component() {
     return (

@@ -7,7 +7,7 @@ import type { KvkResponseFrontend } from '../../../../../server/services/hr-kvk/
 import { getFullAddress } from '../../../../../universal/helpers/brp.ts';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
 import MockApp from '../../../MockApp.tsx';
-import { routeConfig } from '../Profile-thema-config.ts';
+import { themaConfig } from '../Profile-thema-config.ts';
 
 const responseData: KvkResponseFrontend = {
   eigenaar: {
@@ -157,7 +157,7 @@ const panelHeadings = [
 ];
 
 describe('<MijnBedrijfsGegevensThema />', () => {
-  const routeEntry = routeConfig.themaPageKVK.path;
+  const routeEntry = themaConfig.KVK.route.path;
 
   function Component() {
     return (

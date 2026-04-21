@@ -13,7 +13,7 @@ import { bffApiHost } from '../../../../../testing/setup.ts';
 import { bffApi } from '../../../../../testing/utils.ts';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
 import MockApp from '../../../MockApp.tsx';
-import { routeConfig } from '../Profile-thema-config.ts';
+import { themaConfig } from '../Profile-thema-config.ts';
 
 const testState = (
   responseBRP: BrpFrontend | object = {},
@@ -35,7 +35,7 @@ const panelHeadings = [
 ];
 
 describe('<Profile />', () => {
-  const routeEntry = routeConfig.themaPageBRP.path;
+  const routeEntry = themaConfig.BRP.route.path;
 
   function Component({
     state,

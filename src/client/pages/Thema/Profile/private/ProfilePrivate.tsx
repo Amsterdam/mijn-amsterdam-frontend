@@ -17,9 +17,9 @@ import ThemaPagina from '../../../../components/Thema/ThemaPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
 
 function ProfilePrivateSectionPanels() {
-  const { BRP, profileData, routeConfig } = useProfileData();
+  const { BRP, profileData, themaConfig } = useProfileData();
 
-  useHTMLDocumentTitle(routeConfig.themaPageBRP);
+  useHTMLDocumentTitle(themaConfig.BRP.route);
 
   return (
     <>
@@ -101,8 +101,8 @@ export function MijnGegevensThema() {
     isLoadingContactmomenten,
     isErrorBrp,
     isErrorContactmomenten,
-    linkListItems,
     hasContactMomenten,
+    pageLinks,
   } = useProfileThemaData();
 
   const pageContentErrorAlert = (
@@ -151,7 +151,7 @@ export function MijnGegevensThema() {
       isPartialError={isErrorBrp || isErrorContactmomenten}
       errorAlertContent={pageContentErrorAlert}
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
-      pageLinks={linkListItems}
+      pageLinks={pageLinks}
       pageContentTop={pageContentTop}
       maintenanceNotificationsPageSlug="brp"
       pageContentMain={

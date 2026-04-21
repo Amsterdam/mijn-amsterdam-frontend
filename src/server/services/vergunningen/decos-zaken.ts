@@ -19,6 +19,7 @@ import {
   type OnttrekkingsvergunningSloopDecos,
   type VormenVanWoonruimteDecos,
   type LigplaatsvergunningDecos,
+  type SplitsingsvergunningDecos,
 } from './config-and-types.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import {
@@ -151,6 +152,26 @@ const VOBvergunning: DecosZaakTransformer<LigplaatsvergunningDecos> = {
     text6: location,
     text10: { name: 'vesselKind' }, // soort vaartuig
     text14: { name: 'vesselName' }, // naam vaartuig
+  },
+};
+
+const Splitsingsvergunning: DecosZaakTransformer<SplitsingsvergunningDecos> = {
+  isActive: true,
+  itemType: 'folders',
+  caseType: caseTypeVergunningen.Splitsingsvergunning,
+  title: caseTypeVergunningen.Splitsingsvergunning,
+  fetchWorkflowStatusDatesFor: [
+    {
+      status: 'In behandeling',
+      decosActionCode: 'Splitsingsvergunning - Behandelen',
+    },
+  ],
+  transformFields: {
+    ...SELECT_FIELDS_TRANSFORM_BASE,
+    text6: location,
+    dfunction: transformDecision({
+      Ingetrokken: ['Ingetrokken aanvraag op eigen verzoek'],
+    }),
   },
 };
 
@@ -575,6 +596,7 @@ export const decosCaseToZaakTransformers = {
   [OnttrekkingsvergunningSloop.caseType]: OnttrekkingsvergunningSloop,
   [Samenvoegingsvergunning.caseType]: Samenvoegingsvergunning,
   [VOBvergunning.caseType]: VOBvergunning,
+  [Splitsingsvergunning.caseType]: Splitsingsvergunning,
   [VormenVanWoonruimte.caseType]: VormenVanWoonruimte,
   [Omzettingsvergunning.caseType]: Omzettingsvergunning,
   [AanbiedenDiensten.caseType]: AanbiedenDiensten,

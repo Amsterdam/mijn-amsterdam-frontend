@@ -51,7 +51,7 @@ import {
   type EMandateUpdatePayload,
   type EMandateSignRequestStatusPayload,
 } from './afis-types.ts';
-import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config.ts';
 import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
 import {
   apiErrorResult,
@@ -528,7 +528,7 @@ function createEMandateSignRequestPayload(
   signRequestPayload: EMandateSignRequestPayload
 ): POMSignRequestUrlPayload {
   const returnUrl = generateFullApiUrlBFF(
-    routeConfig.detailPageEMandate.path,
+    themaConfig.detailEMandatePage.route.path,
     [
       // In development we mock the API responses from the payment provider, for convenience we add the creditor IBAN to the URL so we can determine in the mock API which response to return.
       IS_DEVELOPMENT ? { iban: creditor.iban } : {},

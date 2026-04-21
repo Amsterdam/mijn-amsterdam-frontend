@@ -6,7 +6,6 @@ import {
   Paragraph,
 } from '@amsterdam/design-system-react';
 
-import { featureToggle } from './Afis-thema-config.ts';
 import styles from './AfisBetaalVoorkeuren.module.scss';
 import { AfisEmandateRefetchInterval } from './AfisEmandateFetchInterval.tsx';
 import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData.tsx';
@@ -92,14 +91,14 @@ export function AfisBetaalVoorkeuren() {
     businessPartnerIdEncrypted,
     isThemaPaginaError,
     isThemaPaginaLoading,
-    linkListItems,
+    pageLinks,
     breadcrumbs,
-    routeConfig,
+    themaConfig,
     themaId,
     belastingenLinkListItem,
   } = useAfisThemaData();
 
-  useHTMLDocumentTitle(routeConfig.betaalVoorkeuren);
+  useHTMLDocumentTitle(themaConfig.betaalVoorkeurenPage.route);
 
   const {
     title,
@@ -126,7 +125,7 @@ export function AfisBetaalVoorkeuren() {
     isLoadingBusinessPartnerDetails ||
     isLoadingEMandates;
 
-  const eMandatesTable = featureToggle.emandatesActive && (
+  const eMandatesTable = themaConfig.featureToggle.emandates.active && (
     <ThemaPaginaTable<AfisEMandateFrontend>
       displayProps={eMandateTableConfig.displayProps}
       maxItems={-1}
@@ -174,7 +173,7 @@ export function AfisBetaalVoorkeuren() {
         </Link>
         .
       </Paragraph>
-      {!featureToggle.emandatesActive && (
+      {!themaConfig.featureToggle.emandates.active && (
         <>
           <Heading level={4}>Via automatische incasso betalen</Heading>
           <Paragraph className="ams-mb-m">
@@ -210,7 +209,7 @@ export function AfisBetaalVoorkeuren() {
         businesspartner={businesspartnerDetails}
         labels={businessPartnerDetailsLabels}
         isLoading={!!(isLoadingBusinessPartnerDetails || isThemaPaginaLoading)}
-        startCollapsed={featureToggle.emandatesActive}
+        startCollapsed={themaConfig.featureToggle.emandates.active}
       />
       {payloadStorage.hasPayloads() && (
         <AfisEmandateRefetchInterval fetch={fetchEMandates} />
@@ -253,7 +252,7 @@ export function AfisBetaalVoorkeuren() {
       errorAlertContent={errorAlertContent}
       isLoading={isLoadingAllAPis}
       breadcrumbs={breadcrumbs}
-      pageLinks={linkListItems}
+      pageLinks={pageLinks}
       pageContentTop={pageContentTop}
       pageContentMain={pageContentMain}
       maintenanceNotificationsPageSlug="afis"

@@ -1,7 +1,7 @@
 import { useContactmomenten } from './useContactmomenten.hook.tsx';
 import { isError, isLoading } from '../../../../../universal/helpers/api.ts';
 import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
-import { themaTitle, themaIdBRP } from '../Profile-thema-config.ts';
+import { themaConfig } from '../Profile-thema-config.ts';
 
 export function useProfileThemaData() {
   const { BRP } = useAppStateGetter();
@@ -12,14 +12,14 @@ export function useProfileThemaData() {
   } = useContactmomenten();
 
   return {
-    id: themaIdBRP,
-    title: themaTitle.BRP,
+    id: themaConfig.BRP.id,
+    title: themaConfig.BRP.title,
     brpContent: BRP.content,
     isErrorBrp: isError(BRP),
     isErrorContactmomenten,
     isLoadingBrp: isLoading(BRP),
     isLoadingContactmomenten,
     hasContactMomenten: !!contactmomenten?.length,
-    linkListItems: [],
+    pageLinks: themaConfig.BRP.pageLinks,
   };
 }

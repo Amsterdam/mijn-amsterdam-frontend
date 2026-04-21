@@ -23,7 +23,7 @@ import type { ContentTipSource } from './tip-types.ts';
 import { themaConfig as themaAfval } from '../../../client/pages/Thema/Afval/Afval-thema-config.ts';
 import { themaConfig as hliThemaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config.ts';
 import { themaConfig as inkomenThemaConfig } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
-import { themaIdBRP } from '../../../client/pages/Thema/Profile/Profile-thema-config.ts';
+import { themaConfig as profileThemaConfig } from '../../../client/pages/Thema/Profile/Profile-thema-config.ts';
 import { themaConfig as toeristischeVerhuurThemaConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 
 const DAYS = 90;
@@ -54,7 +54,7 @@ export const contentTips: ContentTipSource[] = [
     datePublished: '2026-02-03',
     title: 'Tip: Stembureaus in Amsterdam',
     profileTypes: ['private'],
-    themaID: themaIdBRP,
+    themaID: profileThemaConfig.BRP.id,
     description:
       'U kunt alle stembureaus in Amsterdam vinden via de onderstaande link. Om in te zoomen op uw buurt, voert u na het openen van de link uw postcode of adres in.',
     predicates: [isMokum, is18OrOlderOnElectionDay],
@@ -159,7 +159,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2020-07-03',
     title: 'Tip: Welkom in Amsterdam',
-    themaID: themaIdBRP,
+    themaID: profileThemaConfig.BRP.id,
     profileTypes: ['private'],
     description:
       'U woont in Amsterdam, welkom! Blijf op de hoogte van de producten en diensten die u heeft bij de gemeente Amsterdam.nl.',
@@ -181,7 +181,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2024-04-04',
     title: 'Overgangsregeling: achternaam van kind kiezen',
-    themaID: themaIdBRP,
+    themaID: profileThemaConfig.BRP.id,
     profileTypes: ['private'],
     description:
       'Op 1 januari 2024 is de wet Gecombineerde achternaam ingegaan. In 2024 is hiervoor een overgangsregeling. Dit betekent dat u als ouders de achternaam van uw kinderen kunt wijzigen naar een combinatie van allebei uw achternamen.',
@@ -364,7 +364,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2025-06-05',
     title: 'Uw kind wordt of is 18 jaar',
-    themaID: themaIdBRP,
+    themaID: profileThemaConfig.BRP.id,
     profileTypes: ['private'],
     description:
       'Wanneer je kind 18 wordt, verandert er veel in zijn of haar leven. Er komt wat organisatie bij kijken.',
@@ -384,7 +384,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2025-06-05',
     title: 'Je wordt of bent 18 jaar',
-    themaID: themaIdBRP,
+    themaID: profileThemaConfig.BRP.id,
     profileTypes: ['private'],
     description:
       'Er verandert veel als je 18 wordt. Je moet een aantal dingen regelen.',

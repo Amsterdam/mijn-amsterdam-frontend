@@ -1,6 +1,6 @@
 import { Alert, Button, Paragraph } from '@amsterdam/design-system-react';
 
-import { EMANDATE_STATUS_ACTIVE, routeConfig } from './Afis-thema-config.ts';
+import { EMANDATE_STATUS_ACTIVE, themaConfig } from './Afis-thema-config.ts';
 import { AfisEMandateActionButtons } from './AfisEmandateActionButtons.tsx';
 import { DateAdjust } from './AfisEmandateDateAdjust.tsx';
 import { AfisEmandateRefetchInterval } from './AfisEmandateFetchInterval.tsx';
@@ -171,7 +171,7 @@ function EMandate({ eMandate }: EMandateProps) {
 }
 
 export function AfisEMandateDetail() {
-  useHTMLDocumentTitle(routeConfig.detailPageEMandate);
+  useHTMLDocumentTitle(themaConfig.detailEMandatePage.route);
 
   const {
     title,

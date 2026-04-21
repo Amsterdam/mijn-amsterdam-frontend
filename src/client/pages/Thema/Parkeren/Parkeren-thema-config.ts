@@ -39,12 +39,21 @@ export const themaConfig: ParkerenThemaConfig = {
       to: 'https://www.amsterdam.nl/parkeren/parkeervergunning/parkeervergunning-bewoners/',
       title: 'Meer over parkeervergunningen',
     },
+    {
+      to: 'https://www.amsterdam.nl/parkeren/parkeren-gehandicapten/',
+      title: 'Parkeren voor gehandicapten',
+    },
   ],
   uitlegPageSections: [
     {
       title: THEMA_TITLE,
       listItems: [
         'Het inzien, aanvragen of wijzigen van een bewonersvergunning',
+        'Uw aanvraag voor een gehandicaptenparkeerkaart (GPK) of een vaste gehandicaptenparkeerplaats (GPP)',
+        'Uw aanvraag voor een eigen parkeerplaats voor huisartsen, verloskundigen en consuls',
+        'Uw aanvraag voor een ontheffing touringcar',
+        'Uw aanvraag voor een ontheffing zwaar verkeer',
+        'Uw aanvraag voor een ontheffing blauwe zone',
       ],
     },
   ],

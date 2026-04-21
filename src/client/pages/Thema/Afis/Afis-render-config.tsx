@@ -1,9 +1,4 @@
-import {
-  routeConfig,
-  themaId,
-  themaTitle,
-  featureToggle,
-} from './Afis-thema-config.ts';
+import { themaConfig } from './Afis-thema-config.ts';
 import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren.tsx';
 import { AfisEMandateDetail } from './AfisEMandateDetail.tsx';
 import { AfisFactuur } from './AfisFactuur.tsx';
@@ -19,41 +14,41 @@ import {
 
 export const AfisRoutes = [
   {
-    route: routeConfig.listPage.path,
+    route: themaConfig.listPage.route.path,
     Component: AfisList,
-    isActive: featureToggle.AfisActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.detailPage.path,
+    route: themaConfig.detailPage.route.path,
     Component: AfisFactuur,
-    isActive: featureToggle.AfisActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.betaalVoorkeuren.path,
+    route: themaConfig.betaalVoorkeurenPage.route.path,
     Component: AfisBetaalVoorkeuren,
-    isActive: featureToggle.AfisActive,
+    isActive: themaConfig.featureToggle.active,
   },
   {
-    route: routeConfig.detailPageEMandate.path,
+    route: themaConfig.detailEMandatePage.route.path,
     Component: AfisEMandateDetail,
-    isActive: featureToggle.emandatesActive,
+    isActive: themaConfig.featureToggle.emandates.active,
   },
   {
-    route: routeConfig.themaPage.path,
+    route: themaConfig.route.path,
     Component: AfisThema,
-    isActive: featureToggle.AfisActive,
+    isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
-  to: routeConfig.themaPage.path,
-  redactedScope: 'full',
-  profileTypes: ['private', 'commercial'],
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
+  to: themaConfig.route.path,
+  redactedScope: themaConfig.redactedScope,
+  profileTypes: themaConfig.profileTypes,
   isActive(appState: AppState) {
     return (
-      featureToggle.AfisActive &&
+      themaConfig.featureToggle.active &&
       !isLoading(appState.AFIS) &&
       !!appState.AFIS.content?.isKnown
     );
