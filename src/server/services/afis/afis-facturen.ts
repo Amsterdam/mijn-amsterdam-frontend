@@ -21,7 +21,7 @@ import type {
   AfisFacturenOverviewResponse,
   AfisFactuurTermijn,
 } from './afis-types.ts';
-import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -317,7 +317,10 @@ function transformFactuur(
     eMandateId,
     documentDownloadLink,
     link: {
-      to: generatePath(routeConfig.detailPage.path, { state, factuurNummer }),
+      to: generatePath(themaConfig.detailPage.route.path, {
+        state,
+        factuurNummer,
+      }),
       title: `Factuur ${factuurNummer}`,
     },
   };

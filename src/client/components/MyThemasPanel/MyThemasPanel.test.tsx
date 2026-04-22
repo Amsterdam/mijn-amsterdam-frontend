@@ -23,7 +23,7 @@ describe('Thema panel display', () => {
     );
     expect(screen.getByText('Belastingen')).toBeInTheDocument();
     expect(
-      screen.getByText('Dit ziet u in Mijn Amsterdam')
+      screen.getByText('Dit kunt u zien in Mijn Amsterdam')
     ).toBeInTheDocument();
   });
 
