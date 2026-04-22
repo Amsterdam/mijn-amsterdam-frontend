@@ -108,8 +108,6 @@ export async function devProxyHandler(req: Request, res: Response) {
           .send(
             `Proxy: Request send to ${proxyTarget.href} but no response has been received`
           );
-      } else {
-        logger.error(err);
       }
     });
 }
