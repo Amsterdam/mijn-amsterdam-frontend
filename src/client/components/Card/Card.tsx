@@ -14,21 +14,22 @@ export function Card({ title, icon, children, actionRightside }: CardProps) {
   const isSmallScreen = useSmallScreen();
   const isLargeScreen = !isSmallScreen;
 
-  const icon_ = icon && <Icon svg={icon} size={'heading-2'}></Icon>;
-  const heading = <Heading level={3}>{title}</Heading>;
+  const titleIcon = icon && <Icon svg={icon} size={'heading-2'}></Icon>;
+  const titleHeading = <Heading level={3}>{title}</Heading>;
+
   return (
     <div
       className={'ams-mb-m'}
       style={{ paddingTop: '16px', borderTop: '2px solid #EEEEEE' }}
     >
       <Row gap={'large'}>
-        {isLargeScreen && icon_}
+        {isLargeScreen && titleIcon}
         <Column style={{ width: isSmallScreen ? '' : '800px' }}>
-          {isLargeScreen && heading}
+          {isLargeScreen && titleHeading}
           {isSmallScreen && (
             <Row>
-              {icon_}
-              {heading}
+              {titleIcon}
+              {titleHeading}
             </Row>
           )}
           {children}
