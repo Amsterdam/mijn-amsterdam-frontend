@@ -149,7 +149,7 @@ export function getApiErrors(appState: AppState): ApiError[] {
             apiResponseData == null ||
             ('status' in apiResponseData &&
               (apiResponseData?.status === 'ERROR' ||
-                apiResponseData?.status === 'DEPENDENCY_ERROR' ||
+                apiResponseData?.status === 'ERROR' ||
                 (apiResponseData?.status === 'OK' &&
                   'failedDependencies' in apiResponseData &&
                   !!apiResponseData?.failedDependencies))))

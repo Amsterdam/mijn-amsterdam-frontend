@@ -35,26 +35,18 @@ export type ApiPostponeResponse<T> = {
   status: 'POSTPONE';
 };
 
-// Used if the request can't be made because of dependent requirements e.g using request params from data of another api which returns an error.
-export type ApiDependencyErrorResponse = {
-  content: null;
-  message: string;
-  status: 'DEPENDENCY_ERROR';
-};
-
 export type ResponseStatus =
   | 'ERROR'
   | 'OK'
   | 'PRISTINE'
   | 'POSTPONE'
-  | 'DEPENDENCY_ERROR';
+  | 'ERROR';
 
 export type ApiResponse_DEPRECATED<T> =
   | ApiErrorResponse<null>
   | ApiSuccessResponse<T>
   | ApiPristineResponse<T>
-  | ApiPostponeResponse<T>
-  | ApiDependencyErrorResponse;
+  | ApiPostponeResponse<T>;
 
 export type ApiResponse<T> =
   | ApiErrorResponse<null>
@@ -81,7 +73,6 @@ export function isError(
 ) {
   return (
     apiResponseData?.status === 'ERROR' ||
-    apiResponseData?.status === 'DEPENDENCY_ERROR' ||
     (includeFailedDependencies &&
       apiResponseData?.status === 'OK' &&
       !!apiResponseData?.failedDependencies)
@@ -135,10 +126,7 @@ export function getFailedDependencies<T extends object>(results: T) {
   let failedDependencies: FailedDependencies | undefined = undefined;
 
   for (const [key, apiResult] of Object.entries(results)) {
-    if (
-      apiResult?.status === 'ERROR' ||
-      apiResult?.status === 'DEPENDENCY_ERROR'
-    ) {
+    if (apiResult?.status === 'ERROR') {
       if (!failedDependencies) {
         failedDependencies = {};
       }
@@ -170,20 +158,17 @@ export function apiPostponeResult<T>(content: T): ApiPostponeResponse<T> {
 
 export function apiDependencyError(
   apiResponses: Record<string, ApiResponse_DEPRECATED<unknown>>
-): ApiDependencyErrorResponse {
-  return {
-    message: Object.entries(apiResponses).reduce((acc, [key, response]) => {
-      if (
-        response.status === 'ERROR' ||
-        response.status === 'DEPENDENCY_ERROR'
-      ) {
-        acc += `[${key}] ${response.message}`;
+): ApiErrorResponse<null> {
+  const message = Object.entries(apiResponses).reduce(
+    (acc, [key, response]) => {
+      if (response.status === 'ERROR') {
+        acc += `[${key}] ${response.message} ${response.code ? `(code: ${response.code})` : ''}; `;
       }
       return acc;
-    }, ''),
-    content: null,
-    status: 'DEPENDENCY_ERROR',
-  };
+    },
+    ''
+  );
+  return apiErrorResult(message || 'One or more dependencies failed', null);
 }
 
 export function getSettledResult<T>(result: PromiseSettledResult<T>) {
