@@ -1,5 +1,6 @@
-import { Heading, Icon } from '@amsterdam/design-system-react';
 import type { ReactNode, SVGProps } from 'react';
+
+import { Heading, Icon } from '@amsterdam/design-system-react';
 
 type CardProps = {
   title: string;

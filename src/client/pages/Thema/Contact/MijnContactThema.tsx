@@ -1,22 +1,16 @@
-import {
-  Button,
-  Heading,
-  Link,
-  Paragraph,
-} from '@amsterdam/design-system-react';
+import { Button, Heading, Paragraph } from '@amsterdam/design-system-react';
+import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 
 import type { ContactmomentFrontend } from './Contact-thema-config.ts';
 import { useContactmomentenListData } from './useContactmomentenListData.hook.tsx';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
+import { Card } from '../../../components/Card/Card.tsx';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
+import { LocationModal } from '../../../components/LocationModal/LocationModal.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
-import { Card } from '../../../components/Card/Card.tsx';
-import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
-import { MaLink } from '../../../components/MaLink/MaLink.tsx';
-import { LocationModal } from '../../../components/LocationModal/LocationModal.tsx';
 
 export function MijnContactThema() {
   const { id, title, isLoading, isError, pageLinks, routeConfig } =
@@ -55,17 +49,12 @@ export function MijnContactThema() {
         <>
           <PageContentCell>
             <Heading level={2}>Afspraken bij een stadsloket</Heading>
-            <Card
-              icon={PersonAtDeskIcon}
-              title="Hersteltermijn gesprek"
-              children={
-                <>
-                  <LocationModal address={'Amsterdam Amstel 1'}></LocationModal>
-                  <Paragraph>Ical placeholder</Paragraph>
-                  <Button variant={'secondary'}>Toon QR code</Button>
-                </>
-              }
-            ></Card>
+            <Card icon={PersonAtDeskIcon} title="Hersteltermijn gesprek">
+              <Paragraph>Datum</Paragraph>
+              <Paragraph>Address</Paragraph>
+              <Paragraph>Ical placeholder</Paragraph>
+              <Button variant="secondary">Toon QR code</Button>
+            </Card>
           </PageContentCell>
           {hasContactmomenten && (
             <PageContentCell>
