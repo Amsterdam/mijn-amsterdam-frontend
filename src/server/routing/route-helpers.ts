@@ -98,7 +98,7 @@ export function generateFullApiAdminUrlBFF(
 export function sendResponse(
   res: Response,
   apiResponse: ApiResponse<unknown>,
-  templateName: string = ''
+  viewName: string = ''
 ) {
   if (apiResponse.status === 'ERROR') {
     res.status(
@@ -108,8 +108,8 @@ export function sendResponse(
     );
   }
 
-  return templateName
-    ? res.render(templateName, {
+  return viewName
+    ? res.render(viewName, {
         apiResponse,
       })
     : res.send(apiResponse);
@@ -118,9 +118,9 @@ export function sendResponse(
 export function sendResponseHTML(
   res: Response,
   apiResponse: ApiResponse<unknown>,
-  templateName: string = 'api-response-html'
+  viewName: string = 'api-response-html'
 ) {
-  return sendResponse(res, apiResponse, templateName);
+  return sendResponse(res, apiResponse, viewName);
 }
 
 export function sendBadRequest(res: Response, reason: string) {
