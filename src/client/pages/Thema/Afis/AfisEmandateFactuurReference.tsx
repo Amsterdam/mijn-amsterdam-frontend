@@ -1,73 +1,92 @@
+import { Alert, Paragraph } from '@amsterdam/design-system-react';
+
 import type { AfisFactuurFrontend } from './Afis-thema-config.ts';
 import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
-import { CheckStatus } from './useAfisEMandatesSignRequest.tsx';
-import type { RowSet } from '../../../components/Datalist/Datalist.tsx';
+import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types.ts';
+import type { Row, RowSet } from '../../../components/Datalist/Datalist.tsx';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 
-function AfisEmandateFactuurReference({
-  eMandateId,
+export function AfisEmandateFactuurReference({
+  eMandate,
 }: {
-  eMandateId?: AfisFactuurFrontend['eMandateId'];
+  eMandate: AfisEMandateFrontend;
 }) {
-  const { eMandates } = useAfisEMandatesApi();
-  const eMandate = eMandates.find(
-    (mandate) => mandate.eMandateIdSource === eMandateId
-  );
-
-  return eMandate ? (
-    <>
-      Afdeling {eMandate.detailLinkComponent} met kenmerk{' '}
-      <MaRouterLink href={eMandate.link.to}>{eMandateId}</MaRouterLink>.
-    </>
-  ) : (
-    eMandateId
+  return (
+    <MaRouterLink
+      href={`${eMandate.link.to}${eMandate.status !== '1' ? '#eerdere-emandaten' : ''}`}
+    >
+      {eMandate.eMandateIdSource}
+    </MaRouterLink>
   );
 }
 
 function AfisEmandateFactuurStatus({
-  eMandateId,
+  eMandate,
 }: {
-  eMandateId?: AfisFactuurFrontend['eMandateId'];
+  eMandate: AfisEMandateFrontend;
 }) {
-  const { eMandates } = useAfisEMandatesApi();
-  const eMandate = eMandates.find(
-    (mandate) => mandate.eMandateIdSource === eMandateId
-  );
-
-  return eMandate ? (
-    <>
-      <CheckStatus eMandate={eMandate} />
-      {eMandate.status !== '1' &&
-        eMandate.dateValidToFormatted &&
-        `, gestopt op ${eMandate.dateValidToFormatted}.`}
-    </>
-  ) : (
-    'Niet actief'
-  );
+  return eMandate.status !== '1' && eMandate.dateValidToFormatted
+    ? `Niet actief - gestopt op ${eMandate.dateValidToFormatted}.`
+    : `Actief sinds ${eMandate.dateValidFromFormatted}.`;
 }
 
 export function useAfisEmandateFactuurReferenceContent(
-  eMandateId?: AfisFactuurFrontend['eMandateId']
-): null | RowSet {
-  if (!eMandateId) {
+  eMandateId?: AfisFactuurFrontend['eMandateId'],
+  factuur?: AfisFactuurFrontend
+): null | Array<RowSet | Row> {
+  const { eMandates } = useAfisEMandatesApi();
+  if (!eMandateId || !factuur) {
     return null;
   }
-  return {
-    // label: 'E-Mandaat voor automatische incasso',
-    rows: [
-      {
-        label: 'E-Mandaat kenmerk',
-        content: eMandateId ? (
-          <AfisEmandateFactuurReference eMandateId={eMandateId} />
-        ) : null,
-      },
-      {
-        label: 'E-Mandaat status',
-        content: eMandateId ? (
-          <AfisEmandateFactuurStatus eMandateId={eMandateId} />
-        ) : null,
-      },
-    ],
-    isVisible: !!eMandateId,
-  };
+  let eMandate: AfisEMandateFrontend | null =
+    eMandates.find(
+      (mandate) =>
+        mandate.eMandateIdSource === eMandateId ||
+        mandate.history.some(
+          (historyItem) => historyItem.eMandateIdSource === eMandateId
+        )
+    ) ?? null;
+
+  if (eMandate !== null && eMandate?.eMandateIdSource !== eMandateId) {
+    const eMandateHistoric = eMandate.history.find(
+      (historyItem) => historyItem.eMandateIdSource === eMandateId
+    );
+    eMandate = {
+      ...eMandate,
+      ...eMandateHistoric,
+    };
+  }
+  return [
+    {
+      rows: [
+        {
+          label: 'E-Mandaat referentie',
+          content: eMandate ? (
+            <AfisEmandateFactuurReference eMandate={eMandate} />
+          ) : null,
+        },
+        {
+          label: 'E-Mandaat status',
+          content: eMandate ? (
+            <AfisEmandateFactuurStatus eMandate={eMandate} />
+          ) : null,
+        },
+      ],
+      isVisible: !!eMandateId,
+    },
+    {
+      label: <span className="ams-visually-hidden">Betalingswijze</span>,
+      content: (
+        <Alert heading="Handmatig betalen" headingLevel={4} severity="warning">
+          <Paragraph>
+            Het E-Mandaat voor deze factuur is niet meer actief en wordt niet
+            per automatische incasso voldaan.
+            <br />
+            Maak het bedrag van {factuur.amountOriginalFormatted} over onder
+            vermelding van de gegevens op uw factuur.
+          </Paragraph>
+        </Alert>
+      ),
+    },
+  ];
 }

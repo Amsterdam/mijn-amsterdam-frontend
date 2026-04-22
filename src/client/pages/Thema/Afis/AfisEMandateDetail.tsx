@@ -33,7 +33,7 @@ function EmandateHistorySection({
 }) {
   return (
     <section>
-      <Heading level={3} className="ams-mb-m">
+      <Heading id="eerdere-emandaten" level={3} className="ams-mb-m">
         Eerdere E-Mandaten
       </Heading>
       {eMandateHistory.map((historyItem) => {

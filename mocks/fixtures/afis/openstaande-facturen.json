@@ -3554,7 +3554,7 @@
             "DunningBlockingReason": "",
             "DunningLevel": 0,
             "ProfitCenterName": "GO Erfpacht en Uitgi",
-            "SEPAMandate": "",
+            "SEPAMandate": "0000000167",
             "PostingDate": "2024-10-17T00:00:00",
             "NetDueDate": "2025-02-28T00:00:00",
             "AmountInBalanceTransacCrcy": 0.01,

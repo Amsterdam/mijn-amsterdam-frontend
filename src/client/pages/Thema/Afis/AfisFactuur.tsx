@@ -61,11 +61,11 @@ function FactuurDetailContent({
     themaContextParams
   );
 
-  const factuur =
-    facturen.find((f) => f.factuurNummer === factuurNummer) ?? null;
+  const factuur = facturen.find((f) => f.factuurNummer === factuurNummer);
 
-  const eMandateRowset = useAfisEmandateFactuurReferenceContent(
-    factuur?.eMandateId
+  const eMandateRowsets = useAfisEmandateFactuurReferenceContent(
+    factuur?.eMandateId,
+    factuur
   );
 
   if (isListPageLoading) {
@@ -108,7 +108,7 @@ function FactuurDetailContent({
       content: factuur.statusDescription ?? '-',
       isVisible: factuur.status !== 'factuur-in-termijnen',
     },
-    ...(eMandateRowset ? [eMandateRowset] : []),
+    ...(eMandateRowsets ? eMandateRowsets : []),
     {
       label: 'Termijnen',
       content: getTermijnenTable(factuur),
