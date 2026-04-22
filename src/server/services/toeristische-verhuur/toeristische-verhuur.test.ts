@@ -124,9 +124,9 @@ describe('Toeristische verhuur service', () => {
     const response = await fetchToeristischeVerhuur(authProfileAndToken);
 
     expect(response.failedDependencies?.lvvRegistraties).toStrictEqual({
-      status: 'DEPENDENCY_ERROR',
+      status: 'ERROR',
       content: null,
-      message: `[registrationNumbers] Not Available`,
+      message: `[registrationNumbers] Not Available (code: 500)`,
     });
   });
 

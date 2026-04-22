@@ -6,6 +6,8 @@ import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import {
   apiErrorResult,
   apiPostponeResult,
+  apiSuccessResult,
+  type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import { pick } from '../../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
@@ -72,7 +74,9 @@ function transformZwdVvEResponse(
   return camelizedData;
 }
 
-export async function fetchVVEData(authProfileAndToken: AuthProfileAndToken) {
+export async function fetchVVEData(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<ApiResponse<VvEDataFrontend | null>> {
   if (!featureToggle.service.fetchWonen.isEnabled) {
     return apiPostponeResult(null);
   }
@@ -84,20 +88,15 @@ export async function fetchVVEData(authProfileAndToken: AuthProfileAndToken) {
 
   const bagResponse = await service(authProfileAndToken);
 
-  if (
-    bagResponse.status == 'ERROR' ||
-    !bagResponse.content ||
-    bagResponse.content.length === 0
-  ) {
-    return apiErrorResult(
-      bagResponse.status === 'ERROR'
-        ? bagResponse.message
-        : 'No BAG locations found for the user',
-      null
-    );
+  if (bagResponse.status === 'ERROR') {
+    return bagResponse;
+  }
+  // We only support fetching VVE data for users with at least one valid BAG location, as the VVE data is linked to a BAG verblijfsobjectIdentificatie.
+  if (!bagResponse.content?.length) {
+    return apiSuccessResult(null);
   }
 
-  const bagLocations: BAGLocation[] = bagResponse.content;
+  const bagLocations: BAGLocation[] = bagResponse.content ?? [];
   const verblijfsobjectIdentificatie =
     bagLocations?.[0]?.bagAddress?.verblijfsobjectIdentificatie;
 
