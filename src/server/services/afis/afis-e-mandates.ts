@@ -451,7 +451,7 @@ function transformEMandateSource(
       .map((eMandateCompact) => omit(eMandateCompact, ['currentStatus']))
       .toSorted(sortByNumber('eMandateIdSource', 'desc')),
     link: {
-      to: generatePath(routeConfig.detailPageEMandate.path, { id }),
+      to: generatePath(themaConfig.detailEMandatePage.route.path, { id }),
       title: creditor.name,
     },
   };

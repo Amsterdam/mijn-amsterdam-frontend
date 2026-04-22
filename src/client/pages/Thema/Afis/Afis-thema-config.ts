@@ -267,3 +267,19 @@ export const EMANDATE_SIGN_REQUEST_SUCCESS_STATUSES = [
 
 const ONE_MINUTE_MS = 60000;
 export const AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS = 10 * ONE_MINUTE_MS;
+
+export const eMandateHistoryDisplayProps: DisplayProps<
+  AfisEMandateFrontend['history'][number]
+> = {
+  props: {
+    eMandateIdSource: 'Referentie',
+    dateValidFromFormatted: 'Vanaf',
+    dateValidToFormatted: 'Tot',
+    senderName: 'Naam rekeninghouder',
+    senderIBAN: 'Rekeningnummer',
+  },
+  colWidths: {
+    large: ['15%', '15%', '15%', '25%', '30%'],
+    small: ['50%', '0', '50%'],
+  },
+};

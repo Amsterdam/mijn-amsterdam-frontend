@@ -112,7 +112,7 @@ export function AfisThema() {
   const pageContentSecondary = (
     <>
       <PageContentCell>
-        <Heading level={2}>Betaalvoorkeuren</Heading>
+        <Heading level={2}>Automatische incasso</Heading>
         <Paragraph className="ams-mb-s">
           Facturatiegegevens bekijken en een automatische incasso instellen.
         </Paragraph>
@@ -121,7 +121,7 @@ export function AfisThema() {
           variant="secondary"
           href={themaConfig.betaalVoorkeurenPage.route.path}
         >
-          Bekijk de gegevens
+          Ga naar betaalvoorkeuren
         </MaButtonRouterLink>
 
         <AfisDisclaimer />
