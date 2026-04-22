@@ -12,7 +12,6 @@ import { BffEndpoints } from '../routing/bff-routes.ts';
  *
  * Specify in the environment variable `MA_PROXY_TARGET_HOST_ALLOWLIST` what hosts to allow -
  * seperated by semicolons. For example: foo.com;bar.dev;baz.nl.
- * Or use a wildcard to allow all: '*', but it is better to explicitly set hosts for security reasons.
  *
  * # Usage
  *
@@ -69,11 +68,7 @@ export async function devProxyHandler(req: Request, res: Response) {
     true
   )!.split(';');
   if (
-    !(
-      allowListedHosts.length &&
-      (allowListedHosts.includes('*') ||
-        allowListedHosts.includes(proxyTarget.host))
-    )
+    !(allowListedHosts.length && allowListedHosts.includes(proxyTarget.host))
   ) {
     return res
       .status(HttpStatusCode.Forbidden)
