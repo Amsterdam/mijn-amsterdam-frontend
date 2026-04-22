@@ -135,7 +135,8 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
     if (lastActiveApi === 'deactivateApi') {
       fetchEMandates();
     }
-  }, [fetchEMandates, lastActiveApi]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastActiveApi]);
 
   useEffect(() => {
     entries({
