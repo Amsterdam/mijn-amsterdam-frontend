@@ -126,7 +126,7 @@ describe('Toeristische verhuur service', () => {
     expect(response.failedDependencies?.lvvRegistraties).toStrictEqual({
       status: 'ERROR',
       content: null,
-      message: `[registrationNumbers] Not Available (code: 500)\n`,
+      message: `[registrationNumbers] Not Available (code: 500)`,
     });
   });
 
