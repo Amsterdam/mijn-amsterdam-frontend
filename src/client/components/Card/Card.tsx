@@ -34,7 +34,7 @@ export function Card({ title, icon, children, actionRightside }: CardProps) {
           {children}
           {isSmallScreen && actionRightside}
         </Column>
-        {isSmallScreen || actionRightside}
+        {isLargeScreen && actionRightside}
       </Row>
     </div>
   );
