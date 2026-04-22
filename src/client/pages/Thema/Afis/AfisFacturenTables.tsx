@@ -1,5 +1,8 @@
+import { Paragraph } from '@amsterdam/design-system-react';
+
 import type { AfisFactuurFrontend } from './Afis-thema-config.ts';
 import { AfisDisclaimerOvergedragenFacturen } from './AfisThema.tsx';
+import { VragenOverFactuurLink } from './AfisVragenOverFactuurLink.tsx';
 import {
   type AfisFacturenThemaContextParams,
   useAfisFacturenData,
@@ -37,10 +40,22 @@ export function AfisFacturenTables({
               themaContextParams.factuurMapFn?.(factuur, state) ?? factuur
           );
         }
-        const contentAfterTheTitle =
-          state === 'overgedragen' && !!facturen.length ? (
-            <AfisDisclaimerOvergedragenFacturen />
-          ) : null;
+        let contentAfterTheTitle = null;
+        if (state === 'overgedragen' && !!facturen.length) {
+          contentAfterTheTitle = <AfisDisclaimerOvergedragenFacturen />;
+        } else if (state === 'afgehandeld') {
+          contentAfterTheTitle = (
+            <Paragraph className="ams-mb-m">
+              Afgehandelde facturen van vóór 1 januari 2025 kunnen wij hier niet
+              laten zien.
+              <br />
+              Heeft u vragen over deze of andere facturen? Stuur dan een e-mail
+              naar{' '}
+              <VragenOverFactuurLink mailSubject="Vraag over factuur [factuurnummer]" />
+              .
+            </Paragraph>
+          );
+        }
         return (
           <ThemaPaginaTable<AfisFactuurFrontend>
             key={state}

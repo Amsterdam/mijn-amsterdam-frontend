@@ -4,13 +4,7 @@ import { MijnBedrijfsGegevensThema } from './commercial/ProfileCommercial.tsx';
 import { ContactmomentenListPage } from './private/ContactmomentenListPage.tsx';
 import { MijnGegevensThema } from './private/ProfilePrivate.tsx';
 import { VvEDetail } from './private/VvEDetail.tsx';
-import {
-  routeConfig,
-  themaTitle,
-  themaIdBRP,
-  themaIdKVK,
-  featureToggle,
-} from './Profile-thema-config.ts';
+import { themaConfig } from './Profile-thema-config.ts';
 import { default as ProfilePrivateIcon } from './ProfilePrivateIcon.svg?react';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles.ts';
 import { isLoading } from '../../../../universal/helpers/api.ts';
@@ -18,33 +12,30 @@ import type { AppState } from '../../../../universal/types/App.types.ts';
 import type { ThemaMenuItem } from '../../../config/thema-types.ts';
 
 export const ProfileRoutes = [
-  { route: routeConfig.themaPageBRP.path, Component: MijnGegevensThema },
+  { route: themaConfig.BRP.route.path, Component: MijnGegevensThema },
   {
-    route: routeConfig.themaPageKVK.path,
+    route: themaConfig.KVK.route.path,
     Component: MijnBedrijfsGegevensThema,
   },
   {
-    route: routeConfig.detailPageVvE.path,
+    route: themaConfig.BRP.detailPageVvE.route.path,
     Component: VvEDetail,
-    isActive: featureToggle[themaIdBRP].wonenActive,
+    isActive: themaConfig.BRP.featureToggle.wonenActive,
   },
   {
-    route: routeConfig.listPageContactmomenten.path,
+    route: themaConfig.BRP.listPageContactmomenten.route.path,
     Component: ContactmomentenListPage,
     isActive: FeatureToggle.contactmomentenActive,
   },
 ];
 
-export const menuItems: [
-  ThemaMenuItem<typeof themaIdBRP>,
-  ThemaMenuItem<typeof themaIdKVK>,
-] = [
+export const menuItems: ThemaMenuItem[] = [
   {
-    title: themaTitle.BRP,
-    id: themaIdBRP,
-    to: routeConfig.themaPageBRP.path,
-    profileTypes: ['private'],
-    redactedScope: 'content',
+    title: themaConfig.BRP.title,
+    id: themaConfig.BRP.id,
+    to: themaConfig.BRP.route.path,
+    profileTypes: themaConfig.BRP.profileTypes,
+    redactedScope: themaConfig.BRP.redactedScope,
     isActive(appState: AppState) {
       return (
         (!isLoading(appState.BRP) && !!appState.BRP.content?.persoon) ||
@@ -55,11 +46,11 @@ export const menuItems: [
     IconSVG: ProfilePrivateIcon,
   } as const,
   {
-    title: themaTitle.KVK,
-    id: themaIdKVK,
-    to: routeConfig.themaPageKVK.path,
-    redactedScope: 'content',
-    profileTypes: ['commercial', 'private'],
+    title: themaConfig.KVK.title,
+    id: themaConfig.KVK.id,
+    to: themaConfig.KVK.route.path,
+    redactedScope: themaConfig.KVK.redactedScope,
+    profileTypes: themaConfig.KVK.profileTypes,
     isActive(appState: AppState) {
       return (
         !isLoading(appState.KVK) &&

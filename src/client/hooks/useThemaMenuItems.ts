@@ -9,10 +9,7 @@ import { sortAlpha } from '../../universal/helpers/utils.ts';
 import type { LinkProps } from '../../universal/types/App.types.ts';
 import { useThemasByProfileType } from '../config/menuItems.ts';
 import type { ThemaMenuItemTransformed } from '../config/thema-types.ts';
-import {
-  themaIdBRP,
-  themaIdKVK,
-} from '../pages/Thema/Profile/Profile-thema-config.ts';
+import { themaConfig } from '../pages/Thema/Profile/Profile-thema-config.ts';
 
 export interface ThemasState {
   items: ThemaMenuItemTransformed[];
@@ -24,7 +21,7 @@ const sortAlphaOnTitle = sortAlpha('title');
 
 export function compareThemas<T extends withIDTitle>(a: T, b: T): 0 | 1 | -1 {
   // These will be placed on top in the order they are put here.
-  const themaIDsOnTop = [themaIdBRP, themaIdKVK] as string[];
+  const themaIDsOnTop = [themaConfig.BRP.id, themaConfig.KVK.id] as string[];
 
   const aHasPrecedence = themaIDsOnTop.includes(a.id);
   const bHasPrecedence = themaIDsOnTop.includes(b.id);

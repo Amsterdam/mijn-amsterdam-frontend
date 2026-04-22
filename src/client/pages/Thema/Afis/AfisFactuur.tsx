@@ -4,10 +4,10 @@ import { useParams } from 'react-router';
 import type { AfisFactuurFrontend } from './Afis-thema-config.ts';
 import {
   displayPropsTermijnenTable,
-  routeConfig,
+  themaConfig,
 } from './Afis-thema-config.ts';
 import styles from './AfisFactuur.module.scss';
-import { getVragenOverFactuurText } from './AfisThema.tsx';
+import { getVragenOverFactuurText } from './AfisVragenOverFactuurLink.tsx';
 import { getDocumentLink } from './useAfisFacturenApi.tsx';
 import { useAfisListPageData } from './useAfisListPageData.tsx';
 import {
@@ -75,7 +75,7 @@ function FactuurDetailContent({
         headingLevel={3}
       >
         We kunnen de gevraagde factuur niet vinden.{' '}
-        <MaRouterLink href={routeConfig.themaPage.path}>
+        <MaRouterLink href={themaConfig.route.path}>
           Ga terug naar het overzicht
         </MaRouterLink>
       </Alert>

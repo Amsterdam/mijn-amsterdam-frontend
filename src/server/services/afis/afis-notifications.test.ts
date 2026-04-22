@@ -8,10 +8,9 @@ import {
 } from './afis-notifications.ts';
 import type { AfisFactuur, AfisFactuurStatus } from './afis-types.ts';
 import { fetchIsKnownInAFIS } from './afis.ts';
-import { themaId } from '../../../client/pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config.ts';
 import { getAuthProfileAndToken } from '../../../testing/utils.ts';
-import type {
-  ApiErrorResponse} from '../../../universal/helpers/api.ts';
+import type { ApiErrorResponse } from '../../../universal/helpers/api.ts';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -110,7 +109,7 @@ describe('fetchAfisNotifications', () => {
           {
             id: 'facturen-open-notification',
             datePublished: '2023-01-01T00:00:00.000Z',
-            themaID: themaId,
+            themaID: themaConfig.id,
             themaTitle: 'Facturen en betalen',
             title: 'Betaal tijdig om extra kosten te voorkomen',
             description: `U heeft 1 openstaande facturen.`,
