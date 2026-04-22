@@ -2,8 +2,6 @@ import session from 'express-session';
 
 import { createBFFRouter } from './route-helpers.ts';
 import { IS_PRODUCTION } from '../../universal/config/env.ts';
-import { isAuthenticatedAdmin } from '../services/admin/admin-route-handlers.ts';
-import { router as adminRouter } from '../services/admin/admin-router.ts';
 import { BFF_ADMIN_AUTH_SESSION_COOKIE_NAME } from '../services/admin/admin-service-config.ts';
 import {
   BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET,
@@ -17,26 +15,28 @@ export const router = createBFFRouter({
   isEnabled: IS_ADMIN_ROUTER_ENABLED,
 });
 
-router.use(
-  ...(IS_ADMIN_ROUTER_ENABLED
-    ? [
-        session({
-          secret: BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET,
-          resave: false,
-          saveUninitialized: false,
-          name: BFF_ADMIN_AUTH_SESSION_COOKIE_NAME,
-          cookie: {
-            httpOnly: true,
-            secure: IS_PRODUCTION,
-          },
-        }),
-        adminRouter.public,
-        // The authentication middleware is only applied to the protected admin routes,
-        // so the public routes defined in router-admin.ts can be accessed without authentication (e.g. for the login flow).
-        isAuthenticatedAdmin,
-        adminRouter.protected,
-        userFeedbackRouter.admin,
-        amsappNotificationsRouter.admin,
-      ]
-    : [])
-);
+if (IS_ADMIN_ROUTER_ENABLED) {
+  const { isAuthenticatedAdmin } =
+    await import('../services/admin/admin-route-handlers.ts');
+  const { router: adminRouter } =
+    await import('../services/admin/admin-router.ts');
+  router.use(
+    session({
+      secret: BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET,
+      resave: false,
+      saveUninitialized: false,
+      name: BFF_ADMIN_AUTH_SESSION_COOKIE_NAME,
+      cookie: {
+        httpOnly: true,
+        secure: IS_PRODUCTION,
+      },
+    }),
+    adminRouter.public,
+    // The authentication middleware is only applied to the protected admin routes,
+    // so the public routes defined in router-admin.ts can be accessed without authentication (e.g. for the login flow).
+    isAuthenticatedAdmin,
+    adminRouter.protected,
+    userFeedbackRouter.admin,
+    amsappNotificationsRouter.admin
+  );
+}
