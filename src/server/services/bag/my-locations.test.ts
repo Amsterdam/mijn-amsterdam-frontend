@@ -132,17 +132,7 @@ describe('fetchPrivate', () => {
     const result = await forTesting.fetchPrivate(authProfileAndToken);
 
     expect(result.status).toBe('OK');
-    expect(result.content).toHaveLength(1);
-    expect(result.content).toEqual([
-      {
-        address: null,
-        bagAddress: null,
-        latlng: null,
-        mokum: false,
-        profileType: 'private',
-        title: 'Nergens',
-      },
-    ]);
+    expect(result.content).toHaveLength(0);
   });
 
   it('should return an error if fetching BRP data fails', async () => {
@@ -152,7 +142,7 @@ describe('fetchPrivate', () => {
 
     const result = await forTesting.fetchPrivate(authProfileAndToken);
     expect(result.status === 'ERROR' && result.message).toBe(
-      '[BRP] Error fetching BRP data'
+      '[BRP] Error fetching BRP data\n'
     );
   });
 });

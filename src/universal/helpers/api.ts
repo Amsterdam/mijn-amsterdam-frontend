@@ -35,12 +35,7 @@ export type ApiPostponeResponse<T> = {
   status: 'POSTPONE';
 };
 
-export type ResponseStatus =
-  | 'ERROR'
-  | 'OK'
-  | 'PRISTINE'
-  | 'POSTPONE'
-  | 'ERROR';
+export type ResponseStatus = 'ERROR' | 'OK' | 'PRISTINE' | 'POSTPONE' | 'ERROR';
 
 export type ApiResponse_DEPRECATED<T> =
   | ApiErrorResponse<null>
@@ -162,7 +157,7 @@ export function apiDependencyError(
   const message = Object.entries(apiResponses).reduce(
     (acc, [key, response]) => {
       if (response.status === 'ERROR') {
-        acc += `[${key}] ${response.message} ${response.code ? `(code: ${response.code})` : ''}; `;
+        acc += `[${key}] ${response.message}${response.code ? ` (code: ${response.code})` : ''}\n`;
       }
       return acc;
     },
