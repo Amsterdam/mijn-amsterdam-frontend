@@ -34,7 +34,28 @@ export function MijnContactThema() {
     </PageContentCell>
   );
 
-  const firstAppointment = data?.appointments[0]!;
+  const appointmentCards = data?.appointments.map((a) => {
+    return (
+      <div>
+        <Card
+          icon={PersonAtDeskIcon}
+          title={a.subject}
+          actionRightside={
+            <MaLink style={{ marginLeft: '50px' }} href={a.cancellationLink}>
+              Annuleren
+            </MaLink>
+          }
+        >
+          <Paragraph>{`Datum, ${a.appointmentDateFormatted}, ${a.startTime}-${a.endTime} uur`}</Paragraph>
+          <Paragraph>{`Locatie Stadsloket ${a.location.name}, ${a.location.street}`}</Paragraph>
+          <Paragraph className={'ams-mb-s'}>
+            Voeg toe aan uw privé agenda
+          </Paragraph>
+          <Button variant="secondary">Toon QR code</Button>
+        </Card>
+      </div>
+    );
+  });
 
   return (
     <ThemaPagina
@@ -48,21 +69,14 @@ export function MijnContactThema() {
       pageContentMain={
         <>
           <PageContentCell>
-            <Heading level={2}>Afspraken bij een stadsloket</Heading>
-            <Card
-              icon={PersonAtDeskIcon}
-              title="Hersteltermijn gesprek"
-              actionRightside={
-                <MaLink href={firstAppointment.cancellationLink}>
-                  Annuleren
-                </MaLink>
-              }
-            >
-              <Paragraph>{`Datum, ${firstAppointment.appointmentDateFormatted}, ${firstAppointment.startTime}-${firstAppointment.endTime} uur`}</Paragraph>
-              <Paragraph>{`Locatie Stadsloket ${firstAppointment.location.name}, ${firstAppointment.location.street}`}</Paragraph>
-              <Paragraph>Voeg toe aan uw privé agenda</Paragraph>
-              <Button variant="secondary">Toon QR code</Button>
-            </Card>
+            <Heading level={2} className={'ams-mb-s'}>
+              Afspraken bij een stadsloket
+            </Heading>
+            {appointmentCards ? (
+              appointmentCards
+            ) : (
+              <Paragraph>U heeft geen afspraken.</Paragraph>
+            )}
           </PageContentCell>
           {!!data?.klantcontacten.length && (
             <PageContentCell>
