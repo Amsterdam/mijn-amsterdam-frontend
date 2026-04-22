@@ -35,7 +35,7 @@ export type ApiPostponeResponse<T> = {
   status: 'POSTPONE';
 };
 
-export type ResponseStatus = 'ERROR' | 'OK' | 'PRISTINE' | 'POSTPONE' | 'ERROR';
+export type ResponseStatus = 'ERROR' | 'OK' | 'PRISTINE' | 'POSTPONE';
 
 export type ApiResponse_DEPRECATED<T> =
   | ApiErrorResponse<null>

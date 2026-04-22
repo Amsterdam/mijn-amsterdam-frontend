@@ -88,7 +88,7 @@ export async function fetchVVEData(
 
   const bagResponse = await service(authProfileAndToken);
 
-  if (bagResponse.status == 'ERROR') {
+  if (bagResponse.status === 'ERROR') {
     return bagResponse;
   }
   // We only support fetching VVE data for users with at least one valid BAG location, as the VVE data is linked to a BAG verblijfsobjectIdentificatie.
