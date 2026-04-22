@@ -39,8 +39,8 @@ importers:
         specifier: ^17.3.6
         version: 17.3.6(history@5.3.0)(react@18.3.1)(tslib@2.8.1)
       '@microsoft/applicationinsights-web':
-        specifier: ^3.3.11
-        version: 3.3.11(tslib@2.8.1)
+        specifier: ^3.4.1
+        version: 3.4.1(tslib@2.8.1)
       '@microsoft/feature-management':
         specifier: ^2.3.0
         version: 2.3.0
@@ -222,8 +222,8 @@ importers:
         specifier: ^5.2.17
         version: 5.2.17(@types/react@18.3.28)(react@18.3.1)
       ibantools:
-        specifier: ^4.5.2
-        version: 4.5.2
+        specifier: ^4.5.4
+        version: 4.5.4
       install:
         specifier: ^0.13.0
         version: 0.13.0
@@ -294,8 +294,8 @@ importers:
         specifier: ^9.14.0
         version: 9.14.0
       prettier:
-        specifier: ^3.8.1
-        version: 3.8.1
+        specifier: ^3.8.3
+        version: 3.8.3
       proj4:
         specifier: ^2.20.8
         version: 2.20.8
@@ -318,8 +318,8 @@ importers:
         specifier: ^4.1.2
         version: 4.1.2(react@18.3.1)
       react-router:
-        specifier: ^7.14.0
-        version: 7.14.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^7.14.1
+        version: 7.14.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-swipeable:
         specifier: ^7.0.2
         version: 7.0.2(react@18.3.1)
@@ -345,8 +345,8 @@ importers:
         specifier: ^7.1.5
         version: 7.1.5
       thenby:
-        specifier: ^1.3.4
-        version: 1.3.4
+        specifier: ^1.4.0
+        version: 1.4.0
       throttle-debounce:
         specifier: ^5.0.2
         version: 5.0.2
@@ -986,18 +986,18 @@ packages:
   '@keyv/serialize@1.1.1':
     resolution: {integrity: sha512-dXn3FZhPv0US+7dtJsIi2R+c7qWYiReoEh5zUntWCf4oSpMNib8FDhSoed6m3QyZdx5hK7iLFkYk3rNxwt8vTA==}
 
-  '@microsoft/applicationinsights-analytics-js@3.3.11':
-    resolution: {integrity: sha512-33fS5Y7uPgckP8yWqCAoWpWerA+d3RUC2lv6kkfJQM/V2KHeN4CGDtyXXWpq5vSZjE9BESXao13iBq4wiWit8Q==}
+  '@microsoft/applicationinsights-analytics-js@3.4.1':
+    resolution: {integrity: sha512-zdxZzu50/gsE2JWrzeviHloFZu9r5/x2+OLD0TIYHhvrod321AKkStmKlDoep1JAsSephjxBfwTjciKiFXXyGA==}
     peerDependencies:
       tslib: '>= 1.0.0'
 
-  '@microsoft/applicationinsights-cfgsync-js@3.3.11':
-    resolution: {integrity: sha512-HdBc/ldMZpqGtzAFDs49o82wTdKRX2B0BzmjgS+D4MrS7CLth4MxLHJHOpmTI2bmc/S4T8n32LlFkaQCvWb9ig==}
+  '@microsoft/applicationinsights-cfgsync-js@3.4.1':
+    resolution: {integrity: sha512-ifNgSIisKM/rZoLdpzS6sIQqBBRNXXAhiazZizwoP2MLdK93Z8JcPNi6eXkKPhW0Fi3SuoUivCaM7GgAMgVEFw==}
     peerDependencies:
       tslib: '>= 1.0.0'
 
-  '@microsoft/applicationinsights-channel-js@3.3.11':
-    resolution: {integrity: sha512-0ex/mxTf5R+P5WSvdU8Hgbeg8VzQ0XvcnjKQdmQy05ycScnKevt8an3DEPikOFqOKDi59L5hUETZlcdhesnVtg==}
+  '@microsoft/applicationinsights-channel-js@3.4.1':
+    resolution: {integrity: sha512-QS1k6iwVwR1MznGAB1H0F9raqpevbFNbadLS5O1419pz9OEWBfF9wRQLnENCyo8QS9Q0IdiqnGAON/D8IywpWg==}
     peerDependencies:
       tslib: '>= 1.0.0'
 
@@ -1011,13 +1011,18 @@ packages:
     peerDependencies:
       tslib: '>= 1.0.0'
 
-  '@microsoft/applicationinsights-dependencies-js@3.3.11':
-    resolution: {integrity: sha512-+D7vBHvLWFveZmg1PCbDhpw/tiD+/AnptzEoV8IsM9wPbiHPGHdni9IDMrTJZdJZVafO0GxnxOJNpir8QTdO8g==}
+  '@microsoft/applicationinsights-core-js@3.4.1':
+    resolution: {integrity: sha512-eXIHZ1+nvBiJgVpufBiTP801Vtr5FEwjWZioUsb44NC/z/UcsZh2MDJ1mBpjaDO73LVYUw/ZZmDCCo6Pg/61kA==}
     peerDependencies:
       tslib: '>= 1.0.0'
 
-  '@microsoft/applicationinsights-properties-js@3.3.11':
-    resolution: {integrity: sha512-GOyIV8QziFop/LelZW1LAKwhGvtjzN7d47NkSRh9ZyZPW/ahWifakdQ6mZfLcL2uTyTmpcK8JtMtfNADo77NZg==}
+  '@microsoft/applicationinsights-dependencies-js@3.4.1':
+    resolution: {integrity: sha512-cnjVVTxSeavmwCoOwXi/ZQuCcjo7SnYYRWyS+GsMCrTRTItVHZlVj6NHgmFEQZWNybrM+U1RgwZE2wXn1/Liyw==}
+    peerDependencies:
+      tslib: '>= 1.0.0'
+
+  '@microsoft/applicationinsights-properties-js@3.4.1':
+    resolution: {integrity: sha512-s2cUuknjazaoCbh9i6ljymeZqeQqpyAE8v2ZUxCkAwRuxbonAvZWQtEr4QQmEHWJIdbWgn0Ge+OOlMtMkh+Ixg==}
     peerDependencies:
       tslib: '>= 1.0.0'
 
@@ -1034,8 +1039,8 @@ packages:
   '@microsoft/applicationinsights-web-snippet@1.0.1':
     resolution: {integrity: sha512-2IHAOaLauc8qaAitvWS+U931T+ze+7MNWrDHY47IENP5y2UA0vqJDu67kWZDdpCN1fFC77sfgfB+HV7SrKshnQ==}
 
-  '@microsoft/applicationinsights-web@3.3.11':
-    resolution: {integrity: sha512-LEI6LhfLFzBfPJ4j5TTPNC8LxwDpiJZSeyD2VVU3EPN2RtK+15vEL0oONaSV/AsWnDrwH3DIku0Nm+EVRJ4pNQ==}
+  '@microsoft/applicationinsights-web@3.4.1':
+    resolution: {integrity: sha512-gdYLIYkP11D+V71nNCupYsmWE8LAL9EpIR2Q7+B3n6dpck7tgaYMXFN3S5ZrOh3yxLAwt7GVXZoDcN2mGkagxQ==}
     peerDependencies:
       tslib: '>= 1.0.0'
 
@@ -3251,8 +3256,8 @@ packages:
     resolution: {integrity: sha512-vK9P5/iUfdl95AI+JVyUuIcVtd4ofvtrOr3HNtM2yxC9bnMbEdp3x01OhQNnjb8IJYi38VlTE3mBXwcfvywuSw==}
     engines: {node: '>= 14'}
 
-  ibantools@4.5.2:
-    resolution: {integrity: sha512-is+8TgZcKS/AMv/z9nW1zz0bhjhoyjpA1p0nc3A6GkW/InOdcQiUZpkufADzh/aO/LY/TOD/P3oPWncNRn5QMA==}
+  ibantools@4.5.4:
+    resolution: {integrity: sha512-6jX1gh4aH6XH+o0ey+wtkMTzkcvsEta7DakIOZSng9voZYpMw3U+gK1+tZChk3aRcPcloEt0NOzksjaRZiqXbw==}
 
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -4309,8 +4314,8 @@ packages:
     resolution: {integrity: sha512-ravE6m9Atw9Z/jjttRUZ+clIXogdghyZAuWJ3qEzjT+jI/dL1ifAqhZeC5VHzQp1MSt1+jxKkFNemj/iO7tVUA==}
     engines: {node: '>=4'}
 
-  prettier@3.8.1:
-    resolution: {integrity: sha512-UOnG6LftzbdaHZcKoPFtOcCKztrQ57WkHDeRD9t/PTQtmT0NHSeWWepj6pS0z/N7+08BHFDQVUrfmfMRcZwbMg==}
+  prettier@3.8.3:
+    resolution: {integrity: sha512-7igPTM53cGHMW8xWuVTydi2KO233VFiTNyF5hLJqpilHfmn8C8gPf+PS7dUT64YcXFbiMGZxS9pCSxL/Dxm/Jw==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -4477,8 +4482,8 @@ packages:
     resolution: {integrity: sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==}
     engines: {node: '>=0.10.0'}
 
-  react-router@7.14.0:
-    resolution: {integrity: sha512-m/xR9N4LQLmAS0ZhkY2nkPA1N7gQ5TUVa5n8TgANuDTARbn1gt+zLPXEm7W0XDTbrQ2AJSJKhoa6yx1D8BcpxQ==}
+  react-router@7.14.1:
+    resolution: {integrity: sha512-5BCvFskyAAVumqhEKh/iPhLOIkfxcEUz8WqFIARCkMg8hZZzDYX9CtwxXA0e+qT8zAxmMC0x3Ckb9iMONwc5jg==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       react: '>=18'
@@ -4922,8 +4927,8 @@ packages:
   text-hex@1.0.0:
     resolution: {integrity: sha512-uuVGNWzgJ4yhRaNSiubPY7OjISw4sw4E5Uv0wbjp+OzcbmVU/rsT8ujgcXJhn9ypzsgr5vlzpPqP+MBBKcGvbg==}
 
-  thenby@1.3.4:
-    resolution: {integrity: sha512-89Gi5raiWA3QZ4b2ePcEwswC3me9JIg+ToSgtE0JWeCynLnLxNr/f9G+xfo9K+Oj4AFdom8YNJjibIARTJmapQ==}
+  thenby@1.4.0:
+    resolution: {integrity: sha512-D+BkEl5MpeTbQ1Rz0io/TLZmwmYUAgvUpS1r2eKUvPicYOnpqzjZE6bVa7rSEYv189zkSM+CVc+hG5X7nVe9LQ==}
 
   thread-stream@3.1.0:
     resolution: {integrity: sha512-OqyPZ9u96VohAyMfJykzmivOrY2wfMSf3C5TtFJVgN+Hm6aj+voFhlK+kZEIv2FBh1X6Xp3DlnCOfEQ3B2J86A==}
@@ -6110,29 +6115,26 @@ snapshots:
 
   '@keyv/serialize@1.1.1': {}
 
-  '@microsoft/applicationinsights-analytics-js@3.3.11(tslib@2.8.1)':
+  '@microsoft/applicationinsights-analytics-js@3.4.1(tslib@2.8.1)':
     dependencies:
-      '@microsoft/applicationinsights-common': 3.3.11(tslib@2.8.1)
-      '@microsoft/applicationinsights-core-js': 3.3.11(tslib@2.8.1)
+      '@microsoft/applicationinsights-core-js': 3.4.1(tslib@2.8.1)
       '@microsoft/applicationinsights-shims': 3.0.1
       '@microsoft/dynamicproto-js': 2.0.3
       '@nevware21/ts-utils': 0.13.0
       tslib: 2.8.1
 
-  '@microsoft/applicationinsights-cfgsync-js@3.3.11(tslib@2.8.1)':
+  '@microsoft/applicationinsights-cfgsync-js@3.4.1(tslib@2.8.1)':
     dependencies:
-      '@microsoft/applicationinsights-common': 3.3.11(tslib@2.8.1)
-      '@microsoft/applicationinsights-core-js': 3.3.11(tslib@2.8.1)
+      '@microsoft/applicationinsights-core-js': 3.4.1(tslib@2.8.1)
       '@microsoft/applicationinsights-shims': 3.0.1
       '@microsoft/dynamicproto-js': 2.0.3
       '@nevware21/ts-async': 0.5.5
       '@nevware21/ts-utils': 0.13.0
       tslib: 2.8.1
 
-  '@microsoft/applicationinsights-channel-js@3.3.11(tslib@2.8.1)':
+  '@microsoft/applicationinsights-channel-js@3.4.1(tslib@2.8.1)':
     dependencies:
-      '@microsoft/applicationinsights-common': 3.3.11(tslib@2.8.1)
-      '@microsoft/applicationinsights-core-js': 3.3.11(tslib@2.8.1)
+      '@microsoft/applicationinsights-core-js': 3.4.1(tslib@2.8.1)
       '@microsoft/applicationinsights-shims': 3.0.1
       '@microsoft/dynamicproto-js': 2.0.3
       '@nevware21/ts-async': 0.5.5
@@ -6155,20 +6157,26 @@ snapshots:
       '@nevware21/ts-utils': 0.13.0
       tslib: 2.8.1
 
-  '@microsoft/applicationinsights-dependencies-js@3.3.11(tslib@2.8.1)':
+  '@microsoft/applicationinsights-core-js@3.4.1(tslib@2.8.1)':
     dependencies:
-      '@microsoft/applicationinsights-common': 3.3.11(tslib@2.8.1)
-      '@microsoft/applicationinsights-core-js': 3.3.11(tslib@2.8.1)
       '@microsoft/applicationinsights-shims': 3.0.1
       '@microsoft/dynamicproto-js': 2.0.3
       '@nevware21/ts-async': 0.5.5
       '@nevware21/ts-utils': 0.13.0
       tslib: 2.8.1
 
-  '@microsoft/applicationinsights-properties-js@3.3.11(tslib@2.8.1)':
+  '@microsoft/applicationinsights-dependencies-js@3.4.1(tslib@2.8.1)':
     dependencies:
-      '@microsoft/applicationinsights-common': 3.3.11(tslib@2.8.1)
-      '@microsoft/applicationinsights-core-js': 3.3.11(tslib@2.8.1)
+      '@microsoft/applicationinsights-core-js': 3.4.1(tslib@2.8.1)
+      '@microsoft/applicationinsights-shims': 3.0.1
+      '@microsoft/dynamicproto-js': 2.0.3
+      '@nevware21/ts-async': 0.5.5
+      '@nevware21/ts-utils': 0.13.0
+      tslib: 2.8.1
+
+  '@microsoft/applicationinsights-properties-js@3.4.1(tslib@2.8.1)':
+    dependencies:
+      '@microsoft/applicationinsights-core-js': 3.4.1(tslib@2.8.1)
       '@microsoft/applicationinsights-shims': 3.0.1
       '@microsoft/dynamicproto-js': 2.0.3
       '@nevware21/ts-utils': 0.13.0
@@ -6191,15 +6199,14 @@ snapshots:
 
   '@microsoft/applicationinsights-web-snippet@1.0.1': {}
 
-  '@microsoft/applicationinsights-web@3.3.11(tslib@2.8.1)':
+  '@microsoft/applicationinsights-web@3.4.1(tslib@2.8.1)':
     dependencies:
-      '@microsoft/applicationinsights-analytics-js': 3.3.11(tslib@2.8.1)
-      '@microsoft/applicationinsights-cfgsync-js': 3.3.11(tslib@2.8.1)
-      '@microsoft/applicationinsights-channel-js': 3.3.11(tslib@2.8.1)
-      '@microsoft/applicationinsights-common': 3.3.11(tslib@2.8.1)
-      '@microsoft/applicationinsights-core-js': 3.3.11(tslib@2.8.1)
-      '@microsoft/applicationinsights-dependencies-js': 3.3.11(tslib@2.8.1)
-      '@microsoft/applicationinsights-properties-js': 3.3.11(tslib@2.8.1)
+      '@microsoft/applicationinsights-analytics-js': 3.4.1(tslib@2.8.1)
+      '@microsoft/applicationinsights-cfgsync-js': 3.4.1(tslib@2.8.1)
+      '@microsoft/applicationinsights-channel-js': 3.4.1(tslib@2.8.1)
+      '@microsoft/applicationinsights-core-js': 3.4.1(tslib@2.8.1)
+      '@microsoft/applicationinsights-dependencies-js': 3.4.1(tslib@2.8.1)
+      '@microsoft/applicationinsights-properties-js': 3.4.1(tslib@2.8.1)
       '@microsoft/applicationinsights-shims': 3.0.1
       '@microsoft/dynamicproto-js': 2.0.3
       '@nevware21/ts-async': 0.5.5
@@ -8826,7 +8833,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ibantools@4.5.2: {}
+  ibantools@4.5.4: {}
 
   iconv-lite@0.4.24:
     dependencies:
@@ -9887,7 +9894,7 @@ snapshots:
 
   prepend-http@2.0.0: {}
 
-  prettier@3.8.1: {}
+  prettier@3.8.3: {}
 
   pretty-format@27.5.1:
     dependencies:
@@ -10085,7 +10092,7 @@ snapshots:
 
   react-refresh@0.17.0: {}
 
-  react-router@7.14.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-router@7.14.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       cookie: 1.1.1
       react: 18.3.1
@@ -10637,7 +10644,7 @@ snapshots:
 
   text-hex@1.0.0: {}
 
-  thenby@1.3.4: {}
+  thenby@1.4.0: {}
 
   thread-stream@3.1.0:
     dependencies:
