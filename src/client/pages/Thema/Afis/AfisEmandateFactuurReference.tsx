@@ -60,16 +60,20 @@ export function useAfisEmandateFactuurReferenceContent(
     {
       rows: [
         {
-          label: 'E-Mandaat referentie',
+          label: 'E-Mandaat kenmerk',
           content: eMandate ? (
             <AfisEmandateFactuurReference eMandate={eMandate} />
-          ) : null,
+          ) : (
+            eMandateId
+          ),
         },
         {
           label: 'E-Mandaat status',
           content: eMandate ? (
             <AfisEmandateFactuurStatus eMandate={eMandate} />
-          ) : null,
+          ) : (
+            'Niet actief'
+          ),
         },
       ],
       isVisible: !!eMandateId,
@@ -79,8 +83,7 @@ export function useAfisEmandateFactuurReferenceContent(
       content: (
         <Alert heading="Handmatig betalen" headingLevel={4} severity="warning">
           <Paragraph>
-            Het E-Mandaat voor deze factuur is niet meer actief en wordt niet
-            per automatische incasso voldaan.
+            Het E-Mandaat voor deze factuur is niet meer actief.
             <br />
             Maak het bedrag van {factuur.amountOriginalFormatted} over onder
             vermelding van de gegevens op uw factuur.

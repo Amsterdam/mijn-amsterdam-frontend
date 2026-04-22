@@ -41,7 +41,7 @@ function EmandateHistorySection({
           <article key={historyItem.eMandateIdSource} className="ams-mb-xl">
             <table className={styles.EmandateHistoryItem}>
               <tr>
-                <th>Referentie</th>
+                <th>Kenmerk</th>
                 <td>{historyItem.eMandateIdSource}</td>
               </tr>
               <tr>
@@ -117,7 +117,7 @@ function EMandate({ eMandate }: EMandateProps) {
           ...(eMandate.status === EMANDATE_STATUS_ACTIVE
             ? [
                 {
-                  label: 'Referentie',
+                  label: 'Kenmerk',
                   content: eMandate.eMandateIdSource,
                 },
               ]

@@ -272,7 +272,7 @@ export const eMandateHistoryDisplayProps: DisplayProps<
   AfisEMandateFrontend['history'][number]
 > = {
   props: {
-    eMandateIdSource: 'Referentie',
+    eMandateIdSource: 'Kenmerk',
     dateValidFromFormatted: 'Vanaf',
     dateValidToFormatted: 'Tot',
     senderName: 'Naam rekeninghouder',
