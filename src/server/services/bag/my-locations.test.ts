@@ -142,7 +142,7 @@ describe('fetchPrivate', () => {
 
     const result = await forTesting.fetchPrivate(authProfileAndToken);
     expect(result.status === 'ERROR' && result.message).toBe(
-      '[BRP] Error fetching BRP data\n'
+      '[BRP] Error fetching BRP data'
     );
   });
 });

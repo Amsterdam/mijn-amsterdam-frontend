@@ -154,15 +154,15 @@ export function apiPostponeResult<T>(content: T): ApiPostponeResponse<T> {
 export function apiDependencyError(
   apiResponses: Record<string, ApiResponse_DEPRECATED<unknown>>
 ): ApiErrorResponse<null> {
-  const message = Object.entries(apiResponses).reduce(
-    (acc, [key, response]) => {
+  const message = Object.entries(apiResponses)
+    .map(([key, response]) => {
       if (response.status === 'ERROR') {
-        acc += `[${key}] ${response.message}${response.code ? ` (code: ${response.code})` : ''}\n`;
+        return `[${key}] ${response.message}${response.code ? ` (code: ${response.code})` : ''}`;
       }
-      return acc;
-    },
-    ''
-  );
+      return '';
+    })
+    .join('\n');
+
   return apiErrorResult(message || 'One or more dependencies failed', null);
 }
 

@@ -19,7 +19,7 @@ vi.mock('react-router', async (importOriginal) => {
 });
 
 describe('<Pagination />', () => {
-  it('Renders without crashing', async () => {
+  it.only('Renders without crashing', async () => {
     const user = userEvent.setup();
 
     const { rerender } = render(
@@ -30,15 +30,13 @@ describe('<Pagination />', () => {
         path="/thema/lijst"
       />
     );
-    expect(screen.getAllByText('Pagina 1')[0]).toBeInTheDocument();
-    expect(
-      screen
-        .getAllByText('Pagina 1')[0]
-        .parentElement?.getAttribute('aria-current')
-    ).toBe('page');
-    expect(screen.getAllByText('Ga naar pagina 2')[0]).toBeInTheDocument();
+    expect(screen.getAllByRole('link')[0]?.innerText).toBe('Pagina 1');
+    expect(screen.getAllByRole('link')[0].getAttribute('aria-current')).toBe(
+      'page'
+    );
+    expect(screen.getAllByRole('link')[1]?.innerText).toBe('Ga naar pagina 2');
 
-    await user.click(screen.getAllByText('Ga naar pagina 2')[0]);
+    await user.click(screen.getAllByRole('link')[1]);
     expect(mocks.navigate).toHaveBeenCalledWith('/thema/lijst/2');
 
     rerender(
@@ -49,11 +47,8 @@ describe('<Pagination />', () => {
         path="/thema/lijst"
       />
     );
-    expect(screen.getAllByText('Pagina 2')[0]).toBeInTheDocument();
-    expect(
-      screen
-        .getAllByText('Pagina 2')[0]
-        .parentElement?.getAttribute('aria-current')
-    ).toBe('page');
+    expect(screen.getAllByRole('link')[2]?.innerText).toBe('Pagina 2');
+    await user.click(screen.getAllByRole('link')[3]);
+    expect(mocks.navigate).toHaveBeenCalledWith('/thema/lijst/3');
   });
 });
