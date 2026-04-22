@@ -49,7 +49,7 @@ function createAfisFactuur(
       to: '/facturen-en-betalen',
       title: 'Bekijk uw openstaande facturen',
     },
-  };
+  } as AfisFactuur;
 }
 
 describe('createAfisFacturenNotification', () => {

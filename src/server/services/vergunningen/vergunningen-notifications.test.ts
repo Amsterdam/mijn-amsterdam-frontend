@@ -354,7 +354,7 @@ describe('vergunningen-notifications', () => {
       );
 
       const result = await fetchVergunningenNotifications(authProfileAndToken);
-      expect(result.status).toBe('DEPENDENCY_ERROR');
+      expect(result.status).toBe('ERROR');
     });
   });
 });

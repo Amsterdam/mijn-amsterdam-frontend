@@ -4,7 +4,10 @@ import {
   DEFAULT_LAT,
   DEFAULT_LNG,
 } from '../../../universal/config/myarea-datasets.ts';
-import type { ApiResponse_DEPRECATED } from '../../../universal/helpers/api.ts';
+import type {
+  ApiResponse,
+  ApiResponse_DEPRECATED,
+} from '../../../universal/helpers/api.ts';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -17,7 +20,7 @@ import { fetchKVK } from '../hr-kvk/hr-kvk.ts';
 
 export async function fetchPrivate(
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse_DEPRECATED<BAGLocationExtended[] | null>> {
+): Promise<ApiResponse<BAGLocationExtended[]>> {
   const BRP = await fetchBrp(authProfileAndToken);
 
   if (BRP.status === 'OK') {
@@ -43,16 +46,7 @@ export async function fetchPrivate(
       ]);
     }
 
-    return apiSuccessResult([
-      {
-        title: 'Nergens',
-        latlng: null,
-        address: null,
-        bagAddress: null,
-        mokum: false,
-        profileType: 'private',
-      },
-    ]);
+    return apiSuccessResult([]);
   }
 
   return apiDependencyError({ BRP });
@@ -60,7 +54,7 @@ export async function fetchPrivate(
 
 export async function fetchCommercial(
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse_DEPRECATED<BAGLocationExtended[] | null>> {
+): Promise<ApiResponse<BAGLocationExtended[]>> {
   const KVK = await fetchKVK(authProfileAndToken);
 
   if (KVK.status === 'OK') {

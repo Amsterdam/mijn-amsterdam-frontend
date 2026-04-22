@@ -40,6 +40,7 @@ export default [
         },
       ],
       'import/no-default-export': 'warn',
+      eqeqeq: ['error', 'always', { null: 'ignore' }],
       'import/extensions': [
         'error', // Enforce the rule with "error" severity
         'ignorePackages', // Do not require extensions for third-party packages
