@@ -19,7 +19,7 @@ vi.mock('react-router', async (importOriginal) => {
 });
 
 describe('<Pagination />', () => {
-  it.only('Renders without crashing', async () => {
+  it('Renders without crashing', async () => {
     const user = userEvent.setup();
 
     const { rerender } = render(
