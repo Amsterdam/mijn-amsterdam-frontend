@@ -7,13 +7,6 @@ import { getFromEnv } from '../helpers/env.ts';
 import { logger } from '../logging.ts';
 import { BffEndpoints } from '../routing/bff-routes.ts';
 
-// Controls which headers get filtered out by supplying a prefix or a full name.
-const EXCLUDED_HEADERS = [
-  'x-ma-', // Functional headers for the route handler.
-  'host', // Overwriting the host will cause the target to not send the request back to the BFF.
-  'cookie', // Part of this is for application proxy authentication. For simplicity the whole cookie is stripped.
-];
-
 /** This proxy route handler is for sending requests to external systems -
  * that have us specifically whitelisted.
  *
@@ -24,19 +17,23 @@ const EXCLUDED_HEADERS = [
  * # Usage
  *
  * Send a request to the proxy route and most things are like sending it to the target directly.
- * Everything after this endpoints route will be cut off and sent as the path to the target host -
+ * Everything after this endpoints route '/proxy</this-part>' will be cut off and sent as the path for the target host -
  * including url parameters.
  *
  * Just supply the required headers:
  * x-ma-dev-api-key for authentication.
- * x-ma-proxy-target for where to send the request.
- * And add any other header you need as usual, these will be passed through unless they are in EXCLUDED_HEADERS.
+ * x-ma-proxy-target-host for where to send the request.
+ *
+ * Optional headers passed through to the target server start with 'x-ma-pass-'.
+ * When receiving these, we will send everything after that prefix as is.
+ * For example: 'x-ma-pass-foo: bar' will be send as 'foo: bar'.
  *
  * ## Example request
  *
  * curl https://bff-server.nl/api/v1/proxy/path/foo/bar/baz?a=1&b=2 /
  *   --header 'x-ma-dev-api-key: x'
- *   --header 'x-ma-proxy-target: https://someserver.com'
+ *   --header 'x-ma-proxy-target-host: https://someserver.com'
+ *   --header 'x-ma-pass-api-key-for-target-server: x'
  */
 export async function devProxyHandler(req: Request, res: Response) {
   const proxyApiKey = getFromEnv('MA_DEV_API_KEY', true);
@@ -119,8 +116,13 @@ export async function devProxyHandler(req: Request, res: Response) {
 }
 
 function getPassthroughHeaders(req: Request): IncomingHttpHeaders {
-  const headers = Object.entries(req.headers).filter(
-    ([name]) => !EXCLUDED_HEADERS.some((h) => name.startsWith(h))
-  );
+  const passthroughPrefix = 'x-ma-pass-';
+  const headers = Object.entries(req.headers)
+    .filter(([name]) => {
+      return name.startsWith(passthroughPrefix);
+    })
+    .map(([name, val]) => {
+      return [name.replace(passthroughPrefix, ''), val];
+    });
   return Object.fromEntries(headers);
 }
