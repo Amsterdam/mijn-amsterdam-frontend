@@ -6,17 +6,16 @@ import { useContactmomentenListData } from './useContactmomentenListData.hook.ts
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import { Card } from '../../../components/Card/Card.tsx';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
-import { LocationModal } from '../../../components/LocationModal/LocationModal.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { MaLink } from '../../../components/MaLink/MaLink.tsx';
 
 export function MijnContactThema() {
-  const { id, title, isLoading, isError, pageLinks, routeConfig } =
+  const { id, title, isLoading, isError, pageLinks, routeConfig, data } =
     useKlantcontactData();
   useHTMLDocumentTitle(routeConfig);
-  const { hasContactmomenten } = useContactmomentenListData();
   const pageContentErrorAlert = (
     <>
       Wij kunnen de volgende gegevens nu niet tonen:
@@ -35,6 +34,8 @@ export function MijnContactThema() {
     </PageContentCell>
   );
 
+  const firstAppointment = data?.appointments[0]!;
+
   return (
     <ThemaPagina
       id={id}
@@ -48,14 +49,22 @@ export function MijnContactThema() {
         <>
           <PageContentCell>
             <Heading level={2}>Afspraken bij een stadsloket</Heading>
-            <Card icon={PersonAtDeskIcon} title="Hersteltermijn gesprek">
-              <Paragraph>Datum</Paragraph>
-              <Paragraph>Address</Paragraph>
-              <Paragraph>Ical placeholder</Paragraph>
+            <Card
+              icon={PersonAtDeskIcon}
+              title="Hersteltermijn gesprek"
+              actionRightside={
+                <MaLink href={firstAppointment.cancellationLink}>
+                  Annuleren
+                </MaLink>
+              }
+            >
+              <Paragraph>{`Datum, ${firstAppointment.appointmentDateFormatted}, ${firstAppointment.startTime}-${firstAppointment.endTime} uur`}</Paragraph>
+              <Paragraph>{`Locatie Stadsloket ${firstAppointment.location.name}, ${firstAppointment.location.street}`}</Paragraph>
+              <Paragraph>Voeg toe aan uw privé agenda</Paragraph>
               <Button variant="secondary">Toon QR code</Button>
             </Card>
           </PageContentCell>
-          {hasContactmomenten && (
+          {!!data?.klantcontacten.length && (
             <PageContentCell>
               <ContactMomenten />
             </PageContentCell>
