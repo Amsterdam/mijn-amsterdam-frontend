@@ -44,7 +44,6 @@ export function MijnContactThema() {
       isLoading={isLoading}
       pageLinks={pageLinks}
       pageContentTop={pageContentTop}
-      maintenanceNotificationsPageSlug="brp"
       pageContentMain={
         <>
           <PageContentCell>
