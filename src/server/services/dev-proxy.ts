@@ -8,6 +8,7 @@ import { logger } from '../logging.ts';
 import { BffEndpoints } from '../routing/bff-routes.ts';
 
 const PROXY_API_KEY = getFromEnv('MA_DEV_API_KEY', true);
+const ALLOWED_HOSTS = getFromEnv('MA_PROXY_TARGET_HOST_ALLOWLIST', true);
 
 /** This proxy route handler is for sending requests to external systems -
  * that have us specifically whitelisted.
@@ -37,6 +38,12 @@ const PROXY_API_KEY = getFromEnv('MA_DEV_API_KEY', true);
  *   --header 'x-ma-pass-api-key-for-target-server: x'
  */
 export async function devProxyHandler(req: Request, res: Response) {
+  if (!(PROXY_API_KEY && ALLOWED_HOSTS)) {
+    return res
+      .status(HttpStatusCode.InternalServerError)
+      .send('Missing env variables; check the server logs');
+  }
+
   const apiKeyName = 'x-ma-dev-api-key';
   const apiKey = req.headers[apiKeyName];
   if (apiKey !== PROXY_API_KEY) {
@@ -63,10 +70,7 @@ export async function devProxyHandler(req: Request, res: Response) {
       .send(`Invalid URL in: '${proxyTargetHeaderName}'`);
   }
 
-  const allowListedHosts = getFromEnv(
-    'MA_PROXY_TARGET_HOST_ALLOWLIST',
-    true
-  )!.split(';');
+  const allowListedHosts = ALLOWED_HOSTS.split(';');
   if (
     !(allowListedHosts.length && allowListedHosts.includes(proxyTarget.origin))
   ) {
