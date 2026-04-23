@@ -209,4 +209,44 @@ describe('amsapp-notifications', () => {
       systemTime.toISOString()
     );
   });
+
+  it('storeNotificationsResponses does not store temporary filtered services', async () => {
+    mocks.model.storeNotifications.mockResolvedValue(undefined);
+
+    await storeNotificationsResponses(
+      '123456789',
+      {
+        serviceA: {
+          status: 'OK',
+          content: { notifications: [] },
+        },
+        afis: {
+          status: 'OK',
+          content: { notifications: [] },
+        },
+        belastingen: {
+          status: 'OK',
+          content: { notifications: [] },
+        },
+        brp: {
+          status: 'OK',
+          content: { notifications: [] },
+        },
+      } as any,
+      { updateLastLoginDate: true }
+    );
+
+    expect(mocks.model.storeNotifications).toHaveBeenCalledWith(
+      '123456789',
+      [
+        {
+          serviceId: 'serviceA',
+          dateUpdated: systemTime.toISOString(),
+          status: 'OK',
+          content: [],
+        },
+      ],
+      systemTime.toISOString()
+    );
+  });
 });
