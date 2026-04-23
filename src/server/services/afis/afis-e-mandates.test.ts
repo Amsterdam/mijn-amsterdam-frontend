@@ -11,7 +11,10 @@ import type {
   AfisEMandateSource,
 } from './afis-types.ts';
 import { remoteApi } from '../../../testing/utils.ts';
-import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types.ts';
+import type {
+  AuthProfile,
+  AuthProfileAndToken,
+} from '../../auth/auth-types.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
 import * as sourceApiRequest from '../../helpers/source-api-request.ts';
 import { decryptPayloadAndValidateSessionID } from '../shared/decrypt-route-param.ts';
@@ -259,9 +262,10 @@ describe('afis-e-mandates service (with nock)', () => {
 
       remoteApi.get(/A_BusinessPartnerAddress/).reply(200);
 
-      remoteApi
-        .get(/A_BusinessPartnerBank/)
-        .reply(500, { status: 'ERROR', message: 'fail' });
+      remoteApi.get(/A_BusinessPartnerBank/).reply(500, {
+        status: 'ERROR',
+        message: expect.stringContaining('fail'),
+      });
 
       await expect(
         emandates.createOrUpdateEMandateFromStatusNotificationPayload(
@@ -462,7 +466,7 @@ describe('afis-e-mandates service (with nock)', () => {
         });
       expect(result.status).toBe('ERROR');
       expect(result.status === 'ERROR' && result.message).toBe(
-        'Request failed with status code 500'
+        'AxiosError in requestData: Request failed with status code 500 for URL http://remote-api-host/pom/v3/paylinks'
       );
     });
 

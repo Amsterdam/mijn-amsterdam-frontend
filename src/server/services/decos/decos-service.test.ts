@@ -259,7 +259,7 @@ describe('decos-service', () => {
       );
       expect(responseData).toStrictEqual({
         content: null,
-        message: 'bad request',
+        message: expect.stringContaining('bad request'),
         status: 'ERROR',
       });
     });
@@ -365,7 +365,7 @@ describe('decos-service', () => {
 
       expect(responseData).toStrictEqual({
         code: 404,
-        message: 'Request failed with status code 404',
+        message: expect.stringContaining('Request failed with status code 404'),
         content: null,
         status: 'ERROR',
       });
@@ -518,7 +518,7 @@ describe('decos-service', () => {
       expect(responseData).toStrictEqual({
         code: 500,
         content: null,
-        message: 'Booksearch failed',
+        message: expect.stringContaining('Booksearch failed'),
         status: 'ERROR',
       });
     });
@@ -674,7 +674,7 @@ describe('decos-service', () => {
 
       expect(responseData).toStrictEqual({
         content: null,
-        message: 'De api geeft een error.',
+        message: expect.stringContaining('De api geeft een error.'),
         status: 'ERROR',
       });
     });
@@ -692,7 +692,9 @@ describe('decos-service', () => {
 
       expect(responseData).toStrictEqual({
         content: null,
-        message: `Unexpected token 'a', "abc" is not valid JSON`,
+        message: expect.stringContaining(
+          `Unexpected token 'a', "abc" is not valid JSON`
+        ),
         status: 'ERROR',
       });
     });

@@ -286,7 +286,9 @@ describe('zorgned-service', () => {
     expect(result).toStrictEqual({
       code: 500,
       content: null,
-      message: 'Zorgned document download - no valid response data provided',
+      message: expect.stringContaining(
+        'Zorgned document download - no valid response data provided'
+      ),
       status: 'ERROR',
     });
   });

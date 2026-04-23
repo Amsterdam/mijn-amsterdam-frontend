@@ -152,8 +152,8 @@ describe('wpi/app-service', () => {
     );
 
     expect(response.status).toBe('ERROR');
-    expect((response as ApiErrorResponse<any>).message).toBe(
-      'Request failed with status code 500'
+    expect((response as ApiErrorResponse<null>).message).toBe(
+      'AxiosError in requestData: Request failed with status code 500 for URL http://remote-api-host/wpi/uitkering/aanvragen'
     );
   });
 

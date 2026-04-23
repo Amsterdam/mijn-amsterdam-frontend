@@ -245,7 +245,7 @@ describe('afis-facturen', async () => {
       {
         "code": 500,
         "content": null,
-        "message": "Request failed with status code 500",
+        "message": "AxiosError in requestData: Request failed with status code 500 for URL http://remote-api-host/afis/RESTAdapter/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02?$filter=AccountNumber eq '12346789'&$select=ArcDocId&$orderby=ArDate desc",
         "status": "ERROR",
       }
     `);

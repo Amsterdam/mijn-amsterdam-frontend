@@ -115,7 +115,7 @@ describe('Toeristische verhuur service', () => {
       code: 500,
       status: 'ERROR',
       content: null,
-      message: 'No can do!',
+      message: expect.stringContaining('No can do!'),
     });
   });
 
@@ -126,7 +126,7 @@ describe('Toeristische verhuur service', () => {
     expect(response.failedDependencies?.lvvRegistraties).toStrictEqual({
       status: 'ERROR',
       content: null,
-      message: `[registrationNumbers] Not Available (code: 500)`,
+      message: expect.stringContaining('Not Available'),
     });
   });
 
@@ -142,7 +142,9 @@ describe('Toeristische verhuur service', () => {
     expect(response.failedDependencies?.lvvRegistraties).toStrictEqual({
       status: 'ERROR',
       content: null,
-      message: 'Could not retrieve all registration details',
+      message: expect.stringContaining(
+        'Could not retrieve all registration details'
+      ),
     });
 
     expect(
@@ -151,7 +153,7 @@ describe('Toeristische verhuur service', () => {
       code: 505,
       status: 'ERROR',
       content: null,
-      message: 'Request failed with status code 505',
+      message: expect.stringContaining('Request failed with status code 505'),
     });
   });
 

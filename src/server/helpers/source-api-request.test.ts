@@ -25,7 +25,6 @@ import {
 import { remoteApiHost } from '../../testing/setup.ts';
 import { getAuthProfileAndToken, remoteApi } from '../../testing/utils.ts';
 import {
-  apiErrorResult,
   apiPostponeResult,
   apiSuccessResult,
 } from '../../universal/helpers/api.ts';
@@ -310,7 +309,36 @@ describe('requestData', () => {
       AUTH_PROFILE_AND_TOKEN
     );
 
-    expect(rs).toStrictEqual(apiErrorResult('Network Error', null, 500));
+    expect(rs).toStrictEqual({
+      code: 500,
+      content: null,
+      message:
+        'AxiosError in requestData: Network Error for URL http://remote-api-host/2',
+      status: 'ERROR',
+    });
+    expect(captureException).not.toHaveBeenCalled();
+  });
+
+  it('A transformer generates an error', async () => {
+    remoteApi.get(DUMMY_ROUTE_2).reply(200);
+
+    const rs = await requestData(
+      {
+        url: DUMMY_URL_2,
+        transformResponse: () => {
+          throw new Error('No can do!');
+        },
+      },
+      AUTH_PROFILE_AND_TOKEN
+    );
+
+    expect(rs).toStrictEqual({
+      code: 500,
+      content: null,
+      message:
+        'Error in requestData: No can do! for URL http://remote-api-host/2',
+      status: 'ERROR',
+    });
     expect(captureException).toHaveBeenCalled();
   });
 
