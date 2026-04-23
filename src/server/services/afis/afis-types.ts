@@ -382,6 +382,7 @@ export type AfisEMandateFrontend = {
   eMandateIdSource: string | null;
   creditorName: string;
   creditorIBAN: string;
+  businessPartnerId: BusinessPartnerId;
   creditorDescription?: string;
   status: EmandateStatusCode;
   displayStatus: string;

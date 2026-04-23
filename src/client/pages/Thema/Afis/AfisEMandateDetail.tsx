@@ -114,14 +114,11 @@ function EMandate({ eMandate }: EMandateProps) {
       )}
       <Datalist
         rows={[
-          ...(eMandate.status === EMANDATE_STATUS_ACTIVE
-            ? [
-                {
-                  label: 'Kenmerk',
-                  content: eMandate.eMandateIdSource,
-                },
-              ]
-            : []),
+          {
+            label: 'Kenmerk',
+            content: eMandate.eMandateIdSource,
+            isVisible: eMandate.status === EMANDATE_STATUS_ACTIVE,
+          },
           {
             rows: [
               {
@@ -143,45 +140,40 @@ function EMandate({ eMandate }: EMandateProps) {
               },
             ],
           },
-          ...(!signRequestStatusCheckApi.isPendingActivation
-            ? [
-                {
-                  rows: [
-                    {
-                      label: 'Status',
-                      content: eMandate.displayStatus,
-                    },
-                    {
-                      label: 'Einddatum',
-                      isVisible: eMandate.status === EMANDATE_STATUS_ACTIVE,
-                      content: (
-                        <DateAdjust
-                          lifetimeUpdateApi={lifetimeUpdateApi}
-                          eMandate={eMandate}
-                        />
-                      ),
-                    },
-                  ],
-                },
-              ]
-            : []),
-          ...(eMandate.status === EMANDATE_STATUS_ACTIVE &&
-          !signRequestStatusCheckApi.isPendingActivation
-            ? [
-                {
-                  rows: [
-                    {
-                      label: 'Naam rekeninghouder',
-                      content: eMandate.senderName || 'Onbekend',
-                    },
-                    {
-                      label: 'IBAN rekeninghouder',
-                      content: eMandate.senderIBAN || 'Onbekend',
-                    },
-                  ],
-                },
-              ]
-            : []),
+          {
+            isVisible: !signRequestStatusCheckApi.isPendingActivation,
+            rows: [
+              {
+                label: 'Status',
+                content: eMandate.displayStatus,
+              },
+              {
+                label: 'Einddatum',
+                isVisible: eMandate.status === EMANDATE_STATUS_ACTIVE,
+                content: (
+                  <DateAdjust
+                    lifetimeUpdateApi={lifetimeUpdateApi}
+                    eMandate={eMandate}
+                  />
+                ),
+              },
+            ],
+          },
+          {
+            isVisible:
+              eMandate.status === EMANDATE_STATUS_ACTIVE &&
+              !signRequestStatusCheckApi.isPendingActivation,
+            rows: [
+              {
+                label: 'Naam rekeninghouder',
+                content: eMandate.senderName || 'Onbekend',
+              },
+              {
+                label: 'IBAN rekeninghouder',
+                content: eMandate.senderIBAN || 'Onbekend',
+              },
+            ],
+          },
         ]}
       />
       <div className="ams-mb-xl">

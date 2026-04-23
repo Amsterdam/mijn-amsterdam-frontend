@@ -79,6 +79,7 @@ export function useAfisEmandateFactuurReferenceContent(
       isVisible: !!eMandateId,
     },
     {
+      isVisible: eMandate?.status !== '1',
       label: <span className="ams-visually-hidden">Betalingswijze</span>,
       content: (
         <Alert heading="Handmatig betalen" headingLevel={4} severity="warning">

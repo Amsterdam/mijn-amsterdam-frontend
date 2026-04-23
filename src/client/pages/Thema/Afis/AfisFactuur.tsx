@@ -68,6 +68,9 @@ function FactuurDetailContent({
     factuur
   );
 
+  // Wait with rendering the content until the list page data is loaded.
+  // Afgehandelde and Overgedragen facturen are loaded on demand. We have to wait with rendering until we know whether the requested factuur exists or not,
+  // to prevent showing a "Factuur niet gevonden" message while the data is still loading.
   if (isListPageLoading) {
     return <LoadingContent />;
   }
