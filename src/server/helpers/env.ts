@@ -10,13 +10,19 @@ import { captureException } from '../services/monitoring.ts';
  */
 function getFromEnv_(
   key: string,
-  isRequired: boolean = true
+  isRequired: boolean = true,
+  doThrow: boolean = false
 ): string | undefined {
   if (key in process.env) {
     return process.env[key];
   }
   if (isRequired) {
     const error = new Error(`ENV undefined key: ${key}.`);
+
+    if (doThrow) {
+      throw error;
+    }
+
     logger.error(error); // So we see it in logstream.
     captureException(error); // So we see it in monitoring.
   } else {
@@ -26,3 +32,4 @@ function getFromEnv_(
 
 // Prevents spamming the console with duplicate missing env messages
 export const getFromEnv = memoizee(getFromEnv_);
+export const forTesting = { getFromEnv_ };

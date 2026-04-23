@@ -7,6 +7,7 @@ export const featureToggle = {
   ['BRP.aantalBewonersOpAdresTonen']: true,
   ['USER_FEEDBACK.fetchSurvey']: true,
   ['cobrowse']: false,
+  ['MA_ADMIN.router']: !IS_PRODUCTION,
   ['WONEN.vve']: !IS_PRODUCTION,
   ['VERGUNNINGEN.VTHOnPowerbrowserActive']: !IS_PRODUCTION,
 };

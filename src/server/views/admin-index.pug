@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width,initial-scale=1")
+    title= title || 'Mijn Amsterdam Admin'
+  body
+    header
+      h1= title || 'Mijn Amsterdam Admin'
+      if isAuthenticated && username
+        | Welkom
+        |
+        strong= username
+    main
+      if links && Object.keys(links).length
+        ul.links
+          each url, name in links
+            li
+              a(href=url)= name
+      else
+        p No links available.

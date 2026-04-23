@@ -11,11 +11,10 @@ import {
   sendBadRequest,
   sendUnauthorized,
 } from './route-helpers.ts';
-import type {
-  TestUserData} from '../../universal/config/auth.development.ts';
+import type { TestUserData } from '../../universal/config/auth.development.ts';
 import {
   testAccountDataDigid,
-  testAccountDataEherkenning
+  testAccountDataEherkenning,
 } from '../../universal/config/auth.development.ts';
 import { apiSuccessResult } from '../../universal/helpers/api.ts';
 import { getReturnToUrl } from '../auth/auth-after-redirect-returnto.ts';
@@ -30,15 +29,11 @@ import {
 } from '../auth/auth-helpers-development.ts';
 import { getAuth, hasSessionCookie } from '../auth/auth-helpers.ts';
 import { authRoutes } from '../auth/auth-routes.ts';
-import type {
-  AuthProfile,
-  MaSession} from '../auth/auth-types.ts';
-import {
-  type AuthenticatedRequest,
-} from '../auth/auth-types.ts';
+import type { AuthProfile, MaSession } from '../auth/auth-types.ts';
+import { type AuthenticatedRequest } from '../auth/auth-types.ts';
 import { ONE_SECOND_MS } from '../config/app.ts';
 import { getFromEnv } from '../helpers/env.ts';
-import { countLoggedInVisit } from '../services/visitors.ts';
+import { countLoggedInVisit } from '../services/admin/admin-visitors.ts';
 
 export const authRouterDevelopment = createBFFRouter({ id: 'router-dev' });
 
