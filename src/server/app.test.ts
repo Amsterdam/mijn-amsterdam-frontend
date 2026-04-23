@@ -103,7 +103,7 @@ describe('app', async () => {
     ).toBe(true);
   });
 
-  test('Router admin', async () => {
+  test('App Router admin', async () => {
     const appModule = await import('./app.ts');
     const app = appModule.forTesting.app;
     const routerAdmin = app.router.stack.find((layer: ILayer) => {
@@ -127,7 +127,7 @@ describe('app', async () => {
     ).toBe('ma-admin-router-protected');
   });
 
-  test('Router protected', async () => {
+  test('App Router protected', async () => {
     const appModule = await import('./app.ts');
     const app = appModule.forTesting.app;
     const routerProtected = app.router.stack.find((layer: ILayer) => {

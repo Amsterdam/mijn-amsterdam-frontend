@@ -13,6 +13,10 @@ import {
 import type { AuthProfileAndToken } from '../auth/auth-types.ts';
 import { BFF_API_ADMIN_BASE_URL, BFF_API_BASE_URL } from '../config/app.ts';
 
+function nextRouter(_req: Request, res: Response, next: NextFunction) {
+  next('router');
+}
+
 type BFFRouter = express.Router & { BFF_ID: string };
 
 export type RecordStr2 = Record<string, string>;
@@ -28,9 +32,7 @@ export function createBFFRouter({
   router.BFF_ID = id;
 
   if (!isEnabled) {
-    router.use((_req: Request, res: Response, next: NextFunction) => {
-      next('router');
-    });
+    router.use(nextRouter);
   }
 
   return router;
