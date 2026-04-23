@@ -2,7 +2,10 @@ import session from 'express-session';
 
 import { createBFFRouter } from './route-helpers.ts';
 import { IS_PRODUCTION } from '../../universal/config/env.ts';
-import { BFF_ADMIN_AUTH_SESSION_COOKIE_NAME } from '../services/admin/admin-service-config.ts';
+import {
+  BFF_ADMIN_AUTH_SESSION_COOKIE_NAME,
+  IS_ADMIN_AUTHENTICATION_MIDDLEWARE_ENABLED,
+} from '../services/admin/admin-service-config.ts';
 import {
   BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET,
   IS_ADMIN_ROUTER_ENABLED,
@@ -34,7 +37,16 @@ if (IS_ADMIN_ROUTER_ENABLED) {
     adminRouter.public,
     // The authentication middleware is only applied to the protected admin routes,
     // so the public routes defined in router-admin.ts can be accessed without authentication (e.g. for the login flow).
-    isAuthenticatedAdmin,
+    IS_ADMIN_AUTHENTICATION_MIDDLEWARE_ENABLED
+      ? isAuthenticatedAdmin
+      : (_req, _res, next) => {
+          if (IS_PRODUCTION) {
+            throw new Error(
+              'Admin authentication middleware MUST be enabled in production.'
+            );
+          }
+          next();
+        },
     adminRouter.protected,
     userFeedbackRouter.admin,
     amsappNotificationsRouter.admin
