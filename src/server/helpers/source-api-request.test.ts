@@ -305,6 +305,11 @@ describe('requestData', () => {
     const rs = await requestData(
       {
         url: DUMMY_URL_2,
+        transformResponse: () => {
+          throw new Error(
+            'This error should be ignored, because the request itself already fails with an error, and the transformResponse should not be called in that case.'
+          );
+        },
       },
       AUTH_PROFILE_AND_TOKEN
     );
