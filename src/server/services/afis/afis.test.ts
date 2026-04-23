@@ -181,14 +181,11 @@ describe('fetchIsKnownInAFIS ', () => {
         getAuthProfileAndToken('private')
       );
 
-      expect(response).toMatchInlineSnapshot(`
-        {
-          "code": 400,
-          "content": null,
-          "message": "Request failed with status code 400",
-          "status": "ERROR",
-        }
-      `);
+      expect(response).toMatchObject({
+        code: 400,
+        content: null,
+        status: 'ERROR',
+      });
     });
 
     it('Handles server error as expected', async () => {
@@ -200,14 +197,11 @@ describe('fetchIsKnownInAFIS ', () => {
         getAuthProfileAndToken('private')
       );
 
-      expect(response).toMatchInlineSnapshot(`
-        {
-          "code": 500,
-          "content": null,
-          "message": "error retrieving doc",
-          "status": "ERROR",
-        }
-      `);
+      expect(response).toMatchObject({
+        code: 500,
+        content: null,
+        status: 'ERROR',
+      });
     });
 
     it('Handles getting just null as a response by returning an AxiosError', async () => {

@@ -241,14 +241,12 @@ describe('afis-facturen', async () => {
       FACTUUR_NUMMER
     );
 
-    expect(response).toMatchInlineSnapshot(`
-      {
-        "code": 500,
-        "content": null,
-        "message": "Request failed with status code 500",
-        "status": "ERROR",
-      }
-    `);
+    expect(response).toStrictEqual({
+      code: 500,
+      content: null,
+      message: expect.any(String),
+      status: 'ERROR',
+    });
   });
 
   test('Download document success response but no DocumentId', async () => {

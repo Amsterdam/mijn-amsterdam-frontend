@@ -8,8 +8,8 @@ export const routes = {
     USER_FEEDBACK_SURVEY: '/user-feedback/survey',
   },
   admin: {
-    USER_FEEDBACK_OVERVIEW_TABLE: '/admin/user-feedback/overview/table',
-    USER_FEEDBACK_OVERVIEW: '/admin/user-feedback/overview',
+    USER_FEEDBACK_OVERVIEW_TABLE: '/user-feedback/overview/table',
+    USER_FEEDBACK_OVERVIEW: '/user-feedback/overview',
   },
 };
 

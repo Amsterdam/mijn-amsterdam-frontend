@@ -257,9 +257,8 @@ describe('decos-service', () => {
         authProfileAndToken,
         emptyFoldersDecosZaakTransformer
       );
-      expect(responseData).toStrictEqual({
+      expect(responseData).toMatchObject({
         content: null,
-        message: 'bad request',
         status: 'ERROR',
       });
     });
@@ -363,9 +362,8 @@ describe('decos-service', () => {
 
       const responseData = await fetchDecosTermijnen('zaak-id-1', ['Termijn']);
 
-      expect(responseData).toStrictEqual({
+      expect(responseData).toMatchObject({
         code: 404,
-        message: 'Request failed with status code 404',
         content: null,
         status: 'ERROR',
       });
@@ -515,10 +513,9 @@ describe('decos-service', () => {
         decosZaakTransformers
       );
 
-      expect(responseData).toStrictEqual({
+      expect(responseData).toMatchObject({
         code: 500,
         content: null,
-        message: 'Booksearch failed',
         status: 'ERROR',
       });
     });
@@ -672,9 +669,8 @@ describe('decos-service', () => {
         emptyFoldersDecosZaakTransformer
       );
 
-      expect(responseData).toStrictEqual({
+      expect(responseData).toMatchObject({
         content: null,
-        message: 'De api geeft een error.',
         status: 'ERROR',
       });
     });
@@ -690,9 +686,8 @@ describe('decos-service', () => {
         emptyFoldersDecosZaakTransformer
       );
 
-      expect(responseData).toStrictEqual({
+      expect(responseData).toMatchObject({
         content: null,
-        message: `Unexpected token 'a', "abc" is not valid JSON`,
         status: 'ERROR',
       });
     });

@@ -30,7 +30,7 @@ import {
 } from '../auth/auth-routes.ts';
 import type { AuthenticatedRequest } from '../auth/auth-types.ts';
 import { getFromEnv } from '../helpers/env.ts';
-import { countLoggedInVisit } from '../services/visitors.ts';
+import { countLoggedInVisit } from '../services/admin/admin-visitors.ts';
 
 export const oidcRouter = createBFFRouter({ id: 'router-oidc' });
 
