@@ -241,7 +241,7 @@ describe('amsapp-notifications', () => {
       '123456789',
       [
         {
-          serviceId: 'afis',
+          serviceId: 'serviceA',
           dateUpdated: systemTime.toISOString(),
           status: 'OK',
           content: [],
