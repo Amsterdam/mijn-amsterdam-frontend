@@ -13,12 +13,12 @@ import type {
   AuthProfile,
   AuthProfileAndToken,
 } from '../server/auth/auth-types.ts';
+import { createOIDCStub } from '../server/routing/app-router-development.ts';
 import type {
   RecordStr2,
   RequestWithRouteAndQueryParams,
   ResponseAuthenticated,
 } from '../server/routing/route-helpers.ts';
-import { createOIDCStub } from '../server/routing/router-development.ts';
 
 const defaultReplyHeaders = {
   'access-control-allow-origin': '*',
@@ -114,6 +114,7 @@ export class RequestMock {
   query: RecordStr2 = {};
   oidc: Record<string, string> | null = null;
   url: string | null = null;
+  originalUrl: string | null = null;
 
   static new<
     QueryParams extends RecordStr2 = RecordStr2,
@@ -143,6 +144,7 @@ export class RequestMock {
 
   setUrl(url: string) {
     this.url = url;
+    this.originalUrl = url;
     return this;
   }
 

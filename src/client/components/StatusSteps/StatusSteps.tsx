@@ -60,7 +60,7 @@ export function Steps({ steps, title }: StepsProps) {
         </Heading>
       )}
 
-      <ProgressList headingLevel={3}>
+      <ProgressList headingLevel={3} collapsible={false}>
         {steps.map((item) => (
           <ProgressList.Step
             key={item.id}
