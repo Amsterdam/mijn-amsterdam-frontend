@@ -15,7 +15,13 @@ export function Card({ title, icon, children, actionRightside }: CardProps) {
   const isLargeScreen = !isSmallScreen;
 
   const titleIcon = icon && <Icon svg={icon} size={'heading-2'}></Icon>;
-  const titleHeading = <Heading level={3}>{title}</Heading>;
+  const titleHeading = (
+    // Make the heading text always take full space so the icon is always aligned with other items -
+    // on small screens.
+    <Heading level={3} style={{ width: '100%' }}>
+      {title}
+    </Heading>
+  );
 
   return (
     <div
@@ -24,12 +30,18 @@ export function Card({ title, icon, children, actionRightside }: CardProps) {
     >
       <Row gap={'large'}>
         {isLargeScreen && titleIcon}
-        <Column style={{ width: isSmallScreen ? '' : '800px' }}>
+        <Column
+          style={{
+            width: isSmallScreen
+              ? ''
+              : '800px' /* Make sure `actionRightside` is always aligned */,
+          }}
+        >
           {isLargeScreen && titleHeading}
           {isSmallScreen && (
             <Row>
-              {titleIcon}
               {titleHeading}
+              {titleIcon}
             </Row>
           )}
           {children}
