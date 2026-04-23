@@ -1,3 +1,4 @@
+import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
 import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 
@@ -12,6 +13,8 @@ function getAdminAuthEnv(key: string): string {
 }
 
 export const IS_ADMIN_ROUTER_ENABLED = isEnabled('MA_ADMIN.router');
+export const IS_ADMIN_AUTHENTICATION_MIDDLEWARE_ENABLED = !IS_DEVELOPMENT;
+
 export const GRAPH_ME_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 export const MSAL_AUTH_SCOPES = ['User.read'];
 export const OAUTH_ROLE_APPLICATION_ADMIN = 'ApplicationAdmin';
@@ -26,6 +29,7 @@ export const BFF_ADMIN_AUTH_CLIENT_SECRET = getAdminAuthEnv('CLIENT_SECRET');
 export const BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET = getAdminAuthEnv(
   'EXPRESS_SESSION_SECRET'
 );
+
 export const BFF_ADMIN_AUTH_SESSION_COOKIE_NAME = '__MA-adminSession';
 export const routes = {
   public: {
