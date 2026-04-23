@@ -84,7 +84,7 @@ export async function storeNotificationsResponses(
     )
     .filter(
       ([serviceId, _]: [ServiceId, NotificationsAndTipsResponse]) =>
-        !(['belastingen', 'afis', 'brp'] as ServiceId[]).includes(serviceId) // MIJN-12971: Temporary filter to not push notifications repeatedly for notifications that have a datePublished set to today everyday
+        !(['belasting', 'afis', 'brp'] as ServiceId[]).includes(serviceId) // MIJN-12971: Temporary filter to not push notifications repeatedly for notifications that have a datePublished set to today everyday
     )
     .map(
       ([serviceId, response]: [ServiceId, NotificationsAndTipsResponse]) => ({
