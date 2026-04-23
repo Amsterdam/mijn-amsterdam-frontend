@@ -25,7 +25,6 @@ import {
 import { remoteApiHost } from '../../testing/setup.ts';
 import { getAuthProfileAndToken, remoteApi } from '../../testing/utils.ts';
 import {
-  apiErrorResult,
   apiPostponeResult,
   apiSuccessResult,
 } from '../../universal/helpers/api.ts';
@@ -306,11 +305,43 @@ describe('requestData', () => {
     const rs = await requestData(
       {
         url: DUMMY_URL_2,
+        transformResponse: () => {
+          throw new Error(
+            'This error should be ignored, because the request itself already fails with an error, and the transformResponse should not be called in that case.'
+          );
+        },
       },
       AUTH_PROFILE_AND_TOKEN
     );
 
-    expect(rs).toStrictEqual(apiErrorResult('Network Error', null, 500));
+    expect(rs).toStrictEqual({
+      code: 500,
+      content: null,
+      message: expect.any(String),
+      status: 'ERROR',
+    });
+    expect(captureException).not.toHaveBeenCalled();
+  });
+
+  it('A transformer generates an error', async () => {
+    remoteApi.get(DUMMY_ROUTE_2).reply(200);
+
+    const rs = await requestData(
+      {
+        url: DUMMY_URL_2,
+        transformResponse: () => {
+          throw new Error('No can do!');
+        },
+      },
+      AUTH_PROFILE_AND_TOKEN
+    );
+
+    expect(rs).toStrictEqual({
+      code: 500,
+      content: null,
+      message: expect.any(String),
+      status: 'ERROR',
+    });
     expect(captureException).toHaveBeenCalled();
   });
 

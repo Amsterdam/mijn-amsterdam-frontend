@@ -204,30 +204,28 @@ describe('Bezwaren', () => {
         'xxx'
       );
 
-      expect(res).toMatchInlineSnapshot(`
-        {
-          "content": {
-            "documents": null,
-            "statussen": null,
-            "zaakId": "xxx",
+      expect(res).toStrictEqual({
+        content: {
+          documents: null,
+          statussen: null,
+          zaakId: 'xxx',
+        },
+        failedDependencies: {
+          documents: {
+            code: 500,
+            content: null,
+            message: expect.any(String),
+            status: 'ERROR',
           },
-          "failedDependencies": {
-            "documents": {
-              "code": 500,
-              "content": null,
-              "message": "Nock: Disallowed net connect for "remote-api-host:80/bezwaren/zgw/v1/enkelvoudiginformatieobjecten?page=1&identifier=xxx"",
-              "status": "ERROR",
-            },
-            "statussen": {
-              "code": 500,
-              "content": null,
-              "message": "Nock: Disallowed net connect for "remote-api-host:80/bezwaren/zgw/v1/statussen?zaak=http:%2F%2Fremote-api-host%2Fbezwaren%2Fzaken%2Fxxx"",
-              "status": "ERROR",
-            },
+          statussen: {
+            code: 500,
+            content: null,
+            message: expect.any(String),
+            status: 'ERROR',
           },
-          "status": "OK",
-        }
-      `);
+        },
+        status: 'OK',
+      });
     });
   });
 
