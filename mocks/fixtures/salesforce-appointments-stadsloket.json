@@ -20,7 +20,7 @@
       },
       "endDate": "2050-01-01 11:00:00",
       "caseReference": "06157415",
-      "cancellationLink": "https://external-api.nl/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      "cancellationLink": "http://localhost:3000/mijn-contact?cancel=xxxxxx"
     },
     {
       "subject": "Blauwe zone",
@@ -41,7 +41,7 @@
       },
       "endDate": "2026-02-13 11:00:00",
       "caseReference": "00157515",
-      "cancellationLink": "https://external-api.nl/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      "cancellationLink": "http://localhost:3000/mijn-contact?cancel=xxxxxx"
     },
     {
       "subject": "Vaarvignet",
@@ -62,7 +62,7 @@
       },
       "endDate": "2026-02-26 09:20:00",
       "caseReference": "00157783",
-      "cancellationLink": "https://external-api.nl/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      "cancellationLink": "http://localhost:3000/mijn-contact?cancel=xxxxxx"
     },
     {
       "subject": "Briefadres aanvulling",
@@ -83,7 +83,7 @@
       },
       "endDate": "2026-04-03 11:00:00",
       "caseReference": "00157784",
-      "cancellationLink": "https://external-api.nl/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      "cancellationLink": "http://localhost:3000/mijn-contact?cancel=xxxxxx"
     }
   ],
   "previous": null,
