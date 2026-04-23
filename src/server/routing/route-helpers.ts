@@ -13,7 +13,7 @@ import {
 import type { AuthProfileAndToken } from '../auth/auth-types.ts';
 import { BFF_API_ADMIN_BASE_URL, BFF_API_BASE_URL } from '../config/app.ts';
 
-function nextRouter(_req: Request, res: Response, next: NextFunction) {
+function nextRouter(_req: Request, _res: Response, next: NextFunction) {
   next('router');
 }
 
