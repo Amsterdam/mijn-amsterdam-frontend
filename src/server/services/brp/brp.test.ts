@@ -388,7 +388,7 @@ describe('brp.ts', () => {
 
         const response = await fetchBrpByBsnTransformed('test-session-id', BSN);
 
-        expect.objectContaining({
+        expect(response).toMatchObject({
           failedDependencies: {
             adresHistorisch: {
               code: 500,

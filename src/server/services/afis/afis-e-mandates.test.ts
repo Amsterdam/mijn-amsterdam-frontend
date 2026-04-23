@@ -466,7 +466,7 @@ describe('afis-e-mandates service (with nock)', () => {
         });
       expect(result.status).toBe('ERROR');
       expect(result.status === 'ERROR' && result.message).toBe(
-        'AxiosError in requestData: Request failed with status code 500 for URL http://remote-api-host/pom/v3/paylinks'
+        'AxiosError in requestData: Request failed with status code 500'
       );
     });
 

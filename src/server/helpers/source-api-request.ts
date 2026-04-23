@@ -90,34 +90,37 @@ function handleRequestDataError(
   const fromAxios = isAxiosError(error_);
 
   let code: number = 500;
+  let errorMessageInternal: string = '';
   let errorMessage: string = '';
   let stack: string | undefined = undefined;
-  let shouldCaptureException = true;
 
   if (fromAxios) {
     const error = error_ as AxiosError;
     code = error.status ?? error?.response?.status ?? code;
-    errorMessage = `AxiosError in requestData: ${error.message} for URL ${config.url}`;
+    errorMessage = `AxiosError in requestData: ${error.message}`;
+    errorMessageInternal = `${errorMessage} for URL ${config.url}`;
     stack = error.stack;
-    // We don't want to capture exceptions that are a result from failed requests to the source api's
-    // These errors are captured on a lower level by Application Insights as failed requests, and capturing them here as well would lead to double reporting of the same error.
-    shouldCaptureException = false;
   } else {
     const error = error_ as Error;
-    errorMessage = `Error in requestData: ${error.message} for URL ${config.url}`;
+    errorMessage = `Error in requestData: ${error.message}`;
+    errorMessageInternal = `${errorMessage} for URL ${config.url}`;
     stack = error.stack;
   }
 
-  const e = new Error(errorMessage);
-  e.stack = stack;
+  // Create a new, more descriptive, error and add the original stack for better debugging.
+  const errorFinal = new Error(errorMessageInternal);
+  errorFinal.stack = stack;
 
-  debugResponse('[ERROR]: %s', errorMessage);
-  debugResponseError('[ERROR]: %o', e);
+  debugResponse('[ERROR]: %s', errorMessageInternal);
+  debugResponseError('[ERROR]: %o', errorFinal);
 
-  if (shouldCaptureException) {
-    captureException(e);
+  // We don't want to capture exceptions that are a result from failed requests to the source api's
+  // These errors are captured on a lower level by Application Insights as failed requests, and capturing them here as well would lead to double reporting of the same error.
+  if (!fromAxios) {
+    captureException(errorFinal);
   }
 
+  // We want to return a generic error message to the client so we don't expose internal details.
   return apiErrorResult(errorMessage, null, code);
 }
 

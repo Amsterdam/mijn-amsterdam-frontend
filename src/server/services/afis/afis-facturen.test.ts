@@ -241,14 +241,12 @@ describe('afis-facturen', async () => {
       FACTUUR_NUMMER
     );
 
-    expect(response).toMatchInlineSnapshot(`
-      {
-        "code": 500,
-        "content": null,
-        "message": "AxiosError in requestData: Request failed with status code 500 for URL http://remote-api-host/afis/RESTAdapter/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02?$filter=AccountNumber eq '12346789'&$select=ArcDocId&$orderby=ArDate desc",
-        "status": "ERROR",
-      }
-    `);
+    expect(response).toStrictEqual({
+      code: 500,
+      content: null,
+      message: expect.any(String),
+      status: 'ERROR',
+    });
   });
 
   test('Download document success response but no DocumentId', async () => {

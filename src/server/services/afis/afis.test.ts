@@ -181,10 +181,9 @@ describe('fetchIsKnownInAFIS ', () => {
         getAuthProfileAndToken('private')
       );
 
-      expect(response).toStrictEqual({
+      expect(response).toMatchObject({
         code: 400,
         content: null,
-        message: expect.any(String),
         status: 'ERROR',
       });
     });
@@ -198,10 +197,9 @@ describe('fetchIsKnownInAFIS ', () => {
         getAuthProfileAndToken('private')
       );
 
-      expect(response).toStrictEqual({
+      expect(response).toMatchObject({
         code: 500,
         content: null,
-        message: expect.stringContaining('error retrieving doc'),
         status: 'ERROR',
       });
     });

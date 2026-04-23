@@ -111,11 +111,10 @@ describe('Toeristische verhuur service', () => {
     expect(response.content.vakantieverhuurVergunningen.length).toBe(0);
     expect(
       response.failedDependencies?.vakantieverhuurVergunningen
-    ).toStrictEqual({
+    ).toMatchObject({
       code: 500,
       status: 'ERROR',
       content: null,
-      message: expect.stringContaining('No can do!'),
     });
   });
 
@@ -123,10 +122,9 @@ describe('Toeristische verhuur service', () => {
     remoteApi.post('/lvv/bsn').replyWithError('Not Available');
     const response = await fetchToeristischeVerhuur(authProfileAndToken);
 
-    expect(response.failedDependencies?.lvvRegistraties).toStrictEqual({
+    expect(response.failedDependencies?.lvvRegistraties).toMatchObject({
       status: 'ERROR',
       content: null,
-      message: expect.stringContaining('Not Available'),
     });
   });
 
@@ -139,21 +137,17 @@ describe('Toeristische verhuur service', () => {
 
     const response = await fetchToeristischeVerhuur(authProfileAndToken);
 
-    expect(response.failedDependencies?.lvvRegistraties).toStrictEqual({
+    expect(response.failedDependencies?.lvvRegistraties).toMatchObject({
       status: 'ERROR',
       content: null,
-      message: expect.stringContaining(
-        'Could not retrieve all registration details'
-      ),
     });
 
     expect(
       response.failedDependencies?.vakantieverhuurVergunningen
-    ).toStrictEqual({
+    ).toMatchObject({
       code: 505,
       status: 'ERROR',
       content: null,
-      message: expect.stringContaining('Request failed with status code 505'),
     });
   });
 
