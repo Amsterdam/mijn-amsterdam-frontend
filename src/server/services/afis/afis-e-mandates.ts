@@ -16,7 +16,6 @@ import {
   afisEMandatePostbodyStatic,
   EMandateCreditorsGemeenteAmsterdam,
   eMandateReceiver,
-  SETTLE_TIME_AFTER_CREATING_BANK_ACCOUNT_IN_MS,
 } from './afis-e-mandates-config.ts';
 import {
   debugEmandates,
@@ -160,11 +159,6 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
         `Error creating bank account - ${'message' in createBankAccountResponse ? createBankAccountResponse.message : ''}`
       );
     }
-    // Wait for 2 seconds to ensure that the bank account is created and available in the system before we create the e-mandate.
-    await new Promise((resolve) =>
-      setTimeout(resolve, SETTLE_TIME_AFTER_CREATING_BANK_ACCOUNT_IN_MS)
-    );
-    ////
   } else if (
     bankAccountExists &&
     !bankAccountResponse.content?.eMandateCollectionEnabled
