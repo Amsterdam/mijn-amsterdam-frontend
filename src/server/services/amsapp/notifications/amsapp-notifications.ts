@@ -74,6 +74,12 @@ export async function storeNotificationsResponses(
 ): Promise<void> {
   const now = toISOString(new Date());
   const lastLoginDate = options?.updateLastLoginDate ? now : null;
+
+  const temporaryExcludedServices: ServiceId[] = [
+    'afis',
+    'brp',
+    'belasting',
+  ] as const; // MIJN-12971: Temporary filter to not push notifications repeatedly for notifications that have a datePublished set to today everyday
   const responses = entries(serviceResponses)
     .filter(
       // Unsuccessful responses do not contain new notifications
@@ -84,7 +90,7 @@ export async function storeNotificationsResponses(
     )
     .filter(
       ([serviceId, _]: [ServiceId, NotificationsAndTipsResponse]) =>
-        !(['belasting', 'afis', 'brp'] as ServiceId[]).includes(serviceId) // MIJN-12971: Temporary filter to not push notifications repeatedly for notifications that have a datePublished set to today everyday
+        !temporaryExcludedServices.includes(serviceId) // MIJN-12971: Temporary filter to not push notifications repeatedly for notifications that have a datePublished set to today everyday
     )
     .map(
       ([serviceId, response]: [ServiceId, NotificationsAndTipsResponse]) => ({
