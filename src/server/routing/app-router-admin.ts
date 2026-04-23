@@ -2,7 +2,6 @@ import session from 'express-session';
 
 import { createBFFRouter } from './route-helpers.ts';
 import { IS_PRODUCTION } from '../../universal/config/env.ts';
-import { logger } from '../logging.ts';
 import {
   BFF_ADMIN_AUTH_SESSION_COOKIE_NAME,
   IS_ADMIN_AUTHENTICATION_MIDDLEWARE_ENABLED,
@@ -41,9 +40,11 @@ if (IS_ADMIN_ROUTER_ENABLED) {
     IS_ADMIN_AUTHENTICATION_MIDDLEWARE_ENABLED
       ? isAuthenticatedAdmin
       : (_req, _res, next) => {
-          logger.warn(
-            'Admin authentication is disabled. This should only be used in development environments.'
-          );
+          if (IS_PRODUCTION) {
+            throw new Error(
+              'Admin authentication middleware MUST be enabled in production.'
+            );
+          }
           next();
         },
     adminRouter.protected,
