@@ -18,6 +18,7 @@ vi.mock('../services/admin/admin-service-config.ts', async (importActual) => {
 describe('app-router-admin', () => {
   test('should have admin router disabled when the feature toggle is off', async () => {
     mocks.IS_ADMIN_ROUTER_ENABLED = false;
+    vi.resetModules();
     const { router } = await import('./app-router-admin.ts');
     expect(router.stack.length).toBe(1);
     expect(router.stack[0].name).toBe('nextRouter');
