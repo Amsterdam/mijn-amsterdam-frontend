@@ -135,29 +135,50 @@ function isBewoner(verblijfplaats: VerblijfplaatsSource) {
   return verblijfplaats?.functieAdres?.omschrijving === 'woonadres';
 }
 
+function getAdresInOnderzoek(
+  verblijfplaats: PersoonSource['verblijfplaats']
+): Persoon['adresInOnderzoek'] {
+  let adresInOnderzoekType:
+    | NonNullable<Persoon['adresInOnderzoek']>['type']
+    | null = null;
+  if (
+    verblijfplaats?.inOnderzoek ||
+    verblijfplaats?.verblijfadres?.inOnderzoek
+  ) {
+    adresInOnderzoekType = ADRES_IN_ONDERZOEK_A;
+  }
+
+  if (verblijfplaats?.indicatieVastgesteldVerblijftNietOpAdres) {
+    adresInOnderzoekType = ADRES_IN_ONDERZOEK_B;
+  }
+
+  if (!adresInOnderzoekType) {
+    return null;
+  }
+
+  const verblijfplaatsDatum = verblijfplaats?.inOnderzoek?.datumIngangOnderzoek
+    ? getDatum(verblijfplaats.inOnderzoek.datumIngangOnderzoek)
+    : null;
+  const verblijfadresDatum = verblijfplaats?.verblijfadres?.inOnderzoek
+    ?.datumIngangOnderzoek
+    ? getDatum(verblijfplaats.verblijfadres.inOnderzoek.datumIngangOnderzoek)
+    : null;
+
+  return {
+    type: adresInOnderzoekType,
+    datumIngangOnderzoek: verblijfplaatsDatum ?? verblijfadresDatum ?? null,
+  };
+}
+
 function transformBenkBrpResponse(
   sessionID: AuthProfile['sid'],
   persoon: PersoonSource,
   bsnTranslation?: { from: BSN; to: BSN }
 ): BrpFrontend {
-  let adresInOnderzoek: Persoon['adresInOnderzoek'] | null = null;
-  const verblijfplaats = persoon.verblijfplaats;
-
-  if (
-    verblijfplaats?.inOnderzoek ||
-    verblijfplaats?.verblijfadres?.inOnderzoek
-  ) {
-    adresInOnderzoek = ADRES_IN_ONDERZOEK_A;
-  }
-
-  if (verblijfplaats?.indicatieVastgesteldVerblijftNietOpAdres) {
-    adresInOnderzoek = ADRES_IN_ONDERZOEK_B;
-  }
-
   const isMokum =
     persoon.gemeenteVanInschrijving?.code === GEMEENTE_CODE_AMSTERDAM;
   const [partner] = persoon.partners ?? [];
-  const adres = verblijfplaats?.verblijfadres ?? null;
+  const adres = persoon.verblijfplaats?.verblijfadres ?? null;
   const isVerblijfAdresBuitenland =
     adres &&
     'land' in adres &&
@@ -166,8 +187,8 @@ function transformBenkBrpResponse(
 
   const fetchUrlAantalIngeschrevenPersonen =
     isMokum &&
-    verblijfplaats?.adresseerbaarObjectIdentificatie &&
-    isBewoner(verblijfplaats) &&
+    persoon.verblijfplaats?.adresseerbaarObjectIdentificatie &&
+    isBewoner(persoon.verblijfplaats) &&
     featureToggle.service.fetchAantalIngeschrevenPersonenOpAdres.isEnabled
       ? generateFullApiUrlBFF(
           routes.protected.BRP_AANTAL_INGESCHREVEN_PERSONEN_OP_ADRES,
@@ -175,7 +196,7 @@ function transformBenkBrpResponse(
             {
               id: encryptSessionIdWithRouteIdParam(
                 sessionID,
-                verblijfplaats.adresseerbaarObjectIdentificatie
+                persoon.verblijfplaats.adresseerbaarObjectIdentificatie
               ),
             },
           ]
@@ -201,16 +222,16 @@ function transformBenkBrpResponse(
           .filter((n) => !!n.omschrijving) ?? [],
       mokum: isMokum,
       vertrokkenOnbekendWaarheen:
-        verblijfplaats?.type === 'VerblijfplaatsOnbekend',
+        persoon.verblijfplaats?.type === 'VerblijfplaatsOnbekend',
       datumVertrekUitNederlandFormatted: isVerblijfAdresBuitenland
-        ? verblijfplaats.datumVan?.langFormaat
+        ? persoon.verblijfplaats.datumVan?.langFormaat
         : null,
       datumVertrekUitNederland:
         (isVerblijfAdresBuitenland
-          ? getDatum(verblijfplaats?.datumVan)
+          ? getDatum(persoon.verblijfplaats?.datumVan)
           : null) ?? null,
       indicatieGeheim: !!persoon.geheimhoudingPersoonsgegevens,
-      adresInOnderzoek,
+      adresInOnderzoek: getAdresInOnderzoek(persoon.verblijfplaats),
     },
     verbintenis: partner
       ? {
@@ -253,7 +274,9 @@ function transformBenkBrpResponse(
             )
         )
         ?.map((kind) => getPersoonBasis(kind)) ?? [],
-    adres: verblijfplaats?.verblijfadres ? getAdres(verblijfplaats) : null,
+    adres: persoon.verblijfplaats?.verblijfadres
+      ? getAdres(persoon.verblijfplaats)
+      : null,
     fetchUrlAantalIngeschrevenPersonen,
     adresHistorisch: [],
     aantalIngeschrevenPersonen: AANTAL_INGESCHREVEN_PERSONEN_NOT_SET,
@@ -513,4 +536,5 @@ export const forTesting = {
   getDatum,
   transformBenkBrpResponse,
   translateBSN,
+  getAdresInOnderzoek,
 };

@@ -7,7 +7,10 @@ import {
   apiDependencyError,
 } from '../../../universal/helpers/api.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
-import type { MyNotification } from '../../../universal/types/App.types.ts';
+import {
+  NOTIFICATION_PRIORITY,
+  type MyNotification,
+} from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 
 export function transformBRPNotifications(
@@ -26,7 +29,9 @@ export function transformBRPNotifications(
     notifications.push({
       themaID: themaConfig.BRP.id,
       themaTitle: themaConfig.BRP.title,
-      datePublished: compareDate.toISOString(),
+      datePublished: adresInOnderzoek.dateStart ?? '',
+      hideDatePublished: true,
+      priority: NOTIFICATION_PRIORITY.high,
       isAlert: true,
       id: 'brpAdresInOnderzoek',
       title: 'Adres in onderzoek',
