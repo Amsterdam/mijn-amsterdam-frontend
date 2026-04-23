@@ -13,7 +13,7 @@ function getAdminAuthEnv(key: string): string {
 }
 
 export const IS_ADMIN_ROUTER_ENABLED = isEnabled('MA_ADMIN.router');
-export const IS_ADMIN_AUTHENTICATION_ENABLED = !IS_DEVELOPMENT;
+export const IS_ADMIN_AUTHENTICATION_MIDDLEWARE_ENABLED = !IS_DEVELOPMENT;
 
 export const GRAPH_ME_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 export const MSAL_AUTH_SCOPES = ['User.read'];

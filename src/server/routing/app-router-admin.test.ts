@@ -1,6 +1,6 @@
 const mocks = vi.hoisted(() => ({
   IS_ADMIN_ROUTER_ENABLED: true,
-  IS_ADMIN_AUTHENTICATION_ENABLED: true,
+  IS_ADMIN_AUTHENTICATION_MIDDLEWARE_ENABLED: true,
 }));
 
 vi.mock('../services/admin/admin-service-config.ts', async (importActual) => {
@@ -9,8 +9,8 @@ vi.mock('../services/admin/admin-service-config.ts', async (importActual) => {
     get IS_ADMIN_ROUTER_ENABLED() {
       return mocks.IS_ADMIN_ROUTER_ENABLED;
     },
-    get IS_ADMIN_AUTHENTICATION_ENABLED() {
-      return mocks.IS_ADMIN_AUTHENTICATION_ENABLED;
+    get IS_ADMIN_AUTHENTICATION_MIDDLEWARE_ENABLED() {
+      return mocks.IS_ADMIN_AUTHENTICATION_MIDDLEWARE_ENABLED;
     },
   };
 });
@@ -33,7 +33,7 @@ describe('app-router-admin', () => {
 
   test('should have admin authentication middleware', async () => {
     mocks.IS_ADMIN_ROUTER_ENABLED = true;
-    mocks.IS_ADMIN_AUTHENTICATION_ENABLED = true;
+    mocks.IS_ADMIN_AUTHENTICATION_MIDDLEWARE_ENABLED = true;
     vi.resetModules();
     const { router } = await import('./app-router-admin.ts');
     expect(
@@ -43,7 +43,7 @@ describe('app-router-admin', () => {
 
   test('should NOT have admin authentication middleware', async () => {
     mocks.IS_ADMIN_ROUTER_ENABLED = true;
-    mocks.IS_ADMIN_AUTHENTICATION_ENABLED = false;
+    mocks.IS_ADMIN_AUTHENTICATION_MIDDLEWARE_ENABLED = false;
     vi.resetModules();
     const { router } = await import('./app-router-admin.ts');
     expect(
