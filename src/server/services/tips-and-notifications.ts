@@ -206,7 +206,7 @@ export function sortNotificationsAndInsertTips(
       return aPriority === bPriority ? 0 : aPriority > bPriority ? -1 : 1;
     })
     // Put the alerts on the top regardless of the publication date
-    .toSorted((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
+    .toSorted((a, b) => Number(b.isAlert) - Number(a.isAlert));
 
   const notificationsWithoutTips = sorted.filter((n) => !n.isTip);
 
