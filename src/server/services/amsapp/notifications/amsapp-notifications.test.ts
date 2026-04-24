@@ -221,15 +221,7 @@ describe('amsapp-notifications', () => {
           status: 'OK',
           content: { notifications: [] },
         },
-        afis: {
-          status: 'OK',
-          content: { notifications: [] },
-        },
         belasting: {
-          status: 'OK',
-          content: { notifications: [] },
-        },
-        brp: {
           status: 'OK',
           content: { notifications: [] },
         },
