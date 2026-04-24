@@ -103,7 +103,7 @@ describe('Api utils', () => {
       },
       TEST_STATE_5: {
         message: 'Could not resolve dependency',
-        status: 'DEPENDENCY_ERROR',
+        status: 'ERROR',
       },
     } as Partial<AppState>;
 

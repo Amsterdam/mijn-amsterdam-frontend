@@ -10,9 +10,9 @@ import {
   type MockInstance,
 } from 'vitest';
 
-import * as notifications from './amsapp-notifications.ts';
 import * as model from './amsapp-notifications-model.ts';
 import { handleSendNotificationsResponse } from './amsapp-notifications-route-handlers.ts';
+import * as notifications from './amsapp-notifications.ts';
 import { RequestMock, ResponseMock } from '../../../../testing/utils.ts';
 
 describe('amsapp notifications route handlers', () => {

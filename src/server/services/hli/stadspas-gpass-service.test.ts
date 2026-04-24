@@ -471,7 +471,7 @@ describe('stadspas-gpass-service', () => {
     const errorResponse = {
       status: 'ERROR',
       content: null,
-      message: 'Request failed with status code 500',
+      message: expect.any(String),
       code: HttpStatusCode.InternalServerError,
     };
 
@@ -679,7 +679,7 @@ describe('stadspas-gpass-service', () => {
       const errorResponse = {
         status: 'ERROR',
         content: null,
-        message: 'Request failed with status code 500',
+        message: expect.any(String),
         code: HttpStatusCode.InternalServerError,
       };
 

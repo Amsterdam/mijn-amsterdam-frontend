@@ -9,6 +9,7 @@ import {
 } from '@amsterdam/design-system-react';
 
 import { AfisFacturenTables } from './AfisFacturenTables.tsx';
+import { getVragenOverFactuurText } from './AfisVragenOverFactuurLink.tsx';
 import { useAfisThemaData } from './useAfisThemaData.hook.tsx';
 import { entries } from '../../../../universal/helpers/utils.ts';
 import { MaButtonRouterLink } from '../../../components/MaLink/MaLink.tsx';
@@ -24,17 +25,14 @@ function PageContentTop({
   return (
     <PageContentCell spanWide={8}>
       <Paragraph className="ams-mb-m">
-        Hieronder ziet u een overzicht van uw facturen. Mist u een factuur of
-        heeft u een vraag over één van uw facturen? Stuur een e-mail naar{' '}
-        <Link href="mailto:debiteurenadministratie@amsterdam.nl?subject=Vraag over facturen en betaalvoorkeuren">
-          debiteurenadministratie@amsterdam.nl
-        </Link>{' '}
-        met de details van de factuur, zoals het factuurnummer of andere
-        relevante informatie, zodat zij u verder kunnen helpen.
+        Hieronder ziet u een overzicht van uw facturen.
+        <br />
+        {getVragenOverFactuurText('Vraag over facturen en betaalvoorkeuren')}
       </Paragraph>
       <Paragraph>
-        U ziet hier niet de facturen over Gemeentebelastingen. Deze vindt u
-        terug bij{' '}
+        U ziet hier niet de facturen over Gemeentebelastingen
+        <br />
+        Deze vindt u terug bij{' '}
         <Link rel="noreferrer" href={urlNaarBelastingen}>
           Mijn Belastingen
         </Link>
@@ -98,14 +96,14 @@ export function AfisThema() {
     isThemaPaginaError,
     isThemaPaginaLoading,
     listPageTitle,
-    routeConfig,
-    linkListItems,
+    pageLinks,
     belastingenLinkListItem,
     title,
     themaId,
+    themaConfig,
   } = useAfisThemaData();
 
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const isPartialError = entries(dependencyErrors).some(
     ([, hasError]) => hasError
@@ -116,7 +114,7 @@ export function AfisThema() {
       <MaButtonRouterLink
         className="ams-mb-m"
         variant="secondary"
-        href={routeConfig.betaalVoorkeuren.path}
+        href={themaConfig.betaalVoorkeurenPage.route.path}
       >
         Betaalvoorkeuren
       </MaButtonRouterLink>
@@ -145,7 +143,7 @@ export function AfisThema() {
       isPartialError={isPartialError}
       errorAlertContent={pageContentErrorAlert}
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
-      pageLinks={linkListItems}
+      pageLinks={pageLinks}
       pageContentTop={
         <PageContentTop urlNaarBelastingen={belastingenLinkListItem.to} />
       }

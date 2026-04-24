@@ -166,8 +166,8 @@ const specificatiesTableDisplayProps: DisplayProps<
   WpiIncomeSpecificationTransformed & { documentUrl: string }
 > = {
   props: {
-    datePublishedFormatted: 'Datum',
     category: 'Regeling',
+    datePublishedFormatted: 'Datum',
     documentUrl: 'Document',
   },
   colWidths: {
@@ -180,12 +180,13 @@ const jaaropgavenTableDisplayProps: DisplayProps<
   WpiIncomeSpecificationTransformed & { documentUrl: string }
 > = {
   props: {
+    title: 'Naam',
     datePublishedFormatted: 'Datum',
     documentUrl: 'Document',
   },
   colWidths: {
-    large: ['75%', '25%'],
-    small: ['75%', '25%'],
+    large: ['50%', '25%', '25%'],
+    small: ['75%', '0', '25%'],
   },
 };
 

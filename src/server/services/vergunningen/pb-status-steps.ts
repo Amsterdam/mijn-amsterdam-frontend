@@ -38,26 +38,26 @@ export function getStatusStepsPB<T extends PBVergunning>(
   const statusAfgehandeld: StatusLineItem = {
     id: 'step-3',
     status: 'Afgehandeld',
-    datePublished: dateDecision,
+    datePublished: hasDecision ? dateDecision : '',
     description: '',
     documents: [],
     isActive: !isVerlopen && hasDecision,
     isChecked: hasDecision,
   };
 
-  const statusVerlopen: StatusLineItem = {
-    id: 'step-4',
-    status: 'Verlopen',
-    datePublished: zaak.dateEnd ?? '',
-    description: '',
-    documents: [],
-    isActive: true,
-    isChecked: true,
-  };
-
   const steps: StatusLineItem[] = [];
   steps.push(statusOntvangen, statusInBehandeling, statusAfgehandeld);
+
   if (isVerlopen) {
+    const statusVerlopen: StatusLineItem = {
+      id: 'step-4',
+      status: 'Verlopen',
+      datePublished: zaak.dateEnd ?? '',
+      description: '',
+      documents: [],
+      isActive: true,
+      isChecked: true,
+    };
     steps.push(statusVerlopen);
   }
   return steps;

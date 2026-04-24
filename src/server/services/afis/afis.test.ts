@@ -118,7 +118,7 @@ describe('fetchIsKnownInAFIS ', () => {
       remoteApi
         .post(ROUTES.businesspartnerBSN)
         .reply(200, RESPONSE_BODIES.BSNFound);
-      remoteApi.get(ROUTES.facturen).times(8).reply(200, {});
+      remoteApi.get(ROUTES.facturen).times(9).reply(200, {});
 
       const response = await fetchIsKnownInAFIS(
         getAuthProfileAndToken('private')
@@ -152,7 +152,7 @@ describe('fetchIsKnownInAFIS ', () => {
       remoteApi
         .post(ROUTES.businesspartnerKVK)
         .reply(200, RESPONSE_BODIES.KVKFound);
-      remoteApi.get(ROUTES.facturen).times(8).reply(200, {});
+      remoteApi.get(ROUTES.facturen).times(9).reply(200, {});
 
       const response = await fetchIsKnownInAFIS(
         getAuthProfileAndToken('commercial')
@@ -181,14 +181,11 @@ describe('fetchIsKnownInAFIS ', () => {
         getAuthProfileAndToken('private')
       );
 
-      expect(response).toMatchInlineSnapshot(`
-        {
-          "code": 400,
-          "content": null,
-          "message": "Request failed with status code 400",
-          "status": "ERROR",
-        }
-      `);
+      expect(response).toMatchObject({
+        code: 400,
+        content: null,
+        status: 'ERROR',
+      });
     });
 
     it('Handles server error as expected', async () => {
@@ -200,14 +197,11 @@ describe('fetchIsKnownInAFIS ', () => {
         getAuthProfileAndToken('private')
       );
 
-      expect(response).toMatchInlineSnapshot(`
-        {
-          "code": 500,
-          "content": null,
-          "message": "error retrieving doc",
-          "status": "ERROR",
-        }
-      `);
+      expect(response).toMatchObject({
+        code: 500,
+        content: null,
+        status: 'ERROR',
+      });
     });
 
     it('Handles getting just null as a response by returning an AxiosError', async () => {

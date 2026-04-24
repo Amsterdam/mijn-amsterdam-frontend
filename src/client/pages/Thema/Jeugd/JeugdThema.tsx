@@ -1,7 +1,7 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { useJeugdThemaData } from './useJeugdThemaData.ts';
-import type { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jeugd/jeugd.ts';
+import type { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jzd/jeugd/jeugd.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';

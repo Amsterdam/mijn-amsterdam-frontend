@@ -4,8 +4,8 @@ import { BFF500_PAGE_DOCUMENT_TITLE } from './BffError-routes.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
-import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 import { logger } from '../../helpers/logging.ts';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 
 export function BFF500Error() {
   useHTMLDocumentTitle({

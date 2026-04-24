@@ -82,11 +82,15 @@ export async function handleShowSurveyOverview(
     currentPage
   );
 
+  if (feedbackOverview.status === 'ERROR') {
+    return sendResponse(res, feedbackOverview);
+  }
+
   const entries = feedbackOverview.content?.entries || [];
 
   const score = (
     entries.reduce((acc, entry) => {
-      if (typeof entry === 'undefined') {
+      if (!entry) {
         return acc;
       }
       const rating = Object.values(entry.answers)[0] || '0';

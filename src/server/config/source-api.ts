@@ -1,10 +1,6 @@
 import https from 'node:https';
 
-import type {
-  AxiosHeaderValue,
-  AxiosRequestConfig,
-  AxiosResponse,
-} from 'axios';
+import type { AxiosHeaderValue, AxiosRequestConfig } from 'axios';
 
 import {
   BFF_REQUEST_CACHE_ENABLED,
@@ -12,7 +8,7 @@ import {
   ONE_MINUTE_MS,
   ONE_SECOND_MS,
 } from './app.ts';
-import { featureToggle as featureToggleAfis } from '../../client/pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig as themaConfigAfis } from '../../client/pages/Thema/Afis/Afis-thema-config.ts';
 import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config.ts';
 import { themaConfig as themaConfigErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
 import { themaConfig as themaConfigJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
@@ -81,13 +77,6 @@ type DataRequestConfigBase = {
    */
   passthroughOIDCToken?: boolean;
 
-  /**
-   * If you want to combine the responseData of multiple requests into on you can use this function.
-   * It will fire a next request right after the response succeeded, you can merge the response data.
-   * Mind you, the cancelTimeout might have to be increased because you'll probably make multiple requests pretending as one.
-   */
-  request?: <T>(requestConfig: AxiosRequestConfig) => Promise<AxiosResponse<T>>;
-
   transformResponse?: DataRequestResponseTransformer;
 };
 
@@ -100,7 +89,6 @@ export const DATA_REQUEST_CONFIG_BASE_KEYS: (keyof DataRequestConfigBase)[] = [
   'cacheTimeout',
   'formatUrl',
   'cacheKey_UNSAFE',
-  'request',
 ];
 
 export type DataRequestConfig = Omit<
@@ -143,7 +131,7 @@ const afisFeatureToggle = getFromEnv('BFF_AFIS_FEATURE_TOGGLE_ACTIVE');
 const postponeFetchAfis =
   typeof afisFeatureToggle !== 'undefined'
     ? afisFeatureToggle === 'false'
-    : !featureToggleAfis.AfisActive;
+    : !themaConfigAfis.featureToggle.active;
 
 const contactmomentenFeatureToggle = getFromEnv(
   'BFF_CONTACTMOMENTEN_FEATURE_TOGGLE_ACTIVE'

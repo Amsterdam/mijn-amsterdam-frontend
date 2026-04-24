@@ -6,8 +6,7 @@ const year = 2022;
 const day = 20;
 const month = 0;
 
-const CONTACT_FORM_URL =
-  'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Contactformulier.aspx';
+const UITLEG_PAGE = '/uitleg';
 
 export const WelcomeNotification: MyNotification = {
   id: 'welcome01',
@@ -18,27 +17,13 @@ export const WelcomeNotification: MyNotification = {
   hideDatePublished: true,
   description: `
       <p>
-        De persoonlijke digitale pagina voor burgers en ondernemers in de
-        gemeente Amsterdam. Hier ziet u op 1 centrale plek:
+       Welkom op Mijn Amsterdam: dit is uw persoonlijke online portaal bij de gemeente Amsterdam. Hier ziet u op 1 centrale plek welke gegevens de gemeente van u heeft vastgelegd. U ziet hier ook wat u bij de gemeente heeft aangevraagd, hoe het met uw aanvraag staat en hoe u kunt doorgeven als er iets niet klopt.
       </p>
-      <ul>
-        <li>welke gegevens de gemeente van u heeft vastgelegd; </li>
-        <li>hoe het met uw aanvraag staat;</li>
-        <li>hoe u wijzigingen kunt doorgeven als er iets niet klopt;</li>
-        <li>
-          informatie over uw buurt op een overzichtelijke
-          <a href=/buurt>kaart</a>.
-        </li>
-      </ul>
-      <p>
-        <a href=/uitleg>Hier</a> kunt u
-        zien welke gegevens op dit moment getoond kunnen worden. Mijn Amsterdam
-        wordt nog verder ontwikkeld en er komt steeds meer informatie bij.
-      </p>`,
+     `,
   customLink: {
     callback: () => {
-      window.location.href = CONTACT_FORM_URL;
+      window.location.href = UITLEG_PAGE;
     },
-    title: 'Laat ons weten wat u ervan vindt',
+    title: 'Dit kunt u zien in Mijn Amsterdam.',
   },
 };

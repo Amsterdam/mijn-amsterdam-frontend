@@ -1,0 +1,7 @@
+$sizes: xs, s, m, l, xl, 2xl;
+
+@each $size in $sizes {
+  .ma-pull-up-margin-#{$size} {
+    margin-top: calc(var(--ams-space-#{$size}) * -1);
+  }
+}

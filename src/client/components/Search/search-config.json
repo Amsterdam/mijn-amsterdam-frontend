@@ -22,7 +22,7 @@
       "displayTitle": "Informatie over Mijn Amsterdam",
       "description": "Op dit moment staat deze informatie in Mijn Amsterdam",
       "keywords": [
-        "Dit ziet u in Mijn Amsterdam",
+        "Dit kunt u zien in Mijn Amsterdam",
         "Uitleg",
         "About",
         "Over",
@@ -286,6 +286,21 @@
       "displayTitle": "Aantal ingeschreven bewoners op mijn adres",
       "description": "Hoeveel personen zijn er ingeschreven op mijn adres.",
       "keywords": ["Aantal", "bewoners", "ingeschreven", "hoeveel"],
+      "profileTypes": ["private"]
+    },
+    {
+      "url": "/persoonlijke-gegevens",
+      "displayTitle": "Mijn VVE naam",
+      "description": "Informatie over uw VvE.",
+      "keywords": [
+        "VvE",
+        "naam",
+        "vereniging",
+        "eigenaarsvereniging",
+        "eigenaren",
+        "woning",
+        "appartement"
+      ],
       "profileTypes": ["private"]
     },
     {

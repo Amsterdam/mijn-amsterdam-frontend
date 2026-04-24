@@ -2,6 +2,8 @@ import type { LatLngLiteral } from 'leaflet';
 
 import type { Adres } from '../brp/brp-types.ts';
 
+export type BAGID = string;
+
 /** An incomplete slice of a BAG adresseerbaar object.
  *  That is because not all fields are used.
  */
@@ -12,6 +14,8 @@ export type BAGAdreseerbaarObject = {
   huisnummertoevoeging: string | null;
   postcode: string;
   woonplaatsNaam: string;
+  verblijfsobjectIdentificatie: BAGID | null; // Only used in private profile.
+
   openbareruimteNaam: string; // Also know as straatnaam.
   gebiedenStadsdeelNaam: string | null; // Stadsdeel name, e.g. 'Centrum'.
   brkGemeenteNaam: string; // Municipality name, e.g. 'Amsterdam'.
@@ -38,7 +42,7 @@ export type BAGQueryParams = {
   huisnummer?: string;
   huisletter?: string;
   huisnummertoevoeging?: string;
-  identificatie?: string;
+  identificatie?: BAGID;
 };
 
 export type BAGLocation = {

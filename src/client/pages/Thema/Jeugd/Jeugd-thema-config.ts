@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router';
 
-import type { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jeugd/jeugd.ts';
+import type { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jzd/jeugd/jeugd.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import type {
   ThemaConfigBase,

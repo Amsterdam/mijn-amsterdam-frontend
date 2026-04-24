@@ -1,4 +1,6 @@
-import type { ILayer } from 'express-serve-static-core/index';
+import type { ILayer, IRoute } from 'express-serve-static-core/index.js';
+
+vi.mock('@azure/msal-node');
 
 const mocks = vi.hoisted(() => {
   return {
@@ -26,7 +28,7 @@ describe('app', async () => {
   });
 
   test('app middleware OT', async () => {
-    const appModule = await import('./app');
+    const appModule = await import('./app.ts');
     const app = appModule.forTesting.app;
     expect(
       app.router.stack.some((layer: ILayer) =>
@@ -49,6 +51,13 @@ describe('app', async () => {
       app.router.stack.some((layer: ILayer) =>
         'BFF_ID' in layer.handle
           ? layer.handle.BFF_ID === 'router-private-network'
+          : false
+      )
+    ).toBe(true);
+    expect(
+      app.router.stack.some((layer: ILayer) =>
+        'BFF_ID' in layer.handle
+          ? layer.handle.BFF_ID === 'router-admin'
           : false
       )
     ).toBe(true);
@@ -58,7 +67,7 @@ describe('app', async () => {
     mocks.IS_AP = true;
     mocks.IS_OT = false;
 
-    const appModule = await import('./app');
+    const appModule = await import('./app.ts');
     const app = appModule.forTesting.app;
 
     expect(
@@ -85,10 +94,41 @@ describe('app', async () => {
           : false
       )
     ).toBe(true);
+    expect(
+      app.router.stack.some((layer: ILayer) =>
+        'BFF_ID' in layer.handle
+          ? layer.handle.BFF_ID === 'router-admin'
+          : false
+      )
+    ).toBe(true);
   });
 
-  test('Router protected', async () => {
-    const appModule = await import('./app');
+  test('App Router admin', async () => {
+    const appModule = await import('./app.ts');
+    const app = appModule.forTesting.app;
+    const routerAdmin = app.router.stack.find((layer: ILayer) => {
+      return 'BFF_ID' in layer.handle && layer.handle.BFF_ID === 'router-admin';
+    });
+
+    const [
+      sessionMiddleware,
+      adminRouterPublic,
+      authenticationMiddleware,
+      adminRouterProtected,
+    ] = (routerAdmin?.handle as unknown as IRoute).stack;
+    expect(sessionMiddleware.handle.name).toBe('session');
+    expect(
+      'BFF_ID' in adminRouterPublic.handle && adminRouterPublic.handle.BFF_ID
+    ).toBe('ma-admin-router-public');
+    expect(authenticationMiddleware.name).toBe('isAuthenticatedAdmin');
+    expect(
+      'BFF_ID' in adminRouterProtected.handle &&
+        adminRouterProtected.handle.BFF_ID
+    ).toBe('ma-admin-router-protected');
+  });
+
+  test('App Router protected', async () => {
+    const appModule = await import('./app.ts');
     const app = appModule.forTesting.app;
     const routerProtected = app.router.stack.find((layer: ILayer) => {
       return (

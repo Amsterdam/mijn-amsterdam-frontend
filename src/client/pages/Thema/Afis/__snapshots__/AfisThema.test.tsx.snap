@@ -13,8 +13,16 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
+          aria-labelledby=":r0:"
           class="ams-breadcrumb"
         >
+          <h2
+            aria-hidden="true"
+            class="ams-visually-hidden"
+            id=":r0:"
+          >
+            Kruimelpad
+          </h2>
           <ol
             class="ams-breadcrumb__list"
           >
@@ -72,19 +80,25 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
           <p
             class="ams-paragraph ams-mb-m"
           >
-            Hieronder ziet u een overzicht van uw facturen. Mist u een factuur of heeft u een vraag over één van uw facturen? Stuur een e-mail naar 
+            Hieronder ziet u een overzicht van uw facturen.
+            <br />
+            Heeft u een vraag over één van uw facturen?
+            <br />
+            Stuur dan een e-mail naar 
             <a
               class="ams-link"
-              href="mailto:debiteurenadministratie@amsterdam.nl?subject=Vraag over facturen en betaalvoorkeuren"
+              href="mailto:debiteurenadministratie@amsterdam.nl?subject=Vraag%20over%20factuur%20Vraag%20over%20facturen%20en%20betaalvoorkeuren"
             >
               debiteurenadministratie@amsterdam.nl
             </a>
-             met de details van de factuur, zoals het factuurnummer of andere relevante informatie, zodat zij u verder kunnen helpen.
+            .
           </p>
           <p
             class="ams-paragraph"
           >
-            U ziet hier niet de facturen over Gemeentebelastingen. Deze vindt u terug bij 
+            U ziet hier niet de facturen over Gemeentebelastingen
+            <br />
+            Deze vindt u terug bij 
             <a
               class="ams-link"
               href="https://belastingbalie.amsterdam.nl/digid.saml.php?start"
@@ -378,10 +392,24 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
           <h2
-            class="ams-heading ams-heading--2"
+            class="ams-heading ams-heading--2 ams-mb-s"
           >
             Afgehandelde facturen
           </h2>
+          <p
+            class="ams-paragraph ams-mb-m"
+          >
+            Afgehandelde facturen van vóór 1 januari 2025 kunnen wij hier niet laten zien.
+            <br />
+            Heeft u vragen over deze of andere facturen? Stuur dan een e-mail naar 
+            <a
+              class="ams-link"
+              href="mailto:debiteurenadministratie@amsterdam.nl?subject=Vraag%20over%20factuur%20%5Bfactuurnummer%5D"
+            >
+              debiteurenadministratie@amsterdam.nl
+            </a>
+            .
+          </p>
           <div
             class="ams-table"
           >

@@ -69,7 +69,7 @@ describe('App', () => {
 
     const screen = render(<App />);
 
-    expect(screen.getAllByText(MIJN_AMSTERDAM).length).toBe(2);
+    expect(screen.getByText(MIJN_AMSTERDAM)).toBeInTheDocument();
     await screen.findByText('Voor particulieren en eenmanszaken');
     expect(
       screen.getByText('Voor particulieren en eenmanszaken')

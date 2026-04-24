@@ -7,11 +7,15 @@ import z from 'zod';
 
 import { IS_PRODUCTION } from '../../universal/config/env.ts';
 import {
-  type ApiResponse_DEPRECATED,
+  type ApiResponse,
   apiErrorResult,
 } from '../../universal/helpers/api.ts';
 import type { AuthProfileAndToken } from '../auth/auth-types.ts';
-import { BFF_API_BASE_URL } from '../config/app.ts';
+import { BFF_API_ADMIN_BASE_URL, BFF_API_BASE_URL } from '../config/app.ts';
+
+function nextRouter(_req: Request, _res: Response, next: NextFunction) {
+  next('router');
+}
 
 type BFFRouter = express.Router & { BFF_ID: string };
 
@@ -28,9 +32,7 @@ export function createBFFRouter({
   router.BFF_ID = id;
 
   if (!isEnabled) {
-    router.use((_req: Request, res: Response, next: NextFunction) => {
-      next('router');
-    });
+    router.use(nextRouter);
   }
 
   return router;
@@ -87,10 +89,18 @@ export function generateFullApiUrlBFF(
   return `${baseUrl}${generatePath(path, pathParams)}${query}`;
 }
 
+export function generateFullApiAdminUrlBFF(
+  path: string,
+  params?: PathParams | QueryAndOrPathParams
+) {
+  return generateFullApiUrlBFF(path, params, BFF_API_ADMIN_BASE_URL);
+}
+
 /** Sets the right statuscode and sends a response. */
 export function sendResponse(
   res: Response,
-  apiResponse: ApiResponse_DEPRECATED<unknown>
+  apiResponse: ApiResponse<unknown>,
+  viewName: string = ''
 ) {
   if (apiResponse.status === 'ERROR') {
     res.status(
@@ -100,7 +110,19 @@ export function sendResponse(
     );
   }
 
-  return res.send(apiResponse);
+  return viewName
+    ? res.render(viewName, {
+        apiResponse,
+      })
+    : res.send(apiResponse);
+}
+
+export function sendResponseHTML(
+  res: Response,
+  apiResponse: ApiResponse<unknown>,
+  viewName: string = 'api-response-html'
+) {
+  return sendResponse(res, apiResponse, viewName);
 }
 
 export function sendBadRequest(res: Response, reason: string) {

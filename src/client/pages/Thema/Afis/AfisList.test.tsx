@@ -1,7 +1,7 @@
 import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { routeConfig } from './Afis-thema-config.ts';
+import { themaConfig } from './Afis-thema-config.ts';
 import { AfisList } from './AfisList.tsx';
 import { bffApi } from '../../../../testing/utils.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
@@ -52,7 +52,7 @@ const testState = {
 } as unknown as AppState;
 
 describe('<AfisFacturen />', () => {
-  const routePath = routeConfig.listPage.path;
+  const routePath = themaConfig.listPage.route.path;
 
   test('Lists Open facturen', async () => {
     const routeEntry = generatePath(routePath, {

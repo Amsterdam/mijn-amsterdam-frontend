@@ -2,7 +2,7 @@ import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { useZorgThemaData } from './useZorgThemaData.ts';
 import { themaConfig } from './Zorg-thema-config.ts';
-import type { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-types.ts';
+import type { WMOVoorzieningFrontend } from '../../../../server/services/jzd/wmo/wmo-types.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';

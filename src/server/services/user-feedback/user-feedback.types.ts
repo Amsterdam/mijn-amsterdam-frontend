@@ -67,7 +67,7 @@ export type SurveyAnswer = {
 export type SurveyEntryPayload = {
   answers: SurveyAnswer[];
   entry_point: string;
-  metadata: object;
+  metadata: Record<string, unknown>;
 };
 
 export const userFeedbackInput = z.object({
@@ -112,12 +112,21 @@ export type SurveyAnswerFrontend = {
 };
 
 export type SurveyEntryFrontend = {
+  id: number;
   answers: Record<
     SurveyAnswerFrontend['question'],
     SurveyAnswerFrontend['answer']
   >;
   dateCreated: string;
-  metadata: object;
+  dateCreatedFormatted: string;
+  maErrors: {
+    name: string;
+    error: string;
+  }[];
+  maThemas: string[];
+  browserTitle: string;
+  metadata: Record<string, unknown>;
+  entryPoint: string;
 };
 
 export type SurveyOverviewFrontend = {

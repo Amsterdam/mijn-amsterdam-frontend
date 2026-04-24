@@ -13,8 +13,16 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
+          aria-labelledby=":r0:"
           class="ams-breadcrumb"
         >
+          <h2
+            aria-hidden="true"
+            class="ams-visually-hidden"
+            id=":r0:"
+          >
+            Kruimelpad
+          </h2>
           <ol
             class="ams-breadcrumb__list"
           >
@@ -144,8 +152,16 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
+          aria-labelledby=":r1:"
           class="ams-breadcrumb"
         >
+          <h2
+            aria-hidden="true"
+            class="ams-visually-hidden"
+            id=":r1:"
+          >
+            Kruimelpad
+          </h2>
           <ol
             class="ams-breadcrumb__list"
           >
@@ -288,12 +304,16 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                     </span>
                     Ontvangen
                   </h3>
-                  <time
-                    class="_StepStatusDate_5b0b8a"
-                    datetime="2023-03-18T00:00:00.000Z"
+                  <div
+                    class="ams-progress-list__panel"
                   >
-                    18 maart 2023
-                  </time>
+                    <time
+                      class="_StepStatusDate_5b0b8a"
+                      datetime="2023-03-18T00:00:00.000Z"
+                    >
+                      18 maart 2023
+                    </time>
+                  </div>
                 </div>
               </li>
               <li
@@ -327,12 +347,16 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                     </span>
                     In behandeling
                   </h3>
-                  <time
-                    class="_StepStatusDate_5b0b8a"
-                    datetime="2023-05-30T00:00:00.000Z"
+                  <div
+                    class="ams-progress-list__panel"
                   >
-                    30 mei 2023
-                  </time>
+                    <time
+                      class="_StepStatusDate_5b0b8a"
+                      datetime="2023-05-30T00:00:00.000Z"
+                    >
+                      30 mei 2023
+                    </time>
+                  </div>
                 </div>
               </li>
               <li
@@ -383,14 +407,18 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                     </span>
                     Extra informatie nodig
                   </h3>
-                  <time
-                    class="_StepStatusDate_5b0b8a"
-                    datetime="2023-06-03T00:00:00.000Z"
+                  <div
+                    class="ams-progress-list__panel"
                   >
-                    03 juni 2023
-                  </time>
-                  <div>
-                    Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief waarin staat welke informatie wij nodig hebben.
+                    <time
+                      class="_StepStatusDate_5b0b8a"
+                      datetime="2023-06-03T00:00:00.000Z"
+                    >
+                      03 juni 2023
+                    </time>
+                    <div>
+                      Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief waarin staat welke informatie wij nodig hebben.
+                    </div>
                   </div>
                 </div>
               </li>
@@ -420,10 +448,14 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                   >
                     Afgehandeld
                   </h3>
-                  <time
-                    class="_StepStatusDate_5b0b8a"
-                    datetime=""
-                  />
+                  <div
+                    class="ams-progress-list__panel"
+                  >
+                    <time
+                      class="_StepStatusDate_5b0b8a"
+                      datetime=""
+                    />
+                  </div>
                 </div>
               </li>
             </ol>

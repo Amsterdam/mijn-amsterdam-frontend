@@ -1,0 +1,52 @@
+{
+  "annotation": null,
+  "beschermd_stadsdorpsgezicht": null,
+  "build_year": 1975,
+  "contacts": [],
+  "district": "Zuidoost",
+  "id": 11,
+  "is_priority_neighborhood": false,
+  "is_small": false,
+  "kvk_nummer": null,
+  "ligt_in_beschermd_gebied": "nee",
+  "monument_status": null,
+  "name": "Vereniging van Eigenaars Groenhoven huisnummers 106 tot en met 866 te Amsterdam",
+  "neighborhood": "G-buurt-Oost",
+  "number_of_apartments": 437,
+  "owners": [
+    {
+      "type": "Natuurlijk persoon",
+      "name": null,
+      "number_of_apartments": 429
+    },
+    {
+      "type": "Vereniging van eigenaren ",
+      "name": null,
+      "number_of_apartments": 2
+    },
+    {
+      "type": "Onderneming",
+      "name": "STUDIO'S V/H TOONDER STUDIO'S B.V.",
+      "number_of_apartments": 1
+    },
+    {
+      "type": "Onderneming",
+      "name": "Balooney Investments B.V.",
+      "number_of_apartments": 1
+    },
+    { "type": "Onbekend", "name": null, "number_of_apartments": 1 },
+    { "type": "Onderneming", "name": null, "number_of_apartments": 1 },
+    {
+      "type": "Onderneming",
+      "name": "Boum B.V.",
+      "number_of_apartments": 1
+    },
+    {
+      "type": "Natuurlijk persoon",
+      "name": "Frits le Belle Onroerend Goed B.V.",
+      "number_of_apartments": 1
+    }
+  ],
+  "wijk": "Geerdinkhof/Kantershof",
+  "zip_code": "1103NB"
+}

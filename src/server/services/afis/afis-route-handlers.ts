@@ -66,7 +66,7 @@ export type RequestWithEncryptedPayloadQueryParam<
 > = RequestWithRouteAndQueryParams<P, Q>;
 
 export interface AfisFacturenRouteParams extends ParamsDictionary {
-  state: AfisFactuurState;
+  state: Exclude<AfisFactuurState, 'open'>;
 }
 /** Route handler to get a series of invoices (facturen) from AFIS (SAP)
  *

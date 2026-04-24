@@ -1,7 +1,7 @@
 import { useParams } from 'react-router';
 
 import { useJeugdThemaData } from './useJeugdThemaData.ts';
-import type { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jeugd/jeugd.ts';
+import type { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jzd/jeugd/jeugd.ts';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import { DocumentListV2 } from '../../../components/DocumentList/DocumentListV2.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';

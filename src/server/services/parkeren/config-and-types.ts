@@ -1,14 +1,13 @@
-import type { DecosZaakBase} from '../decos/decos-types.ts';
+import type { DecosZaakBase } from '../decos/decos-types.ts';
 import { type DecosZaakFrontend } from '../decos/decos-types.ts';
 import type {
   WithLocation,
   WithDateRange,
   WithKentekens,
   WithDateTimeRange,
-  WithDateEnd} from '../vergunningen/config-and-types.ts';
-import {
-  type WithDateStart,
+  WithDateEnd,
 } from '../vergunningen/config-and-types.ts';
+import { type WithDateStart } from '../vergunningen/config-and-types.ts';
 
 export const caseTypeParkeren = {
   GPK: 'GPK',
@@ -21,8 +20,9 @@ export const caseTypeParkeren = {
   TouringcarJaarontheffing: 'Touringcar Jaarontheffing',
 } as const;
 
-export type CaseTypeParkeren = keyof typeof caseTypeParkeren;
-export type GetCaseType<T extends CaseTypeParkeren> =
+export type CaseTypeParkerenKey = keyof typeof caseTypeParkeren;
+export type CaseTypeParkeren = (typeof caseTypeParkeren)[CaseTypeParkerenKey];
+export type GetCaseType<T extends CaseTypeParkerenKey> =
   (typeof caseTypeParkeren)[T];
 
 type BaseSourceResponse<T> = {

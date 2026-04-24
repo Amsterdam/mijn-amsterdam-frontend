@@ -1,13 +1,13 @@
 import { Alert, Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
-import type {
-  AfisFactuurFrontend} from './Afis-thema-config.ts';
+import type { AfisFactuurFrontend } from './Afis-thema-config.ts';
 import {
   displayPropsTermijnenTable,
-  routeConfig,
+  themaConfig,
 } from './Afis-thema-config.ts';
 import styles from './AfisFactuur.module.scss';
+import { getVragenOverFactuurText } from './AfisVragenOverFactuurLink.tsx';
 import { getDocumentLink } from './useAfisFacturenApi.tsx';
 import { useAfisListPageData } from './useAfisListPageData.tsx';
 import {
@@ -75,7 +75,7 @@ function FactuurDetailContent({
         headingLevel={3}
       >
         We kunnen de gevraagde factuur niet vinden.{' '}
-        <MaRouterLink href={routeConfig.themaPage.path}>
+        <MaRouterLink href={themaConfig.route.path}>
           Ga terug naar het overzicht
         </MaRouterLink>
       </Alert>
@@ -92,7 +92,7 @@ function FactuurDetailContent({
       content: factuur.paymentDueDateFormatted ?? '-',
       isVisible:
         !!factuur.paymentDueDateFormatted &&
-        factuur.status !== 'automatische-incasso-termijnen',
+        factuur.status !== 'factuur-in-termijnen',
     },
     {
       label: 'Afzender',
@@ -101,12 +101,12 @@ function FactuurDetailContent({
     {
       label: 'Status',
       content: factuur.statusDescription ?? '-',
-      isVisible: factuur.status !== 'automatische-incasso-termijnen',
+      isVisible: factuur.status !== 'factuur-in-termijnen',
     },
     {
       label: 'Termijnen',
       content: getTermijnenTable(factuur),
-      isVisible: factuur.status === 'automatische-incasso-termijnen',
+      isVisible: factuur.status === 'factuur-in-termijnen',
     },
     {
       label: 'Download',
@@ -148,14 +148,24 @@ export function AfisFactuur({ themaContextParams }: AfisListProps) {
       isLoading={isThemaPaginaLoading}
       pageContentMain={
         state &&
-        factuurNummer && (
-          <PageContentCell>
-            <FactuurDetailContent
-              factuurNummer={factuurNummer}
-              state={state}
-              themaContextParams={themaContextParams}
-            />
-          </PageContentCell>
+        factuurNummer &&
+        !isThemaPaginaLoading && (
+          <>
+            <PageContentCell>
+              <FactuurDetailContent
+                factuurNummer={factuurNummer}
+                state={state}
+                themaContextParams={themaContextParams}
+              />
+            </PageContentCell>
+            <PageContentCell className="ma-pull-up-margin-l" spanWide={8}>
+              <Paragraph>
+                {getVragenOverFactuurText(
+                  `Vraag over factuur ${factuurNummer}`
+                )}
+              </Paragraph>
+            </PageContentCell>
+          </>
         )
       }
       breadcrumbs={breadcrumbs}

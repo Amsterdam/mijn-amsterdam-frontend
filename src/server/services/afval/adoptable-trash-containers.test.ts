@@ -74,7 +74,7 @@ describe('fetchAdoptableTrashContainers', () => {
     );
 
     const result = await fetchAdoptableTrashContainerTips(authProfileAndToken);
-    expect(result.status).toBe('DEPENDENCY_ERROR');
+    expect(result.status).toBe('ERROR');
   });
 
   it('should return an error if fetching location fails', async () => {
@@ -84,7 +84,7 @@ describe('fetchAdoptableTrashContainers', () => {
     );
 
     const result = await fetchAdoptableTrashContainerTips(authProfileAndToken);
-    expect(result.status).toBe('DEPENDENCY_ERROR');
+    expect(result.status).toBe('ERROR');
   });
 
   it('should return an error if fetching dataset fails', async () => {
@@ -95,7 +95,7 @@ describe('fetchAdoptableTrashContainers', () => {
     );
 
     const result = await fetchAdoptableTrashContainerTips(authProfileAndToken);
-    expect(result.status).toBe('DEPENDENCY_ERROR');
+    expect(result.status).toBe('ERROR');
   });
 
   it('should return no tips if age is less than LATE_TEEN_AGE', async () => {

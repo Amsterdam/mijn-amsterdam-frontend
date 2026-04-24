@@ -5,7 +5,10 @@ import styles from './MyThemasPanel.module.scss';
 import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
 import type { ThemaMenuItemTransformed } from '../../config/thema-types.ts';
 import { getRedactedClass } from '../../helpers/cobrowse.ts';
-import { GeneralInfoRoute } from '../../pages/GeneralInfo/GeneralInfo-routes.ts';
+import {
+  GENERAL_INFO_PAGE_DOCUMENT_TITLE,
+  GeneralInfoRoute,
+} from '../../pages/GeneralInfo/GeneralInfo-routes.ts';
 import LoadingContent from '../LoadingContent/LoadingContent.tsx';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 
@@ -76,7 +79,7 @@ export function MyThemasPanel({
         )}
       </UnorderedList>
       <MaRouterLink href={GeneralInfoRoute.route}>
-        Dit ziet u in Mijn Amsterdam
+        {GENERAL_INFO_PAGE_DOCUMENT_TITLE}
       </MaRouterLink>
     </>
   );

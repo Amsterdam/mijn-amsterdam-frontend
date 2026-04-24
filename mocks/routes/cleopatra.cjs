@@ -1,5 +1,5 @@
-const settings = require('../settings.cjs');
 const CLEOPATRA_RESPONSE = require('../fixtures/cleopatra.json');
+const settings = require('../settings.cjs');
 
 module.exports = [
   {
