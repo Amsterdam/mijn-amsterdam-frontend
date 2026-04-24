@@ -48,7 +48,7 @@ export type VerblijfplaatsSource = {
   adresseerbaarObjectIdentificatie: string;
   nummeraanduidingIdentificatie: string;
   datumVan: DatumSource;
-  inOnderzoek: InOnderzoek;
+  inOnderzoek?: InOnderzoek;
 };
 
 export type VerblijfadresSource = {
@@ -59,7 +59,7 @@ export type VerblijfadresSource = {
   huisletter: string;
   postcode: string;
   woonplaats: string;
-  inOnderzoek: InOnderzoek;
+  inOnderzoek?: InOnderzoek;
   land?: TyperingSource; // Is only a property of VerblijfAdresBuitenland.
   locatiebeschrijving?: string; // Is only a property of VerblijfadresLocatie.
 };

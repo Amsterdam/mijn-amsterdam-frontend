@@ -25,18 +25,18 @@ export function transformBRPNotifications(
 
   const notifications: MyNotification[] = [];
 
-  if (adresInOnderzoek) {
+  if (adresInOnderzoek?.type) {
     notifications.push({
       themaID: themaConfig.BRP.id,
       themaTitle: themaConfig.BRP.title,
-      datePublished: adresInOnderzoek.dateStart ?? '',
+      datePublished: adresInOnderzoek.datumIngangOnderzoek ?? '',
       hideDatePublished: true,
       priority: NOTIFICATION_PRIORITY.high,
       isAlert: true,
       id: 'brpAdresInOnderzoek',
       title: 'Adres in onderzoek',
       description:
-        adresInOnderzoek === ADRES_IN_ONDERZOEK_A
+        adresInOnderzoek.type === ADRES_IN_ONDERZOEK_A
           ? 'Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.'
           : 'Op dit moment onderzoeken wij op welk adres u nu woont.',
       link: {

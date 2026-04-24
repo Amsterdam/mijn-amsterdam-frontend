@@ -141,14 +141,11 @@ function getAdresInOnderzoek(
   let adresInOnderzoekType:
     | NonNullable<Persoon['adresInOnderzoek']>['type']
     | null = null;
-  if (
-    verblijfplaats?.inOnderzoek ||
-    verblijfplaats?.verblijfadres?.inOnderzoek
-  ) {
+  if (verblijfplaats.inOnderzoek || verblijfplaats.verblijfadres?.inOnderzoek) {
     adresInOnderzoekType = ADRES_IN_ONDERZOEK_A;
   }
 
-  if (verblijfplaats?.indicatieVastgesteldVerblijftNietOpAdres) {
+  if (verblijfplaats.indicatieVastgesteldVerblijftNietOpAdres) {
     adresInOnderzoekType = ADRES_IN_ONDERZOEK_B;
   }
 
@@ -156,13 +153,12 @@ function getAdresInOnderzoek(
     return null;
   }
 
-  const verblijfplaatsDatum = verblijfplaats?.inOnderzoek?.datumIngangOnderzoek
-    ? getDatum(verblijfplaats.inOnderzoek.datumIngangOnderzoek)
-    : null;
-  const verblijfadresDatum = verblijfplaats?.verblijfadres?.inOnderzoek
-    ?.datumIngangOnderzoek
-    ? getDatum(verblijfplaats.verblijfadres.inOnderzoek.datumIngangOnderzoek)
-    : null;
+  const verblijfplaatsDatum = getDatum(
+    verblijfplaats.inOnderzoek?.datumIngangOnderzoek
+  );
+  const verblijfadresDatum = getDatum(
+    verblijfplaats.verblijfadres.inOnderzoek?.datumIngangOnderzoek
+  );
 
   return {
     type: adresInOnderzoekType,
