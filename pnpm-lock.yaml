@@ -24,11 +24,11 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0
       '@amsterdam/piwik-tracker':
-        specifier: ^2.0.3
-        version: 2.0.3
+        specifier: 3.0.0-alpha.1
+        version: 3.0.0-alpha.1
       '@amsterdam/piwik-tracker-react':
-        specifier: 3.0.0-alpha.0
-        version: 3.0.0-alpha.0(react@18.3.1)
+        specifier: 3.0.0-alpha.1
+        version: 3.0.0-alpha.1(react@18.3.1)
       '@amsterdam/react-maps':
         specifier: ^1.1.1
         version: 1.1.1(leaflet@1.9.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -477,16 +477,13 @@ packages:
   '@amsterdam/design-system-tokens@3.3.0':
     resolution: {integrity: sha512-+L76IumVKoTMDguGPiQ2ozr3V0r+o2Xo0f4HElvT057uSVAvRPeIfIzKue+efYZmhxqdbEIhGdSEGXWCo0hogg==}
 
-  '@amsterdam/piwik-tracker-react@3.0.0-alpha.0':
-    resolution: {integrity: sha512-ZQBGe+NJA1q5ig4MtMr8UNyehjVcWHCYU2LD/ezEGkZJVu3gp1TJLUjsH400jjO1nkxlaDKm+sheaW1+YiJlRA==}
+  '@amsterdam/piwik-tracker-react@3.0.0-alpha.1':
+    resolution: {integrity: sha512-x5cHIjWeDvDsjBFKLLBFJIs+9+wrQqNFGss2GIc3n+pmBMrsqcQdFrX3tk9Cbe+z25DKOj9K+KK7jl+6pRmsZQ==}
     peerDependencies:
       react: '>= 16.8.0'
 
-  '@amsterdam/piwik-tracker@2.0.3':
-    resolution: {integrity: sha512-amBaXmQuCM8bpA/y5Qlnlz7MXV4aUOLTJ9SCNckqBdoUmZ101Nfh3DiczeT6YEW50xfOaHbGb7/8sStRMUNaTg==}
-
-  '@amsterdam/piwik-tracker@3.0.0-alpha.0':
-    resolution: {integrity: sha512-cPx7eZROSO0Jj6V82aVgPL4zgSlRd9Z2Edfzeb9+wbbLvymqC3CU/zufEofdJJZfDjqw6n3E+cuchbGwdB603A==}
+  '@amsterdam/piwik-tracker@3.0.0-alpha.1':
+    resolution: {integrity: sha512-kUipSUN4cVH+7U9+PCSGnJsV9reCizUsgUQ0kcQrwDyqO1F6WWru89a0SSunxqS4IaXUpYLUm+naNHngf0z1aA==}
 
   '@amsterdam/react-maps@1.1.1':
     resolution: {integrity: sha512-b2b8tcRq73sXwqbDVDVtjnBDFjxPIHcvJCS6d91xP7YlneZ4gx8DP/7hEGXD1Wl0seVgEXAWJMZFC3PzmqhW6w==}
@@ -5505,14 +5502,12 @@ snapshots:
 
   '@amsterdam/design-system-tokens@3.3.0': {}
 
-  '@amsterdam/piwik-tracker-react@3.0.0-alpha.0(react@18.3.1)':
+  '@amsterdam/piwik-tracker-react@3.0.0-alpha.1(react@18.3.1)':
     dependencies:
-      '@amsterdam/piwik-tracker': 3.0.0-alpha.0
+      '@amsterdam/piwik-tracker': 3.0.0-alpha.1
       react: 18.3.1
 
-  '@amsterdam/piwik-tracker@2.0.3': {}
-
-  '@amsterdam/piwik-tracker@3.0.0-alpha.0': {}
+  '@amsterdam/piwik-tracker@3.0.0-alpha.1': {}
 
   '@amsterdam/react-maps@1.1.1(leaflet@1.9.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:

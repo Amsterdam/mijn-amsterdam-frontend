@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-import PiwikTracker from '@amsterdam/piwik-tracker';
+import PiwikTracker, { urlTransformers } from '@amsterdam/piwik-tracker';
 import type {
   CustomDimension,
   TrackPageViewParams,
@@ -30,6 +30,7 @@ const PiwikTrackerConfig: UserOptions = {
   heartBeat: {
     active: false,
   },
+  urlTransformer: urlTransformers.redactIdLikePathSegments,
 };
 
 // See dimension Ids specified in aansluitgids MIJN-5416
