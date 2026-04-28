@@ -81,7 +81,7 @@ describe('tips-and-notifications', () => {
     expect(sortedNotifications[6].title).toBe('tip 2');
   });
 
-  test('Should sort notifications by datePublished and priority', () => {
+  test('Should sort on priority high to low and datePublished early to late', () => {
     const notifications = [
       {
         title: 'tip 0',
