@@ -55,6 +55,7 @@ export interface MyNotification<ID extends string = string> {
   description?: string;
   hideDatePublished?: boolean;
   id: string;
+  /** Use NOTIFICATION_PRIORITY.<priority> to set the priority in a readable manner */
   priority?: (typeof NOTIFICATION_PRIORITY)[keyof typeof NOTIFICATION_PRIORITY];
   isAlert?: boolean;
   link?: LinkProps;
