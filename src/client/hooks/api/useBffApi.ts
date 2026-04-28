@@ -12,7 +12,7 @@ import type { SomeOtherString } from '../../../universal/helpers/types.ts';
 type ApiFetchResponse<T> = Promise<ApiResponse<T>>;
 // Extend RequestInit to include a payload property. The body property always takes precedence over payload.
 // E.g: if both body and payload are provided, body will be used.
-export type RequestInitWithPayload<P extends object> = RequestInit & {
+export type RequestInitWithPayload<P> = RequestInit & {
   payload?: P;
 };
 
@@ -63,7 +63,7 @@ async function handleResponse<T>(
  * @param init Payload can be a regular object and will be converted to URLSearchParams. The provided body however, takes precedence over payload.
  * @returns
  */
-export async function sendFormPostRequest<T, P extends object = object>(
+export async function sendFormPostRequest<T, P = any>(
   url: string | URL,
   init?: RequestInitWithPayload<P>
 ): ApiFetchResponse<T> {
@@ -136,9 +136,7 @@ export type BffApiState<D> = {
   isLoading: boolean;
 };
 
-export type BFFApiHook<T, P extends object = object> = BffApiState<
-  ApiResponse<T>
-> & {
+export type BFFApiHook<T, P = any> = BffApiState<ApiResponse<T>> & {
   fetch: (
     url?: UrlOrString | RequestInitWithPayload<P>,
     init_?: RequestInitWithPayload<P>
@@ -155,7 +153,7 @@ const initialState: BffApiState<null> = Object.seal({
   isDirty: false,
 });
 
-type BffApiOptions<T, P extends object> = {
+type BffApiOptions<T, P> = {
   url?: UrlOrString;
   init?: RequestInitWithPayload<P>;
   fetchImmediately?: boolean;
@@ -189,7 +187,7 @@ export const useBffApiStateStore = create<BFFApiStore>((set, get) => ({
   has: (key) => key in get(),
 }));
 
-export function useBffApi<T, P extends object = object>(
+export function useBffApi<T, P = any>(
   cacheKey: string | null | undefined,
   options?: BffApiOptions<T, P>
 ): BFFApiHook<T | null, P> {
