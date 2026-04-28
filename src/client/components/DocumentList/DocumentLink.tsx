@@ -134,7 +134,8 @@ export function DocumentLink({
         maVariant="noDefaultUnderline"
         className={classnames(
           styles.DocumentLink,
-          isErrorVisible && styles.DocumentLinkError
+          isErrorVisible && styles.DocumentLinkError,
+          'do-not-track' // TODO: Testing for MIJN-12670
         )}
         href={document.url}
         onClick={onClickDocumentLink}

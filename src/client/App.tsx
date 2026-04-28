@@ -135,8 +135,9 @@ function AppLanding() {
 }
 
 export function App() {
-  const { enableLinkTracking } = usePiwik();
+  const { enableLinkTracking, pushInstruction } = usePiwik();
   enableLinkTracking();
+  pushInstruction('setIgnoreClasses', ['do-not-track']);
 
   return (
     <BrowserRouter>
