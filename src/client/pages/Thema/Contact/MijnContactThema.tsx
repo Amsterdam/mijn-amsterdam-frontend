@@ -45,7 +45,7 @@ export function MijnContactThema() {
 
   const appointmentCards = data?.appointments.map((a) => {
     return (
-      <div>
+      <div key={a.caseReference}>
         <Card
           icon={PersonAtDeskIcon}
           title={a.subject}

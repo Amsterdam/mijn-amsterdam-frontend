@@ -12,7 +12,7 @@ import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 export function AppointmentQRCodePage() {
   const { id, themaConfig, data } = useKlantcontactData();
   const routeConfig = themaConfig.appointmentQRCode.route;
-  useThemaBreadcrumbs(id);
+  const breadcrumbs = useThemaBreadcrumbs(id);
   useHTMLDocumentTitle(routeConfig);
 
   const { qrcode } = useParams();
@@ -25,7 +25,10 @@ export function AppointmentQRCodePage() {
   const paragraphMargin = 'ams-mb-m';
   return (
     <>
-      <PageV2 heading={`Uw afspraak bij stadsloket ${stadsloketName}`}>
+      <PageV2
+        breadcrumbs={breadcrumbs}
+        heading={`Uw afspraak bij stadsloket ${stadsloketName}`}
+      >
         <PageContentCell>
           {a ? (
             <>
