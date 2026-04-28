@@ -7,9 +7,6 @@ import { getFromEnv } from '../helpers/env.ts';
 import { logger } from '../logging.ts';
 import { BffEndpoints } from '../routing/bff-routes.ts';
 
-const PROXY_API_KEY = getFromEnv('BFF_DEV_INTERNAL_API_KEY', true);
-const ALLOWED_HOSTS = getFromEnv('BFF_PROXY_TARGET_HOST_ALLOWLIST', true);
-
 /** This proxy route handler is for sending requests to external systems -
  * that have us specifically whitelisted.
  *
@@ -38,6 +35,9 @@ const ALLOWED_HOSTS = getFromEnv('BFF_PROXY_TARGET_HOST_ALLOWLIST', true);
  *   --header 'x-ma-pass-api-key-for-target-server: x'
  */
 export async function devProxyHandler(req: Request, res: Response) {
+  const PROXY_API_KEY = getFromEnv('BFF_DEV_INTERNAL_API_KEY', false);
+  const ALLOWED_HOSTS = getFromEnv('BFF_PROXY_TARGET_HOST_ALLOWLIST', false);
+
   if (!(PROXY_API_KEY && ALLOWED_HOSTS)) {
     return res
       .status(HttpStatusCode.InternalServerError)

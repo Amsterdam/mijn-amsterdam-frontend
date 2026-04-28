@@ -41,7 +41,6 @@ import {
 } from '../services/cms/cms-content.ts';
 import { fetchActiveMaintenanceNotifications } from '../services/cms/cms-maintenance-notifications.ts';
 import type { QueryParamsMaintenanceNotifications } from '../services/cms/cms-types.ts';
-import { devProxyHandler } from '../services/dev-proxy.ts';
 
 export const router = express.Router();
 
@@ -260,6 +259,7 @@ router.all(
 );
 
 if (!IS_PRODUCTION) {
+  const { devProxyHandler } = await import('../services/dev-proxy.ts');
   router.all(new RegExp(`^${BffEndpoints.PROXY}/?.*$`), devProxyHandler);
 }
 
