@@ -13,7 +13,7 @@ const ALLOWED_HOSTS = getFromEnv('BFF_PROXY_TARGET_HOST_ALLOWLIST', true);
 /** This proxy route handler is for sending requests to external systems -
  * that have us specifically whitelisted.
  *
- * Specify in the environment variable `MA_PROXY_TARGET_HOST_ALLOWLIST` what hosts to allow -
+ * Specify in the environment variable `BFF_PROXY_TARGET_HOST_ALLOWLIST` what hosts to allow -
  * seperated by semicolons. For example: foo.com;bar.dev;baz.nl.
  *
  * # Usage
