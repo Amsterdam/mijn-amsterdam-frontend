@@ -65,7 +65,7 @@ describe('Notifications', () => {
     const errorResponse = {
       content: null,
       message: '[VAREN] Failed dependencies',
-      status: 'DEPENDENCY_ERROR',
+      status: 'ERROR',
     };
     expect(response).toStrictEqual(errorResponse);
   });

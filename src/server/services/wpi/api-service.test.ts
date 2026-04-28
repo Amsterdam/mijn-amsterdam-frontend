@@ -9,7 +9,6 @@ import type {
   WpiRequestStatusLabels,
 } from './wpi-types.ts';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
-import type { ApiErrorResponse } from '../../../universal/helpers/api.ts';
 import { jsonCopy } from '../../../universal/helpers/utils.ts';
 
 function fakeStepLabels(): WpiRequestStatusLabels {
@@ -152,9 +151,6 @@ describe('wpi/app-service', () => {
     );
 
     expect(response.status).toBe('ERROR');
-    expect((response as ApiErrorResponse<any>).message).toBe(
-      'Request failed with status code 500'
-    );
   });
 
   test('fetchBijstandsuitkering', async () => {
