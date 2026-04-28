@@ -6,7 +6,7 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
 import {
-  NOTIFICATION_PRIORITY,
+  NOTIFICATION_SORTPRIORITY,
   type MyNotification,
 } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
@@ -57,7 +57,7 @@ export function createAfisFacturenNotification(
   return {
     id: `facturen-open-notification`,
     datePublished: mostRecentDatePublished,
-    priority: NOTIFICATION_PRIORITY.high,
+    sortPriority: NOTIFICATION_SORTPRIORITY.high,
     hideDatePublished: true,
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,

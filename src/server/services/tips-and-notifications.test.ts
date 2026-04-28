@@ -2,7 +2,7 @@ import { describe, expect } from 'vitest';
 
 import { sortNotificationsAndInsertTips } from './tips-and-notifications.ts';
 import {
-  NOTIFICATION_PRIORITY,
+  NOTIFICATION_SORTPRIORITY,
   type MyNotification,
 } from '../../universal/types/App.types.ts';
 
@@ -96,7 +96,7 @@ describe('tips-and-notifications', () => {
         description: 'description',
         id: 'id',
         datePublished: '2021-08-07',
-        priority: NOTIFICATION_PRIORITY.high,
+        priority: NOTIFICATION_SORTPRIORITY.high,
       },
       {
         title: 'notification 1',
@@ -104,7 +104,7 @@ describe('tips-and-notifications', () => {
         description: 'description',
         id: 'id',
         datePublished: '2021-07-07',
-        priority: NOTIFICATION_PRIORITY.high,
+        priority: NOTIFICATION_SORTPRIORITY.high,
       },
     ] as unknown as MyNotification[];
 

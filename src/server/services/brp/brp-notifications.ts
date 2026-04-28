@@ -8,7 +8,7 @@ import {
 } from '../../../universal/helpers/api.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import {
-  NOTIFICATION_PRIORITY,
+  NOTIFICATION_SORTPRIORITY,
   type MyNotification,
 } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
@@ -31,7 +31,7 @@ export function transformBRPNotifications(
       themaTitle: themaConfig.BRP.title,
       datePublished: adresInOnderzoek.datumIngangOnderzoek ?? '',
       hideDatePublished: true,
-      priority: NOTIFICATION_PRIORITY.high,
+      sortPriority: NOTIFICATION_SORTPRIORITY.high,
       isAlert: true,
       id: 'brpAdresInOnderzoek',
       title: 'Adres in onderzoek',
