@@ -124,7 +124,7 @@ function ApiActionButton<T>({
   );
 }
 
-type AfisEMandateActionButtonsProps = {
+export type AfisEMandateActionButtonsProps = {
   eMandate: AfisEMandateFrontend;
   redirectUrlApi: BFFApiHook<AfisEMandateSignRequestResponse | null> & {
     requestRedirectUrl: (isActive: boolean) => void;
@@ -190,8 +190,9 @@ function ApiDeactivateButton({
                 className="ams-mb-m"
               >
                 <Paragraph className="ams-mb-s">
-                  Facturen die gekoppeld zijn aan dit E-Mandaat worden niet meer
-                  per automatische incasso voldaan.
+                  U heeft nog openstaande facturen die gekoppeld zijn aan dit
+                  E-mandaat. Deze facturen worden niet meer automatisch
+                  geïncasseerd als u het E-mandaat stopzet.
                   <br />
                 </Paragraph>
                 <Table className={styles.FacturenAlertTable}>
@@ -202,19 +203,21 @@ function ApiDeactivateButton({
                       <Table.HeaderCell>Vervaldatum</Table.HeaderCell>
                     </Table.Row>
                   </Table.Header>
-                  {facturenByEmandateId.map((factuur) => {
-                    return (
-                      <Table.Row key={factuur.id}>
-                        <Table.Cell>{factuur.factuurNummerEl}</Table.Cell>
-                        <Table.Cell>
-                          {factuur.amountOriginalFormatted}
-                        </Table.Cell>
-                        <Table.Cell>
-                          {factuur.paymentDueDateFormatted}
-                        </Table.Cell>
-                      </Table.Row>
-                    );
-                  })}
+                  <Table.Body>
+                    {facturenByEmandateId.map((factuur) => {
+                      return (
+                        <Table.Row key={factuur.id}>
+                          <Table.Cell>{factuur.factuurNummerEl}</Table.Cell>
+                          <Table.Cell>
+                            {factuur.amountOriginalFormatted}
+                          </Table.Cell>
+                          <Table.Cell>
+                            {factuur.paymentDueDateFormatted}
+                          </Table.Cell>
+                        </Table.Row>
+                      );
+                    })}
+                  </Table.Body>
                 </Table>
               </Alert>
             )}
@@ -226,7 +229,8 @@ function ApiDeactivateButton({
               incasso.
             </Paragraph>
             <Paragraph className="ams-mb-s">
-              Je kunt het E-mandaat later opnieuw activeren.
+              Je kunt het E-mandaat later opnieuw activeren voor nieuwe
+              facturen.
             </Paragraph>
           </>
         ),
