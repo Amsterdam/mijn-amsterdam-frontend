@@ -134,7 +134,7 @@ describe('fetchAfisNotifications', () => {
             id: 'facturen-open-notification',
             datePublished: '2022-12-31',
             hideDatePublished: true,
-            priority: 6,
+            sortPriority: 6,
             themaID: themaConfig.id,
             themaTitle: 'Facturen en betalen',
             title: 'Betaal tijdig om extra kosten te voorkomen',

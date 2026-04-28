@@ -96,7 +96,7 @@ describe('tips-and-notifications', () => {
         description: 'description',
         id: 'id',
         datePublished: '2021-08-07',
-        priority: NOTIFICATION_SORTPRIORITY.high,
+        sortPriority: NOTIFICATION_SORTPRIORITY.high,
       },
       {
         title: 'notification 1',
@@ -104,7 +104,7 @@ describe('tips-and-notifications', () => {
         description: 'description',
         id: 'id',
         datePublished: '2021-07-07',
-        priority: NOTIFICATION_SORTPRIORITY.high,
+        sortPriority: NOTIFICATION_SORTPRIORITY.high,
       },
     ] as unknown as MyNotification[];
 
