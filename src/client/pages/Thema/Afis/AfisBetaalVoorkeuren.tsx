@@ -69,6 +69,9 @@ function AfisBusinessPartnerDetails({
         Facturatiegegevens
       </Heading>
       {isLoading && <LoadingContent />}
+      {!isLoading && !rows.length && (
+        <Paragraph>Geen facturatiegegevens gevonden.</Paragraph>
+      )}
       {!isLoading && !!rows.length && (
         <Grid>
           <Grid.Cell span={6}>
