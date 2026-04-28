@@ -26,7 +26,7 @@ import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { useWidescreen } from '../../../hooks/media.hook.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
-function EmandateHistorySection({
+function EmandateHistorySectionSmallScreen({
   eMandateHistory,
 }: {
   eMandateHistory: AfisEMandateFrontend['history'];
@@ -40,26 +40,28 @@ function EmandateHistorySection({
         return (
           <article key={historyItem.eMandateIdSource} className="ams-mb-xl">
             <table className={styles.EmandateHistoryItem}>
-              <tr>
-                <th>Kenmerk</th>
-                <td>{historyItem.eMandateIdSource}</td>
-              </tr>
-              <tr>
-                <th>Van</th>
-                <td>{historyItem.dateValidFromFormatted}</td>
-              </tr>
-              <tr>
-                <th>Tot</th>
-                <td>{historyItem.dateValidToFormatted}</td>
-              </tr>
-              <tr>
-                <th>Rekeninghouder</th>
-                <td>{historyItem.senderName}</td>
-              </tr>
-              <tr>
-                <th>IBAN</th>
-                <td>{historyItem.senderIBAN}</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <th>Kenmerk</th>
+                  <td>{historyItem.eMandateIdSource}</td>
+                </tr>
+                <tr>
+                  <th>Van</th>
+                  <td>{historyItem.dateValidFromFormatted}</td>
+                </tr>
+                <tr>
+                  <th>Tot</th>
+                  <td>{historyItem.dateValidToFormatted}</td>
+                </tr>
+                <tr>
+                  <th>Rekeninghouder</th>
+                  <td>{historyItem.senderName}</td>
+                </tr>
+                <tr>
+                  <th>IBAN</th>
+                  <td>{historyItem.senderIBAN}</td>
+                </tr>
+              </tbody>
             </table>
           </article>
         );
@@ -219,7 +221,9 @@ function EMandate({ eMandate }: EMandateProps) {
             displayProps={eMandateHistoryDisplayProps}
           />
         ) : (
-          <EmandateHistorySection eMandateHistory={eMandate.history} />
+          <EmandateHistorySectionSmallScreen
+            eMandateHistory={eMandate.history}
+          />
         ))}
     </PageContentCell>
   );
