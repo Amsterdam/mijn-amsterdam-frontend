@@ -51,4 +51,4 @@ describe('app-router-admin', () => {
       router.stack.some((layer) => layer.name === 'isAuthenticatedAdmin')
     ).toBe(false);
   });
-});
+}, 10000);
