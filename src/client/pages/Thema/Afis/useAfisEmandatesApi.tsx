@@ -48,6 +48,7 @@ export function useAfisEMandatesApi() {
   const {
     isError,
     isDirty,
+    isLoading,
     data: eMandatesApiResponse,
     fetch,
     optimisticUpdateContent,
@@ -101,7 +102,7 @@ export function useAfisEMandatesApi() {
     eMandates,
     eMandateTableConfig,
     hasEMandatesError: isError,
-    isLoadingEMandates: !isDirty, // Show loading only on first load.
+    isLoadingEMandates: !isDirty && isLoading, // Show loading only on first load.
     optimisticUpdateContent: (
       eMandateId: string,
       payload: Partial<AfisEMandateFrontend>
