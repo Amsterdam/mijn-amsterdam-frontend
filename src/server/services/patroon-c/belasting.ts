@@ -58,7 +58,7 @@ function transformBelastingResponse(
             themaID: themaConfig.id,
             themaTitle: themaConfig.title,
             title: message.titel,
-            datePublished: message.datum,
+            datePublished: message.datum, // current date
             description: message.omschrijving,
             link: {
               title: message.url_naam,
@@ -70,7 +70,7 @@ function transformBelastingResponse(
         case 'M2':
           tips.push({
             id: `belasting-${message.nummer}`,
-            datePublished: message.datum,
+            datePublished: message.datum, // current date
             title: message.titel,
             description: message.omschrijving,
             tipReason: message.informatie,
