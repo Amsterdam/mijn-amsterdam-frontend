@@ -8,11 +8,11 @@ import {
   addResponseDataDebugging,
 } from './source-api-debug.ts';
 import { getRequestConfigCacheKey } from './source-api-helpers.ts';
-import { APP_MODE, IS_PRODUCTION } from '../../universal/config/env.ts';
 import {
   apiErrorResult,
   apiPostponeResult,
   apiSuccessResult,
+  type ApiErrorResponse,
   type ApiResponse,
 } from '../../universal/helpers/api.ts';
 import { omit } from '../../universal/helpers/utils.ts';
@@ -31,8 +31,6 @@ import {
 } from '../config/source-api.ts';
 import { debugCacheKey, debugResponse, debugResponseError } from '../debug.ts';
 import { captureException } from '../services/monitoring.ts';
-
-const useDescriptiveErrorMessages = !IS_PRODUCTION && APP_MODE !== 'unittest';
 
 export const axiosRequest = axios.create({
   responseType: 'json',
@@ -83,6 +81,47 @@ async function request({
       throw error;
     }
   );
+}
+
+function handleRequestDataError(
+  error_: unknown,
+  config: DataRequestConfig
+): ApiErrorResponse<null> {
+  const fromAxios = isAxiosError(error_);
+
+  let code: number = 500;
+  let errorMessageInternal: string = '';
+  let errorMessage: string = '';
+  let stack: string | undefined = undefined;
+
+  if (fromAxios) {
+    const error = error_ as AxiosError;
+    code = error.status ?? error?.response?.status ?? code;
+    errorMessage = `AxiosError in requestData: ${error.message}`;
+    errorMessageInternal = `${errorMessage} for URL ${config.url}`;
+    stack = error.stack;
+  } else {
+    const error = error_ as Error;
+    errorMessage = `Error in requestData: ${error.message}`;
+    errorMessageInternal = `${errorMessage} for URL ${config.url}`;
+    stack = error.stack;
+  }
+
+  // Create a new, more descriptive, error and add the original stack for better debugging.
+  const errorFinal = new Error(errorMessageInternal);
+  errorFinal.stack = stack;
+
+  debugResponse('[ERROR]: %s', errorMessageInternal);
+  debugResponseError('[ERROR]: %o', errorFinal);
+
+  // We don't want to capture exceptions that are a result from failed requests to the source api's
+  // These errors are captured on a lower level by Application Insights as failed requests, and capturing them here as well would lead to double reporting of the same error.
+  if (!fromAxios) {
+    captureException(errorFinal);
+  }
+
+  // We want to return a generic error message to the client so we don't expose internal details.
+  return apiErrorResult(errorMessage, null, code);
 }
 
 export async function requestData<T>(
@@ -180,36 +219,7 @@ export async function requestData<T>(
     // Delete the cache asap, we don't want to serve a cached error response on the next request.
     cache.del(cacheKey);
 
-    const fromAxios = isAxiosError(error_);
-
-    let code: number = 500;
-    let errorMessage: string = '';
-    let stack: string | undefined = undefined;
-
-    if (fromAxios) {
-      const error = error_ as AxiosError;
-      code = error.status ?? error?.response?.status ?? code;
-      errorMessage = useDescriptiveErrorMessages
-        ? `AxiosError in requestData: ${error.message} for URL ${config.url}`
-        : error.message;
-      stack = error.stack;
-    } else {
-      const error = error_ as Error;
-      errorMessage = useDescriptiveErrorMessages
-        ? `Error in requestData: ${error.message} for URL ${config.url}`
-        : error.message;
-      stack = error.stack;
-    }
-
-    debugResponse('[ERROR]: %s', errorMessage, config.url);
-    debugResponseError('[ERROR]: %o', error_);
-
-    const e = new Error(errorMessage);
-    e.stack = stack;
-
-    captureException(e);
-
-    return apiErrorResult(errorMessage, null, code);
+    return handleRequestDataError(error_, config);
   }
 }
 

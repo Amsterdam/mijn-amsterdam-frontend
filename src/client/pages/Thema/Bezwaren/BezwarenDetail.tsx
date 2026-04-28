@@ -1,5 +1,7 @@
 import React from 'react';
 
+import classNames from 'classnames';
+
 import { themaConfig } from './Bezwaren-thema-config.ts';
 import styles from './BezwarenDetail.module.scss';
 import { useBezwarenDetailData } from './useBezwarenDetailData.hook.ts';
@@ -77,24 +79,20 @@ function BezwaarDetailContent({
       <PageContentCell>
         {documentCategories.map((category) => {
           const docs = documents.filter((d) => d.dossiertype === category);
-          const rows: Row[] = [
-            {
-              classNameLabel: styles.DocumentsListLabel,
-              label: (
-                <>
-                  Document{documents.length > 1 ? 'en' : ''}{' '}
-                  {category.toLowerCase()}
-                </>
-              ),
-              content: (
-                <DocumentListV2
-                  className={styles.DocumentList}
-                  documents={docs}
-                />
-              ),
-            },
-          ];
-          return <Datalist key={category} rows={rows} />;
+          return (
+            <DocumentListV2
+              key={category}
+              className={classNames(
+                styles.DocumentList,
+                documentCategories.length > 1 ? 'ams-mb-s' : ''
+              )}
+              documents={docs}
+              columns={[
+                `Document${docs.length > 1 ? 'en' : ''} ${category.toLowerCase()}`,
+                'Datum',
+              ]}
+            />
+          );
         })}
       </PageContentCell>
     </>

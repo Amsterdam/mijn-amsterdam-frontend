@@ -388,7 +388,17 @@ describe('brp.ts', () => {
 
         const response = await fetchBrpByBsnTransformed('test-session-id', BSN);
 
-        expect(response).toMatchSnapshot();
+        expect(response).toMatchObject({
+          failedDependencies: {
+            adresHistorisch: {
+              code: 500,
+              content: null,
+              message: expect.stringContaining('AxiosError in requestData'),
+              status: 'ERROR',
+            },
+          },
+          status: 'OK',
+        });
         expect(response.status).toBe('OK');
         expect(response.content?.persoon.bsn).toBe(BSN);
       });

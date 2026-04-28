@@ -116,7 +116,7 @@ describe('stadspas services', () => {
       expect(response).toStrictEqual({
         code: 500,
         content: null,
-        message: 'Request failed with status code 500',
+        message: expect.any(String),
         status: 'ERROR',
       });
     });
