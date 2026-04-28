@@ -1,6 +1,7 @@
 import type { ReactNode, SVGProps } from 'react';
 
 import { Column, Heading, Icon, Row } from '@amsterdam/design-system-react';
+
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 
 type CardProps = {
@@ -14,7 +15,7 @@ export function Card({ title, icon, children, actionRightside }: CardProps) {
   const isSmallScreen = useSmallScreen();
   const isLargeScreen = !isSmallScreen;
 
-  const titleIcon = icon && <Icon svg={icon} size={'heading-2'}></Icon>;
+  const titleIcon = icon && <Icon svg={icon} size="heading-2"></Icon>;
   const titleHeading = (
     // Make the heading text always take full space so the icon is always aligned with other items -
     // on small screens.
@@ -25,10 +26,10 @@ export function Card({ title, icon, children, actionRightside }: CardProps) {
 
   return (
     <div
-      className={'ams-mb-m'}
+      className="ams-mb-m"
       style={{ paddingTop: '16px', borderTop: '2px solid #EEEEEE' }}
     >
-      <Row gap={'large'}>
+      <Row gap="large">
         {isLargeScreen && titleIcon}
         <Column
           style={{

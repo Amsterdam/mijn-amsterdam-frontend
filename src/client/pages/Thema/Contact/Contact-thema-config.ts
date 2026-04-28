@@ -18,7 +18,9 @@ export type ContactmomentFrontend = KlantcontactFrontend & {
 const THEMA_ID = 'CONTACT';
 const THEMA_TITLE = 'Mijn contact';
 
-type ContactThema = ThemaConfigBase & WithPageConfig<'listPageContactmomenten'>;
+type ContactThema = ThemaConfigBase &
+  WithPageConfig<'listPageContactmomenten'> &
+  WithPageConfig<'appointmentQRCode'>;
 
 const BASE_PATH = '/mijn-contact';
 
@@ -39,6 +41,13 @@ export const themaConfig: ContactThema = {
     route: {
       path: `${BASE_PATH}/contactmomenten/:page?`,
       documentTitle: `Alle contactmomenten | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
+  appointmentQRCode: {
+    route: {
+      path: `${BASE_PATH}/qrcode/:qrcode`,
+      documentTitle: `QR Code voor uw afspraak | ${THEMA_TITLE}`,
       trackingUrl: null,
     },
   },

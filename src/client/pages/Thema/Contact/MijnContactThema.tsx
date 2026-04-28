@@ -1,20 +1,29 @@
 import { Button, Heading, Paragraph } from '@amsterdam/design-system-react';
 import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
+import { generatePath } from 'react-router';
 
 import type { ContactmomentFrontend } from './Contact-thema-config.ts';
 import { useContactmomentenListData } from './useContactmomentenListData.hook.tsx';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import { Card } from '../../../components/Card/Card.tsx';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
+import { MaLink, MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
-import { MaLink } from '../../../components/MaLink/MaLink.tsx';
 
 export function MijnContactThema() {
-  const { id, title, isLoading, isError, pageLinks, routeConfig, data } =
-    useKlantcontactData();
+  const {
+    id,
+    title,
+    isLoading,
+    isError,
+    pageLinks,
+    routeConfig,
+    data,
+    themaConfig,
+  } = useKlantcontactData();
   useHTMLDocumentTitle(routeConfig);
   const pageContentErrorAlert = (
     <>
@@ -48,10 +57,17 @@ export function MijnContactThema() {
         >
           <Paragraph>{`Datum, ${a.appointmentDateFormatted}, ${a.startTime}-${a.endTime} uur`}</Paragraph>
           <Paragraph>{`Locatie Stadsloket ${a.location.name}, ${a.location.street}`}</Paragraph>
-          <Paragraph className={'ams-mb-s'}>
+          <Paragraph className="ams-mb-s">
             Voeg toe aan uw privé agenda
           </Paragraph>
-          <Button variant="secondary">Toon QR code</Button>
+          <MaRouterLink
+            maVariant="noUnderline"
+            href={generatePath(themaConfig.appointmentQRCode.route.path, {
+              qrcode: a.qrCode,
+            })}
+          >
+            <Button variant="secondary">Toon QR code</Button>
+          </MaRouterLink>
         </Card>
       </div>
     );
@@ -69,7 +85,7 @@ export function MijnContactThema() {
       pageContentMain={
         <>
           <PageContentCell>
-            <Heading level={2} className={'ams-mb-s'}>
+            <Heading level={2} className="ams-mb-s">
               Afspraken bij een stadsloket
             </Heading>
             {appointmentCards ? (
