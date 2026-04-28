@@ -1,4 +1,4 @@
-import { IS_PRODUCTION } from '../../../universal/config/env.ts';
+import { APP_MODE, IS_PRODUCTION } from '../../../universal/config/env.ts';
 
 export const featureToggle = {
   router: {
@@ -11,7 +11,8 @@ export const featureToggle = {
   businesspartnerPhoneActive: false,
   // We don't filter out the undownloadable facturen for testing purposes.
   // We want to be able to test immediately and not wait until the evening.
-  filterOutUndownloadableFacturenActive: IS_PRODUCTION,
+  filterOutUndownloadableFacturenActive:
+    IS_PRODUCTION || APP_MODE === 'unittest',
 } as const;
 
 export const OAUTH_ROLE_AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY =
