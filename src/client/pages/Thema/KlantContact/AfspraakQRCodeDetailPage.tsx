@@ -26,43 +26,41 @@ export function AfspraakQRCodeDetailPage() {
   const stadsloketName = a?.location.name;
   const paragraphMargin = 'ams-mb-m';
   return (
-    <>
-      <PageV2
-        breadcrumbs={breadcrumbs}
-        heading={`Uw afspraak bij stadsloket ${stadsloketName}`}
-      >
-        <PageContentCell>
-          {a ? (
-            <>
-              <Paragraph className={paragraphMargin}>
-                {`U heeft een afspraak bij het stadsloket Stadsloket ${stadsloketName}, ${a.location.street}, ${a.location.postalCode} ${a.location.city}.`}
-              </Paragraph>
-              <Paragraph className={paragraphMargin}>
-                <b>{a.displayDate}</b>
-              </Paragraph>
-              <Paragraph className={paragraphMargin}>
-                Scan deze QR code op het stadsloket zodat de medewerker weet dat
-                u op het stadsloket aanwezig bent.
-              </Paragraph>
-            </>
-          ) : (
-            <ErrorAlert>
-              Er ging iets fout met het opzoeken van uw afspraak, probeer het
-              later opnieuw.
-            </ErrorAlert>
-          )}
-        </PageContentCell>
-        <PageContentCell className={styles['center-elements']}>
-          {qrcode ? (
-            <QRCode value={qrcode} />
-          ) : (
-            <ErrorAlert>
-              Er ging iets fout met het ophalen van de QRCode, probeer het later
-              opnieuw.
-            </ErrorAlert>
-          )}
-        </PageContentCell>
-      </PageV2>
-    </>
+    <PageV2
+      breadcrumbs={breadcrumbs}
+      heading={`Uw afspraak bij stadsloket ${stadsloketName}`}
+    >
+      <PageContentCell>
+        {a ? (
+          <>
+            <Paragraph className={paragraphMargin}>
+              {`U heeft een afspraak bij het stadsloket Stadsloket ${stadsloketName}, ${a.location.street}, ${a.location.postalCode} ${a.location.city}.`}
+            </Paragraph>
+            <Paragraph className={paragraphMargin}>
+              <b>{a.displayDate}</b>
+            </Paragraph>
+            <Paragraph className={paragraphMargin}>
+              Scan deze QR code op het stadsloket zodat de medewerker weet dat u
+              op het stadsloket aanwezig bent.
+            </Paragraph>
+          </>
+        ) : (
+          <ErrorAlert>
+            Er ging iets fout met het opzoeken van uw afspraak, probeer het
+            later opnieuw.
+          </ErrorAlert>
+        )}
+      </PageContentCell>
+      <PageContentCell className={styles['center-elements']}>
+        {qrcode ? (
+          <QRCode value={qrcode} />
+        ) : (
+          <ErrorAlert>
+            Er ging iets fout met het ophalen van de QRCode, probeer het later
+            opnieuw.
+          </ErrorAlert>
+        )}
+      </PageContentCell>
+    </PageV2>
   );
 }
