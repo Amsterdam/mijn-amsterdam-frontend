@@ -20,7 +20,7 @@ const THEMA_TITLE = 'Mijn contact';
 
 type ContactThema = ThemaConfigBase &
   WithPageConfig<'listPageContactmomenten'> &
-  WithPageConfig<'afspraakDetailQRCodePage'>;
+  WithPageConfig<'detailPageAfspraakQRCode'>;
 
 const BASE_PATH = '/mijn-contact';
 
@@ -44,7 +44,7 @@ export const themaConfig: ContactThema = {
       trackingUrl: null,
     },
   },
-  afspraakDetailQRCodePage: {
+  detailPageAfspraakQRCode: {
     route: {
       path: `${BASE_PATH}/qrcode/:qrcode`,
       documentTitle: `QR Code voor uw afspraak | ${THEMA_TITLE}`,

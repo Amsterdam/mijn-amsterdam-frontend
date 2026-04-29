@@ -165,7 +165,7 @@ export function KlantContactThema() {
           <MaRouterLink
             maVariant="noUnderline"
             href={generatePath(
-              themaConfig.afspraakDetailQRCodePage.route.path,
+              themaConfig.detailPageAfspraakQRCode.route.path,
               {
                 qrcode: a.qrCode,
               }

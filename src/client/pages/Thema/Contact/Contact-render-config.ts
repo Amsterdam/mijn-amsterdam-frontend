@@ -23,7 +23,7 @@ export const ContactRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: themaConfig.afspraakDetailQRCodePage.route.path,
+    route: themaConfig.detailPageAfspraakQRCode.route.path,
     Component: AfspraakDetailQRCodePage,
     isActive: themaConfig.featureToggle.active,
   },

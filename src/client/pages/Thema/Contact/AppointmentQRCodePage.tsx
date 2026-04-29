@@ -11,7 +11,7 @@ import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function AfspraakDetailQRCodePage() {
   const { id, themaConfig, data } = useKlantcontactData();
-  const routeConfig = themaConfig.afspraakDetailQRCodePage.route;
+  const routeConfig = themaConfig.detailPageAfspraakQRCode.route;
   const breadcrumbs = useThemaBreadcrumbs(id);
   useHTMLDocumentTitle(routeConfig);
 
