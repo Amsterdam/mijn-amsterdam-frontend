@@ -1,6 +1,7 @@
 import type { Request } from 'express';
 
 import { featureToggle, routes } from './erfpacht-service-config.ts';
+import type { ErfpachtDossiersDetailSource } from './erfpacht-types.ts';
 import { fetchErfpachtDossiersDetail } from './erfpacht.ts';
 import {
   createBFFRouter,
@@ -15,7 +16,10 @@ const erfpachtRouterProtected = createBFFRouter({
 
 erfpachtRouterProtected.get(
   routes.protected.ERFPACHT_DOSSIER_DETAILS,
-  async (req: Request<{ dossierId: string }>, res: ResponseAuthenticated) => {
+  async (
+    req: Request<{ dossierId: ErfpachtDossiersDetailSource['dossierId'] }>,
+    res: ResponseAuthenticated
+  ) => {
     const response = await fetchErfpachtDossiersDetail(
       res.locals.authProfileAndToken,
       req.params.dossierId

@@ -9,7 +9,7 @@ export const featureToggle = {
   service: {
     enabled: isEnabled('ERFPACHT.service'),
   },
-};
+} as const;
 
 export const routes = {
   protected: {
@@ -27,4 +27,4 @@ export const dataRequestConfig: DataRequestConfig = {
     'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',
     apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
   },
-};
+} as const;

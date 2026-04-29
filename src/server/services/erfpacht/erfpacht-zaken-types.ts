@@ -1,3 +1,6 @@
+import type { ErfpachtDossiersDetailSource } from './erfpacht-types.ts';
+import type { ZaakAanvraagDetail } from '../../../universal/types/App.types.ts';
+
 export type ErfpachtZaakDetailSource = {
   url: string;
   uuid: string;
@@ -359,10 +362,10 @@ export type ErfpachtZaakStatussenSource = {
   count: number;
   next: string | null;
   previous: string | null;
-  results: ZaakStatusResult[];
+  results: ZaakStatusSource[];
 };
 
-export type ZaakStatusResult = {
+export type ZaakStatusSource = {
   url: string;
   uuid: string;
   zaak: string;
@@ -378,3 +381,68 @@ export type ZaakStatusResult = {
 export type ZaakStatusExpand = {
   [key: string]: unknown;
 };
+
+export type ZaakInfoSource = {
+  zaakNummer: string;
+  uuid: string; // TODO: Must be added to the ZaakInfo response. Delegate to Vernise Team.
+  zaakOmschrijving: string;
+  statusOmschrijving: string;
+  formattedStatusDatum: string;
+  zaakUrl: string;
+  zaakDossiers: ErfpachtDossiersDetailSource['dossierId'][];
+  titelZaakNummer: string;
+  titelZaakOmschrijving: string;
+  titelStatusOmschrijving: string;
+  titelFormattedStatusDatum: string;
+};
+
+export type ZaakInfoResponseSource = {
+  totalElements: number;
+  totalPages: number;
+  first: boolean;
+  last: boolean;
+  size: number;
+  content: ZaakInfoSource[];
+  number: number;
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  numberOfElements: number;
+  pageable: {
+    offset: number;
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    pageSize: number;
+    paged: boolean;
+    pageNumber: number;
+    unpaged: boolean;
+  };
+  empty: boolean;
+};
+
+// TODO: Welke gegevens zijn nodig?
+export type ErfpachtZaakDetailFrontend = Prettify<
+  ZaakAanvraagDetail &
+    Pick<
+      ErfpachtZaakDetailSource,
+      | 'uuid'
+      | 'identificatie'
+      | 'omschrijving'
+      | 'toelichting'
+      | 'url'
+      | 'registratiedatum'
+      | 'startdatum'
+      | 'einddatum'
+      | 'einddatumGepland'
+      | 'uiterlijkeEinddatumAfdoening'
+      | 'publicatiedatum'
+      | 'betalingsindicatie'
+      | 'betalingsindicatieWeergave'
+      | 'laatsteBetaaldatum'
+    >
+>;

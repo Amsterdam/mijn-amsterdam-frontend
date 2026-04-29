@@ -36,9 +36,11 @@ export const LINKS = {
 
 type WithDetailPageFactuur = PageConfig<'detailPageFactuur'>;
 type WithListPageFacturen = PageConfig<'listPageFacturen'>;
+type WithDetailPageZaak = PageConfig<'detailPageZaak'>;
 
 type ThemaConfigErfpacht = ThemaConfigBase &
   WithDetailPage &
+  WithDetailPageZaak &
   WithListPage &
   WithDetailPageFactuur &
   WithListPageFacturen &
@@ -84,6 +86,13 @@ export const themaConfig: ThemaConfigErfpacht = {
       path: '/erfpacht/dossier/:dossierId',
       trackingUrl: '/erfpacht/dossier',
       documentTitle: `Erfpachtdossier | ${THEMA_TITLE}`,
+    },
+  },
+  detailPageZaak: {
+    route: {
+      path: '/erfpacht/zaak/:uuid',
+      trackingUrl: '/erfpacht/zaak',
+      documentTitle: `Erfpacht wijzigingsaanvraag | ${THEMA_TITLE}`,
     },
   },
   listPage: {
