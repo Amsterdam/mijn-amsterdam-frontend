@@ -3,10 +3,6 @@ import {
   getLifetimeTriggerDate,
   isExpiryNotificationDue,
 } from './vergunningen-helpers.ts';
-import {
-  VERGUNNING_AANVRAAG_LINKS,
-  type CaseType,
-} from './vergunningen-notifications-config.ts';
 import { fetchVergunningen } from './vergunningen.ts';
 import { themaConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 import {
@@ -76,19 +72,14 @@ export function createNotificationDefault(
   if (/vergunning|ontheffing/gi.test(zaak.title.toLowerCase())) {
     documentType = '';
   }
-  const verlengenUrl =
-    zaak.caseType &&
-    zaak.caseType in VERGUNNING_AANVRAAG_LINKS &&
-    VERGUNNING_AANVRAAG_LINKS[zaak.caseType as CaseType]?.verlengen
-      ? VERGUNNING_AANVRAAG_LINKS[zaak.caseType as CaseType]?.verlengen
-      : null;
-
-  const aanvragenUrl =
-    zaak.caseType &&
-    zaak.caseType in VERGUNNING_AANVRAAG_LINKS &&
-    VERGUNNING_AANVRAAG_LINKS[zaak.caseType as CaseType]?.aanvragen
-      ? VERGUNNING_AANVRAAG_LINKS[zaak.caseType as CaseType]?.aanvragen
-      : null;
+  const { url: verlengenUrl, text: verlengenText } = getAanvraagUrlAndText(
+    zaak,
+    'verlengen'
+  );
+  const { url: aanvragenUrl, text: aanvragenText } = getAanvraagUrlAndText(
+    zaak,
+    'aanvragen'
+  );
 
   switch (activeStep.status) {
     case 'Ontvangen':
@@ -129,7 +120,7 @@ export function createNotificationDefault(
             zaak.dateEnd
           ).toISOString(),
           title: `Uw ${zaak.title} loopt af`,
-          description: `Uw ${documentType}${zaak.title} met zaaknummer ${zaak.identifier} loopt binnenkort af, ${verlengenUrl ? `<a href="${verlengenUrl}" rel="noopener noreferrer">vraag zonodig een nieuwe aan</a>` : 'vraag zonodig een nieuwe aan'}.`,
+          description: `Uw ${documentType}${zaak.title} met zaaknummer ${zaak.identifier} loopt binnenkort af, ${verlengenUrl ? `<a href="${verlengenUrl}" rel="noopener noreferrer">${verlengenText}</a>` : verlengenText}.`,
         };
       }
 
@@ -146,7 +137,7 @@ export function createNotificationDefault(
         ...baseNotification,
         datePublished,
         title: `${zaak.title} verlopen`,
-        description: `Uw ${documentType}${zaak.title} met zaaknummer ${zaak.identifier} is verlopen, ${aanvragenUrl ? `<a href="${aanvragenUrl}" rel="noopener noreferrer">vraag zonodig een nieuwe aan</a>` : 'vraag zonodig een nieuwe aan'}.`,
+        description: `Uw ${documentType}${zaak.title} met zaaknummer ${zaak.identifier} is verlopen, ${aanvragenUrl ? `<a href="${aanvragenUrl}" rel="noopener noreferrer">${aanvragenText}</a>` : 'aanvragenText'}.`,
       };
   }
 
@@ -192,4 +183,10 @@ export async function fetchVergunningenNotifications(
   }
 
   return apiDependencyError({ VERGUNNINGEN });
+}
+function getAanvraagUrlAndText(
+  zaak: ZaakFrontendCombined,
+  arg1: string
+): { url: any; text: any } {
+  throw new Error('Function not implemented.');
 }
