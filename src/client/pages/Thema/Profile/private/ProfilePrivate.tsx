@@ -178,7 +178,7 @@ export function MijnGegevensThema() {
               <VertrokkenOnbekendWaarheen brpContent={brpContent} />
             </PageContentCell>
           )}
-          {brpContent?.persoon?.adresInOnderzoek && (
+          {brpContent?.persoon?.adresInOnderzoek?.type && (
             <PageContentCell>
               <AdresInOnderzoek brpContent={brpContent} />
             </PageContentCell>
