@@ -14,6 +14,7 @@ export const featureToggle = {
 export const routes = {
   protected: {
     ERFPACHT_DOSSIER_DETAILS: '/services/erfpacht/dossier/:dossierId',
+    ERFPACHT_ZAAK_DETAILS: '/services/erfpacht/zaak/:uuid',
   },
 } as const;
 
