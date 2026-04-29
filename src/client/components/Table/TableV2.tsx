@@ -39,7 +39,6 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
     let linkPropertyName = propertyName;
 
     if (typeof label !== 'string') {
-      console.log(label, item);
       label = 'Onbekend item';
     }
 
