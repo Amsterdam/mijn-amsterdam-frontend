@@ -13,7 +13,7 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: KLANTCONTACTEN_RESPONSE,
+          body: CONTACTMOMENTEN_RESPONSE,
         },
       },
     ],
