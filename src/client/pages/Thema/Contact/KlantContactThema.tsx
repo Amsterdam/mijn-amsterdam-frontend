@@ -1,120 +1,20 @@
-import {
-  Button,
-  Heading,
-  Icon,
-  Paragraph,
-} from '@amsterdam/design-system-react';
-import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
-import { generatePath } from 'react-router';
+import { Heading, Paragraph } from '@amsterdam/design-system-react';
 
 import type { ContactmomentProps } from './Contact-thema-config.ts';
+import { useAfsprakenListData } from './useAfsprakenListData.hook.tsx';
 import { useContactmomentenListData } from './useContactmomentenListData.hook.tsx';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
-import { AfspraakCard } from '../../../components/AfspraakCard/AfspraakCard.tsx';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
-import { MaLink, MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
-import React, { type ReactNode } from 'react';
-
-type CalendarLinkProps = {
-  children?: ReactNode;
-  // Format: use toICALDateTimeString(): YYYYMMDDTHHMMSSZ
-  start: Date;
-  end: Date;
-  uid: string;
-  summary: string;
-  description: string;
-  // Free form location field. Example: Amsterdam City Hall, Amstel 1, 1011 PN Amsterdam, Netherlands, Room 101
-  location: string;
-};
-
-function leftPadWithZero(num: string): string {
-  return num.length === 1 ? `0${num}` : num;
-}
-
-function toICALDateTimeString(date: Date): string {
-  const year = date.getUTCFullYear().toString();
-  const month = leftPadWithZero(date.getUTCMonth().toString());
-  const day = leftPadWithZero(date.getUTCDate().toString());
-
-  const hours = leftPadWithZero(date.getUTCHours().toString());
-  const minutes = leftPadWithZero(date.getUTCMinutes().toString());
-  const seconds = leftPadWithZero(date.getUTCSeconds().toString());
-
-  return `${year}${month}${day}T${hours}${minutes}${seconds}Z`;
-}
-
-function CalendarLink({
-  children,
-  start,
-  end,
-  uid,
-  summary,
-  description,
-  location,
-}: CalendarLinkProps) {
-  function handleDownload(event: React.MouseEvent<HTMLAnchorElement>) {
-    event.preventDefault();
-
-    const icalContent = `BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//Amsterdam//NONSGML v1.0//EN
-BEGIN:VEVENT
-UID:${uid}
-DTSTAMP:${toICALDateTimeString(new Date())}
-DTSTART:${toICALDateTimeString(start)}
-DTEND:${toICALDateTimeString(end)}
-SUMMARY:${summary}
-DESCRIPTION:${description}
-LOCATION:${location}
-END:VEVENT
-END:VCALENDAR`;
-
-    const blob = new Blob([icalContent], {
-      type: 'text/calendar;charset=utf-8',
-    });
-
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'event.ics';
-
-    // Trigger the download
-    link.click();
-
-    // Clean up the URL object
-    URL.revokeObjectURL(url);
-  }
-
-  return (
-    <div>
-      <a href="#" onClick={handleDownload}>
-        {children}
-      </a>
-    </div>
-  );
-}
-
-function setHourMinutes(date: Date, hourMinutes: string): void {
-  const [hours, minutes] = hourMinutes.split(':');
-  date.setHours(parseInt(hours, 10), parseInt(minutes, 10));
-}
-
 export function KlantContactThema() {
-  const {
-    id,
-    title,
-    isLoading,
-    isError,
-    pageLinks,
-    routeConfig,
-    data,
-    themaConfig,
-  } = useKlantcontactData();
+  const { id, title, isLoading, isError, pageLinks, routeConfig, data } =
+    useKlantcontactData();
+  const { afspraakCards } = useAfsprakenListData();
+
   useHTMLDocumentTitle(routeConfig);
   const pageContentErrorAlert = (
     <>
@@ -133,50 +33,6 @@ export function KlantContactThema() {
       </Paragraph>
     </PageContentCell>
   );
-
-  const afspraakCards = data?.afspraken.map((a) => {
-    const startTime = new Date(a.afspraakDate);
-    setHourMinutes(startTime, a.startTime);
-    const endTime = new Date(a.afspraakDate);
-    setHourMinutes(endTime, a.endTime);
-    return (
-      <div key={a.caseReference}>
-        <AfspraakCard
-          icon={<Icon svg={PersonAtDeskIcon} size="heading-2"></Icon>}
-          title={a.subject}
-          actionRightside={
-            <MaLink style={{ marginLeft: '50px' }} href={a.cancellationLink}>
-              Annuleren
-            </MaLink>
-          }
-        >
-          <Paragraph>{`Datum, ${a.afspraakDateFormatted}, ${a.startTime}-${a.endTime} uur`}</Paragraph>
-          <Paragraph>{`Locatie Stadsloket ${a.location.name}, ${a.location.street}`}</Paragraph>
-          <CalendarLink
-            start={startTime}
-            end={endTime}
-            uid={a.caseReference}
-            summary={`Afspraak voor ${a.subject}`}
-            description={`Referentienummer: ${a.caseReference}`}
-            location={`Stadsloket ${a.location.name}, ${a.location.street}, ${a.location.postalCode} ${a.location.city}, Nederland`}
-          >
-            Voeg toe aan uw privé agenda
-          </CalendarLink>
-          <MaRouterLink
-            maVariant="noUnderline"
-            href={generatePath(
-              themaConfig.detailPageAfspraakQRCode.route.path,
-              {
-                qrcode: a.qrCode,
-              }
-            )}
-          >
-            <Button variant="secondary">Toon QR code</Button>
-          </MaRouterLink>
-        </AfspraakCard>
-      </div>
-    );
-  });
 
   return (
     <ThemaPagina

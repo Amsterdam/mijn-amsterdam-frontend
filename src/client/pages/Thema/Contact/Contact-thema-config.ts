@@ -60,7 +60,7 @@ export const themaConfig: ContactThema = {
   ],
 };
 
-const contactmomentenDisplayProps: DisplayProps<ContactmomentFrontend> = {
+const contactmomentenDisplayProps: DisplayProps<ContactmomentProps> = {
   contacttypeField: 'Contactvorm',
   subjectLink: 'Onderwerp',
   datePublishedFormatted: 'Datum',
