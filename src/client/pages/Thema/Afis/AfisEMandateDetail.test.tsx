@@ -28,12 +28,12 @@ vi.mock('../../../hooks/useHTMLDocumentTitle.ts', () => ({
   useHTMLDocumentTitle: () => undefined,
 }));
 
-const mockCancel = vi.fn();
-
 vi.mock('./useAfisEMandatesSignRequest.tsx');
 vi.mock('./useAfisEmandateActionsApi.tsx');
 vi.mock('./useAfisEmandatesApi.tsx');
 vi.mock('../../../hooks/media.hook.ts');
+
+const mockCancel = vi.fn();
 
 describe('AfisEMandateDetail', () => {
   function Detail() {
