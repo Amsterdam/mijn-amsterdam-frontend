@@ -71,7 +71,15 @@ export function getStatusStepsDecos<
     if (isIngetrokken) {
       description = `Wij hebben uw ${zaak.title} ingetrokken.`;
     } else if (isVerlopen) {
-      description = `Uw ${zaak.title} is verlopen.`;
+      const { url: aanvragenUrl, text: aanvragenText } = getAanvraagUrlAndText(
+        zaak,
+        'aanvragen'
+      );
+      description = `Uw ${zaak.title} is verlopen. ${
+        aanvragenUrl
+          ? `<a href="${aanvragenUrl}" rel="noopener noreferrer">${aanvragenText}</a>`
+          : aanvragenText
+      }`;
       datePublished = zaak.dateEnd as string; // Verlopen status always has a dateEbd associated with it.
     } else if (zaak.dateEndFormatted) {
       description = `Uw vergunning verloopt op ${dateTimeEndFormatted(zaak)}.`;
@@ -90,4 +98,10 @@ export function getStatusStepsDecos<
   }
 
   return steps;
+}
+function getAanvraagUrlAndText<DZ extends DecosZaakBase & Partial<WithDateEnd>>(
+  zaak: DZ,
+  arg1: string
+): { url: any; text: any } {
+  throw new Error('Function not implemented.');
 }
