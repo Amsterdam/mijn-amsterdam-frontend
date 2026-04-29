@@ -1,12 +1,12 @@
-import { fetchContactmomenten } from './contactmomenten.ts';
+import { fetchKlantcontact } from './contactmomenten.ts';
 import type {
   AppointmentResponseSource,
-  KlantcontactResponseSource,
+  ContactmomentResponseSource,
 } from './contactmomenten.types.ts';
 import { remoteApiHost } from '../../../testing/setup.ts';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 
-const klantcontactenResponse = {
+const contactmomentenResponse = {
   results: [
     {
       plaatsgevondenOp: '2024-05-22 08:28:45',
@@ -75,7 +75,7 @@ const noShowAppointment: AppointmentResponseSource['results'][0] = {
 };
 
 function setUpAPI(responses: {
-  klantcontactenResponse: KlantcontactResponseSource;
+  contactmomentenResponse: ContactmomentResponseSource;
   appointmentsResponse: AppointmentResponseSource;
 }) {
   remoteApi
@@ -84,7 +84,7 @@ function setUpAPI(responses: {
         '/salesforce/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/'
       )
     )
-    .reply(200, responses.klantcontactenResponse);
+    .reply(200, responses.contactmomentenResponse);
   remoteApi
     .get(
       new RegExp(
@@ -99,12 +99,12 @@ describe('Contactmomenten service', () => {
 
   test('should transform the data correctly', async () => {
     setUpAPI({
-      klantcontactenResponse,
+      contactmomentenResponse,
       appointmentsResponse,
     });
-    const result = await fetchContactmomenten(profileAndToken);
+    const result = await fetchKlantcontact(profileAndToken);
     expect(result.status).toBe('OK');
-    expect(result.content.klantcontacten).toMatchInlineSnapshot(`
+    expect(result.content.contactmomenten).toMatchInlineSnapshot(`
       [
         {
           "contacttype": "Telefoon",
@@ -146,9 +146,9 @@ describe('Contactmomenten service', () => {
     `);
   });
 
-  test("Tranfers 'missed appointments' to klantcontacten", async () => {
+  test("Tranfers 'missed appointments' to contactmomenten", async () => {
     setUpAPI({
-      klantcontactenResponse: {
+      contactmomentenResponse: {
         results: [],
       },
       appointmentsResponse: {
@@ -158,9 +158,9 @@ describe('Contactmomenten service', () => {
         previous: null,
       },
     });
-    const result = await fetchContactmomenten(profileAndToken);
+    const result = await fetchKlantcontact(profileAndToken);
     expect(result.status).toBe('OK');
-    expect(result.content.klantcontacten).toMatchInlineSnapshot(`
+    expect(result.content.contactmomenten).toMatchInlineSnapshot(`
       [
         {
           "contacttype": "Stadsloket",

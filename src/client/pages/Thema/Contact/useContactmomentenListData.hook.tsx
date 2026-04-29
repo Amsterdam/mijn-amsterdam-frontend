@@ -100,7 +100,7 @@ export function useContactmomentenListData() {
   const { items: myThemasMenuItems } = useActiveThemaMenuItems();
 
   const contactmomenten: ContactmomentFrontend[] =
-    data?.klantcontacten.map((klantcontact) => {
+    data?.contactmomenten.map((klantcontact) => {
       const menuItemId = // getMenuItem can not be used because it is dependend on the user having the thema at the current moment
         mapperContactmomentToMenuItem[
           klantcontact.subject as keyof typeof mapperContactmomentToMenuItem

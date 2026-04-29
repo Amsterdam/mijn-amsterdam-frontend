@@ -1,9 +1,9 @@
 import type {
-  KlantcontactResponseSource,
-  KlantcontactFrontend,
+  ContactmomentResponseSource,
+  ContactmomentFrontend as ContactmomentFrontend,
   AppointmentResponseSource,
   AppointmentFrontend,
-  ContactmonentResponseData,
+  KlantcontactResponseData,
 } from './contactmomenten.types.ts';
 import {
   apiSuccessResult,
@@ -89,8 +89,8 @@ async function fetchAppointments(
   return requestContactmomentenData(authProfileAndToken, requestConfig);
 }
 
-function transformKlantcontactenResponse(
-  responseData: KlantcontactResponseSource
+function transformContactmomentenResponse(
+  responseData: ContactmomentResponseSource
 ) {
   if (responseData.results) {
     return responseData.results
@@ -108,49 +108,49 @@ function transformKlantcontactenResponse(
   return [];
 }
 
-async function fetchKlantcontacten(authProfileAndToken: AuthProfileAndToken) {
+async function fetchContactmomenten(authProfileAndToken: AuthProfileAndToken) {
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
       return `${url}/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
     },
-    transformResponse: transformKlantcontactenResponse,
+    transformResponse: transformContactmomentenResponse,
     cacheKey_UNSAFE: createSessionBasedCacheKey(
       authProfileAndToken.profile.sid,
-      'salesforce-contactmomenten-klantcontacten'
+      'salesforce-klantcontact-contactmomenten'
     ),
   };
-  return requestContactmomentenData<KlantcontactFrontend[]>(
+  return requestContactmomentenData<ContactmomentFrontend[]>(
     authProfileAndToken,
     requestConfig
   );
 }
 
-export async function fetchContactmomenten(
+export async function fetchKlantcontact(
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiSuccessResponse<ContactmonentResponseData>> {
+): Promise<ApiSuccessResponse<KlantcontactResponseData>> {
   const [appointmentsResponse, klantcontactenResponse] =
     await Promise.allSettled([
       fetchAppointments(authProfileAndToken),
-      fetchKlantcontacten(authProfileAndToken),
+      fetchContactmomenten(authProfileAndToken),
     ]);
 
   const appointmentsSettled = getSettledResult(appointmentsResponse);
-  const klantcontactenSettled = getSettledResult(klantcontactenResponse);
+  const contactmomentenSettled = getSettledResult(klantcontactenResponse);
 
-  const [appointments, klantcontacten] =
-    transferMissedAppointmentsToKlantcontacten(
+  const [appointments, contactmomenten] =
+    transferMissedAppointmentsToContactmomenten(
       appointmentsSettled.content ?? [],
-      klantcontactenSettled.content ?? []
+      contactmomentenSettled.content ?? []
     );
 
   return apiSuccessResult(
     {
       appointments,
-      klantcontacten,
+      contactmomenten,
     },
     getFailedDependencies({
       appointments: appointmentsSettled,
-      klantcontacten: klantcontactenSettled,
+      contactmomenten: contactmomentenSettled,
     })
   );
 }
@@ -158,14 +158,14 @@ export async function fetchContactmomenten(
 /** Missed appointments need to be tranferred because the other types need an interaction (contactmoment) -
  * and are automaticaly tranferred. We want these there as well so we put them there.
  */
-function transferMissedAppointmentsToKlantcontacten(
+function transferMissedAppointmentsToContactmomenten(
   appointments: AppointmentFrontend[],
-  klantcontacten: KlantcontactFrontend[]
-): [AppointmentFrontend[], KlantcontactFrontend[]] {
+  contactmomenten: ContactmomentFrontend[]
+): [AppointmentFrontend[], ContactmomentFrontend[]] {
   const missedAppointments = appointments
     .filter((a) => a.status === 'No show')
     .map((a) => {
-      const klantcontactmoment: KlantcontactFrontend = {
+      const klantcontactmoment: ContactmomentFrontend = {
         referenceNumber: a.caseReference,
         contacttype: 'Stadsloket',
         subject: 'Gemiste afspraak',
@@ -179,6 +179,6 @@ function transferMissedAppointmentsToKlantcontacten(
   );
   return [
     appointmentsWithoutMissedAppointments,
-    [...klantcontacten, ...missedAppointments],
+    [...contactmomenten, ...missedAppointments],
   ];
 }

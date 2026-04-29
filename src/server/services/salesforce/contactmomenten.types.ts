@@ -8,18 +8,18 @@ export type ContactType =
   | 'Contactformulier'
   | 'Stadsloket';
 
-export type KlantcontactSource = {
+export type ContactmomentSource = {
   plaatsgevondenOp: string;
   onderwerp: string;
   nummer: string;
   kanaal: string;
 };
 
-export type KlantcontactResponseSource = {
-  results: KlantcontactSource[];
+export type ContactmomentResponseSource = {
+  results: ContactmomentSource[];
 };
 
-export type KlantcontactFrontend = {
+export type ContactmomentFrontend = {
   datePublished: string;
   datePublishedFormatted: string;
   subject: string;
@@ -77,7 +77,7 @@ export type AppointmentFrontend = {
   cancellationLink: string;
 };
 
-export type ContactmonentResponseData = {
-  klantcontacten: KlantcontactFrontend[];
+export type KlantcontactResponseData = {
+  contactmomenten: ContactmomentFrontend[];
   appointments: AppointmentFrontend[];
 };

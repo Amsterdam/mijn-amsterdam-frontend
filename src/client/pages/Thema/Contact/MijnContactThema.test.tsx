@@ -4,7 +4,7 @@ import { themaConfig } from './Contact-thema-config.ts';
 import { MijnContactThema } from './MijnContactThema.tsx';
 import type {
   ContactType,
-  KlantcontactFrontend,
+  ContactmomentFrontend,
 } from '../../../../server/services/salesforce/contactmomenten.types.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
 import { componentCreator } from '../../MockApp.tsx';
@@ -15,7 +15,7 @@ const createMijnContactThemaComponent = componentCreator({
   routeEntry: themaConfig.route.path,
 });
 
-const klantcontacten: KlantcontactFrontend[] = [
+const contactmomenten: ContactmomentFrontend[] = [
   {
     datePublished: '2024-05-29 08:02:38',
     datePublishedFormatted: '2024-05-29 08:02:38',
@@ -47,7 +47,9 @@ const klantcontacten: KlantcontactFrontend[] = [
 ];
 
 const state = {
-  KLANT_CONTACT: { content: { klantcontacten, appointments: [] } },
+  KLANT_CONTACT: {
+    content: { contactmomenten, appointments: [] },
+  },
 } as unknown as AppState;
 
 test('Shows max 3 contactmomenten', async () => {

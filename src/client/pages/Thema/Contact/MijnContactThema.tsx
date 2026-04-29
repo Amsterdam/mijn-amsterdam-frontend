@@ -196,7 +196,7 @@ export function MijnContactThema() {
               <Paragraph>U heeft geen afspraken.</Paragraph>
             )}
           </PageContentCell>
-          {!!data?.klantcontacten.length && (
+          {!!data?.contactmomenten.length && (
             <PageContentCell>
               <ContactMomenten />
             </PageContentCell>

@@ -40,7 +40,7 @@ import { fetchBelasting } from './patroon-c/belasting.ts';
 import { fetchMilieuzone, fetchOvertredingen } from './patroon-c/cleopatra.ts';
 import { fetchSubsidie } from './patroon-c/subsidie.ts';
 import { fetchSVWI } from './patroon-c/svwi.ts';
-import { fetchContactmomenten } from './salesforce/contactmomenten.ts';
+import { fetchKlantcontact } from './salesforce/contactmomenten.ts';
 import {
   combineNotificationsWithTipsAndSort,
   fetchNotificationsAndTipsFromServices,
@@ -159,7 +159,7 @@ const BELASTINGEN = callAuthenticatedService(fetchBelasting);
 const MILIEUZONE = callAuthenticatedService(fetchMilieuzone);
 const OVERTREDINGEN = callAuthenticatedService(fetchOvertredingen);
 const SUBSIDIES = callAuthenticatedService(fetchSubsidie);
-const KLANT_CONTACT = callAuthenticatedService(fetchContactmomenten); // For now salesforcre only consists of contactmomenten.
+const KLANT_CONTACT = callAuthenticatedService(fetchKlantcontact); // For now salesforcre only consists of contactmomenten.
 const WONEN = callAuthenticatedService(fetchWonen);
 
 // Location, address, based services

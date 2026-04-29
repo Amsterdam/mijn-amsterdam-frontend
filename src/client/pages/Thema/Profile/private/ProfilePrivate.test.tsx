@@ -7,7 +7,7 @@ import type {
   Adres,
   BrpFrontend,
 } from '../../../../../server/services/brp/brp-types.ts';
-import type { KlantcontactFrontend } from '../../../../../server/services/salesforce/contactmomenten.types.ts';
+import type { ContactmomentFrontend } from '../../../../../server/services/salesforce/contactmomenten.types.ts';
 import type { WonenDataFrontend } from '../../../../../server/services/wonen/wonen.types.ts';
 import { bffApiHost } from '../../../../../testing/setup.ts';
 import { bffApi } from '../../../../../testing/utils.ts';
@@ -17,7 +17,7 @@ import { themaConfig } from '../Profile-thema-config.ts';
 
 const testState = (
   responseBRP: BrpFrontend | object = {},
-  responseSF: KlantcontactFrontend[] = [],
+  responseSF: ContactmomentFrontend[] = [],
   responseZWD?: WonenDataFrontend
 ) => ({
   BRP: { status: 'OK', content: responseBRP },

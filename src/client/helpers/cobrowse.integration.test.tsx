@@ -5,9 +5,9 @@ import { generatePath } from 'react-router';
 import { describe, it } from 'vitest';
 
 import type {
-  ContactmonentResponseData,
+  KlantcontactResponseData,
   ContactType,
-  KlantcontactFrontend,
+  ContactmomentFrontend,
 } from '../../server/services/salesforce/contactmomenten.types.ts';
 import type { AppState } from '../../universal/types/App.types.ts';
 import { DashboardRoute } from '../pages/Dashboard/Dashboard-routes.ts';
@@ -28,7 +28,7 @@ const testState = {
   KLANT_CONTACT: {
     status: 'OK',
     content: {
-      klantcontacten: [
+      contactmomenten: [
         {
           subject: 'Financiën',
           contacttype: themaConfigAfis.title as ContactType, // We misuse this to keep things together
@@ -37,9 +37,9 @@ const testState = {
           subject: themaVergunningen.id,
           contacttype: 'Chat',
         },
-      ] as KlantcontactFrontend[],
+      ] as ContactmomentFrontend[],
       appointments: [],
-    } satisfies ContactmonentResponseData,
+    } satisfies KlantcontactResponseData,
   },
   BRP: {
     status: 'OK',
@@ -227,7 +227,7 @@ describe('Cobrowse redacted components', () => {
         const contactmomentAfis = screen
           .getByRole('link', {
             name:
-              testState.KLANT_CONTACT.content?.klantcontacten[0].contacttype ??
+              testState.KLANT_CONTACT.content?.contactmomenten[0].contacttype ??
               '',
           })
           .closest('tr');
@@ -235,7 +235,7 @@ describe('Cobrowse redacted components', () => {
 
         const contactmomentVergunning = screen
           .getByText(
-            testState.KLANT_CONTACT.content?.klantcontacten[1].subject ?? ''
+            testState.KLANT_CONTACT.content?.contactmomenten[1].subject ?? ''
           )
           .closest('tr');
         expect(contactmomentVergunning).not.toHaveClass('redacted');
@@ -249,7 +249,7 @@ describe('Cobrowse redacted components', () => {
       const contactmomentAfis = screen
         .getByRole('link', {
           name:
-            testState.KLANT_CONTACT.content?.klantcontacten[0].contacttype ??
+            testState.KLANT_CONTACT.content?.contactmomenten[0].contacttype ??
             '',
         })
         .closest('tr');
@@ -257,7 +257,7 @@ describe('Cobrowse redacted components', () => {
 
       const contactmomentVergunning = screen
         .getByText(
-          testState.KLANT_CONTACT.content?.klantcontacten[1].subject ?? ''
+          testState.KLANT_CONTACT.content?.contactmomenten[1].subject ?? ''
         )
         .closest('tr');
       expect(contactmomentVergunning).not.toHaveClass('redacted');
