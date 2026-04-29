@@ -1,4 +1,9 @@
-import { Button, Heading, Paragraph } from '@amsterdam/design-system-react';
+import {
+  Button,
+  Heading,
+  Icon,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 import { generatePath } from 'react-router';
 
@@ -137,7 +142,7 @@ export function MijnContactThema() {
     return (
       <div key={a.caseReference}>
         <Card
-          icon={PersonAtDeskIcon}
+          icon={<Icon svg={PersonAtDeskIcon} size="heading-2"></Icon>}
           title={a.subject}
           actionRightside={
             <MaLink style={{ marginLeft: '50px' }} href={a.cancellationLink}>
