@@ -7,7 +7,7 @@ import {
 import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 import { generatePath } from 'react-router';
 
-import type { ContactmomentFrontend } from './Contact-thema-config.ts';
+import type { ContactmomentProps } from './Contact-thema-config.ts';
 import { useContactmomentenListData } from './useContactmomentenListData.hook.tsx';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import { Card } from '../../../components/Card/Card.tsx';
@@ -104,7 +104,7 @@ function setHourMinutes(date: Date, hourMinutes: string): void {
   date.setHours(parseInt(hours, 10), parseInt(minutes, 10));
 }
 
-export function MijnContactThema() {
+export function KlantContactThema() {
   const {
     id,
     title,
@@ -234,7 +234,7 @@ function ContactMomenten() {
         Wilt u een eerder contactmoment doorgeven bij een volgende vraag? Geef
         dan het referentienummer door.
       </Paragraph>
-      <ThemaPaginaTable<ContactmomentFrontend>
+      <ThemaPaginaTable<ContactmomentProps>
         zaken={contactmomenten}
         maxItems={tableConfig.maxItems}
         displayProps={tableConfig.displayProps}

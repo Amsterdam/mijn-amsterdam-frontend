@@ -2,14 +2,14 @@ import type { ReactNode } from 'react';
 
 import { generatePath } from 'react-router';
 
-import type { ContactmomentFrontend } from '../../../../server/services/salesforce/contactmomenten.types.ts';
+import type { ContactmomentFrontend } from '../../../../server/services/salesforce/klantcontact.types.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import type {
   ThemaConfigBase,
   WithPageConfig,
 } from '../../../config/thema-types.ts';
 
-export type ContactmomentFrontend = ContactmomentFrontend & {
+export type ContactmomentProps = ContactmomentFrontend & {
   contacttypeField: ReactNode;
   subjectLink: ReactNode;
   className: string;

@@ -1,8 +1,8 @@
-import { fetchKlantcontact } from './contactmomenten.ts';
+import { fetchKlantcontact } from './klantcontact.ts';
 import type {
   AfspraakResponseSource,
   ContactmomentResponseSource,
-} from './contactmomenten.types.ts';
+} from './klantcontact.types.ts';
 import { remoteApiHost } from '../../../testing/setup.ts';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 

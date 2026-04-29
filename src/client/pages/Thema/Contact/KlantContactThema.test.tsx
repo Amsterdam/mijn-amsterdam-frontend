@@ -1,16 +1,16 @@
 import { render } from '@testing-library/react';
 
 import { themaConfig } from './Contact-thema-config.ts';
-import { MijnContactThema } from './MijnContactThema.tsx';
+import { KlantContactThema } from './KlantContactThema.tsx';
 import type {
   ContactType,
   ContactmomentFrontend,
-} from '../../../../server/services/salesforce/contactmomenten.types.ts';
+} from '../../../../server/services/salesforce/klantcontact.types.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
 import { componentCreator } from '../../MockApp.tsx';
 
 const createMijnContactThemaComponent = componentCreator({
-  component: MijnContactThema,
+  component: KlantContactThema,
   routePath: themaConfig.route.path,
   routeEntry: themaConfig.route.path,
 });

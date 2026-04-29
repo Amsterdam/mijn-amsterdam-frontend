@@ -3,7 +3,7 @@ import { ConnectedCirclesIcon } from '@amsterdam/design-system-react-icons';
 import { AfspraakDetailQRCodePage as AfspraakDetailQRCodePage } from './AppointmentQRCodePage.tsx';
 import { themaConfig } from './Contact-thema-config.ts';
 import { ContactmomentenListPage } from './ContactmomentenListPage.tsx';
-import { MijnContactThema } from './MijnContactThema.tsx';
+import { KlantContactThema } from './KlantContactThema.tsx';
 import { isLoading } from '../../../../universal/helpers/api.ts';
 import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
@@ -14,7 +14,7 @@ import {
 export const ContactRoutes = [
   {
     route: themaConfig.route.path,
-    Component: MijnContactThema,
+    Component: KlantContactThema,
     isActive: themaConfig.featureToggle.active,
   },
   {

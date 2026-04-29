@@ -4,7 +4,7 @@ import type {
   AfspraakResponseSource as AfsprakenResponseSource,
   AfspraakFrontend as AfspraakFrontend,
   KlantcontactResponseData,
-} from './contactmomenten.types.ts';
+} from './klantcontact.types.ts';
 import {
   apiSuccessResult,
   getFailedDependencies,
