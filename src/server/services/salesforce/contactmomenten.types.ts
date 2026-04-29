@@ -33,7 +33,7 @@ type Product = {
 
 type Status = 'No show' | 'Canceled';
 
-export type AppointmentSource = {
+export type AfspraakSource = {
   subject: string;
   status: Status;
   startDate: string;
@@ -51,16 +51,16 @@ export type AppointmentSource = {
   cancellationLink: string;
 };
 
-export type AppointmentResponseSource = {
-  results: AppointmentSource[];
+export type AfspraakResponseSource = {
+  results: AfspraakSource[];
   previous: string | null;
   next: string | null;
   count: number;
 };
 
-export type AppointmentFrontend = {
-  appointmentDate: string;
-  appointmentDateFormatted: string;
+export type AfspraakFrontend = {
+  afspraakDate: string;
+  afspraakDateFormatted: string;
   startTime: string;
   endTime: string;
   subject: string;
@@ -79,5 +79,5 @@ export type AppointmentFrontend = {
 
 export type KlantcontactResponseData = {
   contactmomenten: ContactmomentFrontend[];
-  appointments: AppointmentFrontend[];
+  afspraken: AfspraakFrontend[];
 };

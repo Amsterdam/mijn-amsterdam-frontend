@@ -116,7 +116,7 @@ export const PRISTINE_APPSTATE: AppState = {
   KLANT_CONTACT: apiPristineResult(
     {
       contactmomenten: [],
-      appointments: [],
+      afspraken: [],
     },
     {
       profileTypes: ['private'],

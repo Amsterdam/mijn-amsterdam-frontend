@@ -10,7 +10,7 @@ export const featureToggle = {
   ['MA_ADMIN.router']: !IS_PRODUCTION,
   ['WONEN.vve']: !IS_PRODUCTION,
   ['VERGUNNINGEN.VTHOnPowerbrowserActive']: !IS_PRODUCTION,
-  ['KLANT_CONTACT.appointments']: !IS_PRODUCTION,
+  ['KLANT_CONTACT.afspraken']: !IS_PRODUCTION,
 };
 // globalThis is used to make sure featureToggles imported from frontend *-thema-configs have access.
 globalThis.MA_FEATURETOGGLES = featureToggle;

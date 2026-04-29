@@ -1,6 +1,6 @@
 import { ConnectedCirclesIcon } from '@amsterdam/design-system-react-icons';
 
-import { AppointmentQRCodePage } from './AppointmentQRCodePage.tsx';
+import { AfspraakDetailQRCodePage as AfspraakDetailQRCodePage } from './AppointmentQRCodePage.tsx';
 import { themaConfig } from './Contact-thema-config.ts';
 import { ContactmomentenListPage } from './ContactmomentenListPage.tsx';
 import { MijnContactThema } from './MijnContactThema.tsx';
@@ -23,8 +23,8 @@ export const ContactRoutes = [
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: themaConfig.appointmentQRCode.route.path,
-    Component: AppointmentQRCodePage,
+    route: themaConfig.afspraakDetailQRCodePage.route.path,
+    Component: AfspraakDetailQRCodePage,
     isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];

@@ -1,6 +1,6 @@
 import { fetchKlantcontact } from './contactmomenten.ts';
 import type {
-  AppointmentResponseSource,
+  AfspraakResponseSource,
   ContactmomentResponseSource,
 } from './contactmomenten.types.ts';
 import { remoteApiHost } from '../../../testing/setup.ts';
@@ -23,7 +23,7 @@ const contactmomentenResponse = {
   ],
 };
 
-const appointmentsResponse: AppointmentResponseSource = {
+const afsprakenResponse: AfspraakResponseSource = {
   results: [
     {
       subject: 'Vaarvignet',
@@ -52,7 +52,7 @@ const appointmentsResponse: AppointmentResponseSource = {
   count: 2,
 };
 
-const noShowAppointment: AppointmentResponseSource['results'][0] = {
+const noShowAfspraak: AfspraakResponseSource['results'][0] = {
   subject: 'Blauwe zone',
   status: 'No show',
   startDate: '2026-02-26 09:00:00',
@@ -76,7 +76,7 @@ const noShowAppointment: AppointmentResponseSource['results'][0] = {
 
 function setUpAPI(responses: {
   contactmomentenResponse: ContactmomentResponseSource;
-  appointmentsResponse: AppointmentResponseSource;
+  afsprakenResponse: AfspraakResponseSource;
 }) {
   remoteApi
     .get(
@@ -91,7 +91,7 @@ function setUpAPI(responses: {
         '/salesforce/contactmomenten/services/apexrest/klantinteracties/v1.0/appointments'
       )
     )
-    .reply(200, responses.appointmentsResponse);
+    .reply(200, responses.afsprakenResponse);
 }
 
 describe('Contactmomenten service', () => {
@@ -100,7 +100,7 @@ describe('Contactmomenten service', () => {
   test('should transform the data correctly', async () => {
     setUpAPI({
       contactmomentenResponse,
-      appointmentsResponse,
+      afsprakenResponse,
     });
     const result = await fetchKlantcontact(profileAndToken);
     expect(result.status).toBe('OK');
@@ -122,11 +122,11 @@ describe('Contactmomenten service', () => {
         },
       ]
     `);
-    expect(result.content.appointments).toMatchInlineSnapshot(`
+    expect(result.content.afspraken).toMatchInlineSnapshot(`
       [
         {
-          "appointmentDate": "2026-02-26",
-          "appointmentDateFormatted": "26 februari 2026",
+          "afspraakDate": "2026-02-26",
+          "afspraakDateFormatted": "26 februari 2026",
           "cancellationLink": "http://remote-api-host/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
           "caseReference": "00157784",
           "endTime": "09:20",
@@ -146,13 +146,13 @@ describe('Contactmomenten service', () => {
     `);
   });
 
-  test("Tranfers 'missed appointments' to contactmomenten", async () => {
+  test("Tranfers 'missed afspraken' to contactmomenten", async () => {
     setUpAPI({
       contactmomentenResponse: {
         results: [],
       },
-      appointmentsResponse: {
-        results: [noShowAppointment],
+      afsprakenResponse: {
+        results: [noShowAfspraak],
         count: 1,
         next: null,
         previous: null,
@@ -171,6 +171,6 @@ describe('Contactmomenten service', () => {
         },
       ]
     `);
-    expect(result.content.appointments).toMatchInlineSnapshot(`[]`);
+    expect(result.content.afspraken).toMatchInlineSnapshot(`[]`);
   });
 });

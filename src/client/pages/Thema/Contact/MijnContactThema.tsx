@@ -134,10 +134,10 @@ export function MijnContactThema() {
     </PageContentCell>
   );
 
-  const appointmentCards = data?.appointments.map((a) => {
-    const startTime = new Date(a.appointmentDate);
+  const afspraakCards = data?.afspraken.map((a) => {
+    const startTime = new Date(a.afspraakDate);
     setHourMinutes(startTime, a.startTime);
-    const endTime = new Date(a.appointmentDate);
+    const endTime = new Date(a.afspraakDate);
     setHourMinutes(endTime, a.endTime);
     return (
       <div key={a.caseReference}>
@@ -150,7 +150,7 @@ export function MijnContactThema() {
             </MaLink>
           }
         >
-          <Paragraph>{`Datum, ${a.appointmentDateFormatted}, ${a.startTime}-${a.endTime} uur`}</Paragraph>
+          <Paragraph>{`Datum, ${a.afspraakDateFormatted}, ${a.startTime}-${a.endTime} uur`}</Paragraph>
           <Paragraph>{`Locatie Stadsloket ${a.location.name}, ${a.location.street}`}</Paragraph>
           <LinkICAL
             start={startTime}
@@ -164,9 +164,12 @@ export function MijnContactThema() {
           </LinkICAL>
           <MaRouterLink
             maVariant="noUnderline"
-            href={generatePath(themaConfig.appointmentQRCode.route.path, {
-              qrcode: a.qrCode,
-            })}
+            href={generatePath(
+              themaConfig.afspraakDetailQRCodePage.route.path,
+              {
+                qrcode: a.qrCode,
+              }
+            )}
           >
             <Button variant="secondary">Toon QR code</Button>
           </MaRouterLink>
@@ -190,8 +193,8 @@ export function MijnContactThema() {
             <Heading level={2} className="ams-mb-s">
               Afspraken bij een stadsloket
             </Heading>
-            {appointmentCards ? (
-              appointmentCards
+            {afspraakCards ? (
+              afspraakCards
             ) : (
               <Paragraph>U heeft geen afspraken.</Paragraph>
             )}

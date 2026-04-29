@@ -48,7 +48,7 @@ const contactmomenten: ContactmomentFrontend[] = [
 
 const state = {
   KLANT_CONTACT: {
-    content: { contactmomenten, appointments: [] },
+    content: { contactmomenten, afspraken: [] },
   },
 } as unknown as AppState;
 

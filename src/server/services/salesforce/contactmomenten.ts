@@ -1,8 +1,8 @@
 import type {
   ContactmomentResponseSource,
   ContactmomentFrontend as ContactmomentFrontend,
-  AppointmentResponseSource,
-  AppointmentFrontend,
+  AfspraakResponseSource as AfsprakenResponseSource,
+  AfspraakFrontend as AfspraakFrontend,
   KlantcontactResponseData,
 } from './contactmomenten.types.ts';
 import {
@@ -51,24 +51,22 @@ async function requestContactmomentenData<T>(
   return requestData<T>(dataRequestConfigBase);
 }
 
-async function fetchAppointments(
+async function fetchAfspraken(
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<AppointmentFrontend[]>> {
+): Promise<ApiResponse<AfspraakFrontend[]>> {
   const requestConfig: DataRequestConfig = {
-    postponeFetch: !isEnabled('KLANT_CONTACT.appointments'),
+    postponeFetch: !isEnabled('KLANT_CONTACT.afspraken'),
     formatUrl({ url }) {
       return `${url}/services/apexrest/klantinteracties/v1.0/appointments`;
     },
-    transformResponse: (
-      data: AppointmentResponseSource
-    ): AppointmentFrontend[] => {
+    transformResponse: (data: AfsprakenResponseSource): AfspraakFrontend[] => {
       const results = data.results.map((result) => {
-        const [appointmentDate, startTime] = result.startDate.split(' ');
+        const [afspraakDate, startTime] = result.startDate.split(' ');
         const [, endTime] = result.endDate.split(' ');
         const HOUR_MINUTE_FORMAT_END = 5;
         return {
-          appointmentDate,
-          appointmentDateFormatted: defaultDateFormat(appointmentDate),
+          afspraakDate,
+          afspraakDateFormatted: defaultDateFormat(afspraakDate),
           startTime: startTime.slice(0, HOUR_MINUTE_FORMAT_END),
           endTime: endTime.slice(0, HOUR_MINUTE_FORMAT_END),
           subject: result.subject,
@@ -128,28 +126,26 @@ async function fetchContactmomenten(authProfileAndToken: AuthProfileAndToken) {
 export async function fetchKlantcontact(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiSuccessResponse<KlantcontactResponseData>> {
-  const [appointmentsResponse, klantcontactenResponse] =
-    await Promise.allSettled([
-      fetchAppointments(authProfileAndToken),
-      fetchContactmomenten(authProfileAndToken),
-    ]);
+  const [afsprakenResponse, klantcontactenResponse] = await Promise.allSettled([
+    fetchAfspraken(authProfileAndToken),
+    fetchContactmomenten(authProfileAndToken),
+  ]);
 
-  const appointmentsSettled = getSettledResult(appointmentsResponse);
+  const afsprakenSettled = getSettledResult(afsprakenResponse);
   const contactmomentenSettled = getSettledResult(klantcontactenResponse);
 
-  const [appointments, contactmomenten] =
-    transferMissedAppointmentsToContactmomenten(
-      appointmentsSettled.content ?? [],
-      contactmomentenSettled.content ?? []
-    );
+  const [afspraken, contactmomenten] = transferMissedAfsprakenToContactmomenten(
+    afsprakenSettled.content ?? [],
+    contactmomentenSettled.content ?? []
+  );
 
   return apiSuccessResult(
     {
-      appointments,
+      afspraken,
       contactmomenten,
     },
     getFailedDependencies({
-      appointments: appointmentsSettled,
+      appointments: afsprakenSettled,
       contactmomenten: contactmomentenSettled,
     })
   );
@@ -158,27 +154,27 @@ export async function fetchKlantcontact(
 /** Missed appointments need to be tranferred because the other types need an interaction (contactmoment) -
  * and are automaticaly tranferred. We want these there as well so we put them there.
  */
-function transferMissedAppointmentsToContactmomenten(
-  appointments: AppointmentFrontend[],
+function transferMissedAfsprakenToContactmomenten(
+  afspraken: AfspraakFrontend[],
   contactmomenten: ContactmomentFrontend[]
-): [AppointmentFrontend[], ContactmomentFrontend[]] {
-  const missedAppointments = appointments
+): [AfspraakFrontend[], ContactmomentFrontend[]] {
+  const missedAfspraken = afspraken
     .filter((a) => a.status === 'No show')
     .map((a) => {
       const klantcontactmoment: ContactmomentFrontend = {
         referenceNumber: a.caseReference,
         contacttype: 'Stadsloket',
         subject: 'Gemiste afspraak',
-        datePublishedFormatted: a.appointmentDateFormatted,
-        datePublished: a.appointmentDate,
+        datePublishedFormatted: a.afspraakDateFormatted,
+        datePublished: a.afspraakDate,
       };
       return klantcontactmoment;
     });
-  const appointmentsWithoutMissedAppointments = appointments.filter(
+  const afsprakenWithoutMissedAfspraken = afspraken.filter(
     (a) => a.status !== 'No show'
   );
   return [
-    appointmentsWithoutMissedAppointments,
-    [...contactmomenten, ...missedAppointments],
+    afsprakenWithoutMissedAfspraken,
+    [...contactmomenten, ...missedAfspraken],
   ];
 }

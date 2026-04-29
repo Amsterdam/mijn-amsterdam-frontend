@@ -38,7 +38,7 @@ const testState = {
           contacttype: 'Chat',
         },
       ] as ContactmomentFrontend[],
-      appointments: [],
+      afspraken: [],
     } satisfies KlantcontactResponseData,
   },
   BRP: {
