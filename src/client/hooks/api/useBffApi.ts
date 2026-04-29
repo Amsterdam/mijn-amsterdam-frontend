@@ -88,7 +88,7 @@ export async function sendFormPostRequest<T, P = any>(
  * @param init Payload can be a regular object and will be converted to URLSearchParams. The provided body however, takes precedence over payload.
  * @returns
  */
-export async function sendJSONPostRequest<T, P extends object>(
+export async function sendJSONPostRequest<T, P = any>(
   url: string | URL,
   init?: RequestInitWithPayload<P>
 ): ApiFetchResponse<T> {
