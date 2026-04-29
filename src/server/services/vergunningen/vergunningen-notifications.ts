@@ -76,6 +76,19 @@ export function createNotificationDefault(
   if (/vergunning|ontheffing/gi.test(zaak.title.toLowerCase())) {
     documentType = '';
   }
+  const verlengenUrl =
+    zaak.caseType &&
+    zaak.caseType in VERGUNNING_AANVRAAG_LINKS &&
+    VERGUNNING_AANVRAAG_LINKS[zaak.caseType as CaseType]?.verlengen
+      ? VERGUNNING_AANVRAAG_LINKS[zaak.caseType as CaseType]?.verlengen
+      : null;
+
+  const aanvragenUrl =
+    zaak.caseType &&
+    zaak.caseType in VERGUNNING_AANVRAAG_LINKS &&
+    VERGUNNING_AANVRAAG_LINKS[zaak.caseType as CaseType]?.aanvragen
+      ? VERGUNNING_AANVRAAG_LINKS[zaak.caseType as CaseType]?.aanvragen
+      : null;
 
   switch (activeStep.status) {
     case 'Ontvangen':
@@ -109,10 +122,6 @@ export function createNotificationDefault(
         zaak.dateEnd &&
         isExpiryNotificationDue(zaak.dateStart, zaak.dateEnd)
       ) {
-        const url =
-          zaak.caseType && zaak.caseType in VERGUNNING_AANVRAAG_LINKS
-            ? VERGUNNING_AANVRAAG_LINKS[zaak.caseType as CaseType]
-            : null;
         return {
           ...baseNotification,
           datePublished: getLifetimeTriggerDate(
@@ -120,7 +129,7 @@ export function createNotificationDefault(
             zaak.dateEnd
           ).toISOString(),
           title: `Uw ${zaak.title} loopt af`,
-          description: `Uw ${documentType}${zaak.title} met zaaknummer ${zaak.identifier} loopt binnenkort af, ${url ? `<a href="${url}" rel="noopener noreferrer">vraag zonodig een nieuwe aan</a>` : 'vraag zonodig een nieuwe aan'}.`,
+          description: `Uw ${documentType}${zaak.title} met zaaknummer ${zaak.identifier} loopt binnenkort af, ${verlengenUrl ? `<a href="${verlengenUrl}" rel="noopener noreferrer">vraag zonodig een nieuwe aan</a>` : 'vraag zonodig een nieuwe aan'}.`,
         };
       }
 
@@ -137,7 +146,7 @@ export function createNotificationDefault(
         ...baseNotification,
         datePublished,
         title: `${zaak.title} verlopen`,
-        description: `Uw ${documentType}${zaak.title} met zaaknummer ${zaak.identifier} is verlopen.`,
+        description: `Uw ${documentType}${zaak.title} met zaaknummer ${zaak.identifier} is verlopen, ${aanvragenUrl ? `<a href="${aanvragenUrl}" rel="noopener noreferrer">vraag zonodig een nieuwe aan</a>` : 'vraag zonodig een nieuwe aan'}.`,
       };
   }
 
