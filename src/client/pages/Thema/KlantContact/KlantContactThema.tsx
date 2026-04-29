@@ -9,20 +9,13 @@ import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { AfspraakCard } from '../../../components/AfspraakCard/AfspraakCard.tsx';
 
 export function KlantContactThema() {
   const { id, title, isLoading, isError, pageLinks, routeConfig, data } =
     useKlantcontactData();
-  const { afspraakCards } = useAfsprakenListData();
-
+  const { afspraken } = useAfsprakenListData();
   useHTMLDocumentTitle(routeConfig);
-  const pageContentErrorAlert = (
-    <>
-      Wij kunnen de volgende gegevens nu niet tonen:
-      <br />
-      {isError && <>- Uw overzicht van contactmomenten</>}
-    </>
-  );
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
@@ -33,6 +26,18 @@ export function KlantContactThema() {
       </Paragraph>
     </PageContentCell>
   );
+
+  const pageContentErrorAlert = (
+    <>
+      Wij kunnen de volgende gegevens nu niet tonen:
+      <br />
+      {isError && <>- Uw overzicht van contactmomenten</>}
+    </>
+  );
+
+  const afspraakCards = afspraken.map((a) => {
+    return <AfspraakCard key={a.caseReference} afspraak={a}></AfspraakCard>;
+  });
 
   return (
     <ThemaPagina
@@ -49,7 +54,7 @@ export function KlantContactThema() {
             <Heading level={2} className="ams-mb-s">
               Afspraken bij een stadsloket
             </Heading>
-            {afspraakCards ? (
+            {afspraakCards.length ? (
               afspraakCards
             ) : (
               <Paragraph>U heeft geen afspraken.</Paragraph>
