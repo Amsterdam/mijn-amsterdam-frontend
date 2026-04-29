@@ -8,16 +8,18 @@ import ErrorAlert from '../../../components/Alert/Alert.tsx';
 import { PageContentCell, PageV2 } from '../../../components/Page/Page.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
+import { useAfsprakenListData } from './useAfsprakenListData.hook.tsx';
 
 export function AfspraakQRCodeDetailPage() {
-  const { id, themaConfig, data } = useKlantcontactData();
+  const { themaConfig } = useKlantcontactData();
+  const { id, afspraken } = useAfsprakenListData();
   const routeConfig = themaConfig.detailPageAfspraakQRCode.route;
   const breadcrumbs = useThemaBreadcrumbs(id);
   useHTMLDocumentTitle(routeConfig);
 
   const { qrcode } = useParams();
 
-  const a = data?.afspraken.find((a) => {
+  const a = afspraken.find((a) => {
     return a.qrCode === qrcode;
   });
 
@@ -36,7 +38,7 @@ export function AfspraakQRCodeDetailPage() {
                 {`U heeft een afspraak bij het stadsloket Stadsloket ${stadsloketName}, ${a.location.street}, ${a.location.postalCode} ${a.location.city}.`}
               </Paragraph>
               <Paragraph className={paragraphMargin}>
-                <b>{`Datum, ${a.afspraakDateFormatted}, ${a.startTime}-${a.endTime} uur`}</b>
+                <b>{a.displayDate}</b>
               </Paragraph>
               <Paragraph className={paragraphMargin}>
                 Scan deze QR code op het stadsloket zodat de medewerker weet dat

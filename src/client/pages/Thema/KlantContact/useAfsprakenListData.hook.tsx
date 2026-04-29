@@ -7,9 +7,9 @@ import { generatePath } from 'react-router';
 import { CalendarLink } from '../../../components/CalendarLink/CalendarLink.tsx';
 
 export function useAfsprakenListData() {
-  const { data, themaConfig } = useKlantcontactData();
+  const { id, data, themaConfig } = useKlantcontactData();
 
-  const afspraakCards = data?.afspraken.map((a) => {
+  const afspraken = (data?.afspraken ?? []).map((a) => {
     const start = new Date(a.startDate);
     const end = new Date(a.endDate);
 
@@ -17,6 +17,15 @@ export function useAfsprakenListData() {
     const formatToHoursMinutes = (date: Date) =>
       `${pad(date.getHours())}:${pad(date.getMinutes())}`;
 
+    return {
+      ...a,
+      startDate: start,
+      endDate: end,
+      displayDate: `Datum, ${a.dateFormatted}, ${formatToHoursMinutes(start)}-${formatToHoursMinutes(end)} uur`,
+    };
+  });
+
+  const afspraakCards = afspraken.map((a) => {
     return (
       <div key={a.caseReference}>
         <AfspraakCard
@@ -28,12 +37,12 @@ export function useAfsprakenListData() {
             </MaLink>
           }
         >
-          <Paragraph>{`Datum, ${a.dateFormatted}, ${formatToHoursMinutes(start)}-${formatToHoursMinutes(end)} uur`}</Paragraph>
+          <Paragraph>{a.displayDate}</Paragraph>
           <Paragraph>{`Locatie Stadsloket ${a.location.name}, ${a.location.street}`}</Paragraph>
           <CalendarLink
             className={'ams-mb-s'}
-            start={start}
-            end={end}
+            start={a.startDate}
+            end={a.endDate}
             uid={a.caseReference}
             summary={`Afspraak voor ${a.subject}`}
             description={`Referentienummer: ${a.caseReference}`}
@@ -57,5 +66,5 @@ export function useAfsprakenListData() {
     );
   });
 
-  return { afspraakCards };
+  return { id, afspraakCards, afspraken };
 }
