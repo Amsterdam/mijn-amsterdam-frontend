@@ -11,8 +11,8 @@ import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 import { useAfsprakenListData } from './useAfsprakenListData.hook.tsx';
 
 export function AfspraakQRCodeDetailPage() {
-  const { themaConfig } = useKlantcontactData();
-  const { id, afspraken } = useAfsprakenListData();
+  const { id, themaConfig } = useKlantcontactData();
+  const { afspraken } = useAfsprakenListData();
   const routeConfig = themaConfig.detailPageAfspraakQRCode.route;
   const breadcrumbs = useThemaBreadcrumbs(id);
   useHTMLDocumentTitle(routeConfig);

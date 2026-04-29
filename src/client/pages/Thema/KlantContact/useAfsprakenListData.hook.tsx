@@ -7,7 +7,7 @@ import { generatePath } from 'react-router';
 import { CalendarLink } from '../../../components/CalendarLink/CalendarLink.tsx';
 
 export function useAfsprakenListData() {
-  const { id, data, themaConfig } = useKlantcontactData();
+  const { data, themaConfig } = useKlantcontactData();
 
   const afspraken = (data?.afspraken ?? []).map((a) => {
     const start = new Date(a.startDate);
@@ -66,5 +66,5 @@ export function useAfsprakenListData() {
     );
   });
 
-  return { id, afspraakCards, afspraken };
+  return { afspraakCards, afspraken };
 }
