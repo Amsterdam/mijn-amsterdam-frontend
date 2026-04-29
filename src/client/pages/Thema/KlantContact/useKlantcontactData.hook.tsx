@@ -1,6 +1,6 @@
 import { generatePath, useParams } from 'react-router';
 
-import { tableConfigs, themaConfig } from './Contact-thema-config.ts';
+import { tableConfigs, themaConfig } from './KlantContact-thema-config.ts';
 import { isLoading, isError } from '../../../../universal/helpers/api.ts';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';

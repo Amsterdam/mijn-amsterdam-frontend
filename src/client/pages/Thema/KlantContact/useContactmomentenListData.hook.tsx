@@ -6,7 +6,7 @@ import {
   PersonAtDeskIcon,
 } from '@amsterdam/design-system-react-icons';
 
-import type { ContactmomentProps } from './Contact-thema-config.ts';
+import type { ContactmomentProps } from './KlantContact-thema-config.ts';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import type { ContactType } from '../../../../server/services/salesforce/klantcontact.types.ts';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import { themaConfig } from './Contact-thema-config.ts';
+import { themaConfig } from './KlantContact-thema-config.ts';
 import { KlantContactThema } from './KlantContactThema.tsx';
 import type {
   ContactType,

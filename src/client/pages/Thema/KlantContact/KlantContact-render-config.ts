@@ -1,7 +1,7 @@
 import { ConnectedCirclesIcon } from '@amsterdam/design-system-react-icons';
 
 import { AfspraakQRCodeDetailPage } from './AfspraakQRCodeDetailPage.tsx';
-import { themaConfig } from './Contact-thema-config.ts';
+import { themaConfig } from './KlantContact-thema-config.ts';
 import { ContactmomentenListPage } from './ContactmomentenListPage.tsx';
 import { KlantContactThema } from './KlantContactThema.tsx';
 import { isLoading } from '../../../../universal/helpers/api.ts';

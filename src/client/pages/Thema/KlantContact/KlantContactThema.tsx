@@ -1,6 +1,6 @@
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
 
-import type { ContactmomentProps } from './Contact-thema-config.ts';
+import type { ContactmomentProps } from './KlantContact-thema-config.ts';
 import { useAfsprakenListData } from './useAfsprakenListData.hook.tsx';
 import { useContactmomentenListData } from './useContactmomentenListData.hook.tsx';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
