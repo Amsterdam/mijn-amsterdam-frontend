@@ -4,14 +4,19 @@ import { Column, Heading, Row } from '@amsterdam/design-system-react';
 
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 
-type CardProps = {
+type AfspraakCardProps = {
   title: string;
   icon?: ReactNode;
   children: ReactNode;
   actionRightside: ReactNode;
 };
 
-export function Card({ title, icon, children, actionRightside }: CardProps) {
+export function AfspraakCard({
+  title,
+  icon,
+  children,
+  actionRightside,
+}: AfspraakCardProps) {
   const isSmallScreen = useSmallScreen();
   const isLargeScreen = !isSmallScreen;
 

@@ -10,7 +10,7 @@ import { generatePath } from 'react-router';
 import type { ContactmomentProps } from './Contact-thema-config.ts';
 import { useContactmomentenListData } from './useContactmomentenListData.hook.tsx';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
-import { Card } from '../../../components/Card/Card.tsx';
+import { AfspraakCard } from '../../../components/AfspraakCard/AfspraakCard.tsx';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
 import { MaLink, MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
@@ -20,7 +20,7 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 import React, { type ReactNode } from 'react';
 
-type ICALProps = {
+type CalendarLinkProps = {
   children?: ReactNode;
   // Format: use toICALDateTimeString(): YYYYMMDDTHHMMSSZ
   start: Date;
@@ -48,7 +48,7 @@ function toICALDateTimeString(date: Date): string {
   return `${year}${month}${day}T${hours}${minutes}${seconds}Z`;
 }
 
-function LinkICAL({
+function CalendarLink({
   children,
   start,
   end,
@@ -56,7 +56,7 @@ function LinkICAL({
   summary,
   description,
   location,
-}: ICALProps) {
+}: CalendarLinkProps) {
   function handleDownload(event: React.MouseEvent<HTMLAnchorElement>) {
     event.preventDefault();
 
@@ -141,7 +141,7 @@ export function KlantContactThema() {
     setHourMinutes(endTime, a.endTime);
     return (
       <div key={a.caseReference}>
-        <Card
+        <AfspraakCard
           icon={<Icon svg={PersonAtDeskIcon} size="heading-2"></Icon>}
           title={a.subject}
           actionRightside={
@@ -152,7 +152,7 @@ export function KlantContactThema() {
         >
           <Paragraph>{`Datum, ${a.afspraakDateFormatted}, ${a.startTime}-${a.endTime} uur`}</Paragraph>
           <Paragraph>{`Locatie Stadsloket ${a.location.name}, ${a.location.street}`}</Paragraph>
-          <LinkICAL
+          <CalendarLink
             start={startTime}
             end={endTime}
             uid={a.caseReference}
@@ -161,7 +161,7 @@ export function KlantContactThema() {
             location={`Stadsloket ${a.location.name}, ${a.location.street}, ${a.location.postalCode} ${a.location.city}, Nederland`}
           >
             Voeg toe aan uw privé agenda
-          </LinkICAL>
+          </CalendarLink>
           <MaRouterLink
             maVariant="noUnderline"
             href={generatePath(
@@ -173,7 +173,7 @@ export function KlantContactThema() {
           >
             <Button variant="secondary">Toon QR code</Button>
           </MaRouterLink>
-        </Card>
+        </AfspraakCard>
       </div>
     );
   });

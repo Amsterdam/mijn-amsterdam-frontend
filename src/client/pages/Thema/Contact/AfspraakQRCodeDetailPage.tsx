@@ -2,14 +2,14 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import QRCode from 'react-qr-code';
 import { useParams } from 'react-router';
 
-import styles from './AppointmentQRCodePage.module.scss';
+import styles from './AfspraakQRCodeDetailPage.module.scss';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import ErrorAlert from '../../../components/Alert/Alert.tsx';
 import { PageContentCell, PageV2 } from '../../../components/Page/Page.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
-export function AfspraakDetailQRCodePage() {
+export function AfspraakQRCodeDetailPage() {
   const { id, themaConfig, data } = useKlantcontactData();
   const routeConfig = themaConfig.detailPageAfspraakQRCode.route;
   const breadcrumbs = useThemaBreadcrumbs(id);
