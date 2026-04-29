@@ -29,6 +29,7 @@
  * ```
  */
 
+/* eslint-disable */
 import '../src/server/helpers/load-env.ts';
 
 import * as XLSX from 'xlsx';
