@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { vi, describe, it, beforeEach, expect, type Mock } from 'vitest';
 
-// Component under test
 import { eMandateTableConfig } from './Afis-thema-config.ts';
 import { AfisEMandateDetail } from './AfisEMandateDetail.tsx';
 import { useEmandateApis } from './useAfisEmandateActionsApi.tsx';
@@ -18,7 +17,6 @@ import type {
 import { useWidescreen } from '../../../hooks/media.hook.ts';
 import MockApp from '../../MockApp.tsx';
 
-// Stub out internals and hooks used by the component
 vi.mock('./AfisEmandateActionButtons.tsx', () => ({
   AfisEMandateActionButtons: () => <div>ActionButtons</div>,
 }));
