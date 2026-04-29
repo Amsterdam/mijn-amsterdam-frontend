@@ -88,6 +88,30 @@ describe('createAfisFacturenNotification', () => {
       `"U heeft 2 openstaande facturen. Van 1 factuur heeft u inmiddels een herinnering ontvangen per e-mail of post."`
     );
   });
+
+  it('should use the most recent datePublished for the notification datePublished', () => {
+    const facturen: AfisFactuur[] = [
+      createAfisFactuur('1', 'openstaand', '123', '2022-12-31'),
+      createAfisFactuur('2', 'betaald', '321', '2024-05-01'),
+      {
+        ...createAfisFactuur('3', 'openstaand', '999', '2023-12-31'),
+        datePublished: null,
+      },
+    ];
+
+    const notification = createAfisFacturenNotification(facturen);
+    expect(notification).not.toBeNull();
+    expect(notification?.datePublished).toBe('2024-05-01');
+
+    const facturen2: AfisFactuur[] = [
+      createAfisFactuur('1', 'openstaand', '123', '2024-05-01'),
+      createAfisFactuur('2', 'betaald', '321', '2022-12-31'),
+    ];
+
+    const notification2 = createAfisFacturenNotification(facturen2);
+    expect(notification2).not.toBeNull();
+    expect(notification2?.datePublished).toBe('2024-05-01');
+  });
 });
 
 describe('fetchAfisNotifications', () => {
@@ -95,7 +119,7 @@ describe('fetchAfisNotifications', () => {
 
   it('should return notifications if fetchIsKnownInAFIS is successful', async () => {
     const facturen: AfisFactuur[] = [
-      createAfisFactuur('1', 'openstaand', '123', '2023-01-01'),
+      createAfisFactuur('1', 'openstaand', '123', '2022-12-31'),
     ];
     (fetchIsKnownInAFIS as Mock).mockResolvedValue({
       status: 'OK',
@@ -108,7 +132,9 @@ describe('fetchAfisNotifications', () => {
         notifications: [
           {
             id: 'facturen-open-notification',
-            datePublished: '2023-01-01T00:00:00.000Z',
+            datePublished: '2022-12-31',
+            hideDatePublished: true,
+            sortPriority: 6,
             themaID: themaConfig.id,
             themaTitle: 'Facturen en betalen',
             title: 'Betaal tijdig om extra kosten te voorkomen',

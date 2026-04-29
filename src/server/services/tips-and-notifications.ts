@@ -6,7 +6,10 @@ import {
   getSettledResult,
 } from '../../universal/helpers/api.ts';
 import { dateSort } from '../../universal/helpers/date.ts';
-import type { MyNotification } from '../../universal/types/App.types.ts';
+import {
+  NOTIFICATION_SORTPRIORITY,
+  type MyNotification,
+} from '../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../auth/auth-types.ts';
 import { fetchAfisNotifications } from './afis/afis-notifications.ts';
 import { fetchAVGNotifications } from './avg/avg.ts';
@@ -197,8 +200,13 @@ export function sortNotificationsAndInsertTips(
   // sort the notifications with and without a tip
   const sorted = notifications
     .toSorted(dateSort('datePublished', 'desc'))
+    .toSorted((a, b) => {
+      const aPriority = a.sortPriority ?? NOTIFICATION_SORTPRIORITY.default;
+      const bPriority = b.sortPriority ?? NOTIFICATION_SORTPRIORITY.default;
+      return aPriority === bPriority ? 0 : aPriority > bPriority ? -1 : 1;
+    })
     // Put the alerts on the top regardless of the publication date
-    .toSorted((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
+    .toSorted((a, b) => Number(b.isAlert) - Number(a.isAlert));
 
   const notificationsWithoutTips = sorted.filter((n) => !n.isTip);
 

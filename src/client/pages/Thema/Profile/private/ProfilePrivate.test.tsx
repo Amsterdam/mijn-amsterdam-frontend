@@ -238,7 +238,9 @@ describe('<Profile />', () => {
   test('Shows adres in onderzoek', async () => {
     {
       const comp = render(
-        <Component state={{ persoon: { adresInOnderzoek: '089999' } }} />
+        <Component
+          state={{ persoon: { adresInOnderzoek: { type: '089999' } } }}
+        />
       );
       expect(comp.getByText('Adres in onderzoek')).toBeInTheDocument();
       const adresInfo = await comp.queryByText(
@@ -250,7 +252,9 @@ describe('<Profile />', () => {
     cleanup();
     {
       const comp = render(
-        <Component state={{ persoon: { adresInOnderzoek: '080000' } }} />
+        <Component
+          state={{ persoon: { adresInOnderzoek: { type: '080000' } } }}
+        />
       );
       expect(comp.getByText('Adres in onderzoek')).toBeInTheDocument();
       const adresInfo2 = await comp.queryByText(

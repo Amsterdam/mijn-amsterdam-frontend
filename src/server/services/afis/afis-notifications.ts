@@ -5,7 +5,10 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
-import type { MyNotification } from '../../../universal/types/App.types.ts';
+import {
+  NOTIFICATION_SORTPRIORITY,
+  type MyNotification,
+} from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { sanitizeStringTemplate } from '../../helpers/text.ts';
 
@@ -39,13 +42,23 @@ export function createAfisFacturenNotification(
     ${openFacturenHerinneringCount ? `Van ${openFacturenHerinneringCount} ${isMulti ? 'facturen' : 'factuur'} heeft u inmiddels een herinnering ontvangen per e-mail of post.` : ''}
   `);
 
-  const datePublished = new Date().toISOString();
   const cta = 'Bekijk uw openstaande facturen';
   const linkTo = themaConfig.route.path;
 
+  // Uses the most recent published open or paid factuur.
+  // Using only the latest open factuur would cause the datePublished to change
+  // to an earlier date when that factuur is paid while older ones remain open.
+  const mostRecentDatePublished = facturen
+    .map((factuur) => factuur.datePublished ?? '')
+    .reduce((latest, factuurDatePublished) => {
+      return factuurDatePublished > latest ? factuurDatePublished : latest;
+    });
+
   return {
     id: `facturen-open-notification`,
-    datePublished,
+    datePublished: mostRecentDatePublished,
+    sortPriority: NOTIFICATION_SORTPRIORITY.high,
+    hideDatePublished: true,
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,
     title,
