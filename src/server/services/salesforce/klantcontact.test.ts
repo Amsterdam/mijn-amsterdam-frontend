@@ -125,11 +125,10 @@ describe('Contactmomenten service', () => {
     expect(result.content.afspraken).toMatchInlineSnapshot(`
       [
         {
-          "afspraakDate": "2026-02-26",
-          "afspraakDateFormatted": "26 februari 2026",
           "cancellationLink": "http://remote-api-host/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
           "caseReference": "00157784",
-          "endTime": "09:20",
+          "dateFormatted": "26 februari 2026",
+          "endDate": "2026-02-26T09:20:00Z",
           "location": {
             "city": null,
             "countryCode": "NL",
@@ -138,7 +137,7 @@ describe('Contactmomenten service', () => {
             "street": null,
           },
           "qrCode": "xxxxxxxxxxxxxxxxxxxx",
-          "startTime": "09:00",
+          "startDate": "2026-02-26T09:00:00Z",
           "status": "Canceled",
           "subject": "Vaarvignet",
         },
@@ -164,13 +163,13 @@ describe('Contactmomenten service', () => {
       [
         {
           "contacttype": "Stadsloket",
-          "datePublished": "2026-02-26",
+          "datePublished": "2026-02-26T09:00:00Z",
           "datePublishedFormatted": "26 februari 2026",
           "referenceNumber": "00157783",
           "subject": "Gemiste afspraak",
         },
       ]
     `);
-    expect(result.content.afspraken).toMatchInlineSnapshot(`[]`);
+    expect(result.content.afspraken).toStrictEqual([]);
   });
 });

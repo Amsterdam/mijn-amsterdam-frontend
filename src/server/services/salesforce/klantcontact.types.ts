@@ -59,10 +59,9 @@ export type AfspraakResponseSource = {
 };
 
 export type AfspraakFrontend = {
-  afspraakDate: string;
-  afspraakDateFormatted: string;
-  startTime: string;
-  endTime: string;
+  startDate: string;
+  endDate: string;
+  dateFormatted: string;
   subject: string;
   status: Status;
   qrCode: string;

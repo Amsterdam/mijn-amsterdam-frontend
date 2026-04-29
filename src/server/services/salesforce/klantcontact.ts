@@ -61,14 +61,12 @@ async function fetchAfspraken(
     },
     transformResponse: (data: AfsprakenResponseSource): AfspraakFrontend[] => {
       const results = data.results.map((result) => {
-        const [afspraakDate, startTime] = result.startDate.split(' ');
-        const [, endTime] = result.endDate.split(' ');
-        const HOUR_MINUTE_FORMAT_END = 5;
+        const [startDate, startTime] = result.startDate.split(' ');
+        const [endDate, endTime] = result.endDate.split(' ');
         return {
-          afspraakDate,
-          afspraakDateFormatted: defaultDateFormat(afspraakDate),
-          startTime: startTime.slice(0, HOUR_MINUTE_FORMAT_END),
-          endTime: endTime.slice(0, HOUR_MINUTE_FORMAT_END),
+          startDate: `${startDate}T${startTime}Z`,
+          endDate: `${endDate}T${endTime}Z`,
+          dateFormatted: defaultDateFormat(startDate),
           subject: result.subject,
           status: result.status,
           qrCode: result.qrCode,
@@ -165,8 +163,8 @@ function transferMissedAfsprakenToContactmomenten(
         referenceNumber: a.caseReference,
         contacttype: 'Stadsloket',
         subject: 'Gemiste afspraak',
-        datePublishedFormatted: a.afspraakDateFormatted,
-        datePublished: a.afspraakDate,
+        datePublishedFormatted: a.dateFormatted,
+        datePublished: a.startDate,
       };
       return klantcontactmoment;
     });
