@@ -46,16 +46,49 @@ const contactmomenten: ContactmomentFrontend[] = [
   },
 ];
 
-const state = {
+const onlyContactmomentenState = {
   KLANT_CONTACT: {
     content: { contactmomenten, afspraken: [] },
   },
 } as unknown as AppState;
 
+const afspraakTitle = 'Vaarvignet';
+
+const onlyAfsprakenState = {
+  KLANT_CONTACT: {
+    content: {
+      contactmomenten: [],
+      afspraken: [
+        {
+          cancellationLink:
+            'http://remote-api-host/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+          caseReference: '00157784',
+          dateFormatted: '26 februari 2026',
+          endDate: '2026-02-26T09:20:00Z',
+          location: {
+            city: null,
+            countryCode: 'NL',
+            name: 'Zuidoost',
+            postalCode: null,
+            street: null,
+          },
+          qrCode: 'xxxxxxxxxxxxxxxxxxxx',
+          startDate: '2026-02-26T09:00:00Z',
+          status: 'Canceled',
+          subject: afspraakTitle,
+        },
+      ],
+    },
+  },
+} as unknown as AppState;
+
+const contactmomentenHeader = 'Contactmomenten';
+const noAppointmentsText = /U heeft geen afspraken/;
+
 test('Shows max 3 contactmomenten', async () => {
-  const Component = createMijnContactThemaComponent(state);
+  const Component = createMijnContactThemaComponent(onlyContactmomentenState);
   const screen = render(<Component />);
-  expect(screen.getByText('Contactmomenten')).toBeInTheDocument();
+  expect(screen.getByText(contactmomentenHeader)).toBeInTheDocument();
 
   const expectedContacttypes: ContactType[] = [
     'Stadsloket',
@@ -66,4 +99,15 @@ test('Shows max 3 contactmomenten', async () => {
   expectedContacttypes.forEach((type) => {
     expect(screen.getByText(type)).toBeInTheDocument();
   });
+
+  screen.getByText(noAppointmentsText);
+});
+
+test('Shows only afspraken', async () => {
+  const Component = createMijnContactThemaComponent(onlyAfsprakenState);
+  const screen = render(<Component />);
+
+  screen.getByText(afspraakTitle);
+  expect(screen.queryByText(contactmomentenHeader)).not.toBeInTheDocument();
+  expect(screen.queryByText(noAppointmentsText)).not.toBeInTheDocument();
 });
