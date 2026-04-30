@@ -83,7 +83,7 @@ export async function devProxyHandler(req: Request, res: Response) {
 
   const targetPath = req.url.replace(BffEndpoints.PROXY, '');
   axios({
-    url: proxyTarget.origin + targetPath,
+    url: new URL(targetPath, proxyTarget.origin).href,
     method: req.method,
     headers: getPassthroughHeaders(req),
     data: req.body,
