@@ -483,7 +483,7 @@ export type ZaakStatusFrontend =
   | 'Aanvraag'
   | 'Meer informatie nodig'
   | 'In behandeling'
-  | 'Aanpassing akte bij de notaris'
+  | 'Aanpassing akte door de notaris'
   | 'Afgehandeld'
   | 'Onbekend';
 

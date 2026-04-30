@@ -353,11 +353,12 @@ async function fetchErfpachtZaakDetail(
 function getStatus(statustekst?: ZaakStatusTypeSource): ZaakStatusFrontend {
   switch (statustekst) {
     case 'Aanvraag':
-    case 'Aanvraag beoordelen':
-    case 'Aanvraag gereed voor behandeling':
+      return 'Ontvangen';
     case 'Informatie opgevraagd':
     case 'Informatie aangeleverd':
-      return 'Ontvangen';
+      return 'Meer informatie nodig';
+    case 'Aanvraag beoordelen':
+    case 'Aanvraag gereed voor behandeling':
     case 'Behandeling':
     case 'Indicatie verstuurd':
     case 'Aanbieding':
@@ -365,7 +366,7 @@ function getStatus(statustekst?: ZaakStatusTypeSource): ZaakStatusFrontend {
     case 'Besluit verstuurd':
       return 'In behandeling';
     case 'Akte gepasseerd':
-      return 'Aanpassing akte bij de notaris';
+      return 'Aanpassing akte door de notaris';
     case 'Aanvraag afgerond':
       return 'Afgehandeld';
     default:
@@ -381,9 +382,9 @@ function transformErfpachtZaakStatussenResponse(
   const stepStatusFixed: ZaakStatusFrontend[] = [
     'Ontvangen',
     // 'Aanvraag',
-    // 'Meer informatie nodig',
+    'Meer informatie nodig',
     'In behandeling',
-    'Aanpassing akte bij de notaris',
+    'Aanpassing akte door de notaris',
     'Afgehandeld',
   ];
 
