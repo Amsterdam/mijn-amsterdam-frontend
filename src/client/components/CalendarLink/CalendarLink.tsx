@@ -1,8 +1,6 @@
 import type { ReactNode } from 'react';
 
-type CalendarLinkProps = {
-  children?: ReactNode;
-  className?: string;
+type ICSData = {
   // Format: use toICALDateTimeString(): YYYYMMDDTHHMMSSZ
   start: Date;
   end: Date;
@@ -11,6 +9,12 @@ type CalendarLinkProps = {
   description: string;
   // Free form location field. Example: Amsterdam City Hall, Amstel 1, 1011 PN Amsterdam, Netherlands, Room 101
   location: string;
+};
+
+type CalendarLinkProps = {
+  children?: ReactNode;
+  className?: string;
+  icsData: ICSData;
 };
 
 function pad(date: string) {
@@ -29,20 +33,15 @@ function toICALDateTimeString(date: Date): string {
   return `${year}${month}${day}T${hours}${minutes}${seconds}Z`;
 }
 
-export function CalendarLink({
-  children,
-  className,
+function createICS({
+  uid,
   start,
   end,
-  uid,
   summary,
   description,
   location,
-}: CalendarLinkProps) {
-  function handleDownload(event: React.MouseEvent<HTMLAnchorElement>) {
-    event.preventDefault();
-
-    const icalContent = `BEGIN:VCALENDAR
+}: ICSData) {
+  const icalContent = `BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Amsterdam//NONSGML v1.0//EN
 BEGIN:VEVENT
@@ -55,6 +54,18 @@ DESCRIPTION:${description}
 LOCATION:${location}
 END:VEVENT
 END:VCALENDAR`;
+  return icalContent;
+}
+
+export function CalendarLink({
+  children,
+  className,
+  icsData,
+}: CalendarLinkProps) {
+  function handleDownload(event: React.MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault();
+
+    const icalContent = createICS(icsData);
 
     const blob = new Blob([icalContent], {
       type: 'text/calendar;charset=utf-8',
@@ -64,7 +75,7 @@ END:VCALENDAR`;
 
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'event.ics';
+    link.download = `${icsData.uid}.ics`;
     link.click();
 
     URL.revokeObjectURL(url);
@@ -78,3 +89,5 @@ END:VCALENDAR`;
     </div>
   );
 }
+
+export const forTesting = { createICS };
