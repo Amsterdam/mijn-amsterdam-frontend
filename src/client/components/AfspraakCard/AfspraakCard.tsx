@@ -7,15 +7,15 @@ import {
   Row,
 } from '@amsterdam/design-system-react';
 import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
+import classNames from 'classnames';
 
 import styles from './AfspraakCard.module.scss';
-import maLinkStyles from '../MaLink/MaLink.module.scss';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import type { AfspraakFrontendFinal } from '../../pages/Thema/KlantContact/useAfsprakenListData.hook.tsx';
 import { CalendarLink } from '../CalendarLink/CalendarLink.tsx';
-import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 import { LocationModal } from '../LocationModal/LocationModal.tsx';
-import classNames from 'classnames';
+import maLinkStyles from '../MaLink/MaLink.module.scss';
+import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 
 type AfspraakCardProps = {
   afspraak: AfspraakFrontendFinal;

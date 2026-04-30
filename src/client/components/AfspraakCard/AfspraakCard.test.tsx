@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
 import { BrowserRouter, MemoryRouter, Route, Routes } from 'react-router';
 
 import { AfspraakCard } from './AfspraakCard.tsx';
 import type { AfspraakFrontendFinal } from '../../pages/Thema/KlantContact/useAfsprakenListData.hook.tsx';
-import { userEvent } from '@testing-library/user-event';
 
 const mocks = vi.hoisted(() => {
   return {

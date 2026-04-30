@@ -1,6 +1,7 @@
-import { CalendarLink, forTesting } from './CalendarLink.tsx';
 import { render } from '@testing-library/react';
 import mockdate from 'mockdate';
+
+import { CalendarLink, forTesting } from './CalendarLink.tsx';
 
 const icsData = {
   start: new Date('2025-01-01T00:00:00Z'),

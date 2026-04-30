@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+
 import { MaLink } from '../MaLink/MaLink.tsx';
 
 type ICSData = {
