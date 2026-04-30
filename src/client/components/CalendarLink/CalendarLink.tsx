@@ -13,18 +13,18 @@ type CalendarLinkProps = {
   location: string;
 };
 
-function leftPadWithZero(num: string): string {
-  return num.length === 1 ? `0${num}` : num;
+function pad(date: string) {
+  return date.padStart(2, '0');
 }
 
 function toICALDateTimeString(date: Date): string {
   const year = date.getUTCFullYear().toString();
-  const month = leftPadWithZero(date.getUTCMonth().toString());
-  const day = leftPadWithZero(date.getUTCDate().toString());
+  const month = pad(date.getUTCMonth().toString());
+  const day = pad(date.getUTCDate().toString());
 
-  const hours = leftPadWithZero(date.getUTCHours().toString());
-  const minutes = leftPadWithZero(date.getUTCMinutes().toString());
-  const seconds = leftPadWithZero(date.getUTCSeconds().toString());
+  const hours = pad(date.getUTCHours().toString());
+  const minutes = pad(date.getUTCMinutes().toString());
+  const seconds = pad(date.getUTCSeconds().toString());
 
   return `${year}${month}${day}T${hours}${minutes}${seconds}Z`;
 }
