@@ -7,11 +7,14 @@ import {
   Row,
 } from '@amsterdam/design-system-react';
 
+import styles from './AfspraakCard.module.scss';
+
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import type { AfspraakFrontendFinal } from '../../pages/Thema/KlantContact/useAfsprakenListData.hook.tsx';
 import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 import { CalendarLink } from '../CalendarLink/CalendarLink.tsx';
+import classNames from 'classnames';
 
 type AfspraakCardProps = {
   afspraak: AfspraakFrontendFinal;
@@ -24,13 +27,13 @@ export function AfspraakCard({ afspraak }: AfspraakCardProps) {
   const titleHeading = (
     // Make the heading text always take full space so the icon is always aligned with other items -
     // on small screens.
-    <Heading level={3} style={{ width: '100%' }}>
+    <Heading level={3} className={styles.Heading}>
       {afspraak.subject}
     </Heading>
   );
 
   const actionRightside = (
-    <MaLink style={{ marginLeft: '50px' }} href={afspraak.cancellationLink}>
+    <MaLink className={styles.MaLink} href={afspraak.cancellationLink}>
       Annuleren
     </MaLink>
   );
@@ -40,17 +43,16 @@ export function AfspraakCard({ afspraak }: AfspraakCardProps) {
   return (
     <div
       key={afspraak.caseReference}
-      className="ams-mb-m"
-      style={{ paddingTop: '16px', borderTop: '2px solid #EEEEEE' }}
+      className={classNames('ams-mb-m', styles.CardContainer)}
     >
       <Row gap="large">
         {isLargeScreen && icon}
         <Column
-          style={{
-            width: isSmallScreen
-              ? ''
-              : '800px' /* Make sure `actionRightside` is always aligned */,
-          }}
+          className={
+            isLargeScreen
+              ? styles.ColumnLargeScreen /* Make sure `actionRightside` is always aligned */
+              : ''
+          }
         >
           {isLargeScreen && titleHeading}
           {isSmallScreen && (
