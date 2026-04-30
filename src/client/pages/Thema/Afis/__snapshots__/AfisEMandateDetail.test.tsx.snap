@@ -1,0 +1,136 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AfisEMandateDetail > shows E-Mandaat history when history items present > Small screen display 1`] = `
+<article
+  class="ams-mb-xl"
+>
+  <table
+    class="_EmandateHistoryItem_bd1394"
+  >
+    <tbody>
+      <tr>
+        <th>
+          Kenmerk
+        </th>
+        <td>
+          00001
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Van
+        </th>
+        <td>
+          1 januari 2024
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Tot
+        </th>
+        <td>
+          31 december 2024
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Rekeninghouder
+        </th>
+        <td>
+          Jan Jansen
+        </td>
+      </tr>
+      <tr>
+        <th>
+          IBAN
+        </th>
+        <td>
+          NL00BANK0123456789
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+`;
+
+exports[`AfisEMandateDetail > shows E-Mandaat history when history items present > Wide screen display 1`] = `
+<div
+  class="ams-table"
+>
+  <table
+    class="ams-table__table _TableV2_1fc147"
+  >
+    <thead
+      class="ams-table__header"
+    >
+      <tr
+        class="ams-table__row"
+      >
+        <th
+          class="ams-table__header-cell"
+          style="width: 15%;"
+        >
+          Kenmerk
+        </th>
+        <th
+          class="ams-table__header-cell"
+          style="width: 15%;"
+        >
+          Vanaf
+        </th>
+        <th
+          class="ams-table__header-cell"
+          style="width: 15%;"
+        >
+          Tot
+        </th>
+        <th
+          class="ams-table__header-cell"
+          style="width: 25%;"
+        >
+          Naam rekeninghouder
+        </th>
+        <th
+          class="ams-table__header-cell"
+          style="width: 30%;"
+        >
+          Rekeningnummer
+        </th>
+      </tr>
+    </thead>
+    <tbody
+      class="ams-table__body"
+    >
+      <tr
+        class="ams-table__row"
+      >
+        <td
+          class="ams-table__cell"
+        >
+          00001
+        </td>
+        <td
+          class="ams-table__cell"
+        >
+          1 januari 2024
+        </td>
+        <td
+          class="ams-table__cell"
+        >
+          31 december 2024
+        </td>
+        <td
+          class="ams-table__cell"
+        >
+          Jan Jansen
+        </td>
+        <td
+          class="ams-table__cell"
+        >
+          NL00BANK0123456789
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

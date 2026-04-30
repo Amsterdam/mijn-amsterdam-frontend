@@ -1,9 +1,8 @@
 import type {
   AfisEMandateCreditor,
-  EMandateReceiverSource} from './afis-types.ts';
-import {
-  type AfisEMandateSourceStatic,
+  EMandateReceiverSource,
 } from './afis-types.ts';
+import { type AfisEMandateSourceStatic } from './afis-types.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 
 // Voor elke afdeling van de gemeente gebruiken we dezelfde gegevens.

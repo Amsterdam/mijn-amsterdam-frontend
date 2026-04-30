@@ -37,14 +37,12 @@ type AfisBusinessPartnerProps = {
     >
   >;
   isLoading: boolean;
-  startCollapsed: boolean;
 };
 
 function AfisBusinessPartnerDetails({
   businesspartner,
   labels,
   isLoading,
-  startCollapsed = true,
 }: AfisBusinessPartnerProps) {
   const rows = businesspartner
     ? entries(labels)
@@ -71,6 +69,9 @@ function AfisBusinessPartnerDetails({
         Facturatiegegevens
       </Heading>
       {isLoading && <LoadingContent />}
+      {!isLoading && !rows.length && (
+        <Paragraph>Geen facturatiegegevens gevonden.</Paragraph>
+      )}
       {!isLoading && !!rows.length && (
         <Grid>
           <Grid.Cell span={6}>
@@ -209,7 +210,6 @@ export function AfisBetaalVoorkeuren() {
         businesspartner={businesspartnerDetails}
         labels={businessPartnerDetailsLabels}
         isLoading={!!(isLoadingBusinessPartnerDetails || isThemaPaginaLoading)}
-        startCollapsed={themaConfig.featureToggle.emandates.active}
       />
       {payloadStorage.hasPayloads() && (
         <AfisEmandateRefetchInterval fetch={fetchEMandates} />

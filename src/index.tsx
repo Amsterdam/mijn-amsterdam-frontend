@@ -9,9 +9,12 @@ import { BFFApiUrls } from './client/config/api.ts';
 import { type FeatureToggles } from './server/config/feature-toggles.ts';
 
 (async function startApp() {
-  const response = await fetch(BFFApiUrls.FEATURE_TOGGLES);
-  const featureToggles: FeatureToggles = await response.json();
-  globalThis.MA_FEATURETOGGLES = featureToggles;
+  // eslint-disable-next-line no-console
+  console.info(
+    'Commit: %s Build: %s',
+    `https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${MA_GIT_SHA}`,
+    MA_BUILD_ID ?? '-1'
+  );
 
   if (
     /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||
@@ -21,12 +24,19 @@ import { type FeatureToggles } from './server/config/feature-toggles.ts';
     window.location.replace('/no-support');
   }
 
-  // eslint-disable-next-line no-console
-  console.info(
-    'Commit: %s Build: %s',
-    `https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${MA_GIT_SHA}`,
-    MA_BUILD_ID ?? '-1'
-  );
-
-  await import('./client/render-root.tsx');
+  try {
+    const response = await fetch(BFFApiUrls.FEATURE_TOGGLES);
+    const featureToggles: FeatureToggles = await response.json();
+    globalThis.MA_FEATURETOGGLES = featureToggles;
+    await import('./client/render-root.tsx');
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error fetching feature toggles', error);
+    document.getElementById('loader')?.appendChild(
+      Object.assign(document.createElement('div'), {
+        id: 'loadfail',
+        textContent: 'De website werkt nu niet. Wij werken aan een oplossing.',
+      })
+    );
+  }
 })();
