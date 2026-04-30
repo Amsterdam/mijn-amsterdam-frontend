@@ -32,7 +32,7 @@ import { BffEndpoints } from '../routing/bff-routes.ts';
  * curl https://bff-server.nl/api/v1/proxy/path/foo/bar/baz?a=1&b=2 /
  *   --header 'x-ma-dev-api-key: x'
  *   --header 'x-ma-target-host: https://someserver.com'
- *   --header 'x-ma-pass-api-key-for-target-server: x'
+ *   --header 'x-ma-pass-foo-bar: x'
  */
 export async function devProxyHandler(req: Request, res: Response) {
   const PROXY_API_KEY = getFromEnv('BFF_DEV_INTERNAL_API_KEY', false);
