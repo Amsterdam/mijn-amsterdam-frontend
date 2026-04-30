@@ -9,10 +9,13 @@ import {
 import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 
 import styles from './AfspraakCard.module.scss';
+import maLinkStyles from '../MaLink/MaLink.module.scss';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import type { AfspraakFrontendFinal } from '../../pages/Thema/KlantContact/useAfsprakenListData.hook.tsx';
 import { CalendarLink } from '../CalendarLink/CalendarLink.tsx';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
+import { LocationModal } from '../LocationModal/LocationModal.tsx';
+import classNames from 'classnames';
 
 type AfspraakCardProps = {
   afspraak: AfspraakFrontendFinal;
@@ -60,23 +63,39 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
           </Row>
         )}
         <Paragraph>{afspraak.displayDate}</Paragraph>
-        <Paragraph>{`Locatie Stadsloket ${afspraak.location.name}, ${afspraak.location.street}`}</Paragraph>
-        <CalendarLink
-          className="ams-mb-s"
-          icsData={{
-            start: afspraak.startDate,
-            end: afspraak.endDate,
-            uid: afspraak.caseReference,
-            summary: `Afspraak voor ${afspraak.subject}`,
-            description: `Referentienummer: ${afspraak.caseReference}`,
-            location: `Stadsloket ${afspraak.location.name}, ${afspraak.location.street}, ${afspraak.location.postalCode} ${afspraak.location.city}, Nederland`,
-          }}
-        >
-          Voeg toe aan uw privé agenda
-        </CalendarLink>
-        <MaRouterLink maVariant="noUnderline" href={afspraak.qrCodeHref}>
-          <Button variant="secondary">Toon QR code</Button>
-        </MaRouterLink>
+        {/* Without this div the LocationModal is not clickable. */}
+        <div>
+          <LocationModal
+            address={`${afspraak.location.street}`}
+            className={classNames(
+              'ams-link',
+              maLinkStyles.MaLink,
+              styles.LocationModal
+            )}
+          >
+            {`Locatie Stadsloket ${afspraak.location.name}, ${afspraak.location.street}`}
+          </LocationModal>
+        </div>
+        {/* The divs makes sure the links will not be displayed next to eachother. */}
+        <div className="ams-mb-s">
+          <CalendarLink
+            icsData={{
+              start: afspraak.startDate,
+              end: afspraak.endDate,
+              uid: afspraak.caseReference,
+              summary: `Afspraak voor ${afspraak.subject}`,
+              description: `Referentienummer: ${afspraak.caseReference}`,
+              location: `Stadsloket ${afspraak.location.name}, ${afspraak.location.street}, ${afspraak.location.postalCode} ${afspraak.location.city}, Nederland`,
+            }}
+          >
+            Voeg toe aan uw privé agenda
+          </CalendarLink>
+        </div>
+        <div>
+          <MaRouterLink maVariant="noUnderline" href={afspraak.qrCodeHref}>
+            <Button variant="secondary">Toon QR code</Button>
+          </MaRouterLink>
+        </div>
         {isSmallScreen && cancellationLink}
       </Column>
       {isLargeScreen && cancellationLink}

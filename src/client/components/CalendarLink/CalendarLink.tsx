@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { MaLink } from '../MaLink/MaLink.tsx';
 
 type ICSData = {
   // Format: use toICALDateTimeString(): YYYYMMDDTHHMMSSZ
@@ -82,11 +83,9 @@ export function CalendarLink({
   }
 
   return (
-    <div className={className}>
-      <a href="#" onClick={handleDownload}>
-        {children}
-      </a>
-    </div>
+    <MaLink className={className} href="#" onClick={handleDownload}>
+      {children}
+    </MaLink>
   );
 }
 

@@ -1,4 +1,4 @@
-import type { ReactNode} from 'react';
+import type { ReactNode } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 
 import { Button, Paragraph } from '@amsterdam/design-system-react';
@@ -12,13 +12,12 @@ import type {
   BAGSourceData,
 } from '../../../server/services/bag/bag.types.ts';
 import { LOCATION_ZOOM } from '../../../universal/config/myarea-datasets.ts';
-import type {
-  LatLngWithAddress} from '../../../universal/helpers/bag.ts';
+import type { LatLngWithAddress } from '../../../universal/helpers/bag.ts';
 import {
   extractAddressParts,
   getLatLngWithAddress,
   getLatLonByAddress,
-  isLocatedInWeesp
+  isLocatedInWeesp,
 } from '../../../universal/helpers/bag.ts';
 import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle.tsx';
 import { MyAreaLoader } from '../../components/MyArea/MyAreaLoader.tsx';
@@ -68,6 +67,7 @@ export interface LocationModalProps {
   // Explicit latlng
   latlng?: LatLngLiteral;
   children?: ReactNode;
+  className?: string;
 }
 
 export function LocationModal({
@@ -77,6 +77,7 @@ export function LocationModal({
   modalTitle,
   label,
   children,
+  className = '',
 }: LocationModalProps) {
   const [isLocationModalOpen, setLocationModalOpen] = useState(false);
   const hasLocationData = !!(address || latlng);
@@ -146,7 +147,7 @@ export function LocationModal({
     hasLocationData && (
       <>
         <Button
-          className={styles.LocationModalLink}
+          className={classNames(styles.LocationModalLink, className)}
           variant="secondary"
           onClick={() => setLocationModalOpen(true)}
         >

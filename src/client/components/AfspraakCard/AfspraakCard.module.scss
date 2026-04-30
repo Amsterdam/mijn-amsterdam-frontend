@@ -14,3 +14,14 @@
 .ColumnLargeScreen {
   width: 800px;
 }
+
+.LocationModal {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--ams-color-interactive);
+  text-decoration: underline;
+  &:hover {
+    box-shadow: none !important;
+  }
+}
