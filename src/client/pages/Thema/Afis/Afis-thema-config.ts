@@ -9,6 +9,7 @@ import type {
   AfisFactuur,
   AfisFactuurStateFrontend,
   AfisFactuurTermijn,
+  EmandateStatusCode,
 } from '../../../../server/services/afis/afis-types.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
@@ -259,7 +260,7 @@ export function getAfisListPageDocumentTitle<T extends Params<string>>(
   }
 }
 
-export const EMANDATE_STATUS_ACTIVE = '1';
+export const EMANDATE_STATUS_ACTIVE: EmandateStatusCode = '1';
 export const EMANDATE_SIGN_REQUEST_SUCCESS_STATUSES = [
   'payment_started',
   'paid',

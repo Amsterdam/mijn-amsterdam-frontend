@@ -1,6 +1,9 @@
 import { Alert, Paragraph } from '@amsterdam/design-system-react';
 
-import type { AfisFactuurFrontend } from './Afis-thema-config.ts';
+import {
+  EMANDATE_STATUS_ACTIVE,
+  type AfisFactuurFrontend,
+} from './Afis-thema-config.ts';
 import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types.ts';
 import type { Row, RowSet } from '../../../components/Datalist/Datalist.tsx';
@@ -13,7 +16,7 @@ export function AfisEmandateFactuurReference({
 }) {
   return (
     <MaRouterLink
-      href={`${eMandate.link.to}${eMandate.status !== '1' ? '#eerdere-emandaten' : ''}`}
+      href={`${eMandate.link.to}${eMandate.status !== EMANDATE_STATUS_ACTIVE ? '#eerdere-emandaten' : ''}`}
     >
       {eMandate.eMandateIdSource}
     </MaRouterLink>
@@ -25,7 +28,8 @@ function AfisEmandateFactuurStatus({
 }: {
   eMandate: AfisEMandateFrontend;
 }) {
-  return eMandate.status !== '1' && eMandate.dateValidToFormatted
+  return eMandate.status !== EMANDATE_STATUS_ACTIVE &&
+    eMandate.dateValidToFormatted
     ? `Niet actief - gestopt op ${eMandate.dateValidToFormatted}.`
     : `Actief sinds ${eMandate.dateValidFromFormatted}.`;
 }
@@ -79,7 +83,7 @@ export function useAfisEmandateFactuurReferenceContent(
       isVisible: !!eMandateId,
     },
     {
-      isVisible: eMandate?.status !== '1',
+      isVisible: !!eMandate && eMandate?.status !== EMANDATE_STATUS_ACTIVE,
       label: <span className="ams-visually-hidden">Betalingswijze</span>,
       content: (
         <Alert heading="Handmatig betalen" headingLevel={4} severity="warning">
