@@ -56,7 +56,7 @@ exports[`Renders afspraak data > Large screen 1`] = `
       </div>
       <a
         class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline_10c0a4"
-        href="https://qrcode.com/qr/123"
+        href="/qr/123"
       >
         <button
           class="ams-button ams-button--secondary"
@@ -136,7 +136,7 @@ exports[`Renders afspraak data > Small screen 1`] = `
       </div>
       <a
         class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline_10c0a4"
-        href="https://qrcode.com/qr/123"
+        href="/qr/123"
       >
         <button
           class="ams-button ams-button--secondary"
