@@ -260,6 +260,8 @@ router.all(
 
 if (!IS_PRODUCTION) {
   const { devProxyHandler } = await import('../services/dev-proxy.ts');
+  // Make sure the PROXY endpoint can handle paths without a root ('/') for convieniance.
+  // Usually you can leave out the root of an URL so to be consistent with that the same is done here.
   router.all(new RegExp(`^${BffEndpoints.PROXY}/?.*$`), devProxyHandler);
 }
 
