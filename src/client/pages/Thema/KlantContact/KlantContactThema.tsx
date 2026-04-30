@@ -10,6 +10,8 @@ import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { AfspraakCard } from '../../../components/AfspraakCard/AfspraakCard.tsx';
+import styles from '../../../components/AfspraakCard/AfspraakCard.module.scss';
+import classNames from 'classnames';
 
 export function KlantContactThema() {
   const { id, title, isLoading, isError, pageLinks, routeConfig, data } =
@@ -35,8 +37,14 @@ export function KlantContactThema() {
     </>
   );
 
-  const afspraakCards = afspraken.map((a) => {
-    return <AfspraakCard key={a.caseReference} afspraak={a}></AfspraakCard>;
+  const afspraakCards = afspraken.map((afspraak) => {
+    return (
+      <AfspraakCard
+        className={classNames('ams-mb-m', styles.CardListContainer)}
+        key={afspraak.caseReference}
+        afspraak={afspraak}
+      ></AfspraakCard>
+    );
   });
 
   return (

@@ -14,13 +14,13 @@ import type { AfspraakFrontendFinal } from '../../pages/Thema/KlantContact/useAf
 import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 import { CalendarLink } from '../CalendarLink/CalendarLink.tsx';
-import classNames from 'classnames';
 
 type AfspraakCardProps = {
   afspraak: AfspraakFrontendFinal;
+  className?: string;
 };
 
-export function AfspraakCard({ afspraak }: AfspraakCardProps) {
+export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
   const isSmallScreen = useSmallScreen();
   const isLargeScreen = !isSmallScreen;
 
@@ -41,46 +41,41 @@ export function AfspraakCard({ afspraak }: AfspraakCardProps) {
   const icon = <Icon svg={PersonAtDeskIcon} size="heading-2"></Icon>;
 
   return (
-    <div
-      key={afspraak.caseReference}
-      className={classNames('ams-mb-m', styles.CardContainer)}
-    >
-      <Row gap="large">
-        {isLargeScreen && icon}
-        <Column
-          className={
-            isLargeScreen
-              ? styles.ColumnLargeScreen /* Make sure `actionRightside` is always aligned */
-              : ''
-          }
+    <Row className={className} gap="large">
+      {isLargeScreen && icon}
+      <Column
+        className={
+          isLargeScreen
+            ? styles.ColumnLargeScreen /* Make sure `actionRightside` is always aligned */
+            : ''
+        }
+      >
+        {isLargeScreen && titleHeading}
+        {isSmallScreen && (
+          <Row>
+            {titleHeading}
+            {icon}
+          </Row>
+        )}
+        <Paragraph>{afspraak.displayDate}</Paragraph>
+        <Paragraph>{`Locatie Stadsloket ${afspraak.location.name}, ${afspraak.location.street}`}</Paragraph>
+        <CalendarLink
+          className={'ams-mb-s'}
+          start={afspraak.startDate}
+          end={afspraak.endDate}
+          uid={afspraak.caseReference}
+          summary={`Afspraak voor ${afspraak.subject}`}
+          description={`Referentienummer: ${afspraak.caseReference}`}
+          location={`Stadsloket ${afspraak.location.name}, ${afspraak.location.street}, ${afspraak.location.postalCode} ${afspraak.location.city}, Nederland`}
         >
-          {isLargeScreen && titleHeading}
-          {isSmallScreen && (
-            <Row>
-              {titleHeading}
-              {icon}
-            </Row>
-          )}
-          <Paragraph>{afspraak.displayDate}</Paragraph>
-          <Paragraph>{`Locatie Stadsloket ${afspraak.location.name}, ${afspraak.location.street}`}</Paragraph>
-          <CalendarLink
-            className={'ams-mb-s'}
-            start={afspraak.startDate}
-            end={afspraak.endDate}
-            uid={afspraak.caseReference}
-            summary={`Afspraak voor ${afspraak.subject}`}
-            description={`Referentienummer: ${afspraak.caseReference}`}
-            location={`Stadsloket ${afspraak.location.name}, ${afspraak.location.street}, ${afspraak.location.postalCode} ${afspraak.location.city}, Nederland`}
-          >
-            Voeg toe aan uw privé agenda
-          </CalendarLink>
-          <MaRouterLink maVariant="noUnderline" href={afspraak.qrCodeHref}>
-            <Button variant="secondary">Toon QR code</Button>
-          </MaRouterLink>
-          {isSmallScreen && actionRightside}
-        </Column>
-        {isLargeScreen && actionRightside}
-      </Row>
-    </div>
+          Voeg toe aan uw privé agenda
+        </CalendarLink>
+        <MaRouterLink maVariant="noUnderline" href={afspraak.qrCodeHref}>
+          <Button variant="secondary">Toon QR code</Button>
+        </MaRouterLink>
+        {isSmallScreen && actionRightside}
+      </Column>
+      {isLargeScreen && actionRightside}
+    </Row>
   );
 }
