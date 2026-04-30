@@ -6,14 +6,13 @@ import {
   Paragraph,
   Row,
 } from '@amsterdam/design-system-react';
+import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 
 import styles from './AfspraakCard.module.scss';
-
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import type { AfspraakFrontendFinal } from '../../pages/Thema/KlantContact/useAfsprakenListData.hook.tsx';
-import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
-import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 import { CalendarLink } from '../CalendarLink/CalendarLink.tsx';
+import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 
 type AfspraakCardProps = {
   afspraak: AfspraakFrontendFinal;
@@ -63,7 +62,7 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
         <Paragraph>{afspraak.displayDate}</Paragraph>
         <Paragraph>{`Locatie Stadsloket ${afspraak.location.name}, ${afspraak.location.street}`}</Paragraph>
         <CalendarLink
-          className={'ams-mb-s'}
+          className="ams-mb-s"
           start={afspraak.startDate}
           end={afspraak.endDate}
           uid={afspraak.caseReference}

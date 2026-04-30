@@ -1,6 +1,7 @@
+import { generatePath } from 'react-router';
+
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import type { AfspraakFrontend } from '../../../../server/services/salesforce/klantcontact.types.ts';
-import { generatePath } from 'react-router';
 
 export type AfspraakFrontendFinal = {
   startDate: Date;

@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
+import { BrowserRouter } from 'react-router';
 
 import { AfspraakCard } from './AfspraakCard.tsx';
 import type { AfspraakFrontendFinal } from '../../pages/Thema/KlantContact/useAfsprakenListData.hook.tsx';
-import { BrowserRouter } from 'react-router';
 
 const mocks = vi.hoisted(() => {
   return {

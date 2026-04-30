@@ -86,8 +86,10 @@ const contactmomentenHeader = 'Contactmomenten';
 const noAppointmentsText = /U heeft geen afspraken/;
 
 test('Shows max 3 contactmomenten', async () => {
-  const Component = createMijnContactThemaComponent(onlyContactmomentenState);
-  const screen = render(<Component />);
+  const KlantContactThema = createMijnContactThemaComponent(
+    onlyContactmomentenState
+  );
+  const screen = render(<KlantContactThema />);
   expect(screen.getByText(contactmomentenHeader)).toBeInTheDocument();
 
   const expectedContacttypes: ContactType[] = [
@@ -104,8 +106,8 @@ test('Shows max 3 contactmomenten', async () => {
 });
 
 test('Shows only afspraken', async () => {
-  const Component = createMijnContactThemaComponent(onlyAfsprakenState);
-  const screen = render(<Component />);
+  const KlantContactThema = createMijnContactThemaComponent(onlyAfsprakenState);
+  const screen = render(<KlantContactThema />);
 
   expect(screen.queryByText(contactmomentenHeader)).not.toBeInTheDocument();
 

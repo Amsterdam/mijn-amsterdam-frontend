@@ -1,17 +1,17 @@
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
 
 import type { ContactmomentProps } from './KlantContact-thema-config.ts';
 import { useAfsprakenListData } from './useAfsprakenListData.hook.tsx';
 import { useContactmomentenListData } from './useContactmomentenListData.hook.tsx';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
+import styles from '../../../components/AfspraakCard/AfspraakCard.module.scss';
+import { AfspraakCard } from '../../../components/AfspraakCard/AfspraakCard.tsx';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
-import { AfspraakCard } from '../../../components/AfspraakCard/AfspraakCard.tsx';
-import styles from '../../../components/AfspraakCard/AfspraakCard.module.scss';
-import classNames from 'classnames';
 
 export function KlantContactThema() {
   const { id, title, isLoading, isError, pageLinks, routeConfig, data } =
