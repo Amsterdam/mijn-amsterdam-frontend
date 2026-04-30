@@ -143,7 +143,7 @@ describe('AfisEMandateDetail', () => {
     expect(screen.getByText('ActionButtons')).toBeInTheDocument();
   });
 
-  describe('shows E-Mandaat history when history items present', async () => {
+  describe('shows E-Mandaat history when history items present', () => {
     const historyItem: AfisEMandateFrontend['history'][number] = {
       // id: '1',
       eMandateIdSource: '00001',
