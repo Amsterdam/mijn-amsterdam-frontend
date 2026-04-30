@@ -70,9 +70,7 @@ export async function sendFormPostRequest<T, P = any>(
   return handleResponse<T>(() =>
     fetch(url, {
       method: 'POST',
-      body: init?.payload
-        ? new URLSearchParams(init.payload as Record<string, string>)
-        : init?.body,
+      body: init?.payload ? new URLSearchParams(init.payload) : init?.body,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
