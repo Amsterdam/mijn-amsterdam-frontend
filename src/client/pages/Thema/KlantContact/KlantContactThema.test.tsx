@@ -107,7 +107,8 @@ test('Shows only afspraken', async () => {
   const Component = createMijnContactThemaComponent(onlyAfsprakenState);
   const screen = render(<Component />);
 
-  screen.getByText(afspraakTitle);
   expect(screen.queryByText(contactmomentenHeader)).not.toBeInTheDocument();
+
   expect(screen.queryByText(noAppointmentsText)).not.toBeInTheDocument();
+  screen.getByText(afspraakTitle);
 });
