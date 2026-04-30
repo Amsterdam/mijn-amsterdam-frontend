@@ -63,12 +63,14 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
         <Paragraph>{`Locatie Stadsloket ${afspraak.location.name}, ${afspraak.location.street}`}</Paragraph>
         <CalendarLink
           className="ams-mb-s"
-          start={afspraak.startDate}
-          end={afspraak.endDate}
-          uid={afspraak.caseReference}
-          summary={`Afspraak voor ${afspraak.subject}`}
-          description={`Referentienummer: ${afspraak.caseReference}`}
-          location={`Stadsloket ${afspraak.location.name}, ${afspraak.location.street}, ${afspraak.location.postalCode} ${afspraak.location.city}, Nederland`}
+          icsData={{
+            start: afspraak.startDate,
+            end: afspraak.endDate,
+            uid: afspraak.caseReference,
+            summary: `Afspraak voor ${afspraak.subject}`,
+            description: `Referentienummer: ${afspraak.caseReference}`,
+            location: `Stadsloket ${afspraak.location.name}, ${afspraak.location.street}, ${afspraak.location.postalCode} ${afspraak.location.city}, Nederland`,
+          }}
         >
           Voeg toe aan uw privé agenda
         </CalendarLink>
