@@ -32,7 +32,9 @@ type OverlijdenSource = {
   datum: DatumSource;
 };
 
-type InOnderzoek = Record<string, boolean>;
+type InOnderzoek = Record<string, boolean | DatumSource> & {
+  datumIngangOnderzoek: DatumSource;
+};
 
 export type VerblijfplaatsSource = {
   type:
@@ -46,7 +48,7 @@ export type VerblijfplaatsSource = {
   adresseerbaarObjectIdentificatie: string;
   nummeraanduidingIdentificatie: string;
   datumVan: DatumSource;
-  inOnderzoek: InOnderzoek;
+  inOnderzoek?: InOnderzoek;
 };
 
 export type VerblijfadresSource = {
@@ -57,7 +59,7 @@ export type VerblijfadresSource = {
   huisletter: string;
   postcode: string;
   woonplaats: string;
-  inOnderzoek: InOnderzoek;
+  inOnderzoek?: InOnderzoek;
   land?: TyperingSource; // Is only a property of VerblijfAdresBuitenland.
   locatiebeschrijving?: string; // Is only a property of VerblijfadresLocatie.
 };
@@ -209,7 +211,10 @@ export type Persoon = PersoonBasis & {
   datumVertrekUitNederland: string | null;
   datumVertrekUitNederlandFormatted?: string | null;
   indicatieGeheim: boolean;
-  adresInOnderzoek: '080000' | '089999' | null;
+  adresInOnderzoek: {
+    type: '080000' | '089999';
+    datumIngangOnderzoek: string | null;
+  } | null;
 };
 
 export type Verbintenis = {
@@ -239,5 +244,5 @@ export type BrpFrontend = {
 };
 
 type AdresFrontend = Adres & {
-  vveNaam?: string|undefined;
+  vveNaam?: string | undefined;
 };

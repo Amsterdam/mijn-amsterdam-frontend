@@ -2,8 +2,11 @@ import { generatePath } from 'react-router';
 
 import type { StadspasFrontend } from './stadspas-types.ts';
 import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config.ts';
-import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date.ts';
-import type { MyNotification } from '../../../universal/types/App.types.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
+import {
+  NOTIFICATION_SORTPRIORITY,
+  type MyNotification,
+} from '../../../universal/types/App.types.ts';
 
 export const GPASS_API_TOKEN = process.env.BFF_GPASS_API_TOKEN;
 export const GPASS_BUDGET_ONLY_FOR_CHILDREN = true;
@@ -28,7 +31,9 @@ export function getBudgetNotifications(stadspassen: StadspasFrontend[]) {
     stadspasPassNumber?: string
   ): MyNotification => ({
     id: `stadspas-budget-notification`,
-    datePublished: dateFormat(new Date(), 'yyyy-MM-dd'),
+    datePublished: BUDGET_NOTIFICATION_DATE_START,
+    sortPriority: NOTIFICATION_SORTPRIORITY.high,
+    hideDatePublished: true,
     themaID: themaConfig.id,
     themaTitle: themaConfig.title,
     title: `Stadspas kindtegoed: Maak je tegoed op voor ${defaultDateFormat(
