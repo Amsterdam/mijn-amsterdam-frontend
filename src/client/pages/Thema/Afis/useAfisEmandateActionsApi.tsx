@@ -132,11 +132,15 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
   useEffect(() => {
     // Fetch the latest eMandates from the server after deactivating an eMandate.
     // The deactivated mandate should appear in the history section of the detail page, so we need to fetch the latest data to show that.
-    if (lastActiveApi === 'deactivateApi') {
+    if (
+      lastActiveApi === 'deactivateApi' &&
+      !deactivateApi.isLoading &&
+      !deactivateApi.isError
+    ) {
       fetchEMandates();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lastActiveApi]);
+  }, [lastActiveApi, deactivateApi.isLoading, deactivateApi.isError]);
 
   useEffect(() => {
     entries({
