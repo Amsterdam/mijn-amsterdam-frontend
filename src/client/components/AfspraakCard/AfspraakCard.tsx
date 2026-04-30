@@ -32,8 +32,11 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
     </Heading>
   );
 
-  const actionRightside = (
-    <MaLink className={styles.MaLink} href={afspraak.cancellationLink}>
+  const cancellationLink = (
+    <MaLink
+      className={isSmallScreen ? styles.CancellationLink : ''}
+      href={afspraak.cancellationLink}
+    >
       Annuleren
     </MaLink>
   );
@@ -46,7 +49,7 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
       <Column
         className={
           isLargeScreen
-            ? styles.ColumnLargeScreen /* Make sure `actionRightside` is always aligned */
+            ? styles.ColumnLargeScreen /* Make sure `cancellationLink` is always aligned */
             : ''
         }
       >
@@ -73,9 +76,9 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
         <MaRouterLink maVariant="noUnderline" href={afspraak.qrCodeHref}>
           <Button variant="secondary">Toon QR code</Button>
         </MaRouterLink>
-        {isSmallScreen && actionRightside}
+        {isSmallScreen && cancellationLink}
       </Column>
-      {isLargeScreen && actionRightside}
+      {isLargeScreen && cancellationLink}
     </Row>
   );
 }
