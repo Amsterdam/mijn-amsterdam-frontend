@@ -16,13 +16,12 @@ test('Renders', async () => {
   const screen = render(<CalendarLink icsData={icsData}>{text}</CalendarLink>);
   expect(screen.asFragment()).toMatchInlineSnapshot(`
     <DocumentFragment>
-      <div>
-        <a
-          href="#"
-        >
-          Calendar Link Text
-        </a>
-      </div>
+      <a
+        class="ams-link _MaLink_10c0a4"
+        href="#"
+      >
+        Calendar Link Text
+      </a>
     </DocumentFragment>
   `);
 });

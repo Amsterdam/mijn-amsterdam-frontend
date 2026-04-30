@@ -40,31 +40,37 @@ exports[`Renders afspraak data > Large screen 1`] = `
       >
         Datum, 01-01-2020 17:50
       </p>
-      <p
-        class="ams-paragraph"
-      >
-        Locatie Stadsloket Centrum, Amstel 1
-      </p>
+      <div>
+        <button
+          class="ams-button ams-button--secondary _LocationModalLink_fa327b ams-link _MaLink_10c0a4 _LocationModal_0a51e6"
+          type="button"
+        >
+          Locatie Stadsloket Centrum, Amstel 1
+        </button>
+      </div>
       <div
         class="ams-mb-s"
       >
         <a
+          class="ams-link _MaLink_10c0a4"
           href="#"
         >
           Voeg toe aan uw privé agenda
         </a>
       </div>
-      <a
-        class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline_10c0a4"
-        href="/qr/123"
-      >
-        <button
-          class="ams-button ams-button--secondary"
-          type="button"
+      <div>
+        <a
+          class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline_10c0a4"
+          href="/qr/123"
         >
-          Toon QR code
-        </button>
-      </a>
+          <button
+            class="ams-button ams-button--secondary"
+            type="button"
+          >
+            Toon QR code
+          </button>
+        </a>
+      </div>
     </div>
     <a
       class="ams-link _MaLink_10c0a4"
@@ -120,31 +126,37 @@ exports[`Renders afspraak data > Small screen 1`] = `
       >
         Datum, 01-01-2020 17:50
       </p>
-      <p
-        class="ams-paragraph"
-      >
-        Locatie Stadsloket Centrum, Amstel 1
-      </p>
+      <div>
+        <button
+          class="ams-button ams-button--secondary _LocationModalLink_fa327b ams-link _MaLink_10c0a4 _LocationModal_0a51e6"
+          type="button"
+        >
+          Locatie Stadsloket Centrum, Amstel 1
+        </button>
+      </div>
       <div
         class="ams-mb-s"
       >
         <a
+          class="ams-link _MaLink_10c0a4"
           href="#"
         >
           Voeg toe aan uw privé agenda
         </a>
       </div>
-      <a
-        class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline_10c0a4"
-        href="/qr/123"
-      >
-        <button
-          class="ams-button ams-button--secondary"
-          type="button"
+      <div>
+        <a
+          class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline_10c0a4"
+          href="/qr/123"
         >
-          Toon QR code
-        </button>
-      </a>
+          <button
+            class="ams-button ams-button--secondary"
+            type="button"
+          >
+            Toon QR code
+          </button>
+        </a>
+      </div>
       <a
         class="ams-link _CancellationLink_0a51e6 _MaLink_10c0a4"
         href="https://cancel.com"
