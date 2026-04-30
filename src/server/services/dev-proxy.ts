@@ -21,7 +21,7 @@ import { BffEndpoints } from '../routing/bff-routes.ts';
  *
  * Just supply the required headers:
  * x-ma-dev-api-key for authentication.
- * x-ma-proxy-target-host for where to send the request.
+ * x-ma-target-host for where to send the request.
  *
  * Optional headers passed through to the target server start with 'x-ma-pass-'.
  * When receiving these, we will send everything after that prefix as is.
@@ -31,7 +31,7 @@ import { BffEndpoints } from '../routing/bff-routes.ts';
  *
  * curl https://bff-server.nl/api/v1/proxy/path/foo/bar/baz?a=1&b=2 /
  *   --header 'x-ma-dev-api-key: x'
- *   --header 'x-ma-proxy-target-host: https://someserver.com'
+ *   --header 'x-ma-target-host: https://someserver.com'
  *   --header 'x-ma-pass-api-key-for-target-server: x'
  */
 export async function devProxyHandler(req: Request, res: Response) {
@@ -52,7 +52,7 @@ export async function devProxyHandler(req: Request, res: Response) {
       .send(`Invalid or missing header '${apiKeyName}'`);
   }
 
-  const proxyTargetHeaderName = 'x-ma-proxy-target-host';
+  const proxyTargetHeaderName = 'x-ma-target-host';
   const proxyTargetHeader = req.headers[proxyTargetHeaderName];
   if (!proxyTargetHeader || typeof proxyTargetHeader !== 'string') {
     return res
