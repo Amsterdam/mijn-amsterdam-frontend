@@ -4,6 +4,17 @@ import { AfspraakCard } from './AfspraakCard.tsx';
 import type { AfspraakFrontendFinal } from '../../pages/Thema/KlantContact/useAfsprakenListData.hook.tsx';
 import { BrowserRouter } from 'react-router';
 
+const mocks = vi.hoisted(() => {
+  return {
+    isSmallScreen: false,
+  };
+});
+
+vi.mock('../../hooks/media.hook.ts', async (importOriginal) => ({
+  ...(await importOriginal()),
+  useSmallScreen: () => mocks.isSmallScreen,
+}));
+
 const afspraak = {
   subject: 'Varen',
   cancellationLink: 'https://cancel.com',
@@ -17,9 +28,21 @@ const afspraak = {
   qrCodeHref: 'https://qrcode.com/qr/123',
 } as AfspraakFrontendFinal;
 
-test('Renders afspraak data', () => {
-  const screen = render(<AfspraakCard afspraak={afspraak}></AfspraakCard>, {
-    wrapper: BrowserRouter,
+describe('Renders afspraak data', () => {
+  beforeEach(() => {
+    mocks.isSmallScreen = false;
   });
-  expect(screen.asFragment()).toMatchSnapshot();
+  test('Large screen', () => {
+    const screen = render(<AfspraakCard afspraak={afspraak}></AfspraakCard>, {
+      wrapper: BrowserRouter,
+    });
+    expect(screen.asFragment()).toMatchSnapshot();
+  });
+  test('Small screen', () => {
+    mocks.isSmallScreen = true;
+    const screen = render(<AfspraakCard afspraak={afspraak}></AfspraakCard>, {
+      wrapper: BrowserRouter,
+    });
+    expect(screen.asFragment()).toMatchSnapshot();
+  });
 });
