@@ -4,7 +4,6 @@ import { MaLink } from '../MaLink/MaLink.tsx';
 import { captureException } from '../../helpers/monitoring.ts';
 
 type ICSData = {
-  // Format: use toICALDateTimeString(): YYYYMMDDTHHMMSSZ
   start: Date;
   end: Date;
   uid: string;
@@ -24,6 +23,9 @@ function pad(date: string) {
   return date.padStart(2, '0');
 }
 
+/**
+ * Formats to an ICAL date string in YYYYMMDDTHHMMSSZ format.
+ */
 function toICALDateTimeString(date: Date): string {
   const year = date.getUTCFullYear().toString();
   const month = pad((date.getUTCMonth() + 1).toString());
