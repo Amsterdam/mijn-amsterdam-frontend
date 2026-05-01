@@ -27,7 +27,7 @@ import {
 } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 
-async function requestContactmomentenData<T>(
+async function fetchContactmomentenData<T>(
   authProfileAndToken: AuthProfileAndToken,
   dataRequestConfigSpecific: DataRequestConfig
 ) {
@@ -82,7 +82,7 @@ async function fetchAfspraken(
       'salesforce-contactmomenten-appointments'
     ),
   };
-  return requestContactmomentenData(authProfileAndToken, requestConfig);
+  return fetchContactmomentenData(authProfileAndToken, requestConfig);
 }
 
 function transformContactmomentenResponse(
@@ -115,7 +115,7 @@ async function fetchContactmomenten(authProfileAndToken: AuthProfileAndToken) {
       'salesforce-klantcontact-contactmomenten'
     ),
   };
-  return requestContactmomentenData<ContactmomentFrontend[]>(
+  return fetchContactmomentenData<ContactmomentFrontend[]>(
     authProfileAndToken,
     requestConfig
   );
