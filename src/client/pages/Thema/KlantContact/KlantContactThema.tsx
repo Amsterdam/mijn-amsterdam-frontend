@@ -10,6 +10,7 @@ import { CollapsiblePanel } from '../../../components/CollapsiblePanel/Collapsib
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { isEnabled } from '../../../config/feature-toggles.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function KlantContactThema() {
@@ -56,16 +57,18 @@ export function KlantContactThema() {
       pageContentTop={pageContentTop}
       pageContentMain={
         <>
-          <PageContentCell>
-            <Heading level={2} className="ams-mb-s">
-              Afspraken bij een stadsloket
-            </Heading>
-            {afspraakCards.length ? (
-              afspraakCards
-            ) : (
-              <Paragraph>U heeft geen afspraken.</Paragraph>
-            )}
-          </PageContentCell>
+          {isEnabled('KLANT_CONTACT.afspraken') && (
+            <PageContentCell>
+              <Heading level={2} className="ams-mb-s">
+                Afspraken bij een stadsloket
+              </Heading>
+              {afspraakCards.length ? (
+                afspraakCards
+              ) : (
+                <Paragraph>U heeft geen afspraken.</Paragraph>
+              )}
+            </PageContentCell>
+          )}
           {!!contactmomenten.length && (
             <PageContentCell>
               <ContactMomenten />

@@ -6,6 +6,7 @@ import { themaConfig } from './KlantContact-thema-config.ts';
 import { KlantContactThema } from './KlantContactThema.tsx';
 import { isLoading } from '../../../../universal/helpers/api.ts';
 import { type AppState } from '../../../../universal/types/App.types.ts';
+import { isEnabled } from '../../../config/feature-toggles.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
@@ -25,7 +26,8 @@ export const ContactRoutes = [
   {
     route: themaConfig.detailPageAfspraakQRCode.route.path,
     Component: AfspraakQRCodeDetailPage,
-    isActive: themaConfig.featureToggle.active,
+    isActive:
+      themaConfig.featureToggle.active && isEnabled('KLANT_CONTACT.afspraken'),
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 
-import { MaLink } from '../MaLink/MaLink.tsx';
 import { captureException } from '../../helpers/monitoring.ts';
+import { MaLink } from '../MaLink/MaLink.tsx';
 
 type ICSData = {
   start: Date;

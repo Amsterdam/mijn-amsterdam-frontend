@@ -1,10 +1,10 @@
 import { generatePath, useParams } from 'react-router';
 
 import { tableConfigs, themaConfig } from './KlantContact-thema-config.ts';
+import type { AfspraakFrontend } from '../../../../server/services/salesforce/klantcontact.types.ts';
 import { isLoading, isError } from '../../../../universal/helpers/api.ts';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
-import type { AfspraakFrontend } from '../../../../server/services/salesforce/klantcontact.types.ts';
 
 export function useKlantcontactData() {
   const { KLANT_CONTACT } = useAppStateGetter();
