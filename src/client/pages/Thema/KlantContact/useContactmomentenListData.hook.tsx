@@ -8,7 +8,7 @@ import {
 
 import type { ContactmomentProps } from './KlantContact-thema-config.ts';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
-import type { ContactType } from '../../../../server/services/salesforce/klantcontact.types.ts';
+import type { Kanaal } from '../../../../server/services/salesforce/klantcontact.types.ts';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import type { ThemaMenuItemTransformed } from '../../../config/thema-types.ts';
 import { getRedactedClass } from '../../../helpers/cobrowse.ts';
@@ -70,8 +70,8 @@ function getLinkToThemaPage(
   );
 }
 
-function addIcon(type: ContactType) {
-  const icons: Record<ContactType, React.FC> = {
+function addIcon(type: Kanaal) {
+  const icons: Record<Kanaal, React.FC> = {
     Telefoon: PhoneIcon,
     Chat: SpeechBalloonEllipsisIcon,
     Contactformulier: MailIcon,
@@ -108,7 +108,7 @@ export function useContactmomentenListData() {
       return {
         ...contactmoment,
         className: getRedactedClass(menuItemId),
-        contacttypeField: addIcon(contactmoment.contacttype),
+        kanaal: addIcon(contactmoment.kanaal),
         subjectLink: getLinkToThemaPage(
           contactmoment.subject,
           myThemasMenuItems

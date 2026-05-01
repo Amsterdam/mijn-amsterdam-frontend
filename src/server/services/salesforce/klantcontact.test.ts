@@ -107,16 +107,16 @@ describe('Contactmomenten service', () => {
     expect(result.content.contactmomenten).toMatchInlineSnapshot(`
       [
         {
-          "contacttype": "Telefoon",
           "datePublished": "2024-05-29 08:02:38",
           "datePublishedFormatted": "29 mei 2024",
+          "kanaal": "Telefoon",
           "referenceNumber": "00002032",
           "subject": "Meldingen",
         },
         {
-          "contacttype": "Telefoon",
           "datePublished": "2024-05-22 08:28:45",
           "datePublishedFormatted": "22 mei 2024",
+          "kanaal": "Telefoon",
           "referenceNumber": "10001875",
           "subject": "Algemeen",
         },
@@ -162,9 +162,9 @@ describe('Contactmomenten service', () => {
     expect(result.content.contactmomenten).toMatchInlineSnapshot(`
       [
         {
-          "contacttype": "Stadsloket",
           "datePublished": "2026-02-26T09:00:00Z",
           "datePublishedFormatted": "26 februari 2026",
+          "kanaal": "Stadsloket",
           "referenceNumber": "00157783",
           "subject": "Gemiste afspraak",
         },

@@ -93,7 +93,7 @@ function transformContactmomentenResponse(
       .map((contactMoment) => ({
         referenceNumber: contactMoment.nummer,
         subject: contactMoment.onderwerp,
-        contacttype: contactMoment.kanaal,
+        kanaal: contactMoment.kanaal,
         datePublishedFormatted: defaultDateFormat(
           contactMoment.plaatsgevondenOp
         ),
@@ -161,7 +161,7 @@ function transferMissedAfsprakenToContactmomenten(
     .map((a) => {
       const klantcontactmoment: ContactmomentFrontend = {
         referenceNumber: a.caseReference,
-        contacttype: 'Stadsloket',
+        kanaal: 'Stadsloket',
         subject: 'Gemiste afspraak',
         datePublishedFormatted: a.dateFormatted,
         datePublished: a.startDate,

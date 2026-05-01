@@ -2,11 +2,7 @@ export type SalesforceResponseType = {
   '@onformdata.context': string;
 };
 
-export type ContactType =
-  | 'Telefoon'
-  | 'Chat'
-  | 'Contactformulier'
-  | 'Stadsloket';
+export type Kanaal = 'Telefoon' | 'Chat' | 'Contactformulier' | 'Stadsloket';
 
 export type ContactmomentSource = {
   plaatsgevondenOp: string;
@@ -24,7 +20,7 @@ export type ContactmomentFrontend = {
   datePublishedFormatted: string;
   subject: string;
   referenceNumber: string;
-  contacttype: ContactType;
+  kanaal: Kanaal;
 };
 
 type Product = {

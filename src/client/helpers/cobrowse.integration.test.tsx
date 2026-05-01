@@ -6,7 +6,7 @@ import { describe, it } from 'vitest';
 
 import type {
   KlantcontactResponseData,
-  ContactType,
+  Kanaal,
   ContactmomentFrontend,
 } from '../../server/services/salesforce/klantcontact.types.ts';
 import type { AppState } from '../../universal/types/App.types.ts';
@@ -31,11 +31,11 @@ const testState = {
       contactmomenten: [
         {
           subject: 'Financiën',
-          contacttype: themaConfigAfis.title as ContactType, // We misuse this to keep things together
+          kanaal: themaConfigAfis.title as Kanaal, // We misuse this to keep things together
         },
         {
           subject: themaVergunningen.id,
-          contacttype: 'Chat',
+          kanaal: 'Chat',
         },
       ] as ContactmomentFrontend[],
       afspraken: [],
@@ -227,8 +227,7 @@ describe('Cobrowse redacted components', () => {
         const contactmomentAfis = screen
           .getByRole('link', {
             name:
-              testState.KLANT_CONTACT.content?.contactmomenten[0].contacttype ??
-              '',
+              testState.KLANT_CONTACT.content?.contactmomenten[0].kanaal ?? '',
           })
           .closest('tr');
         expect(contactmomentAfis).toHaveClass('redacted');
@@ -249,8 +248,7 @@ describe('Cobrowse redacted components', () => {
       const contactmomentAfis = screen
         .getByRole('link', {
           name:
-            testState.KLANT_CONTACT.content?.contactmomenten[0].contacttype ??
-            '',
+            testState.KLANT_CONTACT.content?.contactmomenten[0].kanaal ?? '',
         })
         .closest('tr');
       expect(contactmomentAfis).toHaveClass('redacted');

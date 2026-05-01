@@ -10,7 +10,7 @@ import type {
 } from '../../../config/thema-types.ts';
 
 export type ContactmomentProps = ContactmomentFrontend & {
-  contacttypeField: ReactNode;
+  kanaalField: ReactNode;
   subjectLink: ReactNode;
   className: string;
 };
@@ -61,7 +61,7 @@ export const themaConfig: ContactThema = {
 };
 
 const contactmomentenDisplayProps: DisplayProps<ContactmomentProps> = {
-  contacttypeField: 'Contactvorm',
+  kanaal: 'Contactvorm',
   subjectLink: 'Onderwerp',
   datePublishedFormatted: 'Datum',
   referenceNumber: 'Referentienummer',

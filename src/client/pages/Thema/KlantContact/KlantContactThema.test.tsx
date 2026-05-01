@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { themaConfig } from './KlantContact-thema-config.ts';
 import { KlantContactThema } from './KlantContactThema.tsx';
 import type {
-  ContactType,
+  Kanaal,
   ContactmomentFrontend,
 } from '../../../../server/services/salesforce/klantcontact.types.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
@@ -21,28 +21,28 @@ const contactmomenten: ContactmomentFrontend[] = [
     datePublishedFormatted: '2024-05-29 08:02:38',
     subject: 'Meldingen',
     referenceNumber: '00002032',
-    contacttype: 'Stadsloket',
+    kanaal: 'Stadsloket',
   },
   {
     datePublished: '2024-05-29 08:02:38',
     datePublishedFormatted: '2024-05-29 08:02:38',
     subject: 'Meldingen',
     referenceNumber: '00002032',
-    contacttype: 'Telefoon',
+    kanaal: 'Telefoon',
   },
   {
     datePublished: '2024-05-29 08:02:38',
     datePublishedFormatted: '2024-05-29 08:02:38',
     subject: 'Meldingen',
     referenceNumber: '00002032',
-    contacttype: 'Chat',
+    kanaal: 'Chat',
   },
   {
     datePublished: '2024-05-29 08:02:38',
     datePublishedFormatted: '2024-05-29 08:02:38',
     subject: 'Meldingen',
     referenceNumber: '00002032',
-    contacttype: 'Contactformulier',
+    kanaal: 'Contactformulier',
   },
 ];
 
@@ -92,13 +92,13 @@ test('Shows max 3 contactmomenten', async () => {
   const screen = render(<KlantContactThema />);
   expect(screen.getByText(contactmomentenHeader)).toBeInTheDocument();
 
-  const expectedContacttypes: ContactType[] = [
+  const expectedKanalen: Kanaal[] = [
     'Stadsloket',
     'Telefoon',
     'Chat',
     'Contactformulier',
   ];
-  expectedContacttypes.forEach((type) => {
+  expectedKanalen.forEach((type) => {
     expect(screen.getByText(type)).toBeInTheDocument();
   });
 
