@@ -91,7 +91,7 @@ export function useContactmomentenListData() {
   const {
     id,
     themaConfig,
-    data,
+    contactmomenten,
     tableConfigs,
     isLoading,
     isError,
@@ -99,18 +99,18 @@ export function useContactmomentenListData() {
   } = useKlantcontactData();
   const { items: myThemasMenuItems } = useActiveThemaMenuItems();
 
-  const contactmomenten: ContactmomentProps[] =
-    data?.contactmomenten.map((klantcontact) => {
+  const contactmomentenProps: ContactmomentProps[] =
+    contactmomenten.map((contactmoment) => {
       const menuItemId = // getMenuItem can not be used because it is dependend on the user having the thema at the current moment
         mapperContactmomentToMenuItem[
-          klantcontact.subject as keyof typeof mapperContactmomentToMenuItem
-        ] || klantcontact.subject;
+          contactmoment.subject as keyof typeof mapperContactmomentToMenuItem
+        ] || contactmoment.subject;
       return {
-        ...klantcontact,
+        ...contactmoment,
         className: getRedactedClass(menuItemId),
-        contacttypeField: addIcon(klantcontact.contacttype),
+        contacttypeField: addIcon(contactmoment.contacttype),
         subjectLink: getLinkToThemaPage(
-          klantcontact.subject,
+          contactmoment.subject,
           myThemasMenuItems
         ),
       };
@@ -122,7 +122,7 @@ export function useContactmomentenListData() {
     isLoading,
     isError,
     breadcrumbs,
-    contactmomenten,
+    contactmomenten: contactmomentenProps,
     hasContactmomenten: !!contactmomenten.length,
     routeConfig: themaConfig.listPageContactmomenten.route,
   };

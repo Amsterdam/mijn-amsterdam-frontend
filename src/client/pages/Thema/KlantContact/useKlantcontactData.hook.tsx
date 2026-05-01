@@ -4,6 +4,7 @@ import { tableConfigs, themaConfig } from './KlantContact-thema-config.ts';
 import { isLoading, isError } from '../../../../universal/helpers/api.ts';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
+import type { AfspraakFrontend } from '../../../../server/services/salesforce/klantcontact.types.ts';
 
 export function useKlantcontactData() {
   const { KLANT_CONTACT } = useAppStateGetter();
@@ -14,7 +15,10 @@ export function useKlantcontactData() {
     themaConfig,
     id: themaConfig.id,
     title: themaConfig.title,
-    data: KLANT_CONTACT.content,
+    contactmomenten: KLANT_CONTACT.content?.contactmomenten ?? [],
+    get afspraken() {
+      return getAfspraken(KLANT_CONTACT.content?.afspraken ?? []);
+    },
     pageLinks: themaConfig.pageLinks,
     isError: isError(KLANT_CONTACT),
     isLoading: isLoading(KLANT_CONTACT),
@@ -29,4 +33,35 @@ export function useKlantcontactData() {
       }
     ),
   };
+}
+
+export type AfspraakFrontendFinal = {
+  startDate: Date;
+  endDate: Date;
+  displayDate: string;
+  qrCodeHref: string;
+} & Omit<AfspraakFrontend, 'startDate' | 'endDate'>;
+
+function getAfspraken(afspraken: AfspraakFrontend[]): AfspraakFrontendFinal[] {
+  return afspraken.map((a) => {
+    const start = new Date(a.startDate);
+    const end = new Date(a.endDate);
+
+    const pad = (num: number) => num.toString().padStart(2, '0');
+    const formatToHoursMinutes = (date: Date) =>
+      `${pad(date.getHours())}:${pad(date.getMinutes())}`;
+
+    return {
+      ...a,
+      startDate: start,
+      endDate: end,
+      displayDate: `Datum, ${a.dateFormatted}, ${formatToHoursMinutes(start)}-${formatToHoursMinutes(end)} uur`,
+      qrCodeHref: generatePath(
+        themaConfig.detailPageAfspraakQRCode.route.path,
+        {
+          qrcode: a.qrCode,
+        }
+      ),
+    };
+  });
 }

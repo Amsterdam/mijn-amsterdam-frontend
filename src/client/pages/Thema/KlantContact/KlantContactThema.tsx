@@ -2,7 +2,6 @@ import { Heading, Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import type { ContactmomentProps } from './KlantContact-thema-config.ts';
-import { useAfsprakenListData } from './useAfsprakenListData.hook.tsx';
 import { useContactmomentenListData } from './useContactmomentenListData.hook.tsx';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import styles from '../../../components/AfspraakCard/AfspraakCard.module.scss';
@@ -14,20 +13,19 @@ import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function KlantContactThema() {
-  const { id, title, isLoading, isError, pageLinks, routeConfig, data } =
-    useKlantcontactData();
-  const { afspraken } = useAfsprakenListData();
+  const {
+    id,
+    title,
+    isLoading,
+    isError,
+    pageLinks,
+    routeConfig,
+    afspraken,
+    contactmomenten,
+  } = useKlantcontactData();
   useHTMLDocumentTitle(routeConfig);
 
-  const pageContentTop = (
-    <PageContentCell spanWide={8}>
-      <Paragraph>
-        Hier regelt u uw contact voorkeuren, zoals wilt u de post van de
-        gemeente alleen digitaal ontvangen, aanpassen van uw afspraken met de
-        gemeente en het wijzigen van uw e-mailadres of telefoonnummer.
-      </Paragraph>
-    </PageContentCell>
-  );
+  const pageContentTop = <div></div>;
 
   const pageContentErrorAlert = (
     <>
@@ -68,7 +66,7 @@ export function KlantContactThema() {
               <Paragraph>U heeft geen afspraken.</Paragraph>
             )}
           </PageContentCell>
-          {!!data?.contactmomenten.length && (
+          {!!contactmomenten.length && (
             <PageContentCell>
               <ContactMomenten />
             </PageContentCell>

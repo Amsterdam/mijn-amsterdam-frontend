@@ -3,7 +3,6 @@ import QRCode from 'react-qr-code';
 import { useParams } from 'react-router';
 
 import styles from './AfspraakQRCodeDetailPage.module.scss';
-import { useAfsprakenListData } from './useAfsprakenListData.hook.tsx';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import ErrorAlert from '../../../components/Alert/Alert.tsx';
 import { PageContentCell, PageV2 } from '../../../components/Page/Page.tsx';
@@ -11,8 +10,7 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function AfspraakQRCodeDetailPage() {
-  const { id, themaConfig } = useKlantcontactData();
-  const { afspraken } = useAfsprakenListData();
+  const { id, themaConfig, afspraken } = useKlantcontactData();
   const routeConfig = themaConfig.detailPageAfspraakQRCode.route;
   const breadcrumbs = useThemaBreadcrumbs(id);
   useHTMLDocumentTitle(routeConfig);
