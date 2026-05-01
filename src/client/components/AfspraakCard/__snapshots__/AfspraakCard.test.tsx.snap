@@ -42,7 +42,7 @@ exports[`Renders afspraak data > Large screen 1`] = `
       </p>
       <div>
         <button
-          class="ams-button ams-button--secondary _LocationModalLink_fa327b ams-link _MaLink_10c0a4 _LocationModal_0a51e6"
+          class="ams-button ams-button--secondary _LocationModalLink_fa327b ams-link _MaLink_10c0a4 _LocationModalLink_0a51e6"
           type="button"
         >
           Locatie Stadsloket Centrum, Amstel 1
@@ -128,7 +128,7 @@ exports[`Renders afspraak data > Small screen 1`] = `
       </p>
       <div>
         <button
-          class="ams-button ams-button--secondary _LocationModalLink_fa327b ams-link _MaLink_10c0a4 _LocationModal_0a51e6"
+          class="ams-button ams-button--secondary _LocationModalLink_fa327b ams-link _MaLink_10c0a4 _LocationModalLink_0a51e6"
           type="button"
         >
           Locatie Stadsloket Centrum, Amstel 1

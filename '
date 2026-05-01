@@ -25,7 +25,7 @@ function pad(date: string) {
 
 function toICALDateTimeString(date: Date): string {
   const year = date.getUTCFullYear().toString();
-  const month = pad((date.getUTCMonth() + 1).toString());
+  const month = pad(date.getUTCMonth().toString());
   const day = pad(date.getUTCDate().toString());
 
   const hours = pad(date.getUTCHours().toString());
@@ -57,37 +57,8 @@ function createICS({
     `LOCATION:${location}`,
     `END:VEVENT`,
     `END:VCALENDAR`,
-  ]
-    .map(foldLine)
-    .join('\r\n');
+  ].join('\r\n');
   return icalContent;
-}
-
-/**
- * Fold a line according to RFC 5545 (ICS file spec).
- * Ensures lines are no longer than 75 bytes, folding with CRLF + space.
- */
-function foldLine(line: string): string {
-  const maxBytes = 75;
-  const encoder = new TextEncoder();
-  let foldedLine = '';
-  let currentLine = '';
-
-  for (const char of line) {
-    const charBytes = encoder.encode(char);
-    const currentBytes = encoder.encode(currentLine).length;
-
-    if (currentBytes + charBytes.length > maxBytes) {
-      foldedLine += currentLine + '\r\n ';
-      currentLine = char;
-    } else {
-      currentLine += char;
-    }
-  }
-
-  foldedLine += currentLine;
-
-  return foldedLine;
 }
 
 export function CalendarLink({
