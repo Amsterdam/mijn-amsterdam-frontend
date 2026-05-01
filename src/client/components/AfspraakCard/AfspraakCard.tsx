@@ -70,7 +70,7 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
             className={classNames(
               'ams-link',
               maLinkStyles.MaLink,
-              styles.LocationModal
+              styles.LocationModalLink
             )}
           >
             {`Locatie Stadsloket ${afspraak.location.name}, ${afspraak.location.street}`}
