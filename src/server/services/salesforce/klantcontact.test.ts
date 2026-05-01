@@ -1,6 +1,7 @@
 import { fetchKlantcontact } from './klantcontact.ts';
 import type {
   AfspraakResponseSource,
+  AfspraakSource,
   ContactmomentResponseSource,
 } from './klantcontact.types.ts';
 import { remoteApiHost } from '../../../testing/setup.ts';
@@ -52,7 +53,7 @@ const afsprakenResponse: AfspraakResponseSource = {
   count: 2,
 };
 
-const noShowAfspraak: AfspraakResponseSource['results'][0] = {
+const noShowAfspraak: AfspraakSource = {
   subject: 'Blauwe zone',
   status: 'No show',
   startDate: '2026-02-26 09:00:00',
