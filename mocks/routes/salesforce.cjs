@@ -1,4 +1,4 @@
-const APPOINTMENTS_RESPONSE = require('../fixtures/salesforce-appointments-stadsloket.json');
+const AFSPRAKEN_RESPONSE = require('../fixtures/salesforce-appointments-stadsloket.json');
 const CONTACTMOMENTEN_RESPONSE = require('../fixtures/salesforce-contactmomenten.json');
 const settings = require('../settings.cjs');
 
@@ -19,7 +19,7 @@ module.exports = [
     ],
   },
   {
-    id: 'get-salesforce-appointments-stadsloket',
+    id: 'get-salesforce-afspraken-stadsloket',
     url: `${settings.MOCK_BASE_PATH}/salesforce/contactmomenten/services/apexrest/klantinteracties/v1.0/appointments`,
     method: 'GET',
     variants: [
@@ -28,7 +28,7 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: APPOINTMENTS_RESPONSE,
+          body: AFSPRAKEN_RESPONSE,
         },
       },
     ],
