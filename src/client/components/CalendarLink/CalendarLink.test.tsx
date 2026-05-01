@@ -81,6 +81,27 @@ END:VCALENDAR`);
 });
 
 test('Can handle a line of 100_000 chars', () => {
+  const DESCRIPTION_LENGTH = 'DESCRIPTION:'.length;
+  const TEST_DATA_LENGTH = 100_000 - DESCRIPTION_LENGTH;
+
+  const icsData = {
+    start: new Date('2025-01-01T00:00:00Z'),
+    end: new Date('2025-01-01T00:30:00Z'),
+    uid: 'unique-id-123',
+    summary: 'Summary',
+    description: new Array(TEST_DATA_LENGTH).fill('x').join(''),
+    location: 'Location',
+  };
+  const now = '2025-01-01T00:00:00Z';
+  mockdate.set(new Date(now));
+  const result = forTesting.createICS(icsData);
+
+  expect(
+    result.split('\r\n').find((l) => l.startsWith('DESCRIPTION'))
+  ).toBeDefined();
+});
+
+test('Throws away lines that are too long', () => {
   const icsData = {
     start: new Date('2025-01-01T00:00:00Z'),
     end: new Date('2025-01-01T00:30:00Z'),
@@ -91,5 +112,9 @@ test('Can handle a line of 100_000 chars', () => {
   };
   const now = '2025-01-01T00:00:00Z';
   mockdate.set(new Date(now));
-  forTesting.createICS(icsData);
+  const result = forTesting.createICS(icsData);
+
+  expect(
+    result.split('\r\n').find((l) => l.startsWith('DESCRIPTION'))
+  ).toBeUndefined();
 });

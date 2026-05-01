@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 import { MaLink } from '../MaLink/MaLink.tsx';
+import { captureException } from '../../helpers/monitoring.ts';
 
 type ICSData = {
   // Format: use toICALDateTimeString(): YYYYMMDDTHHMMSSZ
@@ -42,7 +43,7 @@ function createICS({
   summary,
   description,
   location,
-}: ICSData) {
+}: ICSData): string {
   const icalContent = [
     `BEGIN:VCALENDAR`,
     `VERSION:2.0`,
@@ -68,6 +69,10 @@ function createICS({
  * Ensures lines are no longer than 75 bytes, folding with CRLF + space.
  */
 function foldLine(line: string): string {
+  if (line.length > 100_000) {
+    captureException(new Error('Line too long'));
+    return '';
+  }
   const maxBytes = 75;
   const encoder = new TextEncoder();
   let foldedLine = '';
