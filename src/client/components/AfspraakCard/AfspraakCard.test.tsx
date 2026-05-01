@@ -51,7 +51,7 @@ describe('Renders afspraak data', () => {
     expect(screen.asFragment()).toMatchSnapshot();
   });
 
-  test('Can click QR code', async () => {
+  test('Can navigate to QR code page', async () => {
     const QR_PAGE_ID = 'QR Page';
     const screen = render(
       <MemoryRouter initialEntries={['/']}>
