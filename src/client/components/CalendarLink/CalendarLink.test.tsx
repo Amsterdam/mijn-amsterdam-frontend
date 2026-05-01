@@ -54,7 +54,7 @@ test('Lines cannot be longer then 75 bytes (octets)', () => {
     // In steps of 10: (.........-)
     summary:
       '.........-.........-.........-.........-.........-.........-.........-.........-.........-.........-.........-.........-.........-.........-.........-.........-.........-',
-    // SIZE = 'DESCRIPTION:' + 'Array(...)' = 12 + 16 * 4 = 76 bytes which is one too much.
+    // SIZE = 'DESCRIPTION:' + 'Array(...)' = 12 + 16 * 4 = 76 bytes, which is one too much.
     description: new Array(16).fill('🚲').join(''),
     location: 'Location',
   };
