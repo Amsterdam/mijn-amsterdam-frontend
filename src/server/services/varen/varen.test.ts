@@ -214,7 +214,7 @@ describe('Varen service', () => {
     } as unknown as VarenVergunningExploitatieType;
 
     const vergunningRef = (identifier: string) =>
-      ({ identifier }) as unknown as DecosVarenZaakVergunning;
+      ({ identifier }) as DecosVarenZaakVergunning;
 
     it('removes transport zaken and non-passagiersvaart vergunningen, plus linked items', () => {
       const zaken = [
@@ -238,7 +238,7 @@ describe('Varen service', () => {
           segment: 'Onbemand',
           vergunning: null,
         },
-      ] as unknown as VarenZakenFrontend[];
+      ] satisfies Partial<VarenZakenFrontend>[] as unknown as VarenZakenFrontend[];
 
       const [vergunningenFiltered, zakenFiltered] = filterNonPassagiersvaart(
         [passagiersVergunning, transportVergunning],
@@ -266,7 +266,7 @@ describe('Varen service', () => {
           segment: 'Onbemand',
           vergunning: vergunningRef('Passagiersvaart'),
         },
-      ] as unknown as VarenZakenFrontend[];
+      ] satisfies Partial<VarenZakenFrontend>[] as unknown as VarenZakenFrontend[];
 
       const [vergunningenFiltered, zakenFiltered] = filterNonPassagiersvaart(
         [passagiersVergunning],
@@ -284,7 +284,7 @@ describe('Varen service', () => {
           segment: 'Transport',
           vergunning: vergunningRef('Passagiersvaart'),
         },
-      ] as unknown as VarenZakenFrontend[];
+      ] satisfies Partial<VarenZakenFrontend>[] as unknown as VarenZakenFrontend[];
 
       const [vergunningenFiltered, zakenFiltered] = filterNonPassagiersvaart(
         [passagiersVergunning],
@@ -298,7 +298,7 @@ describe('Varen service', () => {
     it('keeps passagiersvaart vergunningen even if there are no zaken', () => {
       const [vergunningenFiltered, zakenFiltered] = filterNonPassagiersvaart(
         [passagiersVergunning, transportVergunning],
-        [] as unknown as VarenZakenFrontend[]
+        [] satisfies Partial<VarenZakenFrontend>[] as unknown as VarenZakenFrontend[]
       );
 
       expect(zakenFiltered).toStrictEqual([]);
