@@ -29,7 +29,7 @@ export function filterNonPassagiersvaart(
     .filter(
       (vergunning) =>
         vergunning.soortVergunning === 'Passagiersvaart' ||
-        vergunning.soortVergunning == null
+        vergunning.soortVergunning == null // Keep vergunningen with unknown soortVergunning. These can be legacy items that predate the addition of the soortVergunning field
     )
     .filter(
       (vergunning) =>
