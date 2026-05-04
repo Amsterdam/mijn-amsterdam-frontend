@@ -7,7 +7,6 @@ import type {
   VarenVergunningExploitatieType,
   ZaakVergunningExploitatieWijzigingVaartuigNaamType,
   VarenZakenFrontend,
-  VarenVergunningFrontend,
 } from './config-and-types.ts';
 import { filterNonPassagiersvaart } from './varen-helper.ts';
 import { fetchVaren } from './varen.ts';
@@ -207,12 +206,12 @@ describe('Varen service', () => {
     const passagiersVergunning = {
       identifier: 'Passagiersvaart',
       soortVergunning: 'Passagiersvaart',
-    } as unknown as VarenVergunningFrontend;
+    } as unknown as VarenVergunningExploitatieType;
 
     const transportVergunning = {
       identifier: 'Transport',
       soortVergunning: 'Transport',
-    } as unknown as VarenVergunningFrontend;
+    } as unknown as VarenVergunningExploitatieType;
 
     const vergunningRef = (identifier: string) =>
       ({ identifier }) as unknown as DecosVarenZaakVergunning;

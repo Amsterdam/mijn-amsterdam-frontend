@@ -1,14 +1,14 @@
 import type {
-  VarenVergunningFrontend,
+  VarenVergunningExploitatieType,
   VarenZakenFrontend,
 } from './config-and-types.ts';
 
 // MIJN - 12951: Filter non-passagiersvaart until there is more clarity about what is intended with non-passagiersvaart zaken and vergunningen
 // Zaken and vergunningen linked to at least one passagiersvaart of the other type (or to none of the other type) are kept, even if they are also linked to a non-passagiersvaart.
 export function filterNonPassagiersvaart(
-  vergunningen: VarenVergunningFrontend[],
+  vergunningen: VarenVergunningExploitatieType[],
   zaken: VarenZakenFrontend[]
-): [VarenVergunningFrontend[], VarenZakenFrontend[]] {
+): [VarenVergunningExploitatieType[], VarenZakenFrontend[]] {
   const zakenTransport = new Set(
     zaken
       .filter((zaak) => zaak.segment === 'Transport')
