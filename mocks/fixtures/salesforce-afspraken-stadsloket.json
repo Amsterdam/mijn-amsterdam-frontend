@@ -1,6 +1,27 @@
 {
   "results": [
     {
+      "subject": "Overheidsloket",
+      "status": "New",
+      "startDate": "2050-01-01 12:35:00",
+      "endDate": "2050-01-01 12:45:00",
+      "qrCode": "837707fc28f6774cc349",
+      "products": [
+        {
+          "name": "Overheidsloket"
+        }
+      ],
+      "location": {
+        "street": "Amstel 1",
+        "postalCode": "1011 PN",
+        "name": "Centrum",
+        "countryCode": "NL",
+        "city": "Amsterdam"
+      },
+      "caseReference": "00157784",
+      "cancellationLink": "http://localhost:3000/mijn-contact?cancel=xxxxxx"
+    },
+    {
       "subject": "Fictief: Extreem lange titel die opzich voor kan komen omdat dit een open invoerveld betreft",
       "status": "New",
       "startDate": "2050-01-01 10:30:00",
