@@ -24,6 +24,28 @@ const contactmomentenResponse = {
   ],
 };
 
+const baseAfspraak: AfspraakSource = {
+  subject: 'Blauwe zone',
+  status: 'New',
+  startDate: '2026-02-26 09:00:00',
+  qrCode: 'xxxxxxxxxxxxxxxxxxxx',
+  products: [
+    {
+      name: 'Blauwe zone',
+    },
+  ],
+  location: {
+    street: null,
+    postalCode: null,
+    name: 'Zuidoost',
+    countryCode: 'NL',
+    city: null,
+  },
+  endDate: '2026-02-26 09:20:00',
+  caseReference: '00157783',
+  cancellationLink: `${remoteApiHost}/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`,
+};
+
 const afsprakenResponse: AfspraakResponseSource = {
   results: [
     {
@@ -54,25 +76,8 @@ const afsprakenResponse: AfspraakResponseSource = {
 };
 
 const noShowAfspraak: AfspraakSource = {
-  subject: 'Blauwe zone',
+  ...baseAfspraak,
   status: 'No show',
-  startDate: '2026-02-26 09:00:00',
-  qrCode: 'xxxxxxxxxxxxxxxxxxxx',
-  products: [
-    {
-      name: 'Blauwe zone',
-    },
-  ],
-  location: {
-    street: null,
-    postalCode: null,
-    name: 'Zuidoost',
-    countryCode: 'NL',
-    city: null,
-  },
-  endDate: '2026-02-26 09:20:00',
-  caseReference: '00157783',
-  cancellationLink: `${remoteApiHost}/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`,
 };
 
 function setUpAPI(responses: {
@@ -146,13 +151,18 @@ describe('Contactmomenten service', () => {
     `);
   });
 
-  test("Tranfers 'missed afspraken' to contactmomenten", async () => {
+  test('Tranfers historical appointments to contactmomenten', async () => {
     setUpAPI({
       contactmomentenResponse: {
         results: [],
       },
       afsprakenResponse: {
-        results: [noShowAfspraak],
+        results: [
+          noShowAfspraak,
+          { ...baseAfspraak, status: 'New' },
+          { ...baseAfspraak, status: 'NoShowCounter' },
+          { ...baseAfspraak, status: 'Completed' },
+        ],
         count: 1,
         next: null,
         previous: null,
