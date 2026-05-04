@@ -7,9 +7,10 @@ import type {
   VarenVergunningExploitatieType,
   ZaakVergunningExploitatieWijzigingVaartuigNaamType,
   VarenZakenFrontend,
+  VarenVergunningFrontend,
 } from './config-and-types.ts';
-import { fetchVaren } from './varen.ts';
 import { filterNonPassagiersvaart } from './varen-helper.ts';
+import { fetchVaren } from './varen.ts';
 import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import {
   apiErrorResult,
@@ -206,12 +207,12 @@ describe('Varen service', () => {
     const passagiersVergunning = {
       identifier: 'Passagiersvaart',
       soortVergunning: 'Passagiersvaart',
-    } as unknown as VarenVergunningExploitatieType;
+    } as unknown as VarenVergunningFrontend;
 
     const transportVergunning = {
       identifier: 'Transport',
       soortVergunning: 'Transport',
-    } as unknown as VarenVergunningExploitatieType;
+    } as unknown as VarenVergunningFrontend;
 
     const vergunningRef = (identifier: string) =>
       ({ identifier }) as unknown as DecosVarenZaakVergunning;

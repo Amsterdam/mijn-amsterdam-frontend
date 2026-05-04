@@ -126,19 +126,17 @@ export async function fetchVaren(authProfileAndToken: AuthProfileAndToken) {
     )
   );
 
-  // MIJN - 12951: Filter non-passagiersvaart until there is more clarity about what is intended with non-passagiersvaart zaken and vergunningen
-  const [vergunningenFilteredRaw, zakenFiltered] = filterNonPassagiersvaart(
-    vergunningenRaw.content,
-    zaken
+  const vergunningen = vergunningenRaw.content.flatMap((vergunning) =>
+    transformVarenVergunningFrontend(vergunning, zaken)
   );
 
-  const vergunningen = vergunningenFilteredRaw.flatMap((vergunning) =>
-    transformVarenVergunningFrontend(vergunning, zakenFiltered)
-  );
+  // MIJN - 12951: Filter non-passagiersvaart until there is more clarity about what is intended with non-passagiersvaart zaken and vergunningen
+  const [vergunningenPassagiersvaart, zakenPassagiersvaart] =
+    filterNonPassagiersvaart(vergunningen, zaken);
 
   return apiSuccessResult({
     reder,
-    zaken: zakenFiltered,
-    vergunningen,
+    zaken: zakenPassagiersvaart,
+    vergunningen: vergunningenPassagiersvaart,
   });
 }
