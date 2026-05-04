@@ -6,8 +6,10 @@ import type {
   ZaakVergunningExploitatieType,
   VarenVergunningExploitatieType,
   ZaakVergunningExploitatieWijzigingVaartuigNaamType,
+  VarenZakenFrontend,
 } from './config-and-types.ts';
 import { fetchVaren } from './varen.ts';
+import { filterNonPassagiersvaart } from './varen-helper.ts';
 import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import {
   apiErrorResult,
@@ -31,6 +33,7 @@ const vergunningContent = {
   itemType: 'varens',
   caseType: null,
   title: 'Varen vergunning exploitatie',
+  soortVergunning: 'Passagiersvaart',
   dateEnd: '2025-01-03T00:00:00',
 } as unknown as VarenVergunningExploitatieType;
 
@@ -196,6 +199,112 @@ describe('Varen service', () => {
           to: '/varen/vergunningen/varen-vergunning-exploitatie-wijziging-vaartuignaam/Z-24-0000002',
         },
       });
+    });
+  });
+
+  describe('filterNonPassagiersvaart', () => {
+    const passagiersVergunning = {
+      identifier: 'Passagiersvaart',
+      soortVergunning: 'Passagiersvaart',
+    } as unknown as VarenVergunningExploitatieType;
+
+    const transportVergunning = {
+      identifier: 'Transport',
+      soortVergunning: 'Transport',
+    } as unknown as VarenVergunningExploitatieType;
+
+    const vergunningRef = (identifier: string) =>
+      ({ identifier }) as unknown as DecosVarenZaakVergunning;
+
+    it('removes transport zaken and non-passagiersvaart vergunningen, plus linked items', () => {
+      const zaken = [
+        {
+          id: 'z-transport',
+          segment: 'Transport',
+          vergunning: vergunningRef('Transport'),
+        },
+        {
+          id: 'z-linked-to-transport-vergunning',
+          segment: 'Onbemand',
+          vergunning: vergunningRef('Transport'),
+        },
+        {
+          id: 'z-linked-to-passagiers-vergunning',
+          segment: 'Onbemand',
+          vergunning: vergunningRef('Passagiersvaart'),
+        },
+        {
+          id: 'z-no-vergunning',
+          segment: 'Onbemand',
+          vergunning: null,
+        },
+      ] as unknown as VarenZakenFrontend[];
+
+      const [vergunningenFiltered, zakenFiltered] = filterNonPassagiersvaart(
+        [passagiersVergunning, transportVergunning],
+        zaken
+      );
+
+      expect(zakenFiltered.map((z) => z.id)).toStrictEqual([
+        'z-linked-to-passagiers-vergunning',
+        'z-no-vergunning',
+      ]);
+      expect(vergunningenFiltered.map((v) => v.identifier)).toStrictEqual([
+        'Passagiersvaart',
+      ]);
+    });
+
+    it('keeps passagiersvaart vergunningen if it has at least one passagiersvaart zaak', () => {
+      const zaken = [
+        {
+          id: 'z-transport',
+          segment: 'Transport',
+          vergunning: vergunningRef('Passagiersvaart'),
+        },
+        {
+          id: 'z-passagiers',
+          segment: 'Onbemand',
+          vergunning: vergunningRef('Passagiersvaart'),
+        },
+      ] as unknown as VarenZakenFrontend[];
+
+      const [vergunningenFiltered, zakenFiltered] = filterNonPassagiersvaart(
+        [passagiersVergunning],
+        zaken
+      );
+
+      expect(zakenFiltered.map((z) => z.id)).toStrictEqual(['z-passagiers']);
+      expect(vergunningenFiltered.length).toBe(1);
+    });
+
+    it('removes passagiersvaart vergunningen if it only has transport zaken', () => {
+      const zaken = [
+        {
+          id: 'z-transport',
+          segment: 'Transport',
+          vergunning: vergunningRef('Passagiersvaart'),
+        },
+      ] as unknown as VarenZakenFrontend[];
+
+      const [vergunningenFiltered, zakenFiltered] = filterNonPassagiersvaart(
+        [passagiersVergunning],
+        zaken
+      );
+
+      expect(zakenFiltered.length).toStrictEqual(0);
+      expect(vergunningenFiltered.length).toStrictEqual(0);
+    });
+
+    it('keeps passagiersvaart vergunningen even if there are no zaken', () => {
+      const [vergunningenFiltered, zakenFiltered] = filterNonPassagiersvaart(
+        [passagiersVergunning, transportVergunning],
+        [] as unknown as VarenZakenFrontend[]
+      );
+
+      expect(zakenFiltered).toStrictEqual([]);
+      expect(vergunningenFiltered.map((v) => v.identifier)).toStrictEqual([
+        'Passagiersvaart',
+      ]);
     });
   });
 });

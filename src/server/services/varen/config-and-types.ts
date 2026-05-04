@@ -9,6 +9,7 @@ export type DecosZaakVarensFieldsSource = {
   text11: string | null;
   text21: string | null;
   text22: string | null;
+  text50: 'Passagiersvaart' | 'Transport' | 'Gedoogverklaring' | null;
   text36: string | null;
 };
 
@@ -46,7 +47,8 @@ export type DecosVarenZaakVergunning = {
     | 'Historisch groot'
     | 'Historisch klein en middelgroot'
     | 'Klein en middelgroot'
-    | 'Onbemand';
+    | 'Onbemand'
+    | 'Transport';
   eniNumber: string | null;
   vergunningKenmerk: string | null;
   vesselName: string | null;
@@ -68,6 +70,11 @@ export type VarenVergunningExploitatieType = DecosZaakBase &
     itemType: 'varens';
     caseType: null;
     title: 'Vergunning passagiersvaart';
+    soortVergunning:
+      | 'Passagiersvaart'
+      | 'Transport'
+      | 'Gedoogverklaring'
+      | null;
   };
 
 export type ZaakVergunningExploitatieType = DecosVarenZaakBase & {
