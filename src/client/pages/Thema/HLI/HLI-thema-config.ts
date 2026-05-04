@@ -8,7 +8,10 @@ import { dateSort } from '../../../../universal/helpers/date.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import { propagateFeatureToggles } from '../../../config/feature-toggles.ts';
-import type { PageConfig, ThemaConfigBase } from '../../../config/thema-types.ts';
+import type {
+  PageConfig,
+  ThemaConfigBase,
+} from '../../../config/thema-types.ts';
 
 const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen' as const;
 export const regelingenTitle = 'Regelingen bij laag inkomen' as const;

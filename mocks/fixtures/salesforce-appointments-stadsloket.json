@@ -1,9 +1,8 @@
 {
   "results": [
     {
-      "__comment": "RP TODO: Replace this for a real case, it is unsure what status is for an open case",
       "subject": "Fictief: Extreem lange titel die opzich voor kan komen omdat dit een open invoerveld betreft",
-      "status": "Open",
+      "status": "New",
       "startDate": "2050-01-01 10:30:00",
       "qrCode": "a35e003d235841327843",
       "products": [

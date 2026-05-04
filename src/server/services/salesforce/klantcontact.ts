@@ -26,6 +26,7 @@ import {
   getApiConfig,
 } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
+import { isAfter } from 'date-fns';
 
 async function fetchContactmomentenData<T>(
   authProfileAndToken: AuthProfileAndToken,
@@ -132,14 +133,15 @@ export async function fetchKlantcontact(
   const afsprakenSettled = getSettledResult(afsprakenResponse);
   const contactmomentenSettled = getSettledResult(klantcontactenResponse);
 
-  const [afspraken, contactmomenten] = transferMissedAfsprakenToContactmomenten(
-    afsprakenSettled.content ?? [],
+  const afspraken = afsprakenSettled.content ?? [];
+  const contactmomenten = addMissedAfsprakenToContactmomenten(
+    afspraken,
     contactmomentenSettled.content ?? []
   );
 
   return apiSuccessResult(
     {
-      afspraken,
+      afspraken: afspraken.filter((a) => isUpcomingAndActive(a)),
       contactmomenten,
     },
     getFailedDependencies({
@@ -149,30 +151,38 @@ export async function fetchKlantcontact(
   );
 }
 
-/** Missed appointments need to be tranferred because the other types need an interaction (contactmoment) -
- * and are automaticaly tranferred. We want these there as well so we put them there.
+function isUpcomingAndActive(afspraak: AfspraakFrontend): boolean {
+  return (
+    !isMissed(afspraak) &&
+    afspraak.status !== 'Cancelled' &&
+    isAfter(afspraak.endDate, new Date())
+  );
+}
+
+/** Missed appointments need to be added because the other types need an interaction (contactmoment) -
+ * and are already present in that dataset. We want these there as well so we put them there.
  */
-function transferMissedAfsprakenToContactmomenten(
+function addMissedAfsprakenToContactmomenten(
   afspraken: AfspraakFrontend[],
   contactmomenten: ContactmomentFrontend[]
-): [AfspraakFrontend[], ContactmomentFrontend[]] {
-  const missedAfspraken = afspraken
-    .filter((a) => a.status === 'No show')
-    .map((a) => {
-      const klantcontactmoment: ContactmomentFrontend = {
-        referenceNumber: a.caseReference,
-        kanaal: 'Stadsloket',
-        subject: 'Gemiste afspraak',
-        datePublishedFormatted: a.dateFormatted,
-        datePublished: a.startDate,
-      };
-      return klantcontactmoment;
-    });
-  const afsprakenWithoutMissedAfspraken = afspraken.filter(
-    (a) => a.status !== 'No show'
-  );
-  return [
-    afsprakenWithoutMissedAfspraken,
-    [...contactmomenten, ...missedAfspraken],
+): ContactmomentFrontend[] {
+  const missedAfspraken = afspraken.filter(isMissed).map((a) => {
+    const klantcontactmoment: ContactmomentFrontend = {
+      referenceNumber: a.caseReference,
+      kanaal: 'Stadsloket',
+      subject: 'Gemiste afspraak',
+      datePublishedFormatted: a.dateFormatted,
+      datePublished: a.startDate,
+    };
+    return klantcontactmoment;
+  });
+  return [...contactmomenten, ...missedAfspraken];
+}
+
+function isMissed(afspraak: AfspraakFrontend): boolean {
+  const noshowStatus: AfspraakFrontend['status'][] = [
+    'NoShowCounter',
+    'No show',
   ];
+  return noshowStatus.includes(afspraak.status);
 }

@@ -27,7 +27,7 @@ type Product = {
   name: string;
 };
 
-type Status = 'New' | 'NoShowCounter' | 'Completed' | 'No show' | 'Canceled';
+type Status = 'New' | 'No show' | 'NoShowCounter' | 'Completed' | 'Cancelled';
 
 export type AfspraakSource = {
   subject: string;
