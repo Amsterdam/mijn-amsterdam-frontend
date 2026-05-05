@@ -48,17 +48,15 @@ exports[`Renders afspraak data > Large screen 1`] = `
           Locatie Stadsloket Centrum, Amstel 1
         </button>
       </div>
-      <div
-        class="ams-mb-s"
+      <a
+        class="ams-link _Block_0a51e6 ams-mb-s _MaLink_10c0a4"
+        href="#"
       >
-        <a
-          class="ams-link _MaLink_10c0a4"
-          href="#"
-        >
-          Voeg toe aan uw privé agenda
-        </a>
-      </div>
-      <div>
+        Voeg toe aan uw privé agenda
+      </a>
+      <div
+        class="ams-row ams-row--align-vertical-center"
+      >
         <a
           class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline_10c0a4"
           href="/qr/123"
@@ -134,17 +132,15 @@ exports[`Renders afspraak data > Small screen 1`] = `
           Locatie Stadsloket Centrum, Amstel 1
         </button>
       </div>
-      <div
-        class="ams-mb-s"
+      <a
+        class="ams-link _Block_0a51e6 ams-mb-s _MaLink_10c0a4"
+        href="#"
       >
-        <a
-          class="ams-link _MaLink_10c0a4"
-          href="#"
-        >
-          Voeg toe aan uw privé agenda
-        </a>
-      </div>
-      <div>
+        Voeg toe aan uw privé agenda
+      </a>
+      <div
+        class="ams-row ams-row--align-vertical-center"
+      >
         <a
           class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline_10c0a4"
           href="/qr/123"
@@ -156,13 +152,13 @@ exports[`Renders afspraak data > Small screen 1`] = `
             Toon QR code
           </button>
         </a>
+        <a
+          class="ams-link _CancellationLink_0a51e6 _MaLink_10c0a4"
+          href="https://cancel.com"
+        >
+          Annuleren
+        </a>
       </div>
-      <a
-        class="ams-link _CancellationLink_0a51e6 _MaLink_10c0a4"
-        href="https://cancel.com"
-      >
-        Annuleren
-      </a>
     </div>
   </div>
 </DocumentFragment>
