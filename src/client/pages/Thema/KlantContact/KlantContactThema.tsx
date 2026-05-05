@@ -12,6 +12,7 @@ import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { isEnabled } from '../../../config/feature-toggles.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { getRedactedClass } from '../../../helpers/cobrowse.ts';
 
 export function KlantContactThema() {
   const {
@@ -39,7 +40,11 @@ export function KlantContactThema() {
   const afspraakCards = afspraken.map((afspraak) => {
     return (
       <AfspraakCard
-        className={classNames('ams-mb-m', styles.CardListContainer)}
+        className={classNames(
+          getRedactedClass(),
+          'ams-mb-m',
+          styles.CardListContainer
+        )}
         key={afspraak.caseReference}
         afspraak={afspraak}
       ></AfspraakCard>
@@ -58,7 +63,7 @@ export function KlantContactThema() {
       pageContentMain={
         <>
           {isEnabled('KLANT_CONTACT.afspraken') && (
-            <PageContentCell>
+            <PageContentCell className={getRedactedClass(null, 'full')}>
               <Heading level={2} className="ams-mb-s">
                 Afspraken bij een stadsloket
               </Heading>
