@@ -1,3 +1,5 @@
+import { isAfter } from 'date-fns';
+
 import type {
   ContactmomentResponseSource,
   ContactmomentFrontend as ContactmomentFrontend,
@@ -26,7 +28,6 @@ import {
   getApiConfig,
 } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
-import { isAfter } from 'date-fns';
 
 async function fetchContactmomentenData<T>(
   authProfileAndToken: AuthProfileAndToken,

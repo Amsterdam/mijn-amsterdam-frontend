@@ -1,5 +1,6 @@
-import { fetchKlantcontact } from './klantcontact.ts';
 import mockdate from 'mockdate';
+
+import { fetchKlantcontact } from './klantcontact.ts';
 import type {
   AfspraakResponseSource,
   AfspraakSource,

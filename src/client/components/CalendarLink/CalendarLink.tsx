@@ -97,6 +97,12 @@ function foldLine(line: string): string {
   return foldedLine;
 }
 
+/**
+ * Create a CalendarLink with an ICS (RFC 5545) file download on clicking it.
+ *
+ * The uid in icsData should be unique,
+ * also think about what other items might be present in the users calendar.
+ */
 export function CalendarLink({
   children,
   className,

@@ -11,7 +11,7 @@ import classNames from 'classnames';
 
 import styles from './AfspraakCard.module.scss';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
-import type { AfspraakFrontendFinal } from '../../pages/Thema/KlantContact/useAfsprakenListData.hook.tsx';
+import type { AfspraakFrontendFinal } from '../../pages/Thema/KlantContact/useKlantcontactData.hook.tsx';
 import { CalendarLink } from '../CalendarLink/CalendarLink.tsx';
 import { LocationModal } from '../LocationModal/LocationModal.tsx';
 import maLinkStyles from '../MaLink/MaLink.module.scss';
@@ -82,7 +82,7 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
             icsData={{
               start: afspraak.startDate,
               end: afspraak.endDate,
-              uid: afspraak.caseReference,
+              uid: `afspraak-stadsloket-${afspraak.caseReference}`,
               summary: `Afspraak voor ${afspraak.subject}`,
               description: `Referentienummer: ${afspraak.caseReference}`,
               location: `Stadsloket ${afspraak.location.name}, ${afspraak.location.street}, ${afspraak.location.postalCode} ${afspraak.location.city}, Nederland`,
