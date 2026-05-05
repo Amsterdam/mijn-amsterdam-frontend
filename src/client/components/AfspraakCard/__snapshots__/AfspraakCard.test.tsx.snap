@@ -31,7 +31,7 @@ exports[`Renders afspraak data > Large screen 1`] = `
       class="ams-column _ColumnLargeScreen_0a51e6"
     >
       <h3
-        class="ams-heading ams-heading--3 _Heading_0a51e6"
+        class="ams-heading ams-heading--3"
       >
         Varen
       </h3>
@@ -92,7 +92,7 @@ exports[`Renders afspraak data > Small screen 1`] = `
         class="ams-row"
       >
         <h3
-          class="ams-heading ams-heading--3 _Heading_0a51e6"
+          class="ams-heading ams-heading--3 _SmallScreenHeading_0a51e6"
         >
           Varen
         </h3>

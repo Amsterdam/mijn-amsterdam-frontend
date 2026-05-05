@@ -26,10 +26,8 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
   const isSmallScreen = useSmallScreen();
   const isLargeScreen = !isSmallScreen;
 
-  const titleHeading = (
-    // Make the heading text always take full space so the icon is always aligned with other items -
-    // on small screens.
-    <Heading level={3} className={styles.Heading}>
+  const TitleHeading: React.FC<{ className?: string }> = ({ className }) => (
+    <Heading level={3} className={className ?? ''}>
       {afspraak.subject}
     </Heading>
   );
@@ -55,10 +53,14 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
             : ''
         }
       >
-        {isLargeScreen && titleHeading}
+        {isLargeScreen && <TitleHeading></TitleHeading>}
         {isSmallScreen && (
           <Row>
-            {titleHeading}
+            {
+              <TitleHeading
+                className={styles.SmallScreenHeading}
+              ></TitleHeading>
+            }
             {icon}
           </Row>
         )}
