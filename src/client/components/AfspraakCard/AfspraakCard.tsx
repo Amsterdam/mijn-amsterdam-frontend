@@ -76,27 +76,25 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
             {`Locatie Stadsloket ${afspraak.location.name}, ${afspraak.location.street}`}
           </LocationModal>
         </div>
-        {/* The divs makes sure the links will not be displayed next to eachother. */}
-        <div className="ams-mb-s">
-          <CalendarLink
-            icsData={{
-              start: afspraak.startDate,
-              end: afspraak.endDate,
-              uid: `afspraak-stadsloket-${afspraak.caseReference}`,
-              summary: `Afspraak voor ${afspraak.subject}`,
-              description: `Referentienummer: ${afspraak.caseReference}`,
-              location: `Stadsloket ${afspraak.location.name}, ${afspraak.location.street}, ${afspraak.location.postalCode} ${afspraak.location.city}, Nederland`,
-            }}
-          >
-            Voeg toe aan uw privé agenda
-          </CalendarLink>
-        </div>
-        <div>
+        <CalendarLink
+          className={classNames(styles.Block, 'ams-mb-s')}
+          icsData={{
+            start: afspraak.startDate,
+            end: afspraak.endDate,
+            uid: `afspraak-stadsloket-${afspraak.caseReference}`,
+            summary: `Afspraak voor ${afspraak.subject}`,
+            description: `Referentienummer: ${afspraak.caseReference}`,
+            location: `Stadsloket ${afspraak.location.name}, ${afspraak.location.street}, ${afspraak.location.postalCode} ${afspraak.location.city}, Nederland`,
+          }}
+        >
+          Voeg toe aan uw privé agenda
+        </CalendarLink>
+        <Row alignVertical="center">
           <MaRouterLink maVariant="noUnderline" href={afspraak.qrCodeHref}>
             <Button variant="secondary">Toon QR code</Button>
           </MaRouterLink>
-        </div>
-        {isSmallScreen && cancellationLink}
+          {isSmallScreen && cancellationLink}
+        </Row>
       </Column>
       {isLargeScreen && cancellationLink}
     </Row>
