@@ -175,6 +175,11 @@ describe('vergunningen-notifications', () => {
             isActive: false,
           },
           {
+            status: 'Afgehandeld',
+            datePublished: yesterday,
+            isActive: false,
+          },
+          {
             status: 'Verlopen',
             datePublished: today,
             isActive: true,
