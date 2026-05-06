@@ -1,4 +1,8 @@
 import type { WithDateEnd } from './config-and-types.ts';
+import {
+  getVergunningAanvraagLinks,
+  type CaseType,
+} from './vergunningen-notifications-config.ts';
 import { dateTimeEndFormatted } from '../../../client/pages/Thema/Vergunningen/Vergunningen-helpers.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 import { MA_VERLEEND_DECISIONS_COMMOM } from '../decos/decos-field-transformers.ts';
@@ -58,6 +62,8 @@ export function getStatusStepsDecos<
     statusAfgehandeld,
   ];
 
+  const caseType = zaak.caseType as CaseType;
+
   if (
     isAfgehandeld &&
     // TODO: Discuss with the team if this is the right way to check for a valid decision.
@@ -71,7 +77,8 @@ export function getStatusStepsDecos<
     if (isIngetrokken) {
       description = `Wij hebben uw ${zaak.title} ingetrokken.`;
     } else if (isVerlopen) {
-      description = `Uw ${zaak.title} is verlopen.`;
+      const url = getVergunningAanvraagLinks(caseType)?.aanvragen;
+      description = `Uw ${zaak.title} is verlopen, ${url ? `<a href="${url}" rel="noopener noreferrer">vraag zonodig een nieuwe aan</a>` : 'vraag zonodig een nieuwe aan'}.`;
       datePublished = zaak.dateEnd as string; // Verlopen status always has a dateEbd associated with it.
     } else if (zaak.dateEndFormatted) {
       description = `Uw vergunning verloopt op ${dateTimeEndFormatted(zaak)}.`;
