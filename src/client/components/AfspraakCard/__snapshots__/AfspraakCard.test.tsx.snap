@@ -83,7 +83,7 @@ exports[`Renders afspraak data > Large screen 1`] = `
 exports[`Renders afspraak data > Small screen 1`] = `
 <DocumentFragment>
   <div
-    class="ams-row ams-row--gap-large"
+    class="ams-row"
   >
     <div
       class="ams-column"
@@ -153,7 +153,7 @@ exports[`Renders afspraak data > Small screen 1`] = `
           </button>
         </a>
         <a
-          class="ams-link _CancellationLink_0a51e6 _MaLink_10c0a4"
+          class="ams-link _SmallScreenCancellationLink_0a51e6 _MaLink_10c0a4"
           href="https://cancel.com"
         >
           Annuleren

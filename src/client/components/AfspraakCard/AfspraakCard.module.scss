@@ -3,17 +3,8 @@
   border-top: 2px solid #eeeeee;
 }
 
-.SmallScreenHeading {
-  // For consistent alignment of the icon.
-  width: 325px;
-}
-
 .Block {
   display: block;
-}
-
-.CancellationLink {
-  margin-left: 50px;
 }
 
 .ColumnLargeScreen {
@@ -29,4 +20,13 @@
   &:hover {
     box-shadow: none !important;
   }
+}
+
+.SmallScreenHeading {
+  // For consistent alignment of the icon.
+  width: 325px;
+}
+
+.SmallScreenCancellationLink {
+  margin-left: 50px;
 }
