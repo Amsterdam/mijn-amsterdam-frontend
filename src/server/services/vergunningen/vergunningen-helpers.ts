@@ -3,6 +3,7 @@ import { addDays, differenceInDays, parseISO } from 'date-fns';
 import {
   MINIMUM_DAYS_FOR_WILL_EXPIRE_NOTIFICATION,
   PERCENTAGE_OF_LIFETIME_FOR_WILL_EXPIRE_NOTIFICATION,
+  type ZaakFrontendCombined,
 } from './config-and-types.ts';
 import { isDateInPast } from '../../../universal/helpers/date.ts';
 import type {
@@ -75,4 +76,24 @@ export function isExpiryNotificationDue(
     daysInBetweenStartAndEnd - daysUntilEnd >=
     Math.round(daysInBetweenStartAndEnd * percentageOfLifetime)
   );
+}
+import { caseTypeVergunningen } from './config-and-types.ts';
+
+export function getAanvraagUrlAndText(
+  zaak: ZaakFrontendCombined,
+  type: 'verlengen' | 'aanvragen'
+): { url: string | null; text: string } {
+  const config = caseTypeVergunningen[zaak.caseType];
+
+  if (config && config[type]) {
+    return {
+      url: config[type].url,
+      text: config[type].text,
+    };
+  }
+
+  return {
+    url: null,
+    text: '',
+  };
 }

@@ -32,7 +32,7 @@ export const VERGUNNING_AANVRAAG_LINKS: Partial<VergunningAanvraagLinkByCaseType
     [caseTypeVergunningen.RVVSloterweg]: {
       verlengen: {
         url: 'https://www.amsterdam.nl/vergunningen-ontheffingen/verlengen-ontheffing-sloterweg-laan/',
-        text: ' vraag zo nodig een nieuwe vergunning aan.',
+        text: 'vraag zo nodig een nieuwe vergunning aan.',
       },
       aanvragen: {
         url: 'https://www.amsterdam.nl/vergunningen-ontheffingen/ontheffing-aanvragen-sloterweg-laan/',

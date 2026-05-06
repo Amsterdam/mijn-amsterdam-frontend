@@ -3,6 +3,7 @@ import {
   getLifetimeTriggerDate,
   isExpiryNotificationDue,
 } from './vergunningen-helpers.ts';
+import { getAanvraagUrlAndText } from './vergunningen-helpers.ts';
 import { fetchVergunningen } from './vergunningen.ts';
 import { themaConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 import {
@@ -105,7 +106,7 @@ export function createNotificationDefault(
       };
     case 'Ingetrokken':
     case 'Afgehandeld': {
-      // Verloopt binnenkort
+      // Verloopt binnenkort  TO DO const expiresSoon maken
       if (
         activeStep.status !== 'Ingetrokken' &&
         'isExpired' in zaak &&
@@ -183,10 +184,4 @@ export async function fetchVergunningenNotifications(
   }
 
   return apiDependencyError({ VERGUNNINGEN });
-}
-function getAanvraagUrlAndText(
-  zaak: ZaakFrontendCombined,
-  arg1: string
-): { url: any; text: any } {
-  throw new Error('Function not implemented.');
 }

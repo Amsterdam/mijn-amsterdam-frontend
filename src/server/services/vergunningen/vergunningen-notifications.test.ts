@@ -138,9 +138,8 @@ describe('vergunningen-notifications', () => {
         );
         expect(notification).toHaveProperty(
           'description',
-          'Uw vergunning Test case met zaaknummer Z/123/456 loopt binnenkort af, vraag zonodig een nieuwe aan.'
-        );
-      });
+          'Uw vergunning Test case met zaaknummer Z/123/456 loopt binnenkort af, vraag zondig een nieuwe aan.'
+      );
     });
   });
 
@@ -280,7 +279,7 @@ describe('vergunningen-notifications', () => {
         {
           datePublished: '2025-01-09',
           description:
-            'Uw vergunning Test case met zaaknummer Z/111222/000 is verlopen.',
+            'Uw vergunning Test case met zaaknummer Z/111222/000 is verlopen, vraag zo nodig een nieuwe vergunning aan.',
           id: 'vergunning-4-notification',
           link: {
             title: 'Bekijk details',

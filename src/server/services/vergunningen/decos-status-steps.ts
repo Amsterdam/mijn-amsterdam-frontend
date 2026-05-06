@@ -1,4 +1,5 @@
 import type { WithDateEnd } from './config-and-types.ts';
+import { getAanvraagUrlAndText } from './vergunningen-helpers.ts';
 import { dateTimeEndFormatted } from '../../../client/pages/Thema/Vergunningen/Vergunningen-helpers.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 import { MA_VERLEEND_DECISIONS_COMMOM } from '../decos/decos-field-transformers.ts';
@@ -98,10 +99,4 @@ export function getStatusStepsDecos<
   }
 
   return steps;
-}
-function getAanvraagUrlAndText<DZ extends DecosZaakBase & Partial<WithDateEnd>>(
-  zaak: DZ,
-  arg1: string
-): { url: any; text: any } {
-  throw new Error('Function not implemented.');
 }
