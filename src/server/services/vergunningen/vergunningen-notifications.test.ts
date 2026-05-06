@@ -144,6 +144,74 @@ describe('vergunningen-notifications', () => {
     });
   });
 
+  describe('Expired (Verlopen) notifications', () => {
+    const base = '2026-04';
+    const yesterday = `${base}-01`;
+    const today = `${base}-02`;
+
+    beforeEach(() => {
+      MockDate.set(today);
+    });
+
+    function getVerlopenVergunning(caseType: string) {
+      return {
+        id: '1',
+        caseType,
+        identifier: 'Z/111/111',
+        title: 'Test case',
+        link: { to: '/test', title: 'Test' },
+        dateStart: yesterday,
+        dateEnd: today,
+        isExpired: true,
+        steps: [
+          {
+            status: 'Ontvangen',
+            datePublished: yesterday,
+            isActive: false,
+          },
+          {
+            status: 'In behandeling',
+            datePublished: yesterday,
+            isActive: false,
+          },
+          {
+            status: 'Verlopen',
+            datePublished: today,
+            isActive: true,
+          },
+        ],
+      } as unknown as DecosZaakFrontend;
+    }
+
+    it('When notification has aanvraag link, it displays that.', () => {
+      const vergunning = getVerlopenVergunning(
+        caseTypeVergunningen.RVVSloterweg
+      );
+      const notification = createNotificationDefault(vergunning, {
+        themaID: themaConfig.id,
+        themaTitle: themaConfig.title,
+      });
+      expect(notification).toHaveProperty(
+        'description',
+        'Uw vergunning Test case met zaaknummer Z/111/111 is verlopen, <a href="https://www.amsterdam.nl/vergunningen-ontheffingen/ontheffing-aanvragen-sloterweg-laan/" rel="noopener noreferrer">vraag zonodig een nieuwe aan</a>.'
+      );
+    });
+
+    it('When notification has aanvraag link, it displays that.', () => {
+      const vergunning = getVerlopenVergunning(
+        'caseType without aanvraag URL in config'
+      );
+      const notification = createNotificationDefault(vergunning, {
+        themaID: themaConfig.id,
+        themaTitle: themaConfig.title,
+      });
+      expect(notification).toHaveProperty(
+        'description',
+        'Uw vergunning Test case met zaaknummer Z/111/111 is verlopen, vraag zonodig een nieuwe aan.'
+      );
+    });
+  });
+
   describe('getVergunningNotifications', () => {
     beforeAll(() => {
       MockDate.set('2025-01-10');
@@ -280,7 +348,7 @@ describe('vergunningen-notifications', () => {
         {
           datePublished: '2025-01-09',
           description:
-            'Uw vergunning Test case met zaaknummer Z/111222/000 is verlopen.',
+            'Uw vergunning Test case met zaaknummer Z/111222/000 is verlopen, vraag zonodig een nieuwe aan.',
           id: 'vergunning-4-notification',
           link: {
             title: 'Bekijk details',

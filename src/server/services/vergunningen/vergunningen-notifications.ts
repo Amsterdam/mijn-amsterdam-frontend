@@ -4,7 +4,7 @@ import {
   isExpiryNotificationDue,
 } from './vergunningen-helpers.ts';
 import {
-  VERGUNNING_AANVRAAG_LINKS,
+  getVergunningAanvraagLinks,
   type CaseType,
 } from './vergunningen-notifications-config.ts';
 import { fetchVergunningen } from './vergunningen.ts';
@@ -44,6 +44,7 @@ export function createNotificationDefault(
   zaak: ZaakFrontendCombined,
   themaOptions: NotificationThemaOptions
 ): MyNotification | null {
+  const caseType = zaak.caseType as CaseType;
   const activeStep = zaak.steps.find((step) => step.isActive);
 
   let datePublished: string = activeStep?.datePublished ?? '';
@@ -109,10 +110,8 @@ export function createNotificationDefault(
         zaak.dateEnd &&
         isExpiryNotificationDue(zaak.dateStart, zaak.dateEnd)
       ) {
-        const url =
-          zaak.caseType && zaak.caseType in VERGUNNING_AANVRAAG_LINKS
-            ? VERGUNNING_AANVRAAG_LINKS[zaak.caseType as CaseType]
-            : null;
+        const links = getVergunningAanvraagLinks(caseType);
+        const url = links?.verlengen ?? links?.aanvragen;
         return {
           ...baseNotification,
           datePublished: getLifetimeTriggerDate(
@@ -132,13 +131,16 @@ export function createNotificationDefault(
         description: `Wij hebben uw aanvraag ${zaak.title} met zaaknummer ${zaak.identifier} afgehandeld.`,
       };
     }
-    case 'Verlopen':
+    case 'Verlopen': {
+      const aanvraagUrl =
+        getVergunningAanvraagLinks(caseType)?.aanvragen ?? null;
       return {
         ...baseNotification,
         datePublished,
         title: `${zaak.title} verlopen`,
-        description: `Uw ${documentType}${zaak.title} met zaaknummer ${zaak.identifier} is verlopen.`,
+        description: `Uw ${documentType}${zaak.title} met zaaknummer ${zaak.identifier} is verlopen, ${aanvraagUrl ? `<a href="${aanvraagUrl}" rel="noopener noreferrer">vraag zonodig een nieuwe aan</a>` : 'vraag zonodig een nieuwe aan'}.`,
       };
+    }
   }
 
   return null;
