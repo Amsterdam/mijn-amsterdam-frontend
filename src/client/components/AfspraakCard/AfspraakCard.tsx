@@ -16,6 +16,7 @@ import { CalendarLink } from '../CalendarLink/CalendarLink.tsx';
 import { LocationModal } from '../LocationModal/LocationModal.tsx';
 import maLinkStyles from '../MaLink/MaLink.module.scss';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
+import { getRedactedClass } from '../../helpers/cobrowse.ts';
 
 type AfspraakCardProps = {
   afspraak: AfspraakFrontendFinal;
@@ -78,9 +79,7 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
       <Row className={className}>
         <Column>
           <Row>
-            <TitleHeading
-                className={styles.SmallScreenHeading}
-              ></TitleHeading>
+            <TitleHeading className={styles.SmallScreenHeading}></TitleHeading>
             {icon}
           </Row>
           {body}
@@ -115,4 +114,25 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
       <CancellationLink></CancellationLink>
     </Row>
   );
+}
+
+export function AfspraakCards({
+  afspraken,
+}: {
+  afspraken: AfspraakFrontendFinal[];
+}) {
+  const afspraakCards = afspraken.map((afspraak) => {
+    return (
+      <AfspraakCard
+        className={classNames(
+          getRedactedClass(),
+          'ams-mb-m',
+          styles.CardListContainer
+        )}
+        key={afspraak.caseReference}
+        afspraak={afspraak}
+      ></AfspraakCard>
+    );
+  });
+  return afspraakCards;
 }

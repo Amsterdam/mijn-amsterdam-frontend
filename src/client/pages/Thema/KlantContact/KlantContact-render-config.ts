@@ -11,6 +11,7 @@ import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
 } from '../../../config/thema-types.ts';
+import { AfspraakListPage } from './AfspraakListPage.tsx';
 
 export const ContactRoutes = [
   {
@@ -22,6 +23,12 @@ export const ContactRoutes = [
     route: themaConfig.listPageContactmomenten.route.path,
     Component: ContactmomentenListPage,
     isActive: themaConfig.featureToggle.active,
+  },
+  {
+    route: themaConfig.listPageAfspraken.route.path,
+    Component: AfspraakListPage,
+    isActive:
+      themaConfig.featureToggle.active && isEnabled('KLANT_CONTACT.afspraken'),
   },
   {
     route: themaConfig.detailPageAfspraakQRCode.route.path,

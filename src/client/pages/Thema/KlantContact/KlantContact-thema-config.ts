@@ -20,6 +20,7 @@ const THEMA_TITLE = 'Mijn contact';
 
 type ContactThema = ThemaConfigBase &
   WithPageConfig<'listPageContactmomenten'> &
+  WithPageConfig<'listPageAfspraken'> &
   WithPageConfig<'detailPageAfspraakQRCode'>;
 
 const BASE_PATH = '/mijn-contact';
@@ -41,6 +42,13 @@ export const themaConfig: ContactThema = {
     route: {
       path: `${BASE_PATH}/contactmomenten/:page?`,
       documentTitle: `Alle contactmomenten | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
+  listPageAfspraken: {
+    route: {
+      path: `${BASE_PATH}/afspraken/:page?`,
+      documentTitle: `Alle afspraken | ${THEMA_TITLE}`,
       trackingUrl: null,
     },
   },
