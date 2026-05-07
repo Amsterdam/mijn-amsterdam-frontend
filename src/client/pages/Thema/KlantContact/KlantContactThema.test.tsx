@@ -9,6 +9,7 @@ import type {
 } from '../../../../server/services/salesforce/klantcontact.types.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
 import { componentCreator } from '../../MockApp.tsx';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 
 const createMijnContactThemaComponent = componentCreator({
   component: KlantContactThema,
@@ -89,8 +90,8 @@ test('Shows max 3 contactmomenten', async () => {
 test('Shows only afspraken', async () => {
   const afspraakTitle = 'Vaarvignet';
   const state = getState({
-    afspraken: [
-      {
+    afspraken: new Array(MAX_TABLE_ROWS_ON_THEMA_PAGINA + 1)
+      .fill({
         cancellationLink:
           'http://remote-api-host/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
         caseReference: '00157784',
@@ -107,14 +108,17 @@ test('Shows only afspraken', async () => {
         startDate: '2026-02-26T09:00:00Z',
         status: 'New',
         subject: afspraakTitle,
-      },
-    ],
+      })
+      .map((a, i) => ({ ...a, caseReference: i })),
   });
   const KlantContactThema = createMijnContactThemaComponent(state);
   const screen = render(<KlantContactThema />);
 
   expect(screen.queryByText(contactmomentenHeader)).not.toBeInTheDocument();
-
   expect(screen.queryByText(noAppointmentsText)).not.toBeInTheDocument();
-  screen.getByText(afspraakTitle);
+
+  expect(screen.getAllByText(afspraakTitle)).toHaveLength(
+    MAX_TABLE_ROWS_ON_THEMA_PAGINA
+  );
+  screen.getByRole('link', { name: 'Toon meer' });
 });
