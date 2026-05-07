@@ -78,11 +78,9 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
       <Row className={className}>
         <Column>
           <Row>
-            {
-              <TitleHeading
+            <TitleHeading
                 className={styles.SmallScreenHeading}
               ></TitleHeading>
-            }
             {icon}
           </Row>
           {body}
