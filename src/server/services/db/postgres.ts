@@ -3,6 +3,7 @@ import { Pool } from 'pg';
 
 import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
 import { captureException } from '../monitoring.ts';
+import { startDbWatchdog, stopDbWatchdog } from './postgres-watchdog.ts';
 
 // Connection params are taken from env variables.
 export const pgDbConfig: PoolConfig = {
@@ -10,6 +11,10 @@ export const pgDbConfig: PoolConfig = {
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
+  // See https://node-postgres.com/features/pooling#pool-options
+  maxUses: 5000,
+  maxLifetimeSeconds: 900,
+  keepAlive: true,
 };
 
 let pool: Pool | null;
@@ -20,6 +25,8 @@ export function getPool() {
   }
 
   pool = new Pool(pgDbConfig);
+
+  startDbWatchdog(() => getPool());
 
   pool.on('error', (err) => {
     captureException(err);
@@ -43,6 +50,7 @@ export async function endPool() {
 
   const current = pool;
   pool = null;
+  stopDbWatchdog();
   await current.end();
 }
 
@@ -81,6 +89,7 @@ export const id = 'postgres';
 
 process.on('beforeExit', () => {
   pool?.end();
+  stopDbWatchdog();
 });
 
 export default {

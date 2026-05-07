@@ -59,9 +59,10 @@ export default [
         'warn',
         {
           args: 'all',
-          argsIgnorePattern: '^_',
-          caughtErrorsIgnorePattern: '^_',
-          destructuredArrayIgnorePattern: '^_',
+          argsIgnorePattern: '^_{1,3}$',
+          caughtErrorsIgnorePattern: '^_{1,3}$',
+          destructuredArrayIgnorePattern: '^_{1,3}$',
+          varsIgnorePattern: '^_{1,3}$',
         },
       ],
       'no-undef': 'off',
