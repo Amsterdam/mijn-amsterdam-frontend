@@ -42,7 +42,6 @@ import { differenceInYears, parseISO } from 'date-fns';
 
 import type { ServiceResults } from '../src/server/services/content-tips/tip-types.ts';
 import { IS_PRODUCTION } from '../src/universal/config/env.ts';
-import { cleanTestUsername } from '../src/server/auth/auth-helpers-development.ts';
 import type { MyNotification } from '../src/universal/types/App.types.ts';
 import type {
   Adres,
@@ -77,6 +76,10 @@ import { themaConfig as themaParkeren } from '../src/client/pages/Thema/Parkeren
 import { themaConfig as themaBelastingen } from '../src/client/pages/Thema/Belastingen/Belastingen-thema-config.ts';
 import { themaConfig as themaMilieuzone } from '../src/client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
 import { themaConfig as themaSubsidies } from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
+
+function cleanTestUsername(username: string): string {
+  return username.trim().replace('Provincie-', '');
+}
 
 /** Extra hardcoded additions are to display certain services like they're their own thema.
  */

@@ -6,7 +6,7 @@
         "content": {
           "@type": "application/xml",
           "properties": {
-            "IMandateId": "100001",
+            "IMandateId": "0000000167",
             "SndDebtorId": "AFVAL",
             "SndId": "8888888888",
             "LifetimeFrom": "2024-05-01",

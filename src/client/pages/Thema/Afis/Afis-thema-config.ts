@@ -9,6 +9,7 @@ import type {
   AfisFactuur,
   AfisFactuurStateFrontend,
   AfisFactuurTermijn,
+  EmandateStatusCode,
 } from '../../../../server/services/afis/afis-types.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
@@ -259,7 +260,7 @@ export function getAfisListPageDocumentTitle<T extends Params<string>>(
   }
 }
 
-export const EMANDATE_STATUS_ACTIVE = '1';
+export const EMANDATE_STATUS_ACTIVE: EmandateStatusCode = '1';
 export const EMANDATE_SIGN_REQUEST_SUCCESS_STATUSES = [
   'payment_started',
   'paid',
@@ -267,3 +268,19 @@ export const EMANDATE_SIGN_REQUEST_SUCCESS_STATUSES = [
 
 const ONE_MINUTE_MS = 60000;
 export const AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS = 10 * ONE_MINUTE_MS;
+
+export const eMandateHistoryDisplayProps: DisplayProps<
+  AfisEMandateFrontend['history'][number]
+> = {
+  props: {
+    eMandateIdSource: 'Kenmerk',
+    dateValidFromFormatted: 'Vanaf',
+    dateValidToFormatted: 'Tot',
+    senderName: 'Naam rekeninghouder',
+    senderIBAN: 'Rekeningnummer',
+  },
+  colWidths: {
+    large: ['15%', '15%', '15%', '25%', '30%'],
+    small: ['50%', '0', '50%'],
+  },
+};

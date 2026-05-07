@@ -1,8 +1,16 @@
 import { useState, type ReactElement } from 'react';
 
-import { ActionGroup, Button, Paragraph } from '@amsterdam/design-system-react';
+import {
+  ActionGroup,
+  Alert,
+  Button,
+  Paragraph,
+  Table,
+} from '@amsterdam/design-system-react';
 
 import { EMANDATE_STATUS_ACTIVE } from './Afis-thema-config.ts';
+import styles from './AfisEmandateActionButtons.module.scss';
+import { useAfisFacturenData } from './useAfisThemaData.hook.tsx';
 import type {
   AfisEMandateFrontend,
   AfisEMandateSignRequestResponse,
@@ -41,6 +49,7 @@ function ActionConfirmationModal({
       closeOnEscape
       onClose={onClose}
       pollingQuerySelector="#action-confirmation"
+      className={styles.ActionConfirmationModal}
       actions={
         <ActionGroup>
           <Button
@@ -115,12 +124,12 @@ function ApiActionButton<T>({
   );
 }
 
-type AfisEMandateActionButtonsProps = {
+export type AfisEMandateActionButtonsProps = {
   eMandate: AfisEMandateFrontend;
-  redirectUrlApi: BFFApiHook<AfisEMandateSignRequestResponse> & {
+  redirectUrlApi: BFFApiHook<AfisEMandateSignRequestResponse | null> & {
     requestRedirectUrl: (isActive: boolean) => void;
   };
-  deactivateApi: BFFApiHook<AfisEMandateStatusChangeResponse>;
+  deactivateApi: BFFApiHook<AfisEMandateStatusChangeResponse | null>;
 };
 
 export function AfisEMandateActionButtons({
@@ -141,31 +150,92 @@ export function AfisEMandateActionButtons({
       )}
       &nbsp;
       {eMandate.deactivateUrl && eMandate.status === EMANDATE_STATUS_ACTIVE && (
-        <ApiActionButton
-          api={deactivateApi}
-          fetch={() => deactivateApi.fetch()}
-          label="Stopzetten"
-          doConfirm
-          confirmationModal={{
-            title: 'Stopzetten E-Mandaat',
-            confirmationText: (
-              <>
-                <Paragraph className="ams-mb-s">
-                  Weet je zeker dat je dit E-mandaat wilt stopzetten?
-                </Paragraph>
-                <Paragraph className="ams-mb-s">
-                  Het E-mandaat wordt dan niet meer gebruikt voor automatische
-                  incasso.
-                </Paragraph>
-                <Paragraph className="ams-mb-s">
-                  Je kunt het E-mandaat later opnieuw activeren.
-                </Paragraph>
-              </>
-            ),
-            confirmLabel: 'Ja, stopzetten',
-          }}
+        <ApiDeactivateButton
+          deactivateApi={deactivateApi}
+          eMandate={eMandate}
         />
       )}
     </>
+  );
+}
+
+function ApiDeactivateButton({
+  deactivateApi,
+  eMandate,
+}: {
+  deactivateApi: BFFApiHook<AfisEMandateStatusChangeResponse | null>;
+  eMandate: AfisEMandateFrontend;
+}) {
+  const { facturenByState } = useAfisFacturenData();
+  const facturenByEmandateId = facturenByState?.open
+    ? facturenByState.open.facturen.filter(
+        (factuur) => factuur.eMandateId === eMandate.eMandateIdSource
+      )
+    : [];
+  return (
+    <ApiActionButton
+      api={deactivateApi}
+      fetch={() => deactivateApi.fetch()}
+      label="Stopzetten"
+      doConfirm
+      confirmationModal={{
+        title: 'Stopzetten E-Mandaat',
+        confirmationText: (
+          <>
+            {!!facturenByEmandateId.length && (
+              <Alert
+                headingLevel={4}
+                severity="warning"
+                heading="Let op"
+                className="ams-mb-m"
+              >
+                <Paragraph className="ams-mb-s">
+                  U heeft nog openstaande facturen die gekoppeld zijn aan dit
+                  E-mandaat. Deze facturen worden niet meer automatisch
+                  geïncasseerd als u het E-mandaat stopzet.
+                  <br />
+                </Paragraph>
+                <Table className={styles.FacturenAlertTable}>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell>Factuurnummer</Table.HeaderCell>
+                      <Table.HeaderCell>Bedrag</Table.HeaderCell>
+                      <Table.HeaderCell>Vervaldatum</Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {facturenByEmandateId.map((factuur) => {
+                      return (
+                        <Table.Row key={factuur.id}>
+                          <Table.Cell>{factuur.factuurNummerEl}</Table.Cell>
+                          <Table.Cell>
+                            {factuur.amountOriginalFormatted}
+                          </Table.Cell>
+                          <Table.Cell>
+                            {factuur.paymentDueDateFormatted}
+                          </Table.Cell>
+                        </Table.Row>
+                      );
+                    })}
+                  </Table.Body>
+                </Table>
+              </Alert>
+            )}
+            <Paragraph className="ams-mb-s">
+              Weet je zeker dat je dit E-mandaat wilt stopzetten?
+            </Paragraph>
+            <Paragraph className="ams-mb-s">
+              Het E-mandaat wordt dan niet meer gebruikt voor automatische
+              incasso.
+            </Paragraph>
+            <Paragraph className="ams-mb-s">
+              Je kunt het E-mandaat later opnieuw activeren voor nieuwe
+              facturen.
+            </Paragraph>
+          </>
+        ),
+        confirmLabel: 'Ja, stopzetten',
+      }}
+    />
   );
 }

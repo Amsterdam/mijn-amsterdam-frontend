@@ -15,6 +15,7 @@ export const BffEndpoints = {
   CMS_FOOTER: '/services/cms/footer',
   CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
   STATUS_HEALTH: '/status/health',
+  PROXY: '/proxy',
 
   FEATURE_TOGGLES: '/services/feature-toggles',
 
