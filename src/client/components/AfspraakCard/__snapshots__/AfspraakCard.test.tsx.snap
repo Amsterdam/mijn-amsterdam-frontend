@@ -89,7 +89,7 @@ exports[`Renders afspraak data > Small screen 1`] = `
       class="ams-column"
     >
       <div
-        class="ams-row"
+        class="ams-row ams-row--gap-none"
       >
         <h3
           class="ams-heading ams-heading--3 _SmallScreenHeading_0a51e6"

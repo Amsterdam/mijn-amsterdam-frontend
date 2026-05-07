@@ -78,7 +78,7 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
     return (
       <Row className={className}>
         <Column>
-          <Row>
+          <Row gap="none">
             <TitleHeading className={styles.SmallScreenHeading}></TitleHeading>
             {icon}
           </Row>
