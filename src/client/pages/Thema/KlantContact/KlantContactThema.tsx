@@ -15,8 +15,15 @@ import { LinkToListPage } from '../../../components/LinkToListPage/LinkToListPag
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 
 export function KlantContactThema() {
-  const { id, title, isLoading, isError, pageLinks, routeConfig } =
-    useKlantcontactData();
+  const {
+    id,
+    title,
+    isLoading,
+    isError,
+    dependencyErrors,
+    pageLinks,
+    routeConfig,
+  } = useKlantcontactData();
   useHTMLDocumentTitle(routeConfig);
 
   const pageContentTop = <div></div>;
@@ -25,7 +32,10 @@ export function KlantContactThema() {
     <>
       Wij kunnen de volgende gegevens nu niet tonen:
       <br />
-      {isError && <>- Uw overzicht van contactmomenten</>}
+      {dependencyErrors.afspraken && <>- Uw overzicht van uw afspraken</>}
+      {dependencyErrors.contactmomenten && (
+        <>- Uw overzicht van contactmomenten</>
+      )}
     </>
   );
 
@@ -34,6 +44,9 @@ export function KlantContactThema() {
       id={id}
       title={title}
       isError={isError}
+      isPartialError={
+        dependencyErrors.afspraken !== dependencyErrors.contactmomenten
+      }
       errorAlertContent={pageContentErrorAlert}
       isLoading={isLoading}
       pageLinks={pageLinks}

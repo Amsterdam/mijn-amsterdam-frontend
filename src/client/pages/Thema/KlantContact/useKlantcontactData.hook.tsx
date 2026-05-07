@@ -2,7 +2,11 @@ import { generatePath, useParams } from 'react-router';
 
 import { tableConfigs, themaConfig } from './KlantContact-thema-config.ts';
 import type { AfspraakFrontend } from '../../../../server/services/salesforce/klantcontact.types.ts';
-import { isLoading, isError } from '../../../../universal/helpers/api.ts';
+import {
+  isLoading,
+  isError,
+  hasFailedDependency,
+} from '../../../../universal/helpers/api.ts';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
@@ -22,6 +26,10 @@ export function useKlantcontactData() {
     pageLinks: themaConfig.pageLinks,
     isError: isError(KLANT_CONTACT),
     isLoading: isLoading(KLANT_CONTACT),
+    dependencyErrors: {
+      contactmomenten: hasFailedDependency(KLANT_CONTACT, 'contactmomenten'),
+      afspraken: hasFailedDependency(KLANT_CONTACT, 'afspraken'),
+    },
     routeConfig: themaConfig.route,
     breadcrumbs,
     routeParams,
