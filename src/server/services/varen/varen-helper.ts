@@ -3,6 +3,10 @@ import type {
   VarenZakenFrontend,
 } from './config-and-types.ts';
 
+const hasPassagiersvaartSegment = (zaak: VarenZakenFrontend): boolean => {
+  return zaak.segment !== 'Transport' && zaak.segment !== 'Gedoogverklaring';
+};
+
 // MIJN - 12951: Filter non-passagiersvaart until there is more clarity about what is intended with non-passagiersvaart zaken and vergunningen
 // Zaken and vergunningen linked to at least one passagiersvaart of the other type (or to none of the other type) are kept, even if they are also linked to a non-passagiersvaart.
 export function filterNonPassagiersvaart(
@@ -11,7 +15,7 @@ export function filterNonPassagiersvaart(
 ): [VarenVergunningExploitatieType[], VarenZakenFrontend[]] {
   const zakenTransport = new Set(
     zaken
-      .filter((zaak) => zaak.segment === 'Transport')
+      .filter((zaak) => !hasPassagiersvaartSegment(zaak))
       .flatMap((zaak) =>
         zaak.vergunning?.identifier ? [zaak.vergunning.identifier] : []
       )
@@ -19,18 +23,13 @@ export function filterNonPassagiersvaart(
 
   const zakenNonTransport = new Set(
     zaken
-      .filter((zaak) => zaak.segment !== 'Transport')
-      .flatMap((zaak) =>
-        zaak.vergunning?.identifier ? [zaak.vergunning.identifier] : []
-      )
+      .filter(hasPassagiersvaartSegment)
+      .filter((zaak) => !!zaak.vergunning?.identifier)
+      .map((zaak) => zaak.vergunning!.identifier)
   );
 
   const vergunningenPassagiersvaart = vergunningen
-    .filter(
-      (vergunning) =>
-        vergunning.soortVergunning === 'Passagiersvaart' ||
-        vergunning.soortVergunning == null // Keep vergunningen with unknown soortVergunning. These can be legacy items that predate the addition of the soortVergunning field
-    )
+    .filter((vergunning) => vergunning.soortVergunning === 'Passagiersvaart')
     .filter(
       (vergunning) =>
         !zakenTransport.has(vergunning.identifier) ||
@@ -42,7 +41,7 @@ export function filterNonPassagiersvaart(
   );
   const zakenPassagiersvaart = zaken.filter(
     (zaak) =>
-      zaak.segment !== 'Transport' &&
+      hasPassagiersvaartSegment(zaak) &&
       (!zaak.vergunning ||
         vergunningenPassagiersvaartIds.has(zaak.vergunning.identifier))
   );

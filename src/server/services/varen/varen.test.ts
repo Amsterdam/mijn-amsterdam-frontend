@@ -216,17 +216,37 @@ describe('Varen service', () => {
     const vergunningRef = (identifier: string) =>
       ({ identifier }) as DecosVarenZaakVergunning;
 
-    it('removes transport zaken and non-passagiersvaart vergunningen, plus linked items', () => {
+    it('removes non-passagiersvaart zaken and non-passagiersvaart vergunningen, plus linked items', () => {
       const zaken = [
         {
-          id: 'z-transport',
+          id: 'z-transport-transport',
           segment: 'Transport',
           vergunning: vergunningRef('Transport'),
+        },
+        {
+          id: 'z-passagiers-transport',
+          segment: 'Transport',
+          vergunning: vergunningRef('Passagiersvaart'),
+        },
+        {
+          id: 'z-transport-gedoog',
+          segment: 'Gedoogverklaring',
+          vergunning: vergunningRef('Transport'),
+        },
+        {
+          id: 'z-passagiers-gedoog',
+          segment: 'Gedoogverklaring',
+          vergunning: vergunningRef('Passagiersvaart'),
         },
         {
           id: 'z-linked-to-transport-vergunning',
           segment: 'Onbemand',
           vergunning: vergunningRef('Transport'),
+        },
+        {
+          id: 'z-linked-to-gedoog-vergunning',
+          segment: 'Onbemand',
+          vergunning: vergunningRef('Gedoogverklaring'),
         },
         {
           id: 'z-linked-to-passagiers-vergunning',
@@ -277,11 +297,16 @@ describe('Varen service', () => {
       expect(vergunningenFiltered.length).toBe(1);
     });
 
-    it('removes passagiersvaart vergunningen if it only has transport zaken', () => {
+    it('removes passagiersvaart vergunningen if it only has non-passagiersvaart zaken', () => {
       const zaken = [
         {
           id: 'z-transport',
           segment: 'Transport',
+          vergunning: vergunningRef('Passagiersvaart'),
+        },
+        {
+          id: 'z-gedoog',
+          segment: 'Gedoogverklaring',
           vergunning: vergunningRef('Passagiersvaart'),
         },
       ] satisfies Partial<VarenZakenFrontend>[] as unknown as VarenZakenFrontend[];

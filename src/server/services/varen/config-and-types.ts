@@ -1,3 +1,4 @@
+import type { SomeOtherString } from '../../../universal/helpers/types.ts';
 import type { OmitMapped } from '../../../universal/helpers/utils.ts';
 import type { ZaakDetail } from '../../../universal/types/App.types.ts';
 import type { DecosZaakBase, DecosZaakFrontend } from '../decos/decos-types.ts';
@@ -43,12 +44,18 @@ export type DecosVarenZaakVergunning = {
   segment:
     | 'Beeldbepalend groot'
     | 'Beeldbepalend klein en middelgroot'
+    | 'Bemand gesloten'
+    | 'Bemand groot'
+    | 'Bemand open'
     | 'Groot'
     | 'Historisch groot'
     | 'Historisch klein en middelgroot'
     | 'Klein en middelgroot'
     | 'Onbemand'
-    | 'Transport';
+    | 'Waterfietsen'
+    | 'Transport'
+    | 'Gedoogverklaring'
+    | SomeOtherString;
   eniNumber: string | null;
   vergunningKenmerk: string | null;
   vesselName: string | null;
