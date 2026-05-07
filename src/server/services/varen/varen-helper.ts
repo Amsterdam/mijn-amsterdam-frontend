@@ -3,9 +3,9 @@ import type {
   VarenZakenFrontend,
 } from './config-and-types.ts';
 
-const hasPassagiersvaartSegment = (zaak: VarenZakenFrontend): boolean => {
+function hasPassagiersvaartSegment(zaak: VarenZakenFrontend): boolean {
   return zaak.segment !== 'Transport' && zaak.segment !== 'Gedoogverklaring';
-};
+}
 
 // MIJN - 12951: Filter non-passagiersvaart until there is more clarity about what is intended with non-passagiersvaart zaken and vergunningen
 // Zaken and vergunningen linked to at least one passagiersvaart of the other type (or to none of the other type) are kept, even if they are also linked to a non-passagiersvaart.
