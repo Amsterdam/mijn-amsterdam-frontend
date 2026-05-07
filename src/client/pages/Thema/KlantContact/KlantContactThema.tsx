@@ -54,7 +54,7 @@ function Afspraken() {
   if (!isEnabled('KLANT_CONTACT.afspraken')) {
     return null;
   }
-  const MAX_AFSPRAKEN_DISPLAYED_AMOUNT = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
+  const MAX_AMOUNT_AFSPRAKEN_DISPLAYED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
   return (
     <PageContentCell className={getRedactedClass(null, 'full')}>
       <Heading level={2} className="ams-mb-s">
@@ -63,12 +63,12 @@ function Afspraken() {
       {afspraken.length ? (
         <>
           <AfspraakCards
-            afspraken={afspraken.slice(0, MAX_AFSPRAKEN_DISPLAYED_AMOUNT)}
+            afspraken={afspraken.slice(0, MAX_AMOUNT_AFSPRAKEN_DISPLAYED)}
           />
           <LinkToListPage
             count={afspraken.length}
             route={themaConfig.listPageAfspraken.route.path}
-            threshold={MAX_AFSPRAKEN_DISPLAYED_AMOUNT}
+            threshold={MAX_AMOUNT_AFSPRAKEN_DISPLAYED}
           />
         </>
       ) : (
