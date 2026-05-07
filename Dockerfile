@@ -38,6 +38,7 @@ WORKDIR /build-space
 
 # Copy packages + Install
 COPY pnpm-lock.yaml /build-space/
+COPY pnpm-workspace.yaml /build-space/
 COPY package.json /build-space/
 COPY vite.config.ts /build-space/
 COPY .env.local.template /build-space/

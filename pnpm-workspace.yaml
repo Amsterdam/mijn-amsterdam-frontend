@@ -2,7 +2,7 @@ allowBuilds:
   '@parcel/watcher': false
   core-js: false
   es5-ext: false
-  esbuild: true
+  esbuild: false
 minimumReleaseAge: 1440 # 1440 minutes = 1 day
 packages:
   - .
