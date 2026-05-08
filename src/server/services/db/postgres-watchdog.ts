@@ -14,7 +14,7 @@ let dbWatchdogInterval: NodeJS.Timeout | null = null;
 let consecutiveFailures = 0;
 let lastError: unknown;
 
-function resetAfterSuccessfulPing() {
+function resetDbWatchdog() {
   consecutiveFailures = 0;
   lastError = undefined;
 }
@@ -28,8 +28,8 @@ function registerPingFailure(error: unknown) {
       type: 'db',
       name: 'db-watchdog-ping-failed',
       message: 'DB watchdog ping failed',
-      severity: 'error',
     },
+    severity: 'error',
   });
 
   if (consecutiveFailures < DB_WATCHDOG_MAX_CONSECUTIVE_FAILURES) {
@@ -41,10 +41,10 @@ function registerPingFailure(error: unknown) {
       type: 'db',
       name: 'db-watchdog-ping-failed-max-retries',
       message: 'DB watchdog ping failed max consecutive times, exiting process',
-      severity: 'error',
       intervalMs: DB_WATCHDOG_INTERVAL_MS,
       timeoutMs: DB_WATCHDOG_QUERY_TIMEOUT_MS,
     },
+    severity: 'error',
   });
 
   // Ensure captureException is sent before the process exits
@@ -71,7 +71,7 @@ export function stopDbWatchdog() {
 
   clearInterval(dbWatchdogInterval);
   dbWatchdogInterval = null;
-  resetAfterSuccessfulPing();
+  resetDbWatchdog();
 }
 
 type PoolLike = { query: (query: string) => Promise<unknown> };
@@ -89,7 +89,7 @@ export function startDbWatchdog(getPool: () => PoolLike) {
     try {
       const pool = getPool();
       await withTimeout(pool.query('SELECT 1'), DB_WATCHDOG_QUERY_TIMEOUT_MS);
-      resetAfterSuccessfulPing();
+      resetDbWatchdog();
     } catch (error) {
       registerPingFailure(error);
     }
