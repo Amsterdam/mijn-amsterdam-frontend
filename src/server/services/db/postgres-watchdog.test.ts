@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { range } from '../../../universal/helpers/utils.ts';
 
 const DB_WATCHDOG_INTERVAL_MS = 60_000;
-const DB_WATCHDOG_MAX_CONSECUTIVE_FAILURES = 5;
+const MAX_CONSECUTIVE_FAILED_PINGS = 5;
 
 const mocks = vi.hoisted(() => {
   return {
@@ -100,24 +101,20 @@ describe('postgres watchdog', () => {
     expect(setIntervalSpy).not.toHaveBeenCalled();
   });
 
-  it('exits the process after DB_WATCHDOG_MAX_CONSECUTIVE_FAILURES consecutive failed pings (when enabled)', async () => {
+  it('does not exit the process before MAX_CONSECUTIVE_FAILED_PINGS consecutive failed pings', async () => {
     vi.resetModules();
     mocks.APP_MODE = 'development';
     mocks.IS_DB_ENABLED = true;
 
-    const err = new Error('db down');
-    mocks.poolQuery.mockRejectedValue(err);
-
     vi.useFakeTimers();
     const exitSpy = vi
       .spyOn(process, 'exit')
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .mockImplementation((() => undefined) as any);
 
     const postgres = await import('./postgres.ts');
     postgres.getPool();
 
-    for (const _ of range(1, DB_WATCHDOG_MAX_CONSECUTIVE_FAILURES - 1)) {
+    for (const _ of range(1, MAX_CONSECUTIVE_FAILED_PINGS - 1)) {
       await vi.advanceTimersByTimeAsync(DB_WATCHDOG_INTERVAL_MS);
     }
 
@@ -138,11 +135,28 @@ describe('postgres watchdog', () => {
       })
     );
     expect(exitSpy).not.toHaveBeenCalled();
+  });
 
-    // DB_WATCHDOG_MAX_CONSECUTIVE_FAILURES consecutive failure: should capture and exit.
-    await vi.advanceTimersByTimeAsync(DB_WATCHDOG_INTERVAL_MS);
+  it('exits the process after MAX_CONSECUTIVE_FAILED_PINGS consecutive failed pings', async () => {
+    vi.resetModules();
+    mocks.APP_MODE = 'development';
+    mocks.IS_DB_ENABLED = true;
 
-    expect(mocks.captureException).toHaveBeenCalled();
+    const err = new Error('db down');
+    mocks.poolQuery.mockRejectedValue(err);
+
+    vi.useFakeTimers();
+    const exitSpy = vi
+      .spyOn(process, 'exit')
+      .mockImplementation((() => undefined) as any);
+
+    const postgres = await import('./postgres.ts');
+    postgres.getPool();
+
+    for (const _ of range(1, MAX_CONSECUTIVE_FAILED_PINGS)) {
+      await vi.advanceTimersByTimeAsync(DB_WATCHDOG_INTERVAL_MS);
+    }
+
     expect(mocks.captureException).toHaveBeenCalledWith(
       expect.any(Error),
       expect.objectContaining({
@@ -166,7 +180,7 @@ describe('postgres watchdog', () => {
     const nMockResponses = 2;
     for (const i of range(
       nMockResponses + 1,
-      nMockResponses + DB_WATCHDOG_MAX_CONSECUTIVE_FAILURES - 1
+      nMockResponses + MAX_CONSECUTIVE_FAILED_PINGS - 1
     )) {
       mocks.poolQuery.mockRejectedValueOnce(new Error(`response ${i}: fail`));
     }
@@ -176,7 +190,6 @@ describe('postgres watchdog', () => {
     vi.useFakeTimers();
     const exitSpy = vi
       .spyOn(process, 'exit')
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .mockImplementation((() => undefined) as any);
 
     const postgres = await import('./postgres.ts');
@@ -188,7 +201,7 @@ describe('postgres watchdog', () => {
 
     expect(exitSpy).not.toHaveBeenCalled();
     expect(mocks.captureException).toHaveBeenCalledTimes(
-      DB_WATCHDOG_MAX_CONSECUTIVE_FAILURES
+      MAX_CONSECUTIVE_FAILED_PINGS
     );
     expect(mocks.captureException).not.toHaveBeenCalledWith(
       expect.any(Error),
