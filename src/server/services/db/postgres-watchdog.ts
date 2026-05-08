@@ -3,7 +3,7 @@ import { delay } from '../../../universal/helpers/utils.ts';
 import { captureException } from '../monitoring.ts';
 import { IS_DB_ENABLED } from './config.ts';
 
-const DELAY_BEFORE_EXIT_MS = 5_000;
+const DELAY_BEFORE_EXIT_MS = 15_000;
 const JOB_FAILED_CODE = 1;
 
 const DB_WATCHDOG_INTERVAL_MS = 60_000;
@@ -19,20 +19,20 @@ function resetDbWatchdog() {
   lastError = undefined;
 }
 
-function registerPingFailure(error: unknown) {
+async function registerPingFailure(error: unknown) {
   lastError = error;
   consecutiveFailures += 1;
 
-  captureException(lastError, {
-    properties: {
-      type: 'db',
-      name: 'db-watchdog-ping-failed',
-      message: 'DB watchdog ping failed',
-    },
-    severity: 'error',
-  });
-
   if (consecutiveFailures < DB_WATCHDOG_MAX_CONSECUTIVE_FAILURES) {
+    captureException(lastError, {
+      properties: {
+        type: 'db',
+        name: 'db-watchdog-ping-failed',
+        message: 'DB watchdog ping failed',
+        consecutiveFailures,
+      },
+      severity: 'error',
+    });
     return;
   }
 
@@ -41,14 +41,13 @@ function registerPingFailure(error: unknown) {
       type: 'db',
       name: 'db-watchdog-ping-failed-max-retries',
       message: 'DB watchdog ping failed max consecutive times, exiting process',
-      intervalMs: DB_WATCHDOG_INTERVAL_MS,
-      timeoutMs: DB_WATCHDOG_QUERY_TIMEOUT_MS,
     },
     severity: 'error',
   });
 
   // Ensure captureException is sent before the process exits
-  delay(DELAY_BEFORE_EXIT_MS).then(() => process.exit(JOB_FAILED_CODE));
+  await delay(DELAY_BEFORE_EXIT_MS);
+  process.exit(JOB_FAILED_CODE);
 }
 
 function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
