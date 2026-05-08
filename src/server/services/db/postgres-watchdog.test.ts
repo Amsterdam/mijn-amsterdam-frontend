@@ -107,6 +107,9 @@ describe('postgres watchdog', () => {
     mocks.APP_MODE = 'development';
     mocks.IS_DB_ENABLED = true;
 
+    const err = new Error('db down');
+    mocks.poolQuery.mockRejectedValue(err);
+
     vi.useFakeTimers();
     const exitSpy = vi
       .spyOn(process, 'exit')
@@ -166,7 +169,7 @@ describe('postgres watchdog', () => {
         }),
       })
     );
-    
+
     await vi.advanceTimersByTimeAsync(DELAY_BEFORE_EXIT_MS);
     expect(exitSpy).toHaveBeenCalledWith(1);
   });
