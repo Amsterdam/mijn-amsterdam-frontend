@@ -1,7 +1,11 @@
 import * as jose from 'jose';
 import { generatePath } from 'react-router';
 
-import { EMPTY_UUID, MAX_PAGE_COUNT, routes } from './bezwaren-service-config.ts';
+import {
+  EMPTY_UUID,
+  MAX_PAGE_COUNT,
+  routes,
+} from './bezwaren-service-config.ts';
 import type {
   BezwaarFrontend,
   BezwaarDocument,
@@ -21,7 +25,7 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
-import { isRecentNotification } from '../../../universal/helpers/utils.ts';
+import { isRecentNotification } from '../../../universal/helpers/date.ts';
 import type {
   MyNotification,
   StatusLineItem,

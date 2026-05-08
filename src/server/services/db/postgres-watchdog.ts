@@ -1,15 +1,23 @@
 import { APP_MODE } from '../../../universal/config/env.ts';
+import { delay } from '../../../universal/helpers/utils.ts';
 import { captureException } from '../monitoring.ts';
 import { IS_DB_ENABLED } from './config.ts';
-import type { DBAdapter } from './db.ts';
+
+const DELAY_BEFORE_EXIT_MS = 5_000;
+const JOB_FAILED_CODE = 1;
 
 const DB_WATCHDOG_INTERVAL_MS = 60_000;
-const DB_WATCHDOG_QUERY_TIMEOUT_MS = 3_000;
+const DB_WATCHDOG_QUERY_TIMEOUT_MS = 5_000;
 const DB_WATCHDOG_MAX_CONSECUTIVE_FAILURES = 5;
 
 let dbWatchdogInterval: NodeJS.Timeout | null = null;
 let consecutiveFailures = 0;
 let lastError: unknown;
+
+function resetAfterSuccessfulPing() {
+  consecutiveFailures = 0;
+  lastError = undefined;
+}
 
 function registerPingFailure(error: unknown) {
   lastError = error;
@@ -39,7 +47,8 @@ function registerPingFailure(error: unknown) {
     },
   });
 
-  process.exit(1);
+  // Ensure captureException is sent before the process exits
+  delay(DELAY_BEFORE_EXIT_MS).then(() => process.exit(JOB_FAILED_CODE));
 }
 
 function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
@@ -62,11 +71,11 @@ export function stopDbWatchdog() {
 
   clearInterval(dbWatchdogInterval);
   dbWatchdogInterval = null;
-  consecutiveFailures = 0;
-  lastError = undefined;
+  resetAfterSuccessfulPing();
 }
 
-export function startDbWatchdog(getPool: () => DBAdapter) {
+type PoolLike = { query: (query: string) => Promise<unknown> };
+export function startDbWatchdog(getPool: () => PoolLike) {
   if (dbWatchdogInterval) {
     return;
   }
@@ -80,8 +89,7 @@ export function startDbWatchdog(getPool: () => DBAdapter) {
     try {
       const pool = getPool();
       await withTimeout(pool.query('SELECT 1'), DB_WATCHDOG_QUERY_TIMEOUT_MS);
-      consecutiveFailures = 0;
-      lastError = undefined;
+      resetAfterSuccessfulPing();
     } catch (error) {
       registerPingFailure(error);
     }

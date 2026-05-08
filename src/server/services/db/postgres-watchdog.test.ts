@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { range } from '../../../universal/helpers/utils.ts';
 
+const DELAY_BEFORE_EXIT_MS = 5_000;
 const DB_WATCHDOG_INTERVAL_MS = 60_000;
 const MAX_CONSECUTIVE_FAILED_PINGS = 5;
 
@@ -165,6 +166,8 @@ describe('postgres watchdog', () => {
         }),
       })
     );
+    
+    await vi.advanceTimersByTimeAsync(DELAY_BEFORE_EXIT_MS);
     expect(exitSpy).toHaveBeenCalledWith(1);
   });
 

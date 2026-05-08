@@ -4,10 +4,10 @@ import {
   jsonCopy,
   sortAlpha,
   range,
-  isRecentNotification,
   splitBy,
   isNumeric,
 } from './utils.ts';
+import { isRecentNotification } from './date.ts';
 describe('Utils.ts', () => {
   it('deepOmitKeys: Should omit keys recursively', () => {
     const testData = {
