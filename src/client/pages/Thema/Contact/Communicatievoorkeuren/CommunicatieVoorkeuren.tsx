@@ -3,6 +3,7 @@ import {
   Heading,
   Paragraph,
   Icon,
+  Alert,
 } from '@amsterdam/design-system-react';
 import { CheckmarkIcon, CloseIcon } from '@amsterdam/design-system-react-icons';
 import { generatePath } from 'react-router';
@@ -74,14 +75,17 @@ export function CommunicatieVoorkeuren() {
 
   return (
     <>
-      <Heading level={2} size="level-3">
-        Hoe kunnen wij u bereiken?
-      </Heading>
-      <Paragraph className="ams-mb-m">
-        Met onderstaande gegevens kunnen wij u bereiken. Wij sturen nooit links
-        in e-mails of sms-berichten.
-      </Paragraph>
-      <Datalist rows={rows} className="ams-mb-xl" />
+      <Datalist rows={rows} />
+      <Alert
+        severity="warning"
+        heading="Let op!"
+        headingLevel={3}
+        className="ams-mb-m"
+      >
+        <Paragraph>
+          Wij sturen nooit links in e-mails of sms-berichten.
+        </Paragraph>
+      </Alert>
       <Heading level={2} size="level-3">
         Hoe wilt u informatie van ons ontvangen?
       </Heading>

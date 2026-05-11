@@ -119,6 +119,8 @@ export function useCommunicatieVoorkeurDetail() {
   const voorkeur =
     voorkeurenBE.find((voorkeur) => voorkeur.id === params.id) ?? null;
 
+  console.log(voorkeur, params.id, voorkeurenBE);
+
   const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
@@ -148,7 +150,7 @@ export function useCommunicatieVoorkeurInstellen() {
     voorkeur?.settings.find((medium) => medium.type === params.medium) ?? null;
 
   return {
-    title: `Instellen ${medium?.type}`,
+    title: `Instellen ${medium?.type ?? params.medium}`,
     themaId,
     voorkeur,
     medium,

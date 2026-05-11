@@ -13,8 +13,15 @@ export function ContactThemaPagina() {
   useHTMLDocumentTitle(routeConfig.themaPage);
 
   const pageContentTop = (
-    <PageContentCell>
-      <Paragraph className="ams-mb-m">Hallo.</Paragraph>
+    <PageContentCell spanWide={8}>
+      <Paragraph className="ams-mb-m">
+        Wilt u uw post voortaan per e-mail ontvangen? Of wilt u op de hoogte
+        gehouden worden van de status van uw zaak per sms?
+      </Paragraph>
+      <Paragraph>
+        In dit onderdeel kunt u uw communicatievoorkeuren instellen en bekijken
+        wanneer wij contact met u hebben gehad.
+      </Paragraph>
     </PageContentCell>
   );
 
