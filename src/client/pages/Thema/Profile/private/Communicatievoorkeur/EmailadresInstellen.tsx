@@ -6,7 +6,7 @@ import { EmailForm, EmailVerify } from './EmailInputAndValidation';
 import { useSessionStorage } from '../../../../../hooks/storage.hook';
 
 type MediumInstellenProps = {
-  email: string;
+  email?: string;
   updateEmailValue: (email: string) => void;
 };
 

@@ -36,7 +36,7 @@ export function EmailVerify({ email, onValidated }: EmailVerifyProps) {
   const [otp, setOtp] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
 
-  const [state, send] = useDataApi<ApiResponse<{ verified: boolean }>>(
+  const [state, send] = useDataApi<ApiResponse<{ verified: boolean }> | null>(
     {
       url: 'http://localhost:5000/api/v1/services/verification-request/verify',
       postpone: true,
@@ -55,7 +55,7 @@ export function EmailVerify({ email, onValidated }: EmailVerifyProps) {
     }
   }, [state.isDirty, state.isLoading, state.data]);
 
-  const hasApiError = false;
+  const hasApiError = !state.isLoading && state.isError;
 
   const submit = useCallback(
     async (code: string) => {

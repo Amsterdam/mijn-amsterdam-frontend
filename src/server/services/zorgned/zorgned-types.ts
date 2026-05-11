@@ -198,6 +198,7 @@ export interface ZorgnedDocumentResponseSource {
 
 export type ZorgnedPersoonSource = {
   bsn: string;
+  email: string | null;
   clientidentificatie: number | null;
   geboortenaam: string;
   roepnaam: string | null;
