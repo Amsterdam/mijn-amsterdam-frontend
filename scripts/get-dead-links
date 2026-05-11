@@ -14,6 +14,7 @@ fi
 EXTERNAL_URLS=$(
   # sed filters out urls that we cannot send reliable requests to.
   # formulier.amsterdam not to be confused with formulierEN.amsterdam is filtered out because it is blocked in the pipeline.
+  # https://mijn.werkeninkomen.amsterdam.nl is a closed project, it will probably be deleted at some point.
   grep --no-filename -r -P -o --exclude-dir="__snapshots__" --exclude="*test*" \
     "(\\\?[\`\"'])((https?:|www\.).*?)[^\\\]\1" ./src/* 2> /dev/null \
     | sed -E "s/([\`\"'])(.+)\1/\2/" \
@@ -24,7 +25,9 @@ EXTERNAL_URLS=$(
     | sed '/.*api\.*/d' \
     | sed '/{.*}/d' \
     | sed '/.*\.azure\..*/d' \
-    | sed '/formulier\.amsterdam/d'
+    | sed '/formulier\.amsterdam/d' \
+    | sed '/https.*microsoft.com/d' \
+    | sed '/mijn.werkeninkomen.amsterdam/d'
 )
 
 echo_dead_link() {
