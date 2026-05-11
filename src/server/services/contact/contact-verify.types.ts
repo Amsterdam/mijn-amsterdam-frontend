@@ -1,9 +1,8 @@
-export type CreateVerificationRequestPayload = {
-  email: string;
+export type CreateVerificationRequestPayload<T extends 'email' | 'phone'> = {
   reference: string;
   templateId: string;
   apiKey: string;
-};
+} & (T extends 'email' ? { email: string } : { phoneNumber: string });
 
 export type CreateVerificationRequestResponse = {
   requestId: string;

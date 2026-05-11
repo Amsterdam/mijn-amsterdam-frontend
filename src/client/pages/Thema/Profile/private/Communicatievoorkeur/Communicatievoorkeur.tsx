@@ -60,19 +60,32 @@ export function useCommunicatievoorkeurApi() {
   };
 }
 
-export function Communicatievoorkeur() {
+type CommunicatievoorkeurProps = {
+  doUpdate?: boolean;
+  onUpdate?: (email: string) => void;
+};
+
+export function Communicatievoorkeur({
+  doUpdate,
+  onUpdate,
+}: CommunicatievoorkeurProps) {
   const { hasEmail, doVerify, email, updateEmailValue, setDoVerify } =
     useCommunicatievoorkeurApi();
 
   useEffect(() => {
     if (email) {
-      setDoVerify(false);
+      setDoVerify(!!doUpdate);
     }
-  }, [email]);
+  }, [email, doUpdate]);
   return (
     <>
       {(!hasEmail || doVerify) && (
-        <EmailadresInstellen updateEmailValue={updateEmailValue} />
+        <EmailadresInstellen
+          updateEmailValue={(email: string) => {
+            updateEmailValue(email);
+            onUpdate?.(email);
+          }}
+        />
       )}
       {hasEmail && !doVerify && (
         <Paragraph className="ams-mb-m">

@@ -8,6 +8,7 @@ import type {
 import { routeConfig } from '../Contact-thema-config';
 import { AdresValue } from './AdresVoorkeur';
 import { SMSValue } from './SMSVoorkeur';
+import { uniqueArray } from '../../../../../universal/helpers/utils';
 
 type MediumValueProps = {
   medium: CommunicatieMedium;
@@ -15,7 +16,8 @@ type MediumValueProps = {
 };
 
 export function MediumValue({ medium, mediumsByType }: MediumValueProps) {
-  const hasMultipleEmails = mediumsByType.email.length > 1;
+  const hasMultipleEmails =
+    uniqueArray(mediumsByType.email.map((m) => m.value)).length > 1;
 
   switch (medium.type) {
     case 'email':

@@ -2,6 +2,7 @@ import createDebugger from 'debug';
 
 import type {
   CreateVerificationRequestPayload,
+  CreateVerificationRequestResponse,
   VerifyVerificationRequestPayload,
   VerifyVerificationRequestResponse,
 } from './contact-verify.types';
@@ -14,7 +15,8 @@ const debugVerifyApiRequestData = createDebugger('verify-api:request-data');
 const debugVerifyApiResponseData = createDebugger('verify-api:response-data');
 
 type CreateVerificationRequestProps = {
-  email: string;
+  email?: string;
+  phone?: string;
 };
 
 const VERIFY_REFERENCE_STATIC = 'Mijn Amsterdam';
@@ -25,26 +27,41 @@ function getUniqueReference(email: string) {
 
 export function createVerificationRequest(
   authProfileAndToken: AuthProfileAndToken,
-  { email }: CreateVerificationRequestProps
+  { email, phone }: CreateVerificationRequestProps
 ) {
-  const data: CreateVerificationRequestPayload = {
-    email,
-    reference: getUniqueReference(email),
-    templateId: `${getFromEnv('BFF_VERIFY_EMAIL_TEMPLATE_ID')}`,
+  const medium: 'email' | 'phone' | null = email
+    ? 'email'
+    : phone
+      ? 'phone'
+      : null;
+
+  if (!medium) {
+    throw new Error('Either email or phone must be provided');
+  }
+
+  // There must be a medium, so we use the bang! operator
+  const mediumValue = (medium === 'email' ? email : phone)!;
+
+  const payload: CreateVerificationRequestPayload<typeof medium> = {
+    reference: getUniqueReference(mediumValue),
+    templateId: `${getFromEnv(`BFF_VERIFY_${medium.toUpperCase()}_TEMPLATE_ID`)}`,
     apiKey: `${getFromEnv('BFF_VERIFY_API_KEY')}`,
+    ...(medium === 'email'
+      ? { email: mediumValue }
+      : { phoneNumber: mediumValue }),
   };
 
-  debugVerifyApiRequestData({ data });
+  debugVerifyApiRequestData({ data: payload });
 
   const apiConfig = getApiConfig('VERIFY', {
-    data,
+    data: payload,
     transformResponse: (response) => {
       debugVerifyApiResponseData(response);
       return response;
     },
   });
 
-  return requestData<CreateVerificationRequestPayload>(apiConfig);
+  return requestData<CreateVerificationRequestResponse>(apiConfig);
 }
 
 type VerifyVerificationRequestProps = {

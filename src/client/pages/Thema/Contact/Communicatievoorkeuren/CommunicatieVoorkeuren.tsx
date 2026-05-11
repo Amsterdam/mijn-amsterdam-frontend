@@ -4,6 +4,7 @@ import {
   Paragraph,
   Icon,
   Alert,
+  Link,
 } from '@amsterdam/design-system-react';
 import { CheckmarkIcon, CloseIcon } from '@amsterdam/design-system-react-icons';
 import { generatePath } from 'react-router';
@@ -83,7 +84,10 @@ export function CommunicatieVoorkeuren() {
         className="ams-mb-m"
       >
         <Paragraph>
-          Wij sturen nooit links in e-mails of sms-berichten.
+          Wij sturen geen <Link href="#">links</Link> in e-mails of sms
+          berichten.
+          <br />
+          Vetrouwt u iets niet, neem dan contact op met de gemeente.
         </Paragraph>
       </Alert>
       <Heading level={2} size="level-3">
@@ -96,14 +100,4 @@ export function CommunicatieVoorkeuren() {
       {voorkeurenList}
     </>
   );
-  // <ThemaPaginaTable
-  //   title={title}
-  //   subTitle={
-  //     <Paragraph className="ams-mb-m">
-  //       Dit is een lijst van communicatievoorkeuren.
-  //     </Paragraph>
-  //   }
-  //   zaken={voorkeuren}
-  //   displayProps={displayProps}
-  // />
 }

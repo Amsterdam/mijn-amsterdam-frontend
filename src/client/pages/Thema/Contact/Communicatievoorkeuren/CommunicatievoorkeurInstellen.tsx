@@ -203,6 +203,11 @@ export function CommunicatievoorkeurInstellen() {
 
   useHTMLDocumentTitle(routeConfig.detailPageCommunicatievoorkeurInstellen);
 
+  const navigate = useNavigate();
+  function navigateToThemaPage() {
+    navigate(routeConfig.themaPage.path);
+  }
+
   return (
     <ThemaDetailPagina
       title={title}
@@ -220,7 +225,7 @@ export function CommunicatievoorkeurInstellen() {
               defaultValue={defaultValue}
             />
           ) : (
-            <C2 />
+            <C2 doUpdate={true} onUpdate={() => navigateToThemaPage()} />
           )}
         </PageContentCell>
       }

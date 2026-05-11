@@ -13,6 +13,7 @@ import {
   sendResponse,
   sendUnauthorized,
 } from '../../routing/route-helpers';
+import { captureException } from '../monitoring';
 import { fetchPersoonsgegevensNAW } from '../zorgned/zorgned-service';
 
 const debugContactRequestData = createDebugger(
@@ -32,17 +33,22 @@ export async function handleCreateVerificationRequest(
     return sendUnauthorized(res);
   }
 
-  const { email } = req.body;
+  const { email, phone } = req.body;
 
-  if (!email) {
-    return sendBadRequest(res, 'E-mail is required');
+  if (!email && !phone) {
+    return sendBadRequest(res, 'E-mail or phone is required');
   }
 
-  const response = await createVerificationRequest(authProfileAndToken, {
-    email,
-  });
-
-  return sendResponse(res, response);
+  try {
+    const response = await createVerificationRequest(authProfileAndToken, {
+      email,
+      phone,
+    });
+    return sendResponse(res, response);
+  } catch (error) {
+    captureException(error);
+    return sendBadRequest(res, 'Failed to create verification request');
+  }
 }
 
 export async function handleVerifyVerificationRequest(
