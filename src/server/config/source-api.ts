@@ -394,6 +394,10 @@ const ApiConfig_ = {
     url: `${getFromEnv('BFF_MS_OAUTH_ENDPOINT')}:tenant/oauth2/v2.0/token`,
     method: 'POST',
   },
+  VERIFY: {
+    url: `${getFromEnv('BFF_VERIFY_API_URL')}`,
+    method: 'POST',
+  },
 } as const;
 
 export const ApiConfig: Record<SourceApiName, DataRequestConfig> = ApiConfig_;

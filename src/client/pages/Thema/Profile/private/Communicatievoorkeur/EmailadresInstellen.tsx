@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { EmailForm, EmailOTP } from './EmailInputAndValidation';
+import { EmailForm, EmailVerify } from './EmailInputAndValidation';
 import { useSessionStorage } from '../../../../../hooks/storage.hook';
 
 type MediumInstellenProps = {
@@ -25,19 +25,15 @@ export function EmailadresInstellen({
     <>
       {step === '1' && (
         <EmailForm
-          onSubmit={({ email, isVerified }) => {
-            if (!isVerified) {
-              setEmailLocal(email);
-              setStep('2');
-            } else {
-              updateEmailValue(email);
-            }
+          onSubmit={({ email }) => {
+            setEmailLocal(email);
+            setStep('2');
           }}
           email={emailLocal}
         />
       )}
       {step === '2' && (
-        <EmailOTP
+        <EmailVerify
           email={emailLocal}
           onValidated={({ otp, email }) => {
             updateEmailValue(email);

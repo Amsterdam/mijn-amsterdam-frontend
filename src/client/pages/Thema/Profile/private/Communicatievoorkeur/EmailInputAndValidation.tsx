@@ -11,6 +11,10 @@ import {
 import OtpInput from 'react-otp-input';
 
 import styles from './EmailInputAndValidation.module.scss';
+import {
+  useCreateVerificationRequest,
+  useVerifyVerificationRequest,
+} from './useEmailVerification';
 import { MaRouterLink } from '../../../../../components/MaLink/MaLink';
 import { Spinner } from '../../../../../components/Spinner/Spinner';
 
@@ -20,28 +24,35 @@ function validateCodeFormat(code: string) {
   return code.split('').filter(Boolean).length === VERIFICATION_CODE_LENGTH;
 }
 
-type EmailOTPProps = {
+type EmailVerifyProps = {
   email: string;
   onValidated: (formData: { otp: string; email: string }) => void;
 };
 
-export function EmailOTP({ email, onValidated }: EmailOTPProps) {
+export function EmailVerify({ email, onValidated }: EmailVerifyProps) {
   const [otp, setOtp] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const { send, ...rest } = useVerifyVerificationRequest({
+    url: 'http://localhost:5000/api/v1/services/verification-request/verify',
+    onSuccess(data) {
+      console.log('Verification successful:', data);
+      onValidated({ otp, email });
+      setIsSubmitting(false);
+    },
+  });
+
+  console.log('rest', rest);
+
   const hasApiError = false;
 
   const submit = useCallback(
-    (otp: string) => {
-      const isValid = validateCodeFormat(otp);
+    async (code: string) => {
+      const isValid = validateCodeFormat(code);
       if (isValid) {
         setIsSubmitting(true);
-        // TODO: Make api call
-        setTimeout(() => {
-          setIsSubmitting(false);
-          onValidated({ otp, email });
-        }, 1000);
+        send({ email, code });
       } else {
         setIsInvalid(true);
       }
@@ -143,13 +154,24 @@ function EmailInput({ value, onChange, isInvalid = false }: EmailInputProps) {
 
 type EmailFormProps = {
   email: string;
-  onSubmit: (formData: { email: string; isVerified: boolean }) => void;
+  onSubmit: (formData: { email: string }) => void;
 };
 
 export function EmailForm({ email, onSubmit }: EmailFormProps) {
   const emailValue = email || '';
   const [emailToVerify, setEmailToVerify] = useState<string>('');
   const [isInvalid, setIsInvalid] = useState(false);
+
+  const { send, ...rest } = useCreateVerificationRequest({
+    url: 'http://localhost:5000/api/v1/services/verification-request/create',
+    onSuccess(data) {
+      console.log('Creation successful:', data);
+      onSubmit({ email: emailToVerify });
+    },
+  });
+
+  console.log('rest', rest);
+
   // Onsubmit, send to backend and setStep to 2 OTP validation
   const submitForm: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
@@ -169,7 +191,7 @@ export function EmailForm({ email, onSubmit }: EmailFormProps) {
       return;
     }
 
-    onSubmit({ email: emailToVerify, isVerified: !isEmailToVerify });
+    send({ email: emailToVerify });
   };
 
   return (
