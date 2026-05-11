@@ -1,0 +1,54 @@
+import type {
+  DecosVarenZaakVergunning,
+  VarenVergunningExploitatieType,
+  VarenZakenFrontend,
+} from './config-and-types.ts';
+
+function hasPassagiersvaartSegment(
+  zaak: Pick<DecosVarenZaakVergunning, 'segment'>
+): boolean {
+  return zaak.segment !== 'Transport' && zaak.segment !== 'Gedoogverklaring';
+}
+
+// MIJN - 12951: Filter non-passagiersvaart until there is more clarity about what is intended with non-passagiersvaart zaken and vergunningen
+// Passagiersvaart zaken and vergunningen linked to at least one passagiersvaart of the other type (or to none of the other type) are kept, even if they are also linked to a non-passagiersvaart.
+export function filterNonPassagiersvaart(
+  vergunningen: VarenVergunningExploitatieType[],
+  zaken: VarenZakenFrontend[]
+): [VarenVergunningExploitatieType[], VarenZakenFrontend[]] {
+  const zakenTransport = new Set(
+    zaken
+      .filter((zaak) => !hasPassagiersvaartSegment(zaak))
+      .flatMap((zaak) =>
+        zaak.vergunning?.identifier ? [zaak.vergunning.identifier] : []
+      )
+  );
+
+  const zakenNonTransport = new Set(
+    zaken
+      .filter(hasPassagiersvaartSegment)
+      .filter((zaak) => !!zaak.vergunning?.identifier)
+      .map((zaak) => zaak.vergunning!.identifier)
+  );
+
+  const vergunningenPassagiersvaart = vergunningen
+    .filter((vergunning) => vergunning.soortVergunning === 'Passagiersvaart')
+    .filter(hasPassagiersvaartSegment)
+    .filter(
+      (vergunning) =>
+        !zakenTransport.has(vergunning.identifier) ||
+        zakenNonTransport.has(vergunning.identifier)
+    );
+
+  const vergunningenPassagiersvaartIds = new Set(
+    vergunningenPassagiersvaart.map((v) => v.identifier)
+  );
+  const zakenPassagiersvaart = zaken.filter(
+    (zaak) =>
+      hasPassagiersvaartSegment(zaak) &&
+      (!zaak.vergunning ||
+        vergunningenPassagiersvaartIds.has(zaak.vergunning.identifier))
+  );
+
+  return [vergunningenPassagiersvaart, zakenPassagiersvaart];
+}

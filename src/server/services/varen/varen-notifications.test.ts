@@ -18,12 +18,13 @@ import * as decos from '../decos/decos-service.ts';
 const vergunning = {
   vesselLength: '2,31',
   vesselWidth: '2,32',
+  soortVergunning: 'Passagiersvaart',
   segment: 'Onbemand',
   eniNumber: '7654321',
   vesselName: 'Titanic',
   id: 'Z-25-0000001-10001',
   identifier: 'Z/25/0000001/10001',
-} as DecosVarenZaakVergunning;
+} as Partial<DecosVarenZaakVergunning>;
 
 const vergunningContent = {
   ...vergunning,

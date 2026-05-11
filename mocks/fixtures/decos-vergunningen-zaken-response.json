@@ -1106,6 +1106,60 @@
         "varens": ["Z/25/0000001-10001"]
       },
       "links": []
+    },
+    {
+      "key": "HEKSJDHKCKEI4672828O8888B7B11006",
+      "fields": {
+        "mark": "Z/24/2238028",
+        "subject1": "Aanvraag wijziging Exploitatievergunning varen (vaartuignaam)",
+        "document_date": "2025-10-01T00:00:00",
+        "date5": "2025-09-29T00:00:00",
+        "dfunction": "Verleend",
+        "processed": true,
+        "text10": "Transport",
+        "text11": "Nvt",
+        "text12": "Geen kosten",
+        "text50": "Controle niet nodig",
+        "text45": "Varen vergunning exploitatie Wijziging vaartuignaam",
+        "num22": 2024.0,
+        "text18": "Nieuwe naam",
+        "text33": "Dit is een transport en moet niet getoond worden",
+        "subject2": "Varen vergunning",
+        "department": "Varen",
+        "text5": "Varen vergunning",
+        "title": "Besluit",
+        "mailaddress": "Amstel 1, 1011 PN Amsterdam",
+        "zipcode": "1234 ZG",
+        "city": "Amsterdam",
+        "phone1": "0612345678",
+        "varens": ["Z/25/1000001-10001"]
+      },
+      "links": []
+    },
+    {
+      "key": "HEKSJDHKCKEI4672828O8888B7B11007",
+      "fields": {
+        "mark": "Z/24/2238029",
+        "title": "In behandeling",
+        "text45": "Varen vergunning exploitatie",
+        "dfunction": "In behandeling",
+        "SUBJECT1": "Een beschrijving van deze vergunning",
+        "document_date": "2023-11-06T00:00:00",
+        "date5": "2023-11-06T00:00:00",
+        "processed": false,
+        "text11": "Nvt",
+        "text18": "Dit is een transport en moet niet getoond worden",
+        "text21": "2,38",
+        "text22": "2,48",
+        "text23": "3,00",
+        "text24": "6,00",
+        "num8": 150,
+        "num10": "11223344",
+        "text10": "Transport",
+        "text15": 2,
+        "text96": "/documents"
+      },
+      "links": []
     }
   ]
 }
