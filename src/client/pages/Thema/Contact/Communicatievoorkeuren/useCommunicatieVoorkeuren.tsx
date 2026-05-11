@@ -9,6 +9,7 @@ import {
   communicatieVoorkeurDetailTitle,
   communicatievoorkeurenDisplayProps,
   communicatieVoorkeurenTitle,
+  communicatieVoorkeurInstellenTitle,
 } from './CommunicatieVoorkeuren-config';
 
 const voorkeurenBE: Communicatievoorkeur[] = [
@@ -119,7 +120,7 @@ export function useCommunicatievoorkeuren() {
 
 export function useCommunicatieVoorkeurDetail() {
   const { themaId, isError, isLoading } = useCommunicatievoorkeuren();
-
+  const voorkeurenBE = useRecoilValue(voorkeurenAtom);
   const params = useParams<{ id: string }>();
   const voorkeur =
     voorkeurenBE.find((voorkeur) => voorkeur.id === params.id) ?? null;
@@ -127,12 +128,39 @@ export function useCommunicatieVoorkeurDetail() {
   const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
-    title: communicatieVoorkeurDetailTitle,
+    title: `${communicatieVoorkeurDetailTitle} ${voorkeur?.stakeholder}`,
     themaId,
     voorkeur,
     isError,
     isLoading,
     breadcrumbs,
+    routeConfig,
+  };
+}
+
+export function useCommunicatieVoorkeurInstellen() {
+  const { voorkeur, breadcrumbs, themaId, isError, isLoading } =
+    useCommunicatieVoorkeurDetail();
+  const params = useParams<{ medium: string }>();
+  const breadcrumbs_ = [
+    ...breadcrumbs,
+    {
+      title: `${communicatieVoorkeurDetailTitle} ${voorkeur?.stakeholder}`,
+      to: generatePath(routeConfig.detailPageCommunicatievoorkeur.path, {
+        id: voorkeur?.id,
+      }),
+    },
+  ];
+
+  return {
+    title: communicatieVoorkeurInstellenTitle,
+    themaId,
+    voorkeur,
+    medium:
+      voorkeur?.medium.find((medium) => medium.name === params.medium) ?? null,
+    isError,
+    isLoading,
+    breadcrumbs: breadcrumbs_,
     routeConfig,
   };
 }

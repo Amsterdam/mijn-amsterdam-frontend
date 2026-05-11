@@ -1,4 +1,5 @@
 import { CommunicatievoorkeurDetail } from './Communicatievoorkeuren/CommunicatieVoorkeur';
+import { CommunicatievoorkeurInstellen } from './Communicatievoorkeuren/CommunicatievoorkeurInstellen';
 import { routeConfig, themaId, themaTitle } from './Contact-thema-config';
 import { default as InkomenIcon } from './ContactIcon.svg?react';
 import { ContactmomentenListPage } from './Contactmomenten/ContactmomentenListPage';
@@ -25,6 +26,10 @@ export const ContactRoutes = [
   {
     route: routeConfig.detailPageCommunicatievoorkeur.path,
     Component: CommunicatievoorkeurDetail,
+  },
+  {
+    route: routeConfig.detailPageCommunicatievoorkeurInstellen.path,
+    Component: CommunicatievoorkeurInstellen,
   },
 ];
 
