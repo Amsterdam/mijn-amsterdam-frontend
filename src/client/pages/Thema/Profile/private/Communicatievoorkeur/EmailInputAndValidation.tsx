@@ -14,7 +14,7 @@ import styles from './EmailInputAndValidation.module.scss';
 import { MaRouterLink } from '../../../../../components/MaLink/MaLink';
 import { Spinner } from '../../../../../components/Spinner/Spinner';
 
-const VERIFICATION_CODE_LENGTH = 6;
+const VERIFICATION_CODE_LENGTH = 5;
 
 function validateCodeFormat(code: string) {
   return code.split('').filter(Boolean).length === VERIFICATION_CODE_LENGTH;
