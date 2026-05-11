@@ -19,8 +19,8 @@ export function EmailadresInstellen({
     email ?? ''
   );
 
-  const [emailFormActive, setEmailFormActive] = useState(false);
   const [step, setStep] = useState('1');
+
   return (
     <>
       {step === '1' && (
