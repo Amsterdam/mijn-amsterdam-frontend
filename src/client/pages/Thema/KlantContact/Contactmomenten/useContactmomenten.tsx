@@ -22,7 +22,7 @@ import {
   useActiveThemaMenuItems,
 } from '../../../../hooks/useThemaMenuItems.ts';
 import { themaConfig } from '../../Profile/Profile-thema-config.ts';
-import { routeConfig } from '../Contact-thema-config.ts';
+import { routeConfig } from '../KlantContact-thema-config.ts';
 
 function getMenuItem(
   onderwerp: string,

@@ -3,7 +3,7 @@ import { generatePath } from 'react-router';
 
 import type { CommunicatieMedium } from '../../../../../server/services/contact/contact-profieldienst-types.ts';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
-import { routeConfig } from '../Contact-thema-config.ts';
+import { routeConfig } from '../KlantContact-thema-config.ts';
 
 type CommunicatieMediumValueProps = {
   medium: CommunicatieMedium;

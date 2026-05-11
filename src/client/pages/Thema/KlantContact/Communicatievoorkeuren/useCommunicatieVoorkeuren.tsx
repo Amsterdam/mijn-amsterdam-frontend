@@ -21,7 +21,7 @@ import {
   featureToggle,
   routeConfig,
   themaId,
-} from '../Contact-thema-config.ts';
+} from '../KlantContact-thema-config.ts';
 
 export function useCommunicatievoorkeuren() {
   const { data } = useBffApi<CommunicatievoorkeurenResponseFrontend>(

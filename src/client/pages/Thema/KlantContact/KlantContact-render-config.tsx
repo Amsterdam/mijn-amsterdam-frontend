@@ -1,11 +1,15 @@
-import { routeConfig, themaId, themaTitle } from './Contact-thema-config.ts';
-import { default as ContactIcon } from './ContactIcon.svg?react';
+import { CommunicatievoorkeurInstellen } from './Communicatievoorkeuren/CommunicatievoorkeurInstellen.tsx';
 import { ContactmomentenListPage } from './Contactmomenten/ContactmomentenListPage.tsx';
-import { ContactThemaPagina } from './ContactThema.tsx';
+import {
+  routeConfig,
+  themaId,
+  themaTitle,
+} from './KlantContact-thema-config.ts';
+import { default as ContactIcon } from './KlantContactIcon.svg?react';
+import { ContactThemaPagina } from './KlantContactThema.tsx';
 import { isLoading } from '../../../../universal/helpers/api.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
 import type { ThemaMenuItem } from '../../../config/thema-types.ts';
-import { CommunicatievoorkeurInstellen } from './Communicatievoorkeuren/CommunicatievoorkeurInstellen.tsx';
 
 export const ContactRoutes = [
   {

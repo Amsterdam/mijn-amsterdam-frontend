@@ -1,14 +1,14 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { linkListItems } from './Contact-thema-config.ts';
+import { CommunicatieVoorkeuren } from './Communicatievoorkeuren/CommunicatieVoorkeuren.tsx';
+import { useCommunicatievoorkeuren } from './Communicatievoorkeuren/useCommunicatieVoorkeuren.tsx';
 import { ContactMomenten } from './Contactmomenten/ContactMomenten.tsx';
 import { useContactmomenten } from './Contactmomenten/useContactmomenten.tsx';
-import { useContactThema } from './useContactThema.ts';
+import { linkListItems } from './KlantContact-thema-config.ts';
+import { useContactThema } from './useKlantContactThema.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
-import { CommunicatieVoorkeuren } from './Communicatievoorkeuren/CommunicatieVoorkeuren.tsx';
-import { useCommunicatievoorkeuren } from './Communicatievoorkeuren/useCommunicatieVoorkeuren.tsx';
 
 export function ContactThemaPagina() {
   const { id, title, routeConfig, isError, isLoading } = useContactThema();

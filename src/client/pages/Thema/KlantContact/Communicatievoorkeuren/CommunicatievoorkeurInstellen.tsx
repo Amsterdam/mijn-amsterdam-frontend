@@ -22,7 +22,7 @@ import { PageContentCell } from '../../../../components/Page/Page.tsx';
 import ThemaDetailPagina from '../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useSessionStorage } from '../../../../hooks/storage.hook.ts';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
-import { routeConfig } from '../Contact-thema-config.ts';
+import { routeConfig } from '../KlantContact-thema-config.ts';
 
 type EmailInstellenProps = {
   medium: CommunicatieMediumSetting;

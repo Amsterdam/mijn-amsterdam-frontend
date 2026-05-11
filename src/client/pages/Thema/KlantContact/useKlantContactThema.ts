@@ -4,7 +4,7 @@ import {
   routeConfig,
   themaId,
   themaTitle,
-} from './Contact-thema-config.ts';
+} from './KlantContact-thema-config.ts';
 
 export function useContactThema() {
   return {
