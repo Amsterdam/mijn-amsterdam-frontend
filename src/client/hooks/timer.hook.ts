@@ -90,3 +90,9 @@ export function useCounter(nConfig: Partial<CounterProps> = DefaultConfig) {
 
   return { count, pause, resume, reset };
 }
+
+export function useDateNow() {
+  const [now, setNow] = useState(new Date());
+  useInterval(() => setNow(new Date()));
+  return now;
+}
