@@ -79,7 +79,7 @@ describe('vergunningen-notifications', () => {
       expect(notification).toBeNull();
     });
 
-    describe('expiry notifications', () => {
+    describe('Upcoming expiry notifications', () => {
       const vergunning = {
         id: '1',
         caseType: caseTypeVergunningen.RVVSloterweg,
@@ -128,7 +128,7 @@ describe('vergunningen-notifications', () => {
         });
       });
 
-      it('should create an expiry notification without "vraag zonodig een nieuwe aan" link if end date is near', () => {
+      it('Unknown caseType: should create an expiry notification without link if end date is near', () => {
         const notification = createNotificationDefault(
           { ...vergunning, caseType: 'BlaBla' },
           {
@@ -188,7 +188,7 @@ describe('vergunningen-notifications', () => {
       } as unknown as DecosZaakFrontend;
     }
 
-    it('When notification has aanvraag link, it displays that.', () => {
+    it('When notification has an aanvraag link', () => {
       const vergunning = getVerlopenVergunning(
         caseTypeVergunningen.RVVSloterweg
       );
@@ -202,7 +202,7 @@ describe('vergunningen-notifications', () => {
       );
     });
 
-    it('When notification has aanvraag link, it displays that.', () => {
+    it('When notification has NO aanvraag link', () => {
       const vergunning = getVerlopenVergunning(
         'caseType without aanvraag URL in config'
       );
