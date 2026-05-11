@@ -33,7 +33,6 @@ function useDateTime() {
     const interval = setInterval(() => {
       setDateTime(new Date());
     }, ONE_SECOND_MS);
-
     return () => clearInterval(interval);
   }, []);
 
@@ -54,12 +53,13 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
   const CancellationLink: React.FC<{ className?: string }> = ({
     className,
   }) => {
-    const isAbleToCancel = !isAfter(afspraak.startDate, datetime);
+    const isAbleToCancel = isAfter(afspraak.startDate, datetime);
     if (!isAbleToCancel) {
       return (
         <div
+          title="De afspraak is gestart en kan niet meer geannuleerd worden."
           aria-hidden="true"
-          className={classNames('ams-link', styles.InactiveLinkColor)}
+          className={classNames(className, 'ams-link', styles.DisabledLink)}
         >
           Annuleren
         </div>

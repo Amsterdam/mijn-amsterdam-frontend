@@ -3,7 +3,8 @@ import { userEvent } from '@testing-library/user-event';
 import { BrowserRouter, MemoryRouter, Route, Routes } from 'react-router';
 
 import { AfspraakCard } from './AfspraakCard.tsx';
-import type { AfspraakFrontendFinal } from '../../pages/Thema/KlantContact/useAfsprakenListData.hook.tsx';
+import type { AfspraakFrontendFinal } from '../../pages/Thema/KlantContact/useKlantcontactData.hook.tsx';
+import mockdate from 'mockdate';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -16,8 +17,16 @@ vi.mock('../../hooks/media.hook.ts', async (importOriginal) => ({
   useSmallScreen: () => mocks.isSmallScreen,
 }));
 
-const afspraak = {
+mockdate.set('2020-01-01');
+
+const afspraak: AfspraakFrontendFinal = {
   subject: 'Varen',
+  startDate: new Date('2020-01-01T12:00:00Z'),
+  endDate: new Date('2020-01-01T13:00:00Z'),
+  status: 'New',
+  qrCode: 'qrcode-123',
+  caseReference: 'unique-123',
+  dateFormatted: '01 Januari 2025',
   cancellationLink: 'https://cancel.com',
   displayDate: 'Datum, 01-01-2020 17:50',
   location: {
@@ -25,9 +34,10 @@ const afspraak = {
     street: 'Amstel 1',
     postalCode: '1020 HA',
     city: 'Amsterdam',
+    countryCode: 'NL',
   },
   qrCodeHref: '/qr/123',
-} as AfspraakFrontendFinal;
+};
 
 function renderAfspraakCard(afspraak: AfspraakFrontendFinal) {
   return render(<AfspraakCard afspraak={afspraak}></AfspraakCard>, {
