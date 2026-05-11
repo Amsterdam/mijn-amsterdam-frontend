@@ -17,14 +17,33 @@ import { LocationModal } from '../LocationModal/LocationModal.tsx';
 import maLinkStyles from '../MaLink/MaLink.module.scss';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 import { getRedactedClass } from '../../helpers/cobrowse.ts';
+import { isAfter } from 'date-fns';
+import { useEffect, useState } from 'react';
+import { ONE_SECOND_MS } from '../../hooks/api/useSessionApi.ts';
 
 type AfspraakCardProps = {
   afspraak: AfspraakFrontendFinal;
   className?: string;
 };
 
+function useDateTime() {
+  const [datetime, setDateTime] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDateTime(new Date());
+    }, ONE_SECOND_MS);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return datetime;
+}
+
 export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
   const isSmallScreen = useSmallScreen();
+  // To prevent a user from thinking that they can still cancel when not refreshing the screen.
+  const datetime = useDateTime();
 
   const TitleHeading: React.FC<{ className?: string }> = ({ className }) => (
     <Heading level={3} className={className ?? ''}>
@@ -34,11 +53,24 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
 
   const CancellationLink: React.FC<{ className?: string }> = ({
     className,
-  }) => (
-    <MaLink className={className} href={afspraak.cancellationLink}>
-      Annuleren
-    </MaLink>
-  );
+  }) => {
+    const isAbleToCancel = !isAfter(afspraak.startDate, datetime);
+    if (!isAbleToCancel) {
+      return (
+        <div
+          aria-hidden="true"
+          className={classNames('ams-link', styles.InactiveLinkColor)}
+        >
+          Annuleren
+        </div>
+      );
+    }
+    return (
+      <MaLink className={className} href={afspraak.cancellationLink}>
+        Annuleren
+      </MaLink>
+    );
+  };
 
   const icon = <Icon svg={PersonAtDeskIcon} size="heading-2"></Icon>;
 

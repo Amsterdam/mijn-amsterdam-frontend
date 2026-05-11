@@ -11,6 +11,13 @@
   width: 800px;
 }
 
+.InactiveLinkColor {
+  color: var(--ams-color-interactive-disabled);
+  &:hover {
+    color: var(--ams-color-interactive-disabled);
+  }
+}
+
 .LocationModalLink {
   background: none;
   border: none;
