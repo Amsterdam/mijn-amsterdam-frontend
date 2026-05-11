@@ -1,20 +1,20 @@
 import createDebugger from 'debug';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
 import {
   createVerificationRequest,
   verifyVerificationRequest,
-} from './contact-verify';
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { getAuth } from '../../auth/auth-helpers';
-import { requestData } from '../../helpers/source-api-request';
+} from './contact-verify.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import { getAuth } from '../../auth/auth-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
 import {
   sendBadRequest,
   sendResponse,
   sendUnauthorized,
-} from '../../routing/route-helpers';
-import { captureException } from '../monitoring';
-import { fetchPersoonsgegevensNAW } from '../zorgned/zorgned-service';
+} from '../../routing/route-helpers.ts';
+import { captureException } from '../monitoring.ts';
+import { fetchPersoonsgegevensNAW } from '../zorgned/zorgned-service.ts';
 
 const debugContactRequestData = createDebugger(
   'contact-api:route-request-data'

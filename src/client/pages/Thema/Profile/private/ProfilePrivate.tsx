@@ -1,7 +1,6 @@
 import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { AdresInOnderzoek } from './AdresInOnderzoek.tsx';
-import { ContactMomenten } from './ContactMomenten.tsx';
 import { panelConfig } from './ProfilePrivate.transform.tsx';
 import { ProfileSectionPanel } from '../ProfileSectionPanel.tsx';
 import { useProfileData } from './useProfileData.hook.tsx';
@@ -93,28 +92,18 @@ function ProfilePrivateSectionPanels() {
 }
 
 export function MijnGegevensThema() {
-  const {
-    id,
-    title,
-    brpContent,
-    isLoadingBrp,
-    isLoadingContactmomenten,
-    isErrorBrp,
-    isErrorContactmomenten,
-    hasContactMomenten,
-    pageLinks,
-  } = useProfileThemaData();
+  const { id, title, brpContent, isLoadingBrp, isErrorBrp, pageLinks } =
+    useProfileThemaData();
 
   const pageContentErrorAlert = (
     <>
       Wij kunnen de volgende gegevens nu niet tonen:
       <br />
       {isErrorBrp && <>- Uw persoonlijke gegevens</>}
-      {isErrorContactmomenten && <>- Uw overzicht van contactmomenten</>}
     </>
   );
-  const isThemaPaginaError = isErrorBrp && isErrorContactmomenten;
-  const isThemaPaginaLoading = isLoadingBrp || isLoadingContactmomenten;
+  const isThemaPaginaError = isErrorBrp;
+  const isThemaPaginaLoading = isLoadingBrp;
   const nonMokum = !isLoadingBrp && !isMokum(brpContent);
   const hasOtherNationality = hasDutchAndOtherNationalities(brpContent);
 
@@ -148,7 +137,7 @@ export function MijnGegevensThema() {
       id={id}
       title={title}
       isError={isThemaPaginaError}
-      isPartialError={isErrorBrp || isErrorContactmomenten}
+      isPartialError={isErrorBrp}
       errorAlertContent={pageContentErrorAlert}
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
       pageLinks={pageLinks}
@@ -183,12 +172,6 @@ export function MijnGegevensThema() {
               <AdresInOnderzoek brpContent={brpContent} />
             </PageContentCell>
           )}
-          {hasContactMomenten && (
-            <PageContentCell>
-              <ContactMomenten />
-            </PageContentCell>
-          )}
-
           <ProfilePrivateSectionPanels />
         </>
       }

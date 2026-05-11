@@ -1,19 +1,17 @@
-// import { linkListItems, tableConfig } from './config';
-
 import { Icon, Link } from '@amsterdam/design-system-react';
 import {
-  SpeechBalloonEllipsisIcon,
-  MailIcon,
+  EllipsisIcon as SpeechBalloonEllipsisIcon,
+  EmailIcon,
   PhoneIcon,
 } from '@amsterdam/design-system-react-icons';
 import { useParams } from 'react-router';
 
-import type { ContactMomentFrontend } from './Contactmomenten.config.ts';
 import {
+  type ContactMomentFrontend,
   contactmomentenDisplayProps,
   mapperContactmomentToMenuItem,
-} from './Contactmomenten.config.ts';
-import styles from './ProfilePrivate.module.scss';
+} from './Contactmomenten-config.ts';
+import styles from './Contactmomenten.module.scss';
 import { isLoading, isError } from '../../../../../universal/helpers/api.ts';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import type { ThemaMenuItemTransformed } from '../../../../config/thema-types.ts';
@@ -23,7 +21,7 @@ import {
   useThemaBreadcrumbs,
   useActiveThemaMenuItems,
 } from '../../../../hooks/useThemaMenuItems.ts';
-import { themaConfig } from '../Profile-thema-config.ts';
+import { themaConfig } from '../../Profile/Profile-thema-config.ts';
 
 function getMenuItem(
   onderwerp: string,
@@ -62,7 +60,7 @@ function addIcon(type: string) {
   const icons: Record<string, React.FC> = {
     Telefoon: PhoneIcon,
     Chat: SpeechBalloonEllipsisIcon,
-    Contactformulier: MailIcon,
+    Contactformulier: EmailIcon,
   };
   if (icons[type]) {
     return (

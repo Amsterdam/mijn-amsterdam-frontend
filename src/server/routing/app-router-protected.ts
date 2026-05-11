@@ -38,6 +38,7 @@ import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/power
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler.ts';
 import { userFeedbackRouter } from '../services/user-feedback/user-feedback.router.ts';
 import { fetchWpiDocument } from '../services/wpi/api-service.ts';
+import { contactRouter } from '../services/contact/contact-router.ts';
 
 export const router = createBFFRouter({ id: 'router-protected' });
 
@@ -121,7 +122,8 @@ router.use(
   brpRouter.protected,
   afisRouter.protected,
   bezwarenRouter.protected,
-  userFeedbackRouter.protected
+  userFeedbackRouter.protected,
+  contactRouter.protected
 );
 
 // Decos (Vergunningen, Horeca, Toeristische verhuur, Parkeren)

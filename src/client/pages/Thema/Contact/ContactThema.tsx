@@ -1,12 +1,12 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { CommunicatieVoorkeuren } from './Communicatievoorkeuren/CommunicatieVoorkeuren';
-import { linkListItems } from './Contact-thema-config';
-import { ContactMomenten } from './Contactmomenten/ContactMomenten';
-import { useContactThema } from './useContactThema';
-import { PageContentCell } from '../../../components/Page/Page';
-import ThemaPagina from '../../../components/Thema/ThemaPagina';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { CommunicatieVoorkeuren } from './Communicatievoorkeuren/CommunicatieVoorkeuren.tsx';
+import { linkListItems } from './Contact-thema-config.ts';
+import { ContactMomenten } from './Contactmomenten/ContactMomenten.tsx';
+import { useContactThema } from './useContactThema.ts';
+import { PageContentCell } from '../../../components/Page/Page.tsx';
+import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function ContactThemaPagina() {
   const { id, title, routeConfig, isError, isLoading } = useContactThema();
@@ -30,17 +30,14 @@ export function ContactThemaPagina() {
       id={id}
       title={title}
       pageContentTop={pageContentTop}
-      linkListItems={linkListItems}
+      pageLinks={linkListItems}
       pageContentMain={
         <>
           <PageContentCell spanWide={8}>
             <CommunicatieVoorkeuren />
           </PageContentCell>
           <PageContentCell>
-            <ContactMomenten
-              listPageRoute={routeConfig.listPageContactmomenten.path}
-              showTitle
-            />
+            <ContactMomenten/>
           </PageContentCell>
         </>
       }

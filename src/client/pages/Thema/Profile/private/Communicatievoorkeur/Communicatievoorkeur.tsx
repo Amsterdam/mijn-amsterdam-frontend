@@ -2,13 +2,12 @@ import { useEffect, useState } from 'react';
 
 import { Checkbox, Field, Paragraph } from '@amsterdam/design-system-react';
 
-import { EmailadresInstellen } from './EmailadresInstellen';
-import type { ContactResponse } from '../../../../../../server/services/contact/contact-route-handlers';
-import { type ApiResponse_DEPRECATED } from '../../../../../../universal/helpers/api';
-import { CollapsiblePanel } from '../../../../../components/CollapsiblePanel/CollapsiblePanel';
-import LoadingContent from '../../../../../components/LoadingContent/LoadingContent';
-import { MaButtonInline } from '../../../../../components/MaLink/MaLink';
-import { useDataApi } from '../../../../../hooks/api/useDataApi';
+import { EmailadresInstellen } from './EmailadresInstellen.tsx';
+import type { ContactResponse } from '../../../../../../server/services/contact/contact-route-handlers.ts';
+import { type ApiResponse_DEPRECATED } from '../../../../../../universal/helpers/api.ts';
+import { CollapsiblePanel } from '../../../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
+import LoadingContent from '../../../../../components/LoadingContent/LoadingContent.tsx';
+import { MaButtonInline } from '../../../../../components/MaLink/MaLink.tsx';
 
 export function useCommunicatievoorkeurApi() {
   const [contactUpdateApi, updateApiEmailValue_] =

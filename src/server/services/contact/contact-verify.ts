@@ -5,11 +5,11 @@ import type {
   CreateVerificationRequestResponse,
   VerifyVerificationRequestPayload,
   VerifyVerificationRequestResponse,
-} from './contact-verify.types';
-import type { AuthProfileAndToken } from '../../auth/auth-types';
-import { getFromEnv } from '../../helpers/env';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+} from './contact-verify.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
 
 const debugVerifyApiRequestData = createDebugger('verify-api:request-data');
 const debugVerifyApiResponseData = createDebugger('verify-api:response-data');

@@ -1,7 +1,7 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import type { ContactMomentFrontend } from './Contactmomenten.config.ts';
-import { useContactmomenten } from './useContactmomenten.hook.tsx';
+import type { ContactMomentFrontend } from './Contactmomenten-config.ts';
+import { useContactmomenten } from './useContactmomenten.tsx';
 import { CollapsiblePanel } from '../../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
 import ThemaPaginaTable from '../../../../components/Thema/ThemaPaginaTable.tsx';
 
