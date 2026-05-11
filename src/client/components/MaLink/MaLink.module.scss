@@ -41,3 +41,16 @@
     }
   }
 }
+
+.MaButtonInline {
+  border: 0;
+  background: none;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+    color: var(--ams-link-hover-color);
+    text-decoration-thickness: var(--ams-link-hover-text-decoration-thickness);
+    text-underline-offset: var(--ams-link-hover-text-underline-offset);
+  }
+}

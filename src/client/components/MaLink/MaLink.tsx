@@ -176,3 +176,13 @@ export function MaButtonRouterLink({
     </a>
   );
 }
+
+type MaButtonInlineProps = Omit<ButtonProps, 'variant'>;
+
+export function MaButtonInline({ children, ...rest }: MaButtonInlineProps) {
+  return (
+    <button className={classNames(styles.MaButtonInline, 'ams-link')} {...rest}>
+      {children}
+    </button>
+  );
+}
