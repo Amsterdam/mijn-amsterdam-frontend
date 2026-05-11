@@ -86,7 +86,7 @@ export const themaConfig: VergunningenThemaConfig = {
   },
   pageLinks: [
     {
-      to: 'https://www.amsterdam.nl/ondernemen/vergunningen/wevos/',
+      to: 'https://www.amsterdam.nl/vergunningen-ontheffingen',
       title: 'Ontheffing RVV en TVM aanvragen',
     },
   ],
