@@ -20,7 +20,9 @@ function resetDbWatchdog() {
 }
 
 async function registerPingFailure(error: unknown) {
-  lastError = error;
+  lastError = new Error('Database ping failed', {
+    cause: error,
+  });
   consecutiveFailures += 1;
 
   if (consecutiveFailures < DB_WATCHDOG_MAX_CONSECUTIVE_FAILURES) {
