@@ -86,8 +86,16 @@ export const themaConfig: VergunningenThemaConfig = {
   },
   pageLinks: [
     {
+      title: 'Verkeersontheffing (RVV) aanvragen',
+      to: 'https://www.amsterdam.nl/vergunningen-ontheffingen/werkzaamheden-straat/verkeersontheffing-hele-stad-aanvragen/',
+    },
+    {
+      title: 'Toestemming voor afsluiten of blokkeren straat aanvragen (TVM)',
+      to: 'https://www.amsterdam.nl/vergunningen-ontheffingen/werkzaamheden-straat/toestemming-afsluiten-blokkeren-straat/',
+    },
+    {
+      title: 'Overige vergunningen of ontheffingen aanvragen',
       to: 'https://www.amsterdam.nl/vergunningen-ontheffingen',
-      title: 'Ontheffing RVV en TVM aanvragen',
     },
   ],
   uitlegPageSections: [
