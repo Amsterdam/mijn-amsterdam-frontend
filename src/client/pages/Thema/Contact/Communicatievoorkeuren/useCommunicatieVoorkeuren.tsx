@@ -10,6 +10,7 @@ import {
   communicatievoorkeurenDisplayProps,
   communicatieVoorkeurenTitle,
 } from './CommunicatieVoorkeuren-config';
+import { uniqueArray } from '../../../../../universal/helpers/utils';
 
 const voorkeurenBE: Communicatievoorkeur[] = [
   {
@@ -18,7 +19,7 @@ const voorkeurenBE: Communicatievoorkeur[] = [
     title: 'Informatie over uw aanvragen en voorzieningen',
     description: '',
     medium: [
-      { name: 'e-mail', isActive: true, value: 'pieter@post.com' },
+      { name: 'e-mail', isActive: true, value: null },
       {
         name: 'sms',
         isActive: false,
@@ -40,42 +41,41 @@ const voorkeurenBE: Communicatievoorkeur[] = [
       }),
     },
   },
-  // {
-  //   id: '2',
-  //   stakeholder: 'Erfpacht',
-  //   title: 'Factuurspecificaties',
-  //   description: 'Omschrijving 2',
-  //   medium: [
-  //     { name: 'e-mail', isActive: true, value: 'pieter@post.com' },
-  //     { name: 'sms', isActive: false, value: null },
-  //     { name: 'brieven per post', isActive: true, value: null },
-  //   ],
-  //   isActive: true,
-  //   link: {
-  //     title: `Stel communicatievoorkeur in`,
-  //     to: generatePath(routeConfig.detailPageCommunicatievoorkeur.path, {
-  //       id: '2',
-  //     }),
-  //   },
-  // },
-  // {
-  //   id: '3',
-  //   stakeholder: 'Erfpacht',
-  //   title: 'Informatie over uw Erfpacht dossiers',
-  //   description: 'Omschrijving 2',
-  //   medium: [
-  //     { name: 'e-mail', isActive: false, value: null },
-  //     { name: 'sms', isActive: true, value: '0612345678' },
-  //     { name: 'brieven per post', isActive: false, value: null },
-  //   ],
-  //   isActive: true,
-  //   link: {
-  //     title: `Stel communicatievoorkeur in`,
-  //     to: generatePath(routeConfig.detailPageCommunicatievoorkeur.path, {
-  //       id: '3',
-  //     }),
-  //   },
-  // },
+  {
+    id: '2',
+    stakeholder: 'Erfpacht',
+    title: 'Factuurspecificaties',
+    description: 'Omschrijving 2',
+    medium: [
+      { name: 'e-mail', isActive: true, value: null },
+      { name: 'sms', isActive: false, value: null },
+      { name: 'brieven per post', isActive: true, value: null },
+    ],
+    isActive: true,
+    link: {
+      title: `Stel communicatievoorkeur in`,
+      to: generatePath(routeConfig.detailPageCommunicatievoorkeur.path, {
+        id: '2',
+      }),
+    },
+  },
+  {
+    id: '3',
+    stakeholder: 'Erfpacht',
+    title: 'Informatie over uw Erfpacht dossiers',
+    description: 'Omschrijving 2',
+    medium: [
+      { name: 'e-mail', isActive: false, value: null },
+      { name: 'sms', isActive: true, value: '0612345678' },
+    ],
+    isActive: true,
+    link: {
+      title: `Stel communicatievoorkeur in`,
+      to: generatePath(routeConfig.detailPageCommunicatievoorkeur.path, {
+        id: '3',
+      }),
+    },
+  },
 ];
 
 export const voorkeurenAtom = atom<Communicatievoorkeur[]>({
@@ -138,6 +138,7 @@ export function useCommunicatieVoorkeurDetail() {
 export function useCommunicatieVoorkeurInstellen() {
   const { voorkeur, breadcrumbs, themaId, isError, isLoading } =
     useCommunicatieVoorkeurDetail();
+  const voorkeurenBE = useRecoilValue(voorkeurenAtom);
   const params = useParams<{ medium: string }>();
   const medium =
     voorkeur?.medium.find((medium) => medium.name === params.medium) ?? null;
@@ -151,8 +152,21 @@ export function useCommunicatieVoorkeurInstellen() {
     },
   ];
 
+  function getMediumValues(mediumName: string): string[] {
+    const items = voorkeurenBE.flatMap((voorkeur) =>
+      voorkeur?.medium
+        .filter((medium) => medium.name === mediumName)
+        .map((medium) => medium.value)
+        .filter((x) => x !== null)
+    );
+    return uniqueArray(items);
+  }
+
+  const emails: string[] = getMediumValues('e-mail');
+  const phoneNumbers: string[] = getMediumValues('sms');
+
   return {
-    title: `${medium?.value ? 'Wijzigen' : 'Activeren'} ${medium?.name}`,
+    title: `Instellen ${medium?.name}`,
     themaId,
     voorkeur,
     medium,
@@ -160,5 +174,7 @@ export function useCommunicatieVoorkeurInstellen() {
     isLoading,
     breadcrumbs: breadcrumbs_,
     routeConfig,
+    emails,
+    phoneNumbers,
   };
 }

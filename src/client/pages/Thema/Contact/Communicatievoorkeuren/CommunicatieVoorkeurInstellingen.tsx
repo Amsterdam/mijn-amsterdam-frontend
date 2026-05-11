@@ -8,20 +8,13 @@ import {
   type CommunicatievoorkeurFrontend,
 } from './CommunicatieVoorkeuren-config';
 import { EmailValue } from './EmailVoorkeur';
-import {
-  useCommunicatieVoorkeurDetail,
-  voorkeurenAtom,
-} from './useCommunicatieVoorkeuren';
+import { voorkeurenAtom } from './useCommunicatieVoorkeuren';
 import type {
   CommunicatieMedium,
   Communicatievoorkeur,
 } from '../../../../../server/services/contact/contact.types';
-import { Datalist } from '../../../../components/Datalist/Datalist';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink';
-import { PageContentCell } from '../../../../components/Page/Page';
 import { TableV2 } from '../../../../components/Table/TableV2';
-import ThemaDetailPagina from '../../../../components/Thema/ThemaDetailPagina';
-import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle';
 import { routeConfig } from '../Contact-thema-config';
 import { AdresValue } from './AdresVoorkeur';
 import { SMSValue } from './SMSVoorkeur';
@@ -61,13 +54,14 @@ function MediumValue({ medium, voorkeur }: MediumValueProps) {
   }
 }
 
-function CommunicatievoorkeurInstellen({
+export function CommunicatievoorkeurInstellingen({
   voorkeur,
 }: {
   voorkeur: Communicatievoorkeur;
 }) {
   const navigate = useNavigate();
   const setVoorkeurenBE = useSetRecoilState(voorkeurenAtom);
+
   const voorkeur_: CommunicatievoorkeurFrontend | null = voorkeur
     ? {
         ...voorkeur,
@@ -124,6 +118,17 @@ function CommunicatievoorkeurInstellen({
       }
     : null;
 
+  const rows = voorkeur_?.medium_.map((medium) => {
+    return {
+      label: (
+        <div style={{ display: 'flex' }}>
+          {medium.isActive_} {medium.name}
+        </div>
+      ),
+      content: <>{medium.value_}</>,
+    };
+  });
+
   return (
     <>
       {voorkeur_ ? (
@@ -133,6 +138,7 @@ function CommunicatievoorkeurInstellen({
             className="ams-mb-m"
             displayProps={communicatievoorkeurInstellenDisplayProps}
           />
+          {/* {!!rows && <Datalist rows={rows} />} */}
           {!voorkeur.medium.some((m) => m.isActive) && (
             <Alert
               className="ams-mb-m"
@@ -164,51 +170,5 @@ function CommunicatievoorkeurInstellen({
         </MaRouterLink>
       </Paragraph>
     </>
-  );
-}
-
-export function CommunicatievoorkeurDetail() {
-  const {
-    themaId,
-    voorkeur,
-    title,
-    isError,
-    isLoading,
-    breadcrumbs,
-    routeConfig,
-  } = useCommunicatieVoorkeurDetail();
-
-  useHTMLDocumentTitle(routeConfig.detailPageCommunicatievoorkeur);
-
-  const rows = [
-    // {
-    //   label: 'Afdeling gemeente',
-    //   content: voorkeur?.stakeholder,
-    // },
-    {
-      label: 'Onderwerp',
-      content: voorkeur?.title,
-    },
-  ];
-
-  return (
-    <ThemaDetailPagina<Communicatievoorkeur>
-      title={title}
-      themaId={themaId}
-      zaak={voorkeur}
-      isError={isError}
-      isLoading={isLoading}
-      breadcrumbs={breadcrumbs}
-      pageContentMain={
-        <PageContentCell>
-          {!!voorkeur && (
-            <>
-              <Datalist rows={rows} />
-              <CommunicatievoorkeurInstellen voorkeur={voorkeur} />
-            </>
-          )}
-        </PageContentCell>
-      }
-    />
   );
 }

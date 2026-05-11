@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, type ChangeEventHandler } from 'react';
 
 import {
   Button,
@@ -6,6 +6,7 @@ import {
   Field,
   Label,
   Paragraph,
+  Select,
   TextInput,
 } from '@amsterdam/design-system-react';
 import OtpInput from 'react-otp-input';
@@ -108,23 +109,111 @@ export function EmailOTP({ medium, onSubmit }: EmailOTPProps) {
 }
 
 type EmailInputProps = {
-  medium: CommunicatieMedium;
-  voorkeur: Communicatievoorkeur;
-  onSubmit: React.FormEventHandler<HTMLFormElement>;
+  value: string;
+  isInvalid: boolean;
+  onChange: ChangeEventHandler<HTMLInputElement>;
 };
 
-export function EmailInput({ medium, voorkeur, onSubmit }: EmailInputProps) {
-  const [email, setEmail] = useState<string>(medium.value || '');
+export function EmailInput({
+  value,
+  onChange,
+  isInvalid = false,
+}: EmailInputProps) {
+  return (
+    <Field invalid={isInvalid} className="ams-mb-m">
+      <Paragraph id="description2" size="small">
+        Zorg ervoor dat u een geldig e-mailadres invult. U ontvangt een code op
+        dit e-mailadres. De code moet u straks invullen.
+      </Paragraph>
+      {isInvalid && (
+        <ErrorMessage id="error2">
+          Dit lijkt geen valide e-mailadres.
+        </ErrorMessage>
+      )}
+      <TextInput
+        aria-describedby="description2 error2"
+        aria-required
+        id="input3"
+        invalid={isInvalid}
+        size={30}
+        value={value}
+        placeholder="naam@domein.nl"
+        onChange={onChange}
+        type="text"
+        name="emailToVerify"
+      />
+    </Field>
+  );
+}
+
+type EmailSelectProps = {
+  emails: string[];
+  value: string;
+  onChange: (email: string) => void;
+};
+
+export function EmailSelect({ emails, value, onChange }: EmailSelectProps) {
+  return (
+    <Select
+      name="emailExisting"
+      onChange={(e) => onChange(e.target.value)}
+      defaultValue={value || ''}
+    >
+      <Select.Option value="">Kies een bestaand e-mailadres</Select.Option>
+      {emails.map((email) => (
+        <Select.Option key={email} value={email}>
+          {email}
+        </Select.Option>
+      ))}
+    </Select>
+  );
+}
+
+type EmailFormProps = {
+  medium: CommunicatieMedium;
+  voorkeur: Communicatievoorkeur;
+  onSubmit: (formData: { email: string; isVerified: boolean }) => void;
+  emails: string[];
+};
+
+export function EmailForm({
+  medium,
+  voorkeur,
+  onSubmit,
+  emails,
+}: EmailFormProps) {
+  const emailValue = medium.value || '';
+  const [emailToVerify, setEmailToVerify] = useState<string>('');
   const [isInvalid, setIsInvalid] = useState(false);
   // Onsubmit, send to backend and setStep to 2 OTP validation
   const submitForm: React.FormEventHandler<HTMLFormElement> = (event) => {
-    if (!email || !email.includes('@')) {
-      event.preventDefault();
+    event.preventDefault();
+
+    const formData = new FormData(event.target as HTMLFormElement);
+
+    const emailToVerify = formData.get('emailToVerify') as string;
+    const emailExisting = formData.get('emailExisting') as string;
+
+    const isEmailToVerify = emailToVerify && emailToVerify !== emailValue;
+
+    console.log('fs', formData, emailToVerify, emailExisting, isEmailToVerify);
+
+    if (
+      (isEmailToVerify && !emailToVerify.includes('@')) ||
+      (!emailExisting && !emailToVerify)
+    ) {
       setIsInvalid(true);
       return;
     }
-    onSubmit(event);
+
+    console.log('submit!');
+    onSubmit({ email: emailToVerify, isVerified: !isEmailToVerify });
   };
+
+  const hasMultipleEmails =
+    (!!emails.length && emails.length > 1) ||
+    (emails.length === 1 && emails[0] !== emailValue);
+
   return (
     <>
       <Paragraph className="ams-mb-m">
@@ -133,29 +222,30 @@ export function EmailInput({ medium, voorkeur, onSubmit }: EmailInputProps) {
         {medium.description ?? 'producten en diensten'}.
       </Paragraph>
       <form onSubmit={submitForm} name="email-adjust-form">
-        <Field invalid={isInvalid} className="ams-mb-m">
-          <Paragraph id="description2" size="small">
-            Zorg ervoor dat u een geldig e-mailadres invult. U ontvangt een code
-            op dit e-mailadres. De code moet u straks invullen.
-          </Paragraph>
-          {isInvalid && (
-            <ErrorMessage id="error2">
-              Dit lijkt geen valide e-mailadres.
-            </ErrorMessage>
-          )}
-          <TextInput
-            aria-describedby="description2 error2"
-            aria-required
-            id="input3"
-            invalid={isInvalid}
-            value={email}
-            placeholder="naam@domein.nl"
+        {hasMultipleEmails && (
+          <Field className="ams-mb-m">
+            <Label>Kies een bestaand e-mailadres</Label>
+            <EmailSelect
+              value={emailValue}
+              emails={emails}
+              onChange={(email) => {
+                console.log('on change', email);
+                if (email) {
+                  onSubmit({ email, isVerified: true });
+                }
+              }}
+            />
+          </Field>
+        )}
+        <Field>
+          {hasMultipleEmails && <Label>Of kies een nieuw e-mailadres</Label>}
+          <EmailInput
+            value={emailToVerify}
+            isInvalid={isInvalid}
             onChange={(e) => {
-              setEmail(e.target.value);
+              setEmailToVerify(e.target.value);
               setIsInvalid(false);
             }}
-            type="text"
-            name="email"
           />
         </Field>
         <Button type="submit">Versturen</Button>
