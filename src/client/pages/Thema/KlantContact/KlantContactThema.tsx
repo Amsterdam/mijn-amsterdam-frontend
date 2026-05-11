@@ -5,14 +5,14 @@ import { useContactmomentenListData } from './useContactmomentenListData.hook.ts
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import { AfspraakCards } from '../../../components/AfspraakCard/AfspraakCard.tsx';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
+import { LinkToListPage } from '../../../components/LinkToListPage/LinkToListPage.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import { isEnabled } from '../../../config/feature-toggles.ts';
 import { getRedactedClass } from '../../../helpers/cobrowse.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
-import { LinkToListPage } from '../../../components/LinkToListPage/LinkToListPage.tsx';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 
 export function KlantContactThema() {
   const {

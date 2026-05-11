@@ -8,8 +8,8 @@ import type {
   AfspraakFrontend,
 } from '../../../../server/services/salesforce/klantcontact.types.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
-import { componentCreator } from '../../MockApp.tsx';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
+import { componentCreator } from '../../MockApp.tsx';
 
 const createMijnContactThemaComponent = componentCreator({
   component: KlantContactThema,

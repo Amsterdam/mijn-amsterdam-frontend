@@ -1,10 +1,11 @@
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
+import { subMinutes } from 'date-fns';
+import mockdate from 'mockdate';
 import { BrowserRouter, MemoryRouter, Route, Routes } from 'react-router';
 
 import { AfspraakCard } from './AfspraakCard.tsx';
 import type { AfspraakFrontendFinal } from '../../pages/Thema/KlantContact/useKlantcontactData.hook.tsx';
-import mockdate from 'mockdate';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -16,8 +17,6 @@ vi.mock('../../hooks/media.hook.ts', async (importOriginal) => ({
   ...(await importOriginal()),
   useSmallScreen: () => mocks.isSmallScreen,
 }));
-
-mockdate.set('2020-01-01');
 
 const afspraak: AfspraakFrontendFinal = {
   subject: 'Varen',
@@ -48,6 +47,11 @@ function renderAfspraakCard(afspraak: AfspraakFrontendFinal) {
 describe('Renders afspraak data', () => {
   beforeEach(() => {
     mocks.isSmallScreen = false;
+    mockdate.set('2020-01-01');
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   test('Large screen', () => {
@@ -77,5 +81,24 @@ describe('Renders afspraak data', () => {
     }).parentNode;
     await user.click(link as HTMLElement);
     screen.getByText(QR_PAGE_ID);
+  });
+
+  test('Cancel afspraak link is disabled when Afspraak started', () => {
+    vi.useFakeTimers();
+
+    const MINUTE_BEFORE_AFSPRAAK = subMinutes(afspraak.startDate, 1);
+    mockdate.set(MINUTE_BEFORE_AFSPRAAK);
+    const screen = renderAfspraakCard(afspraak);
+    const targetTitle =
+      'De afspraak is gestart en kan niet meer geannuleerd worden.';
+    expect(screen.queryByTitle(targetTitle)).not.toBeInTheDocument();
+
+    act(() => {
+      mockdate.set(afspraak.startDate);
+      vi.advanceTimersToNextTimer();
+    });
+    screen.getByTitle(targetTitle);
+
+    vi.useRealTimers();
   });
 });

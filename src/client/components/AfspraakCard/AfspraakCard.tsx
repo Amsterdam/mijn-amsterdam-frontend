@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import {
   Button,
   Column,
@@ -8,18 +10,16 @@ import {
 } from '@amsterdam/design-system-react';
 import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
+import { isAfter } from 'date-fns';
 
 import styles from './AfspraakCard.module.scss';
+import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import type { AfspraakFrontendFinal } from '../../pages/Thema/KlantContact/useKlantcontactData.hook.tsx';
 import { CalendarLink } from '../CalendarLink/CalendarLink.tsx';
 import { LocationModal } from '../LocationModal/LocationModal.tsx';
 import maLinkStyles from '../MaLink/MaLink.module.scss';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
-import { getRedactedClass } from '../../helpers/cobrowse.ts';
-import { isAfter } from 'date-fns';
-import { useEffect, useState } from 'react';
-import { ONE_SECOND_MS } from '../../hooks/api/useSessionApi.ts';
 
 type AfspraakCardProps = {
   afspraak: AfspraakFrontendFinal;
@@ -29,6 +29,7 @@ type AfspraakCardProps = {
 function useDateTime() {
   const [datetime, setDateTime] = useState(new Date());
 
+  const ONE_SECOND_MS = 1000;
   useEffect(() => {
     const interval = setInterval(() => {
       setDateTime(new Date());

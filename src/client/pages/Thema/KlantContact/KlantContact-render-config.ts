@@ -1,5 +1,6 @@
 import { ConnectedCirclesIcon } from '@amsterdam/design-system-react-icons';
 
+import { AfspraakListPage } from './AfspraakListPage.tsx';
 import { AfspraakQRCodeDetailPage } from './AfspraakQRCodeDetailPage.tsx';
 import { ContactmomentenListPage } from './ContactmomentenListPage.tsx';
 import { themaConfig } from './KlantContact-thema-config.ts';
@@ -11,7 +12,6 @@ import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
 } from '../../../config/thema-types.ts';
-import { AfspraakListPage } from './AfspraakListPage.tsx';
 
 export const ContactRoutes = [
   {
