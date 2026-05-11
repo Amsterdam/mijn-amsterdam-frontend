@@ -1,3 +1,4 @@
+import type { SomeOtherString } from '../../../universal/helpers/types.ts';
 import type { OmitMapped } from '../../../universal/helpers/utils.ts';
 import type { ZaakDetail } from '../../../universal/types/App.types.ts';
 import type { DecosZaakBase, DecosZaakFrontend } from '../decos/decos-types.ts';
@@ -9,6 +10,7 @@ export type DecosZaakVarensFieldsSource = {
   text11: string | null;
   text21: string | null;
   text22: string | null;
+  text50: 'Passagiersvaart' | 'Transport' | 'Gedoogverklaring' | null;
   text36: string | null;
 };
 
@@ -42,11 +44,18 @@ export type DecosVarenZaakVergunning = {
   segment:
     | 'Beeldbepalend groot'
     | 'Beeldbepalend klein en middelgroot'
+    | 'Bemand gesloten'
+    | 'Bemand groot'
+    | 'Bemand open'
     | 'Groot'
     | 'Historisch groot'
     | 'Historisch klein en middelgroot'
     | 'Klein en middelgroot'
-    | 'Onbemand';
+    | 'Onbemand'
+    | 'Waterfietsen'
+    | 'Transport'
+    | 'Gedoogverklaring'
+    | SomeOtherString;
   eniNumber: string | null;
   vergunningKenmerk: string | null;
   vesselName: string | null;
@@ -68,6 +77,11 @@ export type VarenVergunningExploitatieType = DecosZaakBase &
     itemType: 'varens';
     caseType: null;
     title: 'Vergunning passagiersvaart';
+    soortVergunning:
+      | 'Passagiersvaart'
+      | 'Transport'
+      | 'Gedoogverklaring'
+      | null;
   };
 
 export type ZaakVergunningExploitatieType = DecosVarenZaakBase & {

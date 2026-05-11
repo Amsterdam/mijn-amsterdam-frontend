@@ -45,6 +45,7 @@ export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExp
     transformFields: {
       mark: 'identifier',
       text11: 'vergunningKenmerk' as const,
+      text50: 'soortVergunning' as const,
       ...vesselSegment,
       ...vesselEniNumber,
       ...vesselLengths,
