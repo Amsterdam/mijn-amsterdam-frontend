@@ -10,7 +10,7 @@ import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
-export function ContactThemaPagina() {
+export function KlantContactThemaPagina() {
   const { id, title, routeConfig, isError, isLoading } = useContactThema();
   const communicatievoorkeuren = useCommunicatievoorkeuren();
   const contactmomenten = useContactmomenten();

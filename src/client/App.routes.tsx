@@ -15,7 +15,7 @@ import { AfvalRoutes } from './pages/Thema/Afval/Afval-render-config.tsx';
 import { AvgRoutes } from './pages/Thema/AVG/AVG-render-config.tsx';
 import { BezwarenRoutes } from './pages/Thema/Bezwaren/Bezwaren-render-config.tsx';
 import { BodemRoutes } from './pages/Thema/Bodem/Bodem-render-config.tsx';
-import { ContactRoutes } from './pages/Thema/KlantContact/KlantContact-render-config.tsx';
+import { KlantContactRoutes } from './pages/Thema/KlantContact/KlantContact-render-config.tsx';
 import { ErfpachtRoutes } from './pages/Thema/Erfpacht/Erfpacht-render-config.tsx';
 import { HLIRoutes } from './pages/Thema/HLI/HLI-render-config.tsx';
 import { HorecaRoutes } from './pages/Thema/Horeca/Horeca-render-config.tsx';
@@ -47,7 +47,7 @@ const routeComponents: ApplicationRouteConfig[] = [
   BffErrorRoutes,
   BodemRoutes,
   BurgerzakenRoutes,
-  ContactRoutes,
+  KlantContactRoutes,
   DashboardRoutes,
   ErfpachtRoutes,
   GeneralInfoRoutes,

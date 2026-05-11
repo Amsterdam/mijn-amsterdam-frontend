@@ -2,10 +2,10 @@ import type { LinkProps } from '../../../../universal/types/App.types.ts';
 import { isEnabled } from '../../../config/feature-toggles.ts';
 import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
 
-export const themaId = 'CONTACT' as const;
+export const themaId = 'KLANT_CONTACT' as const;
 
 export const featureToggle = {
-  themaActive: isEnabled('CONTACT.thema'),
+  themaActive: isEnabled('KLANT_CONTACT.thema'),
 };
 
 export const themaTitle = 'Contact en communicatie';

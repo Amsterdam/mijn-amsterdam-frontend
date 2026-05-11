@@ -6,15 +6,15 @@ import {
   themaTitle,
 } from './KlantContact-thema-config.ts';
 import { default as ContactIcon } from './KlantContactIcon.svg?react';
-import { ContactThemaPagina } from './KlantContactThema.tsx';
+import { KlantContactThemaPagina } from './KlantContactThema.tsx';
 import { isLoading } from '../../../../universal/helpers/api.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
 import type { ThemaMenuItem } from '../../../config/thema-types.ts';
 
-export const ContactRoutes = [
+export const KlantContactRoutes = [
   {
     route: routeConfig.themaPage.path,
-    Component: ContactThemaPagina,
+    Component: KlantContactThemaPagina,
   },
   {
     route: routeConfig.listPageContactmomenten.path,
