@@ -127,7 +127,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
         // TODO: possibly return different URLs based on the specific productgroep or other properties of the voorziening.
         return {
           'stopzetten-niet-via-formulier':
-            'https://www.amsterdam.nl/stopzetten-wmo-voorziening',
+            'https://www.amsterdam.nl/zorg-en-ondersteuning/contact/wmo-helpdesk/',
         };
       },
     },
@@ -321,7 +321,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
         // TODO: possibly return different URLs based on the specific productgroep or other properties of the voorziening.
         return {
           'stopzetten-niet-via-formulier':
-            'https://www.amsterdam.nl/stopzetten-wmo-voorziening',
+            'https://www.amsterdam.nl/zorg-en-ondersteuning/contact/wmo-helpdesk/',
         };
       },
     },

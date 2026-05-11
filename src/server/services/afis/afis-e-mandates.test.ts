@@ -513,12 +513,10 @@ describe('afis-e-mandates service (with nock)', () => {
         authProfile.sid,
         '123',
         eMandate,
+        creditor,
         {
-          iban: validSenderIBAN,
-          name: 'Test',
-          refId: 'ref',
-          subId: '',
-        }
+          IMandateId: 1,
+        } as AfisEMandateSource
       );
       expect(eMandate).toHaveProperty('signRequestUrl');
     });
@@ -582,7 +580,7 @@ describe('afis-e-mandates service (with nock)', () => {
         sourceMandates,
         validCreditor
       );
-      expect(result).toBe(validSourceMandate);
+      expect(result).toStrictEqual([validSourceMandate]);
     });
 
     it('getEMandateSourceByCreditor does not find the correct source', () => {
@@ -591,7 +589,7 @@ describe('afis-e-mandates service (with nock)', () => {
         sourceMandates,
         { ...validCreditor, refId: 'x' }
       );
-      expect(result).toBe(undefined);
+      expect(result).toStrictEqual([]);
     });
 
     it('getSignRequestApiUrl generates URL', () => {
@@ -662,14 +660,17 @@ describe('afis-e-mandates service (with nock)', () => {
           name: 'Test',
           subId: '',
         },
-        {
-          LifetimeFrom: '2024-01-01T00:00:00',
-          LifetimeTo: '9999-12-31T00:00:00',
-          SndIban: validSenderIBAN,
-          SndName1: 'John',
-          SndName2: 'Doe',
-          Status: '1',
-        } as AfisEMandateSource
+        [
+          {
+            LifetimeFrom: '2024-01-01T00:00:00',
+            LifetimeTo: '9999-12-31T00:00:00',
+            SndIban: validSenderIBAN,
+            SndName1: 'John',
+            SndName2: 'Doe',
+            Status: '1',
+            IMandateId: 22,
+          },
+        ] as AfisEMandateSource[]
       );
       expect(result).toMatchObject({
         creditorName: 'Test',
@@ -692,6 +693,55 @@ describe('afis-e-mandates service (with nock)', () => {
         ),
         status: '1',
       });
+    });
+
+    it('transformEMandatesResponse returns per-creditor eMandates with history entries', () => {
+      const responseData = {
+        feed: {
+          entry: [
+            {
+              content: {
+                properties: {
+                  IMandateId: '1',
+                  SndDebtorId: creditor.refId,
+                  LifetimeFrom: '2023-01-01T00:00:00',
+                  LifetimeTo: '2024-01-01T00:00:00',
+                  SndIban: 'OLDIBAN',
+                  SndName1: 'Old',
+                  SndName2: 'Name',
+                  Status: '0',
+                },
+              },
+            },
+            {
+              content: {
+                properties: {
+                  IMandateId: '2',
+                  SndDebtorId: creditor.refId,
+                  LifetimeFrom: '2024-01-01T00:00:00',
+                  LifetimeTo: '9999-12-31T00:00:00',
+                  SndIban: validSenderIBAN,
+                  SndName1: 'John',
+                  SndName2: 'Doe',
+                  Status: '1',
+                },
+              },
+            },
+          ],
+        },
+      } as unknown as any;
+
+      const result = emandates.forTesting.transformEMandatesResponse(
+        responseData,
+        authProfile.sid,
+        businessPartnerId
+      );
+
+      expect(result.length).toBe(EMandateCreditorsGemeenteAmsterdam.length);
+      const first = result.find((r) => r.creditorName === creditor.name)!;
+      expect(first.eMandateIdSource).toBe('2');
+      expect(first.history.length).toBe(1);
+      expect(first.history[0].eMandateIdSource).toBe('1');
     });
 
     it('transformEMandatesRedirectUrlResponse transforms response', () => {

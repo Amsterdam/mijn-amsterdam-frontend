@@ -2,10 +2,9 @@ import type { ReactNode } from 'react';
 
 import type {
   GridColumnNumber,
-  GridColumnNumbers} from '@amsterdam/design-system-react';
-import {
-  Grid
+  GridColumnNumbers,
 } from '@amsterdam/design-system-react';
+import { Grid } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import styles from './Datalist.module.scss';
@@ -70,35 +69,39 @@ function DatalistRowWrapped({
 
 export interface RowSet {
   rows: WrappedRow[];
+  label?: ReactNode;
   className?: string;
   isVisible?: boolean;
 }
 
-function DatalistRowsWithWrapper({ rows, className }: RowSet) {
+function DatalistRowsWithWrapper({ rows, label, className }: RowSet) {
   return (
-    <div
-      className={classNames(
-        'ams-grid',
-        styles['Datalist__row-wrapper'],
-        className
-      )}
-    >
-      {rows
-        .filter((row) =>
-          typeof row.isVisible !== 'undefined' ? row.isVisible : true
-        )
-        .map((row) => (
-          <DatalistRowWrapped
-            key={`row-${row.label}`}
-            label={row.label}
-            content={row.content}
-            className={row.className}
-            isVisible={row.isVisible}
-            span={row.span ?? WRAPPED_ROW_SPAN_DEFAULT}
-            start={row.start}
-          />
-        ))}
-    </div>
+    <>
+      {label}
+      <div
+        className={classNames(
+          'ams-grid',
+          styles['Datalist__row-wrapper'],
+          className
+        )}
+      >
+        {rows
+          .filter((row) =>
+            typeof row.isVisible !== 'undefined' ? row.isVisible : true
+          )
+          .map((row) => (
+            <DatalistRowWrapped
+              key={`row-${row.label}`}
+              label={row.label}
+              content={row.content}
+              className={row.className}
+              isVisible={row.isVisible}
+              span={row.span ?? WRAPPED_ROW_SPAN_DEFAULT}
+              start={row.start}
+            />
+          ))}
+      </div>
+    </>
   );
 }
 
@@ -131,6 +134,7 @@ export function Datalist({
               isVisible={row.isVisible}
               key={`row-${index}`}
               rows={row.rows}
+              label={row.label}
               className={row.className}
             />
           ) : (

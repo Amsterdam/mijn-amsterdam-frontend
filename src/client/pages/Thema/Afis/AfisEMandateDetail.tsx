@@ -1,8 +1,15 @@
-import { Alert, Button, Paragraph } from '@amsterdam/design-system-react';
+import {
+  Alert,
+  Button,
+  Heading,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 
 import { EMANDATE_STATUS_ACTIVE, themaConfig } from './Afis-thema-config.ts';
+import { eMandateHistoryDisplayProps } from './Afis-thema-config.ts';
 import { AfisEMandateActionButtons } from './AfisEmandateActionButtons.tsx';
 import { DateAdjust } from './AfisEmandateDateAdjust.tsx';
+import styles from './AfisEMandateDetail.module.scss';
 import { AfisEmandateRefetchInterval } from './AfisEmandateFetchInterval.tsx';
 import { useEmandateApis } from './useAfisEmandateActionsApi.tsx';
 import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
@@ -11,12 +18,57 @@ import {
   useSignRequestStatusCheck,
 } from './useAfisEMandatesSignRequest.tsx';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types.ts';
-import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { Spinner } from '../../../components/Spinner/Spinner.tsx';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { useWidescreen } from '../../../hooks/media.hook.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+
+function EmandateHistorySectionSmallScreen({
+  eMandateHistory,
+}: {
+  eMandateHistory: AfisEMandateFrontend['history'];
+}) {
+  return (
+    <section>
+      <Heading id="eerdere-emandaten" level={3} className="ams-mb-m">
+        Eerdere E-Mandaten
+      </Heading>
+      {eMandateHistory.map((historyItem) => {
+        return (
+          <article key={historyItem.eMandateIdSource} className="ams-mb-xl">
+            <table className={styles.EmandateHistoryItem}>
+              <tbody>
+                <tr>
+                  <th>Kenmerk</th>
+                  <td>{historyItem.eMandateIdSource}</td>
+                </tr>
+                <tr>
+                  <th>Van</th>
+                  <td>{historyItem.dateValidFromFormatted}</td>
+                </tr>
+                <tr>
+                  <th>Tot</th>
+                  <td>{historyItem.dateValidToFormatted}</td>
+                </tr>
+                <tr>
+                  <th>Rekeninghouder</th>
+                  <td>{historyItem.senderName}</td>
+                </tr>
+                <tr>
+                  <th>IBAN</th>
+                  <td>{historyItem.senderIBAN}</td>
+                </tr>
+              </tbody>
+            </table>
+          </article>
+        );
+      })}
+    </section>
+  );
+}
 
 type EMandateProps = {
   eMandate: AfisEMandateFrontend;
@@ -31,7 +83,7 @@ function EMandate({ eMandate }: EMandateProps) {
     hideError,
     lastActiveApi,
   } = useEmandateApis(eMandate);
-
+  const isWideScreen = useWidescreen();
   const signRequestStatusCheckApi = useSignRequestStatusCheck(eMandate);
 
   return (
@@ -64,14 +116,11 @@ function EMandate({ eMandate }: EMandateProps) {
       )}
       <Datalist
         rows={[
-          ...(!IS_PRODUCTION && eMandate.status === EMANDATE_STATUS_ACTIVE
-            ? [
-                {
-                  label: 'AFIS/SAP - ID',
-                  content: eMandate.eMandateIdSource,
-                },
-              ]
-            : []),
+          {
+            label: 'Kenmerk',
+            content: eMandate.eMandateIdSource,
+            isVisible: eMandate.status === EMANDATE_STATUS_ACTIVE,
+          },
           {
             rows: [
               {
@@ -93,79 +142,89 @@ function EMandate({ eMandate }: EMandateProps) {
               },
             ],
           },
-          ...(!signRequestStatusCheckApi.isPendingActivation
-            ? [
-                {
-                  rows: [
-                    {
-                      label: 'Status',
-                      content: eMandate.displayStatus,
-                    },
-                    {
-                      label: 'Einddatum',
-                      isVisible: eMandate.status === EMANDATE_STATUS_ACTIVE,
-                      content: (
-                        <DateAdjust
-                          lifetimeUpdateApi={lifetimeUpdateApi}
-                          eMandate={eMandate}
-                        />
-                      ),
-                    },
-                  ],
-                },
-              ]
-            : []),
-          ...(eMandate.status === EMANDATE_STATUS_ACTIVE &&
-          !signRequestStatusCheckApi.isPendingActivation
-            ? [
-                {
-                  rows: [
-                    {
-                      label: 'Naam rekeninghouder',
-                      content: eMandate.senderName || 'Onbekend',
-                    },
-                    {
-                      label: 'IBAN rekeninghouder',
-                      content: eMandate.senderIBAN || 'Onbekend',
-                    },
-                  ],
-                },
-              ]
-            : []),
+          {
+            isVisible: !signRequestStatusCheckApi.isPendingActivation,
+            rows: [
+              {
+                label: 'Status',
+                content: eMandate.displayStatus,
+              },
+              {
+                label: 'Einddatum',
+                isVisible: eMandate.status === EMANDATE_STATUS_ACTIVE,
+                content: (
+                  <DateAdjust
+                    lifetimeUpdateApi={lifetimeUpdateApi}
+                    eMandate={eMandate}
+                  />
+                ),
+              },
+            ],
+          },
+          {
+            isVisible:
+              eMandate.status === EMANDATE_STATUS_ACTIVE &&
+              !signRequestStatusCheckApi.isPendingActivation,
+            rows: [
+              {
+                label: 'Naam rekeninghouder',
+                content: eMandate.senderName || 'Onbekend',
+              },
+              {
+                label: 'IBAN rekeninghouder',
+                content: eMandate.senderIBAN || 'Onbekend',
+              },
+            ],
+          },
         ]}
       />
-      {signRequestStatusCheckApi.isRequestingStatusCheck ? (
-        <Paragraph>
-          <Spinner /> Mijn Amsterdam controleert de status van het E-Mandaat...
-        </Paragraph>
-      ) : signRequestStatusCheckApi.isPendingActivation ? (
-        <Alert headingLevel={4} heading="Status">
+      <div className="ams-mb-xl">
+        {signRequestStatusCheckApi.isRequestingStatusCheck ? (
           <Paragraph>
-            Wachten op bevestiging van het E-Mandaat voor{' '}
-            {eMandate.creditorName}. Dit kan enkele minuten duren.
+            <Spinner /> Mijn Amsterdam controleert de status van het
+            E-Mandaat...
           </Paragraph>
-          <Paragraph>
-            Zodra de bevestiging is ontvangen, zal het E-Mandaat actief
-            worden.{' '}
-          </Paragraph>
-          {signRequestStatusCheckApi.isTakingLong && (
+        ) : signRequestStatusCheckApi.isPendingActivation ? (
+          <Alert headingLevel={4} heading="Status">
             <Paragraph>
-              <Button
-                variant="secondary"
-                onClick={() => signRequestStatusCheckApi.cancel()}
-              >
-                Duurt het erg lang? Probeer het opnieuw.
-              </Button>
+              Wachten op bevestiging van het E-Mandaat voor{' '}
+              {eMandate.creditorName}. Dit kan enkele minuten duren.
             </Paragraph>
-          )}
-        </Alert>
-      ) : (
-        <AfisEMandateActionButtons
-          redirectUrlApi={redirectUrlApi}
-          deactivateApi={deactivateApi}
-          eMandate={eMandate}
-        />
-      )}
+            <Paragraph>
+              Zodra de bevestiging is ontvangen, zal het E-Mandaat actief
+              worden.{' '}
+            </Paragraph>
+            {signRequestStatusCheckApi.isTakingLong && (
+              <Paragraph>
+                <Button
+                  variant="secondary"
+                  onClick={() => signRequestStatusCheckApi.cancel()}
+                >
+                  Duurt het erg lang? Probeer het opnieuw.
+                </Button>
+              </Paragraph>
+            )}
+          </Alert>
+        ) : (
+          <AfisEMandateActionButtons
+            redirectUrlApi={redirectUrlApi}
+            deactivateApi={deactivateApi}
+            eMandate={eMandate}
+          />
+        )}
+      </div>
+      {!!eMandate.history.length &&
+        (isWideScreen ? (
+          <ThemaPaginaTable
+            zaken={eMandate.history}
+            title="Eerdere E-Mandaten"
+            displayProps={eMandateHistoryDisplayProps}
+          />
+        ) : (
+          <EmandateHistorySectionSmallScreen
+            eMandateHistory={eMandate.history}
+          />
+        ))}
     </PageContentCell>
   );
 }
@@ -192,17 +251,19 @@ export function AfisEMandateDetail() {
       zaak={eMandate}
       isError={hasEMandatesError}
       isLoading={isLoadingEMandates}
-      pageContentMain={
-        !!eMandate && (
-          <>
-            {payloadStorage.hasPayloads() && (
-              <AfisEmandateRefetchInterval fetch={fetchEMandates} />
-            )}
-            <EMandate eMandate={eMandate} />
-          </>
-        )
-      }
       breadcrumbs={breadcrumbs}
+      pageContentMain={
+        <>
+          {!!eMandate && (
+            <>
+              {payloadStorage.hasPayloads() && (
+                <AfisEmandateRefetchInterval fetch={fetchEMandates} />
+              )}
+              <EMandate eMandate={eMandate} />
+            </>
+          )}
+        </>
+      }
     />
   );
 }

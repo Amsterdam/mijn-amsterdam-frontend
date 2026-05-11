@@ -14,6 +14,7 @@ import {
   useBffApi,
   sendFetchRequest,
   sendFormPostRequest,
+  type RequestInitWithPayload,
 } from '../../../hooks/api/useBffApi.ts';
 
 function useRedirectUrlApi(
@@ -24,13 +25,16 @@ function useRedirectUrlApi(
     eMandate.signRequestUrl,
     {
       fetchImmediately: false,
-      sendRequest: async (url, init) => {
+      sendRequest: async (
+        url,
+        init?: RequestInitWithPayload<{ isReplacement: string }>
+      ) => {
         return sendFetchRequest<AfisEMandateSignRequestResponse>(url).then(
           (response) => {
             if (response.content?.redirectUrl) {
               payloadStorage.add(
                 eMandate.id,
-                eMandate.eMandateIdSource?.toString() ?? '',
+                eMandate.eMandateIdSource || '',
                 response.content.statusCheckPayload,
                 init?.payload?.isReplacement === 'true'
               );
@@ -110,7 +114,7 @@ function useLifetimeUpdateApi(
 // The api's that this hook exposes are meant to be used in sequential way, meaning that only one of them should be used at a time.
 // All the actions that are performed by these api's (deactivate, update lifetime, request redirect url) result in a state change of the eMandate, so it doesn't make sense to use them in parallel.
 export function useEmandateApis(eMandate: AfisEMandateFrontend) {
-  const { optimisticUpdateContent } = useAfisEMandatesApi();
+  const { optimisticUpdateContent, fetchEMandates } = useAfisEMandatesApi();
   const payloadStorage = useSignRequestPayloadStorage();
 
   const redirectUrlApi = useRedirectUrlApi(eMandate, payloadStorage);
@@ -124,6 +128,19 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
 
   const [showError, setShowError] = useState(false);
   const [lastActiveApi, setLastActiveApi] = useState<ApiName | null>(null);
+
+  useEffect(() => {
+    // Fetch the latest eMandates from the server after deactivating an eMandate.
+    // The deactivated mandate should appear in the history section of the detail page, so we need to fetch the latest data to show that.
+    if (
+      lastActiveApi === 'deactivateApi' &&
+      !deactivateApi.isLoading &&
+      !deactivateApi.isError
+    ) {
+      fetchEMandates();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastActiveApi, deactivateApi.isLoading, deactivateApi.isError]);
 
   useEffect(() => {
     entries({

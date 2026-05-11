@@ -354,6 +354,9 @@ describe('useEmandateApis', () => {
 
   it('should call the correct API for status change and update the emandate with the new status', async () => {
     bffApi.get(/\/deactivate/).reply(200, { content: { status: '0' } });
+    bffApi
+      .get(/\/e-mandates/)
+      .reply(200, { content: [{ ...eMandate, status: '0' }] });
 
     const { result } = renderHook(() => ({
       store: useBffApiStateStore(),
