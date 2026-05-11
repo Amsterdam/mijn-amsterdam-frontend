@@ -36,42 +36,42 @@ const voorkeurenBE: Communicatievoorkeur[] = [
       }),
     },
   },
-  {
-    id: '2',
-    stakeholder: 'Erfpacht',
-    title: 'Factuurspecificaties',
-    description: 'Omschrijving 2',
-    medium: [
-      { name: 'e-mail', isActive: true, value: 'pieter@post.com' },
-      { name: 'sms', isActive: false, value: null },
-      { name: 'brieven per post', isActive: true, value: null },
-    ],
-    isActive: true,
-    link: {
-      title: `Stel communicatievoorkeur in`,
-      to: generatePath(routeConfig.detailPageCommunicatievoorkeur.path, {
-        id: '2',
-      }),
-    },
-  },
-  {
-    id: '3',
-    stakeholder: 'Erfpacht',
-    title: 'Informatie over uw Erfpacht dossiers',
-    description: 'Omschrijving 2',
-    medium: [
-      { name: 'e-mail', isActive: false, value: null },
-      { name: 'sms', isActive: true, value: '0612345678' },
-      { name: 'brieven per post', isActive: false, value: null },
-    ],
-    isActive: true,
-    link: {
-      title: `Stel communicatievoorkeur in`,
-      to: generatePath(routeConfig.detailPageCommunicatievoorkeur.path, {
-        id: '3',
-      }),
-    },
-  },
+  // {
+  //   id: '2',
+  //   stakeholder: 'Erfpacht',
+  //   title: 'Factuurspecificaties',
+  //   description: 'Omschrijving 2',
+  //   medium: [
+  //     { name: 'e-mail', isActive: true, value: 'pieter@post.com' },
+  //     { name: 'sms', isActive: false, value: null },
+  //     { name: 'brieven per post', isActive: true, value: null },
+  //   ],
+  //   isActive: true,
+  //   link: {
+  //     title: `Stel communicatievoorkeur in`,
+  //     to: generatePath(routeConfig.detailPageCommunicatievoorkeur.path, {
+  //       id: '2',
+  //     }),
+  //   },
+  // },
+  // {
+  //   id: '3',
+  //   stakeholder: 'Erfpacht',
+  //   title: 'Informatie over uw Erfpacht dossiers',
+  //   description: 'Omschrijving 2',
+  //   medium: [
+  //     { name: 'e-mail', isActive: false, value: null },
+  //     { name: 'sms', isActive: true, value: '0612345678' },
+  //     { name: 'brieven per post', isActive: false, value: null },
+  //   ],
+  //   isActive: true,
+  //   link: {
+  //     title: `Stel communicatievoorkeur in`,
+  //     to: generatePath(routeConfig.detailPageCommunicatievoorkeur.path, {
+  //       id: '3',
+  //     }),
+  //   },
+  // },
 ];
 
 export const voorkeurenAtom = atom<Communicatievoorkeur[]>({
@@ -108,12 +108,6 @@ export function useCommunicatievoorkeuren() {
     routeConfig,
     isError: false,
     isLoading: false,
-    listPageRoute: generatePath(
-      routeConfig.listPageCommunicatievoorkeuren.path,
-      {
-        page: null,
-      }
-    ),
   };
 }
 
@@ -127,7 +121,7 @@ export function useCommunicatieVoorkeurDetail() {
   const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
-    title: `${communicatieVoorkeurDetailTitle} ${voorkeur?.stakeholder}`,
+    title: `${communicatieVoorkeurDetailTitle} ${voorkeur?.stakeholder ?? ''}`,
     themaId,
     voorkeur,
     isError,

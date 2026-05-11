@@ -23,12 +23,6 @@ export const routeConfig = {
     },
     documentTitle: `Alle contactmomenten | ${themaTitle}`,
   },
-  listPageCommunicatievoorkeuren: {
-    get path(): string {
-      return `/${routeConfig.themaPage.path}/communicatievoorkeuren/:page?`;
-    },
-    documentTitle: `Alle communicatievoorkeuren | ${themaTitle}`,
-  },
   detailPageCommunicatievoorkeur: {
     get path(): string {
       return `/${routeConfig.themaPage.path}/communicatievoorkeur/:id`;

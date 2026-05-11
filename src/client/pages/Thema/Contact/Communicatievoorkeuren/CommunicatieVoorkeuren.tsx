@@ -4,8 +4,7 @@ import { useCommunicatievoorkeuren } from './useCommunicatieVoorkeuren';
 import ThemaPaginaTable from '../../../../components/Thema/ThemaPaginaTable';
 
 export function CommunicatieVoorkeuren() {
-  const { voorkeuren, displayProps, title, listPageRoute } =
-    useCommunicatievoorkeuren();
+  const { voorkeuren, displayProps, title } = useCommunicatievoorkeuren();
 
   return (
     <ThemaPaginaTable
@@ -17,7 +16,6 @@ export function CommunicatieVoorkeuren() {
       }
       zaken={voorkeuren}
       displayProps={displayProps}
-      listPageRoute={listPageRoute}
     />
   );
 }
