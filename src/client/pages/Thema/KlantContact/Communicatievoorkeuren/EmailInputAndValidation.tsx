@@ -1,9 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useState,
-  type ChangeEventHandler,
-} from 'react';
+import { useCallback, useState, type ChangeEventHandler } from 'react';
 
 import {
   Button,
@@ -13,13 +8,19 @@ import {
   Paragraph,
   TextInput,
 } from '@amsterdam/design-system-react';
-import OtpInput from 'react-otp-input';
+import OTPInput from 'react-otp-input';
 
 import styles from './EmailInputAndValidation.module.scss';
-import type { ApiResponse } from '../../../../../../universal/helpers/api';
-import { MaRouterLink } from '../../../../../components/MaLink/MaLink';
-import { Spinner } from '../../../../../components/Spinner/Spinner';
-import { useDataApi } from '../../../../../hooks/api/useDataApi';
+import type {
+  CreateVerificationRequestResponse,
+  VerifyVerificationRequestResponse,
+} from '../../../../../server/services/contact/contact-verify.types.ts';
+import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
+import { Spinner } from '../../../../components/Spinner/Spinner.tsx';
+import {
+  sendFormPostRequest,
+  useBffApi,
+} from '../../../../hooks/api/useBffApi.ts';
 
 const VERIFICATION_CODE_LENGTH = 5;
 
@@ -36,32 +37,32 @@ export function EmailVerify({ email, onValidated }: EmailVerifyProps) {
   const [otp, setOtp] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
 
-  const [state, send] = useDataApi<ApiResponse<{ verified: boolean }> | null>(
-    {
-      url: 'http://localhost:5000/api/v1/services/verification-request/verify',
-      postpone: true,
-      method: 'POST',
-    },
-    null
-  );
+  const { fetch, isLoading, isError } =
+    useBffApi<VerifyVerificationRequestResponse>(
+      'http://localhost:5000/api/v1/services/contact/verification-request/verify',
+      {
+        fetchImmediately: false,
+        sendRequest: async (url, init) => {
+          return sendFormPostRequest<VerifyVerificationRequestResponse>(
+            url,
+            init
+          ).then((response) => {
+            if (response.content?.verified === true) {
+              onValidated({ otp, email });
+            }
+            return response;
+          });
+        },
+      }
+    );
 
-  useEffect(() => {
-    if (
-      state.data?.content?.verified === true &&
-      state.isDirty &&
-      !state.isLoading
-    ) {
-      onValidated({ otp, email });
-    }
-  }, [state.isDirty, state.isLoading, state.data]);
-
-  const hasApiError = !state.isLoading && state.isError;
+  const hasApiError = !isLoading && isError;
 
   const submit = useCallback(
     async (code: string) => {
       const isValid = validateCodeFormat(code);
       if (isValid) {
-        send({ data: { email, code } });
+        fetch({ payload: { email, code } });
       } else {
         setIsInvalid(true);
       }
@@ -91,7 +92,7 @@ export function EmailVerify({ email, onValidated }: EmailVerifyProps) {
             Er is een fout opgetreden bij het checken van de code.
           </ErrorMessage>
         )}
-        <OtpInput
+        <OTPInput
           value={otp}
           onChange={(otp) => {
             setOtp(otp);
@@ -110,13 +111,13 @@ export function EmailVerify({ email, onValidated }: EmailVerifyProps) {
               {...props}
               name="otpcode"
               invalid={isInvalid}
-              disabled={state.isLoading}
+              disabled={isLoading}
               type="text"
             />
           )}
         />
       </Field>
-      {state.isLoading ? (
+      {isLoading ? (
         <Paragraph>
           <Spinner /> Bezig met controleren van de code...
         </Paragraph>
@@ -144,7 +145,7 @@ function EmailInput({
 }: EmailInputProps) {
   return (
     <Field invalid={isInvalid} className="ams-mb-m">
-      <Paragraph id="description2" size="small">
+      <Paragraph id="description2">
         Zorg ervoor dat u een geldig e-mailadres invult. U ontvangt een code op
         dit e-mailadres. De code moet u straks invullen.
       </Paragraph>
@@ -182,37 +183,39 @@ type EmailFormProps = {
 
 export function EmailForm({ email, onSubmit }: EmailFormProps) {
   const emailValue = email || '';
-  const [emailToVerify, setEmailToVerify] = useState<string>('');
+  const [emailToVerify, setEmailToVerify] = useState<string>(emailValue);
   const [isInvalid, setIsInvalid] = useState(false);
 
-  const [state, send] = useDataApi(
-    {
-      url: 'http://localhost:5000/api/v1/services/verification-request/create',
-      postpone: true,
-      method: 'POST',
-    },
-    null
-  );
-
-  useEffect(() => {
-    if (state.isDirty && !state.isLoading && !state.isError) {
-      onSubmit({ email: emailToVerify });
-    }
-  }, [emailToVerify, state.isDirty, state.isLoading]);
+  const { fetch, isLoading, isError } =
+    useBffApi<CreateVerificationRequestResponse>(
+      'http://localhost:5000/api/v1/services/contact/verification-request/create',
+      {
+        fetchImmediately: false,
+        sendRequest: async (url, init) => {
+          return sendFormPostRequest<CreateVerificationRequestResponse>(
+            url,
+            init
+          ).then((response) => {
+            if (response.content?.success === true) {
+              onSubmit({ email: emailToVerify });
+            }
+            return response;
+          });
+        },
+      }
+    );
 
   // Onsubmit, send to backend and setStep to 2 OTP validation
   const submitForm: React.FormEventHandler<HTMLFormElement> = useCallback(
     (event) => {
       event.preventDefault();
 
-      const isEmailToVerify = emailToVerify && emailToVerify !== emailValue;
-
-      if (isEmailToVerify && !emailToVerify.includes('@')) {
+      if (!emailToVerify.includes('@')) {
         setIsInvalid(true);
         return;
       }
 
-      send({ data: { email: emailToVerify } });
+      fetch({ payload: { email: emailToVerify } });
     },
     [emailToVerify]
   );
@@ -223,15 +226,15 @@ export function EmailForm({ email, onSubmit }: EmailFormProps) {
         <EmailInput
           value={emailToVerify}
           isInvalid={isInvalid}
-          isError={state.isError}
-          isLoading={state.isLoading}
+          isError={isError}
+          isLoading={isLoading}
           onChange={(e) => {
             setEmailToVerify(e.target.value);
             setIsInvalid(false);
           }}
         />
       </Field>
-      {state.isLoading ? (
+      {isLoading ? (
         <Paragraph>
           <Spinner /> Bezig met versturen...
         </Paragraph>

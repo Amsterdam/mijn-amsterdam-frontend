@@ -3,8 +3,8 @@ import type { ReactNode } from 'react';
 import type {
   Communicatievoorkeur,
   CommunicatieMediumSetting,
-} from '../../../../../server/services/contact/contact.types';
-import type { DisplayProps } from '../../../../components/Table/TableV2.types';
+} from '../../../../../server/services/contact/contact-profieldienst-types.ts';
+import type { DisplayProps } from '../../../../components/Table/TableV2.types.ts';
 
 export const VERIFICATION_CODE_LENGTH = 5;
 
@@ -15,6 +15,7 @@ export const communicatieVoorkeurInstellenTitle = 'Instellen';
 type CommunicatieMediumFrontend = CommunicatieMediumSetting & {
   isActive_: ReactNode;
   value_: ReactNode;
+  name: string; // TODO: Need this?
 };
 
 export type CommunicatievoorkeurFrontend = Communicatievoorkeur & {

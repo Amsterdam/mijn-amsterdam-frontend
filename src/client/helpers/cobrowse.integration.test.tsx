@@ -15,8 +15,8 @@ import { themaConfig as themaBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-t
 import { BezwarenDetail } from '../pages/Thema/Bezwaren/BezwarenDetail.tsx';
 import { BezwarenList } from '../pages/Thema/Bezwaren/BezwarenList.tsx';
 import { BezwarenThema } from '../pages/Thema/Bezwaren/BezwarenThema.tsx';
-import { mapperContactmomentToMenuItem } from '../pages/Thema/Profile/private/Contactmomenten.config.ts';
-import { ContactmomentenListPage } from '../pages/Thema/Profile/private/ContactmomentenListPage.tsx';
+import { mapperContactmomentToMenuItem } from '../pages/Thema/KlantContact/Contactmomenten/Contactmomenten-config.ts';
+import { ContactmomentenListPage } from '../pages/Thema/KlantContact/Contactmomenten/ContactmomentenListPage.tsx';
 import { MijnGegevensThema } from '../pages/Thema/Profile/private/ProfilePrivate.tsx';
 import { themaConfig as themaVergunningen } from '../pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 

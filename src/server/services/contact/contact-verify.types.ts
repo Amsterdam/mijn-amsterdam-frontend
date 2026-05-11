@@ -5,7 +5,7 @@ export type CreateVerificationRequestPayload<T extends 'email' | 'phone'> = {
 } & (T extends 'email' ? { email: string } : { phoneNumber: string });
 
 export type CreateVerificationRequestResponse = {
-  requestId: string;
+  success: boolean;
 };
 
 export type VerifyVerificationRequestPayload = {

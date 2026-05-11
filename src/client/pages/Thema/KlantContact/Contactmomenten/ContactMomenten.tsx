@@ -1,20 +1,24 @@
-import { Paragraph } from '@amsterdam/design-system-react';
+import { Heading, Paragraph } from '@amsterdam/design-system-react';
 
 import type { ContactMomentFrontend } from './Contactmomenten-config.ts';
-import { useContactmomenten } from './useContactmomenten.tsx';
-import { CollapsiblePanel } from '../../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
+import type { useContactmomenten } from './useContactmomenten.tsx';
 import ThemaPaginaTable from '../../../../components/Thema/ThemaPaginaTable.tsx';
 
-export function ContactMomenten() {
+export function ContactMomenten({
+  contactmomentenData,
+}: {
+  contactmomentenData: ReturnType<typeof useContactmomenten>;
+}) {
   const { contactmomenten, displayProps, title, listPageRoute } =
-    useContactmomenten();
+    contactmomentenData;
 
   if (!contactmomenten.length) {
     return null;
   }
 
   return (
-    <CollapsiblePanel title={title} startCollapsed={true}>
+    <>
+      <Heading level={3}>{title}</Heading>
       <Paragraph className="ams-mb-m">
         De lijst met contactmomenten wordt alleen bijgehouden met telefonische
         gesprekken naar telefoonnummer 14 020 of chatberichten met een
@@ -35,6 +39,6 @@ export function ContactMomenten() {
         listPageLinkTitle="Bekijk alle contactmomenten"
         listPageRoute={listPageRoute}
       />
-    </CollapsiblePanel>
+    </>
   );
 }

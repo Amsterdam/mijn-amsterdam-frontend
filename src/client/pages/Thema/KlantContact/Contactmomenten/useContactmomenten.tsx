@@ -1,7 +1,7 @@
 import { Icon, Link } from '@amsterdam/design-system-react';
 import {
   EllipsisIcon as SpeechBalloonEllipsisIcon,
-  EmailIcon,
+  MailIcon,
   PhoneIcon,
 } from '@amsterdam/design-system-react-icons';
 import { useParams } from 'react-router';
@@ -22,6 +22,7 @@ import {
   useActiveThemaMenuItems,
 } from '../../../../hooks/useThemaMenuItems.ts';
 import { themaConfig } from '../../Profile/Profile-thema-config.ts';
+import { routeConfig } from '../Contact-thema-config.ts';
 
 function getMenuItem(
   onderwerp: string,
@@ -60,7 +61,7 @@ function addIcon(type: string) {
   const icons: Record<string, React.FC> = {
     Telefoon: PhoneIcon,
     Chat: SpeechBalloonEllipsisIcon,
-    Contactformulier: EmailIcon,
+    Contactformulier: MailIcon,
   };
   if (icons[type]) {
     return (
@@ -97,13 +98,12 @@ export function useContactmomenten() {
 
   return {
     contactmomenten,
-    themaId: themaConfig.BRP.id,
     displayProps: contactmomentenDisplayProps,
     isError: isError(KLANT_CONTACT),
     isLoading: isLoading(KLANT_CONTACT),
     title: 'Contactmomenten',
     breadcrumbs,
     routeParams,
-    listPageRoute: themaConfig.BRP.listPageContactmomenten.route.path,
+    listPageRoute: routeConfig.listPageContactmomenten.path,
   };
 }

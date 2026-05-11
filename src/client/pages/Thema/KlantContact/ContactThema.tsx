@@ -1,15 +1,20 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { CommunicatieVoorkeuren } from './Communicatievoorkeuren/CommunicatieVoorkeuren.tsx';
 import { linkListItems } from './Contact-thema-config.ts';
 import { ContactMomenten } from './Contactmomenten/ContactMomenten.tsx';
+import { useContactmomenten } from './Contactmomenten/useContactmomenten.tsx';
 import { useContactThema } from './useContactThema.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { CommunicatieVoorkeuren } from './Communicatievoorkeuren/CommunicatieVoorkeuren.tsx';
+import { useCommunicatievoorkeuren } from './Communicatievoorkeuren/useCommunicatieVoorkeuren.tsx';
 
 export function ContactThemaPagina() {
   const { id, title, routeConfig, isError, isLoading } = useContactThema();
+  const communicatievoorkeuren = useCommunicatievoorkeuren();
+  const contactmomenten = useContactmomenten();
+
   useHTMLDocumentTitle(routeConfig.themaPage);
 
   const pageContentTop = (
@@ -34,15 +39,23 @@ export function ContactThemaPagina() {
       pageContentMain={
         <>
           <PageContentCell spanWide={8}>
-            <CommunicatieVoorkeuren />
+            <CommunicatieVoorkeuren
+              communicatievoorkeurenData={communicatievoorkeuren}
+            />
           </PageContentCell>
           <PageContentCell>
-            <ContactMomenten/>
+            <ContactMomenten contactmomentenData={contactmomenten} />
           </PageContentCell>
         </>
       }
-      isError={isError}
-      isLoading={isLoading}
+      isError={
+        isError || contactmomenten.isError || communicatievoorkeuren.isError
+      }
+      isLoading={
+        isLoading ||
+        contactmomenten.isLoading ||
+        communicatievoorkeuren.isLoading
+      }
     />
   );
 }

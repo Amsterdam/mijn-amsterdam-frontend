@@ -1,5 +1,5 @@
-import { contactmomentenDisplayProps } from './Contactmomenten.config.ts';
-import { useContactmomenten } from './useContactmomenten.hook.tsx';
+import { contactmomentenDisplayProps } from './Contactmomenten-config.ts';
+import { useContactmomenten } from './useContactmomenten.tsx';
 import { ListPagePaginated } from '../../../../components/ListPagePaginated/ListPagePaginated.tsx';
 
 export function ContactmomentenListPage() {

@@ -6,33 +6,30 @@ import {
   Alert,
   Link,
 } from '@amsterdam/design-system-react';
-import { CheckmarkIcon, CloseIcon } from '@amsterdam/design-system-react-icons';
+import { CheckMarkIcon, CloseIcon } from '@amsterdam/design-system-react-icons';
 import { generatePath } from 'react-router';
 
-import { MediumValue } from './CommunicatieMediumValue';
+import { MediumValue } from './CommunicatieMediumValue.tsx';
 import {
   MediumByTypeLabels,
   VoorkeurByTypeLabels,
-} from './CommunicatieVoorkeuren-config';
+} from './CommunicatieVoorkeuren-config.ts';
 import styles from './CommunicatieVoorkeuren.module.scss';
-import { useCommunicatievoorkeuren } from './useCommunicatieVoorkeuren';
-import { Datalist } from '../../../../components/Datalist/Datalist';
-import { MaRouterLink } from '../../../../components/MaLink/MaLink';
+import type { useCommunicatievoorkeuren } from './useCommunicatieVoorkeuren.tsx';
+import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
+import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 
-export function CommunicatieVoorkeuren() {
-  const {
-    voorkeuren,
-    routeConfig,
-    mediums,
-    defaultMediumsByType,
-    mediumsByType,
-  } = useCommunicatievoorkeuren();
+export function CommunicatieVoorkeuren({
+  communicatievoorkeurenData,
+}: {
+  communicatievoorkeurenData: ReturnType<typeof useCommunicatievoorkeuren>;
+}) {
+  const { voorkeuren, defaultMediumsByType, routeConfig } =
+    communicatievoorkeurenData ?? {};
 
   const voorkeurenList = voorkeuren.map((voorkeur) => (
     <article key={voorkeur.id} className="ams-mb-xl">
-      <Heading level={4} size="level-5">
-        {voorkeur.stakeholder}
-      </Heading>
+      <Heading level={4}>{voorkeur.stakeholder}</Heading>
       <Paragraph className="ams-mb-s">{voorkeur.description}</Paragraph>
 
       <ul className={styles.VoorkeurInstellingen}>
@@ -48,14 +45,21 @@ export function CommunicatieVoorkeuren() {
                       { medium: medium.type, id: voorkeur.id, step: '1' }
                     )}
                   >
-                    {VoorkeurByTypeLabels[medium.type]}
+                    {
+                      VoorkeurByTypeLabels[
+                        medium.type as keyof typeof VoorkeurByTypeLabels
+                      ]
+                    }
                   </MaRouterLink>
                 </span>
                 <span className={styles.Switch}>
-                  <Icon svg={medium.value ? CheckmarkIcon : CloseIcon} /> &nbsp;
-                  {medium.value
+                  <Icon svg={medium.value ? CheckMarkIcon : CloseIcon} /> &nbsp;
+                  {medium.value && defaultMediumsByType
                     ? `Ja${
-                        medium.value !== defaultMediumsByType[medium.type].value
+                        medium.value !==
+                        defaultMediumsByType[
+                          medium.type as keyof typeof defaultMediumsByType
+                        ].value
                           ? `, naar ${medium.value}`
                           : ''
                       }`
@@ -69,9 +73,9 @@ export function CommunicatieVoorkeuren() {
     </article>
   ));
 
-  const rows = mediums.map((medium) => ({
-    label: MediumByTypeLabels[medium.type],
-    content: <MediumValue medium={medium} mediumsByType={mediumsByType} />,
+  const rows = Object.values(defaultMediumsByType ?? {}).map((medium) => ({
+    label: MediumByTypeLabels[medium.type as keyof typeof MediumByTypeLabels],
+    content: <MediumValue medium={medium} />,
   }));
 
   return (

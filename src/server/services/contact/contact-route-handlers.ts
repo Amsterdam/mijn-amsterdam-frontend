@@ -1,20 +1,20 @@
 import createDebugger from 'debug';
-import type { Request, Response } from 'express';
+import type { Request } from 'express';
 
+import {
+  fetchCommunicatievoorkeuren,
+  setCommunicatievoorkeur,
+} from './contact-profieldienst.ts';
 import {
   createVerificationRequest,
   verifyVerificationRequest,
 } from './contact-verify.ts';
-import { apiSuccessResult } from '../../../universal/helpers/api.ts';
-import { getAuth } from '../../auth/auth-helpers.ts';
-import { requestData } from '../../helpers/source-api-request.ts';
 import {
   sendBadRequest,
   sendResponse,
-  sendUnauthorized,
+  type ResponseAuthenticated,
 } from '../../routing/route-helpers.ts';
 import { captureException } from '../monitoring.ts';
-import { fetchPersoonsgegevensNAW } from '../zorgned/zorgned-service.ts';
 
 const debugContactRequestData = createDebugger(
   'contact-api:route-request-data'
@@ -22,16 +22,9 @@ const debugContactRequestData = createDebugger(
 
 export async function handleCreateVerificationRequest(
   req: Request,
-  res: Response
+  res: ResponseAuthenticated
 ) {
   debugContactRequestData(req.body);
-
-  // return res.send(apiSuccessResult({ ok: true }));
-  const authProfileAndToken = getAuth(req);
-
-  if (!authProfileAndToken) {
-    return sendUnauthorized(res);
-  }
 
   const { email, phone } = req.body;
 
@@ -40,10 +33,13 @@ export async function handleCreateVerificationRequest(
   }
 
   try {
-    const response = await createVerificationRequest(authProfileAndToken, {
-      email,
-      phone,
-    });
+    const response = await createVerificationRequest(
+      res.locals.authProfileAndToken,
+      {
+        email,
+        phone,
+      }
+    );
     return sendResponse(res, response);
   } catch (error) {
     captureException(error);
@@ -53,15 +49,9 @@ export async function handleCreateVerificationRequest(
 
 export async function handleVerifyVerificationRequest(
   req: Request,
-  res: Response
+  res: ResponseAuthenticated
 ) {
   debugContactRequestData(req.body);
-
-  const authProfileAndToken = getAuth(req);
-
-  if (!authProfileAndToken) {
-    return sendUnauthorized(res);
-  }
 
   const { email, code } = req.body;
 
@@ -69,60 +59,46 @@ export async function handleVerifyVerificationRequest(
     return sendBadRequest(res, 'E-mail and code are required');
   }
 
-  const response = await verifyVerificationRequest(authProfileAndToken, {
-    email,
-    code,
-  });
+  const response = await verifyVerificationRequest(
+    res.locals.authProfileAndToken,
+    {
+      email,
+      code,
+    }
+  );
 
   return sendResponse(res, response);
 }
 
-export async function handleGetEmail(req: Request, res: Response) {
-  const authProfileAndToken = getAuth(req);
-
-  if (!authProfileAndToken) {
-    return sendUnauthorized(res);
-  }
-
-  const USE_CACHED = false;
-
-  const response = await fetchPersoonsgegevensNAW(
-    authProfileAndToken.profile.id,
-    'ZORGNED_JZD',
-    USE_CACHED
+export async function handleGetCommunicatievoorkeuren(
+  req: Request,
+  res: ResponseAuthenticated
+) {
+  const communicatievoorkeurenResponse = await fetchCommunicatievoorkeuren(
+    res.locals.authProfileAndToken
   );
 
-  if (response.status !== 'OK') {
-    return sendResponse(res, response);
-  }
-
-  const contactResponse = apiSuccessResult({
-    email: response.content?.persoon?.email ?? null,
-  });
-
-  return sendResponse(res, contactResponse);
+  return sendResponse(res, communicatievoorkeurenResponse);
 }
 
-export type ContactResponse = { email: string | null };
+export async function handleSetCommunicatievoorkeur(
+  req: Request,
+  res: ResponseAuthenticated
+) {
+  const { value, type, serviceId, voorkeurId } = req.body;
 
-export async function handleUpdateEmail(req: Request, res: Response) {
-  const authProfileAndToken = getAuth(req);
+  // TODO: Use ZOD
+  // if (typeof email === 'undefined') {
+  //   return sendBadRequest(res, 'E-mail is required');
+  // }
 
-  if (!authProfileAndToken) {
-    return sendUnauthorized(res);
-  }
-
-  const { email } = req.body;
-
-  if (typeof email === 'undefined') {
-    return sendBadRequest(res, 'E-mail is required');
-  }
-
-  const response = await requestData({
-    url: 'http://localhost:3100/mocks-api/zorgned/client-data',
-    data: { email },
-    method: 'POST',
-  });
+  const response = await setCommunicatievoorkeur(
+    res.locals.authProfileAndToken,
+    type,
+    value,
+    serviceId,
+    voorkeurId
+  );
 
   return sendResponse(res, response);
 }

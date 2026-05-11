@@ -1,4 +1,3 @@
-import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import type { LinkProps } from '../../../../universal/types/App.types.ts';
 import { isEnabled } from '../../../config/feature-toggles.ts';
 import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
@@ -17,27 +16,27 @@ export const routeConfig = {
   themaPage: {
     path: '/contact-en-communicatie',
     documentTitle: `${themaTitle} | Mijn Amsterdam`,
-    trackingUrl: null
+    trackingUrl: null,
   },
   listPageContactmomenten: {
     get path(): string {
       return `/${routeConfig.themaPage.path}/contactmomenten/:page?`;
     },
     documentTitle: `Alle contactmomenten | ${themaTitle}`,
-    trackingUrl: null
+    trackingUrl: null,
   },
   detailPageCommunicatievoorkeurInstellen: {
     get path(): string {
       return `/${routeConfig.themaPage.path}/instellen/:id/:medium/:step`;
     },
     documentTitle: `Communicatievoorkeur instellen | ${themaTitle}`,
-    trackingUrl: null
+    trackingUrl: null,
   },
   detailPageCommunicatieMediumInstellen: {
     get path(): string {
       return `/${routeConfig.themaPage.path}/instellen/:medium/:step`;
     },
     documentTitle: `Communicatievoorkeur instellen | ${themaTitle}`,
-    trackingUrl: null
+    trackingUrl: null,
   },
 } as const satisfies ThemaRoutesConfig;

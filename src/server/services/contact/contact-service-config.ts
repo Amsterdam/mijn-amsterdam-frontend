@@ -1,10 +1,18 @@
+import type { DataRequestConfig } from '../../config/source-api.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 
+export const featureToggle = {};
 
-export const featureToggle = {
-
-}
+const BASE_ROUTE = '/services/contact';
 
 export const routes = {
-  VERIFICATION_REQUEST_CREATE: '',
-  VERIFICATION_REQUEST_VERIFY: '',
-}
+  BASE: BASE_ROUTE,
+  VERIFICATION_REQUEST_CREATE: `${BASE_ROUTE}/verification-request/create`,
+  VERIFICATION_REQUEST_VERIFY: `${BASE_ROUTE}/verification-request/verify`,
+  CONTACT_SET_COMMUNICATIEVOORKEUR: `${BASE_ROUTE}/communicatievoorkeuren/set`,
+  CONTACT_GET_COMMUNICATIEVOORKEUREN: `${BASE_ROUTE}/communicatievoorkeuren`,
+} as const;
+
+export const profieldienstRequestConfig: DataRequestConfig = {
+  url: `${getFromEnv('BFF_PROFIELDIENST_BASE_URL')}`,
+} as const;

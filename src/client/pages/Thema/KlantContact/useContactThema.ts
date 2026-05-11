@@ -4,7 +4,7 @@ import {
   routeConfig,
   themaId,
   themaTitle,
-} from './Contact-thema-config';
+} from './Contact-thema-config.ts';
 
 export function useContactThema() {
   return {
