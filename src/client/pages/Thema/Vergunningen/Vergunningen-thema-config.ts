@@ -94,7 +94,7 @@ export const themaConfig: VergunningenThemaConfig = {
       to: 'https://www.amsterdam.nl/vergunningen-ontheffingen/werkzaamheden-straat/toestemming-afsluiten-blokkeren-straat/',
     },
     {
-      title: 'Overige vergunningen of ontheffingen aanvragen',
+      title: 'Overige vergunningen en ontheffingen aanvragen',
       to: 'https://www.amsterdam.nl/vergunningen-ontheffingen',
     },
   ],
