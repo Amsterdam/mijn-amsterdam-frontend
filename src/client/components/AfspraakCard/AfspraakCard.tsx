@@ -62,7 +62,7 @@ function CardBody({ afspraak }: AfspraakCardProps) {
           location: `Stadsloket ${afspraak.location.name}, ${afspraak.location.street}, ${afspraak.location.postalCode} ${afspraak.location.city}, Nederland`,
         }}
       >
-        Voeg toe aan uw privé agenda
+        Voeg toe aan uw privé-agenda
       </CalendarLink>
     </>
   );

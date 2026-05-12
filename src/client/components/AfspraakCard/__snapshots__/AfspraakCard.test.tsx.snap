@@ -52,7 +52,7 @@ exports[`Renders afspraak data > Large screen 1`] = `
         class="ams-link _Block_0a51e6 ams-mb-s _MaLink_10c0a4"
         href="#"
       >
-        Voeg toe aan uw privé agenda
+        Voeg toe aan uw privé-agenda
       </a>
       <div
         class="ams-row ams-row--align-vertical-center"
@@ -136,7 +136,7 @@ exports[`Renders afspraak data > Small screen 1`] = `
         class="ams-link _Block_0a51e6 ams-mb-s _MaLink_10c0a4"
         href="#"
       >
-        Voeg toe aan uw privé agenda
+        Voeg toe aan uw privé-agenda
       </a>
       <div
         class="ams-row ams-row--align-vertical-center"

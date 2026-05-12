@@ -102,8 +102,8 @@ function ContactMomenten() {
     <PageContentCell>
       <CollapsiblePanel title="Contactmomenten" startCollapsed={false}>
         <Paragraph className="ams-mb-m">
-          De lijst met contactmomenten wordt alleen bijgehouden met telefonische
-          gesprekken naar telefoonnummer 14 020 of chatberichten met een
+          De lijst met contactmomenten wordt alleen bijgehouden met
+          telefoongesprekken naar telefoonnummer 14 020 of chatberichten met een
           medewerker, waarbij er voor het beantwoorden van de vraag
           persoonsgegevens nodig zijn.
         </Paragraph>
