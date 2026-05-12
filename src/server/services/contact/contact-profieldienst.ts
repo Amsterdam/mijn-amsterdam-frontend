@@ -93,7 +93,7 @@ export async function fetchCommunicatievoorkeuren(
       email: { type: MEDIUM_TYPES.EMAIL, value: null },
       phone: { type: MEDIUM_TYPES.PHONE, value: null },
       app: { type: MEDIUM_TYPES.APP, value: null },
-      berichtenbox: { type: MEDIUM_TYPES.APP, value: null },
+      berichtenbox: { type: MEDIUM_TYPES.BERICHTENBOX, value: null },
       postadres: {
         type: MEDIUM_TYPES.POSTADRES,
         value: locationsResponse.content?.[0]?.address
