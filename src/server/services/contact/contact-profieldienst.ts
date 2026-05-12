@@ -121,7 +121,7 @@ export async function fetchCommunicatievoorkeuren(
       email: {
         type: ContactgegevenTypeFrontend.EMAIL,
         value: 't.van.oostrom@amsterdam.nl',
-        isValidated: false,
+        isValidated: true,
         dateModified: '2025-05-05',
         dateModifiedFormatted: '05 mei 2025',
         // value: null,
@@ -134,8 +134,10 @@ export async function fetchCommunicatievoorkeuren(
       },
       app: {
         type: ContactgegevenTypeFrontend.APP,
-        value: null,
-        dateModified: null,
+        value: 'Amsterdam App ID: 123456789',
+        isValidated: true,
+        dateModified: '2025-05-05',
+        dateModifiedFormatted: '05 mei 2025',
       },
       berichtenbox: {
         type: ContactgegevenTypeFrontend.BERICHTENBOX,

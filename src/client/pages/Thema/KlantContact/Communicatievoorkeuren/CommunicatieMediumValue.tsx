@@ -35,14 +35,14 @@ type ValueActionsProps = {
 function ValueActions({
   medium,
   path,
-  actionLabels = { on: 'Wijzigen', off: 'Instellen' },
+  actionLabels = { on: 'Instellen', off: 'Wijzigen' },
 }: ValueActionsProps) {
   const LinkComponent = path?.startsWith('http') ? Link : MaRouterLink;
   return (
     <span className={styles.ValueActions}>
       {path && (
         <LinkComponent href={path}>
-          {medium.value ? actionLabels.on : actionLabels.off}
+          {medium.value ? actionLabels.off : actionLabels.on}
         </LinkComponent>
       )}
     </span>
@@ -79,8 +79,7 @@ export function MediumValue({ medium }: MediumValueProps) {
             <Value medium={medium} />{' '}
             {medium.value && medium.isValidated && (
               <>(Laatst gevalideerd op {medium.dateModifiedFormatted})</>
-            )}
-            <br />
+            )}{' '}
             {needsValidation && (
               <>
                 {!isOld ? (
@@ -95,8 +94,8 @@ export function MediumValue({ medium }: MediumValueProps) {
                   medium={medium}
                   path={getRoute('1', 'valideren')}
                   actionLabels={{
-                    on: isOld ? 'Opnieuw valideren' : 'Nu valideren',
-                    off: 'Wijzigen',
+                    off: isOld ? 'Opnieuw valideren' : 'Nu valideren',
+                    on: 'Wijzigen',
                   }}
                 />
               </>
@@ -110,12 +109,12 @@ export function MediumValue({ medium }: MediumValueProps) {
     case 'phone': {
       return (
         <>
-          <Paragraph size="small">
+          <Paragraph size="small" className="ams-mb-s">
             Voor sommige diensten is het belangrijk dat het telefoonnummer
             actief beheerd wordt.
           </Paragraph>
           <Paragraph>
-            <Value medium={medium} />
+            <Value medium={medium} />{' '}
             <ValueActions medium={medium} path={route} />
           </Paragraph>
         </>
@@ -124,12 +123,15 @@ export function MediumValue({ medium }: MediumValueProps) {
     case 'app': {
       return (
         <>
-          <Paragraph size="small">
+          <Paragraph size="small" className="ams-mb-s">
             Als u de Amsterdam App download en toestemming geeft om meldingen
             van Mijn Amsterdam te versturen.
           </Paragraph>
           <Paragraph>
             <Value medium={medium} noValueText="Nog niet gekoppeld" />
+            {medium.value && medium.isValidated && (
+              <>(Gekoppeld op {medium.dateModifiedFormatted})</>
+            )}{' '}
             <ValueActions
               medium={medium}
               path={route}
@@ -142,12 +144,12 @@ export function MediumValue({ medium }: MediumValueProps) {
     case 'berichtenbox': {
       return (
         <>
-          <Paragraph size="small">
+          <Paragraph size="small" className="ams-mb-s">
             Als u de berichtbox toestemming heeft gegeven om namens gemeente
             Amsterdam te versturen.
           </Paragraph>
           <Paragraph>
-            <Value medium={medium} noValueText="Nog niet gekoppeld" />
+            <Value medium={medium} noValueText="Nog niet gekoppeld" />{' '}
             <ValueActions
               medium={medium}
               path={route}
@@ -166,7 +168,7 @@ export function MediumValue({ medium }: MediumValueProps) {
             postadres doorgeven.
           </Paragraph>
           <Paragraph>
-            <Value medium={medium} noValueText="Geen postadres bekend" />
+            <Value medium={medium} noValueText="Geen postadres bekend" />{' '}
             <ValueActions
               medium={medium}
               path="https://www.amsterdam.nl/burgerzaken/verhuizen-inschrijving-briefadres/"
