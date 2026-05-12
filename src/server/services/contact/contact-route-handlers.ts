@@ -13,7 +13,7 @@ import {
 import { captureException } from '../monitoring.ts';
 import {
   fetchCommunicatievoorkeuren,
-  setCommunicatievoorkeur,
+  setContactgegeven,
 } from './contact-profieldienst.ts';
 
 const debugContactRequestData = createDebugger(
@@ -81,7 +81,7 @@ export async function handleGetCommunicatievoorkeuren(
   return sendResponse(res, communicatievoorkeurenResponse);
 }
 
-export async function handleSetCommunicatievoorkeur(
+export async function handleSetContactgegeven(
   req: Request,
   res: ResponseAuthenticated
 ) {
@@ -92,7 +92,7 @@ export async function handleSetCommunicatievoorkeur(
   //   return sendBadRequest(res, 'E-mail is required');
   // }
 
-  const response = await setCommunicatievoorkeur(
+  const response = await setContactgegeven(
     res.locals.authProfileAndToken,
     type,
     value,

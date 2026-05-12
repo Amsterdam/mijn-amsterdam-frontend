@@ -197,7 +197,7 @@ const payloadTypeByMediumType = {
   Record<MediumType, CreateVerificationRequestPayload['type'] | null>
 >;
 
-export async function setCommunicatievoorkeur(
+export async function setContactgegeven(
   authProfileAndToken: AuthProfileAndToken,
   mediumType: MediumType,
   mediumValue: string,

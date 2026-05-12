@@ -3,7 +3,7 @@ import express from 'express';
 import {
   handleCreateVerificationRequest,
   handleVerifyVerificationRequest,
-  handleSetCommunicatievoorkeur,
+  handleSetContactgegeven,
   handleGetCommunicatievoorkeuren,
 } from './contact-route-handlers.ts';
 import { routes } from './contact-service-config.ts';
@@ -28,8 +28,8 @@ routerProtected.get(
   handleGetCommunicatievoorkeuren
 );
 routerProtected.post(
-  routes.CONTACT_SET_COMMUNICATIEVOORKEUR,
-  handleSetCommunicatievoorkeur
+  routes.CONTACT_SET_CONTACTGEGEVEN,
+  handleSetContactgegeven
 );
 
 export const contactRouter = {
