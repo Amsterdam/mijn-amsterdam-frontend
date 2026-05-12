@@ -71,13 +71,17 @@ export function Dashboard() {
         }}
       >
         <PageContentCell spanWide={7}>
-          <CollapsiblePanel title="Aankomende afspraken" startCollapsed={false}>
-            {afspraken.length ? (
+          {/* When there are no afspraken it is better to not show the whole Panel otherwise
+              we can leave the impression that there are no afspraken AT ALL with the government.
+          */}
+          {afspraken.length && (
+            <CollapsiblePanel
+              title="Aankomende afspraken"
+              startCollapsed={false}
+            >
               <AfspraakCardsDashboard afspraken={afspraken} />
-            ) : (
-              <Paragraph className="ams-mb-m">{AFSPRAKEN_EMPTY_TEXT}</Paragraph>
-            )}
-          </CollapsiblePanel>
+            </CollapsiblePanel>
+          )}
           <Heading level={2} className="ams-mb-m">
             Recente berichten{' '}
             {total > notifications.length && (
