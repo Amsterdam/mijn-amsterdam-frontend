@@ -28,8 +28,8 @@ export function CommunicatieVoorkeuren({
 
   const voorkeurenList = voorkeuren.map((voorkeur) => (
     <article key={voorkeur.id} className="ams-mb-xl">
-      <Heading level={4}>{voorkeur.stakeholder}</Heading>
-      <Paragraph className="ams-mb-s">{voorkeur.description}</Paragraph>
+      <Heading level={4}>{voorkeur.dienstNaam}</Heading>
+      <Paragraph className="ams-mb-s">{voorkeur.dienstBeschrijving}</Paragraph>
 
       <ul className={styles.VoorkeurInstellingen}>
         {voorkeur.settings.map((medium) => {

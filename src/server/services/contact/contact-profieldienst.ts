@@ -1,9 +1,9 @@
 import type {
   ContactProfieldienstResponseSource,
-  CommunicatievoorkeurPayload,
+  CommunicatievoorkeurPayloadSource,
 } from './contact-profieldienst-types.ts';
 import type {
-  Communicatievoorkeur,
+  CommunicatievoorkeurFrontend,
   CommunicatievoorkeurenResponseFrontend,
 } from './contact-profieldienst-types.ts';
 import { profieldienstRequestConfig } from './contact-service-config.ts';
@@ -17,7 +17,7 @@ import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import { fetchMyLocations } from '../bag/my-locations.ts';
 
-const MEDIUM_TYPES = {
+const ContactgegevenTypeFrontend = {
   EMAIL: 'email',
   PHONE: 'phone',
   APP: 'app',
@@ -25,17 +25,22 @@ const MEDIUM_TYPES = {
   POSTADRES: 'postadres',
 } as const;
 
-export type MediumType = (typeof MEDIUM_TYPES)[keyof typeof MEDIUM_TYPES];
+export type MediumType =
+  (typeof ContactgegevenTypeFrontend)[keyof typeof ContactgegevenTypeFrontend];
 
-const voorkeurenBE____static: Communicatievoorkeur[] = [
+const voorkeurenBE____static: CommunicatievoorkeurFrontend[] = [
   {
     id: 1,
-    stakeholder: 'Zorg en ondersteuning (WMO)',
-    description: 'Informatie over uw aanvragen en voorzieningen',
+    dienstNaam: 'Zorg en ondersteuning (WMO)',
+    dienstBeschrijving: 'Informatie over uw aanvragen en voorzieningen',
     settings: [
-      { type: MEDIUM_TYPES.EMAIL, value: null, dateModified: null },
       {
-        type: MEDIUM_TYPES.POSTADRES,
+        type: ContactgegevenTypeFrontend.EMAIL,
+        value: null,
+        dateModified: null,
+      },
+      {
+        type: ContactgegevenTypeFrontend.POSTADRES,
         value: 'Het Amstelplein 32-H',
         dateModified: null,
       },
@@ -43,28 +48,48 @@ const voorkeurenBE____static: Communicatievoorkeur[] = [
   },
   {
     id: 2,
-    stakeholder: 'Erfpacht',
-    description: 'Factuurspecificaties',
+    dienstNaam: 'Erfpacht',
+    dienstBeschrijving: 'Factuurspecificaties',
     settings: [
-      { type: MEDIUM_TYPES.EMAIL, value: null, dateModified: null },
-      { type: MEDIUM_TYPES.POSTADRES, value: null, dateModified: null },
-      { type: MEDIUM_TYPES.PHONE, value: '0612345678', dateModified: null },
+      {
+        type: ContactgegevenTypeFrontend.EMAIL,
+        value: null,
+        dateModified: null,
+      },
+      {
+        type: ContactgegevenTypeFrontend.POSTADRES,
+        value: null,
+        dateModified: null,
+      },
+      {
+        type: ContactgegevenTypeFrontend.PHONE,
+        value: '0612345678',
+        dateModified: null,
+      },
     ],
   },
   {
     id: 3,
-    stakeholder: 'Erfpacht',
-    description: 'Informatie over uw Erfpacht dossiers',
+    dienstNaam: 'Erfpacht',
+    dienstBeschrijving: 'Informatie over uw Erfpacht dossiers',
     settings: [
-      { type: MEDIUM_TYPES.EMAIL, value: null, dateModified: null },
-      { type: MEDIUM_TYPES.POSTADRES, value: null, dateModified: null },
+      {
+        type: ContactgegevenTypeFrontend.EMAIL,
+        value: null,
+        dateModified: null,
+      },
+      {
+        type: ContactgegevenTypeFrontend.POSTADRES,
+        value: null,
+        dateModified: null,
+      },
     ],
   },
 ];
 
 const identificatieTypeByProfileType: Record<
   ProfileType,
-  CommunicatievoorkeurPayload['scope']['scopeIdentificatieType']
+  CommunicatievoorkeurPayloadSource['scope']['scopeIdentificatieType']
 > = {
   private: 'BSN',
   commercial: 'KVK',
@@ -88,24 +113,34 @@ export async function fetchCommunicatievoorkeuren(
   const locationsResponse = await fetchMyLocations(authProfileAndToken);
 
   return apiSuccessResult({
+    // Hier gegevens uit het profile endpoint aansluiten.
     voorkeuren: voorkeurenBE____static,
-    defaultMediumsByType: {
+    // Welke zijn de standaard gegevens? Misschien de eerst toegevoegde?
+    standaardContactvoorkeurPerType: {
       // TODO: add the default contactgegevens from the profieldienst.
       email: {
-        type: MEDIUM_TYPES.EMAIL,
+        type: ContactgegevenTypeFrontend.EMAIL,
         // value: 't.van.oostrom@amsterdam.nl',
         value: null,
         dateModified: '2025-05-04',
       },
-      phone: { type: MEDIUM_TYPES.PHONE, value: null, dateModified: null },
-      app: { type: MEDIUM_TYPES.APP, value: null, dateModified: null },
+      phone: {
+        type: ContactgegevenTypeFrontend.PHONE,
+        value: null,
+        dateModified: null,
+      },
+      app: {
+        type: ContactgegevenTypeFrontend.APP,
+        value: null,
+        dateModified: null,
+      },
       berichtenbox: {
-        type: MEDIUM_TYPES.BERICHTENBOX,
+        type: ContactgegevenTypeFrontend.BERICHTENBOX,
         value: null,
         dateModified: null,
       },
       postadres: {
-        type: MEDIUM_TYPES.POSTADRES,
+        type: ContactgegevenTypeFrontend.POSTADRES,
         dateModified: null,
         value: locationsResponse.content?.[0]?.address
           ? getFullAddress(locationsResponse.content?.[0]?.address)
@@ -122,7 +157,7 @@ export async function setCommunicatievoorkeur(
   serviceId?: number,
   voorkeurId?: number
 ): Promise<ApiResponse<null>> {
-  const scope: CommunicatievoorkeurPayload['scope'] = {
+  const scope: CommunicatievoorkeurPayloadSource['scope'] = {
     scopeIdentificatieType:
       identificatieTypeByProfileType[authProfileAndToken.profile.profileType],
     scopeIdentificatieNummer: authProfileAndToken.profile.id,
@@ -132,7 +167,7 @@ export async function setCommunicatievoorkeur(
     scope.dienstId = serviceId;
   }
 
-  const payload: CommunicatievoorkeurPayload = {
+  const payload: CommunicatievoorkeurPayloadSource = {
     voorkeurType: type,
     waarde: value,
     scope,

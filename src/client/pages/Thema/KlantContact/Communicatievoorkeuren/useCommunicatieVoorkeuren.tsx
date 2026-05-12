@@ -11,7 +11,7 @@ import type {
 } from '../../../../../server/services/contact/contact-profieldienst-types.ts';
 import type {
   CommunicatievoorkeurenResponseFrontend,
-  MediumType,
+  ContactgegevenTypeFrontend,
 } from '../../../../../server/services/contact/contact-profieldienst-types.ts';
 import { lowercaseFirstLetter } from '../../../../../universal/helpers/text.ts';
 import {
@@ -35,7 +35,8 @@ export function useCommunicatievoorkeuren() {
   return {
     themaId,
     voorkeuren,
-    defaultMediumsByType: data?.content?.defaultMediumsByType ?? null,
+    defaultMediumsByType:
+      data?.content?.standaardContactvoorkeurPerType ?? null,
     featureToggle,
     displayProps: communicatievoorkeurenDisplayProps,
     title: communicatieVoorkeurenTitle,
@@ -76,7 +77,10 @@ export function useCommunicatieVoorkeurInstellen() {
   } = useCommunicatievoorkeuren();
   const { fetch: updateCommunicatievoorkeur } = useSetCommunicatievoorkeur();
   const breadcrumbs = useThemaBreadcrumbs(themaId);
-  const params = useParams<{ medium: MediumType; id?: string }>();
+  const params = useParams<{
+    medium: ContactgegevenTypeFrontend;
+    id?: string;
+  }>();
   const voorkeur =
     voorkeuren.find((voorkeur) => voorkeur.id === params.id) ?? null;
 
@@ -88,7 +92,7 @@ export function useCommunicatieVoorkeurInstellen() {
   }
 
   return {
-    title: `Instellen ${lowercaseFirstLetter(MediumByTypeLabels[medium?.type ?? (params.medium as MediumType)] ?? '')}`,
+    title: `Instellen ${lowercaseFirstLetter(MediumByTypeLabels[medium?.type ?? (params.medium as ContactgegevenTypeFrontend)] ?? '')}`,
     themaId,
     breadcrumbs,
     voorkeur,
@@ -100,7 +104,7 @@ export function useCommunicatieVoorkeurInstellen() {
       if (defaultMediumsByType) {
         optimisticUpdateContent({
           voorkeuren,
-          defaultMediumsByType: {
+          standaardContactvoorkeurPerType: {
             ...defaultMediumsByType,
             [payload.type]: {
               ...defaultMediumsByType[payload.type],

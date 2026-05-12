@@ -1,96 +1,98 @@
-// Generated TypeScript types for the contact profieldienst response
-
-export type PartijIdentificatie = {
+export type PartijIdentificatieSource = {
   identificatieType: string;
   identificatieNummer: string;
 };
 
-export type Identificatie = PartijIdentificatie;
+export type IdentificatieSource = PartijIdentificatieSource;
 
-export type Dienst = {
+export type DienstSource = {
   id: number;
   beschrijving: string;
 };
 
-export type Scope = {
-  partij: PartijIdentificatie;
-  dienst: Dienst;
+export type ScopeSource = {
+  partij: PartijIdentificatieSource;
+  dienst: DienstSource;
 };
 
-export type Voorkeur = {
+export type VoorkeurSource = {
   id: number;
   voorkeurType: string;
   waarde: string;
   createdAt: string; // ISO date string
   lastUpdated: string; // ISO date string
-  scopes: Scope[];
+  scopes: ScopeSource[];
 };
 
-export type Contactgegeven = {
+export type ContactgegevenSource = {
   id: number;
-  type: 'Email' | 'Telefoon' | string; // TODO: see list
+  type: 'Email' | 'Telefoon' | string; // TODO: see list in source?
   waarde: string;
   isGeverifieerd: boolean;
   isValid: boolean;
   createdAt: string; // ISO date string
   lastUpdated: string; // ISO date string
-  scopes: Scope[];
+  scopes: ScopeSource[];
 };
 
 export type ContactProfieldienstResponseSource = {
   partijId: number;
-  identificaties: Identificatie[];
-  voorkeuren: Voorkeur[];
-  contactgegevens: Contactgegeven[];
+  identificaties: IdentificatieSource[];
+  voorkeuren: VoorkeurSource[];
+  contactgegevens: ContactgegevenSource[];
 };
 
-export type CommunicatievoorkeurPayloadFrontend = {
-  type: MediumType;
-  value: CommunicatieMediumSetting['value'];
-  dienstId?: number;
-  voorkeurId?: number;
-};
-
-export type SetCommunicatievoorkeurResponseFrontend = {
-  success: boolean;
-};
-
-export type CommunicatievoorkeurPayload = {
-  id?: number;
-  voorkeurType: Contactgegeven['type'];
-  waarde: string;
-  scope: {
-    scopeIdentificatieType: 'BSN' | 'KVK';
-    scopeIdentificatieNummer: string;
-    dienstId?: number;
-  };
-};
-
-export type MediumType =
+// TODO: Gelijktrekken met types uit API, dan is er geen transformatie nodig.
+export type ContactgegevenTypeFrontend =
   | 'email'
   | 'phone'
   | 'app'
   | 'berichtenbox'
-  | 'postadres';
+  | 'postadres'; // MA only.
 
-export type CommunicatieMedium = {
-  type: MediumType;
+export type ContactgegevenFrontend = {
+  type: ContactgegevenTypeFrontend;
   value: string | null;
   dateModified: string | null; // ISO date string
+  isValidated?: boolean;
 };
 
-export type CommunicatieMediumSetting = CommunicatieMedium & {
-  // foo: 'bar'; // TODO: Remove this when the backend is updated to return the correct type
+export type CommunicatievoorkeurFrontend = {
+  id: CommunicatievoorkeurPayloadSource['id'];
+  // Hebben we wel een naam + beschrijving nodig van de dienst?
+  dienstNaam: string;
+  dienstBeschrijving: string;
+  settings: ContactgegevenFrontend[];
 };
 
-export type Communicatievoorkeur = {
-  id: CommunicatievoorkeurPayload['id'];
-  stakeholder: string;
-  description: string;
-  settings: CommunicatieMediumSetting[];
+// Van BFF naar Profieldienst API
+export type CommunicatievoorkeurPayloadSource = {
+  id?: VoorkeurSource['id'];
+  voorkeurType: ContactgegevenSource['type'];
+  waarde: string;
+  scope: {
+    scopeIdentificatieType: 'BSN' | 'KVK';
+    scopeIdentificatieNummer: string;
+    dienstId?: DienstSource['id'];
+  };
 };
 
 export type CommunicatievoorkeurenResponseFrontend = {
-  voorkeuren: Communicatievoorkeur[];
-  defaultMediumsByType: Record<MediumType, CommunicatieMedium>;
+  voorkeuren: CommunicatievoorkeurFrontend[];
+  standaardContactvoorkeurPerType: Record<
+    ContactgegevenTypeFrontend,
+    ContactgegevenFrontend
+  >;
+};
+
+// Van FE naar BFF
+export type CommunicatievoorkeurPayloadFrontend = {
+  type: ContactgegevenTypeFrontend;
+  value: ContactgegevenFrontend['value'];
+  dienstId?: DienstSource['id'];
+  voorkeurId?: VoorkeurSource['id'];
+};
+
+export type SetCommunicatievoorkeurResponseFrontend = {
+  success: boolean;
 };

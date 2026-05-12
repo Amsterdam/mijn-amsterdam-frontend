@@ -3,12 +3,12 @@ import { differenceInCalendarMonths } from 'date-fns';
 import { generatePath } from 'react-router';
 
 import { MAXIMUM_AGE_BEFORE_VALIDATION } from './CommunicatieVoorkeuren-config.ts';
-import type { CommunicatieMedium } from '../../../../../server/services/contact/contact-profieldienst-types.ts';
+import type { ContactgegevenFrontend } from '../../../../../server/services/contact/contact-profieldienst-types.ts';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import { routeConfig } from '../KlantContact-thema-config.ts';
 
 type CommunicatieMediumValueProps = {
-  medium: CommunicatieMedium;
+  medium: ContactgegevenFrontend;
   noValueText?: string;
 };
 
@@ -20,7 +20,7 @@ function Value({
 }
 
 type ValueActionsProps = {
-  medium: CommunicatieMedium;
+  medium: ContactgegevenFrontend;
   path?: string;
   actionLabels?: {
     on: string;
@@ -46,7 +46,7 @@ function ValueActions({
 }
 
 type MediumValueProps = {
-  medium: CommunicatieMedium;
+  medium: ContactgegevenFrontend;
 };
 
 export function MediumValue({ medium }: MediumValueProps) {

@@ -13,16 +13,16 @@ import { VoorkeurByTypeLabels } from './CommunicatieVoorkeuren-config.ts';
 import styles from './CommunicatieVoorkeuren.module.scss';
 import { EmailForm, EmailVerify } from './EmailInputAndValidation.tsx';
 import type {
-  CommunicatieMedium,
-  Communicatievoorkeur,
+  ContactgegevenFrontend,
+  CommunicatievoorkeurFrontend,
 } from '../../../../../server/services/contact/contact-profieldienst-types.ts';
 import { MaButtonInline } from '../../../../components/MaLink/MaLink.tsx';
 import { useSessionStorage } from '../../../../hooks/storage.hook.ts';
 import { routeConfig } from '../KlantContact-thema-config.ts';
 
 type EmailInstellenProps = {
-  medium: CommunicatieMedium;
-  voorkeur?: Communicatievoorkeur | null;
+  medium: ContactgegevenFrontend;
+  voorkeur?: CommunicatievoorkeurFrontend | null;
   onFinished: (email: string) => void;
 };
 
@@ -44,7 +44,7 @@ export function EmailInstellen({
 
   console.log('step', step);
 
-  const medium_: CommunicatieMedium = {
+  const medium_: ContactgegevenFrontend = {
     ...medium,
     value: emailLocal || medium.value,
   };
@@ -73,10 +73,12 @@ export function EmailInstellen({
             <>
               <Paragraph className="ams-mb-m">
                 Hier kunt u uw e-mailadres doorgeven. U krijgt dan e-mails van{' '}
-                {voorkeur.stakeholder} over de volgende onderwerpen:
+                {voorkeur.dienstNaam} over de volgende onderwerpen:
               </Paragraph>
               <UnorderedList className="ams-mb-m">
-                <UnorderedList.Item>{voorkeur.description}</UnorderedList.Item>
+                <UnorderedList.Item>
+                  {voorkeur.dienstBeschrijving}
+                </UnorderedList.Item>
               </UnorderedList>
               {!!medium.value && (
                 <Field className="ams-mb-m">
