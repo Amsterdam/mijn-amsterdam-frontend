@@ -3,6 +3,7 @@ import {
   Paragraph,
   UnorderedList,
   Checkbox,
+  Alert,
 } from '@amsterdam/design-system-react';
 
 import { MediumValue } from './CommunicatieMediumValue.tsx';
@@ -54,10 +55,16 @@ export function CommunicatieVoorkeuren({
           ))}
         </UnorderedList>
         {!hasValidatedEmail && (
-          <Paragraph>
-            U heeft nog geen gevalideerd e-mailadres gekoppeld. Hieronder kunt u
-            uw e-mailadres instellen en valideren.
-          </Paragraph>
+          <Alert
+            severity="warning"
+            heading="E-mailadres ontbreekt"
+            headingLevel={3}
+          >
+            <Paragraph>
+              U heeft nog geen gevalideerd e-mailadres gekoppeld. Hieronder kunt
+              u uw e-mailadres instellen en valideren.
+            </Paragraph>
+          </Alert>
         )}
         {hasValidatedEmail && (
           <form>
