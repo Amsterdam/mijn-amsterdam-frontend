@@ -58,7 +58,7 @@ export function MediumValue({ medium }: MediumValueProps) {
     case 'email':
       return (
         <>
-          <Paragraph size="small" className="ams-mb-s">
+          <Paragraph size="small">
             Voor sommige diensten is het belangrijk dat het e-mailadres actief
             beheerd wordt.
           </Paragraph>
@@ -67,7 +67,7 @@ export function MediumValue({ medium }: MediumValueProps) {
           {medium.dateModified &&
             differenceInCalendarMonths(new Date(), medium.dateModified) >=
               MAXIMUM_AGE_BEFORE_VALIDATION && (
-              <Paragraph size="small" className="ams-mb-s">
+              <Paragraph size="small">
                 Het e-mailadres is langer dan 6 maanden niet bijgewerkt.
               </Paragraph>
             )}
@@ -76,7 +76,7 @@ export function MediumValue({ medium }: MediumValueProps) {
     case 'phone':
       return (
         <>
-          <Paragraph size="small" className="ams-mb-s">
+          <Paragraph size="small">
             Voor sommige diensten is het belangrijk dat het telefoonnummer
             actief beheerd wordt.
           </Paragraph>
@@ -87,7 +87,7 @@ export function MediumValue({ medium }: MediumValueProps) {
     case 'app':
       return (
         <>
-          <Paragraph size="small" className="ams-mb-s">
+          <Paragraph size="small">
             Als u de Amsterdam App download en toestemming geeft om meldingen
             van Mijn Amsterdam te versturen.
           </Paragraph>
@@ -102,7 +102,7 @@ export function MediumValue({ medium }: MediumValueProps) {
     case 'berichtenbox':
       return (
         <>
-          <Paragraph size="small" className="ams-mb-s">
+          <Paragraph size="small">
             Als u de berichtbox toestemming heeft gegeven om namens gemeente
             Amsterdam te versturen.
           </Paragraph>
