@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import {
   Heading,
   OrderedList,
-  Paragraph,
 } from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
 
@@ -27,7 +26,6 @@ import { useAppStateNotifications } from '../../hooks/useNotifications.ts';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
 import { useKlantcontactData } from '../Thema/KlantContact/useKlantcontactData.hook.tsx';
-import { AFSPRAKEN_EMPTY_TEXT } from '../Thema/KlantContact/KlantContactThema.tsx';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
 

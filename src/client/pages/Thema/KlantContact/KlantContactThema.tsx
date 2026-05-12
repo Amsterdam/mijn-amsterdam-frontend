@@ -14,8 +14,6 @@ import { isEnabled } from '../../../config/feature-toggles.ts';
 import { getRedactedClass } from '../../../helpers/cobrowse.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
-export const AFSPRAKEN_EMPTY_TEXT = 'U heeft geen afspraken.';
-
 export function KlantContactThema() {
   const {
     id,
@@ -87,7 +85,7 @@ function Afspraken() {
           />
         </>
       ) : (
-        <Paragraph>{AFSPRAKEN_EMPTY_TEXT}</Paragraph>
+        <Paragraph>U heeft geen afspraken.</Paragraph>
       )}
     </PageContentCell>
   );
