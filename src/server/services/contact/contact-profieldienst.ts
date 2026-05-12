@@ -185,41 +185,32 @@ export async function fetchCommunicatievoorkeuren(
   const app = getMostRecentForMedium(profiel, 'app');
 
   // TODO: ook gegevens van berichtenbox/postadres toevoegen
-  const failedDependencies = getFailedDependencies({
-    locationsResponse,
-    profiel,
-    dienstverlenerResponse,
-  });
-
-  return apiSuccessResult(
-    {
-      voorkeuren: voorkeurenBE____static,
-      aangeslotenDiensten:
-        dienstverlenerResponse.status === 'OK'
-          ? (dienstverlenerResponse.content?.diensten ?? [])
-          : [],
-      standaardContactvoorkeurPerType: {
-        email,
-        phone,
-        app,
-        berichtenbox: {
-          type: ContactgegevenTypeFrontend.BERICHTENBOX,
-          value: null,
-          dateModified: null,
-          dateModifiedFormatted: null,
-        },
-        postadres: {
-          type: ContactgegevenTypeFrontend.POSTADRES,
-          dateModified: null,
-          value: locationsResponse.content?.[0]?.address
-            ? getFullAddress(locationsResponse.content?.[0]?.address)
-            : null,
-          dateModifiedFormatted: null,
-        },
+  return apiSuccessResult({
+    voorkeuren: voorkeurenBE____static,
+    standaardContactvoorkeurPerType: {
+      email,
+      phone: {
+        ...phone,
+        disabled: true,
+      },
+      app,
+      berichtenbox: {
+        type: ContactgegevenTypeFrontend.BERICHTENBOX,
+        value: null,
+        dateModified: null,
+        dateModifiedFormatted: null,
+        disabled: true,
+      },
+      postadres: {
+        type: ContactgegevenTypeFrontend.POSTADRES,
+        dateModified: null,
+        value: locationsResponse.content?.[0]?.address
+          ? getFullAddress(locationsResponse.content?.[0]?.address)
+          : null,
+        dateModifiedFormatted: null,
       },
     },
-    failedDependencies
-  );
+  });
 }
 
 const payloadTypeByMediumType = {

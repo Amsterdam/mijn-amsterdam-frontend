@@ -39,7 +39,7 @@ export function useCommunicatievoorkeuren() {
   return {
     themaId,
     voorkeuren,
-    defaultMediumsByType:
+    standaardContactvoorkeurPerType:
       data?.content?.standaardContactvoorkeurPerType ?? null,
     featureToggle,
     displayProps: communicatievoorkeurenDisplayProps,
@@ -73,7 +73,7 @@ function useSetCommunicatievoorkeur() {
 
 export function useCommunicatieVoorkeurInstellen() {
   const {
-    defaultMediumsByType,
+    standaardContactvoorkeurPerType: defaultMediumsByType,
     voorkeuren,
     isError,
     isLoading,

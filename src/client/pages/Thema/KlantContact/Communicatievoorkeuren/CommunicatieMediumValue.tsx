@@ -71,15 +71,16 @@ export function MediumValue({ medium }: MediumValueProps) {
       const needsValidation = !!medium.value && (!medium.isValidated || isOld);
       return (
         <>
-          <Paragraph size="small" className="ams-mb-s">
+          {/* <Paragraph size="small" className="ams-mb-s">
             Voor sommige diensten is het belangrijk dat het e-mailadres actief
             beheerd wordt.
-          </Paragraph>
+          </Paragraph> */}
           <Paragraph className="ams-mb-s">
-            <Value medium={medium} />{' '}
+            <Value medium={medium} />
             {medium.value && medium.isValidated && (
               <>(Laatst gewijzigd op {medium.dateModifiedFormatted})</>
-            )}{' '}
+            )}
+            <br />
             {needsValidation && (
               <>
                 {!isOld ? (
@@ -109,12 +110,13 @@ export function MediumValue({ medium }: MediumValueProps) {
     case 'phone': {
       return (
         <>
-          <Paragraph size="small" className="ams-mb-s">
+          {/* <Paragraph size="small" className="ams-mb-s">
             Voor sommige diensten is het belangrijk dat het telefoonnummer
             actief beheerd wordt.
-          </Paragraph>
+          </Paragraph> */}
           <Paragraph>
-            <Value medium={medium} />{' '}
+            <Value medium={medium} />
+            <br />
             <ValueActions medium={medium} path={route} />
           </Paragraph>
         </>
@@ -123,15 +125,16 @@ export function MediumValue({ medium }: MediumValueProps) {
     case 'app': {
       return (
         <>
-          <Paragraph size="small" className="ams-mb-s">
+          {/* <Paragraph size="small" className="ams-mb-s">
             Als u de Amsterdam App download en toestemming geeft om meldingen
             van Mijn Amsterdam te versturen.
-          </Paragraph>
+          </Paragraph> */}
           <Paragraph>
             <Value medium={medium} noValueText="Nog niet gekoppeld" />
             {medium.value && medium.isValidated && (
               <>(Gekoppeld op {medium.dateModifiedFormatted})</>
-            )}{' '}
+            )}
+            <br />
             <ValueActions
               medium={medium}
               path={route}
@@ -144,12 +147,13 @@ export function MediumValue({ medium }: MediumValueProps) {
     case 'berichtenbox': {
       return (
         <>
-          <Paragraph size="small" className="ams-mb-s">
+          {/* <Paragraph size="small" className="ams-mb-s">
             Als u de berichtbox toestemming heeft gegeven om namens gemeente
             Amsterdam te versturen.
-          </Paragraph>
+          </Paragraph> */}
           <Paragraph>
-            <Value medium={medium} noValueText="Nog niet gekoppeld" />{' '}
+            <Value medium={medium} noValueText="Nog niet gekoppeld" />
+            <br />
             <ValueActions
               medium={medium}
               path={route}
@@ -163,12 +167,13 @@ export function MediumValue({ medium }: MediumValueProps) {
     case 'postadres': {
       return (
         <>
-          <Paragraph size="small">
+          {/* <Paragraph size="small" className="ams-mb-s">
             Klopt het adres niet of gaat u verhuizen? U kunt u hier uw nieuwe
             postadres doorgeven.
-          </Paragraph>
+          </Paragraph> */}
           <Paragraph>
-            <Value medium={medium} noValueText="Geen postadres bekend" />{' '}
+            <Value medium={medium} noValueText="Geen postadres bekend" />
+            <br />
             <ValueActions
               medium={medium}
               path="https://www.amsterdam.nl/burgerzaken/verhuizen-inschrijving-briefadres/"

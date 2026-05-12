@@ -62,6 +62,7 @@ export type ContactgegevenFrontend = {
   dateModified: string | null; // ISO date string
   dateModifiedFormatted: string | null;
   isValidated?: boolean;
+  disabled?: boolean;
 };
 
 export type CommunicatievoorkeurFrontend = {

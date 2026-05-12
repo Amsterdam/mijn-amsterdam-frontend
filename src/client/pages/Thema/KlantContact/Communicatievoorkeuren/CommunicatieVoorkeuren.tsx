@@ -1,100 +1,83 @@
 import {
-  Field,
   Heading,
   Paragraph,
-  Icon,
-  Link,
+  UnorderedList,
+  Checkbox,
 } from '@amsterdam/design-system-react';
-import { CheckMarkIcon, CloseIcon } from '@amsterdam/design-system-react-icons';
-import { generatePath } from 'react-router';
 
 import { MediumValue } from './CommunicatieMediumValue.tsx';
-import {
-  MediumByTypeLabels,
-  VoorkeurByTypeLabels,
-} from './CommunicatieVoorkeuren-config.ts';
+import { MediumByTypeLabels } from './CommunicatieVoorkeuren-config.ts';
 import styles from './CommunicatieVoorkeuren.module.scss';
 import type { useCommunicatievoorkeuren } from './useCommunicatieVoorkeuren.tsx';
 import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
-import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 
 export function CommunicatieVoorkeuren({
   communicatievoorkeurenData,
 }: {
   communicatievoorkeurenData: ReturnType<typeof useCommunicatievoorkeuren>;
 }) {
-  const { voorkeuren, defaultMediumsByType, routeConfig } =
+  const { voorkeuren, standaardContactvoorkeurPerType } =
     communicatievoorkeurenData ?? {};
 
-  const voorkeurenList = voorkeuren.map((voorkeur) => (
-    <article key={voorkeur.id} className="ams-mb-xl">
-      <Heading level={4}>{voorkeur.dienstNaam}</Heading>
-      <Paragraph className="ams-mb-s">{voorkeur.dienstBeschrijving}</Paragraph>
+  const rows = Object.values(standaardContactvoorkeurPerType ?? {})
+    .filter((medium) => !medium.disabled)
+    .map((medium) => ({
+      label: MediumByTypeLabels[medium.type as keyof typeof MediumByTypeLabels],
+      content: (
+        <article className={styles.MediumValue}>
+          <MediumValue medium={medium} />
+        </article>
+      ),
+    }));
 
-      <ul className={styles.VoorkeurInstellingen}>
-        {voorkeur.settings.map((medium) => {
-          return (
-            <li key={voorkeur.id + medium.type}>
-              <Field className={styles.SwitchField}>
-                <span className={styles.SwitchFieldLink}>
-                  <MaRouterLink
-                    maVariant="fatNoDefaultUnderline"
-                    href={generatePath(
-                      routeConfig.detailPageCommunicatievoorkeurInstellen.path,
-                      {
-                        medium: medium.type,
-                        id: voorkeur.id,
-                        step: '1',
-                        action: 'instellen',
-                      }
-                    )}
-                  >
-                    {
-                      VoorkeurByTypeLabels[
-                        medium.type as keyof typeof VoorkeurByTypeLabels
-                      ]
-                    }
-                  </MaRouterLink>
-                </span>
-                <span className={styles.Switch}>
-                  <Icon svg={medium.value ? CheckMarkIcon : CloseIcon} /> &nbsp;
-                  {medium.value && defaultMediumsByType
-                    ? `Ja${
-                        medium.value !==
-                        defaultMediumsByType[
-                          medium.type as keyof typeof defaultMediumsByType
-                        ].value
-                          ? `, naar ${medium.value}`
-                          : ''
-                      }`
-                    : 'Nee'}
-                </span>
-              </Field>
-            </li>
-          );
-        })}
-      </ul>
-    </article>
-  ));
-
-  const rows = Object.values(defaultMediumsByType ?? {}).map((medium) => ({
-    label: MediumByTypeLabels[medium.type as keyof typeof MediumByTypeLabels],
-    content: (
-      <article className={styles.MediumValue}>
-        <MediumValue medium={medium} />
-      </article>
-    ),
-  }));
+  const hasValidatedEmail = !!(
+    standaardContactvoorkeurPerType?.email?.value &&
+    standaardContactvoorkeurPerType.email.isValidated
+  );
 
   return (
     <>
-      <Heading level={2}>Mijn contactgegevens</Heading>
-      <Paragraph className="ams-mb-l">
-        Via welk medium u geïnformeerd wilt worden als er bijvoorbeeld een
-        bericht voor u klaar staat of een status van een product is veranderd.
-      </Paragraph>
-      <Datalist rows={rows} />
-      {/* <Alert
+      <div className="ams-mb-l">
+        <Heading level={2}>Post per e-mail</Heading>
+        <Paragraph className="ams-mb-s">
+          U kunt voor de volgende diensten post per e-mail ontvangen:
+        </Paragraph>
+        <UnorderedList className="ams-mb-m">
+          {voorkeuren?.map((voorkeur) => (
+            <UnorderedList.Item key={voorkeur.id}>
+              <Paragraph>
+                <strong>{voorkeur.dienstNaam}</strong>
+                <br />
+                {voorkeur.dienstBeschrijving}
+              </Paragraph>
+            </UnorderedList.Item>
+          ))}
+        </UnorderedList>
+        {!hasValidatedEmail && (
+          <Paragraph>
+            U heeft nog geen gevalideerd e-mailadres gekoppeld. Hieronder kunt u
+            uw e-mailadres instellen en valideren.
+          </Paragraph>
+        )}
+        {hasValidatedEmail && (
+          <form>
+            <Checkbox
+              id=""
+              onChange={function fie() {}}
+              onClick={function fie() {}}
+            >
+              Ja, ik wil post per e-mail ontvangen voor bovenstaande diensten.
+            </Checkbox>
+          </form>
+        )}
+      </div>
+      <div>
+        <Heading level={2}>Mijn contactgegevens</Heading>
+        <Paragraph className="ams-mb-l">
+          Via onderstaande contactgegevens kan de gemeente met u communiceren.
+        </Paragraph>
+        <Datalist rows={rows} />
+        {/* <Alert
         severity="warning"
         heading="Let op!"
         headingLevel={3}
@@ -107,19 +90,7 @@ export function CommunicatieVoorkeuren({
           Vetrouwt u iets niet, neem dan contact op met de gemeente.
         </Paragraph>
       </Alert> */}
-      <Heading level={2}>Mijn communicatievoorkeuren</Heading>
-      <Paragraph className="ams-mb-l">
-        Nog niet alle diensten van de gemeente zijn aangesloten bij de generieke
-        communicatievoorkeuren. Het kan dus zijn dat er nog elders binnen de
-        gemeente contactgegevens van u worden gebruikt voor berichtgeving over
-        thema's die niet hieronder staan benoemd. Heeft u daar vragen over bel
-        dan naar{' '}
-        <Link href="tel:14020" rel="noopener noreferrer">
-          14020
-        </Link>
-        .
-      </Paragraph>
-      {voorkeurenList}
+      </div>
     </>
   );
 }
