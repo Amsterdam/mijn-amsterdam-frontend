@@ -17,6 +17,7 @@ import styles from './AfspraakCard.module.scss';
 import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { useDateNow } from '../../hooks/timer.hook.ts';
+import { themaConfig } from '../../pages/Thema/KlantContact/KlantContact-thema-config.ts';
 import type { AfspraakFrontendFinal } from '../../pages/Thema/KlantContact/useKlantcontactData.hook.tsx';
 import { CalendarLink } from '../CalendarLink/CalendarLink.tsx';
 import { LocationModal } from '../LocationModal/LocationModal.tsx';
@@ -164,7 +165,13 @@ export function AfspraakCardsDashboard({ afspraken }: AfspraakCardsProps) {
   const isSmallScreen = useSmallScreen();
   const afspraakCards = afspraken.map((afspraak) => {
     return (
-      <Row key={afspraak.caseReference} className="ams-mb-m">
+      <Row
+        key={afspraak.caseReference}
+        className={classNames(
+          'ams-mb-m',
+          getRedactedClass(themaConfig.id, 'content')
+        )}
+      >
         <Column>
           <Heading
             level={3}

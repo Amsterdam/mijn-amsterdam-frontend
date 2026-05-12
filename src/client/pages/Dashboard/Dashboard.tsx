@@ -25,7 +25,6 @@ import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 import { useAppStateNotifications } from '../../hooks/useNotifications.ts';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
-import { themaConfig } from '../Thema/KlantContact/KlantContact-thema-config.ts';
 import { useKlantcontactData } from '../Thema/KlantContact/useKlantcontactData.hook.tsx';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
@@ -42,7 +41,8 @@ export function Dashboard() {
   const { notifications, total } = useAppStateNotifications(
     MAX_NOTIFICATIONS_VISIBLE
   );
-  const { afspraken } = useKlantcontactData();
+  const { afspraken, themaConfig: themaConfigKlantContact } =
+    useKlantcontactData();
 
   const isPhoneScreen = useSmallScreen();
 
@@ -83,7 +83,7 @@ export function Dashboard() {
               />
               <LinkToListPage
                 count={afspraken.length}
-                route={themaConfig.listPageAfspraken.route.path}
+                route={themaConfigKlantContact.listPageAfspraken.route.path}
                 threshold={MAX_TABLE_ROWS_ON_THEMA_PAGINA}
               />
             </CollapsiblePanel>
