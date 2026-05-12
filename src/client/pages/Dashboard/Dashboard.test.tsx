@@ -1,4 +1,5 @@
 import { act, render, screen } from '@testing-library/react';
+import { addMinutes } from 'date-fns';
 import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
 import { describe, it } from 'vitest';
@@ -11,7 +12,6 @@ import { Dashboard } from './Dashboard.tsx';
 import { remoteApiHost } from '../../../testing/setup.ts';
 import { bffApi } from '../../../testing/utils.ts';
 import { toDateFormatted } from '../../../universal/helpers/date.ts';
-import { addMinutes } from 'date-fns';
 
 const DATE_NOW = '2021-09-22T09:00:00';
 
@@ -85,59 +85,61 @@ describe('<Dashboard />', () => {
     expect(screen.getByLabelText('Verstuur zoekopdracht'));
   });
 
-  it('Displays afspraken', () => {
-    const state = {
-      KLANT_CONTACT: {
-        status: 'OK',
-        content: {
-          contactmomenten: [],
-          afspraken: [
-            {
-              subject: 'Varen Afspraak',
-              startDate: addMinutes(new Date(DATE_NOW), 30),
-              endDate: addMinutes(new Date(DATE_NOW), 60),
-              status: 'New',
-              qrCode: 'qrcode-123',
-              caseReference: 'unique-123',
-              dateFormatted: '22 Oktober 2025',
-              cancellationLink: 'https://cancel.com',
-              displayDate: 'Datum, 22-09-2021 09:30-10:00',
-              location: {
-                name: 'Centrum',
-                street: 'Amstel 1',
-                postalCode: '1020 HA',
-                city: 'Amsterdam',
-                countryCode: 'NL',
-              },
-              qrCodeHref: '/qr/123',
-            },
-          ],
-        },
-      },
-    } as unknown as AppState;
-    const Component = createDashboardComponent(state);
-    const screen = render(<Component />);
-    screen.getByRole('heading', { name: 'Aankomende afspraken' });
-  });
-
-  it('Does not display afspraken Panel when there are no afspraken', () => {
-    const state = {
-      KLANT_CONTACT: [
-        {
+  describe('Afspraken', () => {
+    it('Displays Panel when there are afspraken', () => {
+      const state = {
+        KLANT_CONTACT: {
           status: 'OK',
           content: {
-            afspraken: [],
             contactmomenten: [],
+            afspraken: [
+              {
+                subject: 'Varen Afspraak',
+                startDate: addMinutes(new Date(DATE_NOW), 30),
+                endDate: addMinutes(new Date(DATE_NOW), 60),
+                status: 'New',
+                qrCode: 'qrcode-123',
+                caseReference: 'unique-123',
+                dateFormatted: '22 Oktober 2025',
+                cancellationLink: 'https://cancel.com',
+                displayDate: 'Datum, 22-09-2021 09:30-10:00',
+                location: {
+                  name: 'Centrum',
+                  street: 'Amstel 1',
+                  postalCode: '1020 HA',
+                  city: 'Amsterdam',
+                  countryCode: 'NL',
+                },
+                qrCodeHref: '/qr/123',
+              },
+            ],
           },
         },
-      ],
-    } as unknown as AppState;
-    const Component = createDashboardComponent(state);
-    const screen = render(<Component />);
-    expect(screen.getByRole('heading', { name: 'Goedemorgen' }));
-    expect(
-      screen.queryByRole('heading', { name: 'Aankomende afspraken' })
-    ).not.toBeInTheDocument();
+      } as unknown as AppState;
+      const Component = createDashboardComponent(state);
+      const screen = render(<Component />);
+      screen.getByRole('heading', { name: 'Aankomende afspraken' });
+    });
+
+    it('Does not display Panel when there are no afspraken', () => {
+      const state = {
+        KLANT_CONTACT: [
+          {
+            status: 'OK',
+            content: {
+              afspraken: [],
+              contactmomenten: [],
+            },
+          },
+        ],
+      } as unknown as AppState;
+      const Component = createDashboardComponent(state);
+      const screen = render(<Component />);
+      expect(screen.getByRole('heading', { name: 'Goedemorgen' }));
+      expect(
+        screen.queryByRole('heading', { name: 'Aankomende afspraken' })
+      ).not.toBeInTheDocument();
+    });
   });
 
   describe('Notifications', () => {
