@@ -13,6 +13,7 @@ import {
 import { captureException } from '../monitoring.ts';
 import {
   fetchCommunicatievoorkeuren,
+  fetchDienstverlener,
   setContactgegeven,
 } from './contact-profieldienst.ts';
 
@@ -100,5 +101,17 @@ export async function handleSetContactgegeven(
     voorkeurId
   );
 
+  return sendResponse(res, response);
+}
+
+export async function handleGetDienstverlener(
+  req: Request,
+  res: ResponseAuthenticated
+) {
+  const { naam } = req.params as { naam?: string };
+  const response = await fetchDienstverlener(
+    res.locals.authProfileAndToken,
+    naam
+  );
   return sendResponse(res, response);
 }

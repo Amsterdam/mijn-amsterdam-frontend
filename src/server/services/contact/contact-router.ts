@@ -2,6 +2,7 @@ import express from 'express';
 
 import {
   handleCreateVerificationRequest,
+  handleGetDienstverlener,
   handleVerifyVerificationRequest,
   handleSetContactgegeven,
   handleGetCommunicatievoorkeuren,
@@ -31,6 +32,8 @@ routerProtected.post(
   routes.CONTACT_SET_CONTACTGEGEVEN,
   handleSetContactgegeven
 );
+
+routerProtected.get(routes.CONTACT_GET_DIENSTVERLENER, handleGetDienstverlener);
 
 export const contactRouter = {
   protected: routerProtected,

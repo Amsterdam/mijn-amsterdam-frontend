@@ -10,6 +10,12 @@ export type DienstSource = {
   beschrijving: string;
 };
 
+export type DienstverlenerSource = {
+  naam: string;
+  oin?: string;
+  diensten?: DienstSource[];
+};
+
 export type ScopeSource = {
   partij: PartijIdentificatieSource;
   dienst: DienstSource;
@@ -86,6 +92,7 @@ export type CommunicatievoorkeurenResponseFrontend = {
     ContactgegevenTypeFrontend,
     ContactgegevenFrontend
   >;
+  aangeslotenDiensten?: DienstSource[];
 };
 
 // Van FE naar BFF

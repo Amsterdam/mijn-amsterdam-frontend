@@ -2,15 +2,18 @@ import { getProfileType } from './contact-helper.ts';
 import type {
   ContactProfieldienstResponseSource,
   CommunicatievoorkeurPayloadSource,
+  DienstSource,
 } from './contact-profieldienst-types.ts';
 import type {
   CommunicatievoorkeurFrontend,
   CommunicatievoorkeurenResponseFrontend,
+  DienstverlenerSource,
 } from './contact-profieldienst-types.ts';
 import type { CreateVerificationRequestPayload } from './contact-verify.types.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
+  getFailedDependencies,
   type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import { getFullAddress } from '../../../universal/helpers/brp.ts';
@@ -125,6 +128,21 @@ export async function getProfiel(
   return response;
 }
 
+export async function fetchDienstverlener(
+  authProfileAndToken: AuthProfileAndToken,
+  dienstverlenerNaam: string = DEFAULT_DIENSTVERLENER
+): Promise<ApiResponse<DienstverlenerSource>> {
+  const apiConfig = getApiConfig('CONTACT', {
+    method: 'get',
+    formatUrl({ url }) {
+      return `${url}/dienstverlener/${dienstverlenerNaam}`;
+    },
+    enableCache: false, // For testing
+  });
+
+  return requestData<DienstverlenerSource>(apiConfig, authProfileAndToken);
+}
+
 function getMostRecentForMedium(
   profiel: ApiResponse<ContactProfieldienstResponseSource>,
   mediumType: MediumType
@@ -155,36 +173,53 @@ function getMostRecentForMedium(
 export async function fetchCommunicatievoorkeuren(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<CommunicatievoorkeurenResponseFrontend>> {
-  const locationsResponse = await fetchMyLocations(authProfileAndToken);
+  const [locationsResponse, profiel, dienstverlenerResponse] =
+    await Promise.all([
+      fetchMyLocations(authProfileAndToken),
+      getProfiel(authProfileAndToken),
+      fetchDienstverlener(authProfileAndToken, DEFAULT_DIENSTVERLENER),
+    ]);
 
-  const profiel = await getProfiel(authProfileAndToken);
   const email = getMostRecentForMedium(profiel, 'email');
   const phone = getMostRecentForMedium(profiel, 'phone');
   const app = getMostRecentForMedium(profiel, 'app');
 
   // TODO: ook gegevens van berichtenbox/postadres toevoegen
-  return apiSuccessResult({
-    voorkeuren: voorkeurenBE____static,
-    standaardContactvoorkeurPerType: {
-      email,
-      phone,
-      app,
-      berichtenbox: {
-        type: ContactgegevenTypeFrontend.BERICHTENBOX,
-        value: null,
-        dateModified: null,
-        dateModifiedFormatted: null,
-      },
-      postadres: {
-        type: ContactgegevenTypeFrontend.POSTADRES,
-        dateModified: null,
-        value: locationsResponse.content?.[0]?.address
-          ? getFullAddress(locationsResponse.content?.[0]?.address)
-          : null,
-        dateModifiedFormatted: null,
+  const failedDependencies = getFailedDependencies({
+    locationsResponse,
+    profiel,
+    dienstverlenerResponse,
+  });
+
+  return apiSuccessResult(
+    {
+      voorkeuren: voorkeurenBE____static,
+      aangeslotenDiensten:
+        dienstverlenerResponse.status === 'OK'
+          ? (dienstverlenerResponse.content?.diensten ?? [])
+          : [],
+      standaardContactvoorkeurPerType: {
+        email,
+        phone,
+        app,
+        berichtenbox: {
+          type: ContactgegevenTypeFrontend.BERICHTENBOX,
+          value: null,
+          dateModified: null,
+          dateModifiedFormatted: null,
+        },
+        postadres: {
+          type: ContactgegevenTypeFrontend.POSTADRES,
+          dateModified: null,
+          value: locationsResponse.content?.[0]?.address
+            ? getFullAddress(locationsResponse.content?.[0]?.address)
+            : null,
+          dateModifiedFormatted: null,
+        },
       },
     },
-  });
+    failedDependencies
+  );
 }
 
 const payloadTypeByMediumType = {

@@ -11,6 +11,7 @@ export const routes = {
   VERIFICATION_REQUEST_VERIFY: `${BASE_ROUTE}/verification-request/verify`,
   CONTACT_SET_CONTACTGEGEVEN: `${BASE_ROUTE}/communicatievoorkeuren/set`,
   CONTACT_GET_COMMUNICATIEVOORKEUREN: `${BASE_ROUTE}/communicatievoorkeuren`,
+  CONTACT_GET_DIENSTVERLENER: `${BASE_ROUTE}/dienstverlener/:naam`,
 } as const;
 
 export const profieldienstRequestConfig: DataRequestConfig = {
