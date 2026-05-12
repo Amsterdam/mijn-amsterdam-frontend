@@ -1,6 +1,10 @@
 import { useEffect } from 'react';
 
-import { Heading, OrderedList } from '@amsterdam/design-system-react';
+import {
+  Heading,
+  OrderedList,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
 
 import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Dashboard-config.ts';
@@ -8,9 +12,7 @@ import styles from './Dashboard.module.scss';
 import { DashboardHeader } from './DashboardHeader.tsx';
 import { WelcomeHeading } from './WelcomHeading.tsx';
 import { isLoading } from '../../../universal/helpers/api.ts';
-import {
-  AfspraakCardsDashboard,
-} from '../../components/AfspraakCard/AfspraakCard.tsx';
+import { AfspraakCardsDashboard } from '../../components/AfspraakCard/AfspraakCard.tsx';
 import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel.tsx';
 import LoadingContent from '../../components/LoadingContent/LoadingContent.tsx';
 import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
@@ -25,6 +27,7 @@ import { useAppStateNotifications } from '../../hooks/useNotifications.ts';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
 import { useKlantcontactData } from '../Thema/KlantContact/useKlantcontactData.hook.tsx';
+import { AFSPRAKEN_EMPTY_TEXT } from '../Thema/KlantContact/KlantContactThema.tsx';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
 
@@ -68,11 +71,12 @@ export function Dashboard() {
         }}
       >
         <PageContentCell spanWide={7}>
-          <CollapsiblePanel
-            title="Aankomende afspraken"
-            startCollapsed={false}
-          >
-            <AfspraakCardsDashboard afspraken={afspraken} />
+          <CollapsiblePanel title="Aankomende afspraken" startCollapsed={false}>
+            {afspraken.length ? (
+              <AfspraakCardsDashboard afspraken={afspraken} />
+            ) : (
+              <Paragraph className="ams-mb-m">{AFSPRAKEN_EMPTY_TEXT}</Paragraph>
+            )}
           </CollapsiblePanel>
           <Heading level={2} className="ams-mb-m">
             Recente berichten{' '}
