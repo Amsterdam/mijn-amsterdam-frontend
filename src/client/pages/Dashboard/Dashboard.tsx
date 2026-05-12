@@ -1,9 +1,6 @@
 import { useEffect } from 'react';
 
-import {
-  Heading,
-  OrderedList,
-} from '@amsterdam/design-system-react';
+import { Heading, OrderedList } from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
 
 import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Dashboard-config.ts';
@@ -13,18 +10,22 @@ import { WelcomeHeading } from './WelcomHeading.tsx';
 import { isLoading } from '../../../universal/helpers/api.ts';
 import { AfspraakCardsDashboard } from '../../components/AfspraakCard/AfspraakCard.tsx';
 import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel.tsx';
+import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage.tsx';
 import LoadingContent from '../../components/LoadingContent/LoadingContent.tsx';
 import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 import { MyAreaDashboard } from '../../components/MyArea/MyAreaDashboard.tsx';
 import { MyNotification } from '../../components/MyNotification/MyNotification.tsx';
 import { MyThemasPanel } from '../../components/MyThemasPanel/MyThemasPanel.tsx';
 import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app.ts';
+import { isEnabled } from '../../config/feature-toggles.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 import { useAppStateNotifications } from '../../hooks/useNotifications.ts';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
+import { themaConfig } from '../Thema/KlantContact/KlantContact-thema-config.ts';
 import { useKlantcontactData } from '../Thema/KlantContact/useKlantcontactData.hook.tsx';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
@@ -72,12 +73,19 @@ export function Dashboard() {
           {/* When there are no afspraken it is better to not show the whole Panel otherwise
               we can leave the impression that there are no afspraken AT ALL with the government.
           */}
-          {afspraken.length && (
+          {isEnabled('KLANT_CONTACT.afspraken') && afspraken.length && (
             <CollapsiblePanel
               title="Aankomende afspraken"
               startCollapsed={false}
             >
-              <AfspraakCardsDashboard afspraken={afspraken} />
+              <AfspraakCardsDashboard
+                afspraken={afspraken.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
+              />
+              <LinkToListPage
+                count={afspraken.length}
+                route={themaConfig.listPageAfspraken.route.path}
+                threshold={MAX_TABLE_ROWS_ON_THEMA_PAGINA}
+              />
             </CollapsiblePanel>
           )}
           <Heading level={2} className="ams-mb-m">
