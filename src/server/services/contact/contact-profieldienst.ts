@@ -187,6 +187,7 @@ export async function fetchCommunicatievoorkeuren(
   // TODO: ook gegevens van berichtenbox/postadres toevoegen
   return apiSuccessResult({
     voorkeuren: voorkeurenBE____static,
+    aangeslotenDiensten: dienstverlenerResponse.content?.diensten || undefined,
     standaardContactvoorkeurPerType: {
       email,
       phone: {
