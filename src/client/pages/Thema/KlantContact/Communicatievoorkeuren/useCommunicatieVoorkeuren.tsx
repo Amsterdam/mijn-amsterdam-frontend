@@ -13,7 +13,10 @@ import type {
   CommunicatievoorkeurenResponseFrontend,
   ContactgegevenTypeFrontend,
 } from '../../../../../server/services/contact/contact-profieldienst-types.ts';
-import { lowercaseFirstLetter } from '../../../../../universal/helpers/text.ts';
+import {
+  capitalizeFirstLetter,
+  lowercaseFirstLetter,
+} from '../../../../../universal/helpers/text.ts';
 import {
   sendFormPostRequest,
   useBffApi,
@@ -23,6 +26,7 @@ import {
   featureToggle,
   routeConfig,
   themaId,
+  type InstelAction,
 } from '../KlantContact-thema-config.ts';
 
 export function useCommunicatievoorkeuren() {
@@ -79,6 +83,7 @@ export function useCommunicatieVoorkeurInstellen() {
   const breadcrumbs = useThemaBreadcrumbs(themaId);
   const params = useParams<{
     medium: ContactgegevenTypeFrontend;
+    action: InstelAction;
     id?: string;
   }>();
   const voorkeur =
@@ -92,7 +97,7 @@ export function useCommunicatieVoorkeurInstellen() {
   }
 
   return {
-    title: `Instellen ${lowercaseFirstLetter(MediumByTypeLabels[medium?.type ?? (params.medium as ContactgegevenTypeFrontend)] ?? '')}`,
+    title: `${params.action ? capitalizeFirstLetter(params.action) : 'Instellen'} ${lowercaseFirstLetter(MediumByTypeLabels[medium?.type ?? (params.medium as ContactgegevenTypeFrontend)] ?? '')}`,
     themaId,
     breadcrumbs,
     voorkeur,

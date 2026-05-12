@@ -41,7 +41,12 @@ export function CommunicatieVoorkeuren({
                     maVariant="fatNoDefaultUnderline"
                     href={generatePath(
                       routeConfig.detailPageCommunicatievoorkeurInstellen.path,
-                      { medium: medium.type, id: voorkeur.id, step: '1' }
+                      {
+                        medium: medium.type,
+                        id: voorkeur.id,
+                        step: '1',
+                        action: 'instellen',
+                      }
                     )}
                   >
                     {

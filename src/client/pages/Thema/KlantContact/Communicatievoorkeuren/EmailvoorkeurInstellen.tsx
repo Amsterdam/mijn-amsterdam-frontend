@@ -18,7 +18,10 @@ import type {
 } from '../../../../../server/services/contact/contact-profieldienst-types.ts';
 import { MaButtonInline } from '../../../../components/MaLink/MaLink.tsx';
 import { useSessionStorage } from '../../../../hooks/storage.hook.ts';
-import { routeConfig } from '../KlantContact-thema-config.ts';
+import {
+  routeConfig,
+  type InstelAction,
+} from '../KlantContact-thema-config.ts';
 
 type EmailInstellenProps = {
   medium: ContactgegevenFrontend;
@@ -32,6 +35,12 @@ export function EmailInstellen({
   onFinished,
 }: EmailInstellenProps) {
   const navigate = useNavigate();
+
+  const { step = '1', action = 'instellen' } = useParams<{
+    step: string;
+    action: InstelAction;
+  }>();
+
   // TODO: Deze naar een hook verplaatsen en koppelen aan backend?
   const [emailLocal, setEmailLocal] = useSessionStorage(
     `voorkeur-${voorkeur?.id || ''}-${medium.type}`,
@@ -40,13 +49,9 @@ export function EmailInstellen({
 
   const [emailFormActive, setEmailFormActive] = useState(true);
 
-  const { step = '1' } = useParams<{ step: string }>();
-
-  console.log('step', step);
-
-  const medium_: ContactgegevenFrontend = {
+  const mediumUpdate: ContactgegevenFrontend = {
     ...medium,
-    value: emailLocal || medium.value,
+    value: emailLocal,
   };
 
   const emailValue = medium.value || '';
@@ -58,12 +63,15 @@ export function EmailInstellen({
 
     navigate(
       generatePath(path, {
-        medium: medium_.type,
+        medium: mediumUpdate.type,
         id: voorkeur?.id,
         step,
+        action: 'instellen',
       })
     );
   }
+
+  console.log('>>', mediumUpdate.value ?? '');
 
   return (
     <>
@@ -84,7 +92,7 @@ export function EmailInstellen({
                 <Field className="ams-mb-m">
                   <Label>
                     Wilt u deze informatie per{' '}
-                    {VoorkeurByTypeLabels[medium_.type]} ontvangen?
+                    {VoorkeurByTypeLabels[mediumUpdate.type]} ontvangen?
                   </Label>
                   <span className={styles.Switch}>
                     <Switch
@@ -129,14 +137,14 @@ export function EmailInstellen({
                 setEmailLocal(email);
                 navigateToStep('2');
               }}
-              email={emailValue}
+              email={action === 'wijzigen' ? '' : emailValue}
             />
           )}
         </>
       )}
       {step === '2' && (
         <EmailVerify
-          email={medium_.value || emailLocal}
+          email={emailLocal}
           onValidated={({ otp, email }) => {
             setEmailLocal('');
             onFinished(email);

@@ -12,6 +12,8 @@ export const themaTitle = 'Mijn contact met de gemeente';
 
 export const linkListItems: LinkProps[] = [];
 
+export type InstelAction = 'instellen' | 'wijzigen' | 'valideren';
+
 export const routeConfig = {
   themaPage: {
     path: '/contact-en-communicatie',
@@ -27,14 +29,14 @@ export const routeConfig = {
   },
   detailPageCommunicatievoorkeurInstellen: {
     get path(): string {
-      return `/${routeConfig.themaPage.path}/instellen/:id/:medium/:step`;
+      return `/${routeConfig.themaPage.path}/:action/:id/:medium/:step`;
     },
     documentTitle: `Communicatievoorkeur instellen | ${themaTitle}`,
     trackingUrl: null,
   },
   detailPageCommunicatieMediumInstellen: {
     get path(): string {
-      return `/${routeConfig.themaPage.path}/instellen/:medium/:step`;
+      return `/${routeConfig.themaPage.path}/:action/:medium/:step`;
     },
     documentTitle: `Communicatievoorkeur instellen | ${themaTitle}`,
     trackingUrl: null,

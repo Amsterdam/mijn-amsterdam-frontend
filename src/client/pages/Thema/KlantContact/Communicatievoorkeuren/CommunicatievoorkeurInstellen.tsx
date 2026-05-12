@@ -25,8 +25,6 @@ export function CommunicatievoorkeurInstellen() {
     navigate(routeConfig.themaPage.path);
   }
 
-  console.log('voorkeur', voorkeur, medium);
-
   return (
     <ThemaDetailPagina
       title={title}
