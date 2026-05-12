@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 import {
   Button,
   Column,
@@ -8,61 +6,35 @@ import {
   Paragraph,
   Row,
 } from '@amsterdam/design-system-react';
-import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
+import {
+  CalendarIcon,
+  PersonAtDeskIcon,
+} from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
 import { isAfter } from 'date-fns';
 
 import styles from './AfspraakCard.module.scss';
 import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
+import { useDateNow } from '../../hooks/timer.hook.ts';
 import type { AfspraakFrontendFinal } from '../../pages/Thema/KlantContact/useKlantcontactData.hook.tsx';
 import { CalendarLink } from '../CalendarLink/CalendarLink.tsx';
 import { LocationModal } from '../LocationModal/LocationModal.tsx';
 import maLinkStyles from '../MaLink/MaLink.module.scss';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
-import { useDateNow } from '../../hooks/timer.hook.ts';
 
 type AfspraakCardProps = {
   afspraak: AfspraakFrontendFinal;
   className?: string;
 };
 
-export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
-  const isSmallScreen = useSmallScreen();
-  // To prevent a user from thinking that they can still cancel when not refreshing the screen.
-  const now = useDateNow();
+type AfspraakCardsProps = {
+  afspraken: AfspraakFrontendFinal[];
+  className?: string;
+};
 
-  const TitleHeading: React.FC<{ className?: string }> = ({ className }) => (
-    <Heading level={3} className={className ?? ''}>
-      {afspraak.subject}
-    </Heading>
-  );
-
-  const CancellationLink: React.FC<{ className?: string }> = ({
-    className,
-  }) => {
-    const isAbleToCancel = isAfter(afspraak.startDate, now);
-    if (!isAbleToCancel) {
-      return (
-        <div
-          title="De afspraak is gestart en kan niet meer geannuleerd worden."
-          aria-hidden="true"
-          className={classNames(className, 'ams-link', styles.DisabledLink)}
-        >
-          Annuleren
-        </div>
-      );
-    }
-    return (
-      <MaLink className={className} href={afspraak.cancellationLink}>
-        Annuleren
-      </MaLink>
-    );
-  };
-
-  const icon = <Icon svg={PersonAtDeskIcon} size="heading-2"></Icon>;
-
-  const body = (
+function CardBody({ afspraak }: AfspraakCardProps) {
+  return (
     <>
       <Paragraph>{afspraak.displayDate}</Paragraph>
       {/* Without this div the LocationModal is not clickable. */}
@@ -93,6 +65,40 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
       </CalendarLink>
     </>
   );
+}
+
+function CancellationLink({ afspraak, className }: AfspraakCardProps) {
+  // To prevent a user from thinking that they can still cancel when not refreshing the screen.
+  const now = useDateNow();
+  const isAbleToCancel = isAfter(afspraak.startDate, now);
+  if (!isAbleToCancel) {
+    return (
+      <div
+        title="De afspraak is gestart en kan niet meer geannuleerd worden."
+        aria-hidden="true"
+        className={classNames(className, 'ams-link', styles.DisabledLink)}
+      >
+        Annuleren
+      </div>
+    );
+  }
+  return (
+    <MaLink className={className} href={afspraak.cancellationLink}>
+      Annuleren
+    </MaLink>
+  );
+}
+
+export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
+  const isSmallScreen = useSmallScreen();
+
+  const TitleHeading: React.FC<{ className?: string }> = ({ className }) => (
+    <Heading level={3} className={className ?? ''}>
+      {afspraak.subject}
+    </Heading>
+  );
+
+  const icon = <Icon svg={PersonAtDeskIcon} size="heading-2"></Icon>;
 
   if (isSmallScreen) {
     return (
@@ -102,12 +108,13 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
             <TitleHeading className={styles.SmallScreenHeading}></TitleHeading>
             {icon}
           </Row>
-          {body}
+          <CardBody afspraak={afspraak} />
           <Row alignVertical="center">
             <MaRouterLink maVariant="noUnderline" href={afspraak.qrCodeHref}>
               <Button variant="secondary">Toon QR code</Button>
             </MaRouterLink>
             <CancellationLink
+              afspraak={afspraak}
               className={styles.SmallScreenCancellationLink}
             ></CancellationLink>
           </Row>
@@ -124,23 +131,19 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
         }
       >
         <TitleHeading></TitleHeading>
-        {body}
+        <CardBody afspraak={afspraak} />
         <Row alignVertical="center">
           <MaRouterLink maVariant="noUnderline" href={afspraak.qrCodeHref}>
             <Button variant="secondary">Toon QR code</Button>
           </MaRouterLink>
         </Row>
       </Column>
-      <CancellationLink></CancellationLink>
+      <CancellationLink afspraak={afspraak}></CancellationLink>
     </Row>
   );
 }
 
-export function AfspraakCards({
-  afspraken,
-}: {
-  afspraken: AfspraakFrontendFinal[];
-}) {
+export function AfspraakCards({ afspraken }: AfspraakCardsProps) {
   const afspraakCards = afspraken.map((afspraak) => {
     return (
       <AfspraakCard
@@ -152,6 +155,28 @@ export function AfspraakCards({
         key={afspraak.caseReference}
         afspraak={afspraak}
       ></AfspraakCard>
+    );
+  });
+  return afspraakCards;
+}
+
+export function AfspraakCardsDashboard({ afspraken }: AfspraakCardsProps) {
+  const isSmallScreen = useSmallScreen();
+  const afspraakCards = afspraken.map((afspraak) => {
+    return (
+      <Row key={afspraak.caseReference} className="ams-mb-m">
+        <Column>
+          <Heading
+            level={3}
+            className={isSmallScreen ? '' : styles.LargeScreenDashboardHeading}
+          >
+            {afspraak.subject}
+          </Heading>
+          <CardBody afspraak={afspraak} />
+          <MaRouterLink href={afspraak.qrCodeHref}>Toon QR code</MaRouterLink>
+        </Column>
+        <Icon size="large" svg={CalendarIcon} />
+      </Row>
     );
   });
   return afspraakCards;
