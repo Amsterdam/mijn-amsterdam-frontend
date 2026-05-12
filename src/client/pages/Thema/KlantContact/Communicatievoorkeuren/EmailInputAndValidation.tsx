@@ -15,7 +15,6 @@ import type {
   CreateVerificationRequestResponse,
   VerifyVerificationRequestResponse,
 } from '../../../../../server/services/contact/contact-verify.types.ts';
-import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import { Spinner } from '../../../../components/Spinner/Spinner.tsx';
 import {
   sendFormPostRequest,
@@ -242,21 +241,5 @@ export function EmailForm({ email, onSubmit }: EmailFormProps) {
         <Button type="submit">Versturen</Button>
       )}
     </form>
-  );
-}
-
-type EmailValueProps = {
-  email: string;
-  path: string;
-};
-
-export function EmailValue({ email, path }: EmailValueProps) {
-  return (
-    <>
-      {email ? email : <em>nog niet opgegeven</em>}{' '}
-      <MaRouterLink href={path}>
-        {email ? 'Wijzigen' : 'Instellen'}
-      </MaRouterLink>
-    </>
   );
 }

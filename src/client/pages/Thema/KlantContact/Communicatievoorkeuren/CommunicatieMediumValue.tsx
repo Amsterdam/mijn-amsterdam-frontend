@@ -1,6 +1,8 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
+import { differenceInCalendarMonths } from 'date-fns';
 import { generatePath } from 'react-router';
 
+import { MAXIMUM_AGE_BEFORE_VALIDATION } from './CommunicatieVoorkeuren-config.ts';
 import type { CommunicatieMedium } from '../../../../../server/services/contact/contact-profieldienst-types.ts';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import { routeConfig } from '../KlantContact-thema-config.ts';
@@ -43,7 +45,7 @@ export function MediumValue({ medium }: MediumValueProps) {
     case 'email':
       return (
         <>
-          <Paragraph>
+          <Paragraph size="small" className="ams-mb-s">
             Voor sommige diensten is het belangrijk dat het e-mailadres actief
             beheerd wordt.
           </Paragraph>
@@ -54,12 +56,19 @@ export function MediumValue({ medium }: MediumValueProps) {
             )}
             medium={medium}
           />
+          {medium.dateModified &&
+            differenceInCalendarMonths(new Date(), medium.dateModified) >=
+              MAXIMUM_AGE_BEFORE_VALIDATION && (
+              <Paragraph size="small" className="ams-mb-s">
+                Het e-mailadres is langer dan 6 maanden niet bijgewerkt.
+              </Paragraph>
+            )}
         </>
       );
     case 'phone':
       return (
         <>
-          <Paragraph>
+          <Paragraph size="small" className="ams-mb-s">
             Voor sommige diensten is het belangrijk dat het telefoonnummer
             actief beheerd wordt.
           </Paragraph>
@@ -75,7 +84,7 @@ export function MediumValue({ medium }: MediumValueProps) {
     case 'app':
       return (
         <>
-          <Paragraph>
+          <Paragraph size="small" className="ams-mb-s">
             Als u de Amsterdam App download en toestemming geeft om meldingen
             van Mijn Amsterdam te versturen.
           </Paragraph>
@@ -93,7 +102,7 @@ export function MediumValue({ medium }: MediumValueProps) {
     case 'berichtenbox':
       return (
         <>
-          <Paragraph>
+          <Paragraph size="small" className="ams-mb-s">
             Als u de berichtbox toestemming heeft gegeven om namens gemeente
             Amsterdam te versturen.
           </Paragraph>

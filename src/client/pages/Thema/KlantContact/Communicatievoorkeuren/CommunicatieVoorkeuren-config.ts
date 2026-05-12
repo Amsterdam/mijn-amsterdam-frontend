@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 
 import type {
+  CommunicatieMedium,
   Communicatievoorkeur,
-  CommunicatieMediumSetting,
 } from '../../../../../server/services/contact/contact-profieldienst-types.ts';
 import type { DisplayProps } from '../../../../components/Table/TableV2.types.ts';
 
@@ -12,7 +12,7 @@ export const communicatieVoorkeurenTitle = 'Alle communicatievoorkeuren';
 export const communicatieVoorkeurDetailTitle = 'Voorkeur';
 export const communicatieVoorkeurInstellenTitle = 'Instellen';
 
-type CommunicatieMediumFrontend = CommunicatieMediumSetting & {
+type CommunicatieMediumFrontend = CommunicatieMedium & {
   isActive_: ReactNode;
   value_: ReactNode;
   name: string; // TODO: Need this?
@@ -55,3 +55,5 @@ export const MediumByTypeLabels = {
   berichtenbox: 'Berichtenbox',
   postadres: 'Postadres',
 };
+
+export const MAXIMUM_AGE_BEFORE_VALIDATION = 6; // in months

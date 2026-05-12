@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import {
   communicatievoorkeurenDisplayProps,
   communicatieVoorkeurenTitle,
+  MediumByTypeLabels,
 } from './CommunicatieVoorkeuren-config.ts';
 import type {
   CommunicatievoorkeurPayloadFrontend,
@@ -12,6 +13,7 @@ import type {
   CommunicatievoorkeurenResponseFrontend,
   MediumType,
 } from '../../../../../server/services/contact/contact-profieldienst-types.ts';
+import { lowercaseFirstLetter } from '../../../../../universal/helpers/text.ts';
 import {
   sendFormPostRequest,
   useBffApi,
@@ -24,9 +26,10 @@ import {
 } from '../KlantContact-thema-config.ts';
 
 export function useCommunicatievoorkeuren() {
-  const { data } = useBffApi<CommunicatievoorkeurenResponseFrontend>(
-    'http://localhost:5000/api/v1/services/contact/communicatievoorkeuren' // diensten.alles
-  );
+  const { data, optimisticUpdateContent } =
+    useBffApi<CommunicatievoorkeurenResponseFrontend>(
+      'http://localhost:5000/api/v1/services/contact/communicatievoorkeuren' // diensten.alles
+    );
   const voorkeuren = data?.content?.voorkeuren ?? [];
 
   return {
@@ -39,6 +42,7 @@ export function useCommunicatievoorkeuren() {
     routeConfig,
     isError: false,
     isLoading: false,
+    optimisticUpdateContent,
   };
 }
 
@@ -63,8 +67,13 @@ function useSetCommunicatievoorkeur() {
 }
 
 export function useCommunicatieVoorkeurInstellen() {
-  const { defaultMediumsByType, voorkeuren, isError, isLoading } =
-    useCommunicatievoorkeuren();
+  const {
+    defaultMediumsByType,
+    voorkeuren,
+    isError,
+    isLoading,
+    optimisticUpdateContent,
+  } = useCommunicatievoorkeuren();
   const { fetch: updateCommunicatievoorkeur } = useSetCommunicatievoorkeur();
   const breadcrumbs = useThemaBreadcrumbs(themaId);
   const params = useParams<{ medium: MediumType; id?: string }>();
@@ -79,7 +88,7 @@ export function useCommunicatieVoorkeurInstellen() {
   }
 
   return {
-    title: `Instellen ${medium?.type ?? params.medium}`,
+    title: `Instellen ${lowercaseFirstLetter(MediumByTypeLabels[medium?.type ?? (params.medium as MediumType)] ?? '')}`,
     themaId,
     breadcrumbs,
     voorkeur,
@@ -88,6 +97,18 @@ export function useCommunicatieVoorkeurInstellen() {
     isLoading,
     routeConfig,
     update(payload: CommunicatievoorkeurPayloadFrontend) {
+      if (defaultMediumsByType) {
+        optimisticUpdateContent({
+          voorkeuren,
+          defaultMediumsByType: {
+            ...defaultMediumsByType,
+            [payload.type]: {
+              ...defaultMediumsByType[payload.type],
+              value: payload.value,
+            },
+          },
+        });
+      }
       return updateCommunicatievoorkeur({ payload });
     },
   };

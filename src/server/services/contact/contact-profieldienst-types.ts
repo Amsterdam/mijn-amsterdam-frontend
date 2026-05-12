@@ -76,11 +76,11 @@ export type MediumType =
 export type CommunicatieMedium = {
   type: MediumType;
   value: string | null;
+  dateModified: string | null; // ISO date string
 };
 
-export type CommunicatieMediumSetting = {
-  type: MediumType;
-  value: string | null;
+export type CommunicatieMediumSetting = CommunicatieMedium & {
+  foo: 'bar'; // TODO: Remove this when the backend is updated to return the correct type
 };
 
 export type Communicatievoorkeur = {

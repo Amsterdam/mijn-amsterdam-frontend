@@ -90,12 +90,21 @@ export async function fetchCommunicatievoorkeuren(
     voorkeuren: voorkeurenBE____static,
     defaultMediumsByType: {
       // TODO: add the default contactgegevens from the profieldienst.
-      email: { type: MEDIUM_TYPES.EMAIL, value: null },
-      phone: { type: MEDIUM_TYPES.PHONE, value: null },
-      app: { type: MEDIUM_TYPES.APP, value: null },
-      berichtenbox: { type: MEDIUM_TYPES.BERICHTENBOX, value: null },
+      email: {
+        type: MEDIUM_TYPES.EMAIL,
+        value: 't.van.oostrom@amsterdam.nl',
+        dateModified: '2025-05-04',
+      },
+      phone: { type: MEDIUM_TYPES.PHONE, value: null, dateModified: null },
+      app: { type: MEDIUM_TYPES.APP, value: null, dateModified: null },
+      berichtenbox: {
+        type: MEDIUM_TYPES.BERICHTENBOX,
+        value: null,
+        dateModified: null,
+      },
       postadres: {
         type: MEDIUM_TYPES.POSTADRES,
+        dateModified: null,
         value: locationsResponse.content?.[0]?.address
           ? getFullAddress(locationsResponse.content?.[0]?.address)
           : null,
