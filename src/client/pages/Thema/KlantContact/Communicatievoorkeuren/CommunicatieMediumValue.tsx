@@ -3,6 +3,7 @@ import { differenceInCalendarMonths } from 'date-fns';
 import { generatePath } from 'react-router';
 
 import { MAXIMUM_AGE_BEFORE_VALIDATION } from './CommunicatieVoorkeuren-config.ts';
+import styles from './CommunicatieVoorkeuren.module.scss';
 import type { ContactgegevenFrontend } from '../../../../../server/services/contact/contact-profieldienst-types.ts';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import { routeConfig } from '../KlantContact-thema-config.ts';
@@ -35,7 +36,7 @@ function ValueActions({
 }: ValueActionsProps) {
   const LinkComponent = path?.startsWith('http') ? Link : MaRouterLink;
   return (
-    <div>
+    <div className={styles.ValueActions}>
       {path && (
         <LinkComponent href={path}>
           {medium.value ? actionLabels.on : actionLabels.off}
@@ -55,7 +56,7 @@ export function MediumValue({ medium }: MediumValueProps) {
     { medium: medium.type, step: '1' }
   );
   switch (medium.type) {
-    case 'email':
+    case 'email': {
       return (
         <>
           <Paragraph size="small">
@@ -73,7 +74,8 @@ export function MediumValue({ medium }: MediumValueProps) {
             )}
         </>
       );
-    case 'phone':
+    }
+    case 'phone': {
       return (
         <>
           <Paragraph size="small">
@@ -84,7 +86,8 @@ export function MediumValue({ medium }: MediumValueProps) {
           <ValueActions medium={medium} path={route} />
         </>
       );
-    case 'app':
+    }
+    case 'app': {
       return (
         <>
           <Paragraph size="small">
@@ -95,11 +98,12 @@ export function MediumValue({ medium }: MediumValueProps) {
           <ValueActions
             medium={medium}
             path={route}
-            actionLabels={{ on: 'Koppelen', off: 'Koppelen' }}
+            actionLabels={{ on: 'Koppelen', off: 'Ontkoppelen' }}
           />
         </>
       );
-    case 'berichtenbox':
+    }
+    case 'berichtenbox': {
       return (
         <>
           <Paragraph size="small">
@@ -110,18 +114,31 @@ export function MediumValue({ medium }: MediumValueProps) {
           <ValueActions
             medium={medium}
             path={route}
-            actionLabels={{ on: 'Koppelen', off: 'Koppelen' }}
+            actionLabels={{ on: 'Koppelen', off: 'Ontkoppelen' }}
           />
         </>
       );
+    }
     // Add more cases for other communication mediums
-    case 'postadres':
+    case 'postadres': {
       return (
-        <Value
-          medium={medium}
-          path="https://www.amsterdam.nl/burgerzaken/verhuizen-inschrijving-briefadres/"
-        />
+        <>
+          <Paragraph size="small">
+            Klopt het adres niet of gaat u verhuizen? U kunt u hier uw nieuwe
+            postadres doorgeven.
+          </Paragraph>
+          <Value medium={medium} noValueText="Geen postadres bekend" />
+          <ValueActions
+            medium={medium}
+            path="https://www.amsterdam.nl/burgerzaken/verhuizen-inschrijving-briefadres/"
+            actionLabels={{
+              on: 'Wijziging doorgeven',
+              off: 'Wijziging doorgeven',
+            }}
+          />
+        </>
       );
+    }
     default:
       return null;
   }

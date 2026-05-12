@@ -48,7 +48,11 @@
 }
 
 .MediumValue {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  position: relative;
+}
+
+.ValueActions {
+  position: absolute;
+  top: 0;
+  right: 0;
 }

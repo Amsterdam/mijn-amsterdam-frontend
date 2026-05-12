@@ -85,8 +85,8 @@ export function CommunicatieVoorkeuren({
     <>
       <Heading level={2}>Mijn contactgegevens</Heading>
       <Paragraph className="ams-mb-l">
-        Via welk medium u geinformeerd wilt worden als er bijvoorbeeld een
-        bericht voor u klaar staat of een status van een product is veranderd
+        Via welk medium u geïnformeerd wilt worden als er bijvoorbeeld een
+        bericht voor u klaar staat of een status van een product is veranderd.
       </Paragraph>
       <Datalist rows={rows} />
       {/* <Alert
