@@ -71,8 +71,6 @@ export function EmailInstellen({
     );
   }
 
-  console.log('>>', mediumUpdate.value ?? '');
-
   return (
     <>
       {step === '1' && (

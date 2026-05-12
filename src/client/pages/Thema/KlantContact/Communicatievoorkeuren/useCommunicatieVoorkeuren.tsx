@@ -114,6 +114,7 @@ export function useCommunicatieVoorkeurInstellen() {
             [payload.type]: {
               ...defaultMediumsByType[payload.type],
               value: payload.value,
+              isValidated: true,
             },
           },
         });

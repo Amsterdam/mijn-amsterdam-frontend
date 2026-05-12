@@ -68,7 +68,7 @@ export function MediumValue({ medium }: MediumValueProps) {
         !!(medium.dateModified && medium.isValidated) &&
         differenceInCalendarMonths(new Date(), medium.dateModified) >=
           MAXIMUM_AGE_BEFORE_VALIDATION;
-      const needsValidation = !medium.isValidated || isOld;
+      const needsValidation = !!medium.value && (!medium.isValidated || isOld);
       return (
         <>
           <Paragraph size="small">

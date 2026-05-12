@@ -182,7 +182,6 @@ type EmailFormProps = {
 
 export function EmailForm({ email, onSubmit }: EmailFormProps) {
   const emailValue = email || '';
-  console.log('emailValue', emailValue);
   const [emailToVerify, setEmailToVerify] = useState<string>(emailValue);
   const [isInvalid, setIsInvalid] = useState(false);
 
@@ -219,8 +218,6 @@ export function EmailForm({ email, onSubmit }: EmailFormProps) {
     },
     [emailToVerify]
   );
-
-  console.log('emailToVerify', emailToVerify);
 
   return (
     <form onSubmit={submitForm} name="email-adjust-form">

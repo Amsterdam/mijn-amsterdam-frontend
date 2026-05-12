@@ -120,10 +120,11 @@ export async function fetchCommunicatievoorkeuren(
       // TODO: add the default contactgegevens from the profieldienst.
       email: {
         type: ContactgegevenTypeFrontend.EMAIL,
-        value: 't.van.oostrom@amsterdam.nl',
-        isValidated: false,
-        // value: null,
-        dateModified: '2025-05-04',
+        // value: 't.van.oostrom@amsterdam.nl',
+        // isValidated: false,
+        // dateModified: '2025-05-04',
+        value: null,
+        dateModified: null,
       },
       phone: {
         type: ContactgegevenTypeFrontend.PHONE,
