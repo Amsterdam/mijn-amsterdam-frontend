@@ -167,13 +167,17 @@ export async function fetchCommunicatievoorkeuren(
     voorkeuren: voorkeurenBE____static,
     standaardContactvoorkeurPerType: {
       email,
-      phone,
+      phone: {
+        ...phone,
+        disabled: true,
+      },
       app,
       berichtenbox: {
         type: ContactgegevenTypeFrontend.BERICHTENBOX,
         value: null,
         dateModified: null,
         dateModifiedFormatted: null,
+        disabled: true,
       },
       postadres: {
         type: ContactgegevenTypeFrontend.POSTADRES,
