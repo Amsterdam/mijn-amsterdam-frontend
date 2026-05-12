@@ -46,3 +46,9 @@
 .SwitchFieldValue {
   display: flex;
 }
+
+.MediumValue {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

@@ -74,7 +74,11 @@ export function CommunicatieVoorkeuren({
 
   const rows = Object.values(defaultMediumsByType ?? {}).map((medium) => ({
     label: MediumByTypeLabels[medium.type as keyof typeof MediumByTypeLabels],
-    content: <MediumValue medium={medium} />,
+    content: (
+      <article className={styles.MediumValue}>
+        <MediumValue medium={medium} />
+      </article>
+    ),
   }));
 
   return (

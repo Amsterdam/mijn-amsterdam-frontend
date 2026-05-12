@@ -9,30 +9,39 @@ import { routeConfig } from '../KlantContact-thema-config.ts';
 
 type CommunicatieMediumValueProps = {
   medium: CommunicatieMedium;
-  path?: string;
   noValueText?: string;
+};
+
+function Value({
+  medium,
+  noValueText = 'Nog niet opgegeven',
+}: CommunicatieMediumValueProps) {
+  return <>{medium.value ? medium.value : <em>{noValueText}</em>} </>;
+}
+
+type ValueActionsProps = {
+  medium: CommunicatieMedium;
+  path?: string;
   actionLabels?: {
     on: string;
     off: string;
   };
 };
 
-function Value({
+function ValueActions({
   medium,
   path,
-  noValueText = 'Nog niet opgegeven',
   actionLabels = { on: 'Wijzigen', off: 'Instellen' },
-}: CommunicatieMediumValueProps) {
+}: ValueActionsProps) {
   const LinkComponent = path?.startsWith('http') ? Link : MaRouterLink;
   return (
-    <>
-      {medium.value ? medium.value : <em>{noValueText}</em>}{' '}
+    <div>
       {path && (
         <LinkComponent href={path}>
           {medium.value ? actionLabels.on : actionLabels.off}
         </LinkComponent>
       )}
-    </>
+    </div>
   );
 }
 
@@ -41,6 +50,10 @@ type MediumValueProps = {
 };
 
 export function MediumValue({ medium }: MediumValueProps) {
+  const route = generatePath(
+    routeConfig.detailPageCommunicatieMediumInstellen.path,
+    { medium: medium.type, step: '1' }
+  );
   switch (medium.type) {
     case 'email':
       return (
@@ -49,13 +62,8 @@ export function MediumValue({ medium }: MediumValueProps) {
             Voor sommige diensten is het belangrijk dat het e-mailadres actief
             beheerd wordt.
           </Paragraph>
-          <Value
-            path={generatePath(
-              routeConfig.detailPageCommunicatieMediumInstellen.path,
-              { medium: medium.type, step: '1' }
-            )}
-            medium={medium}
-          />
+          <Value medium={medium} />
+          <ValueActions medium={medium} path={route} />
           {medium.dateModified &&
             differenceInCalendarMonths(new Date(), medium.dateModified) >=
               MAXIMUM_AGE_BEFORE_VALIDATION && (
@@ -72,13 +80,8 @@ export function MediumValue({ medium }: MediumValueProps) {
             Voor sommige diensten is het belangrijk dat het telefoonnummer
             actief beheerd wordt.
           </Paragraph>
-          <Value
-            medium={medium}
-            path={generatePath(
-              routeConfig.detailPageCommunicatieMediumInstellen.path,
-              { medium: medium.type, step: '1' }
-            )}
-          />
+          <Value medium={medium} />
+          <ValueActions medium={medium} path={route} />
         </>
       );
     case 'app':
@@ -88,14 +91,11 @@ export function MediumValue({ medium }: MediumValueProps) {
             Als u de Amsterdam App download en toestemming geeft om meldingen
             van Mijn Amsterdam te versturen.
           </Paragraph>
-          <Value
+          <Value medium={medium} noValueText="Nog niet gekoppeld" />
+          <ValueActions
             medium={medium}
-            noValueText="Nog niet gekoppeld"
+            path={route}
             actionLabels={{ on: 'Koppelen', off: 'Koppelen' }}
-            path={generatePath(
-              routeConfig.detailPageCommunicatieMediumInstellen.path,
-              { medium: medium.type, step: '1' }
-            )}
           />
         </>
       );
@@ -106,14 +106,11 @@ export function MediumValue({ medium }: MediumValueProps) {
             Als u de berichtbox toestemming heeft gegeven om namens gemeente
             Amsterdam te versturen.
           </Paragraph>
-          <Value
+          <Value medium={medium} noValueText="Nog niet gekoppeld" />
+          <ValueActions
             medium={medium}
-            noValueText="Nog niet gekoppeld"
+            path={route}
             actionLabels={{ on: 'Koppelen', off: 'Koppelen' }}
-            path={generatePath(
-              routeConfig.detailPageCommunicatieMediumInstellen.path,
-              { medium: medium.type, step: '1' }
-            )}
           />
         </>
       );
