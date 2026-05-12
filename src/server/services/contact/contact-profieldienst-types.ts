@@ -54,7 +54,7 @@ export type ContactgegevenFrontend = {
   type: ContactgegevenTypeFrontend;
   value: string | null;
   dateModified: string | null; // ISO date string
-  dateModifiedFormatted?: string | null; // TODO: make non optional
+  dateModifiedFormatted: string | null;
   isValidated?: boolean;
   disabled?: boolean;
 };
@@ -67,13 +67,15 @@ export type CommunicatievoorkeurFrontend = {
   settings: ContactgegevenFrontend[];
 };
 
+export type IdentificatieType = 'BSN' | 'KVK' | 'RSIN';
+
 // Van BFF naar Profieldienst API
 export type CommunicatievoorkeurPayloadSource = {
   id?: VoorkeurSource['id'];
-  voorkeurType: ContactgegevenSource['type'];
+  type: ContactgegevenSource['type'];
   waarde: string;
   scope: {
-    scopeIdentificatieType: 'BSN' | 'KVK';
+    scopeIdentificatieType: IdentificatieType;
     scopeIdentificatieNummer: string;
     dienstId?: DienstSource['id'];
   };

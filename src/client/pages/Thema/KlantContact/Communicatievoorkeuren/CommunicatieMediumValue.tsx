@@ -78,7 +78,7 @@ export function MediumValue({ medium }: MediumValueProps) {
           <Paragraph className="ams-mb-s">
             <Value medium={medium} />
             {medium.value && medium.isValidated && (
-              <>(Laatst gevalideerd op {medium.dateModifiedFormatted})</>
+              <>(Laatst gewijzigd op {medium.dateModifiedFormatted})</>
             )}
             <br />
             {needsValidation && (
