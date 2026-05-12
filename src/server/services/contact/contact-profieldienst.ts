@@ -2,7 +2,6 @@ import { getProfileType } from './contact-helper.ts';
 import type {
   ContactProfieldienstResponseSource,
   CommunicatievoorkeurPayloadSource,
-  DienstSource,
 } from './contact-profieldienst-types.ts';
 import type {
   CommunicatievoorkeurFrontend,
@@ -13,7 +12,6 @@ import type { CreateVerificationRequestPayload } from './contact-verify.types.ts
 import {
   apiErrorResult,
   apiSuccessResult,
-  getFailedDependencies,
   type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import { getFullAddress } from '../../../universal/helpers/brp.ts';
@@ -187,7 +185,9 @@ export async function fetchCommunicatievoorkeuren(
   // TODO: ook gegevens van berichtenbox/postadres toevoegen
   return apiSuccessResult({
     voorkeuren: voorkeurenBE____static,
-    aangeslotenDiensten: dienstverlenerResponse.content?.diensten || undefined,
+    aangeslotenDiensten: (
+      dienstverlenerResponse.content?.diensten ?? []
+    ).filter((dienst) => dienst.beschrijving !== 'Alles'),
     standaardContactvoorkeurPerType: {
       email,
       phone: {

@@ -16,7 +16,7 @@ export function CommunicatieVoorkeuren({
 }: {
   communicatievoorkeurenData: ReturnType<typeof useCommunicatievoorkeuren>;
 }) {
-  const { voorkeuren, standaardContactvoorkeurPerType } =
+  const { aangeslotenDiensten, standaardContactvoorkeurPerType } =
     communicatievoorkeurenData ?? {};
 
   const rows = Object.values(standaardContactvoorkeurPerType ?? {})
@@ -43,12 +43,12 @@ export function CommunicatieVoorkeuren({
           U kunt voor de volgende diensten post per e-mail ontvangen:
         </Paragraph>
         <UnorderedList className="ams-mb-m">
-          {voorkeuren?.map((voorkeur) => (
-            <UnorderedList.Item key={voorkeur.id}>
+          {aangeslotenDiensten?.map((dienst) => (
+            <UnorderedList.Item key={dienst.id}>
               <Paragraph>
-                <strong>{voorkeur.dienstNaam}</strong>
-                <br />
-                {voorkeur.dienstBeschrijving}
+                <strong>{dienst.beschrijving}</strong>
+                {/* <br />
+                {dienst.dienstBeschrijving} */}
               </Paragraph>
             </UnorderedList.Item>
           ))}
@@ -74,7 +74,7 @@ export function CommunicatieVoorkeuren({
       <div>
         <Heading level={2}>Mijn contactgegevens</Heading>
         <Paragraph className="ams-mb-l">
-          Via onderstaande contactgegevens kan de gemeente met u communiceren.
+          Via deze contactgegevens kan de gemeente met u communiceren.
         </Paragraph>
         <Datalist rows={rows} />
         {/* <Alert

@@ -41,6 +41,7 @@ export function useCommunicatievoorkeuren() {
     voorkeuren,
     standaardContactvoorkeurPerType:
       data?.content?.standaardContactvoorkeurPerType ?? null,
+    aangeslotenDiensten: data?.content?.aangeslotenDiensten ?? [],
     featureToggle,
     displayProps: communicatievoorkeurenDisplayProps,
     title: communicatieVoorkeurenTitle,
