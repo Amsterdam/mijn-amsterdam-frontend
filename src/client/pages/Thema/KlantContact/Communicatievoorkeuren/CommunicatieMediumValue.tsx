@@ -71,17 +71,20 @@ export function MediumValue({ medium }: MediumValueProps) {
       const needsValidation = !!medium.value && (!medium.isValidated || isOld);
       return (
         <>
-          <Paragraph size="small">
+          <Paragraph size="small" className="ams-mb-s">
             Voor sommige diensten is het belangrijk dat het e-mailadres actief
             beheerd wordt.
           </Paragraph>
           <Paragraph className="ams-mb-s">
             <Value medium={medium} />{' '}
+            {medium.value && medium.isValidated && (
+              <>(Laatst gevalideerd op {medium.dateModifiedFormatted})</>
+            )}
+            <br />
             {needsValidation && (
               <>
                 {!isOld ? (
                   <>
-                    <br />
                     <Badge label="!" color="red" /> Dit e-mailadres is nog niet
                     gevalideerd.{' '}
                   </>
