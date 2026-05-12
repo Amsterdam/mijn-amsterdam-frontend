@@ -18,7 +18,7 @@ export function ContactMomenten({
 
   return (
     <>
-      <Heading level={3}>{title}</Heading>
+      <Heading level={2}>{title}</Heading>
       <Paragraph className="ams-mb-m">
         De lijst met contactmomenten wordt alleen bijgehouden met telefonische
         gesprekken naar telefoonnummer 14 020 of chatberichten met een
@@ -36,6 +36,7 @@ export function ContactMomenten({
       <ThemaPaginaTable<ContactMomentFrontend>
         zaken={contactmomenten}
         displayProps={displayProps}
+        listPageLinkLabel="Bekijk alle contactmomenten"
         listPageLinkTitle="Bekijk alle contactmomenten"
         listPageRoute={listPageRoute}
       />

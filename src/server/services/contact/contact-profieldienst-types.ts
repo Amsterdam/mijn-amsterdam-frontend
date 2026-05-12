@@ -66,7 +66,12 @@ export type CommunicatievoorkeurPayload = {
   };
 };
 
-export type MediumType = 'email' | 'phone' | 'postadres';
+export type MediumType =
+  | 'email'
+  | 'phone'
+  | 'app'
+  | 'berichtenbox'
+  | 'postadres';
 
 export type CommunicatieMedium = {
   type: MediumType;

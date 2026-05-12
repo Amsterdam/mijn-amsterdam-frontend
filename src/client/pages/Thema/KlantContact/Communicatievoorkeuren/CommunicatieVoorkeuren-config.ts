@@ -43,11 +43,15 @@ export const communicatievoorkeurInstellenDisplayProps: DisplayProps<Communicati
 export const VoorkeurByTypeLabels = {
   email: 'E-mail',
   phone: 'SMS',
+  app: 'App',
+  berichtenbox: 'Berichtenbox',
   postadres: 'Papier',
 };
 
 export const MediumByTypeLabels = {
   email: 'E-mailadres',
-  phone: 'Telefoonnummer',
+  phone: 'Mobiele telefoonnummer',
+  app: 'Amsterdam App',
+  berichtenbox: 'Berichtenbox',
   postadres: 'Postadres',
 };

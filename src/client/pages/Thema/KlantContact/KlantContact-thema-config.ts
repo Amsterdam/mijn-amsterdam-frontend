@@ -8,7 +8,7 @@ export const featureToggle = {
   themaActive: isEnabled('KLANT_CONTACT.thema'),
 };
 
-export const themaTitle = 'Contact en communicatie';
+export const themaTitle = 'Mijn contact met de gemeente';
 
 export const linkListItems: LinkProps[] = [];
 

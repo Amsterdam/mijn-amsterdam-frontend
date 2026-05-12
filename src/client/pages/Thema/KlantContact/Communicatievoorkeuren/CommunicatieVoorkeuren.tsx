@@ -3,7 +3,6 @@ import {
   Heading,
   Paragraph,
   Icon,
-  Alert,
   Link,
 } from '@amsterdam/design-system-react';
 import { CheckMarkIcon, CloseIcon } from '@amsterdam/design-system-react-icons';
@@ -80,8 +79,13 @@ export function CommunicatieVoorkeuren({
 
   return (
     <>
+      <Heading level={2}>Mijn contactgegevens</Heading>
+      <Paragraph className="ams-mb-l">
+        Via welk medium u geinformeerd wilt worden als er bijvoorbeeld een
+        bericht voor u klaar staat of een status van een product is veranderd
+      </Paragraph>
       <Datalist rows={rows} />
-      <Alert
+      {/* <Alert
         severity="warning"
         heading="Let op!"
         headingLevel={3}
@@ -93,13 +97,18 @@ export function CommunicatieVoorkeuren({
           <br />
           Vetrouwt u iets niet, neem dan contact op met de gemeente.
         </Paragraph>
-      </Alert>
-      <Heading level={2} size="level-3">
-        Hoe wilt u informatie van ons ontvangen?
-      </Heading>
+      </Alert> */}
+      <Heading level={2}>Mijn communicatievoorkeuren</Heading>
       <Paragraph className="ams-mb-l">
-        Voor de volgende afdelingen van de gemeente is het mogelijk om uw
-        voorkeur door te geven.
+        Nog niet alle diensten van de gemeente zijn aangesloten bij de generieke
+        communicatievoorkeuren. Het kan dus zijn dat er nog elders binnen de
+        gemeente contactgegevens van u worden gebruikt voor berichtgeving over
+        thema's die niet hieronder staan benoemd. Heeft u daar vragen over bel
+        dan naar{' '}
+        <Link href="tel:14020" rel="noopener noreferrer">
+          14020
+        </Link>
+        .
       </Paragraph>
       {voorkeurenList}
     </>

@@ -20,12 +20,9 @@ export function KlantContactThemaPagina() {
   const pageContentTop = (
     <PageContentCell spanWide={8}>
       <Paragraph className="ams-mb-m">
-        Wilt u uw post voortaan per e-mail ontvangen? Of wilt u op de hoogte
-        gehouden worden van de status van uw zaak per sms?
-      </Paragraph>
-      <Paragraph>
-        In dit onderdeel kunt u uw communicatievoorkeuren instellen en bekijken
-        wanneer wij contact met u hebben gehad.
+        Hier regelt u uw contact voorkeuren, zoals wilt u de post van de
+        gemeente alleen digitaal ontvangen, aanpassen van uw afspraken met de
+        gemeente en het wijzigen van uw e-mailadres of telefoonnummer.
       </Paragraph>
     </PageContentCell>
   );

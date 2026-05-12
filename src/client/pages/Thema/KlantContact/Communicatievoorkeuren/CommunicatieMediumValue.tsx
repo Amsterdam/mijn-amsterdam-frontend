@@ -1,4 +1,4 @@
-import { Link } from '@amsterdam/design-system-react';
+import { Link, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router';
 
 import type { CommunicatieMedium } from '../../../../../server/services/contact/contact-profieldienst-types.ts';
@@ -8,16 +8,26 @@ import { routeConfig } from '../KlantContact-thema-config.ts';
 type CommunicatieMediumValueProps = {
   medium: CommunicatieMedium;
   path?: string;
+  noValueText?: string;
+  actionLabels?: {
+    on: string;
+    off: string;
+  };
 };
 
-function Value({ medium, path }: CommunicatieMediumValueProps) {
+function Value({
+  medium,
+  path,
+  noValueText = 'Nog niet opgegeven',
+  actionLabels = { on: 'Wijzigen', off: 'Instellen' },
+}: CommunicatieMediumValueProps) {
   const LinkComponent = path?.startsWith('http') ? Link : MaRouterLink;
   return (
     <>
-      {medium.value ? medium.value : <em>nog niet opgegeven</em>}{' '}
+      {medium.value ? medium.value : <em>{noValueText}</em>}{' '}
       {path && (
         <LinkComponent href={path}>
-          {medium.value ? 'Wijzigen' : 'Instellen'}
+          {medium.value ? actionLabels.on : actionLabels.off}
         </LinkComponent>
       )}
     </>
@@ -32,13 +42,71 @@ export function MediumValue({ medium }: MediumValueProps) {
   switch (medium.type) {
     case 'email':
       return (
-        <Value
-          path={generatePath(
-            routeConfig.detailPageCommunicatieMediumInstellen.path,
-            { medium: medium.type, step: '1' }
-          )}
-          medium={medium}
-        />
+        <>
+          <Paragraph>
+            Voor sommige diensten is het belangrijk dat het e-mailadres actief
+            beheerd wordt.
+          </Paragraph>
+          <Value
+            path={generatePath(
+              routeConfig.detailPageCommunicatieMediumInstellen.path,
+              { medium: medium.type, step: '1' }
+            )}
+            medium={medium}
+          />
+        </>
+      );
+    case 'phone':
+      return (
+        <>
+          <Paragraph>
+            Voor sommige diensten is het belangrijk dat het telefoonnummer
+            actief beheerd wordt.
+          </Paragraph>
+          <Value
+            medium={medium}
+            path={generatePath(
+              routeConfig.detailPageCommunicatieMediumInstellen.path,
+              { medium: medium.type, step: '1' }
+            )}
+          />
+        </>
+      );
+    case 'app':
+      return (
+        <>
+          <Paragraph>
+            Als u de Amsterdam App download en toestemming geeft om meldingen
+            van Mijn Amsterdam te versturen.
+          </Paragraph>
+          <Value
+            medium={medium}
+            noValueText="Nog niet gekoppeld"
+            actionLabels={{ on: 'Koppelen', off: 'Koppelen' }}
+            path={generatePath(
+              routeConfig.detailPageCommunicatieMediumInstellen.path,
+              { medium: medium.type, step: '1' }
+            )}
+          />
+        </>
+      );
+    case 'berichtenbox':
+      return (
+        <>
+          <Paragraph>
+            Als u de berichtbox toestemming heeft gegeven om namens gemeente
+            Amsterdam te versturen.
+          </Paragraph>
+          <Value
+            medium={medium}
+            noValueText="Nog niet gekoppeld"
+            actionLabels={{ on: 'Koppelen', off: 'Koppelen' }}
+            path={generatePath(
+              routeConfig.detailPageCommunicatieMediumInstellen.path,
+              { medium: medium.type, step: '1' }
+            )}
+          />
+        </>
       );
     // Add more cases for other communication mediums
     case 'postadres':
@@ -46,16 +114,6 @@ export function MediumValue({ medium }: MediumValueProps) {
         <Value
           medium={medium}
           path="https://www.amsterdam.nl/burgerzaken/verhuizen-inschrijving-briefadres/"
-        />
-      );
-    case 'phone':
-      return (
-        <Value
-          medium={medium}
-          path={generatePath(
-            routeConfig.detailPageCommunicatieMediumInstellen.path,
-            { medium: medium.type, step: '1' }
-          )}
         />
       );
     default:

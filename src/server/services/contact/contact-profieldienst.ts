@@ -20,6 +20,8 @@ import { fetchMyLocations } from '../bag/my-locations.ts';
 const MEDIUM_TYPES = {
   EMAIL: 'email',
   PHONE: 'phone',
+  APP: 'app',
+  BERICHTENBOX: 'berichtenbox',
   POSTADRES: 'postadres',
 } as const;
 
@@ -90,6 +92,8 @@ export async function fetchCommunicatievoorkeuren(
       // TODO: add the default contactgegevens from the profieldienst.
       email: { type: MEDIUM_TYPES.EMAIL, value: null },
       phone: { type: MEDIUM_TYPES.PHONE, value: null },
+      app: { type: MEDIUM_TYPES.APP, value: null },
+      berichtenbox: { type: MEDIUM_TYPES.APP, value: null },
       postadres: {
         type: MEDIUM_TYPES.POSTADRES,
         value: locationsResponse.content?.[0]?.address

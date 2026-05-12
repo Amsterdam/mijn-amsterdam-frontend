@@ -101,7 +101,7 @@ export function useContactmomenten() {
     displayProps: contactmomentenDisplayProps,
     isError: isError(KLANT_CONTACT),
     isLoading: isLoading(KLANT_CONTACT),
-    title: 'Contactmomenten',
+    title: 'Mijn contactmomenten',
     breadcrumbs,
     routeParams,
     listPageRoute: routeConfig.listPageContactmomenten.path,
