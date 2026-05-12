@@ -13,6 +13,7 @@ import type {
   CommunicatievoorkeurenResponseFrontend,
   ContactgegevenTypeFrontend,
 } from '../../../../../server/services/contact/contact-profieldienst-types.ts';
+import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
 import {
   capitalizeFirstLetter,
   lowercaseFirstLetter,
@@ -74,8 +75,9 @@ function useSetCommunicatievoorkeur() {
 
 export function useCommunicatieVoorkeurInstellen() {
   const {
-    standaardContactvoorkeurPerType: defaultMediumsByType,
+    standaardContactvoorkeurPerType,
     voorkeuren,
+    aangeslotenDiensten,
     isError,
     isLoading,
     optimisticUpdateContent,
@@ -94,7 +96,7 @@ export function useCommunicatieVoorkeurInstellen() {
     voorkeur?.settings.find((medium) => medium.type === params.medium) ?? null;
   // If the medium is not set in the voorkeur, use the default value if available
   if (!medium && params.medium) {
-    medium = defaultMediumsByType?.[params.medium] ?? null;
+    medium = standaardContactvoorkeurPerType?.[params.medium] ?? null;
   }
 
   return {
@@ -107,16 +109,18 @@ export function useCommunicatieVoorkeurInstellen() {
     isLoading,
     routeConfig,
     update(payload: CommunicatievoorkeurPayloadFrontend) {
-      if (defaultMediumsByType) {
+      if (standaardContactvoorkeurPerType) {
         optimisticUpdateContent({
           voorkeuren,
+          aangeslotenDiensten,
           standaardContactvoorkeurPerType: {
-            ...defaultMediumsByType,
+            ...standaardContactvoorkeurPerType,
             [payload.type]: {
-              ...defaultMediumsByType[payload.type],
+              ...standaardContactvoorkeurPerType[payload.type],
               value: payload.value,
               isValidated: true,
               dateModified: new Date().toISOString(),
+              dateModifiedFormatted: defaultDateFormat(new Date()),
             },
           },
         });
