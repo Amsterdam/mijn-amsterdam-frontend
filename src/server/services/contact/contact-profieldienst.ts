@@ -39,50 +39,6 @@ const voorkeurenBE____static: CommunicatievoorkeurFrontend[] = [
         value: null,
         dateModified: null,
       },
-      {
-        type: ContactgegevenTypeFrontend.POSTADRES,
-        value: 'Het Amstelplein 32-H',
-        dateModified: null,
-      },
-    ],
-  },
-  {
-    id: 2,
-    dienstNaam: 'Erfpacht',
-    dienstBeschrijving: 'Factuurspecificaties',
-    settings: [
-      {
-        type: ContactgegevenTypeFrontend.EMAIL,
-        value: null,
-        dateModified: null,
-      },
-      {
-        type: ContactgegevenTypeFrontend.POSTADRES,
-        value: null,
-        dateModified: null,
-      },
-      {
-        type: ContactgegevenTypeFrontend.PHONE,
-        value: '0612345678',
-        dateModified: null,
-      },
-    ],
-  },
-  {
-    id: 3,
-    dienstNaam: 'Erfpacht',
-    dienstBeschrijving: 'Informatie over uw Erfpacht dossiers',
-    settings: [
-      {
-        type: ContactgegevenTypeFrontend.EMAIL,
-        value: null,
-        dateModified: null,
-      },
-      {
-        type: ContactgegevenTypeFrontend.POSTADRES,
-        value: null,
-        dateModified: null,
-      },
     ],
   },
 ];
@@ -120,17 +76,18 @@ export async function fetchCommunicatievoorkeuren(
       // TODO: add the default contactgegevens from the profieldienst.
       email: {
         type: ContactgegevenTypeFrontend.EMAIL,
-        value: 't.van.oostrom@amsterdam.nl',
-        isValidated: true,
-        dateModified: '2025-05-05',
-        dateModifiedFormatted: '05 mei 2025',
-        // value: null,
-        // dateModified: null,
+        // value: 't.van.oostrom@amsterdam.nl',
+        // isValidated: true,
+        // dateModified: '2025-05-05',
+        // dateModifiedFormatted: '05 mei 2025',
+        value: null,
+        dateModified: null,
       },
       phone: {
         type: ContactgegevenTypeFrontend.PHONE,
         value: null,
         dateModified: null,
+        disabled: true,
       },
       app: {
         type: ContactgegevenTypeFrontend.APP,
@@ -143,6 +100,7 @@ export async function fetchCommunicatievoorkeuren(
         type: ContactgegevenTypeFrontend.BERICHTENBOX,
         value: null,
         dateModified: null,
+        disabled: true,
       },
       postadres: {
         type: ContactgegevenTypeFrontend.POSTADRES,
