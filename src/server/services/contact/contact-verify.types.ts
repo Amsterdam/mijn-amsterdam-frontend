@@ -1,8 +1,14 @@
-export type CreateVerificationRequestPayload<T extends 'email' | 'phone'> = {
-  reference: string;
-  templateId: string;
-  apiKey: string;
-} & (T extends 'email' ? { email: string } : { phoneNumber: string });
+import type { IdentificatieType } from './contact-profieldienst-types.ts';
+
+export type CreateVerificationRequestPayload = {
+  type: 'Email' | 'Telefoonnummer' | 'Adres' | 'AppId';
+  waarde: string;
+  scope: {
+    scopeIdentificatieType: string;
+    scopeIdentificatieNummer: string;
+    dienstId: number;
+  };
+};
 
 export type CreateVerificationRequestResponse = {
   success: boolean;
@@ -10,8 +16,9 @@ export type CreateVerificationRequestResponse = {
 
 export type VerifyVerificationRequestPayload = {
   email: string;
-  reference: string;
-  code: string;
+  identificatieNummer: string;
+  identificatieType: IdentificatieType;
+  verificatieCode: string;
 };
 
 export type VerifyVerificationRequestResponse = {

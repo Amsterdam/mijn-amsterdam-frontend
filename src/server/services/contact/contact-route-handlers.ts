@@ -2,10 +2,6 @@ import createDebugger from 'debug';
 import type { Request } from 'express';
 
 import {
-  fetchCommunicatievoorkeuren,
-  setCommunicatievoorkeur,
-} from './contact-profieldienst.ts';
-import {
   createVerificationRequest,
   verifyVerificationRequest,
 } from './contact-verify.ts';
@@ -15,6 +11,10 @@ import {
   type ResponseAuthenticated,
 } from '../../routing/route-helpers.ts';
 import { captureException } from '../monitoring.ts';
+import {
+  fetchCommunicatievoorkeuren,
+  setCommunicatievoorkeur,
+} from './contact-profieldienst.ts';
 
 const debugContactRequestData = createDebugger(
   'contact-api:route-request-data'

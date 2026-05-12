@@ -21,7 +21,7 @@ import {
   useBffApi,
 } from '../../../../hooks/api/useBffApi.ts';
 
-const VERIFICATION_CODE_LENGTH = 5;
+const VERIFICATION_CODE_LENGTH = 6;
 
 function validateCodeFormat(code: string) {
   return code.split('').filter(Boolean).length === VERIFICATION_CODE_LENGTH;
@@ -46,9 +46,7 @@ export function EmailVerify({ email, onValidated }: EmailVerifyProps) {
             url,
             init
           ).then((response) => {
-            if (response.content?.verified === true) {
-              onValidated({ otp, email });
-            }
+            onValidated({ otp, email });
             return response;
           });
         },
@@ -195,9 +193,7 @@ export function EmailForm({ email, onSubmit }: EmailFormProps) {
             url,
             init
           ).then((response) => {
-            if (response.content?.success === true) {
-              onSubmit({ email: emailToVerify });
-            }
+            onSubmit({ email: emailToVerify });
             return response;
           });
         },

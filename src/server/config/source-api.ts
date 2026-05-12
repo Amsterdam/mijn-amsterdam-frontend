@@ -349,6 +349,9 @@ const ApiConfig_ = {
       ),
     },
   },
+  CONTACT: {
+    url: getFromEnv('BFF_PROFIEL_API_BASE_URL'),
+  },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
     url: `${getFromEnv('BFF_LVV_API_URL')}`,
     headers: {
@@ -392,10 +395,6 @@ const ApiConfig_ = {
   },
   IAM_MS_OAUTH: {
     url: `${getFromEnv('BFF_MS_OAUTH_ENDPOINT')}:tenant/oauth2/v2.0/token`,
-    method: 'POST',
-  },
-  VERIFY: {
-    url: `${getFromEnv('BFF_VERIFY_API_URL')}`,
     method: 'POST',
   },
 } as const;
