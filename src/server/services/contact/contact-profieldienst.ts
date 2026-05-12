@@ -33,10 +33,11 @@ const voorkeurenBE____static: Communicatievoorkeur[] = [
     stakeholder: 'Zorg en ondersteuning (WMO)',
     description: 'Informatie over uw aanvragen en voorzieningen',
     settings: [
-      { type: MEDIUM_TYPES.EMAIL, value: null },
+      { type: MEDIUM_TYPES.EMAIL, value: null, dateModified: null },
       {
         type: MEDIUM_TYPES.POSTADRES,
         value: 'Het Amstelplein 32-H',
+        dateModified: null,
       },
     ],
   },
@@ -45,9 +46,9 @@ const voorkeurenBE____static: Communicatievoorkeur[] = [
     stakeholder: 'Erfpacht',
     description: 'Factuurspecificaties',
     settings: [
-      { type: MEDIUM_TYPES.EMAIL, value: null },
-      { type: MEDIUM_TYPES.POSTADRES, value: null },
-      { type: MEDIUM_TYPES.PHONE, value: '0612345678' },
+      { type: MEDIUM_TYPES.EMAIL, value: null, dateModified: null },
+      { type: MEDIUM_TYPES.POSTADRES, value: null, dateModified: null },
+      { type: MEDIUM_TYPES.PHONE, value: '0612345678', dateModified: null },
     ],
   },
   {
@@ -55,8 +56,8 @@ const voorkeurenBE____static: Communicatievoorkeur[] = [
     stakeholder: 'Erfpacht',
     description: 'Informatie over uw Erfpacht dossiers',
     settings: [
-      { type: MEDIUM_TYPES.EMAIL, value: null },
-      { type: MEDIUM_TYPES.POSTADRES, value: null },
+      { type: MEDIUM_TYPES.EMAIL, value: null, dateModified: null },
+      { type: MEDIUM_TYPES.POSTADRES, value: null, dateModified: null },
     ],
   },
 ];

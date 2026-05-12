@@ -80,7 +80,7 @@ export type CommunicatieMedium = {
 };
 
 export type CommunicatieMediumSetting = CommunicatieMedium & {
-  foo: 'bar'; // TODO: Remove this when the backend is updated to return the correct type
+  // foo: 'bar'; // TODO: Remove this when the backend is updated to return the correct type
 };
 
 export type Communicatievoorkeur = {
