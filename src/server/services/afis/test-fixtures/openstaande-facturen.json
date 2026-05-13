@@ -94,7 +94,7 @@
             "DunningLevel": 9999,
             "DunningBlockingReason": "",
             "ProfitCenterName": "Moneymakers inc.",
-            "SEPAMandate": "",
+            "SEPAMandate": 123123123,
             "PostingDate": "2023-03-23T00:00:00",
             "NetDueDate": "2023-03-23T00:00:00",
             "AmountInBalanceTransacCrcy": "1000.00",
