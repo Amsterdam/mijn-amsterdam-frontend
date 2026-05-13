@@ -166,10 +166,10 @@ describe('afis-facturen', async () => {
     expect(geldTerugInvoice?.status).toBe('geld-terug');
     expect(geldTerugInvoice?.statusDescription.includes('-')).toBe(false);
 
-    const unknownStatusInvoice = response.content?.facturen[4];
-    expect(unknownStatusInvoice?.status).toBe('automatische-incasso');
+    const incassoInvoice = response.content?.facturen[4];
+    expect(incassoInvoice?.status).toBe('automatische-incasso');
 
-    expect(unknownStatusInvoice?.eMandateId).toBe('123123123');
+    expect(incassoInvoice?.eMandateId).toBe('123123123');
   });
 
   test('Afgehandelde factuur data is transformed and url is correctly formatted', async () => {
