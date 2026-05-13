@@ -40,7 +40,7 @@ export async function adminIndexHandler(req: Request, res: Response) {
             adminRoutesGeneric.protected.CACHE_OVERVIEW
           ),
           'Login statistieken': generateFullApiAdminUrlBFF(
-            adminRoutesGeneric.protected.visitors.STATS_TABLE
+            adminRoutesGeneric.protected.visitors.STATS
           ),
           'KTO tabel': generateFullApiAdminUrlBFF(
             adminRoutesUserFeedback.admin.USER_FEEDBACK_OVERVIEW_TABLE
