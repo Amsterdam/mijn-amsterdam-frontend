@@ -26,8 +26,6 @@ export function KlantContactThema() {
   } = useKlantcontactData();
   useHTMLDocumentTitle(routeConfig);
 
-  const pageContentTop = <div></div>;
-
   const pageContentErrorAlert = (
     <>
       Wij kunnen de volgende gegevens nu niet tonen:
@@ -50,7 +48,7 @@ export function KlantContactThema() {
       errorAlertContent={pageContentErrorAlert}
       isLoading={isLoading}
       pageLinks={pageLinks}
-      pageContentTop={pageContentTop}
+      pageContentTop={null}
       pageContentMain={
         <>
           <Afspraken />
