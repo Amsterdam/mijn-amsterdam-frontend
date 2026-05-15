@@ -126,20 +126,18 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
   return (
     <Row className={className} gap="large">
       {icon}
-      <Column
-        className={
-          styles.ColumnLargeScreen /* Make sure `cancellationLink` is always in the same spot for alignment. */
-        }
-      >
-        <TitleHeading></TitleHeading>
-        <CardBody afspraak={afspraak} />
-        <Row alignVertical="center">
-          <MaRouterLink maVariant="noUnderline" href={afspraak.qrCodeHref}>
-            <Button variant="secondary">Toon QR code</Button>
-          </MaRouterLink>
-        </Row>
-      </Column>
-      <CancellationLink afspraak={afspraak}></CancellationLink>
+      <Row>
+        <Column style={{ maxWidth: '85%' }}>
+          <TitleHeading></TitleHeading>
+          <CardBody afspraak={afspraak} />
+          <Row alignVertical="center">
+            <MaRouterLink maVariant="noUnderline" href={afspraak.qrCodeHref}>
+              <Button variant="secondary">Toon QR code</Button>
+            </MaRouterLink>
+          </Row>
+        </Column>
+        <CancellationLink afspraak={afspraak}></CancellationLink>
+      </Row>
     </Row>
   );
 }
