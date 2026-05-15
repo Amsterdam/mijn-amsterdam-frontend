@@ -93,7 +93,7 @@ export function useSignRequestPayloadStorage() {
           );
 
           return lastPayload
-            ? lastPayload.eMandateIdSource !== eMandateIdSource?.toString()
+            ? lastPayload.eMandateIdSource !== eMandateIdSource
             : false;
         },
       };
