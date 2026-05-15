@@ -40,14 +40,12 @@ exports[`Renders afspraak data > Large screen 1`] = `
       >
         Datum, 01-01-2020 17:50
       </p>
-      <div>
-        <button
-          class="ams-button ams-button--secondary _LocationModalLink_fa327b ams-link _MaLink_10c0a4 _LocationModalLink_0a51e6"
-          type="button"
-        >
-          Locatie Stadsloket Centrum, Amstel 1
-        </button>
-      </div>
+      <button
+        class="ams-button ams-button--secondary _LocationModalLink_fa327b ams-link _MaLink_10c0a4 _LocationModalLink_0a51e6"
+        type="button"
+      >
+        Locatie Stadsloket Centrum, Amstel 1
+      </button>
       <a
         class="ams-link _Block_0a51e6 ams-mb-s _MaLink_10c0a4"
         href="#"
@@ -76,6 +74,7 @@ exports[`Renders afspraak data > Large screen 1`] = `
     >
       Annuleren
     </a>
+     
   </div>
 </DocumentFragment>
 `;
@@ -124,14 +123,12 @@ exports[`Renders afspraak data > Small screen 1`] = `
       >
         Datum, 01-01-2020 17:50
       </p>
-      <div>
-        <button
-          class="ams-button ams-button--secondary _LocationModalLink_fa327b ams-link _MaLink_10c0a4 _LocationModalLink_0a51e6"
-          type="button"
-        >
-          Locatie Stadsloket Centrum, Amstel 1
-        </button>
-      </div>
+      <button
+        class="ams-button ams-button--secondary _LocationModalLink_fa327b ams-link _MaLink_10c0a4 _LocationModalLink_0a51e6"
+        type="button"
+      >
+        Locatie Stadsloket Centrum, Amstel 1
+      </button>
       <a
         class="ams-link _Block_0a51e6 ams-mb-s _MaLink_10c0a4"
         href="#"
