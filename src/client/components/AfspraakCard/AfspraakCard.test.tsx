@@ -36,6 +36,7 @@ const afspraak: AfspraakFrontendFinal = {
     countryCode: 'NL',
   },
   qrCodeHref: '/qr/123',
+  products: [],
 };
 
 function renderAfspraakCard(afspraak: AfspraakFrontendFinal) {

@@ -30,11 +30,13 @@ type Product = {
 type Status = 'New' | 'No show' | 'NoShowCounter' | 'Completed' | 'Cancelled';
 
 export type AfspraakSource = {
+  caseReference: string;
   subject: string;
+  products: Product[];
   status: Status;
   startDate: string;
+  endDate: string;
   qrCode: string;
-  products: Product[];
   location: {
     street: string | null;
     postalCode: string | null;
@@ -42,8 +44,6 @@ export type AfspraakSource = {
     countryCode: string;
     city: string | null;
   };
-  endDate: string;
-  caseReference: string;
   cancellationLink: string;
 };
 
@@ -54,22 +54,8 @@ export type AfspraakResponseSource = {
   count: number;
 };
 
-export type AfspraakFrontend = {
-  startDate: string;
-  endDate: string;
+export type AfspraakFrontend = AfspraakSource & {
   dateFormatted: string;
-  subject: string;
-  status: Status;
-  qrCode: string;
-  location: {
-    street: string | null;
-    postalCode: string | null;
-    name: string;
-    countryCode: string;
-    city: string | null;
-  };
-  caseReference: string;
-  cancellationLink: string;
 };
 
 export type KlantcontactResponseData = {

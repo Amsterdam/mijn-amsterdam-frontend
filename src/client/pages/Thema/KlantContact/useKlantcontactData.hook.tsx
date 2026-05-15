@@ -43,12 +43,15 @@ export function useKlantcontactData() {
   };
 }
 
-export type AfspraakFrontendFinal = {
+type AddedAfspraakFields = {
   startDate: Date;
   endDate: Date;
   displayDate: string;
   qrCodeHref: string;
-} & Omit<AfspraakFrontend, 'startDate' | 'endDate'>;
+};
+
+export type AfspraakFrontendFinal = AddedAfspraakFields &
+  Omit<AfspraakFrontend, keyof AddedAfspraakFields>;
 
 function getAfspraken(afspraken: AfspraakFrontend[]): AfspraakFrontendFinal[] {
   return afspraken.map((a) => {
