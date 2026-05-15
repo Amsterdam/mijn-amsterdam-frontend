@@ -38,19 +38,16 @@ function CardBody({ afspraak }: AfspraakCardProps) {
   return (
     <>
       <Paragraph>{afspraak.displayDate}</Paragraph>
-      {/* Without this div the LocationModal is not clickable. */}
-      <div>
-        <LocationModal
-          address={`${afspraak.location.street}`}
-          className={classNames(
-            'ams-link',
-            maLinkStyles.MaLink,
-            styles.LocationModalLink
-          )}
-        >
-          {`Locatie Stadsloket ${afspraak.location.name}, ${afspraak.location.street}`}
-        </LocationModal>
-      </div>
+      <LocationModal
+        address={`${afspraak.location.street}`}
+        className={classNames(
+          'ams-link',
+          maLinkStyles.MaLink,
+          styles.LocationModalLink
+        )}
+      >
+        {`Locatie Stadsloket ${afspraak.location.name}, ${afspraak.location.street}`}
+      </LocationModal>
       <CalendarLink
         className={classNames(styles.Block, 'ams-mb-s')}
         icsData={{
@@ -126,18 +123,20 @@ export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
   return (
     <Row className={className} gap="large">
       {icon}
-      <Row>
-        <Column style={{ maxWidth: '85%' }}>
-          <TitleHeading></TitleHeading>
-          <CardBody afspraak={afspraak} />
-          <Row alignVertical="center">
-            <MaRouterLink maVariant="noUnderline" href={afspraak.qrCodeHref}>
-              <Button variant="secondary">Toon QR code</Button>
-            </MaRouterLink>
-          </Row>
-        </Column>
-        <CancellationLink afspraak={afspraak}></CancellationLink>
-      </Row>
+      <Column
+        className={
+          styles.ColumnLargeScreen /* Make sure `cancellationLink` is always in the same spot for alignment. */
+        }
+      >
+        <TitleHeading></TitleHeading>
+        <CardBody afspraak={afspraak} />
+        <Row alignVertical="center">
+          <MaRouterLink maVariant="noUnderline" href={afspraak.qrCodeHref}>
+            <Button variant="secondary">Toon QR code</Button>
+          </MaRouterLink>
+        </Row>
+      </Column>
+      <CancellationLink afspraak={afspraak}></CancellationLink>{' '}
     </Row>
   );
 }
