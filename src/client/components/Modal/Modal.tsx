@@ -1,4 +1,4 @@
-import type { ReactNode} from 'react';
+import type { ReactNode } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Dialog } from '@amsterdam/design-system-react';
@@ -129,7 +129,7 @@ export function Modal({
 
   return (
     isOpen && (
-      <div className={styles.ModalContainer}>
+      <>
         <div
           className={styles.Modal}
           onClick={() => (closeOnClickOutside ? onClose?.() : void 0)}
@@ -156,7 +156,7 @@ export function Modal({
             />
           )}
         </Dialog>
-      </div>
+      </>
     )
   );
 }

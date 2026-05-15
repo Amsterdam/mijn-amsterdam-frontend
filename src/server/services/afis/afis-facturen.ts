@@ -269,7 +269,7 @@ function transformFactuur(
 
   const deelbetaling = deelbetalingen?.[factuurNummer];
   const hasDeelbetaling = !!deelbetaling;
-  const eMandateId = invoice.SEPAMandate ?? null;
+  const eMandateId = invoice.SEPAMandate?.toString() ?? null;
   const amountOriginal = getInvoiceAmount(invoice);
   const amountPayed = getInvoiceAmount(invoice, deelbetaling);
   const amountPayedFormatted = `€ ${amountPayed ? displayAmount(parseFloat(amountPayed.toFixed(2))) : '0,00'}`;

@@ -180,7 +180,7 @@ export type AfisFactuurPropertiesSource = {
   PostingDate: string;
   ProfitCenterName: string;
   ReverseDocument?: string;
-  SEPAMandate: string;
+  SEPAMandate: AfisEMandateSource['IMandateId'] | '';
   PaymentTerms: string;
 };
 

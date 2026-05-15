@@ -944,7 +944,7 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
     ...omit(zaak, ['statusDates', 'termijnDates']),
     dateDecisionFormatted: toDateFormatted(zaak.dateDecision),
     dateRequestFormatted: toDateFormatted(zaak.dateRequest),
-    steps: options.getStepsFN?.(zaak) ?? [],
+    steps,
     displayStatus: getDisplayStatus(zaak, steps),
     link: {
       to: generatePath(options.detailPageRoute, {
