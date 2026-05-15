@@ -98,29 +98,32 @@ function ContactMomenten() {
   }
   return (
     <PageContentCell>
-      <CollapsiblePanel title="Contactmomenten" startCollapsed={false}>
-        <Paragraph className="ams-mb-m">
-          De lijst met contactmomenten wordt alleen bijgehouden met
-          telefoongesprekken naar telefoonnummer 14 020 of chatberichten met een
-          medewerker, waarbij er voor het beantwoorden van de vraag
-          persoonsgegevens nodig zijn.
-        </Paragraph>
-        <Paragraph className="ams-mb-m">
-          Brieven, klachten vanuit het klachtenformulier, WhatsApp- en
-          socialmediaberichten staan niet in deze lijst.
-        </Paragraph>
-        <Paragraph className="ams-mb-m">
-          Wilt u een eerder contactmoment doorgeven bij een volgende vraag? Geef
-          dan het referentienummer door.
-        </Paragraph>
-        <ThemaPaginaTable<ContactmomentProps>
-          zaken={contactmomenten}
-          maxItems={tableConfig.maxItems}
-          displayProps={tableConfig.displayProps}
-          listPageLinkTitle="Bekijk alle contactmomenten"
-          listPageRoute={routeConfig.path}
-        />
-      </CollapsiblePanel>
+      <ThemaPaginaTable<ContactmomentProps>
+        contentAfterTheTitle={
+          <>
+            <Paragraph className="ams-mb-m">
+              De lijst met contactmomenten wordt alleen bijgehouden met
+              telefoongesprekken naar telefoonnummer 14 020 of chatberichten met
+              een medewerker, waarbij er voor het beantwoorden van de vraag
+              persoonsgegevens nodig zijn.
+            </Paragraph>
+            <Paragraph className="ams-mb-m">
+              Brieven, klachten vanuit het klachtenformulier, WhatsApp- en
+              socialmediaberichten staan niet in deze lijst.
+            </Paragraph>
+            <Paragraph className="ams-mb-m">
+              Wilt u een eerder contactmoment doorgeven bij een volgende vraag?
+              Geef dan het referentienummer door.
+            </Paragraph>
+          </>
+        }
+        zaken={contactmomenten}
+        maxItems={tableConfig.maxItems}
+        displayProps={tableConfig.displayProps}
+        listPageLinkTitle="Bekijk alle contactmomenten"
+        listPageRoute={routeConfig.path}
+        title="Contactmomenten"
+      />
     </PageContentCell>
   );
 }
