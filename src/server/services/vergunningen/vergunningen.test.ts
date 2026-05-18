@@ -5,8 +5,13 @@ import { getStatusStepsDecos } from './decos-status-steps.ts';
 import { themaConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
-import { transformDecosZaakFrontend } from '../decos/decos-service.ts';
+import {
+  fetchDecosZaken,
+  transformDecosZaakFrontend,
+} from '../decos/decos-service.ts';
 import type { DecosZaakBase } from '../decos/decos-types.ts';
+import { fetchPBZaken } from '../powerbrowser/powerbrowser-service.ts';
+import { fetchVergunningen } from './vergunningen.ts';
 
 vi.mock('../../helpers/encrypt-decrypt');
 
@@ -18,6 +23,11 @@ vi.mock(
     fetchDecosZaken: vi.fn(),
   })
 );
+
+vi.mock('../powerbrowser/powerbrowser-service', async (importOriginal) => ({
+  ...(await importOriginal()),
+  fetchPBZaken: vi.fn(),
+}));
 
 vi.mock('./decos-status-steps', () => ({
   getStatusStepsDecos: vi
@@ -98,5 +108,26 @@ describe('vergunningen', () => {
         title: '',
       });
     });
+  });
+
+  it('should return combined vergunningen when both Decos and PB requests succeed', async () => {
+    const mockDecosResponse = {
+      status: 'OK',
+      content: [{ id: '1', caseType: 'Decos Case 1' }],
+    };
+    const mockPBResponse = {
+      status: 'OK',
+      content: [{ id: '2', caseType: 'PB Case 1' }],
+    };
+    (fetchDecosZaken as Mock).mockResolvedValue(mockDecosResponse);
+    (fetchPBZaken as Mock).mockResolvedValue(mockPBResponse);
+
+    const result = await fetchVergunningen(authProfileAndToken);
+
+    expect(result.status).toBe('OK');
+    expect(result.content).toStrictEqual([
+      expect.objectContaining({ caseType: 'Decos Case 1' }),
+      expect.objectContaining({ caseType: 'PB Case 1' }),
+    ]);
   });
 });
