@@ -32,7 +32,7 @@ parameters:
     default: true
 
 variables:
-  - template: '/pipelines/pool.yaml@MamsInfra'
+  - template: 'pipelines/pool.yaml@MamsInfra'
     parameters:
       dtapName: ${{ parameters.dtapName }}
 
