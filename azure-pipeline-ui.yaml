@@ -59,10 +59,14 @@ variables:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
       - name: btdDeploy
         value: false
+  - template: './pool.yaml'
+    parameters:
+      dtapName: p
 
 jobs:
   - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
     parameters:
+      pool: ${{ variables.pool }}
       dtapName: ${{ variables.dtapName }}
       btdBuild: ${{ variables.btdBuild }}
       btdTest: ${{ variables.btdTest }}

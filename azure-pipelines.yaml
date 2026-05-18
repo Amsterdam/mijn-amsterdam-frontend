@@ -30,10 +30,14 @@ parameters:
   - name: btdAppUI
     type: boolean
     default: true
+  - template: './pool.yaml'
+    parameters:
+      dtapName: p
 
 jobs:
   - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
     parameters:
+      pool: ${{ variables.pool }}
       dtapName: ${{ parameters.dtapName }}
       btdBuild: ${{ parameters.btdBuild }}
       btdTest: ${{ parameters.btdTest }}
