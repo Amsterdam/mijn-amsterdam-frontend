@@ -30,7 +30,9 @@ export function getStatusStepsDecos<
     isChecked: true,
   };
   const url = getVergunningCTALinks(caseType)?.meerinfo;
-  const description = `Lees meer over uw aanvraag op ${url ? `<a href="${url}" rel="noopener noreferrer">amsterdam.nl</a>` : ''}.`;
+  const description = url
+    ? `Lees meer over uw aanvraag op <a href="${url}" rel="noopener noreferrer">amsterdam.nl</a>.`
+    : '';
   const statusInBehandeling: StatusLineItem = {
     id: 'step-2',
     status: 'In behandeling',
