@@ -59,7 +59,7 @@ variables:
         value: false
   - template: '/pipelines/pool.yaml@MamsInfra'
     parameters:
-      dtapName: p
+      dtapName: ${{ variables.dtapName }}
 
 jobs:
   - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
