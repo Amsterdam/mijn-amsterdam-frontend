@@ -13,7 +13,7 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
-import { isRecentNotification } from '../../../universal/helpers/utils.ts';
+import { isRecentNotification } from '../../../universal/helpers/date.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getStatusDate } from '../decos/decos-helpers.ts';
