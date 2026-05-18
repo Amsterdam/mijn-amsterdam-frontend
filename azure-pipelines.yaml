@@ -30,7 +30,7 @@ parameters:
   - name: btdAppUI
     type: boolean
     default: true
-  - template: './pool.yaml'
+  - template: './pool.yaml@MamsInfra'
     parameters:
       dtapName: p
 
