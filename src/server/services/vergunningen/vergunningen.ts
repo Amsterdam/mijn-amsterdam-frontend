@@ -72,28 +72,19 @@ function getStatusSteps(vergunning: DecosVergunning): StatusLineItem[] {
 }
 
 // TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
-const activeTransformersDecos = isEnabled(
-  'VERGUNNINGEN.VTHOnPowerbrowserActive'
-)
-  ? decosZaakTransformers.filter(
-      (transformer) =>
-        !(
-          [
-            caseTypeVergunningen.Omzettingsvergunning,
-            caseTypeVergunningen.Onttrekkingsvergunning,
-            caseTypeVergunningen.OnttrekkingsvergunningSloop,
-            caseTypeVergunningen.Samenvoegingsvergunning,
-            caseTypeVergunningen.VormenVanWoonruimte,
-            caseTypeVergunningen.VOB,
-          ] as string[]
-        ).includes(transformer.caseType)
-    )
-  : decosZaakTransformers;
-
-// TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
-const activeTransformersPB = isEnabled('VERGUNNINGEN.VTHOnPowerbrowserActive')
-  ? pbZaakTransformers
-  : [];
+const activeTransformersDecos = decosZaakTransformers.filter(
+  (transformer) =>
+    !(
+      [
+        caseTypeVergunningen.Omzettingsvergunning,
+        caseTypeVergunningen.Onttrekkingsvergunning,
+        caseTypeVergunningen.OnttrekkingsvergunningSloop,
+        caseTypeVergunningen.Samenvoegingsvergunning,
+        caseTypeVergunningen.VormenVanWoonruimte,
+        caseTypeVergunningen.VOB,
+      ] as string[]
+    ).includes(transformer.caseType)
+);
 
 export async function fetchVergunningen(
   authProfileAndToken: AuthProfileAndToken,
@@ -105,7 +96,7 @@ export async function fetchVergunningen(
   );
   const requestPB = fetchPBZaken(
     authProfileAndToken.profile,
-    activeTransformersPB
+    pbZaakTransformers
   );
 
   const [responseDecosResult, responsePBResult] = await Promise.allSettled([
