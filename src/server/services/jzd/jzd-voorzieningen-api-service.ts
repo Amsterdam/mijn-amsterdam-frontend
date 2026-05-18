@@ -58,7 +58,7 @@ function addMaApiPropsToVoorziening<T extends ZorgnedAanvraagTransformed>(
       (Object.entries(actionConfig.assign) as _Entries).forEach(
         ([key, value]) => {
           let value_ = value;
-          if (typeof value == 'function') {
+          if (typeof value === 'function') {
             value_ = value(voorziening, key as never); // The "as never" is needed to satisfy the type checker, because the type of key is a string, but we know that it will always be a valid key of WithMaApiProps.
           }
           if (Array.isArray(value_)) {
