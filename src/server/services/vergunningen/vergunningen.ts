@@ -1,7 +1,6 @@
 import createDebugger from 'debug';
 
 import {
-  caseTypeVergunningen,
   type DecosVergunning,
   type PBVergunning,
   type ZaakFrontendCombined,
@@ -20,7 +19,6 @@ import {
 } from '../../../universal/helpers/api.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
@@ -71,28 +69,13 @@ function getStatusSteps(vergunning: DecosVergunning): StatusLineItem[] {
   return steps;
 }
 
-// TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
-const activeTransformersDecos = decosZaakTransformers.filter(
-  (transformer) =>
-    !(
-      [
-        caseTypeVergunningen.Omzettingsvergunning,
-        caseTypeVergunningen.Onttrekkingsvergunning,
-        caseTypeVergunningen.OnttrekkingsvergunningSloop,
-        caseTypeVergunningen.Samenvoegingsvergunning,
-        caseTypeVergunningen.VormenVanWoonruimte,
-        caseTypeVergunningen.VOB,
-      ] as string[]
-    ).includes(transformer.caseType)
-);
-
 export async function fetchVergunningen(
   authProfileAndToken: AuthProfileAndToken,
   appRouteDetailPage: string = themaConfig.detailPage.route.path
 ): Promise<ApiResponse<ZaakFrontendCombined[]>> {
   const requestDecos = fetchDecosZaken(
     authProfileAndToken,
-    activeTransformersDecos
+    decosZaakTransformers
   );
   const requestPB = fetchPBZaken(
     authProfileAndToken.profile,

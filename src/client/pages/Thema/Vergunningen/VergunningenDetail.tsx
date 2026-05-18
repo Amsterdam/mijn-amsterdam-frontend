@@ -75,7 +75,6 @@ function DetailPageContent<T extends DecosVergunning | PBVergunning>({
           case 'Voorraadvergunning tweede woning':
           case 'Splitsingsvergunning':
             return <Woonvergunningen vergunning={vergunning} />;
-          case 'VOB':
           case 'Ligplaatsvergunning woonboot':
           case 'Ligplaatsvergunning bedrijfsvaartuig':
             return <LigplaatsVergunning vergunning={vergunning} />;

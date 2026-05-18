@@ -38,15 +38,7 @@ export type WithTimeRange = {
 export type WithDateTimeRange = WithDateRange & WithTimeRange; // A list of common readable api attributes
 
 export const caseTypeVergunningen = {
-  // TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
-  Omzettingsvergunning: 'Omzettingsvergunning',
-  Samenvoegingsvergunning: 'Samenvoegingsvergunning',
-  Onttrekkingsvergunning: 'Onttrekkingsvergunning voor ander gebruik',
-  OnttrekkingsvergunningSloop: 'Onttrekkingsvergunning voor sloop',
-  VormenVanWoonruimte: 'Woningvormingsvergunning',
-  VOB: 'VOB',
-  Splitsingsvergunning: 'Splitsingsvergunning',
-
+  Splitsingsvergunning: 'Splitsingsvergunning', // TODO: MIJN-12357: DO NOT REMOVE SplitsingsvergunningDecos UNTIL IT IS MIGRATED TO PB
   TVMRVVObject: 'TVM - RVV - Object',
   EvenementMelding: 'Evenement melding',
   EvenementVergunning: 'Evenement vergunning',
@@ -168,59 +160,14 @@ export type WerkzaamhedenEnVervoerOpStraat = DecosZaakBase &
     werkzaamheden: WVOSActiviteit[];
   };
 
-export type LigplaatsvergunningDecos = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'VOB'>;
-    requestKind: string | null;
-    reason: string | null;
-    vesselKind: string | null;
-    vesselName: string | null;
-  };
-
-export type OmzettingsvergunningDecos = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'Omzettingsvergunning'>;
-    dateInBehandeling: string | null;
-  };
-
-export type SamenvoegingsvergunningDecos = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'Samenvoegingsvergunning'>;
-  };
-
-export type OnttrekkingsvergunningDecos = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'Onttrekkingsvergunning'>;
-  };
-
-export type OnttrekkingsvergunningSloopDecos = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'OnttrekkingsvergunningSloop'>;
-  };
-
-export type VormenVanWoonruimteDecos = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'VormenVanWoonruimte'>;
-  };
-
 export type SplitsingsvergunningDecos = DecosZaakBase &
   WithLocation & {
     caseType: GetCaseType<'Splitsingsvergunning'>;
   };
 
-// TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
-export type WoningVergunningDecos =
-  | SamenvoegingsvergunningDecos
-  | OnttrekkingsvergunningDecos
-  | OnttrekkingsvergunningSloopDecos
-  | VormenVanWoonruimteDecos
-  | SplitsingsvergunningDecos; // TODO: MIJN-12357: DO NOT REMOVE SplitsingsvergunningDecos UNTIL IT IS MIGRATED TO PB
+export type WoningVergunningDecos = SplitsingsvergunningDecos; // TODO: MIJN-12357: DO NOT REMOVE SplitsingsvergunningDecos UNTIL IT IS MIGRATED TO PB
 
-// TODO: MIJN-12357: Remove after move to Powerbrowser is finalized
-type VTHVergunningDecos =
-  | LigplaatsvergunningDecos
-  | OmzettingsvergunningDecos
-  | WoningVergunningDecos;
+type VTHVergunningDecos = WoningVergunningDecos;
 
 export type DecosVergunning =
   | VTHVergunningDecos
@@ -278,7 +225,6 @@ export const missingDocumentsEmailByCaseType = {
   Woningvormingsvergunning: 'bedandbreakfast@amsterdam.nl',
   'Voorraadvergunning tweede woning': 'bedandbreakfast@amsterdam.nl',
   Splitsingsvergunning: 'bedandbreakfast@amsterdam.nl',
-  VOB: 'bedandbreakfast@amsterdam.nl',
 } satisfies Record<CaseTypeVergunningenOrPB, string | null>;
 
 export function getMissingDocumentsEmailForCaseType(
