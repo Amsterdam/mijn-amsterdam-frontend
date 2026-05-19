@@ -99,8 +99,8 @@ export function useContactmomentenListData() {
   } = useKlantcontactData();
   const { items: myThemasMenuItems } = useActiveThemaMenuItems();
 
-  const contactmomenten_: ContactmomentProps[] =
-    contactmomenten.map((contactmoment) => {
+  const contactmomenten_: ContactmomentProps[] = contactmomenten.map(
+    (contactmoment) => {
       const menuItemId = // getMenuItem can not be used because it is dependend on the user having the thema at the current moment
         mapperContactmomentToMenuItem[
           contactmoment.subject as keyof typeof mapperContactmomentToMenuItem
@@ -114,7 +114,8 @@ export function useContactmomentenListData() {
           myThemasMenuItems
         ),
       };
-    }) ?? [];
+    }
+  );
 
   return {
     id,
