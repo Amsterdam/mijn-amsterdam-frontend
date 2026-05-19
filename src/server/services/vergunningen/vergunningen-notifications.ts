@@ -87,7 +87,7 @@ export function createNotificationDefault(
         description: `Wij hebben uw aanvraag ${zaak.title} met zaaknummer ${zaak.identifier} ontvangen.`,
       };
     case 'In behandeling': {
-      const meerinfoUrl = getVergunningCTALinks(caseType)?.meerinfo ?? null;
+      const meerinfoUrl = getVergunningCTALinks(caseType)?.meerinfo;
       return {
         ...baseNotification,
         datePublished,

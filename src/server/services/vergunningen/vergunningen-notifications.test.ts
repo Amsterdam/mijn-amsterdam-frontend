@@ -18,6 +18,7 @@ import {
   apiSuccessResult,
   apiErrorResult,
 } from '../../../universal/helpers/api.ts';
+import { caseTypeParkeren } from '../parkeren/config-and-types.ts';
 
 vi.mock('./vergunningen', () => ({
   fetchVergunningen: vi.fn(),
@@ -31,6 +32,59 @@ describe('vergunningen-notifications', () => {
 
     afterAll(() => {
       MockDate.reset();
+    });
+
+    it('should create an "in behandeling" notification with meerinfo URL for GPK', () => {
+      const vergunning = {
+        id: '1',
+        caseType: caseTypeParkeren.GPK,
+        identifier: 'Z/123/457',
+        title: 'Test case',
+        link: { to: '/test', title: 'Test' },
+        steps: [
+          {
+            status: 'In behandeling',
+            datePublished: '2023-01-10',
+            isActive: true,
+          },
+        ],
+      } as unknown as DecosZaakFrontend;
+
+      const notification = createNotificationDefault(vergunning, {
+        themaID: themaConfig.id,
+        themaTitle: themaConfig.title,
+      });
+
+      expect(notification).toHaveProperty(
+        'description',
+        'Wij hebben uw aanvraag Test case met zaaknummer Z/123/457 in behandeling genomen. Lees meer over uw aanvraag op <a href="https://www.amsterdam.nl/parkeren/parkeren-gehandicapten/europese-gehandicaptenparkeerkaart/gehandicaptenparkeerkaart-aanvragen/#zo-lang-duurt-het" rel="noopener noreferrer">amsterdam.nl</a>.'
+      );
+    });
+    it('should create an "in behandeling" notification without meerinfo URL for Testtype', () => {
+      const vergunning = {
+        id: '1',
+        caseType: 'Testype',
+        identifier: 'Z/123/456',
+        title: 'Test case',
+        link: { to: '/test', title: 'Test' },
+        steps: [
+          {
+            status: 'In behandeling',
+            datePublished: '2023-01-10',
+            isActive: true,
+          },
+        ],
+      } as unknown as DecosZaakFrontend;
+
+      const notification = createNotificationDefault(vergunning, {
+        themaID: themaConfig.id,
+        themaTitle: themaConfig.title,
+      });
+
+      expect(notification).toHaveProperty(
+        'description',
+        'Wij hebben uw aanvraag Test case met zaaknummer Z/123/456 in behandeling genomen.'
+      );
     });
 
     it('should create a notification with valid labels', () => {
