@@ -136,7 +136,7 @@ function AppLanding() {
 
 export function App() {
   const { enableLinkTracking } = usePiwik();
-  enableLinkTracking();
+  enableLinkTracking(['amsterdam.nl']);
 
   return (
     <BrowserRouter>
