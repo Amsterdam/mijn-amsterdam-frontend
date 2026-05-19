@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 
 import type { RVVSloterweg } from './config-and-types.ts';
 import { getStatusStepsDecos } from './decos-status-steps.ts';
+import { getVergunningCTALinks } from './vergunningen-notifications-config.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 import { getDisplayStatus } from '../decos/decos-helpers.ts';
 import type { DecosZaakBase } from '../decos/decos-types.ts';
@@ -334,6 +335,37 @@ describe('vergunningen-status-steps', () => {
       ];
       const status = getDisplayStatus(vergunning, steps);
       expect(status).toBe('Onbekend');
+    });
+  });
+  describe('GPK caseType', () => {
+    it('should give a meerinfo link in step "In behandeling"', () => {
+      const caseType = 'GPK';
+      const url = getVergunningCTALinks(caseType)?.meerinfo;
+      const zaak = {
+        caseType,
+        title: 'GPK Vergunning',
+        dateRequest: '2023-01-01',
+        dateDecision: '',
+        decision: '',
+        processed: false,
+        isExpired: false,
+        statusDates: [
+          { status: 'In behandeling', datePublished: '2023-01-15' },
+        ],
+      } as unknown as DecosZaakBase;
+
+      const steps = getStatusStepsDecos(zaak);
+
+      const inBehandelingStep = steps.find(
+        (step) => step.status === 'In behandeling'
+      );
+      expect(inBehandelingStep).toBeDefined();
+      expect(inBehandelingStep?.description).toBe(
+        url
+          ? `Lees meer over uw aanvraag op <a href="${url}" rel="noopener noreferrer">amsterdam.nl</a>.`
+          : ''
+      );
+      expect(inBehandelingStep?.isActive).toBe(true);
     });
   });
 });

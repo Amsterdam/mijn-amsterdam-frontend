@@ -4,7 +4,7 @@ import {
   isExpiryNotificationDue,
 } from './vergunningen-helpers.ts';
 import {
-  getVergunningAanvraagLinks,
+  getVergunningCTALinks,
   type CaseType,
 } from './vergunningen-notifications-config.ts';
 import { fetchVergunningen } from './vergunningen.ts';
@@ -110,7 +110,7 @@ export function createNotificationDefault(
         zaak.dateEnd &&
         isExpiryNotificationDue(zaak.dateStart, zaak.dateEnd)
       ) {
-        const links = getVergunningAanvraagLinks(caseType);
+        const links = getVergunningCTALinks(caseType);
         const url = links?.verlengen ?? links?.aanvragen;
         return {
           ...baseNotification,
@@ -132,8 +132,7 @@ export function createNotificationDefault(
       };
     }
     case 'Verlopen': {
-      const aanvraagUrl =
-        getVergunningAanvraagLinks(caseType)?.aanvragen ?? null;
+      const aanvraagUrl = getVergunningCTALinks(caseType)?.aanvragen ?? null;
       return {
         ...baseNotification,
         datePublished,
