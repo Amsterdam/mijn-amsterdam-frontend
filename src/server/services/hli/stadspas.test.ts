@@ -19,7 +19,6 @@ import {
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt.ts';
-import { object } from 'zod';
 
 const FAKE_API_KEY = '22222xx22222';
 

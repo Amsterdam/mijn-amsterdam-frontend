@@ -31,9 +31,9 @@ import {
   getSettledResult,
   apiErrorResult,
 } from '../../../universal/helpers/api.ts';
-import type { LinkProps } from '../../../universal/types/App.types.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import { displayAmount } from '../../../universal/helpers/text.ts';
+import type { LinkProps } from '../../../universal/types/App.types.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import {
