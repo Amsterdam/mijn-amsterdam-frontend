@@ -65,7 +65,7 @@ export const themaConfig = {
 } as const satisfies ContactThema;
 
 const contactmomentenDisplayProps: DisplayProps<ContactmomentProps> = {
-  kanaal: 'Contactvorm',
+  kanaalField: 'Contactvorm',
   subjectLink: 'Onderwerp',
   datePublishedFormatted: 'Datum',
   referenceNumber: 'Referentienummer',

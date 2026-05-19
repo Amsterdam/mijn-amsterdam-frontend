@@ -71,12 +71,12 @@ function getLinkToThemaPage(
 }
 
 function addIcon(type: Kanaal) {
-  const icons: Record<Kanaal, React.FC> = {
+  const icons = {
     Telefoon: PhoneIcon,
     Chat: SpeechBalloonEllipsisIcon,
     Contactformulier: MailIcon,
     Stadsloket: PersonAtDeskIcon,
-  };
+  } as const;
   if (icons[type]) {
     return (
       <span className={styles.IconWithLabel}>
@@ -99,7 +99,7 @@ export function useContactmomentenListData() {
   } = useKlantcontactData();
   const { items: myThemasMenuItems } = useActiveThemaMenuItems();
 
-  const contactmomentenProps: ContactmomentProps[] =
+  const contactmomenten_: ContactmomentProps[] =
     contactmomenten.map((contactmoment) => {
       const menuItemId = // getMenuItem can not be used because it is dependend on the user having the thema at the current moment
         mapperContactmomentToMenuItem[
@@ -108,7 +108,7 @@ export function useContactmomentenListData() {
       return {
         ...contactmoment,
         className: getRedactedClass(menuItemId),
-        kanaal: addIcon(contactmoment.kanaal),
+        kanaalEl: addIcon(contactmoment.kanaal),
         subjectLink: getLinkToThemaPage(
           contactmoment.subject,
           myThemasMenuItems
@@ -122,7 +122,7 @@ export function useContactmomentenListData() {
     isLoading,
     isError,
     breadcrumbs,
-    contactmomenten: contactmomentenProps,
+    contactmomenten: contactmomenten_,
     hasContactmomenten: !!contactmomenten.length,
     routeConfig: themaConfig.listPageContactmomenten.route,
   };
