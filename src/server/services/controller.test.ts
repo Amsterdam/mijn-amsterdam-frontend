@@ -216,7 +216,7 @@ describe('controller', () => {
       {
         OK_SERVICE: async () => apiSuccessResult({ ok: true }),
         ERROR_SERVICE: async () => apiErrorResult('nope', null),
-        POSTPHONE_SERVICE: async () => apiPostponeResult({ foo: 'bar' }),
+        POSTPONE_SERVICE: async () => apiPostponeResult({ foo: 'bar' }),
       } as never,
       true
     );
