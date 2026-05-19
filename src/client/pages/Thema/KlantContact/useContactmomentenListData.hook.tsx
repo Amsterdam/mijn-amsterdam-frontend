@@ -8,7 +8,7 @@ import {
 
 import type { ContactmomentProps } from './KlantContact-thema-config.ts';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
-import type { Kanaal } from '../../../../server/services/salesforce/klantcontact.types.ts';
+import type { Kanaal } from '../../../../server/services/klantcontact/klantcontact.types.ts';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import type { ThemaMenuItemTransformed } from '../../../config/thema-types.ts';
 import { getRedactedClass } from '../../../helpers/cobrowse.ts';

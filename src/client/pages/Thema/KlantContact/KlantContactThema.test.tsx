@@ -6,7 +6,7 @@ import type {
   Kanaal,
   ContactmomentFrontend,
   AfspraakFrontend,
-} from '../../../../server/services/salesforce/klantcontact.types.ts';
+} from '../../../../server/services/klantcontact/klantcontact.types.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import { componentCreator } from '../../MockApp.tsx';

@@ -7,7 +7,7 @@ import type {
   Adres,
   BrpFrontend,
 } from '../../../../../server/services/brp/brp-types.ts';
-import type { ContactmomentFrontend } from '../../../../../server/services/salesforce/klantcontact.types.ts';
+import type { ContactmomentFrontend } from '../../../../../server/services/klantcontact/klantcontact.types.ts';
 import type { WonenDataFrontend } from '../../../../../server/services/wonen/wonen.types.ts';
 import { bffApiHost } from '../../../../../testing/setup.ts';
 import { bffApi } from '../../../../../testing/utils.ts';

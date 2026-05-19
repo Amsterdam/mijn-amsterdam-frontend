@@ -8,7 +8,7 @@ import type {
   KlantcontactResponseData,
   Kanaal,
   ContactmomentFrontend,
-} from '../../server/services/salesforce/klantcontact.types.ts';
+} from '../../server/services/klantcontact/klantcontact.types.ts';
 import type { AppState } from '../../universal/types/App.types.ts';
 import { DashboardRoute } from '../pages/Dashboard/Dashboard-routes.ts';
 import { Dashboard } from '../pages/Dashboard/Dashboard.tsx';

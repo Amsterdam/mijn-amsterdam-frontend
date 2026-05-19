@@ -1,45 +1,47 @@
-.CardListContainer {
-  padding-top: 16px;
-  border-top: var(--ams-border-width-s) solid var(--ams-color-separator);
+.AfspraakCard {
+  position: relative;
+  padding-top: var(--ams-space-xl);
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    padding-left: var(--ams-space-xl);
+    padding-top: 0;
+  }
+}
+.Icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.CancellationLink {
+  margin-left: var(--ams-space-m);
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+.QRCodeLink {
+  margin: 0 var(--ams-space-m);
+}
+.DisplayDateTime {
+  white-space: pre;
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    white-space: normal;
+  }
 }
 
-.Block {
+.ActionItem {
   display: block;
-}
-
-.ColumnLargeScreen {
-  width: 60%;
-}
-
-.DisabledLink {
-  color: var(--ams-color-interactive-disabled);
-  &:hover {
-    color: var(--ams-color-interactive-disabled);
+  padding-block: var(--ams-space-xs);
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    padding-block: 0;
+    display: inline-block;
   }
 }
 
-.LocationModalLink {
-  background: none;
-  border: none;
-  padding: 0;
-  color: var(--ams-color-interactive);
-  text-decoration: underline;
-  &:hover {
-    box-shadow: none !important;
+.ActionItem-separator {
+  padding: 0 var(--ams-space-s);
+  display: none;
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    display: inline;
   }
 }
-
-.SmallScreenHeading {
-  // For consistent alignment of the icon.
-  width: 325px;
-}
-
-.SmallScreenCancellationLink {
-  margin-left: 50px;
-}
-
-.LargeScreenDashboardHeading {
-  // For consistent alignment of the icon.
-  width: 425px;
-}
-
