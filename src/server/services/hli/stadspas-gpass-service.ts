@@ -24,12 +24,14 @@ import type {
 import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config.ts';
 import type {
   ApiResponse,
-  ApiSuccessResponse} from '../../../universal/helpers/api.ts';
+  ApiSuccessResponse,
+} from '../../../universal/helpers/api.ts';
 import {
   apiSuccessResult,
   getSettledResult,
   apiErrorResult,
 } from '../../../universal/helpers/api.ts';
+import type { LinkProps } from '../../../universal/types/App.types.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import { displayAmount } from '../../../universal/helpers/text.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
@@ -81,11 +83,29 @@ function transformBudget(budget: StadspasDetailBudgetSource) {
       budgetBalanceFormatted: `€${displayAmount(budget.budget_balance)}`,
       dateEnd: budget.expiry_date,
       dateEndFormatted: defaultDateFormat(budget.expiry_date),
+      readMoreLink: getReadMoreLink(budget),
     };
 
     return stadspasBudget;
   }
   return budget;
+}
+
+function getReadMoreLink(budget: StadspasDetailBudgetSource): LinkProps | null {
+  const naamLower = budget.naam.toLowerCase();
+  if (naamLower.includes('kindtegoed')) {
+    return {
+      to: 'https://www.amsterdam.nl/stadspas/kindtegoed/',
+      title: `Lees meer over de kindtegoed ${budget.naam} regeling op amsterdam.nl.`,
+    };
+  }
+  if (naamLower.includes('pc')) {
+    return {
+      to: 'https://www.amsterdam.nl/stadspas/pc-tegoed/',
+      title: `Lees meer over de pctegoed ${budget.naam} regeling op amsterdam.nl.`,
+    };
+  }
+  return null;
 }
 
 function transformStadspasResponse(

@@ -86,6 +86,7 @@ describe('stadspas-gpass-service', () => {
         budgetBalanceFormatted: '€500,00',
         dateEnd: '2023-12-31',
         dateEndFormatted: '31 december 2023',
+        readMoreLink: null,
       });
     });
 
@@ -113,6 +114,22 @@ describe('stadspas-gpass-service', () => {
             budget_assigned: 1000,
             budget_balance: 500,
             expiry_date: '2023-12-31',
+          },
+          {
+            code: '2025_AMSTEG_PC',
+            naam: '25/26 PC Tegoed',
+            omschrijving: '',
+            expiry_date: '2026-07-31T21:59:59.000Z',
+            budget_assigned: 500,
+            budget_balance: 500,
+          },
+          {
+            code: '2025_AMSTEG_PC',
+            naam: '25/26 Kindtegoed 12 tm 14 jaar',
+            omschrijving: 'Kindtegoed',
+            expiry_date: '2026-07-31T21:59:59.000Z',
+            budget_assigned: 500,
+            budget_balance: 500,
           },
         ],
         actief: false,
@@ -178,10 +195,27 @@ describe('stadspas-gpass-service', () => {
             budgetBalanceFormatted: '€500,00',
             dateEnd: '2023-12-31',
             dateEndFormatted: '31 december 2023',
+            readMoreLink: null,
           },
+          expect.objectContaining({
+            title: '25/26 PC Tegoed',
+            readMoreLink: {
+              title:
+                'Lees meer over de pctegoed 25/26 PC Tegoed regeling op amsterdam.nl.',
+              to: 'https://www.amsterdam.nl/stadspas/pc-tegoed/',
+            },
+          }),
+          expect.objectContaining({
+            title: '25/26 Kindtegoed 12 tm 14 jaar',
+            readMoreLink: {
+              title:
+                'Lees meer over de kindtegoed 25/26 Kindtegoed 12 tm 14 jaar regeling op amsterdam.nl.',
+              to: 'https://www.amsterdam.nl/stadspas/kindtegoed/',
+            },
+          }),
         ],
-        balance: 500,
-        balanceFormatted: '€500,00',
+        balance: 1500,
+        balanceFormatted: '€1.500,00',
         passNumber: 12345,
         passNumberComplete: '12345-67890',
         securityCode: '0123456',
@@ -536,7 +570,7 @@ describe('stadspas-gpass-service', () => {
         balance: 0,
         balanceFormatted: '€0,00',
         budgets: [
-          {
+          expect.objectContaining({
             budgetAssigned: 150,
             budgetAssignedFormatted: '€150,00',
             budgetBalance: 0,
@@ -546,7 +580,7 @@ describe('stadspas-gpass-service', () => {
             dateEndFormatted: '31 augustus 2080',
             description: 'Kindtegoed',
             title: 'Kindtegoed 10-14',
-          },
+          }),
         ],
         dateEnd: '2025-07-31',
         dateEndFormatted: '31 juli 2025',
