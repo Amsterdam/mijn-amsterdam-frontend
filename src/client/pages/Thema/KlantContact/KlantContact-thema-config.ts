@@ -55,7 +55,16 @@ export const themaConfig = {
       trackingUrl: null,
     },
   },
-  pageLinks: [],
+  pageLinks: [
+    {
+      to: 'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/contactformulier.aspx/',
+      title: 'Contactformulier',
+    },
+    {
+      to: 'tel:14020',
+      title: 'Bel 14 020',
+    },
+  ],
   uitlegPageSections: [
     {
       title: THEMA_TITLE,
