@@ -3,14 +3,19 @@
 }
 
 .MessageBar {
-  --ams-alert-content-padding-block: 1px;
+  --ams-alert-content-padding-block: 0;
   --ams-alert-severity-indicator-padding-block: var(--ams-space-s);
 
-  max-width: calc(var(--ams-page-max-inline-size) - var(--ams-space-xl) * 3);
+  max-width: calc(100vw - var(--ams-space-xl));
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    max-width: calc(var(--ams-page-max-inline-size) - var(--ams-space-xl) * 3);
+  }
+
   margin: 0 auto;
   background-color: var(--ams-color-background);
   position: relative;
 
+  // Removes the heading from the visual flow, but keeps it accessible for screen readers.
   :global(.ams-heading) {
     left: -100vw;
     position: absolute;
