@@ -13,6 +13,7 @@ import {
   decosVergunningTransformers,
   decosZaakTransformers,
 } from './decos-zaken.ts';
+import { filterNonPassagiersvaart } from './varen-helper.ts';
 import { getStatusSteps } from './varen-status-steps.ts';
 import { themaConfig } from '../../../client/pages/Thema/Varen/Varen-thema-config.ts';
 import {
@@ -114,22 +115,30 @@ export async function fetchVaren(authProfileAndToken: AuthProfileAndToken) {
   }
 
   const reder = transformVarenRederFrontend(rederRaw.content[0]);
+  const vergunningenUniqueIdentifiers = new Set(
+    vergunningenRaw.content.map((vergunning) => vergunning.identifier)
+  );
   const zaken = zakenRaw.content.flatMap((zaak) =>
     transformVarenZaakFrontend(
       authProfileAndToken,
       zaak,
-      new Set(
-        vergunningenRaw.content.map((vergunning) => vergunning.identifier)
-      )
+      vergunningenUniqueIdentifiers
     )
   );
-  const vergunningen = vergunningenRaw.content.flatMap((vergunning) =>
-    transformVarenVergunningFrontend(vergunning, zaken)
+
+  // MIJN - 12951: Filter non-passagiersvaart until there is more clarity about what is intended with non-passagiersvaart zaken and vergunningen
+  const [vergunningenFilteredRaw, zakenFiltered] = filterNonPassagiersvaart(
+    vergunningenRaw.content,
+    zaken
+  );
+
+  const vergunningen = vergunningenFilteredRaw.flatMap((vergunning) =>
+    transformVarenVergunningFrontend(vergunning, zakenFiltered)
   );
 
   return apiSuccessResult({
     reder,
-    zaken,
+    zaken: zakenFiltered,
     vergunningen,
   });
 }

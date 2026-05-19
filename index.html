@@ -29,20 +29,30 @@
       top: 0;
       left: 0;
       font-family: Arial;
-      font-size: 30px;
       height: 100vh;
       width: 100vw;
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
       padding: 0;
       margin: 0;
+    }
+
+    #loader p {
+      font-size: 30px;
+    }
+
+    #loadfail {
+      display: block;
     }
   </style>
 </head>
 
 <body>
-  <p id="loader">Welkom op Mijn Amsterdam</p>
+  <div id="loader">
+    <p>Welkom op Mijn Amsterdam</p>
+  </div>
   <noscript>
     <div role="main">
       <h1>Welkom op Mijn Amsterdam</h1>

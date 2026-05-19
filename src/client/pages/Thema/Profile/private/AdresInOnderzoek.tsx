@@ -11,7 +11,7 @@ export function AdresInOnderzoek({ brpContent }: AdresInOnderzoekProps) {
   return (
     <Alert severity="warning" heading="Adres in onderzoek" headingLevel={4}>
       <Paragraph>
-        {brpContent?.persoon?.adresInOnderzoek === '080000' ? (
+        {brpContent?.persoon?.adresInOnderzoek?.type === '080000' ? (
           <>
             Op dit moment onderzoeken wij of u nog steeds woont op het adres
             waar u ingeschreven staat.

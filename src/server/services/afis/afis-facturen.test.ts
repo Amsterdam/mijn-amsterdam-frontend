@@ -166,8 +166,10 @@ describe('afis-facturen', async () => {
     expect(geldTerugInvoice?.status).toBe('geld-terug');
     expect(geldTerugInvoice?.statusDescription.includes('-')).toBe(false);
 
-    const unknownStatusInvoice = response.content?.facturen[4];
-    expect(unknownStatusInvoice?.status).toBe('onbekend');
+    const incassoInvoice = response.content?.facturen[4];
+    expect(incassoInvoice?.status).toBe('automatische-incasso');
+
+    expect(incassoInvoice?.eMandateId).toBe('123123123');
   });
 
   test('Afgehandelde factuur data is transformed and url is correctly formatted', async () => {
@@ -424,7 +426,7 @@ describe('afis-facturen', async () => {
         AccountingDocumentCreationDate: '2023-11-22T00:00:00',
         ProfitCenterName: 'Profit Center 2',
         ReverseDocument: '',
-        SEPAMandate: 'SEPA123',
+        SEPAMandate: 123123123,
         PaymentTerms: '',
       },
       'factuur-in-termijnen': {
@@ -464,7 +466,7 @@ describe('afis-facturen', async () => {
         AccountingDocumentCreationDate: '2023-11-22T00:00:00',
         ProfitCenterName: 'Profit Center 2',
         ReverseDocument: '',
-        SEPAMandate: 'SEPA123',
+        SEPAMandate: 123123123,
         PaymentTerms: '',
       },
       'in-dispuut': {

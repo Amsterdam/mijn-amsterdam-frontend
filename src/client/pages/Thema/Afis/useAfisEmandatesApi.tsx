@@ -48,6 +48,7 @@ export function useAfisEMandatesApi() {
   const {
     isError,
     isDirty,
+    isLoading,
     data: eMandatesApiResponse,
     fetch,
     optimisticUpdateContent,
@@ -89,7 +90,9 @@ export function useAfisEMandatesApi() {
       title: titleBetaalvoorkeurenPage,
     },
   ];
-  const { id } = useParams<{ id: AfisEMandateFrontend['id'] }>();
+  const { id } = useParams<{
+    id: AfisEMandateFrontend['id'];
+  }>();
   const eMandate = eMandates.find((mandate) => mandate.id === id);
 
   return {
@@ -99,7 +102,7 @@ export function useAfisEMandatesApi() {
     eMandates,
     eMandateTableConfig,
     hasEMandatesError: isError,
-    isLoadingEMandates: !isDirty, // Show loading only on first load.
+    isLoadingEMandates: !isDirty && isLoading, // Show loading only on first load.
     optimisticUpdateContent: (
       eMandateId: string,
       payload: Partial<AfisEMandateFrontend>
@@ -108,7 +111,7 @@ export function useAfisEMandatesApi() {
         mergePayloadIntoEmandateById(eMandateId, payload, eMandates)
       );
     },
-    title: titleEMandaatPage,
+    title: `${titleEMandaatPage}${eMandate?.creditorName ? ` - ${eMandate.creditorName}` : ''}`,
     fetchEMandates: () => {
       fetch();
     },

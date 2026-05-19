@@ -7,15 +7,13 @@ import type {
   VarenVergunningFrontend,
 } from './config-and-types.ts';
 import { fetchVaren } from './varen.ts';
-import {
- themaConfig,
-} from '../../../client/pages/Thema/Varen/Varen-thema-config.ts';
+import { themaConfig } from '../../../client/pages/Thema/Varen/Varen-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
 import { isDateInFuture } from '../../../universal/helpers/date.ts';
-import { isRecentNotification } from '../../../universal/helpers/utils.ts';
+import { isRecentNotification } from '../../../universal/helpers/date.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 

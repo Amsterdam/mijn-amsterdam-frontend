@@ -62,6 +62,7 @@ export default [
           argsIgnorePattern: '^_',
           caughtErrorsIgnorePattern: '^_',
           destructuredArrayIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
         },
       ],
       'no-undef': 'off',

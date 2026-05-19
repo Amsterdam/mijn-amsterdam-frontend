@@ -43,6 +43,11 @@ export type SVGComponent = FunctionComponent<
   SVGProps<SVGSVGElement> & { title?: string | undefined }
 >;
 
+export const NOTIFICATION_SORTPRIORITY = {
+  default: 3,
+  high: 6,
+} as const;
+
 export interface MyNotification<ID extends string = string> {
   themaID: ID;
   themaTitle: string;
@@ -50,6 +55,8 @@ export interface MyNotification<ID extends string = string> {
   description?: string;
   hideDatePublished?: boolean;
   id: string;
+  /** sortPriority defines the order in which notifications are displayed. A notification with a higher sortPriority is displayed before other non-alert notifications, even when those notifications have the same datePublished. Use NOTIFICATION_PRIORITY.<priority> to set the sortPriority in a readable manner */
+  sortPriority?: (typeof NOTIFICATION_SORTPRIORITY)[keyof typeof NOTIFICATION_SORTPRIORITY];
   isAlert?: boolean;
   link?: LinkProps;
   subject?: string;
