@@ -38,12 +38,11 @@ export function AfspraakCard({
   const locatie = `Stadsloket ${afspraak.location.name}, ${afspraak.location.street}`;
   const details = (
     <Paragraph className="ams-mb-s">
-      <strong>Datum:</strong>{' '}
       <time dateTime={afspraak.dateStart}>
-        {afspraak.displayDateTime}
-        <br />
-        <strong>Locatie:</strong> {locatie}
+        <strong>Datum:</strong> {afspraak.displayDateTime}
       </time>
+      <br />
+      <strong>Locatie:</strong> {locatie}
     </Paragraph>
   );
   return (
