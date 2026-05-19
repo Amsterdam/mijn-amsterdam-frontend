@@ -72,6 +72,10 @@ export function Afspraken({ compact = false }: AfsprakenProps) {
   const { afspraken, themaConfig } = useKlantcontactData();
   const MAX_AMOUNT_AFSPRAKEN_DISPLAYED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
+  if (compact && !afspraken.length) {
+    return null;
+  }
+
   return (
     <>
       <Heading level={2} className="ams-mb-m">
