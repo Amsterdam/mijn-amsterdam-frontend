@@ -69,10 +69,10 @@ type AfsprakenProps = {
 };
 
 export function Afspraken({ compact = false }: AfsprakenProps) {
-  const { afspraken, themaConfig } = useKlantcontactData();
+  const { afspraken, themaConfig, isLoading } = useKlantcontactData();
   const MAX_AMOUNT_AFSPRAKEN_DISPLAYED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
-  if (compact && !afspraken.length) {
+  if (compact && (!afspraken.length || isLoading)) {
     return null;
   }
 
