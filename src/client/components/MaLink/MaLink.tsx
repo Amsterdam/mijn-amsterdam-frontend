@@ -3,11 +3,9 @@ import type { AnchorHTMLAttributes } from 'react';
 import type {
   BreadcrumbLinkProps,
   ButtonProps,
-  LinkProps} from '@amsterdam/design-system-react';
-import {
-  Breadcrumb,
-  Link
+  LinkProps,
 } from '@amsterdam/design-system-react';
+import { Breadcrumb, Link } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router';
 
@@ -175,4 +173,19 @@ export function MaButtonRouterLink({
       {children}
     </a>
   );
+}
+
+export function MaButton({
+  maVariant,
+  className,
+  ...rest
+}: ButtonProps & { maVariant?: MaClassNameVariant }) {
+  const className_ = classNames(
+    className,
+    'ams-link',
+    // 'ams-button--secondary',
+    styles.InlineButton
+  );
+
+  return <button {...rest} className={className_} />;
 }
