@@ -402,8 +402,8 @@ describe('vergunningen-notifications', () => {
       const vergunningen = [
         {
           id: '1',
-          caseType: 'VOB',
-          title: 'V.O.B. 2023-01',
+          caseType: 'MockCase',
+          title: 'MockTitle 2023-01',
           steps: [{ status: 'Ontvangen', isActive: true }],
           link: { to: '/test', title: 'Test' },
         },
@@ -417,7 +417,7 @@ describe('vergunningen-notifications', () => {
       expect(result.content?.notifications).toHaveLength(1);
       expect(result.content?.notifications[0]).toHaveProperty(
         'title',
-        'Aanvraag V.O.B. 2023-01 ontvangen'
+        'Aanvraag MockTitle 2023-01 ontvangen'
       );
     });
 

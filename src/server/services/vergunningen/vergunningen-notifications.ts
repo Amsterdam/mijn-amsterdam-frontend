@@ -150,16 +150,11 @@ export function getVergunningNotifications(
   vergunningen: ZaakFrontendCombined[],
   themaID: string,
   themaTitle: string,
-  createNotification?: typeof createNotificationDefault
+  createNotification: typeof createNotificationDefault = createNotificationDefault
 ): MyNotification[] {
   return vergunningen
     .map((vergunning) =>
-      createNotification
-        ? createNotification(vergunning, { themaID, themaTitle })
-        : createNotificationDefault(vergunning, {
-            themaID,
-            themaTitle,
-          })
+      createNotification(vergunning, { themaID, themaTitle })
     )
     .filter((notification: MyNotification | null) => notification !== null);
 }
