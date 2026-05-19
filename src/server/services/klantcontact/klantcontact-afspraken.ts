@@ -61,7 +61,7 @@ function transformAfsprakenResponse(
         dateStartFormatted: defaultDateFormat(startDate),
         dateEnd,
         dateEndFormatted: defaultDateFormat(endDate),
-        displayDateTime: `${defaultDateFormatWithDayName(startDate)} \nvan ${startTime_} tot ${endTime_} uur`,
+        displayDateTime: `${defaultDateFormatWithDayName(startDate)} van ${startTime_} tot ${endTime_} uur`,
         subject: result.subject,
         status: result.status,
         qrCode: result.qrCode,

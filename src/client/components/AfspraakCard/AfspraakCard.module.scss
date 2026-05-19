@@ -22,13 +22,6 @@
 .QRCodeLink {
   margin: 0 var(--ams-space-m);
 }
-.DisplayDateTime {
-  white-space: pre;
-  @media screen and (min-width: $ams-breakpoint-medium) {
-    white-space: normal;
-  }
-}
-
 .ActionItem {
   display: block;
   padding-block: var(--ams-space-xs);
@@ -37,7 +30,6 @@
     display: inline-block;
   }
 }
-
 .ActionItem-separator {
   padding: 0 var(--ams-space-s);
   display: none;

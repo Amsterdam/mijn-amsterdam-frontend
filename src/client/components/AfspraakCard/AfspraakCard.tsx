@@ -39,7 +39,7 @@ export function AfspraakCard({
   const details = (
     <Paragraph className="ams-mb-s">
       <strong>Datum:</strong>{' '}
-      <time className={styles.DisplayDateTime} dateTime={afspraak.dateStart}>
+      <time dateTime={afspraak.dateStart}>
         {afspraak.displayDateTime}
         <br />
         <strong>Locatie:</strong> {locatie}
