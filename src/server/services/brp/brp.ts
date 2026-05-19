@@ -157,7 +157,7 @@ function getAdresInOnderzoek(
     verblijfplaats.inOnderzoek?.datumIngangOnderzoek
   );
   const verblijfadresDatum = getDatum(
-    verblijfplaats.verblijfadres.inOnderzoek?.datumIngangOnderzoek
+    verblijfplaats.verblijfadres?.inOnderzoek?.datumIngangOnderzoek
   );
 
   return {
