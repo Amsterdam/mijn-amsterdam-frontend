@@ -139,6 +139,7 @@ describe('Displayed description of uw uitgaven text', () => {
       code: '123-code-123',
       dateEnd: '01-01-2080',
       dateEndFormatted: '01-01-2080',
+      readMoreLink: null,
     };
 
     const result = forTesting.determineUwUitgavenDescription(

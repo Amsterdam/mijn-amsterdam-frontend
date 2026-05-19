@@ -22,9 +22,7 @@ import { isError, isLoading } from '../../../../universal/helpers/api.ts';
 import { dateSort } from '../../../../universal/helpers/date.ts';
 import ErrorAlert from '../../../components/Alert/Alert.tsx';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
-import type {
-  BarConfig,
-} from '../../../components/LoadingContent/LoadingContent.tsx';
+import type { BarConfig } from '../../../components/LoadingContent/LoadingContent.tsx';
 import LoadingContent from '../../../components/LoadingContent/LoadingContent.tsx';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { Modal } from '../../../components/Modal/Modal.tsx';
@@ -179,9 +177,11 @@ export function HLIStadspasDetail() {
           <LoadingContent barConfig={loadingContentBarConfigList} />
         )}
         {!isLoadingStadspas && !!stadspas?.budgets.length && (
-          <TableV2<StadspasBudget>
+          <TableV2
             className={styles.Table_budgets}
-            items={stadspas.budgets.toSorted(dateSort('dateEnd', 'asc'))}
+            items={stadspas.budgets
+              .map(addReadMoreLink)
+              .toSorted(dateSort('dateEnd', 'asc'))}
             displayProps={displayPropsBudgets}
           />
         )}
@@ -221,6 +221,26 @@ export function HLIStadspasDetail() {
       )}
     </PageV2>
   );
+}
+
+function addReadMoreLink(budget: StadspasBudget) {
+  return {
+    ...budget,
+    title: budget.readMoreLink ? (
+      <>
+        {budget.title}{' '}
+        <Link
+          rel="noopener norefferer"
+          href={budget.readMoreLink.to}
+          title={budget.readMoreLink.title}
+        >
+          Meer informatie
+        </Link>
+      </>
+    ) : (
+      budget.title
+    ),
+  };
 }
 
 function determineUwUitgavenDescription(
