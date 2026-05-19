@@ -46,7 +46,13 @@ export function KlantContactThema() {
       errorAlertContent={pageContentErrorAlert}
       isLoading={isLoading}
       pageLinks={pageLinks}
-      pageContentTop={null}
+      pageContentTop={
+        <PageContentCell spanWide={8}>
+          <Paragraph>
+            Uw afspraken en contactmomenten met de gemeente Amsterdam.
+          </Paragraph>
+        </PageContentCell>
+      }
       pageContentMain={
         <>
           <PageContentCell
