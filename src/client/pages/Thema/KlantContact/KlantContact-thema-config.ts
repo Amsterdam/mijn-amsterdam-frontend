@@ -17,7 +17,7 @@ export type ContactmomentProps = ContactmomentFrontend & {
 };
 
 const THEMA_ID = 'CONTACT';
-const THEMA_TITLE = 'Mijn contact';
+const THEMA_TITLE = 'Contact met de gemeente';
 
 type ContactThema = ThemaConfigBase &
   WithPageConfig<'listPageContactmomenten'> &
