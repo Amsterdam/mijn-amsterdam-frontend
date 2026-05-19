@@ -269,12 +269,6 @@ const ApiConfig_ = {
       apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
     },
   },
-  CONTACTMOMENTEN: {
-    url: `${getFromEnv('BFF_CONTACTMOMENTEN_BASE_URL')}`,
-    headers: {
-      apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
-    },
-  },
   CMS_CONTENT_GENERAL_INFO: {
     cacheTimeout: 4 * ONE_HOUR_MS, // 4 hours
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/mijn-content/artikelen`,

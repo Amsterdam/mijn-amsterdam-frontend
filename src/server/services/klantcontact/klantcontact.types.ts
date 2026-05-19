@@ -1,3 +1,5 @@
+import type { LinkProps } from '../../../universal/types/App.types.ts';
+
 export type SalesforceResponseType = {
   '@onformdata.context': string;
 };
@@ -54,8 +56,17 @@ export type AfspraakResponseSource = {
   count: number;
 };
 
-export type AfspraakFrontend = AfspraakSource & {
-  dateFormatted: string;
+export type AfspraakFrontend = Omit<
+  AfspraakSource,
+  'startDate' | 'endDate' | 'products'
+> & {
+  dateStart: string;
+  dateStartFormatted: string;
+  dateEnd: string;
+  dateEndFormatted: string;
+  displayDateTime: string;
+  link: LinkProps;
+  icsLink: LinkProps;
 };
 
 export type KlantcontactResponseData = {

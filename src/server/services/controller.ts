@@ -40,7 +40,7 @@ import { fetchBelasting } from './patroon-c/belasting.ts';
 import { fetchMilieuzone, fetchOvertredingen } from './patroon-c/cleopatra.ts';
 import { fetchSubsidie } from './patroon-c/subsidie.ts';
 import { fetchSVWI } from './patroon-c/svwi.ts';
-import { fetchKlantcontact } from './salesforce/klantcontact.ts';
+import { fetchKlantcontact } from './klantcontact/klantcontact.ts';
 import {
   combineNotificationsWithTipsAndSort,
   fetchNotificationsAndTipsFromServices,
