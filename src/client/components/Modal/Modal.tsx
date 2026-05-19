@@ -3,10 +3,12 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Dialog } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
+import classNames from 'classnames';
 
 import styles from './Modal.module.scss';
 import { getElementOnPageAsync } from '../../helpers/utils.ts';
 import { useKeyUp } from '../../hooks/useKey.ts';
+import { MaButton } from '../MaLink/MaLink.tsx';
 
 function FocusTrapInner() {
   const element = document.getElementById('modal-dialog');
@@ -15,13 +17,11 @@ function FocusTrapInner() {
     'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])'
   );
 
-  if (!element || !elements) {
-    return null;
-  }
-
-  const focusableEls = Array.from(elements).filter(
-    (element) => window.getComputedStyle(element)?.display !== 'none'
-  );
+  const focusableEls = elements
+    ? Array.from(elements).filter(
+        (element) => window.getComputedStyle(element)?.display !== 'none'
+      )
+    : [];
 
   const firstFocusableEl = focusableEls[0] as HTMLElement;
   const lastFocusableEl = focusableEls[focusableEls.length - 1] as HTMLElement;
@@ -53,6 +53,8 @@ function FocusTrapInner() {
       window.removeEventListener('keydown', handleTabKey);
     };
   }, []);
+
+  return null;
 }
 
 function FocusTrap({
@@ -158,5 +160,43 @@ export function Modal({
         </Dialog>
       </>
     )
+  );
+}
+
+type ButtonModalProps = {
+  buttonVariant?: 'primary' | 'secondary' | 'tertiary';
+  modal: Omit<ModalProps, 'isOpen' | 'children' | 'onClose'>;
+  children: ReactNode;
+  buttonClassName?: string;
+  buttonLabel: string;
+  startOpen?: boolean;
+};
+
+export function ButtonAndModal({
+  modal,
+  children,
+  buttonClassName,
+  buttonVariant = 'secondary',
+  buttonLabel = 'Open modal',
+  startOpen = false,
+}: ButtonModalProps) {
+  const [isLocationModalOpen, setLocationModalOpen] = useState(startOpen);
+  return (
+    <>
+      <MaButton
+        className={classNames(styles.LocationModalLink, buttonClassName)}
+        variant={buttonVariant}
+        onClick={() => setLocationModalOpen(true)}
+      >
+        {buttonLabel}
+      </MaButton>
+      <Modal
+        {...modal}
+        isOpen={isLocationModalOpen}
+        onClose={() => setLocationModalOpen(false)}
+      >
+        {children}
+      </Modal>
+    </>
   );
 }
