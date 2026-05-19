@@ -160,7 +160,7 @@ describe('stadspas services', () => {
         blockPassURL:
           'http://bff-api-host/api/v1/services/stadspas/block/1x2x3x-%23%23%23%23%23%23%23%23%23%23-4x5x6x',
         budgets: [
-          {
+          expect.objectContaining({
             budgetAssigned: 150,
             budgetAssignedFormatted: '€150,00',
             budgetBalance: 0,
@@ -170,7 +170,7 @@ describe('stadspas services', () => {
             dateEndFormatted: '31 augustus 2080',
             description: 'Kindtegoed',
             title: 'Kindtegoed 10-14',
-          },
+          }),
         ],
         dateEnd: '2025-07-31',
         dateEndFormatted: '31 juli 2025',

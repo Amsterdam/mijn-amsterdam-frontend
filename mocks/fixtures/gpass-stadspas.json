@@ -3,12 +3,20 @@
   "balance_update_time": "2020-04-02T12:45:41.000Z",
   "budgetten": [
     {
-      "code": "AMSTEG_10-14",
-      "naam": "Kindtegoed 10-14",
+      "code": "2025_AMSTEG_PC",
+      "naam": "25/26 PC Tegoed",
+      "omschrijving": "",
+      "expiry_date": "2026-07-31T21:59:59.000Z",
+      "budget_assigned": 580,
+      "budget_balance": 580
+    },
+    {
+      "code": "2025_AMSTEG_PC",
+      "naam": "25/26 Kindtegoed 12 tm 14 jaar",
       "omschrijving": "Kindtegoed",
-      "expiry_date": "2021-08-31T21:59:59.000Z",
-      "budget_assigned": 150,
-      "budget_balance": 132
+      "expiry_date": "2026-07-31T21:59:59.000Z",
+      "budget_assigned": 475,
+      "budget_balance": 475
     },
     {
       "code": "WITGOEDREGELING",
