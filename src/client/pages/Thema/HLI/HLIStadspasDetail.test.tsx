@@ -100,6 +100,44 @@ describe('With basic request where data returned does not matter', () => {
     });
     expect(declineButton).toBeInTheDocument();
   });
+
+  test('shows Meer informatie link when budget has readMoreLink', () => {
+    const Component = createHLIStadspasComponent(
+      createHLIState({
+        stadspas: [
+          createStadspas({
+            actief: true,
+            passNumber,
+            budgets: [
+              {
+                title: 'Kindtegoed 10-14',
+                description: 'Kindtegoed',
+                budgetAssigned: 150,
+                budgetAssignedFormatted: '€150,00',
+                budgetBalance: 132,
+                budgetBalanceFormatted: '€132,00',
+                code: 'AMSTEG_10-14',
+                dateEnd: '2080-08-31T21:59:59.000Z',
+                dateEndFormatted: '31 augustus 2080',
+                readMoreLink: {
+                  to: 'https://www.amsterdam.nl/stadspas/kindtegoed/',
+                  title:
+                    'Lees meer over de kindtegoed Kindtegoed 10-14 regeling op amsterdam.nl.',
+                },
+              },
+            ],
+          }),
+        ],
+      })
+    );
+    const screen = render(<Component />);
+
+    const link = screen.getByRole('link', { name: /Meer informatie/ });
+    expect(link).toHaveAttribute(
+      'href',
+      'https://www.amsterdam.nl/stadspas/kindtegoed/'
+    );
+  });
 });
 
 describe('Displayed description of uw uitgaven text', () => {
