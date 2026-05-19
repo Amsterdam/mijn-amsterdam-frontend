@@ -4,5 +4,8 @@ allowBuilds:
   es5-ext: false
   esbuild: false
 minimumReleaseAge: 1440 # 1440 minutes = 1 day
+minimumReleaseAgeExclude:
+  - '@amsterdam/piwik-tracker-react@3.0.0-alpha.2'
+  - '@amsterdam/piwik-tracker@3.0.0-alpha.2'
 packages:
   - .

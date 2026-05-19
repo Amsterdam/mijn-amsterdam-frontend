@@ -135,16 +135,8 @@ function AppLanding() {
 }
 
 export function App() {
-  const { enableLinkTracking, pushInstruction } = usePiwik();
-  // Force pageUrl to not track possibly identifiable information of entry page in every piwik event
-  pushInstruction('setCustomUrl', 'https://mijn.amsterdam.nl/setCustomUrl'); // TODO: Only strip identifiable information
-  pushInstruction(
-    'setCustomDimensionValue',
-    25,
-    'https://mijn.amsterdam.nl/setCustomDimensionValue'
-  ); // TODO: Only strip identifiable information
-  pushInstruction('disableLinkTracking');
-  enableLinkTracking();
+  const { enableLinkTracking } = usePiwik();
+  enableLinkTracking(['amsterdam.nl']);
 
   return (
     <BrowserRouter>
