@@ -52,6 +52,10 @@ export function defaultDateFormat(datestr: string | Date | number) {
   return dateFormat(datestr, DEFAULT_DATE_FORMAT);
 }
 
+export function defaultDateFormatWithDayName(datestr: string | Date | number) {
+  return dateFormat(datestr, `EEEE ${DEFAULT_DATE_FORMAT}`);
+}
+
 export function isoDateFormat(datestr: string | Date | number) {
   return dateFormat(datestr, ISO_DATE_FORMAT);
 }
