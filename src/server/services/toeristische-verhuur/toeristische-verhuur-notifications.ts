@@ -9,7 +9,7 @@ import type {
 import { themaConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import { dateFormat, isDateInPast } from '../../../universal/helpers/date.ts';
-import { isRecentNotification } from '../../../universal/helpers/utils.ts';
+import { isRecentNotification } from '../../../universal/helpers/date.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../vergunningen/config-and-types.ts';
