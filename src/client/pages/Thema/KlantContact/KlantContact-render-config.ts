@@ -1,13 +1,11 @@
 import { ConnectedCirclesIcon } from '@amsterdam/design-system-react-icons';
 
 import { AfspraakListPage } from './AfspraakListPage.tsx';
-import { AfspraakQRCodeDetailPage } from './AfspraakQRCodeDetailPage.tsx';
 import { ContactmomentenListPage } from './ContactmomentenListPage.tsx';
 import { themaConfig } from './KlantContact-thema-config.ts';
 import { KlantContactThema } from './KlantContactThema.tsx';
 import { isLoading } from '../../../../universal/helpers/api.ts';
 import { type AppState } from '../../../../universal/types/App.types.ts';
-import { isEnabled } from '../../../config/feature-toggles.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
@@ -27,14 +25,7 @@ export const ContactRoutes = [
   {
     route: themaConfig.listPageAfspraken.route.path,
     Component: AfspraakListPage,
-    isActive:
-      themaConfig.featureToggle.active && isEnabled('KLANT_CONTACT.afspraken'),
-  },
-  {
-    route: themaConfig.detailPageAfspraakQRCode.route.path,
-    Component: AfspraakQRCodeDetailPage,
-    isActive:
-      themaConfig.featureToggle.active && isEnabled('KLANT_CONTACT.afspraken'),
+    isActive: themaConfig.featureToggle.afspraken.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 

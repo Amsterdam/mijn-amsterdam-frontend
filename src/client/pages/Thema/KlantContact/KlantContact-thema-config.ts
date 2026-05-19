@@ -2,8 +2,9 @@ import type { ReactNode } from 'react';
 
 import { generatePath } from 'react-router';
 
-import type { ContactmomentFrontend } from '../../../../server/services/salesforce/klantcontact.types.ts';
+import type { ContactmomentFrontend } from '../../../../server/services/klantcontact/klantcontact.types.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+import { isEnabled } from '../../../config/feature-toggles.ts';
 import type {
   ThemaConfigBase,
   WithPageConfig,
@@ -20,16 +21,18 @@ const THEMA_TITLE = 'Mijn contact';
 
 type ContactThema = ThemaConfigBase &
   WithPageConfig<'listPageContactmomenten'> &
-  WithPageConfig<'listPageAfspraken'> &
-  WithPageConfig<'detailPageAfspraakQRCode'>;
+  WithPageConfig<'listPageAfspraken'>;
 
 const BASE_PATH = '/mijn-contact';
 
-export const themaConfig: ContactThema = {
+export const themaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
   featureToggle: {
     active: true,
+    afspraken: {
+      active: isEnabled('KLANT_CONTACT.afspraken'),
+    },
   },
   profileTypes: ['private'],
   redactedScope: 'content',
@@ -52,13 +55,6 @@ export const themaConfig: ContactThema = {
       trackingUrl: null,
     },
   },
-  detailPageAfspraakQRCode: {
-    route: {
-      path: `${BASE_PATH}/qrcode/:qrcode`,
-      documentTitle: `QR Code voor uw afspraak | ${THEMA_TITLE}`,
-      trackingUrl: null,
-    },
-  },
   pageLinks: [],
   uitlegPageSections: [
     {
@@ -66,7 +62,7 @@ export const themaConfig: ContactThema = {
       listItems: ['Contactmomenten', 'Afspraken'],
     },
   ],
-};
+} as const satisfies ContactThema;
 
 const contactmomentenDisplayProps: DisplayProps<ContactmomentProps> = {
   kanaal: 'Contactvorm',
