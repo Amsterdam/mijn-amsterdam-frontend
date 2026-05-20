@@ -695,8 +695,9 @@ function getAvailableUserThemas(
       ) {
         return false;
       }
-      if (sResult.content.isKnown) {
-        return true;
+      const KEY = 'isKnown';
+      if (KEY in sResult.content) {
+        return sResult.content[KEY];
       }
       const entries = Object.entries(sResult.content);
       for (const [, val] of entries) {

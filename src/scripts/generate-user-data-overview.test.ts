@@ -1,36 +1,52 @@
-import { apiSuccessResult } from '../universal/helpers/api.ts';
-import type { ServiceResults } from '../server/services/content-tips/tip-types.ts';
 import { forTesting } from './generate-user-data-overview.ts';
-import type { ApiPatternResponseA } from '../server/services/patroon-c/api-service.ts';
+import type { ServiceResults } from '../server/services/content-tips/tip-types.ts';
+import { apiSuccessResult } from '../universal/helpers/api.ts';
 
-const apiPatternResponseA: ApiPatternResponseA = {
-  tips: [],
-  isKnown: true,
-  url: 'https://mock.mo',
-  notifications: [],
-};
+describe('getAvailableUserThemas', () => {
+  function wrap(results: Record<string, any>): ServiceResults {
+    const entries = Object.entries(results);
+    const wrapped = entries.map(([k, v]) => [k, apiSuccessResult(v)]);
+    return Object.fromEntries(wrapped);
+  }
 
-const mockServiceResults: ServiceResults = {
-  BRP: apiSuccessResult({ persoon: { geboortedatum: '1990-01-01' } }),
-  AFVAL: apiSuccessResult([]),
-  HLI: apiSuccessResult({
-    isKnown: true,
-    stadspas: null,
-    regelingen: [],
-    specificaties: [],
-  }),
-  MOCK: apiSuccessResult(apiPatternResponseA),
-  MOCK_B: apiSuccessResult({}),
-};
+  test('Available themas', () => {
+    const mockServiceResults: ServiceResults = wrap({
+      BRP: { persoon: { geboortedatum: '1990-01-01' } },
+      HLI: {
+        isKnown: true,
+        stadspas: null,
+        regelingen: [],
+        specificaties: [],
+      },
+    });
+    const availableUserThemas =
+      forTesting.getAvailableUserThemas(mockServiceResults);
+    expect(availableUserThemas).toStrictEqual({
+      BRP: 'Mijn gegevens',
+      HLI: 'Stadspas en regelingen bij laag inkomen',
+    });
+  });
 
-test('test', () => {
-  const availableUserThemas =
-    forTesting.getAvailableUserThemas(mockServiceResults);
-  expect(availableUserThemas).toMatchInlineSnapshot(`
-    {
-      "BRP": "Mijn gegevens",
-      "HLI": "Stadspas en regelingen bij laag inkomen",
-      "MOCK": undefined,
-    }
-  `);
+  test('Not available themas', () => {
+    const mockServiceResults: ServiceResults = wrap({
+      A: [],
+      B: {},
+      C: null,
+      D: {
+        isKnown: false,
+        url: 'https://mock.mo',
+      },
+      E: {
+        a: null,
+      },
+      F: {
+        a: [],
+        b: [],
+        c: [],
+      },
+    });
+    const availableUserThemas =
+      forTesting.getAvailableUserThemas(mockServiceResults);
+    expect(availableUserThemas).toStrictEqual({});
+  });
 });
