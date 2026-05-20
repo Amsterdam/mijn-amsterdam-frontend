@@ -137,15 +137,13 @@ describe('<Dashboard />', () => {
 
     it('Does not display Panel when there are no afspraken', () => {
       const state = {
-        KLANT_CONTACT: [
-          {
-            status: 'OK',
-            content: {
-              afspraken: [],
-              contactmomenten: [],
-            },
+        KLANT_CONTACT: {
+          status: 'OK',
+          content: {
+            afspraken: [],
+            contactmomenten: [],
           },
-        ],
+        },
       } as unknown as AppState;
       const Component = createDashboardComponent(state);
       const screen = render(<Component />);
