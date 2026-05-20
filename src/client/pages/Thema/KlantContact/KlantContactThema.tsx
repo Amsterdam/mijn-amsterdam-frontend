@@ -61,7 +61,7 @@ export function KlantContactThema() {
           >
             <Afspraken />
           </PageContentCell>
-          <PageContentCell>
+          <PageContentCell className={getRedactedClass(null, 'full')}>
             <ContactMomenten />
           </PageContentCell>
         </>

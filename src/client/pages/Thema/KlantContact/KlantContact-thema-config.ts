@@ -74,10 +74,16 @@ export const themaConfig = {
 } as const satisfies ContactThema;
 
 const contactmomentenDisplayProps: DisplayProps<ContactmomentProps> = {
-  kanaalEl: 'Contactvorm',
-  subjectLink: 'Onderwerp',
-  datePublishedFormatted: 'Datum',
-  referenceNumber: 'Referentienummer',
+  props: {
+    kanaalEl: 'Contactvorm',
+    subjectLink: 'Onderwerp',
+    datePublishedFormatted: 'Datum',
+    referenceNumber: 'Referentienummer',
+  },
+  colWidths: {
+    large: ['25%', '40%', '20%', '15%'],
+    small: ['30%', '50%', '20%', '0'],
+  },
 };
 
 export const tableConfigs = {

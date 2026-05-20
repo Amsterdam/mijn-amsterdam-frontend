@@ -1,5 +1,4 @@
 import { act, render, screen } from '@testing-library/react';
-import { addMinutes } from 'date-fns';
 import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
 import { describe, it } from 'vitest';
@@ -9,12 +8,43 @@ import { componentCreator } from '../MockApp.tsx';
 import { themaId } from './Dashboard-config.ts';
 import { DashboardRoute } from './Dashboard-routes.ts';
 import { Dashboard } from './Dashboard.tsx';
+import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
 import { remoteApiHost } from '../../../testing/setup.ts';
 import { bffApi } from '../../../testing/utils.ts';
 import { toDateFormatted } from '../../../universal/helpers/date.ts';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app.ts';
 
 const DATE_NOW = '2021-09-22T09:00:00';
+
+const afspraak: AfspraakFrontend = {
+  cancellationLink:
+    'http://remote-api-host/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+  caseReference: '00157784',
+  dateStartFormatted: '26 februari 2026',
+  dateEndFormatted: '26 februari 2026',
+  dateStart: '2026-02-26T09:00:00Z',
+  dateEnd: '2026-02-26T09:20:00Z',
+  displayDateTime: '26 februari 2026 van 10:00 tot 11:20 uur',
+  location: {
+    city: null,
+    countryCode: 'NL',
+    name: 'Zuidoost',
+    postalCode: null,
+    street: null,
+  },
+  qrCode: 'xxxxxxxxxxxxxxxxxxxx',
+  status: 'New',
+  subject: 'Varen Afspraak',
+  link: {
+    to: '/afspraak/00157784',
+    title: 'Bekijk afspraak',
+  },
+  icsLink: {
+    to: 'data:text/calendar;base64,abc123',
+    title: 'Voeg toe aan agenda',
+    download: `afspraak-00157784.ics`,
+  },
+};
 
 const testState = {
   BRP: {
@@ -94,36 +124,15 @@ describe('<Dashboard />', () => {
           status: 'OK',
           content: {
             contactmomenten: [],
-            afspraken: [
-              {
-                subject: 'Varen Afspraak',
-                startDate: addMinutes(new Date(DATE_NOW), 30),
-                endDate: addMinutes(new Date(DATE_NOW), 60),
-                status: 'New',
-                qrCode: 'qrcode-123',
-                caseReference: 'unique-123',
-                dateFormatted: '22 Oktober 2025',
-                cancellationLink: 'https://cancel.com',
-                displayDate: 'Datum, 22-09-2021 09:30-10:00',
-                location: {
-                  name: 'Centrum',
-                  street: 'Amstel 1',
-                  postalCode: '1020 HA',
-                  city: 'Amsterdam',
-                  countryCode: 'NL',
-                },
-                qrCodeHref: '/qr/123',
-              },
-            ],
+            afspraken: [afspraak],
           },
         },
       } as unknown as AppState;
       const Component = createDashboardComponent(state);
       const screen = render(<Component />);
 
-      screen.getByRole('heading', { name: 'Aankomende afspraken' });
+      screen.getByRole('heading', { name: 'Afspraken bij een stadsloket' });
       screen.getByRole('heading', { name: 'Varen Afspraak' });
-      screen.getByRole('link', { name: /QR/i });
     });
 
     it('Does not display Panel when there are no afspraken', () => {
@@ -154,25 +163,7 @@ describe('<Dashboard />', () => {
           content: {
             contactmomenten: [],
             afspraken: new Array(MAX_TABLE_ROWS_ON_THEMA_PAGINA + 1)
-              .fill({
-                subject: 'Varen Afspraak',
-                startDate: addMinutes(new Date(DATE_NOW), 30),
-                endDate: addMinutes(new Date(DATE_NOW), 60),
-                status: 'New',
-                qrCode: 'qrcode-123',
-                caseReference: 'unique-123',
-                dateFormatted: '22 Oktober 2025',
-                cancellationLink: 'https://cancel.com',
-                displayDate: 'Datum, 22-09-2021 09:30-10:00',
-                location: {
-                  name: 'Centrum',
-                  street: 'Amstel 1',
-                  postalCode: '1020 HA',
-                  city: 'Amsterdam',
-                  countryCode: 'NL',
-                },
-                qrCodeHref: '/qr/123',
-              })
+              .fill(afspraak)
               // caseReference is used as key in react, so it must be unique from other items.
               .map((a, i) => ({ ...a, caseReference: i })),
           },

@@ -1,5 +1,5 @@
 import type { ComponentType } from '@react-spring/web';
-import { act, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
 import { describe, it } from 'vitest';
@@ -151,8 +151,8 @@ describe('Cobrowse redacted components', () => {
 
   describe('Cobrowse redacted components', () => {
     describe('Dashboard', () => {
-      it('<MyThemasPanel />', async () => {
-        await act(() => render(<Component component={Dashboard} />));
+      it('<MyThemasPanel />', () => {
+        render(<Component component={Dashboard} />);
         expect(screen.getByTestId(themaConfigBezwaren.title)).toHaveClass(
           'redacted'
         );
@@ -161,8 +161,8 @@ describe('Cobrowse redacted components', () => {
         );
       });
 
-      it('Notifications', async () => {
-        await act(() => render(<Component component={Dashboard} />));
+      it('Notifications', () => {
+        render(<Component component={Dashboard} />);
         const listItems = screen.getAllByRole('listitem');
         const redactedNotification = listItems.find((li) =>
           li.textContent?.includes(themaConfigBezwaren.title)
@@ -175,8 +175,8 @@ describe('Cobrowse redacted components', () => {
       });
     });
 
-    it('Notifications', async () => {
-      await act(() => render(<Component component={MyNotificationsPage} />));
+    it('Notifications', () => {
+      render(<Component component={MyNotificationsPage} />);
       const listItems = screen.getAllByRole('listitem');
       const redactedNotification = listItems.find((li) =>
         li.textContent?.includes(themaConfigBezwaren.title)
@@ -192,8 +192,8 @@ describe('Cobrowse redacted components', () => {
       ['Thema', BezwarenThema],
       ['ThemaDetail', BezwarenDetail],
       ['ThemaList', BezwarenList],
-    ])('%s', async (_, component) => {
-      await act(() => render(<Component component={component} />));
+    ])('%s', (_, component) => {
+      render(<Component component={component} />);
       const cobrowseElem = document.querySelector(
         '.mams-content-wrapper.redacted'
       ) as HTMLElement;
@@ -213,16 +213,16 @@ describe('Cobrowse redacted components', () => {
     });
 
     describe('Mijn gegevens', () => {
-      it('BSN', async () => {
-        await act(() => render(<Component component={MijnGegevensThema} />));
+      it('BSN', () => {
+        render(<Component component={MijnGegevensThema} />);
         const bsnField = screen.getByText(
           testState.BRP.content?.persoon.bsn ?? ''
         );
         expect(bsnField).toHaveClass('redacted');
       });
 
-      it('Contactmomenten', async () => {
-        await act(() => render(<Component component={KlantContactThema} />));
+      it('Contactmomenten', () => {
+        render(<Component component={KlantContactThema} />);
 
         const contactmomentAfis = screen
           .getByRole('link', {
@@ -241,10 +241,8 @@ describe('Cobrowse redacted components', () => {
       });
     });
 
-    it('ContactmomentenList', async () => {
-      await act(() =>
-        render(<Component component={ContactmomentenListPage} />)
-      );
+    it('ContactmomentenList', () => {
+      render(<Component component={ContactmomentenListPage} />);
       const contactmomentAfis = screen
         .getByRole('link', {
           name:
