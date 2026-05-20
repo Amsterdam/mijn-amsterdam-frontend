@@ -17,6 +17,19 @@ function pad(date: string) {
 }
 
 /**
+ * Escape text values according to RFC 5545.
+ */
+function escapeICSValue(value: string): string {
+  return value
+    .replace(/\\/g, '\\\\')
+    .replace(/\r\n/g, '\\n')
+    .replace(/\n/g, '\\n')
+    .replace(/\r/g, '\\n')
+    .replace(/;/g, '\\;')
+    .replace(/,/g, '\\,');
+}
+
+/**
  * Formats to an ICAL date string in YYYYMMDDTHHMMSSZ format.
  */
 function toICALDateTimeString(date: string | Date): string {
@@ -51,9 +64,9 @@ function createICS({
     `DTSTAMP:${toICALDateTimeString(now)}`,
     `DTSTART:${toICALDateTimeString(start)}`,
     `DTEND:${toICALDateTimeString(end)}`,
-    `SUMMARY:${summary}`,
-    `DESCRIPTION:${description}`,
-    `LOCATION:${location}`,
+    `SUMMARY:${escapeICSValue(summary)}`,
+    `DESCRIPTION:${escapeICSValue(description)}`,
+    `LOCATION:${escapeICSValue(location)}`,
     `END:VEVENT`,
     `END:VCALENDAR`,
   ]
@@ -95,8 +108,8 @@ function foldLine(line: string): string {
 
 function icsDataUri(ics: string, useBase64 = true) {
   if (useBase64) {
-    // btoa only works with ASCII; encodeURIComponent/unescape for utf-8-safe base64
-    const base64 = btoa(unescape(encodeURIComponent(ics)));
+    // btoa only works with ASCII; encodeURIComponent for utf-8-safe base64
+    const base64 = btoa(encodeURIComponent(ics));
     return `data:text/calendar;charset=utf-8;base64,${base64}`;
   }
   return `data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}`;

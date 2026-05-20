@@ -51,7 +51,7 @@ function transformAfsprakenResponse(
       uid: `afspraak-stadsloket-${result.caseReference}`,
       summary: `Afspraak voor ${result.subject}`,
       description: `Referentienummer: ${result.caseReference}`,
-      location: `Stadsloket ${result.location.name}, ${result.location.street}, ${result.location.postalCode} ${result.location.city}, Nederland`,
+      location: `Stadsloket ${result.location.name}, ${result.location.street ?? 'onbekend'}, ${result.location.postalCode} ${result.location.city}, Nederland`,
     });
 
     return {
