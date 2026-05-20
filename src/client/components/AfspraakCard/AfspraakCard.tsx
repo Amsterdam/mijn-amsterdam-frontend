@@ -97,7 +97,7 @@ export function AfspraakCard({
 
           <ActionItem>
             <LocationModal
-              address={`${afspraak.location.street}`}
+              address={afspraak.location.street ?? afspraak.location.name}
               buttonVariant="ma-link-like"
             />
           </ActionItem>
