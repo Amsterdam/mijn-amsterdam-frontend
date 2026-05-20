@@ -25,33 +25,35 @@ function FocusTrapInner() {
   const firstFocusableEl = focusableEls[0] as HTMLElement;
   const lastFocusableEl = focusableEls[focusableEls.length - 1] as HTMLElement;
 
-  function handleTabKey(e: KeyboardEvent) {
-    const isTabPressed = e.key === 'Tab';
+  const handleTabKey = useCallback(
+    (e: KeyboardEvent) => {
+      const isTabPressed = e.key === 'Tab';
 
-    if (!isTabPressed) {
-      return;
-    }
+      if (!isTabPressed) {
+        return;
+      }
 
-    if (e.shiftKey) {
-      /* shift + tab */
-      if (document.activeElement === firstFocusableEl) {
-        lastFocusableEl.focus();
+      if (e.shiftKey) {
+        /* shift + tab */
+        if (document.activeElement === firstFocusableEl) {
+          lastFocusableEl.focus();
+          e.preventDefault();
+        }
+        /* tab */
+      } else if (document.activeElement === lastFocusableEl) {
+        firstFocusableEl.focus();
         e.preventDefault();
       }
-      /* tab */
-    } else if (document.activeElement === lastFocusableEl) {
-      firstFocusableEl.focus();
-      e.preventDefault();
-    }
-  }
-
-  window.addEventListener('keydown', handleTabKey);
+    },
+    [firstFocusableEl, lastFocusableEl]
+  );
 
   useEffect(() => {
+    window.addEventListener('keydown', handleTabKey);
     return () => {
       window.removeEventListener('keydown', handleTabKey);
     };
-  }, []);
+  }, [handleTabKey]);
 
   return null;
 }
