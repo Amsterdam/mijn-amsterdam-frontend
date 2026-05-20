@@ -122,8 +122,20 @@ test('should transform the data correctly', async () => {
       {
         "cancellationLink": "http://remote-api-host/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
         "caseReference": "00157784",
-        "dateFormatted": "01 januari 2025",
-        "endDate": "2025-01-01T09:30:00Z",
+        "dateEnd": "2025-01-01T09:30:00Z",
+        "dateEndFormatted": "01 januari 2025",
+        "dateStart": "2025-01-01T09:00:00Z",
+        "dateStartFormatted": "01 januari 2025",
+        "displayDateTime": "woensdag 01 januari 2025 van 10:00 tot 10:30 uur",
+        "icsLink": {
+          "download": "afspraak-00157784.ics",
+          "title": "Voeg toe aan agenda",
+          "to": "data:text/calendar;charset=utf-8;base64,QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KUFJPRElEOi0vL0Ftc3RlcmRhbS8vTk9OU0dNTCB2MS4wLy9FTg0KQkVHSU46VkVWRU5UDQpVSUQ6YWZzcHJhYWstc3RhZHNsb2tldC0wMDE1Nzc4NA0KRFRTVEFNUDoyMDI1MDEwMVQwMDAwMDBaDQpEVFNUQVJUOjIwMjUwMTAxVDA5MDAwMFoNCkRURU5EOjIwMjUwMTAxVDA5MzAwMFoNClNVTU1BUlk6QWZzcHJhYWsgdm9vciBWYWFydmlnbmV0DQpERVNDUklQVElPTjpSZWZlcmVudGllbnVtbWVyOiAwMDE1Nzc4NA0KTE9DQVRJT046U3RhZHNsb2tldCBadWlkb29zdCwgbnVsbCwgbnVsbCBudWxsLCBOZWRlcmxhbmQNCkVORDpWRVZFTlQNCkVORDpWQ0FMRU5EQVI=",
+        },
+        "link": {
+          "title": "Bekijk afspraak",
+          "to": "/mijn-contact",
+        },
         "location": {
           "city": null,
           "countryCode": "NL",
@@ -132,7 +144,6 @@ test('should transform the data correctly', async () => {
           "street": null,
         },
         "qrCode": "xxxxxxxxxxxxxxxxxxxx",
-        "startDate": "2025-01-01T09:00:00Z",
         "status": "New",
         "subject": "Vaarvignet",
       },
