@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import { Heading, Icon, Link, Paragraph } from '@amsterdam/design-system-react';
 import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
@@ -47,11 +45,7 @@ export function AfspraakCard({
       <strong>Locatie:</strong> {locatie}
     </Paragraph>
   );
-  const modalProps = useMemo(() => {
-    return {
-      title: `QR code stadsloket ${afspraak.location.name}`,
-    };
-  }, [afspraak.location.name]);
+
   return (
     <article className={classNames(styles.AfspraakCard, className)}>
       <Icon
@@ -72,7 +66,9 @@ export function AfspraakCard({
         <>
           <ActionItem dash={false}>
             <ButtonAndModal
-              modal={modalProps}
+              modal={{
+                title: `QR code stadsloket ${afspraak.location.name}`,
+              }}
               buttonVariant="ma-link-like"
               buttonLabel="Toon QR code"
             >
