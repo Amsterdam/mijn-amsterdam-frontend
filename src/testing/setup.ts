@@ -183,3 +183,5 @@ process.env.REACT_APP_COBROWSE_LICENSE_KEY = 'test';
 
 process.env.BFF_AMSAPP_SURVEY_API_BASE_URL = `${remoteApiHost}/survey/api/v1/surveys`;
 process.env.BFF_ZWD_API_BASE_URL = remoteApiHost;
+
+process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL = bffApiHost;
