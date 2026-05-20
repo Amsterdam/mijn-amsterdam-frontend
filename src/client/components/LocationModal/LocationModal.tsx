@@ -154,6 +154,7 @@ export interface LocationModalProps {
   // Explicit latlng
   latlng?: LatLngLiteral;
   buttonClassName?: string;
+  buttonVariant?: 'primary' | 'secondary' | 'tertiary' | 'ma-link-like';
 }
 
 export function LocationModal({
@@ -163,9 +164,17 @@ export function LocationModal({
   label,
   buttonLabel = 'Bekijk op de kaart',
   buttonClassName = '',
+  buttonVariant = 'secondary',
 }: LocationModalProps) {
   const hasLocationData = !!(address || latlng);
   const title = modalTitle ?? label ?? address ?? 'Locatie';
+  const modalProps = useMemo(() => {
+    return {
+      pollingQuerySelector: '#map-zoom',
+      giveUpOnReadyPollingAfterMs: 5000,
+      title,
+    };
+  }, [title]);
   return (
     hasLocationData && (
       <>
@@ -174,13 +183,9 @@ export function LocationModal({
             styles.LocationModalLink,
             buttonClassName
           )}
-          buttonVariant="secondary"
+          buttonVariant={buttonVariant}
           buttonLabel={buttonLabel}
-          modal={{
-            pollingQuerySelector: '#map-zoom',
-            giveUpOnReadyPollingAfterMs: 5000,
-            title,
-          }}
+          modal={modalProps}
         >
           <div className={styles.LocationModalInner}>
             <LocationMap

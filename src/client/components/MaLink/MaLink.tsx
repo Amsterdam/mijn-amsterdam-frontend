@@ -1,4 +1,4 @@
-import type { AnchorHTMLAttributes } from 'react';
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react';
 
 import type {
   BreadcrumbLinkProps,
@@ -175,17 +175,16 @@ export function MaButtonRouterLink({
   );
 }
 
-export function MaButton({
-  maVariant,
+export function MaLinkLikeButton({
   className,
+  children,
   ...rest
-}: ButtonProps & { maVariant?: MaClassNameVariant }) {
-  const className_ = classNames(
-    className,
-    'ams-link',
-    // 'ams-button--secondary',
-    styles.InlineButton
-  );
+}: ButtonHTMLAttributes<HTMLButtonElement>) {
+  const className_ = classNames('ams-link', styles.InlineButton, className);
 
-  return <button {...rest} className={className_} />;
+  return (
+    <button {...rest} className={className_}>
+      {children}
+    </button>
+  );
 }

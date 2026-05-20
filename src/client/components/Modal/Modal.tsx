@@ -1,14 +1,13 @@
 import type { ReactNode } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { Dialog } from '@amsterdam/design-system-react';
+import { Button, Dialog } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
-import classNames from 'classnames';
 
 import styles from './Modal.module.scss';
 import { getElementOnPageAsync } from '../../helpers/utils.ts';
 import { useKeyUp } from '../../hooks/useKey.ts';
-import { MaButton } from '../MaLink/MaLink.tsx';
+import { MaLinkLikeButton } from '../MaLink/MaLink.tsx';
 
 function FocusTrapInner() {
   const element = document.getElementById('modal-dialog');
@@ -164,8 +163,8 @@ export function Modal({
 }
 
 type ButtonModalProps = {
-  buttonVariant?: 'primary' | 'secondary' | 'tertiary';
-  modal: Omit<ModalProps, 'isOpen' | 'children' | 'onClose'>;
+  buttonVariant?: 'primary' | 'secondary' | 'tertiary' | 'ma-link-like';
+  modal: Prettify<Omit<ModalProps, 'isOpen' | 'children' | 'onClose'>>;
   children: ReactNode;
   buttonClassName?: string;
   buttonLabel: string;
@@ -181,19 +180,31 @@ export function ButtonAndModal({
   startOpen = false,
 }: ButtonModalProps) {
   const [isLocationModalOpen, setLocationModalOpen] = useState(startOpen);
+
   return (
     <>
-      <MaButton
-        className={classNames(styles.LocationModalLink, buttonClassName)}
-        variant={buttonVariant}
-        onClick={() => setLocationModalOpen(true)}
-      >
-        {buttonLabel}
-      </MaButton>
+      {buttonVariant === 'ma-link-like' ? (
+        <MaLinkLikeButton
+          className={buttonClassName}
+          onClick={() => setLocationModalOpen(true)}
+        >
+          {buttonLabel}
+        </MaLinkLikeButton>
+      ) : (
+        <Button
+          variant={buttonVariant}
+          className={buttonClassName}
+          onClick={() => setLocationModalOpen(true)}
+        >
+          {buttonLabel}
+        </Button>
+      )}
       <Modal
         {...modal}
         isOpen={isLocationModalOpen}
-        onClose={() => setLocationModalOpen(false)}
+        onClose={() => {
+          setLocationModalOpen(false);
+        }}
       >
         {children}
       </Modal>
