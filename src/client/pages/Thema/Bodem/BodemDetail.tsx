@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { useBodemDetailData } from './useBodemDetailData.hook.tsx';
 import type { LoodMetingFrontend } from '../../../../server/services/bodem/types.ts';
 import type { Row } from '../../../components/Datalist/Datalist.tsx';
@@ -8,20 +10,8 @@ import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
-export function BodemDetail() {
-  const {
-    themaId,
-    meting,
-    isLoading,
-    isError,
-    breadcrumbs,
-    title,
-    routeConfig,
-  } = useBodemDetailData();
-
-  useHTMLDocumentTitle(routeConfig);
-
-  const LoodMetingRows = (meting: LoodMetingFrontend) => {
+function BodemDetailContent({ meting }: { meting: LoodMetingFrontend }) {
+  const LoodMetingRows = useMemo(() => {
     const rows: Row[] = [{ label: 'Kenmerk', content: meting.identifier }];
 
     if (meting.adres) {
@@ -48,18 +38,30 @@ export function BodemDetail() {
     }
 
     return rows.filter((row) => !!row.content);
-  };
-
-  function BodemDetailContent({ meting }: { meting: LoodMetingFrontend }) {
-    return (
-      <PageContentCell>
-        <Datalist rows={LoodMetingRows(meting)} />
-      </PageContentCell>
-    );
-  }
+  }, [meting]);
 
   return (
-    <ThemaDetailPagina
+    <PageContentCell>
+      <Datalist rows={LoodMetingRows} />
+    </PageContentCell>
+  );
+}
+
+export function BodemDetail() {
+  const {
+    themaId,
+    meting,
+    isLoading,
+    isError,
+    breadcrumbs,
+    title,
+    routeConfig,
+  } = useBodemDetailData();
+
+  useHTMLDocumentTitle(routeConfig);
+
+  return (
+    <ThemaDetailPagina<LoodMetingFrontend>
       themaId={themaId}
       title={title}
       zaak={meting}

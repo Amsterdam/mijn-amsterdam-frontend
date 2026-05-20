@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { tableConfig, themaConfig } from './Bodem-thema-config.ts';
 import { isError, isLoading } from '../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
@@ -6,7 +8,10 @@ import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useBodemData() {
   const { BODEM } = useAppStateGetter();
-  const items = addLinkElementToProperty(BODEM.content ?? [], 'adres', true);
+  const items = useMemo(
+    () => addLinkElementToProperty(BODEM.content ?? [], 'adres', true),
+    [BODEM.content]
+  );
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return {

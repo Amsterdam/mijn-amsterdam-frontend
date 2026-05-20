@@ -1,0 +1,223 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Renders afspraak data > Large screen 1`] = `
+<DocumentFragment>
+  <article
+    class="_AfspraakCard_0a51e6"
+  >
+    <span
+      class="ams-icon ams-icon--heading-2 _Icon_0a51e6"
+      hidden=""
+    >
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          clip-rule="evenodd"
+          d="M23 13h-4v1h4v2h-1.5v4h-2v-4h-15v4h-2v-4H1v-2h1.72l.593-2.374a2 2 0 0 1 1.94-1.515h4.662a2 2 0 0 1 1.94 1.515L12.448 14H17v-1h-4V6h10zM4.782 14h5.605l-.472-1.889H5.254zM15 11h2v-1h2v1h2V8h-6z"
+          fill-rule="evenodd"
+        />
+        <path
+          clip-rule="evenodd"
+          d="M7.857 4.014a2.67 2.67 0 0 1 2.394 2.653l-.014.272a2.667 2.667 0 0 1-2.652 2.394l-.273-.014a2.67 2.67 0 0 1-2.38-2.38l-.014-.272A2.667 2.667 0 0 1 7.585 4zM7.585 6a.667.667 0 1 0 0 1.334.667.667 0 0 0 0-1.334"
+          fill-rule="evenodd"
+        />
+      </svg>
+    </span>
+    <h3
+      class="ams-heading ams-heading--3 ams-mb-s"
+    >
+      Varen
+    </h3>
+    <p
+      class="ams-paragraph ams-mb-s"
+    >
+      <time
+        datetime="2020-01-01T12:00:00Z"
+      >
+        <strong>
+          Datum:
+        </strong>
+         Datum, 01-01-2020 17:50
+      </time>
+      <br />
+      <strong>
+        Locatie:
+      </strong>
+       Stadsloket Centrum, Amstel 1
+    </p>
+    <span
+      class="_ActionItem_0a51e6"
+    >
+      <button
+        class="ams-link _InlineButton_10c0a4"
+        type="button"
+      >
+        Toon QR code
+      </button>
+    </span>
+    <span
+      class="_ActionItem_0a51e6"
+    >
+      <span
+        class="_ActionItem-separator_0a51e6"
+      >
+        —
+      </span>
+      <a
+        class="ams-link"
+        download="afspraak-unique-123.ics"
+        href="data:text/calendar;base64,abc123"
+        rel="noopener noreferrer"
+      >
+        Voeg toe aan agenda
+      </a>
+    </span>
+    <span
+      class="_ActionItem_0a51e6"
+    >
+      <span
+        class="_ActionItem-separator_0a51e6"
+      >
+        —
+      </span>
+      <button
+        class="ams-link _InlineButton_10c0a4 _LocationModalLink_fa327b"
+        type="button"
+      >
+        Bekijk op de kaart
+      </button>
+    </span>
+    <span
+      class="_ActionItem_0a51e6"
+    >
+      <span
+        class="_ActionItem-separator_0a51e6"
+      >
+        —
+      </span>
+      <a
+        class="ams-link"
+        href="https://cancel.com"
+        rel="noopener noreferrer"
+      >
+        Annuleren
+      </a>
+    </span>
+  </article>
+</DocumentFragment>
+`;
+
+exports[`Renders afspraak data > Small screen 1`] = `
+<DocumentFragment>
+  <article
+    class="_AfspraakCard_0a51e6"
+  >
+    <span
+      class="ams-icon ams-icon--heading-2 _Icon_0a51e6"
+      hidden=""
+    >
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          clip-rule="evenodd"
+          d="M23 13h-4v1h4v2h-1.5v4h-2v-4h-15v4h-2v-4H1v-2h1.72l.593-2.374a2 2 0 0 1 1.94-1.515h4.662a2 2 0 0 1 1.94 1.515L12.448 14H17v-1h-4V6h10zM4.782 14h5.605l-.472-1.889H5.254zM15 11h2v-1h2v1h2V8h-6z"
+          fill-rule="evenodd"
+        />
+        <path
+          clip-rule="evenodd"
+          d="M7.857 4.014a2.67 2.67 0 0 1 2.394 2.653l-.014.272a2.667 2.667 0 0 1-2.652 2.394l-.273-.014a2.67 2.67 0 0 1-2.38-2.38l-.014-.272A2.667 2.667 0 0 1 7.585 4zM7.585 6a.667.667 0 1 0 0 1.334.667.667 0 0 0 0-1.334"
+          fill-rule="evenodd"
+        />
+      </svg>
+    </span>
+    <h3
+      class="ams-heading ams-heading--3 ams-mb-s"
+    >
+      Varen
+    </h3>
+    <p
+      class="ams-paragraph ams-mb-s"
+    >
+      <time
+        datetime="2020-01-01T12:00:00Z"
+      >
+        <strong>
+          Datum:
+        </strong>
+         Datum, 01-01-2020 17:50
+      </time>
+      <br />
+      <strong>
+        Locatie:
+      </strong>
+       Stadsloket Centrum, Amstel 1
+    </p>
+    <span
+      class="_ActionItem_0a51e6"
+    >
+      <button
+        class="ams-link _InlineButton_10c0a4"
+        type="button"
+      >
+        Toon QR code
+      </button>
+    </span>
+    <span
+      class="_ActionItem_0a51e6"
+    >
+      <span
+        class="_ActionItem-separator_0a51e6"
+      >
+        —
+      </span>
+      <a
+        class="ams-link"
+        download="afspraak-unique-123.ics"
+        href="data:text/calendar;base64,abc123"
+        rel="noopener noreferrer"
+      >
+        Voeg toe aan agenda
+      </a>
+    </span>
+    <span
+      class="_ActionItem_0a51e6"
+    >
+      <span
+        class="_ActionItem-separator_0a51e6"
+      >
+        —
+      </span>
+      <button
+        class="ams-link _InlineButton_10c0a4 _LocationModalLink_fa327b"
+        type="button"
+      >
+        Bekijk op de kaart
+      </button>
+    </span>
+    <span
+      class="_ActionItem_0a51e6"
+    >
+      <span
+        class="_ActionItem-separator_0a51e6"
+      >
+        —
+      </span>
+      <a
+        class="ams-link"
+        href="https://cancel.com"
+        rel="noopener noreferrer"
+      >
+        Annuleren
+      </a>
+    </span>
+  </article>
+</DocumentFragment>
+`;

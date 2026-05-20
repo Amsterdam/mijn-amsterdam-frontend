@@ -7,7 +7,7 @@ import type {
   Adres,
   BrpFrontend,
 } from '../../../../../server/services/brp/brp-types.ts';
-import type { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types.ts';
+import type { ContactmomentFrontend } from '../../../../../server/services/klantcontact/klantcontact.types.ts';
 import type { WonenDataFrontend } from '../../../../../server/services/wonen/wonen.types.ts';
 import { bffApiHost } from '../../../../../testing/setup.ts';
 import { bffApi } from '../../../../../testing/utils.ts';
@@ -17,7 +17,7 @@ import { themaConfig } from '../Profile-thema-config.ts';
 
 const testState = (
   responseBRP: BrpFrontend | object = {},
-  responseSF: ContactMoment[] = [],
+  responseSF: ContactmomentFrontend[] = [],
   responseZWD?: WonenDataFrontend
 ) => ({
   BRP: { status: 'OK', content: responseBRP },
@@ -323,61 +323,6 @@ describe('<Profile />', () => {
     render(<Component />);
 
     screen.getByText('VvE Prachtige Straat 13');
-  });
-
-  test('Shows max 3 contactmomenten', async () => {
-    const user = userEvent.setup();
-
-    function Component() {
-      return (
-        <MockApp
-          routeEntry={routeEntry}
-          routePath={routeEntry}
-          component={MijnGegevensThema}
-          state={
-            testState({ persoon: { mokum: true } }, [
-              {
-                datePublished: '2024-05-29 08:02:38',
-                datePublishedFormatted: '2024-05-29 08:02:38',
-                subject: 'Meldingen',
-                referenceNumber: '00002032',
-                themaKanaal: 'Contactformulier',
-              },
-              {
-                datePublished: '2024-05-29 08:02:38',
-                datePublishedFormatted: '2024-05-29 08:02:38',
-                subject: 'Meldingen',
-                referenceNumber: '00002032',
-                themaKanaal: 'Kanaal Foo',
-              },
-              {
-                datePublished: '2024-05-29 08:02:38',
-                datePublishedFormatted: '2024-05-29 08:02:38',
-                subject: 'Meldingen',
-                referenceNumber: '00002032',
-                themaKanaal: 'Kanaal Bar',
-              },
-              {
-                datePublished: '2024-05-29 08:02:38',
-                datePublishedFormatted: '2024-05-29 08:02:38',
-                subject: 'Meldingen',
-                referenceNumber: '00002032',
-                themaKanaal: 'Kanaal world',
-              },
-            ]) as AppState
-          }
-        />
-      );
-    }
-    render(<Component />);
-    expect(screen.getByText('Contactmomenten')).toBeInTheDocument();
-    await user.click(screen.getAllByText('Toon')[0]);
-
-    ['Contactformulier', 'Kanaal Foo', 'Kanaal Bar'].forEach((kanaal) => {
-      expect(screen.getByText(kanaal)).toBeInTheDocument();
-    });
-
-    expect(await screen.queryByText('Kanaal world')).not.toBeInTheDocument();
   });
 
   test('Only shows dutch nationality', () => {

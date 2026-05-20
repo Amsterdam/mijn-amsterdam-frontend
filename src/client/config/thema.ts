@@ -15,6 +15,7 @@ import { menuItem as menuItemHoreca } from '../pages/Thema/Horeca/Horeca-render-
 import { menuItem as menuItemInkomen } from '../pages/Thema/Inkomen/Inkomen-render-config.tsx';
 import { menuItem as menuItemJeugd } from '../pages/Thema/Jeugd/Jeugd-render-config.tsx';
 import { menuItem as menuItemKlachten } from '../pages/Thema/Klachten/Klachten-render-config.tsx';
+import { menuItem as menuItemContact } from '../pages/Thema/KlantContact/KlantContact-render-config.ts';
 import { menuItem as menuItemKrefia } from '../pages/Thema/Krefia/Krefia-render-config.tsx';
 import { menuItem as menuItemMilieuzone } from '../pages/Thema/Milieuzone/Milieuzone-render-config.tsx';
 import { menuItem as menuItemOvertredingen } from '../pages/Thema/Overtredingen/Overtredingen-render-config.tsx';
@@ -33,27 +34,28 @@ export const PageTitleMain = MIJN_AMSTERDAM;
 
 export const myThemasMenuItems: ThemaMenuItem[] = [
   ...profileMenuItems,
-  menuItemInkomen,
-  menuItemJeugd,
+  menuItemAVG,
   menuItemAfis,
   menuItemAfval,
-  menuItemAVG,
+  menuItemBelastingen,
   menuItemBezwaren,
   menuItemBodem,
+  menuItemContact,
   menuItemErfpacht,
   menuItemErfpachtZakelijk,
   menuItemHLI,
   menuItemHoreca,
+  menuItemInkomen,
+  menuItemJeugd,
   menuItemKlachten,
+  menuItemKrefia,
+  menuItemMilieuzone,
+  menuItemOvertredingen,
   menuItemParkeren,
   menuItemSVWI,
+  menuItemSubsidies,
   menuItemToeristischeVerhuur,
   menuItemVaren,
   menuItemVergunningen,
   menuItemZorg,
-  menuItemBelastingen,
-  menuItemSubsidies,
-  menuItemOvertredingen,
-  menuItemMilieuzone,
-  menuItemKrefia,
 ];

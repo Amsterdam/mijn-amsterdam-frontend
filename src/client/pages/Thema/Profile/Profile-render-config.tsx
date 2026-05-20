@@ -1,12 +1,10 @@
 import { BuildingsIcon } from '@amsterdam/design-system-react-icons';
 
 import { MijnBedrijfsGegevensThema } from './commercial/ProfileCommercial.tsx';
-import { ContactmomentenListPage } from './private/ContactmomentenListPage.tsx';
 import { MijnGegevensThema } from './private/ProfilePrivate.tsx';
 import { VvEDetail } from './private/VvEDetail.tsx';
 import { themaConfig } from './Profile-thema-config.ts';
 import { default as ProfilePrivateIcon } from './ProfilePrivateIcon.svg?react';
-import { FeatureToggle } from '../../../../universal/config/feature-toggles.ts';
 import { isLoading } from '../../../../universal/helpers/api.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
 import type { ThemaMenuItem } from '../../../config/thema-types.ts';
@@ -22,11 +20,6 @@ export const ProfileRoutes = [
     Component: VvEDetail,
     isActive: themaConfig.BRP.featureToggle.wonenActive,
   },
-  {
-    route: themaConfig.BRP.listPageContactmomenten.route.path,
-    Component: ContactmomentenListPage,
-    isActive: FeatureToggle.contactmomentenActive,
-  },
 ];
 
 export const menuItems: ThemaMenuItem[] = [
@@ -40,7 +33,7 @@ export const menuItems: ThemaMenuItem[] = [
       return (
         (!isLoading(appState.BRP) && !!appState.BRP.content?.persoon) ||
         (!isLoading(appState.KLANT_CONTACT) &&
-          !!appState.KLANT_CONTACT.content?.length)
+          !!appState.KLANT_CONTACT.content?.contactmomenten?.length)
       );
     },
     IconSVG: ProfilePrivateIcon,

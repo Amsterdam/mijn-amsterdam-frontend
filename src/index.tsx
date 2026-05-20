@@ -35,7 +35,8 @@ import { type FeatureToggles } from './server/config/feature-toggles.ts';
     document.getElementById('loader')?.appendChild(
       Object.assign(document.createElement('div'), {
         id: 'loadfail',
-        textContent: 'De website werkt nu niet. Wij werken aan een oplossing.',
+        innerHTML:
+          'De website werkt nu niet.<br/>Wij werken aan een oplossing.',
       })
     );
   }

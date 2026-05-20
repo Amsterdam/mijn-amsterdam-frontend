@@ -113,9 +113,15 @@ export const PRISTINE_APPSTATE: AppState = {
   BRP: apiPristineResult(null, {
     profileTypes: ['private'],
   }),
-  KLANT_CONTACT: apiPristineResult([], {
-    profileTypes: ['private'],
-  }),
+  KLANT_CONTACT: apiPristineResult(
+    {
+      contactmomenten: [],
+      afspraken: [],
+    },
+    {
+      profileTypes: ['private'],
+    }
+  ),
   AFVAL: apiPristineResult([]),
   AFVALPUNTEN: apiPristineResult({
     centers: [],

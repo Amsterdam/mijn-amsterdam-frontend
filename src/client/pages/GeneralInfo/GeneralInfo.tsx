@@ -26,6 +26,7 @@ import { themaConfig as horecaThemaConfig } from '../Thema/Horeca/Horeca-thema-c
 import { themaConfig as inkomenThemaConfig } from '../Thema/Inkomen/Inkomen-thema-config.ts';
 import { themaConfig as jeugdThemaConfig } from '../Thema/Jeugd/Jeugd-thema-config.ts';
 import { themaConfig as klachtenThemaConfig } from '../Thema/Klachten/Klachten-thema-config.ts';
+import { themaConfig as klantcontactThemaConfig } from '../Thema/KlantContact/KlantContact-thema-config.ts';
 import { themaConfig as krefiaThemaConfig } from '../Thema/Krefia/Krefia-thema-config.ts';
 import { themaConfig as milieuThemaConfig } from '../Thema/Milieuzone/Milieuzone-thema-config.ts';
 import { themaConfig as overtredingenThemaConfig } from '../Thema/Overtredingen/Overtredingen-thema-config.ts';
@@ -66,6 +67,7 @@ export type SectionProps = {
 
 const sections: InfoSection_DEPRECATED[] = [
   myAreaSectionProps,
+  ...createDeprecatedInfoSection(klantcontactThemaConfig),
   ...createDeprecatedInfoSection(afvalThemaConfig),
   ...createDeprecatedInfoSection(avgThemaConfig),
   ...createDeprecatedInfoSection(belastingenThemaConfig),
