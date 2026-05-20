@@ -12,8 +12,10 @@
   "type": "module",
   "scripts": {
     "analyze": "source-map-explorer 'build/assets/*.js'",
-    "mock-server": "mocks-server",
-    "mock-server:serve": "mocks-server --no-plugins.inquirerCli.enabled",
+    "mock-server": "ts-node ./src/mocks-server/app-start.ts",
+    "mock-server:serve": "pnpm mock-server",
+    "mock-server:custom": "pnpm mock-server",
+    "mock-server:custom:serve": "pnpm mock-server",
     "serve-dev": "concurrently \"pnpm:bff-api:watch\" \"pnpm:start\" \"pnpm:mock-server:serve\"",
     "start": "cross-env MA_APP_MODE=development vite",
     "build": "cross-env MA_APP_MODE=production vite build",
@@ -171,7 +173,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
-    "@mocks-server/main": "^4.1.0",
     "@types/debug": "^4.1.13",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/stack-trace": "^0.0.33",
