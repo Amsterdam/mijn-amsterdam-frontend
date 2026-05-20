@@ -44,6 +44,7 @@ function ProfilePrivateSectionPanels() {
             {...panelConfig.verbintenis(BRP, profileData)}
           />
         )}
+
       {!!profileData?.kinderen?.length && (
         <ProfileSectionPanel
           sectionData={profileData.kinderen}
