@@ -32,7 +32,7 @@ export function getCustomApiConfig(
 
 export function getCustomApiConfigWithCacheKey(
   apiName: string,
-  ...configs: Omit<DataRequestConfig, 'cacheKey_UNSAFE'>[]
+  ...configs: DataRequestConfig[]
 ) {
   if (!configs.some((c) => 'cacheKey_UNSAFE' in c)) {
     throw new Error(
