@@ -164,7 +164,7 @@ export function Modal({
   );
 }
 
-type ButtonModalProps = {
+type ModalAndButtonProps = {
   buttonVariant?: 'primary' | 'secondary' | 'tertiary' | 'ma-link-like';
   modal: Prettify<Omit<ModalProps, 'isOpen' | 'children' | 'onClose'>>;
   children: ReactNode;
@@ -173,14 +173,14 @@ type ButtonModalProps = {
   startOpen?: boolean;
 };
 
-export function ButtonAndModal({
+export function ModalAndButton({
   modal,
   children,
   buttonClassName,
   buttonVariant = 'secondary',
   buttonLabel = 'Open modal',
   startOpen = false,
-}: ButtonModalProps) {
+}: ModalAndButtonProps) {
   const [isLocationModalOpen, setLocationModalOpen] = useState(startOpen);
 
   return (

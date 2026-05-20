@@ -19,7 +19,7 @@ import {
   isLocatedInWeesp,
 } from '../../../universal/helpers/bag.ts';
 import { useBffApi } from '../../hooks/api/useBffApi.ts';
-import { ButtonAndModal } from '../Modal/Modal.tsx';
+import { ModalAndButton } from '../Modal/Modal.tsx';
 import { BaseLayerType } from '../MyArea/Map/BaseLayerToggle.tsx';
 import type { MapLocationMarker } from '../MyArea/MyArea.hooks.ts';
 import { MyAreaLoader } from '../MyArea/MyAreaLoader.tsx';
@@ -178,7 +178,7 @@ export function LocationModal({
   return (
     hasLocationData && (
       <>
-        <ButtonAndModal
+        <ModalAndButton
           buttonClassName={classNames(
             styles.LocationModalLink,
             buttonClassName
@@ -194,7 +194,7 @@ export function LocationModal({
               markerLabel={title}
             />
           </div>
-        </ButtonAndModal>
+        </ModalAndButton>
       </>
     )
   );

@@ -7,7 +7,7 @@ import styles from './AfspraakCard.module.scss';
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
 import { LocationModal } from '../LocationModal/LocationModal.tsx';
 import { MaRouterLink } from '../MaLink/MaLink.tsx';
-import { ButtonAndModal } from '../Modal/Modal.tsx';
+import { ModalAndButton } from '../Modal/Modal.tsx';
 
 type AfspraakCardProps = {
   afspraak: AfspraakFrontend;
@@ -65,7 +65,7 @@ export function AfspraakCard({
       ) : (
         <>
           <ActionItem dash={false}>
-            <ButtonAndModal
+            <ModalAndButton
               modal={{
                 title: `QR code - Stadsloket ${afspraak.location.name}`,
               }}
@@ -83,7 +83,7 @@ export function AfspraakCard({
                   dat u op het stadsloket aanwezig bent.
                 </Paragraph>
               </>
-            </ButtonAndModal>
+            </ModalAndButton>
           </ActionItem>
           <ActionItem>
             <Link
