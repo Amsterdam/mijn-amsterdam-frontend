@@ -22,6 +22,17 @@ app.use(
 app.use(express.json({ strict: false }));
 app.use(express.urlencoded({ extended: true }));
 
+app.use((req: Request, _res: Response, next: NextFunction) => {
+  logger.info(
+    {
+      method: req.method,
+      url: req.originalUrl,
+    },
+    'incoming request'
+  );
+  next();
+});
+
 registerRoutes(app, routes);
 
 app.use((_req: Request, res: Response) => {
@@ -34,7 +45,7 @@ app.use((_req: Request, res: Response) => {
 
 app.use(
   (err: Error, _req: Request, res: Response, _next: NextFunction): Response => {
-    logger.error(err.message);
+    logger.error({ err }, 'unhandled mock server error');
     return res.status(500).send({ message: 'Internal mock server error' });
   }
 );

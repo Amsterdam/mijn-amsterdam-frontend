@@ -25,12 +25,22 @@ function executeVariant(
   res: Response,
   next: NextFunction
 ): void {
-  if (variant.type === 'json') {
-    res.status(variant.options.status).send(variant.options.body);
+  const executeResponse = () => {
+    if (variant.type === 'json') {
+      res.status(variant.options.status).send(variant.options.body);
+      return;
+    }
+
+    variant.options.middleware(req, res, next, core);
+  };
+
+  const delayMs = variant.options.delayMs;
+  if (!delayMs || delayMs <= 0) {
+    executeResponse();
     return;
   }
 
-  variant.options.middleware(req, res, next, core);
+  setTimeout(executeResponse, delayMs);
 }
 
 function toExpressMethod(method: MockHttpMethod): Lowercase<MockHttpMethod> {

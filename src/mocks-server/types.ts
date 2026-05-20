@@ -24,6 +24,7 @@ export interface JsonVariant {
   id: string;
   type: 'json';
   options: {
+    delayMs?: number;
     status: number;
     body: unknown;
   };
@@ -33,6 +34,7 @@ export interface MiddlewareVariant {
   id: string;
   type: 'middleware';
   options: {
+    delayMs?: number;
     middleware: (
       req: Request,
       res: Response,
