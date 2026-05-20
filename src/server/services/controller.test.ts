@@ -12,12 +12,17 @@ import {
 import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content.ts';
 import {
   addServiceResultHandler,
+  loadServices,
   forTesting,
   servicesTipsByProfileType,
 } from './controller.ts';
 import type { RequestMock } from '../../testing/utils.ts';
 import { getReqMockWithOidc, ResponseMock } from '../../testing/utils.ts';
-import { apiSuccessResult } from '../../universal/helpers/api.ts';
+import {
+  apiErrorResult,
+  apiPostponeResult,
+  apiSuccessResult,
+} from '../../universal/helpers/api.ts';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -35,6 +40,7 @@ const mocks = vi.hoisted(() => {
     },
     storeNotificationsResponses: vi.fn().mockResolvedValue(undefined),
     captureException: vi.fn(),
+    trackEvent: vi.fn(),
   };
 });
 
@@ -74,6 +80,7 @@ vi.mock('./amsapp/notifications/amsapp-notifications.ts', () => {
 vi.mock('./monitoring.ts', () => {
   return {
     captureException: mocks.captureException,
+    trackEvent: mocks.trackEvent,
   };
 });
 
@@ -199,6 +206,24 @@ describe('controller', () => {
     );
 
     expect(result).toEqual(data);
+  });
+
+  test('loadServices emits services-duration telemetry only for OK', async () => {
+    const reqMock = {} as never;
+
+    const servicePromises = loadServices(
+      reqMock,
+      {
+        OK_SERVICE: async () => apiSuccessResult({ ok: true }),
+        ERROR_SERVICE: async () => apiErrorResult('nope', null),
+        POSTPONE_SERVICE: async () => apiPostponeResult({ foo: 'bar' }),
+      } as never,
+      true
+    );
+
+    await Promise.all(servicePromises);
+
+    expect(mocks.trackEvent).toHaveBeenCalledTimes(1);
   });
 
   test('storeNotificationsForAmsAppUsers omits maintenance notifications', async () => {
