@@ -54,6 +54,7 @@ exports[`Renders afspraak data > Large screen 1`] = `
     >
       <button
         class="ams-link _InlineButton_10c0a4"
+        type="button"
       >
         Toon QR code
       </button>
@@ -85,6 +86,7 @@ exports[`Renders afspraak data > Large screen 1`] = `
       </span>
       <button
         class="ams-link _InlineButton_10c0a4 _LocationModalLink_fa327b"
+        type="button"
       >
         Bekijk op de kaart
       </button>
@@ -163,6 +165,7 @@ exports[`Renders afspraak data > Small screen 1`] = `
     >
       <button
         class="ams-link _InlineButton_10c0a4"
+        type="button"
       >
         Toon QR code
       </button>
@@ -194,6 +197,7 @@ exports[`Renders afspraak data > Small screen 1`] = `
       </span>
       <button
         class="ams-link _InlineButton_10c0a4 _LocationModalLink_fa327b"
+        type="button"
       >
         Bekijk op de kaart
       </button>
