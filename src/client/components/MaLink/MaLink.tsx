@@ -183,7 +183,7 @@ export function MaLinkLikeButton({
   const className_ = classNames('ams-link', styles.InlineButton, className);
 
   return (
-    <button {...rest} className={className_}>
+    <button type="button" {...rest} className={className_}>
       {children}
     </button>
   );
