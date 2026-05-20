@@ -78,11 +78,6 @@ export function AfspraakCard({
                   value={afspraak.qrCode}
                   className="ams-mb-s"
                 />{' '}
-                <Paragraph>
-                  <time dateTime={afspraak.dateStart}>
-                    {afspraak.displayDateTime}
-                  </time>
-                </Paragraph>
                 <Paragraph className="ams-mb-l">
                   Scan deze QR code op het stadsloket zodat de medewerker weet
                   dat u op het stadsloket aanwezig bent.
