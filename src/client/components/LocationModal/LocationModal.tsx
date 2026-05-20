@@ -157,7 +157,6 @@ export interface LocationModalProps {
 }
 
 export function LocationModal({
-  // Addres
   address = null,
   latlng,
   modalTitle,
@@ -166,7 +165,7 @@ export function LocationModal({
   buttonClassName = '',
 }: LocationModalProps) {
   const hasLocationData = !!(address || latlng);
-
+  const title = modalTitle ?? label ?? address ?? 'Locatie';
   return (
     hasLocationData && (
       <>
@@ -180,14 +179,14 @@ export function LocationModal({
           modal={{
             pollingQuerySelector: '#map-zoom',
             giveUpOnReadyPollingAfterMs: 5000,
-            title: modalTitle ?? label ?? address ?? 'Locatie',
+            title,
           }}
         >
           <div className={styles.LocationModalInner}>
             <LocationMap
               address={address}
               latlng={latlng}
-              markerLabel={modalTitle ?? label ?? address ?? 'Locatie'}
+              markerLabel={title}
             />
           </div>
         </ButtonAndModal>
