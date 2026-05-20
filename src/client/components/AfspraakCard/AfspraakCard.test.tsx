@@ -80,6 +80,6 @@ describe('Renders afspraak data', () => {
       name: /Toon QR code/i,
     });
     await user.click(button);
-    screen.getByText(/QR code stadsloket Centrum/i);
+    screen.getByText(/QR code - Stadsloket Centrum/i);
   });
 });
