@@ -86,13 +86,18 @@ export function createNotificationDefault(
         title: `Aanvraag ${zaak.title} ontvangen`,
         description: `Wij hebben uw aanvraag ${zaak.title} met zaaknummer ${zaak.identifier} ontvangen.`,
       };
-    case 'In behandeling':
+    case 'In behandeling': {
+      const meerinfoUrl = getVergunningCTALinks(caseType)?.meerinfo;
       return {
         ...baseNotification,
         datePublished,
         title: `Aanvraag ${zaak.title} in behandeling`,
-        description: `Wij hebben uw aanvraag ${zaak.title} met zaaknummer ${zaak.identifier} in behandeling genomen.`,
+        description: meerinfoUrl
+          ? `Wij hebben uw aanvraag ${zaak.title} met zaaknummer ${zaak.identifier} in behandeling genomen. Lees meer over uw aanvraag op <a href="${meerinfoUrl}" rel="noopener noreferrer">amsterdam.nl</a>.`
+          : `Wij hebben uw aanvraag ${zaak.title} met zaaknummer ${zaak.identifier} in behandeling genomen.`,
       };
+    }
+
     case 'Meer informatie nodig':
       return {
         ...baseNotification,
