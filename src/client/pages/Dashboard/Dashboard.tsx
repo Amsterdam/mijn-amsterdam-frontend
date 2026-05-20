@@ -21,7 +21,6 @@ import { useAppStateNotifications } from '../../hooks/useNotifications.ts';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
 import { Afspraken } from '../Thema/KlantContact/KlantContactThema.tsx';
-import { useKlantcontactData } from '../Thema/KlantContact/useKlantcontactData.hook.tsx';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
 
@@ -37,8 +36,6 @@ export function Dashboard() {
   const { notifications, total } = useAppStateNotifications(
     MAX_NOTIFICATIONS_VISIBLE
   );
-  const { afspraken, themaConfig: themaConfigKlantContact } =
-    useKlantcontactData();
 
   const isPhoneScreen = useSmallScreen();
 
