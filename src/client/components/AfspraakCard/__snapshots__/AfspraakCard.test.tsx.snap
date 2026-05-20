@@ -53,8 +53,7 @@ exports[`Renders afspraak data > Large screen 1`] = `
       class="_ActionItem_0a51e6"
     >
       <button
-        class="_LocationModalLink_6bcec3 ams-link _InlineButton_10c0a4"
-        variant="tertiary"
+        class="ams-link _InlineButton_10c0a4"
       >
         Toon QR code
       </button>
@@ -85,8 +84,7 @@ exports[`Renders afspraak data > Large screen 1`] = `
         —
       </span>
       <button
-        class="_LocationModalLink_6bcec3 _LocationModalLink_fa327b ams-link _InlineButton_10c0a4"
-        variant="secondary"
+        class="ams-link _InlineButton_10c0a4 _LocationModalLink_fa327b"
       >
         Bekijk op de kaart
       </button>
@@ -164,8 +162,7 @@ exports[`Renders afspraak data > Small screen 1`] = `
       class="_ActionItem_0a51e6"
     >
       <button
-        class="_LocationModalLink_6bcec3 ams-link _InlineButton_10c0a4"
-        variant="tertiary"
+        class="ams-link _InlineButton_10c0a4"
       >
         Toon QR code
       </button>
@@ -196,8 +193,7 @@ exports[`Renders afspraak data > Small screen 1`] = `
         —
       </span>
       <button
-        class="_LocationModalLink_6bcec3 _LocationModalLink_fa327b ams-link _InlineButton_10c0a4"
-        variant="secondary"
+        class="ams-link _InlineButton_10c0a4 _LocationModalLink_fa327b"
       >
         Bekijk op de kaart
       </button>
