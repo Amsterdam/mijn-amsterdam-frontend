@@ -67,7 +67,7 @@ export function AfspraakCard({
           <ActionItem dash={false}>
             <ButtonAndModal
               modal={{
-                title: `QR code stadsloket ${afspraak.location.name}`,
+                title: `QR code - Stadsloket ${afspraak.location.name}`,
               }}
               buttonVariant="ma-link-like"
               buttonLabel="Toon QR code"
