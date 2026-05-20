@@ -13,6 +13,7 @@ import {
   getSettledResult,
   type ApiSuccessResponse,
 } from '../../../universal/helpers/api.ts';
+import { dateSort } from '../../../universal/helpers/date.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 
 export async function fetchKlantcontact(
@@ -26,11 +27,13 @@ export async function fetchKlantcontact(
   const afsprakenSettled = getSettledResult(afsprakenResponse);
   const contactmomentenSettled = getSettledResult(klantcontactenResponse);
 
-  const afspraken = afsprakenSettled.content ?? [];
+  const afspraken = (afsprakenSettled.content ?? []).toSorted(
+    dateSort('dateStart', 'asc')
+  );
   const contactmomenten = addMissedAfsprakenToContactmomenten(
     afspraken,
     contactmomentenSettled.content ?? []
-  );
+  ).toSorted(dateSort('datePublished', 'desc'));
 
   return apiSuccessResult(
     {

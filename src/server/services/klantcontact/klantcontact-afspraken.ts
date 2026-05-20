@@ -8,7 +8,6 @@ import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
   dateFormat,
   defaultDateFormat,
-  dateSort,
   defaultDateFormatWithDayName,
 } from '../../../universal/helpers/date.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
@@ -37,50 +36,47 @@ export async function fetchAfspraken(
 function transformAfsprakenResponse(
   data: AfsprakenResponseSource
 ): AfspraakFrontend[] {
-  const results = data.results
-    .map((result) => {
-      const [startDate, startTime] = result.startDate.split(' ');
-      const [endDate, endTime] = result.endDate.split(' ');
-      const dateStart = `${startDate}T${startTime}Z`;
-      const dateEnd = `${endDate}T${endTime}Z`;
+  const results = data.results.map((result) => {
+    const [startDate, startTime] = result.startDate.split(' ');
+    const [endDate, endTime] = result.endDate.split(' ');
+    const dateStart = `${startDate}T${startTime}Z`;
+    const dateEnd = `${endDate}T${endTime}Z`;
 
-      const startTime_ = dateFormat(dateStart, 'HH:mm');
-      const endTime_ = dateFormat(dateEnd, 'HH:mm');
+    const startTime_ = dateFormat(dateStart, 'HH:mm');
+    const endTime_ = dateFormat(dateEnd, 'HH:mm');
 
-      const icsLink = createICSDataUri({
-        start: dateStart,
-        end: dateEnd,
-        uid: `afspraak-stadsloket-${result.caseReference}`,
-        summary: `Afspraak voor ${result.subject}`,
-        description: `Referentienummer: ${result.caseReference}`,
-        location: `Stadsloket ${result.location.name}, ${result.location.street}, ${result.location.postalCode} ${result.location.city}, Nederland`,
-      });
+    const icsLink = createICSDataUri({
+      start: dateStart,
+      end: dateEnd,
+      uid: `afspraak-stadsloket-${result.caseReference}`,
+      summary: `Afspraak voor ${result.subject}`,
+      description: `Referentienummer: ${result.caseReference}`,
+      location: `Stadsloket ${result.location.name}, ${result.location.street}, ${result.location.postalCode} ${result.location.city}, Nederland`,
+    });
 
-      return {
-        dateStart,
-        dateStartFormatted: defaultDateFormat(startDate),
-        dateEnd,
-        dateEndFormatted: defaultDateFormat(endDate),
-        displayDateTime: `${defaultDateFormatWithDayName(startDate)} van ${startTime_} tot ${endTime_} uur`,
-        subject: result.subject,
-        status: result.status,
-        qrCode: result.qrCode,
-        location: result.location,
-        caseReference: result.caseReference,
-        cancellationLink: result.cancellationLink,
-        link: {
-          to: themaConfig.route.path,
-          title: 'Bekijk afspraak',
-        },
-        icsLink: {
-          to: icsLink,
-          title: 'Voeg toe aan agenda',
-          download: `afspraak-${result.caseReference}.ics`,
-        },
-      };
-    })
-    .toSorted(dateSort('dateStart', 'asc'));
-
+    return {
+      dateStart,
+      dateStartFormatted: defaultDateFormat(startDate),
+      dateEnd,
+      dateEndFormatted: defaultDateFormat(endDate),
+      displayDateTime: `${defaultDateFormatWithDayName(startDate)} van ${startTime_} tot ${endTime_} uur`,
+      subject: result.subject,
+      status: result.status,
+      qrCode: result.qrCode,
+      location: result.location,
+      caseReference: result.caseReference,
+      cancellationLink: result.cancellationLink,
+      link: {
+        to: themaConfig.route.path,
+        title: 'Bekijk afspraak',
+      },
+      icsLink: {
+        to: icsLink,
+        title: 'Voeg toe aan agenda',
+        download: `afspraak-${result.caseReference}.ics`,
+      },
+    };
+  });
   return results;
 }
 
