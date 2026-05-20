@@ -38,7 +38,7 @@ export async function fetchKlantcontact(
       contactmomenten,
     },
     getFailedDependencies({
-      appointments: afsprakenSettled,
+      afspraken: afsprakenSettled,
       contactmomenten: contactmomentenSettled,
     })
   );
