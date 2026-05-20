@@ -6,8 +6,8 @@ import {
   fetchAVGNotifications,
   transformAVGResponse,
 } from './avg.ts';
-import avgThemasResponse from '../../../../mocks/fixtures/avg-themas.json' with { type: 'json' };
-import apiResponse from '../../../../mocks/fixtures/avg.json' with { type: 'json' };
+import avgThemasResponse from '../../../mocks-server/fixtures/avg-themas.json' with { type: 'json' };
+import apiResponse from '../../../mocks-server/fixtures/avg.json' with { type: 'json' };
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 
 describe('AVG', () => {
