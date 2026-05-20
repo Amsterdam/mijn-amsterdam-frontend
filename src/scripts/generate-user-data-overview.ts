@@ -30,52 +30,52 @@
  */
 
 /* eslint-disable */
-import '../src/server/helpers/load-env.ts';
+import '../server/helpers/load-env.ts';
 
 import * as XLSX from 'xlsx';
 import * as fs from 'node:fs';
-import { defaultDateFormat } from '../src/universal/helpers/date.ts';
-import { getFullAddress } from '../src/universal/helpers/brp.ts';
-import { testAccountDataDigid } from '../src/universal/config/auth.development.ts';
+import { defaultDateFormat } from '../universal/helpers/date.ts';
+import { getFullAddress } from '../universal/helpers/brp.ts';
+import { testAccountDataDigid } from '../universal/config/auth.development.ts';
 
 import { differenceInYears, parseISO } from 'date-fns';
 
-import type { ServiceResults } from '../src/server/services/content-tips/tip-types.ts';
-import { IS_PRODUCTION } from '../src/universal/config/env.ts';
-import type { MyNotification } from '../src/universal/types/App.types.ts';
+import type { ServiceResults } from '../server/services/content-tips/tip-types.ts';
+import { IS_PRODUCTION } from '../universal/config/env.ts';
+import type { MyNotification } from '../universal/types/App.types.ts';
 import type {
   Adres,
   Kind,
   Persoon,
   BrpFrontend,
-} from '../src/server/services/brp/brp-types.ts';
+} from '../server/services/brp/brp-types.ts';
 
-import { themaConfig as themaInkomen } from '../src/client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
-import { themaConfig as themaProfiles } from '../src/client/pages/Thema/Profile/Profile-thema-config.ts';
-import { themaConfig as themaZorg } from '../src/client/pages/Thema/Zorg/Zorg-thema-config.ts';
-import { themaConfig as themaAfval } from '../src/client/pages/Thema/Afval/Afval-thema-config.ts';
-import { themaConfig as themaVergunningen } from '../src/client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
-import { themaConfig as themaErfpacht } from '../src/client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
-import { themaConfig as themaBezwaren } from '../src/client/pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
-import { themaConfig as themaHoreca } from '../src/client/pages/Thema/Horeca/Horeca-thema-config.ts';
-import { themaConfig as themaToeristischeVerhuur } from '../src/client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
-import { themaConfig as themaAVG } from '../src/client/pages/Thema/AVG/AVG-thema-config.ts';
+import { themaConfig as themaInkomen } from '../client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
+import { themaConfig as themaProfiles } from '../client/pages/Thema/Profile/Profile-thema-config.ts';
+import { themaConfig as themaZorg } from '../client/pages/Thema/Zorg/Zorg-thema-config.ts';
+import { themaConfig as themaAfval } from '../client/pages/Thema/Afval/Afval-thema-config.ts';
+import { themaConfig as themaVergunningen } from '../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
+import { themaConfig as themaErfpacht } from '../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
+import { themaConfig as themaBezwaren } from '../client/pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
+import { themaConfig as themaHoreca } from '../client/pages/Thema/Horeca/Horeca-thema-config.ts';
+import { themaConfig as themaToeristischeVerhuur } from '../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import { themaConfig as themaAVG } from '../client/pages/Thema/AVG/AVG-thema-config.ts';
 import {
   themaId as themaIdSvwi,
   themaTitle as themaTitleSvwi,
-} from '../src/client/pages/Thema/Svwi/Svwi-thema-config.ts';
-import { themaConfig as themaKlachten } from '../src/client/pages/Thema/Klachten/Klachten-thema-config.ts';
-import { themaConfig as themaKrefia } from '../src/client/pages/Thema/Krefia/Krefia-thema-config.ts';
-import { themaConfig as themaAfis } from '../src/client/pages/Thema/Afis/Afis-thema-config.ts';
-import { themaConfig as themaOvertredingen } from '../src/client/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
-import { themaConfig as themaVaren } from '../src/client/pages/Thema/Varen/Varen-thema-config.ts';
-import { themaConfig as themaBodem } from '../src/client/pages/Thema/Bodem/Bodem-thema-config.ts';
-import { themaConfig as themaHLI } from '../src/client/pages/Thema/HLI/HLI-thema-config.ts';
-import { themaConfig as themaJeugd } from '../src/client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
-import { themaConfig as themaParkeren } from '../src/client/pages/Thema/Parkeren/Parkeren-thema-config.ts';
-import { themaConfig as themaBelastingen } from '../src/client/pages/Thema/Belastingen/Belastingen-thema-config.ts';
-import { themaConfig as themaMilieuzone } from '../src/client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
-import { themaConfig as themaSubsidies } from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
+} from '../client/pages/Thema/Svwi/Svwi-thema-config.ts';
+import { themaConfig as themaKlachten } from '../client/pages/Thema/Klachten/Klachten-thema-config.ts';
+import { themaConfig as themaKrefia } from '../client/pages/Thema/Krefia/Krefia-thema-config.ts';
+import { themaConfig as themaAfis } from '../client/pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig as themaOvertredingen } from '../client/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
+import { themaConfig as themaVaren } from '../client/pages/Thema/Varen/Varen-thema-config.ts';
+import { themaConfig as themaBodem } from '../client/pages/Thema/Bodem/Bodem-thema-config.ts';
+import { themaConfig as themaHLI } from '../client/pages/Thema/HLI/HLI-thema-config.ts';
+import { themaConfig as themaJeugd } from '../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
+import { themaConfig as themaParkeren } from '../client/pages/Thema/Parkeren/Parkeren-thema-config.ts';
+import { themaConfig as themaBelastingen } from '../client/pages/Thema/Belastingen/Belastingen-thema-config.ts';
+import { themaConfig as themaMilieuzone } from '../client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
+import { themaConfig as themaSubsidies } from '../client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
 
 function cleanTestUsername(username: string): string {
   return username.trim().replace('Provincie-', '');
@@ -682,7 +682,9 @@ function sheetThemas(resultsByUser: ResultsByUser): SheetData {
   };
 }
 
-function getAvailableUserThemas(serviceResults: ServiceResults) {
+function getAvailableUserThemas(
+  serviceResults: ServiceResults
+): Record<string, string> {
   const availableThemas = Object.entries(serviceResults)
     .filter(([, sResult]) => {
       if (
@@ -693,8 +695,9 @@ function getAvailableUserThemas(serviceResults: ServiceResults) {
       ) {
         return false;
       }
-      if (sResult.content.isKnown) {
-        return true;
+      const KEY = 'isKnown';
+      if (KEY in sResult.content) {
+        return sResult.content[KEY];
       }
       const entries = Object.entries(sResult.content);
       for (const [, val] of entries) {
@@ -943,3 +946,7 @@ function sheetThemaContent(resultsByUser: ResultsByUser): SheetData {
     rowInfo,
   };
 }
+
+export const forTesting = {
+  getAvailableUserThemas,
+};
