@@ -41,10 +41,10 @@ import {
   type TestUserAccount,
   type TestUserData,
   testAccountDataDigid,
-  type TestUserAccountRequiredProperties,
+  type OptionalTestUserAccountProperties,
 } from '../universal/config/auth.development.ts';
 
-import { differenceInYears, isAfter, parseISO } from 'date-fns';
+import { differenceInYears, parseISO } from 'date-fns';
 
 import type { ServiceResults } from '../server/services/content-tips/tip-types.ts';
 import { IS_PRODUCTION } from '../universal/config/env.ts';
@@ -234,12 +234,14 @@ function createDigidTestUserTable(resultsByUser: ResultsByUser): TestUserData {
 function getBRPBasedProperties(
   username: string,
   serviceResults: ServiceResults
-): Omit<TestUserAccount, keyof TestUserAccountRequiredProperties> {
+): {
+  profileId: TestUserAccount['profileId'];
+} & OptionalTestUserAccountProperties {
   const brpContent = serviceResults.BRP?.content as AppState['BRP']['content'];
 
   if (!brpContent) {
     throw new Error(
-      `BRP Content not found for '${username}', and we need a profileID to continue`
+      `BRP Content not found for '${username}', which has a required profileId property`
     );
   }
 

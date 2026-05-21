@@ -56,15 +56,17 @@ type TableHeader = {
   key: string;
 };
 
-export type TestUserAccountRequiredProperties = {
-  username: string;
-  profileId: string;
-};
-
 /** Fields of the table data, the explicit fields are not only used for -
  * informational purposes. */
-export type TestUserAccount = TestUserAccountRequiredProperties &
-  Record<string, string | boolean>;
+export type TestUserAccount = {
+  username: string;
+  profileId: string;
+} & OptionalTestUserAccountProperties;
+
+export type OptionalTestUserAccountProperties = Record<
+  string,
+  string | boolean
+>;
 
 function getTestAccountData(envKey: string): TestUserData | null {
   if (IS_PRODUCTION) {
