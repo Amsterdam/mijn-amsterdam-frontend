@@ -1,7 +1,7 @@
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 
-export const patroonCRoutes: MockRouteDefinition[] = [
+export const routes: MockRouteDefinition[] = [
   {
     id: 'get-patroon-c',
     url: `${MOCK_BASE_PATH}/sso/portaal`,

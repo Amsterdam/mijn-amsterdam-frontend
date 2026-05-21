@@ -8,7 +8,7 @@ function isCommercialUser(cacheKeySupplement?: string): boolean {
   return cacheKeySupplement === 'commercial';
 }
 
-export const kvkRoutes: MockRouteDefinition[] = [
+export const routes: MockRouteDefinition[] = [
   {
     id: 'get-kvk-maatschappelijkeactiviteiten',
     url: `${MOCK_BASE_PATH}/hr_kvk/maatschappelijkeactiviteiten`,

@@ -16,7 +16,7 @@ function hasApiUserHeader(
   return 'x-cache-key-supplement' in headers;
 }
 
-export const zorgnedRoutes: MockRouteDefinition[] = [
+export const routes: MockRouteDefinition[] = [
   {
     id: 'post-zorgned-aanvragen',
     url: `${MOCK_BASE_PATH}/zorgned/aanvragen`,

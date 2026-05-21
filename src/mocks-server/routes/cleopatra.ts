@@ -2,7 +2,7 @@ import CLEOPATRA_RESPONSE from '../fixtures/cleopatra.json' with { type: 'json' 
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 
-export const cleopatraRoutes: MockRouteDefinition[] = [
+export const routes: MockRouteDefinition[] = [
   {
     id: 'post-cleopatra',
     url: `${MOCK_BASE_PATH}/milieuzone`,

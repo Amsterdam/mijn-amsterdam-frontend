@@ -43,7 +43,7 @@ function queryValue(value: unknown): string {
   return typeof value === 'string' ? value : '';
 }
 
-export const afisRoutes: MockRouteDefinition[] = [
+export const routes: MockRouteDefinition[] = [
   {
     id: 'post-afis-auth-token',
     url: `${BASE_URL}/OAuthServer`,

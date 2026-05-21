@@ -6,7 +6,7 @@ import BRP_VERBLIJFPLAATSHISTORIE from '../fixtures/brp/verblijfplaatshistorie.j
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 
-export const brpRoutes: MockRouteDefinition[] = [
+export const routes: MockRouteDefinition[] = [
   {
     id: 'post-brp-persoonsgegevens',
     url: `${MOCK_BASE_PATH}/benk-brp/personen`,

@@ -3,7 +3,7 @@ import NORMAL_RESPONSE from '../fixtures/registraties-toeristische-verhuur.json'
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 
-export const toeristischeVerhuurRegistratiesRoutes: MockRouteDefinition[] = [
+export const routes: MockRouteDefinition[] = [
   {
     id: 'post-toeristische-verhuur-with-bsn',
     url: `${MOCK_BASE_PATH}/vakantieverhuur/bsn`,

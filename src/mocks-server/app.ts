@@ -4,7 +4,7 @@ import type { NextFunction, Request, Response } from 'express';
 
 import { logger } from './logger.ts';
 import { registerRoutes } from './route-registry.ts';
-import { routes } from './routes/index.ts';
+import { loadRoutes } from './routes/index.ts';
 import { MOCK_PORT } from './settings.ts';
 
 const app = express();
@@ -32,6 +32,8 @@ app.use((req: Request, _res: Response, next: NextFunction) => {
   );
   next();
 });
+
+const routes = await loadRoutes();
 
 registerRoutes(app, routes);
 

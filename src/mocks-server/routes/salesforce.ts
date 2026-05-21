@@ -3,7 +3,7 @@ import CONTACTMOMENTEN_RESPONSE from '../fixtures/salesforce-contactmomenten.jso
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 
-export const salesforceRoutes: MockRouteDefinition[] = [
+export const routes: MockRouteDefinition[] = [
   {
     id: 'get-salesforce-contactmomenten',
     url: `${MOCK_BASE_PATH}/salesforce/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/`,

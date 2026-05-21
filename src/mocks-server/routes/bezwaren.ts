@@ -5,7 +5,7 @@ import { sendMockDocument } from '../helpers/send-mock-document.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 
-export const bezwarenRoutes: MockRouteDefinition[] = [
+export const routes: MockRouteDefinition[] = [
   {
     id: 'post-bezwaren-list',
     url: `${MOCK_BASE_PATH}/bezwaren/zgw/v1/zaken/_zoek`,

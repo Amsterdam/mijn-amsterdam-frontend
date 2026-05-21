@@ -57,7 +57,7 @@ function getZaakByKey(key: string): Zaak | undefined {
   return zaken.content.find((zaak) => zaak.key === key);
 }
 
-export const decosRoutes: MockRouteDefinition[] = [
+export const routes: MockRouteDefinition[] = [
   {
     id: 'post-decos-address-books',
     url: `${MOCK_BASE_PATH}/decos/search/books`,

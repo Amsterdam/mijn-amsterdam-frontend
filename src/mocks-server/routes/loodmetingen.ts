@@ -3,7 +3,7 @@ import LOODMETINGEN_RESPONSE from '../fixtures/loodmetingen.json' with { type: '
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 
-export const loodmetingenRoutes: MockRouteDefinition[] = [
+export const routes: MockRouteDefinition[] = [
   {
     id: 'post-loodmetingen-details',
     url: `${MOCK_BASE_PATH}/loodmetingen/be_getrequestdetails`,

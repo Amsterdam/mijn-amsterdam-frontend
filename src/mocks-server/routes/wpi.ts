@@ -5,7 +5,7 @@ import { sendMockDocument } from '../helpers/send-mock-document.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 
-export const wpiRoutes: MockRouteDefinition[] = [
+export const routes: MockRouteDefinition[] = [
   {
     id: 'get-wpi-aanvragen',
     url: `${MOCK_BASE_PATH}/wpi-koppel-api/wpi/uitkering/aanvragen`,

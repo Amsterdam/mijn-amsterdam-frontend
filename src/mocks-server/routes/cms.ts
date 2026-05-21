@@ -9,7 +9,7 @@ const ALLE_RESPONSE = loadFixtureAndReplaceBaseUrl(
   'cms-maintenance-notifications-alle.json'
 );
 
-export const cmsRoutes: MockRouteDefinition[] = [
+export const routes: MockRouteDefinition[] = [
   {
     id: 'get-cms-maintainance-notifications-alle',
     url: `${MOCK_BASE_PATH}/cms/storingsmeldingen/alle-meldingen-mijn-amsterdam`,

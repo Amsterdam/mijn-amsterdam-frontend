@@ -127,7 +127,7 @@ const subPassen = (pashoudersResponse.sub_pashouders as SubPashouder[]).flatMap(
 );
 const allPasses = (pashoudersResponse.passen as Stadspas[]).concat(subPassen);
 
-export const gpassRoutes: MockRouteDefinition[] = [
+export const routes: MockRouteDefinition[] = [
   {
     id: 'get-gpass-pashouders',
     url: `${MOCK_BASE_PATH}/gpass/rest/sales/v1/pashouder`,

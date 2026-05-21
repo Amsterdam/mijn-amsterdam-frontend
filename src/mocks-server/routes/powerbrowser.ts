@@ -55,7 +55,7 @@ const PB_SEARCH_DOCUMENTS_PROCESSED = {
   }),
 };
 
-export const powerbrowserRoutes: MockRouteDefinition[] = [
+export const routes: MockRouteDefinition[] = [
   {
     id: 'post-powerbrowser-token',
     url: `${MOCK_BASE_PATH}/powerbrowser/Token`,

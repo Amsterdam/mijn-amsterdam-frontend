@@ -49,7 +49,7 @@ function getNextIban(): { iban: string; bankCode: string } {
   return { iban: iban.iban, bankCode: iban.bankCode };
 }
 
-export const pomRoutes: MockRouteDefinition[] = [
+export const routes: MockRouteDefinition[] = [
   {
     id: 'get-pom-mandate-page',
     url: getPomPortaalUrlMock(MOCK_BASE_PATH),

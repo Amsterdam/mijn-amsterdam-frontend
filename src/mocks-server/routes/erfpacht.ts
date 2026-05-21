@@ -4,7 +4,7 @@ import ERFPACHT_V2_ERFPACHTER from '../fixtures/erfpacht-v2-erfpachter.json' wit
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 
-export const erfpachtRoutes: MockRouteDefinition[] = [
+export const routes: MockRouteDefinition[] = [
   {
     id: 'get-erfpacht-v2-erfpachter',
     url: `${MOCK_BASE_PATH}/erfpachtv2/vernise/api/erfpachter`,

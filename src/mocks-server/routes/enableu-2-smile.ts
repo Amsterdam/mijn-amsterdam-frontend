@@ -25,7 +25,7 @@ function firstFieldValue(
   return value;
 }
 
-export const enableu2SmileRoutes: MockRouteDefinition[] = [
+export const routes: MockRouteDefinition[] = [
   {
     id: 'post-enableu2smile-klachten',
     url: `${MOCK_BASE_PATH}/smile`,

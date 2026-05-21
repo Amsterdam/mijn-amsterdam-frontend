@@ -19,7 +19,24 @@ function getDefaultVariant(route: MockRouteDefinition): SupportedVariant {
   );
 }
 
+function summarizeVariantOptions(
+  variant: SupportedVariant
+): Record<string, unknown> {
+  if (variant.type === 'json') {
+    return {
+      status: variant.options.status,
+      delayMs: variant.options.delayMs ?? 0,
+    };
+  }
+
+  return {
+    hasMiddleware: true,
+    delayMs: variant.options.delayMs ?? 0,
+  };
+}
+
 function executeVariant(
+  route: MockRouteDefinition,
   variant: SupportedVariant,
   req: Request,
   res: Response,
@@ -34,8 +51,22 @@ function executeVariant(
     variant.options.middleware(req, res, next, core);
   };
 
-  const delayMs = variant.options.delayMs;
-  if (!delayMs || delayMs <= 0) {
+  const delayMs = variant.options.delayMs ?? 0;
+  const delayed = delayMs > 0;
+
+  logger.info(
+    {
+      routeId: route.id,
+      variantId: variant.id,
+      method: req.method,
+      url: req.originalUrl,
+      delayed,
+      delayMs,
+    },
+    'executing mock route response'
+  );
+
+  if (!delayed) {
     executeResponse();
     return;
   }
@@ -54,13 +85,25 @@ export function registerRoutes(
   for (const route of routes) {
     const method = toExpressMethod(route.method);
     const variant = getDefaultVariant(route);
+    const delayMs = variant.options.delayMs ?? 0;
 
-    logger.info(`${route.method} ${route.url} (${route.id}:${variant.id})`);
+    logger.info(
+      {
+        routeId: route.id,
+        method: route.method,
+        url: route.url,
+        variantId: variant.id,
+        variantType: variant.type,
+        delayed: delayMs > 0,
+        options: summarizeVariantOptions(variant),
+      },
+      'registering mock route variant'
+    );
 
     app[method](
       route.url,
       (req: Request, res: Response, next: NextFunction) => {
-        executeVariant(variant, req, res, next);
+        executeVariant(route, variant, req, res, next);
       }
     );
   }
