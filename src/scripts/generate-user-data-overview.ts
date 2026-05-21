@@ -11,9 +11,10 @@
  *   {account_name}={bsn},{account_name}={bsn},...
  * Put that in your .env.local file
  *
- * Also fill BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL with
+ * To connect to our test environment fill BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL with
  * `https://{azure_default_domain}/api/v1` where azure_default_domain is found -
- * on our test environment Appservice in Azure Portal.
+ * on our test Appservice in Azure Portal.
+ * Or keep the default that connects to our local server. Start up our local environment in that case.
  *
  * How to use
  * ==========
