@@ -36,9 +36,9 @@ exports[`Renders afspraak data > Large screen 1`] = `
       class="ams-paragraph"
     >
       <time
-        datetime="2020-01-01T12:00:00Z"
+        datetime="2020-01-17T17:50:00Z"
       >
-        Datum, Datum, 01-01-2020 17:50
+        Datum, maandag 01 januari 2025 van 17:50 tot 18:20
       </time>
     </p>
     <button
@@ -115,9 +115,9 @@ exports[`Renders afspraak data > Small screen 1`] = `
       class="ams-paragraph"
     >
       <time
-        datetime="2020-01-01T12:00:00Z"
+        datetime="2020-01-17T17:50:00Z"
       >
-        Datum, Datum, 01-01-2020 17:50
+        Datum, maandag 01 januari 2025 van 17:50 tot 18:20
       </time>
     </p>
     <button
