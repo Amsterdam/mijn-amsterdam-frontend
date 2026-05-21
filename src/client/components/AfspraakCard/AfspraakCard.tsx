@@ -29,7 +29,7 @@ export function AfspraakCard({
       {compact && (
         <>
           <br />
-          Locatie, {locatie}
+          Locatie {locatie}
         </>
       )}
     </Paragraph>
