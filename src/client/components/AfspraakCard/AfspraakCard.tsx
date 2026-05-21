@@ -37,18 +37,38 @@ export function AfspraakCard({
 }: AfspraakCardProps) {
   const locatie = `Stadsloket ${afspraak.location.name}, ${afspraak.location.street}`;
   const details = (
-    <Paragraph className="ams-mb-s">
+    <Paragraph>
       <time dateTime={afspraak.dateStart}>
         Datum, {afspraak.displayDateTime}
       </time>
-      {compact ? (
+      {compact && (
         <>
           <br />
           Locatie, {locatie}
         </>
-      ) : (
+      )}
+    </Paragraph>
+  );
+
+  return (
+    <article className={classNames(styles.AfspraakCard, className)}>
+      <Icon
+        className={styles.Icon}
+        svg={PersonAtDeskIcon}
+        hidden
+        size="heading-2"
+      />
+      <Heading level={3} size="level-3">
+        {afspraak.subject}
+      </Heading>
+      {details}
+      {compact && (
+        <MaRouterLink href={afspraak.link.to}>
+          {afspraak.link.title}
+        </MaRouterLink>
+      )}
+      {!compact && (
         <>
-          <br />
           <LocationModal
             address={afspraak.location.street ?? afspraak.location.name}
             buttonVariant="ma-link-like"
@@ -91,26 +111,6 @@ export function AfspraakCard({
             </>
           </ModalAndButton>
         </>
-      )}
-    </Paragraph>
-  );
-
-  return (
-    <article className={classNames(styles.AfspraakCard, className)}>
-      <Icon
-        className={styles.Icon}
-        svg={PersonAtDeskIcon}
-        hidden
-        size="heading-2"
-      />
-      <Heading level={3} size="level-3">
-        {afspraak.subject}
-      </Heading>
-      {details}
-      {compact && (
-        <MaRouterLink href={afspraak.link.to}>
-          {afspraak.link.title}
-        </MaRouterLink>
       )}
     </article>
   );
