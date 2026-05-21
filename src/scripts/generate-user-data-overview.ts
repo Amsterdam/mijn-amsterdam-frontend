@@ -41,6 +41,7 @@ import {
   type TestUserAccount,
   type TestUserData,
   testAccountDataDigid,
+  type TestUserAccountRequiredProperties,
 } from '../universal/config/auth.development.ts';
 
 import { differenceInYears, isAfter, parseISO } from 'date-fns';
@@ -211,29 +212,52 @@ function createDigidTestUserTable(resultsByUser: ResultsByUser): TestUserData {
     { displayName: 'Heeft kinderen', key: 'hasChildren' },
     { displayName: 'Partner', key: 'partnerName' },
     { displayName: 'Ouder dan 18', key: 'isOlderThan18' },
+    { displayName: 'Heeft ouders', key: 'hasParents' },
   ];
 
   const accounts: TestUserAccount[] = Object.entries(resultsByUser).map(
     ([username, serviceResults]) => {
-      const brpContent = serviceResults.BRP
-        ?.content as AppState['BRP']['content'];
-      const profileId = brpContent?.persoon?.bsn ?? '';
-      const geboortedatum = brpContent?.persoon?.geboortedatum;
-
+      const brpBasedProperties = getBRPBasedProperties(
+        username,
+        serviceResults
+      );
       return {
         username,
-        profileId,
-        mokum: isMokum(brpContent),
-        hasChildren: (brpContent?.kinderen.length ?? 0) > 0,
-        partnerName: brpContent?.verbintenis?.persoon.voornamen ?? '',
-        isOlderThan18: geboortedatum
-          ? differenceInYears(new Date(), geboortedatum) >= 18
-          : 'onbekend',
+        ...brpBasedProperties,
       };
     }
   );
 
   return { tableHeaders, accounts };
+}
+
+function getBRPBasedProperties(
+  username: string,
+  serviceResults: ServiceResults
+): Omit<TestUserAccount, keyof TestUserAccountRequiredProperties> {
+  const brpContent = serviceResults.BRP?.content as AppState['BRP']['content'];
+
+  if (!brpContent) {
+    throw new Error(
+      `BRP Content not found for '${username}', and we need a profileID to continue`
+    );
+  }
+
+  const profileId = brpContent.persoon?.bsn ?? '';
+  const geboortedatum = brpContent.persoon?.geboortedatum;
+
+  const properties = {
+    profileId,
+    mokum: isMokum(brpContent),
+    hasChildren: (brpContent.kinderen.length ?? 0) > 0,
+    partnerName: brpContent.verbintenis?.persoon.voornamen ?? '',
+    isOlderThan18: geboortedatum
+      ? differenceInYears(new Date(), geboortedatum) >= 18
+      : 'onbekend',
+    hasParents: brpContent.ouders.length > 0,
+  };
+
+  return properties;
 }
 
 function writeTestUserLoginTable(testUserLoginTable: TestUserData): void {

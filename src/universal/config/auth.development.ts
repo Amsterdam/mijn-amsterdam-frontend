@@ -56,12 +56,15 @@ type TableHeader = {
   key: string;
 };
 
-/** Fields of the table data, the explicit fields are not only used for -
- * informational purposes. */
-export type TestUserAccount = {
+export type TestUserAccountRequiredProperties = {
   username: string;
   profileId: string;
-} & Record<string, string | boolean>;
+};
+
+/** Fields of the table data, the explicit fields are not only used for -
+ * informational purposes. */
+export type TestUserAccount = TestUserAccountRequiredProperties &
+  Record<string, string | boolean>;
 
 function getTestAccountData(envKey: string): TestUserData | null {
   if (IS_PRODUCTION) {
