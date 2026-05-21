@@ -9,7 +9,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'POST',
     variants: [
       {
-        id: 'standard',
         type: 'json',
         options: {
           status: 200,

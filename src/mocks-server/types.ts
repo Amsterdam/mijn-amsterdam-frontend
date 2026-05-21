@@ -21,7 +21,6 @@ export interface MockServerCore {
 }
 
 export interface JsonVariant {
-  id: string;
   type: 'json';
   options: {
     delayMs?: number;
@@ -31,7 +30,6 @@ export interface JsonVariant {
 }
 
 export interface MiddlewareVariant {
-  id: string;
   type: 'middleware';
   options: {
     delayMs?: number;

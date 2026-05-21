@@ -37,7 +37,6 @@ describe('loadRoutes', () => {
             method: 'GET',
             variants: [
               {
-                id: 'standard',
                 type: 'json',
                 options: {
                   status: 200,
@@ -60,7 +59,6 @@ describe('loadRoutes', () => {
             method: 'POST',
             variants: [
               {
-                id: 'standard',
                 type: 'json',
                 options: {
                   status: 201,

@@ -8,7 +8,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'GET',
     variants: [
       {
-        id: 'standard',
         type: 'middleware',
         options: {
           middleware: (req, res) => {
@@ -29,7 +28,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'GET',
     variants: [
       {
-        id: 'standard',
         type: 'middleware',
         options: {
           middleware: (req, res) => {

@@ -32,7 +32,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'POST',
     variants: [
       {
-        id: 'standard',
         type: 'middleware',
         options: {
           middleware: async (req, res, _next, core) => {

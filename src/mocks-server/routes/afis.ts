@@ -50,7 +50,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'POST',
     variants: [
       {
-        id: 'standard',
         type: 'json',
         options: {
           status: 200,
@@ -69,7 +68,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'POST',
     variants: [
       {
-        id: 'standard',
         type: 'json',
         options: {
           status: 200,
@@ -90,7 +88,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'POST',
     variants: [
       {
-        id: 'standard',
         type: 'json',
         options: {
           status: 200,
@@ -112,7 +109,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'GET',
     variants: [
       {
-        id: 'standard',
         type: 'json',
         options: {
           status: 200,
@@ -143,7 +139,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'GET',
     variants: [
       {
-        id: 'standard',
         type: 'json',
         options: {
           status: 200,
@@ -180,7 +175,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'GET',
     variants: [
       {
-        id: 'standard',
         type: 'json',
         options: {
           status: 200,
@@ -208,7 +202,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'GET',
     variants: [
       {
-        id: 'standard',
         type: 'json',
         options: {
           status: 200,
@@ -236,7 +229,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'GET',
     variants: [
       {
-        id: 'standard',
         type: 'middleware',
         options: {
           middleware: (req, res) => {
@@ -295,7 +287,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'POST',
     variants: [
       {
-        id: 'standard',
         type: 'json',
         options: {
           status: 200,
@@ -310,7 +301,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'GET',
     variants: [
       {
-        id: 'standard',
         type: 'json',
         options: {
           status: 200,
@@ -325,7 +315,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'GET',
     variants: [
       {
-        id: 'standard',
         type: 'middleware',
         options: {
           middleware: (_req, res) => {
@@ -343,7 +332,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'GET',
     variants: [
       {
-        id: 'standard',
         type: 'middleware',
         options: {
           middleware: (_req, res) => {
@@ -359,7 +347,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'POST',
     variants: [
       {
-        id: 'standard',
         type: 'middleware',
         options: {
           middleware: (req, res) => {
@@ -402,7 +389,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'GET',
     variants: [
       {
-        id: 'standard',
         type: 'middleware',
         options: {
           middleware: (_req, res) => {
@@ -442,7 +428,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'POST',
     variants: [
       {
-        id: 'standard',
         type: 'middleware',
         options: {
           middleware: (_req, res) => {
@@ -458,7 +443,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'PUT',
     variants: [
       {
-        id: 'standard',
         type: 'middleware',
         options: {
           middleware: (req, res) => {

@@ -10,7 +10,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'GET',
     variants: [
       {
-        id: 'standard',
         type: 'json',
         options: {
           status: 200,
@@ -25,7 +24,6 @@ export const routes: MockRouteDefinition[] = [
     method: 'GET',
     variants: [
       {
-        id: 'standard',
         type: 'json',
         options: {
           status: 200,

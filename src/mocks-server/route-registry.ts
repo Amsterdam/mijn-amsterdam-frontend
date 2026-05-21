@@ -12,13 +12,6 @@ const core: MockServerCore = {
   logger,
 };
 
-function getDefaultVariant(route: MockRouteDefinition): SupportedVariant {
-  return (
-    route.variants.find((variant) => variant.id === 'standard') ??
-    route.variants[0]
-  );
-}
-
 function summarizeVariantOptions(
   variant: SupportedVariant
 ): Record<string, unknown> {
@@ -57,7 +50,6 @@ function executeVariant(
   logger.info(
     {
       routeId: route.id,
-      variantId: variant.id,
       method: req.method,
       url: req.originalUrl,
       delayed,
@@ -84,7 +76,7 @@ export function registerRoutes(
 ): void {
   for (const route of routes) {
     const method = toExpressMethod(route.method);
-    const variant = getDefaultVariant(route);
+    const variant = route.variants[0];
     const delayMs = variant.options.delayMs ?? 0;
 
     logger.info(
@@ -92,7 +84,6 @@ export function registerRoutes(
         routeId: route.id,
         method: route.method,
         url: route.url,
-        variantId: variant.id,
         variantType: variant.type,
         delayed: delayMs > 0,
         options: summarizeVariantOptions(variant),
