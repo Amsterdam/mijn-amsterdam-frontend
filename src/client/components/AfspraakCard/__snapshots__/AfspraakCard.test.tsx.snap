@@ -99,7 +99,7 @@ exports[`Renders afspraak data > Regular variant 1`] = `
       class="ams-link _InlineButton_10c0a4 _LocationModalLink_fa327b _LocationLink_0a51e6"
       type="button"
     >
-      Locatie, Stadsloket Centrum, Amstel 1
+      Locatie Stadsloket Centrum, Amstel 1
     </button>
     <br />
     <a
