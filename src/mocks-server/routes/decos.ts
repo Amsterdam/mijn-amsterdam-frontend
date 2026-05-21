@@ -62,199 +62,159 @@ export const routes: MockRouteDefinition[] = [
     id: 'post-decos-address-books',
     url: `${MOCK_BASE_PATH}/decos/search/books`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: ADDRESS_BOOKS,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: ADDRESS_BOOKS,
+    },
   },
   {
     id: 'get-decos-zaak-detail',
     url: `${MOCK_BASE_PATH}/decos/items/:key`,
     method: 'GET',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (req, res) => {
-            return res.send(getZaakByKey(req.params.key) ?? null);
-          },
-        },
+    handler: {
+      type: 'middleware',
+      middleware: (req, res) => {
+        return res.send(getZaakByKey(req.params.key) ?? null);
       },
-    ],
+    },
   },
   {
     id: 'get-decos-zaken',
     url: `${MOCK_BASE_PATH}/decos/items/:key/folders`,
     method: 'GET',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: ZAKEN,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: ZAKEN,
+    },
   },
   {
     id: 'get-decos-zaak-documents',
     url: `${MOCK_BASE_PATH}/decos/items/:key/documents`,
     method: 'GET',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: DOCUMENTS_LIST,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: DOCUMENTS_LIST,
+    },
   },
   {
     id: 'get-decos-zaak-workflows',
     url: `${MOCK_BASE_PATH}/decos/items/:key/workflows`,
     method: 'GET',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (req, res) => {
-            if (zakenKeysStatusInBehandeling.includes(req.params.key)) {
-              workflowsData.content[0].key = req.params.key;
-              return res.send(WORKFLOWS);
-            }
-            return res.send({ content: [] });
-          },
-        },
+    handler: {
+      type: 'middleware',
+      middleware: (req, res) => {
+        if (zakenKeysStatusInBehandeling.includes(req.params.key)) {
+          workflowsData.content[0].key = req.params.key;
+          return res.send(WORKFLOWS);
+        }
+        return res.send({ content: [] });
       },
-    ],
+    },
   },
   {
     id: 'get-decos-zaak-workflowdetails',
     url: `${MOCK_BASE_PATH}/decos/items/:key/workflowlinkinstances`,
     method: 'GET',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (req, res) => {
-            if (zakenKeysStatusInBehandeling.includes(req.params.key)) {
-              const queryParams = new URLSearchParams(
-                req.query as Record<string, string>
-              );
-              const filterValue = queryParams.get('filter') ?? '';
-              const stepTitleMatch = filterValue.match(/'(.*?)'/g);
+    handler: {
+      type: 'middleware',
+      middleware: (req, res) => {
+        if (zakenKeysStatusInBehandeling.includes(req.params.key)) {
+          const queryParams = new URLSearchParams(
+            req.query as Record<string, string>
+          );
+          const filterValue = queryParams.get('filter') ?? '';
+          const stepTitleMatch = filterValue.match(/'(.*?)'/g);
 
-              if (stepTitleMatch?.[0]) {
-                workflowInstancesData.content[1].fields.text7 =
-                  stepTitleMatch[0].replaceAll("'", '').trim();
-              }
+          if (stepTitleMatch?.[0]) {
+            workflowInstancesData.content[1].fields.text7 = stepTitleMatch[0]
+              .replaceAll("'", '')
+              .trim();
+          }
 
-              const dateSource = getZaakByKey(req.params.key)?.fields
-                .document_date;
-              if (dateSource) {
-                const dateRequest = new Date(dateSource);
-                dateRequest.setDate(dateRequest.getDate() + 4);
-                workflowInstancesData.content[1].fields.date1 =
-                  dateRequest.toISOString();
-              }
+          const dateSource = getZaakByKey(req.params.key)?.fields.document_date;
+          if (dateSource) {
+            const dateRequest = new Date(dateSource);
+            dateRequest.setDate(dateRequest.getDate() + 4);
+            workflowInstancesData.content[1].fields.date1 =
+              dateRequest.toISOString();
+          }
 
-              return res.send(WORKFLOW_INSTANCES);
-            }
-            return res.send({ content: [] });
-          },
-        },
+          return res.send(WORKFLOW_INSTANCES);
+        }
+        return res.send({ content: [] });
       },
-    ],
+    },
   },
   {
     id: 'get-decos-zaak-termijnens',
     url: `${MOCK_BASE_PATH}/decos/items/:key/termijnens`,
     method: 'GET',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (req, res) => {
-            if (zakenKeysStatusInBehandeling.includes(req.params.key)) {
-              termijnensData.content[0].key = req.params.key;
-              return res.send(TERMIJNENS);
-            }
-            return res.send({ content: [] });
-          },
-        },
+    handler: {
+      type: 'middleware',
+      middleware: (req, res) => {
+        if (zakenKeysStatusInBehandeling.includes(req.params.key)) {
+          termijnensData.content[0].key = req.params.key;
+          return res.send(TERMIJNENS);
+        }
+        return res.send({ content: [] });
       },
-    ],
+    },
   },
   {
     id: 'get-decos-zaak-varens',
     url: `${MOCK_BASE_PATH}/decos/items/:key/varens`,
     method: 'GET',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (req, res, _next, core) => {
-            if (
-              addressBooksData.itemDataResultSet.content.some(
-                ({ key }) => key === req.params.key
-              )
-            ) {
-              core.logger.debug(`direct varens request for ${req.params.key}`);
-              return res.send({ content: varensData.content });
-            }
+    handler: {
+      type: 'middleware',
+      middleware: (req, res, _next, core) => {
+        if (
+          addressBooksData.itemDataResultSet.content.some(
+            ({ key }) => key === req.params.key
+          )
+        ) {
+          core.logger.debug(`direct varens request for ${req.params.key}`);
+          return res.send({ content: varensData.content });
+        }
 
-            const zaak = getZaakByKey(req.params.key);
-            const vergunningen = getVarensBelongingToZaak(zaak);
-            if (vergunningen) {
-              return res.send({ content: vergunningen });
-            }
-            return res.send({ content: [] });
-          },
-        },
+        const zaak = getZaakByKey(req.params.key);
+        const vergunningen = getVarensBelongingToZaak(zaak);
+        if (vergunningen) {
+          return res.send({ content: vergunningen });
+        }
+        return res.send({ content: [] });
       },
-    ],
+    },
   },
   {
     id: 'get-decos-document-blob',
     url: `${MOCK_BASE_PATH}/decos/items/:key/blob`,
     method: 'GET',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: {
-            content: [
-              {
-                fields: {
-                  bol10: true,
-                },
-              },
-            ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: {
+        content: [
+          {
+            fields: {
+              bol10: true,
+            },
           },
-        },
+        ],
       },
-    ],
+    },
   },
   {
     id: 'get-decos-document-download',
     url: `${MOCK_BASE_PATH}/decos/items/:key/content`,
     method: 'GET',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (_req, res) => {
-            sendMockDocument(res, 200);
-          },
-        },
+    handler: {
+      type: 'middleware',
+      middleware: (_req, res) => {
+        sendMockDocument(res, 200);
       },
-    ],
+    },
   },
 ];

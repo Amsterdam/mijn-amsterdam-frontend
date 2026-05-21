@@ -10,69 +10,53 @@ export const routes: MockRouteDefinition[] = [
     id: 'post-bezwaren-list',
     url: `${MOCK_BASE_PATH}/bezwaren/zgw/v1/zaken/_zoek`,
     method: 'POST',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (_req, res) => {
-            const bezwaren = BEZWAREN_LIST_RESPONSE.results;
+    handler: {
+      type: 'middleware',
+      middleware: (_req, res) => {
+        const bezwaren = BEZWAREN_LIST_RESPONSE.results;
 
-            return res.status(200).send({
-              ...BEZWAREN_LIST_RESPONSE,
-              results: Array.from({ length: 4 })
-                .flatMap(() => bezwaren)
-                .map((bezwaar, index) => ({
-                  ...bezwaar,
-                  uuid: `${bezwaar.uuid} -- ${index}`,
-                  identificatie: `${bezwaar.identificatie} -- ${index}`,
-                })),
-            });
-          },
-        },
+        return res.status(200).send({
+          ...BEZWAREN_LIST_RESPONSE,
+          results: Array.from({ length: 4 })
+            .flatMap(() => bezwaren)
+            .map((bezwaar, index) => ({
+              ...bezwaar,
+              uuid: `${bezwaar.uuid} -- ${index}`,
+              identificatie: `${bezwaar.identificatie} -- ${index}`,
+            })),
+        });
       },
-    ],
+    },
   },
   {
     id: 'get-bezwaren-documenten',
     url: `${MOCK_BASE_PATH}/bezwaren/zgw/v1/enkelvoudiginformatieobjecten`,
     method: 'GET',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: BEZWAREN_DOCUMENTEN_RESPONSE,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: BEZWAREN_DOCUMENTEN_RESPONSE,
+    },
   },
   {
     id: 'get-bezwaren-download-document',
     url: `${MOCK_BASE_PATH}/bezwaren/zgw/v1/enkelvoudiginformatieobjecten/:id/download`,
     method: 'GET',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (_req, res) => {
-            sendMockDocument(res, 200);
-          },
-        },
+    handler: {
+      type: 'middleware',
+      middleware: (_req, res) => {
+        sendMockDocument(res, 200);
       },
-    ],
+    },
   },
   {
     id: 'get-bezwaren-status',
     url: `${MOCK_BASE_PATH}/bezwaren/zgw/v1/statussen`,
     method: 'GET',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: BEZWAREN_STATUS_RESPONSE,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: BEZWAREN_STATUS_RESPONSE,
+    },
   },
 ];

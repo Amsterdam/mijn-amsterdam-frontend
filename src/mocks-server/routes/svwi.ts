@@ -7,14 +7,10 @@ export const routes: MockRouteDefinition[] = [
     id: 'get-svwi-tegel',
     url: `${MOCK_BASE_PATH}/svwi/autorisatie/tegel`,
     method: 'GET',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: SVWI_RESPONSE,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: SVWI_RESPONSE,
+    },
   },
 ];

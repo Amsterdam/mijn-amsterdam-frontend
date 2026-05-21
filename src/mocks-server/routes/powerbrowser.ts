@@ -60,140 +60,106 @@ export const routes: MockRouteDefinition[] = [
     id: 'post-powerbrowser-token',
     url: `${MOCK_BASE_PATH}/powerbrowser/Token`,
     method: 'POST',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (_req, res) => {
-            return res.status(200).send('xxxx-909090-yyyy');
-          },
-        },
+    handler: {
+      type: 'middleware',
+      middleware: (_req, res) => {
+        return res.status(200).send('xxxx-909090-yyyy');
       },
-    ],
+    },
   },
   {
     id: 'post-powerbrowser-search-requests',
     url: `${MOCK_BASE_PATH}/powerbrowser/SearchRequest`,
     method: 'POST',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (req, res) => {
-            const body = req.body as SearchRequestBody;
-            const tableName = body.query?.tableName;
+    handler: {
+      type: 'middleware',
+      middleware: (req, res) => {
+        const body = req.body as SearchRequestBody;
+        const tableName = body.query?.tableName;
 
-            if (tableName === 'MAATSCHAP' || tableName === 'PERSONEN') {
-              return res.status(200).send(PB_SEARCH_PERSON);
-            }
+        if (tableName === 'MAATSCHAP' || tableName === 'PERSONEN') {
+          return res.status(200).send(PB_SEARCH_PERSON);
+        }
 
-            const conditions = body.query?.conditions ?? [];
+        const conditions = body.query?.conditions ?? [];
 
-            return res.status(200).send({
-              mainTableName: PB_SEARCH_DOCUMENTS_PROCESSED.mainTableName,
-              records: PB_SEARCH_DOCUMENTS_PROCESSED.records.filter((record) =>
-                conditions.some(
-                  (condition) =>
-                    condition.fieldName === 'GFO_ZAKEN_ID' &&
-                    record.forTestingZaakIds?.includes(condition.fieldValue)
-                )
-              ),
-            });
-          },
-        },
+        return res.status(200).send({
+          mainTableName: PB_SEARCH_DOCUMENTS_PROCESSED.mainTableName,
+          records: PB_SEARCH_DOCUMENTS_PROCESSED.records.filter((record) =>
+            conditions.some(
+              (condition) =>
+                condition.fieldName === 'GFO_ZAKEN_ID' &&
+                record.forTestingZaakIds?.includes(condition.fieldValue)
+            )
+          ),
+        });
       },
-    ],
+    },
   },
   {
     id: 'post-powerbrowser-zaak-status',
     url: `${MOCK_BASE_PATH}/powerbrowser/Report/RunSavedReport`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: PB_ZAAK_STATUS,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: PB_ZAAK_STATUS,
+    },
   },
   {
     id: 'get-powerbrowser-zaken',
     url: `${MOCK_BASE_PATH}/powerbrowser/record/GFO_ZAKEN/:zaakIds`,
     method: 'GET',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (req, res) => {
-            const zaakIds = req.params.zaakIds.split(',');
+    handler: {
+      type: 'middleware',
+      middleware: (req, res) => {
+        const zaakIds = req.params.zaakIds.split(',');
 
-            return res
-              .status(200)
-              .send(
-                PB_PERSONEN_ZAKEN.filter((zaak) => zaakIds.includes(zaak.id))
-              );
-          },
-        },
+        return res
+          .status(200)
+          .send(PB_PERSONEN_ZAKEN.filter((zaak) => zaakIds.includes(zaak.id)));
       },
-    ],
+    },
   },
   {
     id: 'post-powerbrowser-personen-zaken',
     url: `${MOCK_BASE_PATH}/powerbrowser/Link/:type/GFO_ZAKEN/`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: PB_PERSONEN_ZAKEN,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: PB_PERSONEN_ZAKEN,
+    },
   },
   {
     id: 'get-powerbrowser-bb-zaak-adres',
     url: `${MOCK_BASE_PATH}/powerbrowser/Link/GFO_ZAKEN/ADRESSEN/Table`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: PB_LINK_ZAAK_ADRES,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: PB_LINK_ZAAK_ADRES,
+    },
   },
   {
     id: 'get-powerbrowser-bb-zaak-wb-transport',
     url: `${MOCK_BASE_PATH}/powerbrowser/Link/GFO_ZAKEN/WB_TRANSPORT/Table`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: PB_ZAAK_WBTRANSPORT,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: PB_ZAAK_WBTRANSPORT,
+    },
   },
   {
     id: 'get-powerbrowser-bb-zaak-attachment-download',
     url: `${MOCK_BASE_PATH}/powerbrowser/Dms/:id/Pdf`,
     method: 'GET',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (_req, res) => {
-            sendMockDocument(res, 200);
-          },
-        },
+    handler: {
+      type: 'middleware',
+      middleware: (_req, res) => {
+        sendMockDocument(res, 200);
       },
-    ],
+    },
   },
 ];

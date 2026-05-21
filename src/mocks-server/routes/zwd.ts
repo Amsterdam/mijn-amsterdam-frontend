@@ -7,14 +7,10 @@ export const routes: MockRouteDefinition[] = [
     id: 'get-zwd-vve',
     url: `${MOCK_BASE_PATH}/api/v1/address/0363010000801904/mijn-amsterdam/`,
     method: 'GET',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: ZWD_VVE,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: ZWD_VVE,
+    },
   },
 ];

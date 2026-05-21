@@ -10,57 +10,41 @@ export const routes: MockRouteDefinition[] = [
     id: 'get-wpi-aanvragen',
     url: `${MOCK_BASE_PATH}/wpi-koppel-api/wpi/uitkering/aanvragen`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: WPI_AANVRAGEN_RESPONSE,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: WPI_AANVRAGEN_RESPONSE,
+    },
   },
   {
     id: 'get-wpi-e-aanvragen',
     url: `${MOCK_BASE_PATH}/wpi-koppel-api/wpi/e-aanvragen`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: WPI_E_AANVRAGEN_RESPONSE,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: WPI_E_AANVRAGEN_RESPONSE,
+    },
   },
   {
     id: 'get-wpi-specificaties',
     url: `${MOCK_BASE_PATH}/wpi-koppel-api/wpi/uitkering/specificaties-en-jaaropgaven`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: WPI_SPECIFICATIES_RESPONSE,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: WPI_SPECIFICATIES_RESPONSE,
+    },
   },
   {
     id: 'get-wpi-document-download',
     url: `${MOCK_BASE_PATH}/wpi-koppel-api/wpi/document`,
     method: 'POST',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (_req, res) => {
-            sendMockDocument(res, 200);
-          },
-        },
+    handler: {
+      type: 'middleware',
+      middleware: (_req, res) => {
+        sendMockDocument(res, 200);
       },
-    ],
+    },
   },
 ];

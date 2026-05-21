@@ -8,28 +8,20 @@ export const routes: MockRouteDefinition[] = [
     id: 'post-loodmetingen-details',
     url: `${MOCK_BASE_PATH}/loodmetingen/be_getrequestdetails`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: LOODMETINGEN_RESPONSE,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: LOODMETINGEN_RESPONSE,
+    },
   },
   {
     id: 'post-loodmetingen-rapport',
     url: `${MOCK_BASE_PATH}/loodmetingen/be_downloadleadreport`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: LOODMETINGEN_RAPPORT_RESPONSE,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: LOODMETINGEN_RAPPORT_RESPONSE,
+    },
   },
 ];

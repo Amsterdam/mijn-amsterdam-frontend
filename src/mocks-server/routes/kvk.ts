@@ -13,52 +13,44 @@ export const routes: MockRouteDefinition[] = [
     id: 'get-kvk-maatschappelijkeactiviteiten',
     url: `${MOCK_BASE_PATH}/hr_kvk/maatschappelijkeactiviteiten`,
     method: 'GET',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (req, res) => {
-            const commercial = isCommercialUser(
-              req.headers['x-cache-key-supplement'] as string | undefined
-            );
+    handler: {
+      type: 'middleware',
+      middleware: (req, res) => {
+        const commercial = isCommercialUser(
+          req.headers['x-cache-key-supplement'] as string | undefined
+        );
 
-            return res
-              .status(200)
-              .send(
-                commercial
-                  ? maatschappelijkeactiviteiten
-                  : maatschappelijkeactiviteitenEMZ
-              );
-          },
-        },
+        return res
+          .status(200)
+          .send(
+            commercial
+              ? maatschappelijkeactiviteiten
+              : maatschappelijkeactiviteitenEMZ
+          );
       },
-    ],
+    },
   },
   {
     id: 'get-kvk-vestigingen',
     url: `${MOCK_BASE_PATH}/hr_kvk/vestigingen`,
     method: 'GET',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (req, res) => {
-            const commercial = isCommercialUser(
-              req.headers['x-cache-key-supplement'] as string | undefined
-            );
+    handler: {
+      type: 'middleware',
+      middleware: (req, res) => {
+        const commercial = isCommercialUser(
+          req.headers['x-cache-key-supplement'] as string | undefined
+        );
 
-            if (commercial) {
-              return res.status(200).send(vestigingen);
-            }
+        if (commercial) {
+          return res.status(200).send(vestigingen);
+        }
 
-            return res.status(200).send({
-              _embedded: {
-                vestigingen: vestigingen._embedded.vestigingen.slice(0, 3),
-              },
-            });
+        return res.status(200).send({
+          _embedded: {
+            vestigingen: vestigingen._embedded.vestigingen.slice(0, 3),
           },
-        },
+        });
       },
-    ],
+    },
   },
 ];

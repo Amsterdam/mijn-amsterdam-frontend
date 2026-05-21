@@ -20,33 +20,29 @@ export interface MockServerCore {
   logger: MockServerLogger;
 }
 
-export interface JsonVariant {
+export interface JsonHandler {
   type: 'json';
-  options: {
-    delayMs?: number;
-    status: number;
-    body: unknown;
-  };
+  delayMs?: number;
+  status: number;
+  body: unknown;
 }
 
-export interface MiddlewareVariant {
+export interface MiddlewareHandler {
   type: 'middleware';
-  options: {
-    delayMs?: number;
-    middleware: (
-      req: Request,
-      res: Response,
-      next: NextFunction,
-      core: MockServerCore
-    ) => unknown;
-  };
+  delayMs?: number;
+  middleware: (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+    core: MockServerCore
+  ) => unknown;
 }
 
-export type SupportedVariant = JsonVariant | MiddlewareVariant;
+export type SupportedHandler = JsonHandler | MiddlewareHandler;
 
 export interface MockRouteDefinition {
   id: string;
   url: string;
   method: MockHttpMethod;
-  variants: [SupportedVariant, ...SupportedVariant[]];
+  handler: SupportedHandler;
 }

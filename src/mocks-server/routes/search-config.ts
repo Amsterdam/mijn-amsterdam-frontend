@@ -7,14 +7,10 @@ export const routes: MockRouteDefinition[] = [
     id: 'get-search-config',
     url: `${MOCK_BASE_PATH}/search-config`,
     method: 'GET',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: SEARCH_CONFIG,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: SEARCH_CONFIG,
+    },
   },
 ];

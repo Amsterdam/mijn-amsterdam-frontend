@@ -6,14 +6,10 @@ export const routes: MockRouteDefinition[] = [
     id: 'post-amsapp-administratienummer',
     url: `${MOCK_BASE_PATH}/amsapp/session/credentials`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: { detail: 'Success' },
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: { detail: 'Success' },
+    },
   },
 ];

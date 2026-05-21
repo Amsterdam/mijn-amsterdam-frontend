@@ -5,46 +5,46 @@ import type {
   MockHttpMethod,
   MockRouteDefinition,
   MockServerCore,
-  SupportedVariant,
+  SupportedHandler,
 } from './types.ts';
 
 const core: MockServerCore = {
   logger,
 };
 
-function summarizeVariantOptions(
-  variant: SupportedVariant
+function summarizeHandlerOptions(
+  handler: SupportedHandler
 ): Record<string, unknown> {
-  if (variant.type === 'json') {
+  if (handler.type === 'json') {
     return {
-      status: variant.options.status,
-      delayMs: variant.options.delayMs ?? 0,
+      status: handler.status,
+      delayMs: handler.delayMs ?? 0,
     };
   }
 
   return {
     hasMiddleware: true,
-    delayMs: variant.options.delayMs ?? 0,
+    delayMs: handler.delayMs ?? 0,
   };
 }
 
-function executeVariant(
+function executeHandler(
   route: MockRouteDefinition,
-  variant: SupportedVariant,
+  handler: SupportedHandler,
   req: Request,
   res: Response,
   next: NextFunction
 ): void {
   const executeResponse = () => {
-    if (variant.type === 'json') {
-      res.status(variant.options.status).send(variant.options.body);
+    if (handler.type === 'json') {
+      res.status(handler.status).send(handler.body);
       return;
     }
 
-    variant.options.middleware(req, res, next, core);
+    handler.middleware(req, res, next, core);
   };
 
-  const delayMs = variant.options.delayMs ?? 0;
+  const delayMs = handler.delayMs ?? 0;
   const delayed = delayMs > 0;
 
   logger.info(
@@ -76,25 +76,25 @@ export function registerRoutes(
 ): void {
   for (const route of routes) {
     const method = toExpressMethod(route.method);
-    const variant = route.variants[0];
-    const delayMs = variant.options.delayMs ?? 0;
+    const handler = route.handler;
+    const delayMs = handler.delayMs ?? 0;
 
     logger.info(
       {
         routeId: route.id,
         method: route.method,
         url: route.url,
-        variantType: variant.type,
+        handlerType: handler.type,
         delayed: delayMs > 0,
-        options: summarizeVariantOptions(variant),
+        options: summarizeHandlerOptions(handler),
       },
-      'registering mock route variant'
+      'registering mock route handler'
     );
 
     app[method](
       route.url,
       (req: Request, res: Response, next: NextFunction) => {
-        executeVariant(route, variant, req, res, next);
+        executeHandler(route, handler, req, res, next);
       }
     );
   }

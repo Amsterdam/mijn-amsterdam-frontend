@@ -8,33 +8,25 @@ export const routes: MockRouteDefinition[] = [
     id: 'post-toeristische-verhuur-with-bsn',
     url: `${MOCK_BASE_PATH}/vakantieverhuur/bsn`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: BSN_RESPONSE,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: BSN_RESPONSE,
+    },
   },
   {
     id: 'get-toeristische-verhuur-by-number',
     url: `${MOCK_BASE_PATH}/vakantieverhuur/:number`,
     method: 'GET',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (req, res) => {
-            const { number } = req.params;
-            return res.send({
-              ...NORMAL_RESPONSE,
-              registrationNumber: number,
-            });
-          },
-        },
+    handler: {
+      type: 'middleware',
+      middleware: (req, res) => {
+        const { number } = req.params;
+        return res.send({
+          ...NORMAL_RESPONSE,
+          registrationNumber: number,
+        });
       },
-    ],
+    },
   },
 ];

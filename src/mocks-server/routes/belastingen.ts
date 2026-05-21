@@ -7,14 +7,10 @@ export const routes: MockRouteDefinition[] = [
     id: 'get-belastingen',
     url: `${MOCK_BASE_PATH}/belastingen`,
     method: 'GET',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: BELASTINGEN,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: BELASTINGEN,
+    },
   },
 ];

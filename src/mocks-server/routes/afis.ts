@@ -48,425 +48,361 @@ export const routes: MockRouteDefinition[] = [
     id: 'post-afis-auth-token',
     url: `${BASE_URL}/OAuthServer`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: {
-            access_token: '123xyz',
-            token_type: 'bearer',
-            expires_in: 3600,
-          },
-        },
+    handler: {
+      type: 'json',
+      status: 200,
+      body: {
+        access_token: '123xyz',
+        token_type: 'bearer',
+        expires_in: 3600,
       },
-    ],
+    },
   },
   {
     id: 'post-afis-businesspartner-bsn',
     url: `${BASE_URL}/businesspartner/BSN`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: {
-            BSN: 999999999,
-            Zakenpartnernummer: '67899',
-            Blokkade: 'Nee',
-            Afnemers_indicatie: 'Nee',
-            Gevonden: 'Ja',
-          },
-        },
+    handler: {
+      type: 'json',
+      status: 200,
+      body: {
+        BSN: 999999999,
+        Zakenpartnernummer: '67899',
+        Blokkade: 'Nee',
+        Afnemers_indicatie: 'Nee',
+        Gevonden: 'Ja',
       },
-    ],
+    },
   },
   {
     id: 'post-afis-businesspartner-kvk',
     url: `${BASE_URL}/businesspartner/KVK`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: {
-            Record: {
-              KVK: 55555555,
-              Zakenpartnernummer: '8888888888',
-              Blokkade: 'Nee',
-              Gevonden: 'Ja',
-            },
-          },
+    handler: {
+      type: 'json',
+      status: 200,
+      body: {
+        Record: {
+          KVK: 55555555,
+          Zakenpartnernummer: '8888888888',
+          Blokkade: 'Nee',
+          Gevonden: 'Ja',
         },
       },
-    ],
+    },
   },
   {
     id: 'get-afis-businesspartner-details',
     url: `${BASE_URL}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner`,
     method: 'GET',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: {
-            feed: {
-              entry: [
-                {
-                  content: {
-                    '@type': 'application/xml',
-                    properties: {
-                      BusinessPartner: 515177,
-                      BusinessPartnerFullName: 'Gerrit Expeditions BV',
-                      FirstName: 'G.',
-                      LastName: 'Expeditions BV',
-                    },
-                  },
+    handler: {
+      type: 'json',
+      status: 200,
+      body: {
+        feed: {
+          entry: [
+            {
+              content: {
+                '@type': 'application/xml',
+                properties: {
+                  BusinessPartner: 515177,
+                  BusinessPartnerFullName: 'Gerrit Expeditions BV',
+                  FirstName: 'G.',
+                  LastName: 'Expeditions BV',
                 },
-              ],
+              },
             },
-          },
+          ],
         },
       },
-    ],
+    },
   },
   {
     id: 'get-afis-businesspartner-address',
     url: `${BASE_URL}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerAddress`,
     method: 'GET',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: {
-            feed: {
-              entry: [
-                {
-                  content: {
-                    '@type': 'application/xml',
-                    properties: {
-                      AddressID: 430844,
-                      CityName: 'Leiden',
-                      Country: 'NL',
-                      HouseNumber: 20,
-                      HouseNumberSupplementText: '',
-                      PostalCode: '2311 VW',
-                      Region: '',
-                      StreetName: 'Rembrandtstraat',
-                      StreetPrefixName: '',
-                      StreetSuffixName: '',
-                    },
-                  },
+    handler: {
+      type: 'json',
+      status: 200,
+      body: {
+        feed: {
+          entry: [
+            {
+              content: {
+                '@type': 'application/xml',
+                properties: {
+                  AddressID: 430844,
+                  CityName: 'Leiden',
+                  Country: 'NL',
+                  HouseNumber: 20,
+                  HouseNumberSupplementText: '',
+                  PostalCode: '2311 VW',
+                  Region: '',
+                  StreetName: 'Rembrandtstraat',
+                  StreetPrefixName: '',
+                  StreetSuffixName: '',
                 },
-              ],
+              },
             },
-          },
+          ],
         },
       },
-    ],
+    },
   },
   {
     id: 'get-afis-businesspartner-phonenumber',
     url: `${BASE_URL}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber`,
     method: 'GET',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: {
-            feed: {
-              entry: [
-                {
-                  content: {
-                    '@type': 'application/xml',
-                    properties: {
-                      InternationalPhoneNumber: '+31622030313',
-                    },
-                  },
+    handler: {
+      type: 'json',
+      status: 200,
+      body: {
+        feed: {
+          entry: [
+            {
+              content: {
+                '@type': 'application/xml',
+                properties: {
+                  InternationalPhoneNumber: '+31622030313',
                 },
-              ],
+              },
             },
-          },
+          ],
         },
       },
-    ],
+    },
   },
   {
     id: 'get-afis-businesspartner-emailaddress',
     url: `${BASE_URL}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress`,
     method: 'GET',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: {
-            feed: {
-              entry: [
-                {
-                  content: {
-                    '@type': 'application/xml',
-                    properties: {
-                      SearchEmailAddress: 'xxmail@arjanappel.nl',
-                    },
-                  },
+    handler: {
+      type: 'json',
+      status: 200,
+      body: {
+        feed: {
+          entry: [
+            {
+              content: {
+                '@type': 'application/xml',
+                properties: {
+                  SearchEmailAddress: 'xxmail@arjanappel.nl',
                 },
-              ],
+              },
             },
-          },
+          ],
         },
       },
-    ],
+    },
   },
   {
     id: 'get-afis-facturen',
     url: `${BASE_URL}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM`,
     method: 'GET',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (req, res) => {
-            const stateFilters = [
-              { state: 'openstaande', filter: 'IsCleared eq false' },
-              {
-                state: 'afgehandeldetermijn',
-                filter: `and PaymentTerms gt 'B' and SEPAMandate ne '' `,
-              },
-              {
-                state: 'afgehandelde',
-                filter: `DunningLevel ne '3' or ReverseDocument ne ''`,
-              },
-              { state: 'overgedragen', filter: `DunningLevel eq '3'` },
-            ] as const;
-
-            const filterQuery = queryValue(req.query?.$filter);
-            const stateName = stateFilters.find(({ filter }) =>
-              filterQuery.includes(filter)
-            )?.state;
-
-            if (!stateName) {
-              return res.status(httpConstants.HTTP_STATUS_FORBIDDEN).end();
-            }
-
-            const facturenByState: Record<string, FacturenResponse> = {
-              openstaande: OPENSTAANDE_FACTUREN as FacturenResponse,
-              afgehandelde: AFGEHANDELDE_FACTUREN as FacturenResponse,
-              afgehandeldetermijn:
-                AFGEHANDELDE_TERMIJN_FACTUREN as FacturenResponse,
-              overgedragen: OVERGEDRAGEN_FACTUREN as FacturenResponse,
-            };
-
-            let feedEntries = [...facturenByState[stateName].feed.entry];
-            const count = feedEntries.length;
-
-            const topValue = Number(queryValue(req.query?.$top));
-            if (!Number.isNaN(topValue) && topValue > 0) {
-              feedEntries = feedEntries.slice(0, topValue);
-            }
-
-            return res.send({
-              feed: {
-                entry: feedEntries,
-                count,
-              },
-            });
+    handler: {
+      type: 'middleware',
+      middleware: (req, res) => {
+        const stateFilters = [
+          { state: 'openstaande', filter: 'IsCleared eq false' },
+          {
+            state: 'afgehandeldetermijn',
+            filter: `and PaymentTerms gt 'B' and SEPAMandate ne '' `,
           },
-        },
+          {
+            state: 'afgehandelde',
+            filter: `DunningLevel ne '3' or ReverseDocument ne ''`,
+          },
+          { state: 'overgedragen', filter: `DunningLevel eq '3'` },
+        ] as const;
+
+        const filterQuery = queryValue(req.query?.$filter);
+        const stateName = stateFilters.find(({ filter }) =>
+          filterQuery.includes(filter)
+        )?.state;
+
+        if (!stateName) {
+          return res.status(httpConstants.HTTP_STATUS_FORBIDDEN).end();
+        }
+
+        const facturenByState: Record<string, FacturenResponse> = {
+          openstaande: OPENSTAANDE_FACTUREN as FacturenResponse,
+          afgehandelde: AFGEHANDELDE_FACTUREN as FacturenResponse,
+          afgehandeldetermijn:
+            AFGEHANDELDE_TERMIJN_FACTUREN as FacturenResponse,
+          overgedragen: OVERGEDRAGEN_FACTUREN as FacturenResponse,
+        };
+
+        let feedEntries = [...facturenByState[stateName].feed.entry];
+        const count = feedEntries.length;
+
+        const topValue = Number(queryValue(req.query?.$top));
+        if (!Number.isNaN(topValue) && topValue > 0) {
+          feedEntries = feedEntries.slice(0, topValue);
+        }
+
+        return res.send({
+          feed: {
+            entry: feedEntries,
+            count,
+          },
+        });
       },
-    ],
+    },
   },
   {
     id: 'post-afis-factuur-download',
     url: `${BASE_URL}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: DOCUMENT_RESPONSE,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: DOCUMENT_RESPONSE,
+    },
   },
   {
     id: 'get-afis-factuur-document-id',
     url: `${BASE_URL}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02`,
     method: 'GET',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: ARC_DOC_ID,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: ARC_DOC_ID,
+    },
   },
   {
     id: 'get-afis-paylink',
     url: `${MOCK_BASE_PATH}/afis/paylink`,
     method: 'GET',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (_req, res) => {
-            return res.send(
-              '<h1>Afis factuur betalen</h1><button onclick="history.back()">Betaal factuur</button>'
-            );
-          },
-        },
+    handler: {
+      type: 'middleware',
+      middleware: (_req, res) => {
+        return res.send(
+          '<h1>Afis factuur betalen</h1><button onclick="history.back()">Betaal factuur</button>'
+        );
       },
-    ],
+    },
   },
   {
     id: 'get-afis-emandates',
     url: `${BASE_URL}/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet`,
     method: 'GET',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (_req, res) => {
-            return res.send(eMandates);
-          },
-        },
+    handler: {
+      type: 'middleware',
+      middleware: (_req, res) => {
+        return res.send(eMandates);
       },
-    ],
+    },
   },
   {
     id: 'post-afis-emandates',
     url: `${BASE_URL}/CreateMandate/ZGW_FI_MANDATE_SRV_01/Mandate_createSet`,
     method: 'POST',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (req, res) => {
-            const body = req.body as Record<string, unknown>;
-            const lastMandate =
-              eMandates.feed.entry[eMandates.feed.entry.length - 1];
-            const lastId = String(lastMandate.content.properties.IMandateId);
-            const existingMandate = eMandates.feed.entry.find(
-              (mandate) =>
-                String(mandate.content.properties.SndDebtorId) ===
-                String(body.SndDebtorId)
-            );
+    handler: {
+      type: 'middleware',
+      middleware: (req, res) => {
+        const body = req.body as Record<string, unknown>;
+        const lastMandate =
+          eMandates.feed.entry[eMandates.feed.entry.length - 1];
+        const lastId = String(lastMandate.content.properties.IMandateId);
+        const existingMandate = eMandates.feed.entry.find(
+          (mandate) =>
+            String(mandate.content.properties.SndDebtorId) ===
+            String(body.SndDebtorId)
+        );
 
-            const mandateBase = existingMandate ?? lastMandate;
+        const mandateBase = existingMandate ?? lastMandate;
 
-            const mandate: MandateEntry = {
-              ...mandateBase,
-              content: {
-                ...mandateBase.content,
-                properties: {
-                  ...mandateBase.content.properties,
-                  ...body,
-                  IMandateId: String(parseInt(lastId, 10) + 1),
-                  Status: '1',
-                },
-              },
-            };
-
-            eMandates.feed.entry.push(mandate);
-
-            return res.send(mandate);
+        const mandate: MandateEntry = {
+          ...mandateBase,
+          content: {
+            ...mandateBase.content,
+            properties: {
+              ...mandateBase.content.properties,
+              ...body,
+              IMandateId: String(parseInt(lastId, 10) + 1),
+              Status: '1',
+            },
           },
-        },
+        };
+
+        eMandates.feed.entry.push(mandate);
+
+        return res.send(mandate);
       },
-    ],
+    },
   },
   {
     id: 'get-bank-account',
     url: `${BASE_URL}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank`,
     method: 'GET',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (_req, res) => {
-            return res.send({
-              feed: {
-                entry: [
-                  {
-                    content: {
-                      '@type': 'application/xml',
-                      properties: {
-                        BusinessPartner: '0001500091',
-                        BankIdentification: '0004',
-                        BankCountryKey: 'NL',
-                        BankName: 'BANKAMS',
-                        BankNumber: 'BANKAMS',
-                        SWIFTCode: 'BANKANL5',
-                        BankAccountHolderName: 'I.M Mokum',
-                        ValidityStartDate: new Date().toISOString(),
-                        ValidityEndDate: '9999-12-31T23:59:59Z',
-                        IBAN: 'NL35BOOG9343513650',
-                        IBANValidityStartDate: new Date().toISOString(),
-                        BankAccount: '9343513650',
-                      },
-                    },
+    handler: {
+      type: 'middleware',
+      middleware: (_req, res) => {
+        return res.send({
+          feed: {
+            entry: [
+              {
+                content: {
+                  '@type': 'application/xml',
+                  properties: {
+                    BusinessPartner: '0001500091',
+                    BankIdentification: '0004',
+                    BankCountryKey: 'NL',
+                    BankName: 'BANKAMS',
+                    BankNumber: 'BANKAMS',
+                    SWIFTCode: 'BANKANL5',
+                    BankAccountHolderName: 'I.M Mokum',
+                    ValidityStartDate: new Date().toISOString(),
+                    ValidityEndDate: '9999-12-31T23:59:59Z',
+                    IBAN: 'NL35BOOG9343513650',
+                    IBANValidityStartDate: new Date().toISOString(),
+                    BankAccount: '9343513650',
                   },
-                ],
+                },
               },
-            });
+            ],
           },
-        },
+        });
       },
-    ],
+    },
   },
   {
     id: 'post-bank-account',
     url: `${BASE_URL}/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank`,
     method: 'POST',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (_req, res) => {
-            return res.send('OK');
-          },
-        },
+    handler: {
+      type: 'middleware',
+      middleware: (_req, res) => {
+        return res.send('OK');
       },
-    ],
+    },
   },
   {
     id: 'put-afis-emandates',
     url: `${BASE_URL}/ChangeMandate/ZGW_FI_MANDATE_SRV_01/:changeSetParam`,
     method: 'PUT',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (req, res) => {
-            const body = req.body as Record<string, unknown>;
-            const entryIndex = eMandates.feed.entry.findIndex(
-              (mandate) =>
-                String(mandate.content.properties.IMandateId) ===
-                String(body.IMandateId)
-            );
+    handler: {
+      type: 'middleware',
+      middleware: (req, res) => {
+        const body = req.body as Record<string, unknown>;
+        const entryIndex = eMandates.feed.entry.findIndex(
+          (mandate) =>
+            String(mandate.content.properties.IMandateId) ===
+            String(body.IMandateId)
+        );
 
-            const mandate = eMandates.feed.entry[entryIndex];
-            if (!mandate) {
-              return res.status(httpConstants.HTTP_STATUS_NOT_FOUND).end();
-            }
+        const mandate = eMandates.feed.entry[entryIndex];
+        if (!mandate) {
+          return res.status(httpConstants.HTTP_STATUS_NOT_FOUND).end();
+        }
 
-            eMandates.feed.entry[entryIndex].content.properties = {
-              ...mandate.content.properties,
-              ...body,
-            };
+        eMandates.feed.entry[entryIndex].content.properties = {
+          ...mandate.content.properties,
+          ...body,
+        };
 
-            return res.send(eMandates.feed.entry[entryIndex]);
-          },
-        },
+        return res.send(eMandates.feed.entry[entryIndex]);
       },
-    ],
+    },
   },
 ];

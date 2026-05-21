@@ -132,94 +132,74 @@ export const routes: MockRouteDefinition[] = [
     id: 'get-gpass-pashouders',
     url: `${MOCK_BASE_PATH}/gpass/rest/sales/v1/pashouder`,
     method: 'GET',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: pashoudersResponse,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: pashoudersResponse,
+    },
   },
   {
     id: 'get-gpass-stadspas',
     url: `${MOCK_BASE_PATH}/gpass/rest/sales/v1/pas/:pasnummer`,
     method: 'GET',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (req, res) => {
-            const correspondingPashouderPass = allPasses.find(
-              (pas) => String(pas.pasnummer) === req.params.pasnummer
-            );
+    handler: {
+      type: 'middleware',
+      middleware: (req, res) => {
+        const correspondingPashouderPass = allPasses.find(
+          (pas) => String(pas.pasnummer) === req.params.pasnummer
+        );
 
-            return res.send({
-              ...correspondingPashouderPass,
-              budgetten: RESPONSES_STADSPAS.budgetten,
-            });
-          },
-        },
+        return res.send({
+          ...correspondingPashouderPass,
+          budgetten: RESPONSES_STADSPAS.budgetten,
+        });
       },
-    ],
+    },
   },
   {
     id: 'get-gpass-transacties',
     url: `${MOCK_BASE_PATH}/gpass/rest/transacties/v1/budget`,
     method: 'GET',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: RESPONSES_TRANSACTIES,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: RESPONSES_TRANSACTIES,
+    },
   },
   {
     id: 'get-gpass-aanbiedingen-transacties',
     url: `${MOCK_BASE_PATH}/gpass/rest/transacties/v1/aanbiedingen`,
     method: 'GET',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: [{ toBeDeterminedFields: 'Unknown' }],
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: [{ toBeDeterminedFields: 'Unknown' }],
+    },
   },
   {
     id: 'post-toggle-stadspas',
     url: `${MOCK_BASE_PATH}/gpass/rest/sales/v1/togglepas/:pasnummer`,
     method: 'POST',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (req, res) => {
-            const pasnummer = req.params.pasnummer;
-            const pas = allPasses.find(
-              (pasData) => String(pasData.pasnummer) === pasnummer
-            );
+    handler: {
+      type: 'middleware',
+      middleware: (req, res) => {
+        const pasnummer = req.params.pasnummer;
+        const pas = allPasses.find(
+          (pasData) => String(pasData.pasnummer) === pasnummer
+        );
 
-            if (pas) {
-              pas.actief = !pas.actief;
-              pas.expiry_date = new Date().toISOString();
-            }
+        if (pas) {
+          pas.actief = !pas.actief;
+          pas.expiry_date = new Date().toISOString();
+        }
 
-            return res.send({
-              ...RESPONSES_STADSPAS,
-              pasnummer,
-              expiry_date: pas?.expiry_date,
-              actief: pas?.actief,
-            });
-          },
-        },
+        return res.send({
+          ...RESPONSES_STADSPAS,
+          pasnummer,
+          expiry_date: pas?.expiry_date,
+          actief: pas?.actief,
+        });
       },
-    ],
+    },
   },
 ];

@@ -35,15 +35,11 @@ describe('loadRoutes', () => {
             id: 'alpha-route',
             url: '/alpha',
             method: 'GET',
-            variants: [
-              {
-                type: 'json',
-                options: {
-                  status: 200,
-                  body: { ok: true }
-                }
-              }
-            ]
+            handler: {
+              type: 'json',
+              status: 200,
+              body: { ok: true }
+            }
           }
         ];
       `
@@ -57,15 +53,11 @@ describe('loadRoutes', () => {
             id: 'beta-route',
             url: '/beta',
             method: 'POST',
-            variants: [
-              {
-                type: 'json',
-                options: {
-                  status: 201,
-                  body: { ok: true }
-                }
-              }
-            ]
+            handler: {
+              type: 'json',
+              status: 201,
+              body: { ok: true }
+            }
           }
         ];
       `

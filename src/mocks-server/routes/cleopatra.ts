@@ -7,14 +7,10 @@ export const routes: MockRouteDefinition[] = [
     id: 'post-cleopatra',
     url: `${MOCK_BASE_PATH}/milieuzone`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: CLEOPATRA_RESPONSE,
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: CLEOPATRA_RESPONSE,
+    },
   },
 ];

@@ -6,14 +6,10 @@ export const routes: MockRouteDefinition[] = [
     id: 'post-datapunt-iam-oauth',
     url: `${MOCK_BASE_PATH}/datapunt-iam/openid-connect/token`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: { access_token: 'hello-world' },
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: { access_token: 'hello-world' },
+    },
   },
 ];

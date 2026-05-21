@@ -21,93 +21,81 @@ export const routes: MockRouteDefinition[] = [
     id: 'post-zorgned-aanvragen',
     url: `${MOCK_BASE_PATH}/zorgned/aanvragen`,
     method: 'POST',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (req, res, _next, core) => {
-            if (!hasApiUserHeader(req.headers)) {
-              return res
-                .status(HttpStatusCode.BadRequest)
-                .send(
-                  'x-cache-key-supplement key not found in request headers. This header is required to determine the correct fixture for the response.'
-                );
-            }
+    handler: {
+      type: 'middleware',
+      middleware: (req, res, _next, core) => {
+        if (!hasApiUserHeader(req.headers)) {
+          return res
+            .status(HttpStatusCode.BadRequest)
+            .send(
+              'x-cache-key-supplement key not found in request headers. This header is required to determine the correct fixture for the response.'
+            );
+        }
 
-            const rawApiUser = req.headers['x-cache-key-supplement'];
-            const apiUser = (
-              Array.isArray(rawApiUser) ? rawApiUser[0] : rawApiUser
-            ) as ZorgnedApiUser | string;
+        const rawApiUser = req.headers['x-cache-key-supplement'];
+        const apiUser = (
+          Array.isArray(rawApiUser) ? rawApiUser[0] : rawApiUser
+        ) as ZorgnedApiUser | string;
 
-            switch (apiUser) {
-              case 'AV': {
-                const aanvragen = {
-                  _embedded: {
-                    aanvraag: [
-                      ...ZORGNED_AV_AANVRAGEN_RESPONSE._embedded.aanvraag,
-                      ...ZORGNED_AV_AANVRAGEN_RESPONSE_RTM._embedded.aanvraag,
-                    ],
-                  },
-                };
+        switch (apiUser) {
+          case 'AV': {
+            const aanvragen = {
+              _embedded: {
+                aanvraag: [
+                  ...ZORGNED_AV_AANVRAGEN_RESPONSE._embedded.aanvraag,
+                  ...ZORGNED_AV_AANVRAGEN_RESPONSE_RTM._embedded.aanvraag,
+                ],
+              },
+            };
 
-                return res.status(HttpStatusCode.Ok).send(aanvragen);
-              }
-              case 'JZD':
-                return res
-                  .status(HttpStatusCode.Ok)
-                  .send(ZORGNED_JZD_AANVRAGEN_RESPONSE);
-              case 'LLV':
-                return res
-                  .status(HttpStatusCode.Ok)
-                  .send(ZORGNED_LLV_AANVRAGEN_RESPONSE);
-              default: {
-                const message = `No fixture response found for ${apiUser}`;
-                core.logger.error(message);
-                return res.status(HttpStatusCode.NotFound).send(message);
-              }
-            }
-          },
-        },
+            return res.status(HttpStatusCode.Ok).send(aanvragen);
+          }
+          case 'JZD':
+            return res
+              .status(HttpStatusCode.Ok)
+              .send(ZORGNED_JZD_AANVRAGEN_RESPONSE);
+          case 'LLV':
+            return res
+              .status(HttpStatusCode.Ok)
+              .send(ZORGNED_LLV_AANVRAGEN_RESPONSE);
+          default: {
+            const message = `No fixture response found for ${apiUser}`;
+            core.logger.error(message);
+            return res.status(HttpStatusCode.NotFound).send(message);
+          }
+        }
       },
-    ],
+    },
   },
   {
     id: 'post-zorgned-persoonsgegevens',
     url: `${MOCK_BASE_PATH}/zorgned/persoonsgegevensNAW`,
     method: 'POST',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: (req, res) => {
-            const nawResponse = structuredClone(
-              ZORGNED_AV_PERSOONSGEGEVENSNAW_RESPONSE
-            );
+    handler: {
+      type: 'middleware',
+      middleware: (req, res) => {
+        const nawResponse = structuredClone(
+          ZORGNED_AV_PERSOONSGEGEVENSNAW_RESPONSE
+        );
 
-            if (nawResponse) {
-              const bsn = req.body.burgerservicenummer;
-              nawResponse.persoon.bsn = bsn;
-              nawResponse.persoon.voornamen = `${bsn} - ${nawResponse.persoon.voornamen}`;
-            }
+        if (nawResponse) {
+          const bsn = req.body.burgerservicenummer;
+          nawResponse.persoon.bsn = bsn;
+          nawResponse.persoon.voornamen = `${bsn} - ${nawResponse.persoon.voornamen}`;
+        }
 
-            return res.status(HttpStatusCode.Ok).send(nawResponse);
-          },
-        },
+        return res.status(HttpStatusCode.Ok).send(nawResponse);
       },
-    ],
+    },
   },
   {
     id: 'post-zorgned-document',
     url: `${MOCK_BASE_PATH}/zorgned/document`,
     method: 'POST',
-    variants: [
-      {
-        type: 'json',
-        options: {
-          status: 200,
-          body: { inhoud: MOCK_DOCUMENT_B64 },
-        },
-      },
-    ],
+    handler: {
+      type: 'json',
+      status: 200,
+      body: { inhoud: MOCK_DOCUMENT_B64 },
+    },
   },
 ];

@@ -30,46 +30,42 @@ export const routes: MockRouteDefinition[] = [
     id: 'post-enableu2smile-klachten',
     url: `${MOCK_BASE_PATH}/smile`,
     method: 'POST',
-    variants: [
-      {
-        type: 'middleware',
-        options: {
-          middleware: async (req, res, _next, core) => {
-            try {
-              const fields = await parseMultipartForm(req);
-              const fn = firstFieldValue(
-                fields.function as string | string[] | undefined
-              );
+    handler: {
+      type: 'middleware',
+      middleware: async (req, res, _next, core) => {
+        try {
+          const fields = await parseMultipartForm(req);
+          const fn = firstFieldValue(
+            fields.function as string | string[] | undefined
+          );
 
-              if (!fn) {
-                core.logger.error(
-                  "No 'function' property on multipart fields for /smile route"
-                );
-                return res.status(httpConstants.HTTP_STATUS_NOT_FOUND).end();
-              }
+          if (!fn) {
+            core.logger.error(
+              "No 'function' property on multipart fields for /smile route"
+            );
+            return res.status(httpConstants.HTTP_STATUS_NOT_FOUND).end();
+          }
 
-              if (fn === 'readKlacht') {
-                return res.status(200).send(KLACHTEN_RESPONSE);
-              }
+          if (fn === 'readKlacht') {
+            return res.status(200).send(KLACHTEN_RESPONSE);
+          }
 
-              if (fn === 'readAVGverzoek') {
-                return res.status(200).send(AVG_RESPONSE);
-              }
+          if (fn === 'readAVGverzoek') {
+            return res.status(200).send(AVG_RESPONSE);
+          }
 
-              if (fn === 'readthemaperavgverzoek') {
-                return res.status(200).send(AVG_THEMAS_RESPONSE);
-              }
+          if (fn === 'readthemaperavgverzoek') {
+            return res.status(200).send(AVG_THEMAS_RESPONSE);
+          }
 
-              return res.status(httpConstants.HTTP_STATUS_NOT_FOUND).end();
-            } catch (error) {
-              core.logger.error(String(error));
-              return res
-                .status(httpConstants.HTTP_STATUS_INTERNAL_SERVER_ERROR)
-                .end();
-            }
-          },
-        },
+          return res.status(httpConstants.HTTP_STATUS_NOT_FOUND).end();
+        } catch (error) {
+          core.logger.error(String(error));
+          return res
+            .status(httpConstants.HTTP_STATUS_INTERNAL_SERVER_ERROR)
+            .end();
+        }
       },
-    ],
+    },
   },
 ];
