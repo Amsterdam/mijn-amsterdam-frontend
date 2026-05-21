@@ -72,7 +72,7 @@ function transformAfsprakenResponse(
       },
       icsLink: {
         to: icsLink,
-        title: 'Voeg toe aan agenda',
+        title: 'Voeg toe aan uw privé-agenda',
         download: `afspraak-${result.caseReference}.ics`,
       },
     };

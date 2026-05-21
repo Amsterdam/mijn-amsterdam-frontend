@@ -129,7 +129,7 @@ test('should transform the data correctly', async () => {
         "displayDateTime": "woensdag 01 januari 2025 van 10:00 tot 10:30 uur",
         "icsLink": {
           "download": "afspraak-00157784.ics",
-          "title": "Voeg toe aan agenda",
+          "title": "Voeg toe aan uw privé-agenda",
           "to": "data:text/calendar;charset=utf-8;base64,QkVHSU4lM0FWQ0FMRU5EQVIlMEQlMEFWRVJTSU9OJTNBMi4wJTBEJTBBUFJPRElEJTNBLSUyRiUyRkFtc3RlcmRhbSUyRiUyRk5PTlNHTUwlMjB2MS4wJTJGJTJGRU4lMEQlMEFCRUdJTiUzQVZFVkVOVCUwRCUwQVVJRCUzQWFmc3ByYWFrLXN0YWRzbG9rZXQtMDAxNTc3ODQlMEQlMEFEVFNUQU1QJTNBMjAyNTAxMDFUMDAwMDAwWiUwRCUwQURUU1RBUlQlM0EyMDI1MDEwMVQwOTAwMDBaJTBEJTBBRFRFTkQlM0EyMDI1MDEwMVQwOTMwMDBaJTBEJTBBU1VNTUFSWSUzQUFmc3ByYWFrJTIwdm9vciUyMFZhYXJ2aWduZXQlMEQlMEFERVNDUklQVElPTiUzQVJlZmVyZW50aWVudW1tZXIlM0ElMjAwMDE1Nzc4NCUwRCUwQUxPQ0FUSU9OJTNBU3RhZHNsb2tldCUyMFp1aWRvb3N0JTVDJTJDJTIwb25iZWtlbmQlNUMlMkMlMjBudWxsJTIwbnVsbCU1QyUyQyUyME5lZGVybGFuZCUwRCUwQUVORCUzQVZFVkVOVCUwRCUwQUVORCUzQVZDQUxFTkRBUg==",
         },
         "link": {

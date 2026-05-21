@@ -19,15 +19,15 @@ vi.mock('../../hooks/media.hook.ts', async (importOriginal) => ({
 
 const afspraak: AfspraakFrontend = {
   subject: 'Varen',
-  dateStart: '2020-01-01T12:00:00Z',
-  dateEnd: '2020-01-01T12:00:00Z',
+  dateStart: '2020-01-17T17:50:00Z',
+  dateEnd: '2020-01-17T18:20:00Z',
   dateStartFormatted: 'maandag 01 januari 2025',
   dateEndFormatted: 'maandag 01 januari 2025',
   status: 'New',
   qrCode: 'qrcode-123',
   caseReference: 'unique-123',
   cancellationLink: 'https://cancel.com',
-  displayDateTime: 'Datum, 01-01-2020 17:50',
+  displayDateTime: 'maandag 01 januari 2025 van 17:50 tot 18:20',
   location: {
     name: 'Centrum',
     street: 'Amstel 1',
