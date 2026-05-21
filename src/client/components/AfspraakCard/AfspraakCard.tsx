@@ -30,6 +30,10 @@ export function AfspraakCard({
         <>
           <br />
           Locatie {locatie}
+          <br />
+          <MaRouterLink href={afspraak.link.to}>
+            {afspraak.link.title}
+          </MaRouterLink>
         </>
       )}
     </Paragraph>
@@ -47,11 +51,7 @@ export function AfspraakCard({
         {afspraak.subject}
       </Heading>
       {details}
-      {compact && (
-        <MaRouterLink href={afspraak.link.to}>
-          {afspraak.link.title}
-        </MaRouterLink>
-      )}
+
       {!compact && (
         <>
           <LocationModal
