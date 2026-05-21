@@ -39,10 +39,59 @@ export function AfspraakCard({
   const details = (
     <Paragraph className="ams-mb-s">
       <time dateTime={afspraak.dateStart}>
-        <strong>Datum:</strong> {afspraak.displayDateTime}
+        Datum, {afspraak.displayDateTime}
       </time>
-      <br />
-      <strong>Locatie:</strong> {locatie}
+      {compact ? (
+        <>
+          <br />
+          Locatie, {locatie}
+        </>
+      ) : (
+        <>
+          <br />
+          <LocationModal
+            address={afspraak.location.street ?? afspraak.location.name}
+            buttonVariant="ma-link-like"
+            buttonLabel={`Locatie, ${locatie}`}
+            buttonClassName={styles.LocationLink}
+          />
+          <br />
+          <Link
+            download={afspraak.icsLink.download}
+            href={afspraak.icsLink.to}
+            rel="noopener noreferrer"
+            className={classNames(styles.ICSLink, 'ams-mb-m')}
+          >
+            {afspraak.icsLink.title}
+          </Link>
+          <br />
+          <span className={styles.CancellationLinkContainer}>
+            <Link
+              rel="noopener noreferrer"
+              className={classNames(styles.CancellationLink, 'ams-mb-m')}
+              href={afspraak.cancellationLink}
+            >
+              Annuleren
+            </Link>
+            <br />
+          </span>
+          <ModalAndButton
+            modal={{
+              title: `QR code - Stadsloket ${afspraak.location.name}`,
+            }}
+            buttonVariant="secondary"
+            buttonLabel="Toon QR code"
+          >
+            <>
+              <QRCode size={256} value={afspraak.qrCode} className="ams-mb-s" />{' '}
+              <Paragraph className="ams-mb-l">
+                Scan deze QR code op het stadsloket zodat de medewerker weet dat
+                u op het stadsloket aanwezig bent.
+              </Paragraph>
+            </>
+          </ModalAndButton>
+        </>
+      )}
     </Paragraph>
   );
 
@@ -54,60 +103,14 @@ export function AfspraakCard({
         hidden
         size="heading-2"
       />
-      <Heading level={3} size="level-3" className="ams-mb-s">
+      <Heading level={3} size="level-3">
         {afspraak.subject}
       </Heading>
       {details}
-      {compact ? (
+      {compact && (
         <MaRouterLink href={afspraak.link.to}>
           {afspraak.link.title}
         </MaRouterLink>
-      ) : (
-        <>
-          <ActionItem dash={false}>
-            <ModalAndButton
-              modal={{
-                title: `QR code - Stadsloket ${afspraak.location.name}`,
-              }}
-              buttonVariant="ma-link-like"
-              buttonLabel="Toon QR code"
-            >
-              <>
-                <QRCode
-                  size={256}
-                  value={afspraak.qrCode}
-                  className="ams-mb-s"
-                />{' '}
-                <Paragraph className="ams-mb-l">
-                  Scan deze QR code op het stadsloket zodat de medewerker weet
-                  dat u op het stadsloket aanwezig bent.
-                </Paragraph>
-              </>
-            </ModalAndButton>
-          </ActionItem>
-          <ActionItem>
-            <Link
-              download={afspraak.icsLink.download}
-              href={afspraak.icsLink.to}
-              rel="noopener noreferrer"
-            >
-              {afspraak.icsLink.title}
-            </Link>
-          </ActionItem>
-
-          <ActionItem>
-            <LocationModal
-              address={afspraak.location.street ?? afspraak.location.name}
-              buttonVariant="ma-link-like"
-            />
-          </ActionItem>
-
-          <ActionItem>
-            <Link rel="noopener noreferrer" href={afspraak.cancellationLink}>
-              Annuleren
-            </Link>
-          </ActionItem>
-        </>
       )}
     </article>
   );
