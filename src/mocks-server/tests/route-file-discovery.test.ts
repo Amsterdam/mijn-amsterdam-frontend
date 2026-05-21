@@ -64,10 +64,6 @@ describe('loadRoutes', () => {
     );
 
     await writeFile(
-      path.join(tempDir, 'index.ts'),
-      'export const ignored = true;'
-    );
-    await writeFile(
       path.join(tempDir, 'alpha.test.ts'),
       'export const notRoutes = [];'
     );
