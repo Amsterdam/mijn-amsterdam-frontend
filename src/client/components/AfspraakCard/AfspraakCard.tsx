@@ -20,7 +20,7 @@ export function AfspraakCard({
   className,
   compact,
 }: AfspraakCardProps) {
-  const locatie = `Stadsloket ${afspraak.location.name}, ${afspraak.location.street}`;
+  const locatie = `Locatie Stadsloket ${afspraak.location.name}, ${afspraak.location.street}`;
   const details = (
     <Paragraph>
       <time dateTime={afspraak.dateStart}>
@@ -29,7 +29,11 @@ export function AfspraakCard({
       {compact && (
         <>
           <br />
-          Locatie, {locatie}
+          {locatie}
+          <br />
+          <MaRouterLink href={afspraak.link.to}>
+            {afspraak.link.title}
+          </MaRouterLink>
         </>
       )}
     </Paragraph>
@@ -47,17 +51,13 @@ export function AfspraakCard({
         {afspraak.subject}
       </Heading>
       {details}
-      {compact && (
-        <MaRouterLink href={afspraak.link.to}>
-          {afspraak.link.title}
-        </MaRouterLink>
-      )}
+
       {!compact && (
         <>
           <LocationModal
             address={afspraak.location.street ?? afspraak.location.name}
             buttonVariant="ma-link-like"
-            buttonLabel={`Locatie, ${locatie}`}
+            buttonLabel={locatie}
             buttonClassName={styles.LocationLink}
           />
           <br />

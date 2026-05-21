@@ -6,17 +6,6 @@ import { BrowserRouter } from 'react-router';
 import { AfspraakCard } from './AfspraakCard.tsx';
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
 
-const mocks = vi.hoisted(() => {
-  return {
-    isSmallScreen: false,
-  };
-});
-
-vi.mock('../../hooks/media.hook.ts', async (importOriginal) => ({
-  ...(await importOriginal()),
-  useSmallScreen: () => mocks.isSmallScreen,
-}));
-
 const afspraak: AfspraakFrontend = {
   subject: 'Varen',
   dateStart: '2020-01-17T17:50:00Z',
@@ -46,15 +35,20 @@ const afspraak: AfspraakFrontend = {
   },
 };
 
-function renderAfspraakCard(afspraak: AfspraakFrontend) {
-  return render(<AfspraakCard afspraak={afspraak}></AfspraakCard>, {
-    wrapper: BrowserRouter,
-  });
+function renderAfspraakCard(
+  afspraak: AfspraakFrontend,
+  compact: boolean = false
+) {
+  return render(
+    <AfspraakCard afspraak={afspraak} compact={compact}></AfspraakCard>,
+    {
+      wrapper: BrowserRouter,
+    }
+  );
 }
 
 describe('Renders afspraak data', () => {
   beforeEach(() => {
-    mocks.isSmallScreen = false;
     mockdate.set('2020-01-01');
   });
 
@@ -62,14 +56,13 @@ describe('Renders afspraak data', () => {
     vi.restoreAllMocks();
   });
 
-  test('Large screen', () => {
+  test('Regular variant', () => {
     const screen = renderAfspraakCard(afspraak);
     expect(screen.asFragment()).toMatchSnapshot();
   });
 
-  test('Small screen', () => {
-    mocks.isSmallScreen = true;
-    const screen = renderAfspraakCard(afspraak);
+  test('Compact variant', () => {
+    const screen = renderAfspraakCard(afspraak, true);
     expect(screen.asFragment()).toMatchSnapshot();
   });
 
