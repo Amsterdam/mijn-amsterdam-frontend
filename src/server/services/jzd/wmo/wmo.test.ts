@@ -5,7 +5,7 @@ import { routes } from '../jzd-service-config.ts';
 import type { HulpmiddelenDisclaimerConfig } from './status-line-items/wmo-hulpmiddelen.ts';
 import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen.ts';
 import { fetchWmo, forTesting } from './wmo.ts';
-import ZORGNED_AANVRAGEN_WMO from '../../../../../mocks/fixtures/zorgned-jzd-aanvragen.json' with { type: 'json' };
+import ZORGNED_AANVRAGEN_WMO from '../../../../mocks-server/fixtures/zorgned-jzd-aanvragen.json' with { type: 'json' };
 import {
   getAuthProfileAndToken,
   remoteApi,

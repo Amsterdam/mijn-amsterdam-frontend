@@ -12,8 +12,8 @@
   "type": "module",
   "scripts": {
     "analyze": "source-map-explorer 'build/assets/*.js'",
-    "mock-server": "mocks-server",
-    "mock-server:serve": "mocks-server --no-plugins.inquirerCli.enabled",
+    "mock-server": "nodemon -e ts,json -w ./src/mocks-server -w ./.env.local -x ts-node ./src/mocks-server/app-start.ts",
+    "mock-server:serve": "pnpm mock-server",
     "serve-dev": "concurrently \"pnpm:bff-api:watch\" \"pnpm:start\" \"pnpm:mock-server:serve\"",
     "start": "cross-env MA_APP_MODE=development vite",
     "build": "cross-env MA_APP_MODE=production vite build",
@@ -22,7 +22,7 @@
     "test": "pnpm run test:dirs src/client",
     "bff-api:watch": "nodemon -e ts -w ./src/server -w ./src/universal -w ./.env.local -x pnpm run bff-api:serve-dev",
     "bff-api:test:dirs": "cross-env MA_APP_MODE=unittest vitest --environment=node",
-    "bff-api:test": "pnpm run bff-api:test:dirs src/server src/universal src/scripts",
+    "bff-api:test": "pnpm run bff-api:test:dirs src/server src/universal src/scripts src/mocks-server",
     "bff-api:test:db:amsapp-notifications": "cross-env MA_APP_MODE=unittest RUN_DB_TESTS=true BFF_DB_ENABLED=true pnpm run bff-api:test:dirs src/server/services/amsapp/notifications/amsapp-notifications-model.integration.test.ts",
     "bff-api:serve-build": "node build-bff/server/app-start",
     "bff-api:serve-dev": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --inspect\" ts-node ./src/server/app-start.ts",
@@ -171,7 +171,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
-    "@mocks-server/main": "^4.1.0",
     "@types/debug": "^4.1.13",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/stack-trace": "^0.0.33",
