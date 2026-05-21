@@ -36,8 +36,11 @@ import '../server/helpers/load-env.ts';
 import * as XLSX from 'xlsx';
 import * as fs from 'node:fs';
 import { defaultDateFormat } from '../universal/helpers/date.ts';
-import { getFullAddress } from '../universal/helpers/brp.ts';
-import { testAccountDataDigid } from '../universal/config/auth.development.ts';
+import { getFullAddress, isMokum } from '../universal/helpers/brp.ts';
+import {
+  type TestUserAccount,
+  type TestUserData,
+} from '../universal/config/auth.development.ts';
 
 import { differenceInYears, parseISO } from 'date-fns';
 
@@ -190,10 +193,41 @@ async function generateOverview() {
       sheetZaken(resultsByUser),
     ]);
 
+    const testUserLoginTable = createDigidTestUserTable(resultsByUser);
+    writeTestUserLoginTable(testUserLoginTable);
+
     XLSX.writeFile(workbook, fileName, { compression: true });
 
     return fileName;
   });
+}
+
+function createDigidTestUserTable(resultsByUser: ResultsByUser): TestUserData {
+  const tableHeaders: TestUserData['tableHeaders'] = [
+    { displayName: 'Gebruikersnaam', key: 'username' },
+    { displayName: 'BSN', key: 'profileId' },
+    { displayName: 'Mokum', key: 'mokum' },
+  ];
+
+  const accounts: TestUserAccount[] = Object.entries(resultsByUser).map(
+    ([username, serviceResults]) => {
+      const brpContent = serviceResults.BRP?.content;
+      const profileId = brpContent?.persoon?.bsn ?? '';
+
+      return {
+        username,
+        profileId,
+        mokum: isMokum(brpContent),
+      };
+    }
+  );
+
+  return { tableHeaders, accounts };
+}
+
+function writeTestUserLoginTable(testUserLoginTable: TestUserData): void {
+  const filePath = `${TARGET_DIRECTORY}/digid-test-accounts.json`;
+  fs.writeFileSync(filePath, JSON.stringify(testUserLoginTable, null, 2));
 }
 
 type ResultsByUser = Record<string, ServiceResults>;
