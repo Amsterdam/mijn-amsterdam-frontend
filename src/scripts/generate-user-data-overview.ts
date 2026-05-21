@@ -111,9 +111,6 @@ const themas = [
   { id: themaAfis.id, title: themaAfis.title },
   { id: themaOvertredingen.id, title: themaOvertredingen.title },
 
-  { id: themaBodem.id, title: themaBodem.title },
-  { id: themaHLI.id, title: themaHLI.title },
-  { id: themaJeugd.id, title: themaJeugd.title },
   { id: themaParkeren.id, title: themaParkeren.title },
   { id: themaVaren.id, title: themaVaren.title },
   { id: themaBodem.id, title: themaBodem.title },
@@ -213,6 +210,10 @@ function createDigidTestUserTable(resultsByUser: ResultsByUser): TestUserData {
     { displayName: 'Partner', key: 'partnerName' },
     { displayName: 'Ouder dan 18', key: 'isOlderThan18' },
     { displayName: 'Heeft ouders', key: 'hasParents' },
+    { displayName: 'Heeft VOW', key: 'hasVertrokkenOnbekendWaarheen' },
+    { displayName: 'is AIO', key: 'isAdresInOnderzoek' },
+    { displayName: 'Heeft Stadspas', key: 'heeftStadspas' },
+    { displayName: 'Themas', key: 'availableThemas' },
   ];
 
   const accounts: TestUserAccount[] = Object.entries(resultsByUser).map(
@@ -224,6 +225,11 @@ function createDigidTestUserTable(resultsByUser: ResultsByUser): TestUserData {
       return {
         username,
         ...brpBasedProperties,
+        heeftStadspas:
+          (serviceResults.HLI?.content?.stadspas?.stadspassen?.length ?? 0) > 0,
+        availableThemas: Object.values(getAvailableUserThemas(serviceResults))
+          .filter(Boolean)
+          .join(', '),
       };
     }
   );
@@ -251,12 +257,15 @@ function getBRPBasedProperties(
   const properties = {
     profileId,
     mokum: isMokum(brpContent),
-    hasChildren: (brpContent.kinderen.length ?? 0) > 0,
+    hasChildren: brpContent.kinderen.length > 0,
     partnerName: brpContent.verbintenis?.persoon.voornamen ?? '',
     isOlderThan18: geboortedatum
       ? differenceInYears(new Date(), geboortedatum) >= 18
       : 'onbekend',
     hasParents: brpContent.ouders.length > 0,
+    hasVertrokkenOnbekendWaarheen:
+      brpContent.persoon?.vertrokkenOnbekendWaarheen ?? false,
+    isAdresInOnderzoek: brpContent.persoon?.adresInOnderzoek !== null,
   };
 
   return properties;
