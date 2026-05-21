@@ -40,13 +40,14 @@ import { getFullAddress, isMokum } from '../universal/helpers/brp.ts';
 import {
   type TestUserAccount,
   type TestUserData,
+  testAccountDataDigid,
 } from '../universal/config/auth.development.ts';
 
 import { differenceInYears, parseISO } from 'date-fns';
 
 import type { ServiceResults } from '../server/services/content-tips/tip-types.ts';
 import { IS_PRODUCTION } from '../universal/config/env.ts';
-import type { MyNotification } from '../universal/types/App.types.ts';
+import type { AppState, MyNotification } from '../universal/types/App.types.ts';
 import type {
   Adres,
   Kind,
@@ -207,17 +208,22 @@ function createDigidTestUserTable(resultsByUser: ResultsByUser): TestUserData {
     { displayName: 'Gebruikersnaam', key: 'username' },
     { displayName: 'BSN', key: 'profileId' },
     { displayName: 'Mokum', key: 'mokum' },
+    { displayName: 'Heeft kinderen', key: 'hasChildren' },
+    { displayName: 'Partner', key: 'partnerName' },
   ];
 
   const accounts: TestUserAccount[] = Object.entries(resultsByUser).map(
     ([username, serviceResults]) => {
-      const brpContent = serviceResults.BRP?.content;
+      const brpContent = serviceResults.BRP
+        ?.content as AppState['BRP']['content'];
       const profileId = brpContent?.persoon?.bsn ?? '';
 
       return {
         username,
         profileId,
         mokum: isMokum(brpContent),
+        hasChildren: (brpContent?.kinderen.length ?? 0) > 0,
+        partnerName: brpContent?.verbintenis?.persoon.voornamen ?? '',
       };
     }
   );
