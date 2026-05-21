@@ -8,11 +8,7 @@ type RouteModule = {
 };
 
 function isRouteModuleFile(fileName: string): boolean {
-  return (
-    fileName.endsWith('.ts') &&
-    !fileName.endsWith('.test.ts') &&
-    fileName !== 'index.ts'
-  );
+  return fileName.endsWith('.ts') && !fileName.endsWith('.test.ts');
 }
 
 function toModuleName(fileName: string): string {
