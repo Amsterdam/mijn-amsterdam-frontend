@@ -28,7 +28,7 @@ exports[`Renders afspraak data > Large screen 1`] = `
       </svg>
     </span>
     <h3
-      class="ams-heading ams-heading--3 ams-mb-s"
+      class="ams-heading ams-heading--3"
     >
       Varen
     </h3>
@@ -38,75 +38,44 @@ exports[`Renders afspraak data > Large screen 1`] = `
       <time
         datetime="2020-01-01T12:00:00Z"
       >
-        <strong>
-          Datum:
-        </strong>
-         Datum, 01-01-2020 17:50
+        Datum, Datum, 01-01-2020 17:50
       </time>
       <br />
-      <strong>
-        Locatie:
-      </strong>
-       Stadsloket Centrum, Amstel 1
-    </p>
-    <span
-      class="_ActionItem_0a51e6"
-    >
       <button
-        class="ams-link _InlineButton_10c0a4"
+        class="ams-link _InlineButton_10c0a4 _LocationModalLink_fa327b _LocationLink_0a51e6"
         type="button"
       >
-        Toon QR code
+        Locatie, Stadsloket Centrum, Amstel 1
       </button>
-    </span>
-    <span
-      class="_ActionItem_0a51e6"
-    >
-      <span
-        class="_ActionItem-separator_0a51e6"
-      >
-        —
-      </span>
+      <br />
       <a
-        class="ams-link"
+        class="ams-link _ICSLink_0a51e6 ams-mb-m"
         download="afspraak-unique-123.ics"
         href="data:text/calendar;base64,abc123"
         rel="noopener noreferrer"
       >
         Voeg toe aan agenda
       </a>
-    </span>
-    <span
-      class="_ActionItem_0a51e6"
-    >
+      <br />
       <span
-        class="_ActionItem-separator_0a51e6"
+        class="_CancellationLinkContainer_0a51e6"
       >
-        —
+        <a
+          class="ams-link _CancellationLink_0a51e6 ams-mb-m"
+          href="https://cancel.com"
+          rel="noopener noreferrer"
+        >
+          Annuleren
+        </a>
+        <br />
       </span>
       <button
-        class="ams-link _InlineButton_10c0a4 _LocationModalLink_fa327b"
+        class="ams-button ams-button--secondary"
         type="button"
       >
-        Bekijk op de kaart
+        Toon QR code
       </button>
-    </span>
-    <span
-      class="_ActionItem_0a51e6"
-    >
-      <span
-        class="_ActionItem-separator_0a51e6"
-      >
-        —
-      </span>
-      <a
-        class="ams-link"
-        href="https://cancel.com"
-        rel="noopener noreferrer"
-      >
-        Annuleren
-      </a>
-    </span>
+    </p>
   </article>
 </DocumentFragment>
 `;
@@ -139,7 +108,7 @@ exports[`Renders afspraak data > Small screen 1`] = `
       </svg>
     </span>
     <h3
-      class="ams-heading ams-heading--3 ams-mb-s"
+      class="ams-heading ams-heading--3"
     >
       Varen
     </h3>
@@ -149,75 +118,44 @@ exports[`Renders afspraak data > Small screen 1`] = `
       <time
         datetime="2020-01-01T12:00:00Z"
       >
-        <strong>
-          Datum:
-        </strong>
-         Datum, 01-01-2020 17:50
+        Datum, Datum, 01-01-2020 17:50
       </time>
       <br />
-      <strong>
-        Locatie:
-      </strong>
-       Stadsloket Centrum, Amstel 1
-    </p>
-    <span
-      class="_ActionItem_0a51e6"
-    >
       <button
-        class="ams-link _InlineButton_10c0a4"
+        class="ams-link _InlineButton_10c0a4 _LocationModalLink_fa327b _LocationLink_0a51e6"
         type="button"
       >
-        Toon QR code
+        Locatie, Stadsloket Centrum, Amstel 1
       </button>
-    </span>
-    <span
-      class="_ActionItem_0a51e6"
-    >
-      <span
-        class="_ActionItem-separator_0a51e6"
-      >
-        —
-      </span>
+      <br />
       <a
-        class="ams-link"
+        class="ams-link _ICSLink_0a51e6 ams-mb-m"
         download="afspraak-unique-123.ics"
         href="data:text/calendar;base64,abc123"
         rel="noopener noreferrer"
       >
         Voeg toe aan agenda
       </a>
-    </span>
-    <span
-      class="_ActionItem_0a51e6"
-    >
+      <br />
       <span
-        class="_ActionItem-separator_0a51e6"
+        class="_CancellationLinkContainer_0a51e6"
       >
-        —
+        <a
+          class="ams-link _CancellationLink_0a51e6 ams-mb-m"
+          href="https://cancel.com"
+          rel="noopener noreferrer"
+        >
+          Annuleren
+        </a>
+        <br />
       </span>
       <button
-        class="ams-link _InlineButton_10c0a4 _LocationModalLink_fa327b"
+        class="ams-button ams-button--secondary"
         type="button"
       >
-        Bekijk op de kaart
+        Toon QR code
       </button>
-    </span>
-    <span
-      class="_ActionItem_0a51e6"
-    >
-      <span
-        class="_ActionItem-separator_0a51e6"
-      >
-        —
-      </span>
-      <a
-        class="ams-link"
-        href="https://cancel.com"
-        rel="noopener noreferrer"
-      >
-        Annuleren
-      </a>
-    </span>
+    </p>
   </article>
 </DocumentFragment>
 `;
