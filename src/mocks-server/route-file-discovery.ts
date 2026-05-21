@@ -1,7 +1,7 @@
 import { readdir } from 'node:fs/promises';
 
-import { logger } from '../logger.ts';
-import type { MockRouteDefinition } from '../types.ts';
+import { logger } from './logger.ts';
+import type { MockRouteDefinition } from './types.ts';
 
 type RouteModule = {
   routes: MockRouteDefinition[];
@@ -20,7 +20,7 @@ function toModuleName(fileName: string): string {
 }
 
 export async function loadRoutes(
-  routesDirectoryUrl: URL = new URL('.', import.meta.url)
+  routesDirectoryUrl: URL = new URL('./routes/', import.meta.url)
 ): Promise<MockRouteDefinition[]> {
   const files = await readdir(routesDirectoryUrl);
   const routeFiles = files.filter(isRouteModuleFile).sort();
@@ -49,6 +49,7 @@ export async function loadRoutes(
     {
       routeModuleCount: routeFiles.length,
       routeCount: routes.length,
+      files: routeFiles,
     },
     'discovered mock route modules'
   );

@@ -4,7 +4,7 @@ import type { NextFunction, Request, Response } from 'express';
 
 import { logger } from './logger.ts';
 import { registerRoutes } from './route-registry.ts';
-import { loadRoutes } from './routes/index.ts';
+import { loadRoutes } from './route-file-discovery.ts';
 import { MOCK_PORT } from './settings.ts';
 
 const app = express();

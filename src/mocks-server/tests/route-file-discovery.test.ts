@@ -5,7 +5,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { logger } from '../logger.ts';
-import { loadRoutes } from './index.ts';
+import { loadRoutes } from '../route-file-discovery.ts';
 
 describe('loadRoutes', () => {
   const createdDirs: string[] = [];
@@ -83,6 +83,7 @@ describe('loadRoutes', () => {
       {
         routeModuleCount: 2,
         routeCount: 2,
+        files: ['alpha.ts', 'beta.ts'],
       },
       'discovered mock route modules'
     );
