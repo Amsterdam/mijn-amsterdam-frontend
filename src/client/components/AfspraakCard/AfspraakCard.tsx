@@ -15,21 +15,6 @@ type AfspraakCardProps = {
   compact?: boolean;
 };
 
-function ActionItem({
-  children,
-  dash = true,
-}: {
-  children: React.ReactNode;
-  dash?: boolean;
-}) {
-  return (
-    <span className={styles.ActionItem}>
-      {dash && <span className={styles['ActionItem-separator']}>&mdash;</span>}
-      {children}
-    </span>
-  );
-}
-
 export function AfspraakCard({
   afspraak,
   className,
