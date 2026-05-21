@@ -43,7 +43,7 @@ import {
   testAccountDataDigid,
 } from '../universal/config/auth.development.ts';
 
-import { differenceInYears, parseISO } from 'date-fns';
+import { differenceInYears, isAfter, parseISO } from 'date-fns';
 
 import type { ServiceResults } from '../server/services/content-tips/tip-types.ts';
 import { IS_PRODUCTION } from '../universal/config/env.ts';
@@ -210,6 +210,7 @@ function createDigidTestUserTable(resultsByUser: ResultsByUser): TestUserData {
     { displayName: 'Mokum', key: 'mokum' },
     { displayName: 'Heeft kinderen', key: 'hasChildren' },
     { displayName: 'Partner', key: 'partnerName' },
+    { displayName: 'Ouder dan 18', key: 'isOlderThan18' },
   ];
 
   const accounts: TestUserAccount[] = Object.entries(resultsByUser).map(
@@ -217,6 +218,7 @@ function createDigidTestUserTable(resultsByUser: ResultsByUser): TestUserData {
       const brpContent = serviceResults.BRP
         ?.content as AppState['BRP']['content'];
       const profileId = brpContent?.persoon?.bsn ?? '';
+      const geboortedatum = brpContent?.persoon?.geboortedatum;
 
       return {
         username,
@@ -224,6 +226,9 @@ function createDigidTestUserTable(resultsByUser: ResultsByUser): TestUserData {
         mokum: isMokum(brpContent),
         hasChildren: (brpContent?.kinderen.length ?? 0) > 0,
         partnerName: brpContent?.verbintenis?.persoon.voornamen ?? '',
+        isOlderThan18: geboortedatum
+          ? differenceInYears(new Date(), geboortedatum) >= 18
+          : 'onbekend',
       };
     }
   );
