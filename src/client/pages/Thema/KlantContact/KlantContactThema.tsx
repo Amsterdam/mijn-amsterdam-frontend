@@ -11,6 +11,7 @@ import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import { getRedactedClass } from '../../../helpers/cobrowse.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { isEnabled } from '../../../config/feature-toggles.ts';
 
 export function KlantContactThema() {
   const {
@@ -49,18 +50,20 @@ export function KlantContactThema() {
       pageContentTop={
         <PageContentCell spanWide={8}>
           <Paragraph>
-            Uw afspraken en contactmomenten met de gemeente Amsterdam.
+            {`Uw ${isEnabled('KLANT_CONTACT.afspraken') ? 'afspraken en ' : ''}contactmomenten met de gemeente Amsterdam.`}
           </Paragraph>
         </PageContentCell>
       }
       pageContentMain={
         <>
-          <PageContentCell
-            spanWide={9}
-            className={getRedactedClass(null, 'full')}
-          >
-            <Afspraken />
-          </PageContentCell>
+          {isEnabled('KLANT_CONTACT.afspraken') && (
+            <PageContentCell
+              spanWide={9}
+              className={getRedactedClass(null, 'full')}
+            >
+              <Afspraken />
+            </PageContentCell>
+          )}
           <PageContentCell className={getRedactedClass(null, 'full')}>
             <ContactMomenten />
           </PageContentCell>
