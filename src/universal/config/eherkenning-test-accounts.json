@@ -1,0 +1,21 @@
+{
+  "tableHeaders": [
+    {
+      "displayName": "Gebruikersnaam",
+      "key": "username"
+    },
+    {
+      "displayName": "Mokum",
+      "key": "mokum"
+    },
+    {
+      "displayName": "Digid",
+      "key": "hasDigid"
+    },
+    {
+      "displayName": "Beschrijving",
+      "key": "description"
+    }
+  ],
+  "accounts": []
+}

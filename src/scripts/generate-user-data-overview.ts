@@ -268,7 +268,7 @@ function getBRPBasedProperties(
 }
 
 function writeTestUserLoginTable(testUserLoginTable: TestUserData): void {
-  const filePath = `${TARGET_DIRECTORY}/digid-test-accounts.json`;
+  const filePath = './src/universal/config/digid-test-accounts.json';
   fs.writeFileSync(filePath, JSON.stringify(testUserLoginTable, null, 2));
 }
 

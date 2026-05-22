@@ -1,42 +1,8 @@
 import { IS_PRODUCTION } from './env.ts';
 import { getFromEnv } from '../../server/helpers/env.ts';
-
-export const DEV_USER_ID_DEFAULT =
-  getFromEnv('MA_PROFILE_DEV_ID', false) || 'I.M Mokum';
-
-const FALLBACK_DEV_ACCOUNT: TestUserAccount = {
-  username: 'dev',
-  profileId: DEV_USER_ID_DEFAULT,
-  mokum: false,
-  hasDigid: true,
-  description: 'Fallback test account',
-};
-
-const FALLBACK_TEST_USER_DATA: TestUserData = {
-  tableHeaders: [
-    {
-      displayName: 'Gebruikersnaam',
-      key: 'username',
-    },
-    {
-      displayName: 'BSN',
-      key: 'profileId',
-    },
-    {
-      displayName: 'Mokum',
-      key: 'mokum',
-    },
-    {
-      displayName: 'Digid',
-      key: 'hasDigid',
-    },
-    {
-      displayName: 'Beschrijving',
-      key: 'description',
-    },
-  ],
-  accounts: [FALLBACK_DEV_ACCOUNT],
-};
+import { readFileSync } from 'fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 export const testAccountDataDigid = getTestAccountData('MA_TEST_ACCOUNTS');
 export const testAccountDataEherkenning = getTestAccountData(
@@ -56,7 +22,7 @@ type TableHeader = {
   key: string;
 };
 
-/** Fields of the table data, the explicit fields are not only used for -
+/** Fields of the table data, the optional fields are not only used for -
  * informational purposes. */
 export type TestUserAccount = {
   username: string;
@@ -68,12 +34,21 @@ export type OptionalTestUserAccountProperties = Record<
   string | boolean
 >;
 
-function getTestAccountData(envKey: string): TestUserData | null {
+function getTestAccountData(
+  envKey: 'MA_TEST_ACCOUNTS' | 'MA_TEST_ACCOUNTS_EH'
+): TestUserData | null {
   if (IS_PRODUCTION) {
     return null;
   }
-  const accounts =
-    getFromEnv(envKey, false) || JSON.stringify(FALLBACK_TEST_USER_DATA);
-  const testUserData: TestUserData = JSON.parse(accounts);
-  return testUserData;
+  const envValue = getFromEnv(envKey, false);
+  if (envValue) {
+    return JSON.parse(envValue);
+  }
+  const dirOfThisFile = dirname(fileURLToPath(import.meta.url));
+  const testAccountPath =
+    envKey === 'MA_TEST_ACCOUNTS'
+      ? join(dirOfThisFile, './digid-test-accounts.json')
+      : join(dirOfThisFile, './eherkenning-test-accounts.json');
+  const jsonString = readFileSync(testAccountPath).toString();
+  return JSON.parse(jsonString);
 }
