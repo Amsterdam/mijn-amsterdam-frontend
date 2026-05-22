@@ -73,7 +73,7 @@ export default function ThemaPagina({
       )}
       {pageContentTop}
       {!!pageLinks.length && (
-        <PageContentCell className={styles.PullUp}>
+        <PageContentCell className={pageContentTop ? styles.PullUp : ''}>
           <LinkList>
             {pageLinks.map(({ to, title }) => (
               <LinkList.Link key={to} rel="noreferrer" href={to}>
