@@ -79,7 +79,7 @@ export function registerRoutes(
     const handler = route.handler;
     const delayMs = handler.delayMs ?? 0;
 
-    logger.info(
+    logger.debug(
       {
         routeId: route.id,
         method: route.method,
