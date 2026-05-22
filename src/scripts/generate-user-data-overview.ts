@@ -110,13 +110,11 @@ const themas = [
   { id: themaKrefia.id, title: themaKrefia.title },
   { id: themaAfis.id, title: themaAfis.title },
   { id: themaOvertredingen.id, title: themaOvertredingen.title },
-
   { id: themaParkeren.id, title: themaParkeren.title },
   { id: themaVaren.id, title: themaVaren.title },
   { id: themaBodem.id, title: themaBodem.title },
   { id: themaHLI.id, title: themaHLI.title },
   { id: themaJeugd.id, title: themaJeugd.title },
-
   { id: themaBelastingen.id, title: themaBelastingen.title },
   { id: themaMilieuzone.id, title: themaMilieuzone.title },
   { id: themaSubsidies.id, title: themaSubsidies.title },
