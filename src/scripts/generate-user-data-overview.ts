@@ -252,7 +252,7 @@ function getBRPBasedProperties(
   const profileId = brpContent.persoon?.bsn ?? '';
   const geboortedatum = brpContent.persoon?.geboortedatum;
 
-  const properties = {
+  return {
     profileId,
     mokum: isMokum(brpContent),
     hasChildren: brpContent.kinderen.length > 0,
@@ -265,8 +265,6 @@ function getBRPBasedProperties(
       brpContent.persoon?.vertrokkenOnbekendWaarheen ?? false,
     isAdresInOnderzoek: brpContent.persoon?.adresInOnderzoek !== null,
   };
-
-  return properties;
 }
 
 function writeTestUserLoginTable(testUserLoginTable: TestUserData): void {
