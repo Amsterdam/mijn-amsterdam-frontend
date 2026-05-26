@@ -34,11 +34,11 @@ import {
 import { fetchErfpachtDossiersDetail as fetchErfpachtDossiersDetail } from '../services/erfpacht/erfpacht.ts';
 import { hliRouter } from '../services/hli/hli-router.ts';
 import { jzdRouter } from '../services/jzd/jzd-router.ts';
+import { klantcontactRouter } from '../services/klantcontact/klantcontact-router.ts';
 import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service.ts';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler.ts';
 import { userFeedbackRouter } from '../services/user-feedback/user-feedback.router.ts';
 import { fetchWpiDocument } from '../services/wpi/api-service.ts';
-import { contactRouter } from '../services/contact/contact-router.ts';
 
 export const router = createBFFRouter({ id: 'router-protected' });
 
@@ -123,7 +123,7 @@ router.use(
   afisRouter.protected,
   bezwarenRouter.protected,
   userFeedbackRouter.protected,
-  contactRouter.protected
+  klantcontactRouter.protected
 );
 
 // Decos (Vergunningen, Horeca, Toeristische verhuur, Parkeren)

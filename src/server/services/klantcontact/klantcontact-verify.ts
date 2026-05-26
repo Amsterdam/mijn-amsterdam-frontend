@@ -1,12 +1,12 @@
 import createDebugger from 'debug';
 
-import { getProfileType } from './contact-helper.ts';
+import { getProfileType } from './klantcontact-helpers.ts';
 import type {
   CreateVerificationRequestPayload,
   CreateVerificationRequestResponse,
   VerifyVerificationRequestPayload,
   VerifyVerificationRequestResponse,
-} from './contact-verify.types.ts';
+} from './klantcontact-verify.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';

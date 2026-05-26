@@ -15,11 +15,11 @@ import { EmailForm, EmailVerify } from './EmailInputAndValidation.tsx';
 import type {
   ContactgegevenFrontend,
   CommunicatievoorkeurFrontend,
-} from '../../../../../server/services/contact/contact-profieldienst-types.ts';
-import { MaButtonInline } from '../../../../components/MaLink/MaLink.tsx';
+} from '../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
+import { MaLinkLikeButton } from '../../../../components/MaLink/MaLink.tsx';
 import { useSessionStorage } from '../../../../hooks/storage.hook.ts';
 import {
-  routeConfig,
+  themaConfig,
   type InstelAction,
 } from '../KlantContact-thema-config.ts';
 
@@ -35,7 +35,6 @@ export function EmailInstellen({
   onFinished,
 }: EmailInstellenProps) {
   const navigate = useNavigate();
-
   const { step = '1', action = 'instellen' } = useParams<{
     step: string;
     action: InstelAction;
@@ -58,8 +57,8 @@ export function EmailInstellen({
 
   function navigateToStep(step: '1' | '2') {
     const path = voorkeur
-      ? routeConfig.detailPageCommunicatievoorkeurInstellen.path
-      : routeConfig.detailPageCommunicatieMediumInstellen.path;
+      ? themaConfig.detailPageCommunicatievoorkeurInstellen.route.path
+      : themaConfig.detailPageCommunicatieMediumInstellen.route.path;
 
     navigate(
       generatePath(path, {
@@ -114,11 +113,11 @@ export function EmailInstellen({
                       <>
                         Ja, naar {emailValue}{' '}
                         {!emailFormActive && (
-                          <MaButtonInline
+                          <MaLinkLikeButton
                             onClick={() => setEmailFormActive(true)}
                           >
                             Wijzigen
-                          </MaButtonInline>
+                          </MaLinkLikeButton>
                         )}
                       </>
                     ) : (

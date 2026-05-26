@@ -1,13 +1,11 @@
-import type { AnchorHTMLAttributes } from 'react';
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react';
 
 import type {
   BreadcrumbLinkProps,
   ButtonProps,
-  LinkProps} from '@amsterdam/design-system-react';
-import {
-  Breadcrumb,
-  Link
+  LinkProps,
 } from '@amsterdam/design-system-react';
+import { Breadcrumb, Link } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router';
 

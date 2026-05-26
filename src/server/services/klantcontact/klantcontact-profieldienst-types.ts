@@ -87,12 +87,14 @@ export type CommunicatievoorkeurPayloadSource = {
   };
 };
 
+export type ContactvoorkeurPerTypeFrontend = Record<
+  ContactgegevenTypeFrontend,
+  ContactgegevenFrontend
+>;
+
 export type CommunicatievoorkeurenResponseFrontend = {
   voorkeuren: CommunicatievoorkeurFrontend[];
-  standaardContactvoorkeurPerType: Record<
-    ContactgegevenTypeFrontend,
-    ContactgegevenFrontend
-  >;
+  standaardContactvoorkeurPerType: ContactvoorkeurPerTypeFrontend | null;
   aangeslotenDiensten?: DienstSource[];
 };
 

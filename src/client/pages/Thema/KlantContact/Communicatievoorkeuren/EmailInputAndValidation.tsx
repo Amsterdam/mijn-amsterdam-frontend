@@ -14,7 +14,7 @@ import styles from './EmailInputAndValidation.module.scss';
 import type {
   CreateVerificationRequestResponse,
   VerifyVerificationRequestResponse,
-} from '../../../../../server/services/contact/contact-verify.types.ts';
+} from '../../../../../server/services/klantcontact/klantcontact-verify.types.ts';
 import { Spinner } from '../../../../components/Spinner/Spinner.tsx';
 import {
   sendFormPostRequest,

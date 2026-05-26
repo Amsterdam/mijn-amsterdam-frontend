@@ -1,4 +1,4 @@
-import type { IdentificatieType } from './contact-profieldienst-types.ts';
+import type { IdentificatieType } from './klantcontact-profieldienst-types.ts';
 
 export type CreateVerificationRequestPayload = {
   type: 'Email' | 'Telefoonnummer' | 'Adres' | 'AppId';

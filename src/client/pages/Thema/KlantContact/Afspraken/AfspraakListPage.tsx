@@ -1,7 +1,7 @@
-import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
-import { AfspraakCard } from '../../../components/AfspraakCard/AfspraakCard.tsx';
-import { PageContentCell, PageV2 } from '../../../components/Page/Page.tsx';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { AfspraakCard } from '../../../../components/AfspraakCard/AfspraakCard.tsx';
+import { PageV2, PageContentCell } from '../../../../components/Page/Page.tsx';
+import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
+import { useKlantcontactData } from '../useKlantcontactData.hook.tsx';
 
 export function AfspraakListPage() {
   const { afspraken, themaConfig, breadcrumbs } = useKlantcontactData();

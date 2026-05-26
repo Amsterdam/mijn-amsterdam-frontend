@@ -1,194 +1,96 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
+import { Afspraken } from './Afspraken/AfsprakenList.tsx';
 import { CommunicatieVoorkeuren } from './Communicatievoorkeuren/CommunicatieVoorkeuren.tsx';
-import { useCommunicatievoorkeuren } from './Communicatievoorkeuren/useCommunicatieVoorkeuren.tsx';
-import { ContactMomenten } from './Contactmomenten/ContactMomenten.tsx';
-import { useContactmomenten } from './Contactmomenten/useContactmomenten.tsx';
-import { linkListItems } from './KlantContact-thema-config.ts';
-import { useContactThema } from './useKlantContactThema.ts';
+import { ContactMomenten } from './Contactmomenten/ContactmomentenTable.tsx';
+import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import { getRedactedClass } from '../../../helpers/cobrowse.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
-export function KlantContactThemaPagina() {
-  const { id, title, routeConfig, isError, isLoading } = useContactThema();
-  const communicatievoorkeuren = useCommunicatievoorkeuren();
-  const contactmomenten = useContactmomenten();
+export function KlantContactThema() {
+  const {
+    themaConfig,
+    isLoading,
+    isError,
+    dependencyErrors,
+    communicatievoorkeuren,
+    afspraken,
+    contactmomenten,
+  } = useKlantcontactData();
 
-  useHTMLDocumentTitle(routeConfig.themaPage);
+  const routeConfig = themaConfig.route;
+  useHTMLDocumentTitle(routeConfig);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
-      <Paragraph className="ams-mb-m">
-        Hier regelt u uw contact voorkeuren, zoals wilt u de post van de
-        gemeente alleen digitaal ontvangen, aanpassen van uw afspraken met de
-        gemeente en het wijzigen van uw e-mailadres of telefoonnummer.
+      <Paragraph>
+        Wij registreren uw afspraken bij een stadsloket, uw contactmomenten en
+        uw communicatievoorkeuren. Zo kunnen we u beter van dienst zijn.
+        Hieronder vindt u een overzicht van deze gegevens.
       </Paragraph>
     </PageContentCell>
   );
 
-  return (
-    <ThemaPagina
-      id={id}
-      title={title}
-      pageContentTop={pageContentTop}
-      pageLinks={linkListItems}
-      pageContentMain={
-        <>
-          <PageContentCell spanWide={8}>
-            <CommunicatieVoorkeuren
-              communicatievoorkeurenData={communicatievoorkeuren}
-            />
-          </PageContentCell>
-          <PageContentCell>
-            <ContactMomenten contactmomentenData={contactmomenten} />
-          </PageContentCell>
-        </>
-      }
-      isError={
-        isError || contactmomenten.isError || communicatievoorkeuren.isError
-      }
-      isLoading={
-        isLoading ||
-        contactmomenten.isLoading ||
-        communicatievoorkeuren.isLoading
-      }
-    />
-  );
-}
-
-export function KlantContactThema() {
-  const {
-    id,
-    title,
-    isLoading,
-    isError,
-    dependencyErrors,
-    pageLinks,
-    routeConfig,
-  } = useKlantcontactData();
-  useHTMLDocumentTitle(routeConfig);
+  const isPartialError =
+    dependencyErrors.afspraken ||
+    dependencyErrors.contactmomenten ||
+    dependencyErrors.communicatievoorkeuren;
 
   const pageContentErrorAlert = (
     <>
       Wij kunnen de volgende gegevens nu niet tonen:
       <br />
-      {dependencyErrors.afspraken && <>- Uw overzicht van uw afspraken</>}
+      {dependencyErrors.afspraken && <>- Uw overzicht van afspraken</>}
       {dependencyErrors.contactmomenten && (
         <>- Uw overzicht van contactmomenten</>
+      )}
+      {dependencyErrors.communicatievoorkeuren && (
+        <>- Uw overzicht van communicatievoorkeuren</>
       )}
     </>
   );
 
   return (
     <ThemaPagina
-      id={id}
-      title={title}
-      isError={isError}
-      isPartialError={
-        dependencyErrors.afspraken !== dependencyErrors.contactmomenten
-      }
+      id={themaConfig.id}
+      title={themaConfig.title}
+      pageContentTop={pageContentTop}
+      pageLinks={themaConfig.pageLinks}
+      isPartialError={isPartialError}
       errorAlertContent={pageContentErrorAlert}
-      isLoading={isLoading}
-      pageLinks={pageLinks}
-      pageContentTop={
-        <PageContentCell spanWide={8}>
-          <Paragraph>
-            {`Uw ${isEnabled('KLANT_CONTACT.afspraken') ? 'afspraken en ' : ''}contactmomenten met de gemeente Amsterdam.`}
-          </Paragraph>
-        </PageContentCell>
-      }
       pageContentMain={
         <>
-          {isEnabled('KLANT_CONTACT.afspraken') && (
+          {!!afspraken.length && (
             <PageContentCell
               spanWide={9}
               className={getRedactedClass(null, 'full')}
             >
-              <Afspraken />
+              <Afspraken afspraken={afspraken} />
             </PageContentCell>
           )}
-          <PageContentCell className={getRedactedClass(null, 'full')}>
-            <ContactMomenten />
-          </PageContentCell>
-        </>
-      }
-    />
-  );
-}
-
-type AfsprakenProps = {
-  compact?: boolean;
-};
-
-export function Afspraken({ compact = false }: AfsprakenProps) {
-  const { afspraken, themaConfig, isLoading } = useKlantcontactData();
-  const MAX_AMOUNT_AFSPRAKEN_DISPLAYED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
-
-  if (compact && (!afspraken.length || isLoading)) {
-    return null;
-  }
-
-  return (
-    <>
-      <Heading level={2} className="ams-mb-m">
-        Afspraken bij een stadsloket
-      </Heading>
-      {afspraken.length ? (
-        <>
-          {afspraken
-            .slice(0, MAX_AMOUNT_AFSPRAKEN_DISPLAYED)
-            .map((afspraak, i) => (
-              <AfspraakCard
-                compact={compact}
-                key={afspraak.caseReference}
-                afspraak={afspraak}
-                className={i < MAX_AMOUNT_AFSPRAKEN_DISPLAYED ? 'ams-mb-l' : ''}
+          {communicatievoorkeuren !== null && (
+            <PageContentCell
+              spanWide={8}
+              className={getRedactedClass(null, 'full')}
+            >
+              <CommunicatieVoorkeuren
+                voorkeuren={communicatievoorkeuren?.voorkeuren}
+                standaardContactvoorkeurPerType={
+                  communicatievoorkeuren?.standaardContactvoorkeurPerType
+                }
+                aangeslotenDiensten={
+                  communicatievoorkeuren?.aangeslotenDiensten
+                }
               />
-            ))}
-          <LinkToListPage
-            count={afspraken.length}
-            route={themaConfig.listPageAfspraken.route.path}
-            threshold={MAX_AMOUNT_AFSPRAKEN_DISPLAYED}
-          />
-        </>
-      ) : (
-        <Paragraph>U heeft geen afspraken.</Paragraph>
-      )}
-    </>
-  );
-}
-
-function ContactMomenten() {
-  const { contactmomenten, tableConfig, routeConfig } =
-    useContactmomentenListData();
-
-  return (
-    <ThemaPaginaTable<ContactmomentProps>
-      contentAfterTheTitle={
-        <>
-          <Paragraph className="ams-mb-m">
-            De lijst met contactmomenten wordt alleen bijgehouden met
-            telefoongesprekken naar telefoonnummer 14 020 of chatberichten met
-            een medewerker, waarbij er voor het beantwoorden van de vraag
-            persoonsgegevens nodig zijn.
-          </Paragraph>
-          <Paragraph className="ams-mb-m">
-            Brieven, klachten vanuit het klachtenformulier, WhatsApp- en
-            socialmediaberichten staan niet in deze lijst.
-          </Paragraph>
-          <Paragraph className="ams-mb-m">
-            Wilt u een eerder contactmoment doorgeven bij een volgende vraag?
-            Geef dan het referentienummer door.
-          </Paragraph>
+            </PageContentCell>
+          )}
+          <ContactMomenten contactmomenten={contactmomenten} />
         </>
       }
-      zaken={contactmomenten}
-      maxItems={tableConfig.maxItems}
-      displayProps={tableConfig.displayProps}
-      listPageLinkTitle="Bekijk alle contactmomenten"
-      listPageRoute={routeConfig.path}
-      title="Contactmomenten"
+      isError={!isPartialError && isError}
+      isLoading={isLoading}
     />
   );
 }

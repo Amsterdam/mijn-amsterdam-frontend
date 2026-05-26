@@ -15,14 +15,13 @@ import { AfvalRoutes } from './pages/Thema/Afval/Afval-render-config.tsx';
 import { AvgRoutes } from './pages/Thema/AVG/AVG-render-config.tsx';
 import { BezwarenRoutes } from './pages/Thema/Bezwaren/Bezwaren-render-config.tsx';
 import { BodemRoutes } from './pages/Thema/Bodem/Bodem-render-config.tsx';
-import { KlantContactRoutes } from './pages/Thema/KlantContact/KlantContact-render-config.tsx';
 import { ErfpachtRoutes } from './pages/Thema/Erfpacht/Erfpacht-render-config.tsx';
 import { HLIRoutes } from './pages/Thema/HLI/HLI-render-config.tsx';
 import { HorecaRoutes } from './pages/Thema/Horeca/Horeca-render-config.tsx';
 import { InkomenRoutes } from './pages/Thema/Inkomen/Inkomen-render-config.tsx';
 import { JeugdRoutes } from './pages/Thema/Jeugd/Jeugd-render-config.tsx';
 import { KlachtenRoutes } from './pages/Thema/Klachten/Klachten-render-config.tsx';
-import { ContactRoutes } from './pages/Thema/KlantContact/KlantContact-render-config.ts';
+import { KlantContactRoutes } from './pages/Thema/KlantContact/KlantContact-render-config.tsx';
 import { KrefiaRoutes } from './pages/Thema/Krefia/Krefia-render-config.tsx';
 import { ParkerenRoutes } from './pages/Thema/Parkeren/Parkeren-render-config.tsx';
 import { ProfileRoutes } from './pages/Thema/Profile/Profile-render-config.tsx';
@@ -46,10 +45,8 @@ const routeComponents: ApplicationRouteConfig[] = [
   AvgRoutes,
   BezwarenRoutes,
   BffErrorRoutes,
-  ContactRoutes,
   BodemRoutes,
   BurgerzakenRoutes,
-  KlantContactRoutes,
   DashboardRoutes,
   ErfpachtRoutes,
   GeneralInfoRoutes,
@@ -58,6 +55,8 @@ const routeComponents: ApplicationRouteConfig[] = [
   InkomenRoutes,
   JeugdRoutes,
   KlachtenRoutes,
+  KlantContactRoutes,
+  KlantContactRoutes,
   KrefiaRoutes,
   LandingRoutes,
   MyAreaRoutes,

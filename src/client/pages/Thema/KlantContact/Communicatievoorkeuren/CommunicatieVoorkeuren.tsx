@@ -9,17 +9,24 @@ import {
 import { MediumValue } from './CommunicatieMediumValue.tsx';
 import { MediumByTypeLabels } from './CommunicatieVoorkeuren-config.ts';
 import styles from './CommunicatieVoorkeuren.module.scss';
-import type { useCommunicatievoorkeuren } from './useCommunicatieVoorkeuren.tsx';
+import type {
+  CommunicatievoorkeurFrontend,
+  ContactvoorkeurPerTypeFrontend,
+  DienstSource,
+} from '../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
 import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
 
-export function CommunicatieVoorkeuren({
-  communicatievoorkeurenData,
-}: {
-  communicatievoorkeurenData: ReturnType<typeof useCommunicatievoorkeuren>;
-}) {
-  const { aangeslotenDiensten, standaardContactvoorkeurPerType } =
-    communicatievoorkeurenData ?? {};
+type CommunicatieVoorkeurenProps = {
+  voorkeuren: CommunicatievoorkeurFrontend[];
+  standaardContactvoorkeurPerType: ContactvoorkeurPerTypeFrontend | null;
+  aangeslotenDiensten?: DienstSource[];
+};
 
+export function CommunicatieVoorkeuren({
+  voorkeuren,
+  aangeslotenDiensten,
+  standaardContactvoorkeurPerType,
+}: CommunicatieVoorkeurenProps) {
   const rows = Object.values(standaardContactvoorkeurPerType ?? {})
     .filter((medium) => !medium.disabled)
     .map((medium) => ({
@@ -79,10 +86,9 @@ export function CommunicatieVoorkeuren({
         )}
       </div>
       <div>
-        <Heading level={2}>Mijn contactgegevens</Heading>
-        <Paragraph className="ams-mb-l">
-          Via deze contactgegevens kan de gemeente met u communiceren.
-        </Paragraph>
+        <Heading level={2} className="ams-mb-l">
+          Mijn contactgegevens
+        </Heading>
         <Datalist rows={rows} />
         {/* <Alert
         severity="warning"

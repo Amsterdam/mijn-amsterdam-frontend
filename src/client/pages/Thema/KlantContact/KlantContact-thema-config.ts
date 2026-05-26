@@ -1,59 +1,30 @@
-import type { LinkProps } from '../../../../universal/types/App.types.ts';
+import type { ReactNode } from 'react';
+
+import { generatePath } from 'react-router';
+
+import type { ContactmomentFrontend } from '../../../../server/services/klantcontact/klantcontact.types.ts';
+import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { isEnabled } from '../../../config/feature-toggles.ts';
-import type { ThemaRoutesConfig } from '../../../config/thema-types.ts';
-
-export const themaId = 'KLANT_CONTACT' as const;
-
-export const featureToggle = {
-  themaActive: isEnabled('KLANT_CONTACT.thema'),
-};
-
-export const themaTitle = 'Mijn contact met de gemeente';
-
-export const linkListItems: LinkProps[] = [];
+import type {
+  ThemaConfigBase,
+  WithPageConfig,
+} from '../../../config/thema-types.ts';
 
 export type InstelAction = 'instellen' | 'wijzigen' | 'valideren';
 
-export const routeConfig = {
-  themaPage: {
-    path: '/contact-en-communicatie',
-    documentTitle: `${themaTitle} | Mijn Amsterdam`,
-    trackingUrl: null,
-  },
-  listPageContactmomenten: {
-    get path(): string {
-      return `/${routeConfig.themaPage.path}/contactmomenten/:page?`;
-    },
-    documentTitle: `Alle contactmomenten | ${themaTitle}`,
-    trackingUrl: null,
-  },
-  detailPageCommunicatievoorkeurInstellen: {
-    get path(): string {
-      return `/${routeConfig.themaPage.path}/:action/:id/:medium/:step`;
-    },
-    documentTitle: `Communicatievoorkeur instellen | ${themaTitle}`,
-    trackingUrl: null,
-  },
-  detailPageCommunicatieMediumInstellen: {
-    get path(): string {
-      return `/${routeConfig.themaPage.path}/:action/:medium/:step`;
-    },
-    documentTitle: `Communicatievoorkeur instellen | ${themaTitle}`,
-    trackingUrl: null,
-  },
-} as const satisfies ThemaRoutesConfig;
-
-export type ContactmomentProps = ContactmomentFrontend & {
+export type ContactmomentFrontendFinal = ContactmomentFrontend & {
   kanaalEl: ReactNode;
   subjectLink: ReactNode;
   className: string;
 };
 
-const THEMA_ID = 'CONTACT';
+const THEMA_ID = 'KLANT_CONTACT';
 const THEMA_TITLE = 'Contact met de gemeente';
 
 type ContactThema = ThemaConfigBase &
   WithPageConfig<'listPageContactmomenten'> &
+  WithPageConfig<'detailPageCommunicatievoorkeurInstellen'> &
+  WithPageConfig<'detailPageCommunicatieMediumInstellen'> &
   WithPageConfig<'listPageAfspraken'>;
 
 const BASE_PATH = '/mijn-contact';
@@ -62,9 +33,12 @@ export const themaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
   featureToggle: {
-    active: true,
+    active: isEnabled('KLANT_CONTACT.thema'),
     afspraken: {
       active: isEnabled('KLANT_CONTACT.afspraken'),
+    },
+    communicatievoorkeuren: {
+      active: isEnabled('KLANT_CONTACT.communicatievoorkeuren'),
     },
   },
   profileTypes: ['private'],
@@ -88,6 +62,24 @@ export const themaConfig = {
       trackingUrl: null,
     },
   },
+  detailPageCommunicatievoorkeurInstellen: {
+    route: {
+      get path(): string {
+        return `/${themaConfig.route.path}/:action/:id/:medium/:step`;
+      },
+      documentTitle: `Communicatievoorkeur instellen | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
+  detailPageCommunicatieMediumInstellen: {
+    route: {
+      get path(): string {
+        return `/${themaConfig.route.path}/:action/:medium/:step`;
+      },
+      documentTitle: `Communicatievoorkeur instellen | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
   pageLinks: [
     {
       to: 'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/contactformulier.aspx/',
@@ -106,7 +98,7 @@ export const themaConfig = {
   ],
 } as const satisfies ContactThema;
 
-const contactmomentenDisplayProps: DisplayProps<ContactmomentProps> = {
+const contactmomentenDisplayProps: DisplayProps<ContactmomentFrontendFinal> = {
   props: {
     kanaalEl: 'Contactvorm',
     subjectLink: 'Onderwerp',
@@ -114,7 +106,7 @@ const contactmomentenDisplayProps: DisplayProps<ContactmomentProps> = {
     referenceNumber: 'Referentienummer',
   },
   colWidths: {
-    large: ['25%', '40%', '20%', '15%'],
+    large: ['25%', '30%', '25%', '20%'],
     small: ['30%', '50%', '20%', '0'],
   },
 };
@@ -126,4 +118,4 @@ export const tableConfigs = {
     listPageRoute: generatePath(themaConfig.listPageContactmomenten.route.path),
     maxItems: 5,
   },
-};
+} as const;

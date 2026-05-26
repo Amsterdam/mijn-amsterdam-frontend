@@ -9,7 +9,7 @@ import { sortAlpha } from '../../universal/helpers/utils.ts';
 import type { LinkProps } from '../../universal/types/App.types.ts';
 import { useThemasByProfileType } from '../config/menuItems.ts';
 import type { ThemaMenuItemTransformed } from '../config/thema-types.ts';
-import { themaConfig as mijnContactThemaConfig } from '../pages/Thema/KlantContact/KlantContact-thema-config.ts';
+import { themaConfig as klantContactThemaConfig } from '../pages/Thema/KlantContact/KlantContact-thema-config.ts';
 import { themaConfig as profileThemaConfig } from '../pages/Thema/Profile/Profile-thema-config.ts';
 
 export interface ThemasState {
@@ -25,7 +25,7 @@ export function compareThemas<T extends withIDTitle>(a: T, b: T): 0 | 1 | -1 {
   const themaIDsOnTop = [
     profileThemaConfig.BRP.id,
     profileThemaConfig.KVK.id,
-    mijnContactThemaConfig.id,
+    klantContactThemaConfig.id,
   ] as string[];
 
   const aHasPrecedence = themaIDsOnTop.includes(a.id);

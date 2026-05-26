@@ -1,21 +1,21 @@
 import createDebugger from 'debug';
 import type { Request } from 'express';
 
+import { fetchCommunicatievoorkeuren } from './klantcontact-communicatievoorkeuren.ts';
+import {
+  fetchDienstverlener,
+  setContactgegeven,
+} from './klantcontact-profieldienst.ts';
 import {
   createVerificationRequest,
   verifyVerificationRequest,
-} from './contact-verify.ts';
+} from './klantcontact-verify.ts';
 import {
   sendBadRequest,
   sendResponse,
   type ResponseAuthenticated,
 } from '../../routing/route-helpers.ts';
 import { captureException } from '../monitoring.ts';
-import {
-  fetchCommunicatievoorkeuren,
-  fetchDienstverlener,
-  setContactgegeven,
-} from './contact-profieldienst.ts';
 
 const debugContactRequestData = createDebugger(
   'contact-api:route-request-data'
@@ -71,7 +71,7 @@ export async function handleVerifyVerificationRequest(
   return sendResponse(res, response);
 }
 
-export async function handleGetCommunicatievoorkeuren(
+export async function handleFetchCommunicatievoorkeuren(
   req: Request,
   res: ResponseAuthenticated
 ) {
@@ -104,7 +104,7 @@ export async function handleSetContactgegeven(
   return sendResponse(res, response);
 }
 
-export async function handleGetDienstverlener(
+export async function handleFetchDienstverlener(
   req: Request,
   res: ResponseAuthenticated
 ) {

@@ -14,6 +14,7 @@ import { entries } from '../../../../universal/helpers/utils.ts';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
+import { TableV2 } from '../../../components/Table/TableV2.tsx';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
@@ -66,9 +67,9 @@ function Stadspassen({
 
   return (
     <PageContentCell>
-      <ThemaPaginaTable<StadspasDisplayProps>
+      <TableV2<StadspasDisplayProps>
         displayProps={stadspasDisplayProps}
-        zaken={passen}
+        items={passen}
         className={styles.Stadspassen}
       />
 

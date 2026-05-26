@@ -4,10 +4,10 @@ import { generatePath } from 'react-router';
 
 import { MAXIMUM_AGE_BEFORE_VALIDATION } from './CommunicatieVoorkeuren-config.ts';
 import styles from './CommunicatieVoorkeuren.module.scss';
-import type { ContactgegevenFrontend } from '../../../../../server/services/contact/contact-profieldienst-types.ts';
+import type { ContactgegevenFrontend } from '../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import {
-  routeConfig,
+  themaConfig,
   type InstelAction,
 } from '../KlantContact-thema-config.ts';
 
@@ -55,7 +55,7 @@ type MediumValueProps = {
 
 export function MediumValue({ medium }: MediumValueProps) {
   const getRoute = (step: '1' | '2', action: InstelAction = 'instellen') =>
-    generatePath(routeConfig.detailPageCommunicatieMediumInstellen.path, {
+    generatePath(themaConfig.detailPageCommunicatieMediumInstellen.route.path, {
       medium: medium.type,
       step,
       action,

@@ -2,12 +2,12 @@ import express from 'express';
 
 import {
   handleCreateVerificationRequest,
-  handleGetDienstverlener,
+  handleFetchDienstverlener,
   handleVerifyVerificationRequest,
   handleSetContactgegeven,
-  handleGetCommunicatievoorkeuren,
-} from './contact-route-handlers.ts';
-import { routes } from './contact-service-config.ts';
+  handleFetchCommunicatievoorkeuren,
+} from './klantcontact-route-handlers.ts';
+import { routes } from './klantcontact-service-config.ts';
 import { createBFFRouter } from '../../routing/route-helpers.ts';
 
 const routerProtected = createBFFRouter({ id: 'contact-router-protected' });
@@ -26,15 +26,18 @@ routerProtected.post(
 
 routerProtected.get(
   routes.CONTACT_GET_COMMUNICATIEVOORKEUREN,
-  handleGetCommunicatievoorkeuren
+  handleFetchCommunicatievoorkeuren
 );
 routerProtected.post(
   routes.CONTACT_SET_CONTACTGEGEVEN,
   handleSetContactgegeven
 );
 
-routerProtected.get(routes.CONTACT_GET_DIENSTVERLENER, handleGetDienstverlener);
+routerProtected.get(
+  routes.CONTACT_GET_DIENSTVERLENER,
+  handleFetchDienstverlener
+);
 
-export const contactRouter = {
+export const klantcontactRouter = {
   protected: routerProtected,
 };

@@ -6,24 +6,26 @@ import {
   PersonAtDeskIcon,
 } from '@amsterdam/design-system-react-icons';
 
-import type { ContactmomentProps } from './KlantContact-thema-config.ts';
-import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
-import type { Kanaal } from '../../../../server/services/klantcontact/klantcontact.types.ts';
-import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
-import type { ThemaMenuItemTransformed } from '../../../config/thema-types.ts';
-import { getRedactedClass } from '../../../helpers/cobrowse.ts';
-import { useActiveThemaMenuItems } from '../../../hooks/useThemaMenuItems.ts';
-import { themaConfig as themaAfis } from '../Afis/Afis-thema-config.ts';
-import { themaConfig as themaBelastingen } from '../Belastingen/Belastingen-thema-config.ts';
-import { themaConfig as themaInkomen } from '../Inkomen/Inkomen-thema-config.ts';
-import { themaConfig as themaKrefia } from '../Krefia/Krefia-thema-config.ts';
-import { themaConfig as themaParkeren } from '../Parkeren/Parkeren-thema-config.ts';
-import styles from '../Profile/private/ProfilePrivate.module.scss';
+import type {
+  ContactmomentFrontend,
+  Kanaal,
+} from '../../../../../server/services/klantcontact/klantcontact.types.ts';
+import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
+import type { ThemaMenuItemTransformed } from '../../../../config/thema-types.ts';
+import { getRedactedClass } from '../../../../helpers/cobrowse.ts';
+import { useActiveThemaMenuItems } from '../../../../hooks/useThemaMenuItems.ts';
+import { themaConfig as themaAfis } from '../../Afis/Afis-thema-config.ts';
+import { themaConfig as themaBelastingen } from '../../Belastingen/Belastingen-thema-config.ts';
+import { themaConfig as themaInkomen } from '../../Inkomen/Inkomen-thema-config.ts';
+import { themaConfig as themaKrefia } from '../../Krefia/Krefia-thema-config.ts';
+import { themaConfig as themaParkeren } from '../../Parkeren/Parkeren-thema-config.ts';
 import {
   featureToggle as featureToggleSvwi,
   themaId as themaIdSvwi,
-} from '../Svwi/Svwi-thema-config.ts';
-import { themaConfig as themaZorg } from '../Zorg/Zorg-thema-config.ts';
+} from '../../Svwi/Svwi-thema-config.ts';
+import { themaConfig as themaZorg } from '../../Zorg/Zorg-thema-config.ts';
+import type { ContactmomentFrontendFinal } from '../KlantContact-thema-config.ts';
+import styles from './Contactmomenten.module.scss';
 
 // TODO: Use all the individual thema ID's imported from the Thema Config files.
 const SVWIv1ORv2 = featureToggleSvwi.svwiActive ? themaIdSvwi : themaInkomen.id;
@@ -87,19 +89,12 @@ function addIcon(type: Kanaal) {
   return type;
 }
 
-export function useContactmomentenListData() {
-  const {
-    id,
-    themaConfig,
-    contactmomenten,
-    tableConfigs,
-    isLoading,
-    isError,
-    breadcrumbs,
-  } = useKlantcontactData();
+export function useTransformContactmomenten(
+  contactmomenten: ContactmomentFrontend[]
+): ContactmomentFrontendFinal[] {
   const { items: myThemasMenuItems } = useActiveThemaMenuItems();
 
-  const contactmomenten_: ContactmomentProps[] = contactmomenten.map(
+  const contactmomenten_: ContactmomentFrontendFinal[] = contactmomenten.map(
     (contactmoment) => {
       const menuItemId = // getMenuItem can not be used because it is dependend on the user having the thema at the current moment
         mapperContactmomentToMenuItem[
@@ -117,14 +112,5 @@ export function useContactmomentenListData() {
     }
   );
 
-  return {
-    id,
-    tableConfig: tableConfigs.contactmomenten,
-    isLoading,
-    isError,
-    breadcrumbs,
-    contactmomenten: contactmomenten_,
-    hasContactmomenten: !!contactmomenten.length,
-    routeConfig: themaConfig.listPageContactmomenten.route,
-  };
+  return contactmomenten_;
 }

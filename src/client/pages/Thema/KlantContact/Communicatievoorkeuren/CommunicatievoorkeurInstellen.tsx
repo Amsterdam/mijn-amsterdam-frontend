@@ -1,34 +1,28 @@
 import { useNavigate } from 'react-router';
 
 import { EmailInstellen } from './EmailvoorkeurInstellen.tsx';
-import { useCommunicatieVoorkeurInstellen } from './useCommunicatieVoorkeuren.tsx';
+import { useCommunicatieVoorkeurInstellen } from './useCommunicatieVoorkeuren.ts';
 import { PageContentCell } from '../../../../components/Page/Page.tsx';
 import ThemaDetailPagina from '../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
-import { routeConfig } from '../KlantContact-thema-config.ts';
+import { useKlantcontactData } from '../useKlantcontactData.hook.tsx';
 
 export function CommunicatievoorkeurInstellen() {
-  const {
-    voorkeur,
-    medium,
-    isLoading,
-    isError,
-    title,
-    themaId,
-    breadcrumbs,
-    update,
-  } = useCommunicatieVoorkeurInstellen();
-  useHTMLDocumentTitle(routeConfig.detailPageCommunicatievoorkeurInstellen);
+  const { themaConfig, breadcrumbs, isLoading, isError } =
+    useKlantcontactData();
+  const { voorkeur, medium, title, update, routeConfig } =
+    useCommunicatieVoorkeurInstellen();
+  useHTMLDocumentTitle(routeConfig);
 
   const navigate = useNavigate();
   function navigateToThemaPage() {
-    navigate(routeConfig.themaPage.path);
+    navigate(routeConfig.path);
   }
 
   return (
     <ThemaDetailPagina
       title={title}
-      themaId={themaId}
+      themaId={themaConfig.id}
       isLoading={isLoading}
       isError={isError}
       zaak={voorkeur ?? {}}
