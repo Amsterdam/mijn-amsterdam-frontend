@@ -33,14 +33,15 @@ import { fetchKVK } from './hr-kvk/hr-kvk.ts';
 import { fetchLeerlingenvervoer } from './jzd/jeugd/jeugd.ts';
 import { fetchWmo } from './jzd/wmo/wmo.ts';
 import { fetchAllKlachten } from './klachten/klachten.ts';
+import { fetchKlantcontact } from './klantcontact/klantcontact.ts';
 import { fetchKrefia } from './krefia/krefia.ts';
 import { captureException } from './monitoring.ts';
+import { trackEvent } from './monitoring.ts';
 import { fetchParkeren } from './parkeren/parkeren.ts';
 import { fetchBelasting } from './patroon-c/belasting.ts';
 import { fetchMilieuzone, fetchOvertredingen } from './patroon-c/cleopatra.ts';
 import { fetchSubsidie } from './patroon-c/subsidie.ts';
 import { fetchSVWI } from './patroon-c/svwi.ts';
-import { fetchContactmomenten } from './salesforce/contactmomenten.ts';
 import {
   combineNotificationsWithTipsAndSort,
   fetchNotificationsAndTipsFromServices,
@@ -159,7 +160,7 @@ const BELASTINGEN = callAuthenticatedService(fetchBelasting);
 const MILIEUZONE = callAuthenticatedService(fetchMilieuzone);
 const OVERTREDINGEN = callAuthenticatedService(fetchOvertredingen);
 const SUBSIDIES = callAuthenticatedService(fetchSubsidie);
-const KLANT_CONTACT = callAuthenticatedService(fetchContactmomenten); // For now salesforcre only consists of contactmomenten.
+const KLANT_CONTACT = callAuthenticatedService(fetchKlantcontact);
 const WONEN = callAuthenticatedService(fetchWonen);
 
 // Location, address, based services
@@ -392,14 +393,26 @@ export function loadServices(
   serviceMap:
     | Partial<PrivateServices>
     | Partial<CommercialServices>
-    | Partial<PrivateServicesAttributeBased>
+    | Partial<PrivateServicesAttributeBased>,
+  trackDurationTelemetry: boolean = false
 ) {
+  const startTimeMs = Date.now();
   return Object.entries(serviceMap).map(([serviceID, fetchService]) => {
     // Return service result as Object like { SERVICE_ID: result }
     return fetchService(req)
-      .then((result) => ({
-        [serviceID]: result,
-      }))
+      .then((result) => {
+        if (trackDurationTelemetry && result?.status === 'OK') {
+          trackEvent('services-duration', {
+            serviceId: serviceID,
+            durationMs: Date.now() - startTimeMs,
+            status: result.status,
+          });
+        }
+
+        return {
+          [serviceID]: result,
+        };
+      })
       .catch((error: Error) => {
         captureException(error);
         return {
@@ -425,7 +438,7 @@ export async function loadServicesSSE(req: Request, res: Response) {
   // Determine the services to be loaded for certain profile types
   const serviceMap = getServiceMap(profileType);
   const serviceIds = Object.keys(serviceMap);
-  const servicePromises = loadServices(req, serviceMap);
+  const servicePromises = loadServices(req, serviceMap, true);
 
   // Add result handler that sends the service result via the EventSource stream
   servicePromises.forEach((servicePromise, index) =>
@@ -447,7 +460,7 @@ export async function loadServicesAll(req: Request, res: Response) {
   }
 
   const serviceMap = getServiceMap(authProfileAndToken.profile.profileType);
-  const servicePromises = loadServices(req, serviceMap);
+  const servicePromises = loadServices(req, serviceMap, true);
 
   // Combine all results into 1 object
   const serviceResults = (await Promise.all(servicePromises)).reduce(

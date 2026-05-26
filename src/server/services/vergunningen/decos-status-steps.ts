@@ -1,4 +1,8 @@
 import type { WithDateEnd } from './config-and-types.ts';
+import {
+  getVergunningCTALinks,
+  type CaseType,
+} from './vergunningen-notifications-config.ts';
 import { dateTimeEndFormatted } from '../../../client/pages/Thema/Vergunningen/Vergunningen-helpers.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 import { MA_VERLEEND_DECISIONS_COMMOM } from '../decos/decos-field-transformers.ts';
@@ -14,6 +18,8 @@ export function getStatusStepsDecos<
   const isVerlopen = 'isExpired' in zaak ? zaak.isExpired === true : false;
   const isIngetrokken = !!zaak.decision?.includes('Ingetrokken');
 
+  const caseType = zaak.caseType as CaseType;
+
   const statusOntvangen: StatusLineItem = {
     id: 'step-1',
     status: 'Ontvangen',
@@ -23,12 +29,15 @@ export function getStatusStepsDecos<
     isActive: !isInBehandeling && !isAfgehandeld,
     isChecked: true,
   };
-
+  const url = getVergunningCTALinks(caseType)?.meerinfo;
+  const description = url
+    ? `Lees meer over uw aanvraag op <a href="${url}" rel="noopener noreferrer">amsterdam.nl</a>.`
+    : '';
   const statusInBehandeling: StatusLineItem = {
     id: 'step-2',
     status: 'In behandeling',
     datePublished: dateInBehandeling || '',
-    description: '',
+    description,
     documents: [],
     isActive: isInBehandeling && !isAfgehandeld,
     isChecked: isInBehandeling || isAfgehandeld,
@@ -71,7 +80,8 @@ export function getStatusStepsDecos<
     if (isIngetrokken) {
       description = `Wij hebben uw ${zaak.title} ingetrokken.`;
     } else if (isVerlopen) {
-      description = `Uw ${zaak.title} is verlopen.`;
+      const url = getVergunningCTALinks(caseType)?.aanvragen;
+      description = `Uw ${zaak.title} is verlopen, ${url ? `<a href="${url}" rel="noopener noreferrer">vraag zonodig een nieuwe aan</a>` : 'vraag zonodig een nieuwe aan'}.`;
       datePublished = zaak.dateEnd as string; // Verlopen status always has a dateEbd associated with it.
     } else if (zaak.dateEndFormatted) {
       description = `Uw vergunning verloopt op ${dateTimeEndFormatted(zaak)}.`;

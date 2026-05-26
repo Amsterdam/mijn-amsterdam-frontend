@@ -29,7 +29,7 @@
             "AmountInBalanceTransacCrcy": "343.00",
             "DocumentReferenceID": "1234567890",
             "AccountingDocument": "1234567890",
-            "Paylink": "http://localhost:3100/mocks-server/afis/paylink",
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink",
             "IsCleared": false
           }
         }
@@ -47,7 +47,7 @@
             "AmountInBalanceTransacCrcy": "343.00",
             "DocumentReferenceID": "5555555",
             "AccountingDocument": "5555555",
-            "Paylink": "http://localhost:3100/mocks-server/afis/paylink",
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink",
             "IsCleared": false
           }
         }
@@ -65,7 +65,7 @@
             "AmountInBalanceTransacCrcy": "5.50",
             "DocumentReferenceID": "5555555",
             "AccountingDocument": "5555555",
-            "Paylink": "http://localhost:3100/mocks-server/afis/paylink",
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink",
             "IsCleared": false
           }
         }
@@ -83,7 +83,7 @@
             "AmountInBalanceTransacCrcy": "-16.00",
             "DocumentReferenceID": "5555555",
             "AccountingDocument": "5555555",
-            "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
           }
         }
       },
@@ -94,13 +94,13 @@
             "DunningLevel": 9999,
             "DunningBlockingReason": "",
             "ProfitCenterName": "Moneymakers inc.",
-            "SEPAMandate": "",
+            "SEPAMandate": 123123123,
             "PostingDate": "2023-03-23T00:00:00",
             "NetDueDate": "2023-03-23T00:00:00",
             "AmountInBalanceTransacCrcy": "1000.00",
             "DocumentReferenceID": "5555555",
             "AccountingDocument": "5555555",
-            "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
           }
         }
       }

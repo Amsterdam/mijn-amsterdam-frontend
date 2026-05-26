@@ -1,7 +1,6 @@
-import type { ReactNode} from 'react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 
-import { Button, Paragraph } from '@amsterdam/design-system-react';
+import { Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import type { LatLngLiteral } from 'leaflet';
 
@@ -12,19 +11,18 @@ import type {
   BAGSourceData,
 } from '../../../server/services/bag/bag.types.ts';
 import { LOCATION_ZOOM } from '../../../universal/config/myarea-datasets.ts';
-import type {
-  LatLngWithAddress} from '../../../universal/helpers/bag.ts';
+import type { LatLngWithAddress } from '../../../universal/helpers/bag.ts';
 import {
   extractAddressParts,
   getLatLngWithAddress,
   getLatLonByAddress,
-  isLocatedInWeesp
+  isLocatedInWeesp,
 } from '../../../universal/helpers/bag.ts';
-import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle.tsx';
-import { MyAreaLoader } from '../../components/MyArea/MyAreaLoader.tsx';
 import { useBffApi } from '../../hooks/api/useBffApi.ts';
-import { Modal } from '../Modal/Modal.tsx';
+import { ModalAndButton } from '../Modal/Modal.tsx';
+import { BaseLayerType } from '../MyArea/Map/BaseLayerToggle.tsx';
 import type { MapLocationMarker } from '../MyArea/MyArea.hooks.ts';
+import { MyAreaLoader } from '../MyArea/MyAreaLoader.tsx';
 
 const BAG_ADRESSEERBARE_OBJECTEN_URL =
   'https://api.data.amsterdam.nl/v1/benkagg/adresseerbareobjecten/';
@@ -58,28 +56,13 @@ function transformBagSearchResultsResponse(
   return [];
 }
 
-export interface LocationModalProps {
-  // The address for determining latlng
-  address?: string | null;
-  // Label for InfoDetail
-  label?: string;
-  // Title of the Modal
-  modalTitle?: string;
-  // Explicit latlng
+type LocationMapProps = {
+  address: string | null;
   latlng?: LatLngLiteral;
-  children?: ReactNode;
-}
+  markerLabel: string;
+};
 
-export function LocationModal({
-  // Addres
-  address = null,
-  latlng,
-  modalTitle,
-  label,
-  children,
-}: LocationModalProps) {
-  const [isLocationModalOpen, setLocationModalOpen] = useState(false);
-  const hasLocationData = !!(address || latlng);
+function LocationMap({ address, latlng, markerLabel }: LocationMapProps) {
   const bagApi = useBffApi<BAGSourceData>(
     address ? `${BAG_ADRESSEERBARE_OBJECTEN_URL}?address=${address}` : null,
     {
@@ -112,80 +95,106 @@ export function LocationModal({
   const centerMarker: MapLocationMarker | null = latlngFound
     ? {
         latlng: latlngFound,
-        label: label ?? address ?? `${latlng?.lat},${latlng?.lng}`,
+        label: markerLabel ?? address ?? `${latlng?.lat},${latlng?.lng}`,
       }
     : null;
 
-  const hasLocationDataAndCenterMarker = hasLocationData && centerMarker;
+  const hasLocationDataAndCenterMarker = !!centerMarker;
 
   useEffect(() => {
     if (bagApi.isDirty || bagApi.isLoading || querySearchAddress === null) {
       return;
     }
-    if (isLocationModalOpen) {
-      const { openbareruimteNaam, huisnummer, postcode } = querySearchAddress;
+    const { openbareruimteNaam, huisnummer, postcode } = querySearchAddress;
 
-      if (!(huisnummer && (openbareruimteNaam || postcode))) {
-        return;
-      }
-
-      const bagApiUrl = new URL(BAG_ADRESSEERBARE_OBJECTEN_URL);
-      const params = new URLSearchParams(querySearchAddress);
-      bagApiUrl.search = params.toString();
-
-      bagApi.fetch(bagApiUrl);
+    if (!(huisnummer && (openbareruimteNaam || postcode))) {
+      return;
     }
-  }, [
-    isLocationModalOpen,
-    querySearchAddress,
-    bagApi.isDirty,
-    bagApi.isLoading,
-  ]);
 
+    const bagApiUrl = new URL(BAG_ADRESSEERBARE_OBJECTEN_URL);
+    const params = new URLSearchParams(querySearchAddress);
+    bagApiUrl.search = params.toString();
+
+    bagApi.fetch(bagApiUrl);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Exclude some dependencies to prevent unwanted re-fetches
+  }, [querySearchAddress, bagApi.isDirty, bagApi.isLoading]);
+
+  return (
+    <>
+      {bagApi.isLoading && <Paragraph>Het adres wordt opgezocht..</Paragraph>}
+      {hasLocationDataAndCenterMarker && (
+        <MyAreaLoader
+          showPanels={false}
+          zoom={LOCATION_ZOOM}
+          datasetIds={[]}
+          activeBaseLayerType={BaseLayerType.Aerial}
+          centerMarker={centerMarker}
+          showHomeLocationMarker={false}
+          showSecondaryLocationMarkers={false}
+        />
+      )}
+      {!bagApi.isLoading && !hasLocationDataAndCenterMarker && (
+        <Paragraph>
+          Het adres{address ? ` ${address}` : null} kan niet getoond worden op
+          de kaart.
+        </Paragraph>
+      )}
+    </>
+  );
+}
+
+export interface LocationModalProps {
+  // The address for determining latlng
+  address?: string | null;
+  // Label for InfoDetail
+  label?: string;
+  buttonLabel?: string;
+  // Title of the Modal
+  modalTitle?: string;
+  // Explicit latlng
+  latlng?: LatLngLiteral;
+  buttonClassName?: string;
+  buttonVariant?: 'primary' | 'secondary' | 'tertiary' | 'ma-link-like';
+}
+
+export function LocationModal({
+  address = null,
+  latlng,
+  modalTitle,
+  label,
+  buttonLabel = 'Bekijk op de kaart',
+  buttonClassName = '',
+  buttonVariant = 'secondary',
+}: LocationModalProps) {
+  const hasLocationData = !!(address || latlng);
+  const title = modalTitle ?? label ?? address ?? 'Locatie';
+  const modalProps = useMemo(() => {
+    return {
+      pollingQuerySelector: '#map-zoom',
+      giveUpOnReadyPollingAfterMs: 5000,
+      title,
+    };
+  }, [title]);
   return (
     hasLocationData && (
       <>
-        <Button
-          className={styles.LocationModalLink}
-          variant="secondary"
-          onClick={() => setLocationModalOpen(true)}
-        >
-          {children ?? 'Bekijk op de kaart'}
-        </Button>
-        <Modal
-          isOpen={isLocationModalOpen}
-          pollingQuerySelector="#map-zoom"
-          giveUpOnReadyPollingAfterMs={5000}
-          onClose={() => {
-            setLocationModalOpen(false);
-          }}
-          title={
-            modalTitle ?? label ?? latlngFromBagSearch?.address ?? 'Locatie'
-          }
+        <ModalAndButton
+          buttonClassName={classNames(
+            styles.LocationModalLink,
+            buttonClassName
+          )}
+          buttonVariant={buttonVariant}
+          buttonLabel={buttonLabel}
+          modal={modalProps}
         >
           <div className={styles.LocationModalInner}>
-            {bagApi.isLoading && (
-              <Paragraph>Het adres wordt opgezocht..</Paragraph>
-            )}
-            {hasLocationDataAndCenterMarker && (
-              <MyAreaLoader
-                showPanels={false}
-                zoom={LOCATION_ZOOM}
-                datasetIds={[]}
-                activeBaseLayerType={BaseLayerType.Aerial}
-                centerMarker={centerMarker}
-                showHomeLocationMarker={false}
-                showSecondaryLocationMarkers={false}
-              />
-            )}
-            {!bagApi.isLoading && !hasLocationDataAndCenterMarker && (
-              <Paragraph>
-                Het adres{address ? ` ${address}` : null} kan niet getoond
-                worden op de kaart.
-              </Paragraph>
-            )}
+            <LocationMap
+              address={address}
+              latlng={latlng}
+              markerLabel={title}
+            />
           </div>
-        </Modal>
+        </ModalAndButton>
       </>
     )
   );

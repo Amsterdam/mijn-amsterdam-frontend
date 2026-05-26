@@ -31,9 +31,15 @@ parameters:
     type: boolean
     default: true
 
+variables:
+  - template: pipelines/pool.yaml@MamsInfra
+    parameters:
+      dtapName: ${{ parameters.dtapName }}
+
 jobs:
   - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
     parameters:
+      pool: ${{ variables.pool }}
       dtapName: ${{ parameters.dtapName }}
       btdBuild: ${{ parameters.btdBuild }}
       btdTest: ${{ parameters.btdTest }}

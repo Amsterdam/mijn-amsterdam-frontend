@@ -1,12 +1,13 @@
-import type { ReactNode} from 'react';
+import type { ReactNode } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { Dialog } from '@amsterdam/design-system-react';
+import { Button, Dialog } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import styles from './Modal.module.scss';
 import { getElementOnPageAsync } from '../../helpers/utils.ts';
 import { useKeyUp } from '../../hooks/useKey.ts';
+import { MaLinkLikeButton } from '../MaLink/MaLink.tsx';
 
 function FocusTrapInner() {
   const element = document.getElementById('modal-dialog');
@@ -15,44 +16,46 @@ function FocusTrapInner() {
     'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])'
   );
 
-  if (!element || !elements) {
-    return null;
-  }
-
-  const focusableEls = Array.from(elements).filter(
-    (element) => window.getComputedStyle(element)?.display !== 'none'
-  );
+  const focusableEls = elements
+    ? Array.from(elements).filter(
+        (element) => window.getComputedStyle(element)?.display !== 'none'
+      )
+    : [];
 
   const firstFocusableEl = focusableEls[0] as HTMLElement;
   const lastFocusableEl = focusableEls[focusableEls.length - 1] as HTMLElement;
 
-  function handleTabKey(e: KeyboardEvent) {
-    const isTabPressed = e.key === 'Tab';
+  const handleTabKey = useCallback(
+    (e: KeyboardEvent) => {
+      const isTabPressed = e.key === 'Tab';
 
-    if (!isTabPressed) {
-      return;
-    }
+      if (!isTabPressed) {
+        return;
+      }
 
-    if (e.shiftKey) {
-      /* shift + tab */
-      if (document.activeElement === firstFocusableEl) {
-        lastFocusableEl.focus();
+      if (e.shiftKey) {
+        /* shift + tab */
+        if (document.activeElement === firstFocusableEl) {
+          lastFocusableEl.focus();
+          e.preventDefault();
+        }
+        /* tab */
+      } else if (document.activeElement === lastFocusableEl) {
+        firstFocusableEl.focus();
         e.preventDefault();
       }
-      /* tab */
-    } else if (document.activeElement === lastFocusableEl) {
-      firstFocusableEl.focus();
-      e.preventDefault();
-    }
-  }
-
-  window.addEventListener('keydown', handleTabKey);
+    },
+    [firstFocusableEl, lastFocusableEl]
+  );
 
   useEffect(() => {
+    window.addEventListener('keydown', handleTabKey);
     return () => {
       window.removeEventListener('keydown', handleTabKey);
     };
-  }, []);
+  }, [handleTabKey]);
+
+  return null;
 }
 
 function FocusTrap({
@@ -129,7 +132,7 @@ export function Modal({
 
   return (
     isOpen && (
-      <div className={styles.ModalContainer}>
+      <>
         <div
           className={styles.Modal}
           onClick={() => (closeOnClickOutside ? onClose?.() : void 0)}
@@ -156,7 +159,57 @@ export function Modal({
             />
           )}
         </Dialog>
-      </div>
+      </>
     )
+  );
+}
+
+type ModalAndButtonProps = {
+  buttonVariant?: 'primary' | 'secondary' | 'tertiary' | 'ma-link-like';
+  modal: Prettify<Omit<ModalProps, 'isOpen' | 'children' | 'onClose'>>;
+  children: ReactNode;
+  buttonClassName?: string;
+  buttonLabel: string;
+  startOpen?: boolean;
+};
+
+export function ModalAndButton({
+  modal,
+  children,
+  buttonClassName,
+  buttonVariant = 'secondary',
+  buttonLabel = 'Open modal',
+  startOpen = false,
+}: ModalAndButtonProps) {
+  const [isLocationModalOpen, setLocationModalOpen] = useState(startOpen);
+
+  return (
+    <>
+      {buttonVariant === 'ma-link-like' ? (
+        <MaLinkLikeButton
+          className={buttonClassName}
+          onClick={() => setLocationModalOpen(true)}
+        >
+          {buttonLabel}
+        </MaLinkLikeButton>
+      ) : (
+        <Button
+          variant={buttonVariant}
+          className={buttonClassName}
+          onClick={() => setLocationModalOpen(true)}
+        >
+          {buttonLabel}
+        </Button>
+      )}
+      <Modal
+        {...modal}
+        isOpen={isLocationModalOpen}
+        onClose={() => {
+          setLocationModalOpen(false);
+        }}
+      >
+        {children}
+      </Modal>
+    </>
   );
 }

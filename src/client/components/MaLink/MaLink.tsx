@@ -177,11 +177,15 @@ export function MaButtonRouterLink({
   );
 }
 
-type MaButtonInlineProps = Omit<ButtonProps, 'variant'>;
+export function MaLinkLikeButton({
+  className,
+  children,
+  ...rest
+}: ButtonHTMLAttributes<HTMLButtonElement>) {
+  const className_ = classNames('ams-link', styles.InlineButton, className);
 
-export function MaButtonInline({ children, ...rest }: MaButtonInlineProps) {
   return (
-    <button className={classNames(styles.MaButtonInline, 'ams-link')} {...rest}>
+    <button type="button" {...rest} className={className_}>
       {children}
     </button>
   );

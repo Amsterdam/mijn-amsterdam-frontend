@@ -20,14 +20,6 @@
   z-index: z-index(modal);
 }
 
-.ModalContainer {
-  display: none;
-
-  &:last-child {
-    display: block;
-  }
-}
-
 .Dialog {
   z-index: z-index(dialog);
   position: fixed;

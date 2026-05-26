@@ -29,7 +29,7 @@ Put the following commands in your terminal after all dependencies are installed
 pnpm serve-dev
 ```
 
-It's also possible to run both the mocks server and bff seperately with:
+It's also possible to run the mock server and BFF separately with:
 
 ```bash
 pnpm start
@@ -37,12 +37,14 @@ pnpm mock-server
 pnpm bff-api:watch
 ```
 
+The `mock-server` script starts the custom TypeScript mock server from `src/mocks-server`.
+
 To run our database and an admin panel set `BFF_DB_ENABLED` to `true` and run:
 ```bash
 docker compose up
 ```
 
-You can also include the BFF, but this is a work in progress, meaning connections to the DB, frontend and mock-server should still be made.
+You can also include the BFF, but this is a work in progress, meaning connections to the DB, frontend, and mock server should still be made.
 ```bash
 BFF_SSH_PASSWD=root:admin docker compose --profile dev up
 ```

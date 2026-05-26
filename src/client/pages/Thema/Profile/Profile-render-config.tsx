@@ -33,7 +33,7 @@ export const menuItems: ThemaMenuItem[] = [
       return (
         (!isLoading(appState.BRP) && !!appState.BRP.content?.persoon) ||
         (!isLoading(appState.KLANT_CONTACT) &&
-          !!appState.KLANT_CONTACT.content?.length)
+          !!appState.KLANT_CONTACT.content?.contactmomenten?.length)
       );
     },
     IconSVG: ProfilePrivateIcon,

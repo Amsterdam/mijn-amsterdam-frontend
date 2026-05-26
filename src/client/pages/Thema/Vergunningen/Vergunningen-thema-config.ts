@@ -86,8 +86,16 @@ export const themaConfig: VergunningenThemaConfig = {
   },
   pageLinks: [
     {
-      to: 'https://www.amsterdam.nl/ondernemen/vergunningen/wevos/',
-      title: 'Ontheffing RVV en TVM aanvragen',
+      title: 'Verkeersontheffing (RVV) aanvragen',
+      to: 'https://www.amsterdam.nl/vergunningen-ontheffingen/werkzaamheden-straat/verkeersontheffing-hele-stad-aanvragen/',
+    },
+    {
+      title: 'Toestemming voor afsluiten of blokkeren straat aanvragen (TVM)',
+      to: 'https://www.amsterdam.nl/vergunningen-ontheffingen/werkzaamheden-straat/toestemming-afsluiten-blokkeren-straat/',
+    },
+    {
+      title: 'Overige vergunningen en ontheffingen aanvragen',
+      to: 'https://www.amsterdam.nl/vergunningen-ontheffingen',
     },
   ],
   uitlegPageSections: [

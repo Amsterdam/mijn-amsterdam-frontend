@@ -7,6 +7,7 @@ import {
   parseISO,
 } from 'date-fns';
 import { nl } from 'date-fns/locale/nl';
+import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../config/app.ts';
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
@@ -50,6 +51,10 @@ export function toISOString(date: string | Date): string | null {
 
 export function defaultDateFormat(datestr: string | Date | number) {
   return dateFormat(datestr, DEFAULT_DATE_FORMAT);
+}
+
+export function defaultDateFormatWithDayName(datestr: string | Date | number) {
+  return dateFormat(datestr, `EEEE ${DEFAULT_DATE_FORMAT}`);
 }
 
 export function isoDateFormat(datestr: string | Date | number) {
@@ -198,4 +203,19 @@ export function toDateFormatted(
     return null;
   }
   return defaultDateFormat(input);
+}
+export function isRecentNotification(
+  datePublished: string,
+  dateNow: Date = new Date()
+): boolean {
+  const diff = Math.abs(differenceInMonths(new Date(datePublished), dateNow));
+  return diff < MONTHS_TO_KEEP_NOTIFICATIONS;
+}
+
+export function asEnum<T extends readonly string[]>(values: T) {
+  return Object.freeze(
+    Object.fromEntries(values.map((v) => [v, v])) as {
+      [K in T[number]]: K;
+    }
+  );
 }

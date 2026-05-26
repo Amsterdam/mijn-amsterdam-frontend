@@ -1,0 +1,68 @@
+{
+  "actief": true,
+  "balance_update_time": "2020-04-02T12:45:41.000Z",
+  "budgetten": [
+    {
+      "code": "2025_AMSTEG_PC",
+      "naam": "25/26 PC Tegoed",
+      "omschrijving": "",
+      "expiry_date": "2026-07-31T21:59:59.000Z",
+      "budget_assigned": 580,
+      "budget_balance": 580
+    },
+    {
+      "code": "2025_AMSTEG_PC",
+      "naam": "25/26 Kindtegoed 12 tm 14 jaar",
+      "omschrijving": "Kindtegoed",
+      "expiry_date": "2026-07-31T21:59:59.000Z",
+      "budget_assigned": 475,
+      "budget_balance": 475
+    },
+    {
+      "code": "WITGOEDREGELING",
+      "naam": "Witgoedregeling: dit tegoed komt uit een beperkte subsidiepot, dus op = op!",
+      "omschrijving": "Witgoedregeling: dit tegoed komt uit een beperkte subsidiepot, dus op = op!",
+      "expiry_date": "2025-03-25T21:59:59.000Z",
+      "budget_assigned": 300,
+      "budget_balance": 0
+    },
+    {
+      "code": "AMSTEG_06-30",
+      "naam": "Tegoed automatisch laden",
+      "omschrijving": "Tegoed automatisch laden",
+      "expiry_date": "2019-08-31T21:59:59.000Z",
+      "budget_assigned": 75,
+      "budget_balance": 22
+    },
+    {
+      "code": "AMSTEG_06-30",
+      "naam": "Tegoed automatisch laden",
+      "omschrijving": "Tegoed automatisch laden",
+      "expiry_date": "2020-08-31T21:59:59.000Z",
+      "budget_assigned": 75,
+      "budget_balance": 22
+    }
+  ],
+  "budgetten_actief": true,
+  "categorie": "Amsterdamse Digitale Stadspas",
+  "categorie_code": "A",
+  "expiry_date": "2020-08-31T23:59:59.000Z",
+  "id": 999999,
+  "originele_pas": {
+    "categorie": "Amsterdamse Digitale Stadspas",
+    "categorie_code": "A",
+    "id": 888888,
+    "pasnummer": 8888888888888,
+    "pasnummer_volledig": "8888888888888888888",
+    "passoort": {
+      "id": 11,
+      "naam": "Digitale Stadspas"
+    }
+  },
+  "pasnummer": 6666666666666,
+  "pasnummer_volledig": "6666666666666666666",
+  "passoort": {
+    "id": 11,
+    "naam": "Digitale Stadspas"
+  }
+}

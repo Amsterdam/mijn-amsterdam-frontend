@@ -277,6 +277,19 @@ function descriptionDefinitief(
   return `<p>Uw kind ${betrokkenKinderen} krijgt een ${titelLower}. Lees in de brief hoe u de ${titelLower} bestelt.</p>
         ${regeling.datumEindeGeldigheid ? `<p>U kunt per ${defaultDateFormat(regeling.datumEindeGeldigheid)} opnieuw een ${titelLower} aanvragen.</p>` : ''}`;
 }
+
+const READ_MORE_LINK_PARAGRAPH = `
+        <p>
+          <a
+            href="https://www.amsterdam.nl/stadspas/pc-tegoed/"
+            rel="external noopener noreferrer"
+            title="Lees meer over PC Tegoed op Amsterdam.nl."
+          >
+            Lees meer over PC Tegoed op Amsterdam.nl
+          </a>
+        </p>
+`;
+
 export const PCVERGOEDING_2026: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRelatedPersonsTransformed>[] =
   [
     {
@@ -294,6 +307,7 @@ export const PCVERGOEDING_2026: ZorgnedStatusLineItemTransformerConfig<ZorgnedAa
         }
         </p>
         ${regeling.resultaat === 'toegewezen' ? '' : '<p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>'}
+        ${READ_MORE_LINK_PARAGRAPH}
       `;
       },
     },
@@ -319,6 +333,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
         }
         </p>
         ${regeling.resultaat === 'toegewezen' || isVerzilvering(regeling) ? '' : '<p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>'}
+        ${READ_MORE_LINK_PARAGRAPH}
       `;
       },
     },

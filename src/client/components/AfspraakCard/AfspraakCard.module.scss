@@ -1,0 +1,43 @@
+.AfspraakCard {
+  position: relative;
+  padding-left: var(--ams-space-xl);
+}
+.Icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.CancellationLinkContainer {
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+.CancellationLink {
+  display: inline-flex;
+}
+.ICSLink,
+.QRCodeLink,
+.LocationLink {
+  display: inline-flex;
+  margin-bottom: var(--ams-space-m);
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    margin-bottom: 0;
+  }
+}
+.ActionItem {
+  display: block;
+  padding-block: var(--ams-space-xs);
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    padding-block: 0;
+    display: inline-block;
+  }
+}
+.ActionItem-separator {
+  padding: 0 var(--ams-space-s);
+  display: none;
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    display: inline;
+  }
+}

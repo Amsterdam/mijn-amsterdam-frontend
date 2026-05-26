@@ -30,6 +30,18 @@ export function getCustomApiConfig(
   return getApiConfig('CUSTOM_API', ...configs);
 }
 
+export function getCustomApiConfigWithCacheKey(
+  apiName: string,
+  ...configs: DataRequestConfig[]
+) {
+  if (!configs.some((c) => 'cacheKey_UNSAFE' in c)) {
+    throw new Error(
+      'getCustomApiConfigWithCacheKey requires at least one config to have cacheKey_UNSAFE'
+    );
+  }
+  return getApiConfig(apiName, ...configs);
+}
+
 export function getApiConfig(
   name: SourceApiName | SomeOtherString,
   config: Omit<DataRequestConfig, 'httpsAgent'> = {},

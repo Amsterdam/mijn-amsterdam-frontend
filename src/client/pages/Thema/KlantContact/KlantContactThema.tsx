@@ -56,3 +56,139 @@ export function KlantContactThemaPagina() {
     />
   );
 }
+
+export function KlantContactThema() {
+  const {
+    id,
+    title,
+    isLoading,
+    isError,
+    dependencyErrors,
+    pageLinks,
+    routeConfig,
+  } = useKlantcontactData();
+  useHTMLDocumentTitle(routeConfig);
+
+  const pageContentErrorAlert = (
+    <>
+      Wij kunnen de volgende gegevens nu niet tonen:
+      <br />
+      {dependencyErrors.afspraken && <>- Uw overzicht van uw afspraken</>}
+      {dependencyErrors.contactmomenten && (
+        <>- Uw overzicht van contactmomenten</>
+      )}
+    </>
+  );
+
+  return (
+    <ThemaPagina
+      id={id}
+      title={title}
+      isError={isError}
+      isPartialError={
+        dependencyErrors.afspraken !== dependencyErrors.contactmomenten
+      }
+      errorAlertContent={pageContentErrorAlert}
+      isLoading={isLoading}
+      pageLinks={pageLinks}
+      pageContentTop={
+        <PageContentCell spanWide={8}>
+          <Paragraph>
+            {`Uw ${isEnabled('KLANT_CONTACT.afspraken') ? 'afspraken en ' : ''}contactmomenten met de gemeente Amsterdam.`}
+          </Paragraph>
+        </PageContentCell>
+      }
+      pageContentMain={
+        <>
+          {isEnabled('KLANT_CONTACT.afspraken') && (
+            <PageContentCell
+              spanWide={9}
+              className={getRedactedClass(null, 'full')}
+            >
+              <Afspraken />
+            </PageContentCell>
+          )}
+          <PageContentCell className={getRedactedClass(null, 'full')}>
+            <ContactMomenten />
+          </PageContentCell>
+        </>
+      }
+    />
+  );
+}
+
+type AfsprakenProps = {
+  compact?: boolean;
+};
+
+export function Afspraken({ compact = false }: AfsprakenProps) {
+  const { afspraken, themaConfig, isLoading } = useKlantcontactData();
+  const MAX_AMOUNT_AFSPRAKEN_DISPLAYED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
+
+  if (compact && (!afspraken.length || isLoading)) {
+    return null;
+  }
+
+  return (
+    <>
+      <Heading level={2} className="ams-mb-m">
+        Afspraken bij een stadsloket
+      </Heading>
+      {afspraken.length ? (
+        <>
+          {afspraken
+            .slice(0, MAX_AMOUNT_AFSPRAKEN_DISPLAYED)
+            .map((afspraak, i) => (
+              <AfspraakCard
+                compact={compact}
+                key={afspraak.caseReference}
+                afspraak={afspraak}
+                className={i < MAX_AMOUNT_AFSPRAKEN_DISPLAYED ? 'ams-mb-l' : ''}
+              />
+            ))}
+          <LinkToListPage
+            count={afspraken.length}
+            route={themaConfig.listPageAfspraken.route.path}
+            threshold={MAX_AMOUNT_AFSPRAKEN_DISPLAYED}
+          />
+        </>
+      ) : (
+        <Paragraph>U heeft geen afspraken.</Paragraph>
+      )}
+    </>
+  );
+}
+
+function ContactMomenten() {
+  const { contactmomenten, tableConfig, routeConfig } =
+    useContactmomentenListData();
+
+  return (
+    <ThemaPaginaTable<ContactmomentProps>
+      contentAfterTheTitle={
+        <>
+          <Paragraph className="ams-mb-m">
+            De lijst met contactmomenten wordt alleen bijgehouden met
+            telefoongesprekken naar telefoonnummer 14 020 of chatberichten met
+            een medewerker, waarbij er voor het beantwoorden van de vraag
+            persoonsgegevens nodig zijn.
+          </Paragraph>
+          <Paragraph className="ams-mb-m">
+            Brieven, klachten vanuit het klachtenformulier, WhatsApp- en
+            socialmediaberichten staan niet in deze lijst.
+          </Paragraph>
+          <Paragraph className="ams-mb-m">
+            Wilt u een eerder contactmoment doorgeven bij een volgende vraag?
+            Geef dan het referentienummer door.
+          </Paragraph>
+        </>
+      }
+      zaken={contactmomenten}
+      maxItems={tableConfig.maxItems}
+      displayProps={tableConfig.displayProps}
+      listPageLinkTitle="Bekijk alle contactmomenten"
+      listPageRoute={routeConfig.path}
+      title="Contactmomenten"
+    />
+  );
+}

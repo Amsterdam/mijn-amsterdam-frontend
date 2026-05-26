@@ -712,7 +712,7 @@ describe('pcvergoeding', () => {
             {
               datePublished: '2026-06-18',
               description:
-                '<p> <p>Uw kind Persoon A krijgt een gratis laptop of tablet basis onderwijs. Lees in de brief hoe u de gratis laptop of tablet basis onderwijs bestelt.</p> </p>',
+                '<p> <p>Uw kind Persoon A krijgt een gratis laptop of tablet basis onderwijs. Lees in de brief hoe u de gratis laptop of tablet basis onderwijs bestelt.</p> </p> <p> <a href="https://www.amsterdam.nl/stadspas/pc-tegoed/" rel="external noopener noreferrer" title="Lees meer over PC Tegoed op Amsterdam.nl." > Lees meer over PC Tegoed op Amsterdam.nl </a> </p>',
               documents: [],
               id: 'status-step-0',
               isActive: true,
@@ -742,7 +742,7 @@ describe('pcvergoeding', () => {
             {
               datePublished: '2026-05-18',
               description:
-                '<p> U krijgt geen gratis laptop of tablet voortgezet onderwijs voor uw kind Persoon B. </p> <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>',
+                '<p> U krijgt geen gratis laptop of tablet voortgezet onderwijs voor uw kind Persoon B. </p> <p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p> <p> <a href="https://www.amsterdam.nl/stadspas/pc-tegoed/" rel="external noopener noreferrer" title="Lees meer over PC Tegoed op Amsterdam.nl." > Lees meer over PC Tegoed op Amsterdam.nl </a> </p>',
               documents: [],
               id: 'status-step-0',
               isActive: true,

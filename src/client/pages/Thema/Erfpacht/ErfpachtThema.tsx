@@ -98,10 +98,9 @@ export function ErfpachtThema() {
 function MissingFacturenDescription() {
   return (
     <>
-      <Heading level={3}>Afgehandelde facturen</Heading>
+      <Heading level={3}>Andere erfpachtfacturen</Heading>
       <Paragraph className="ams-mb-m">
-        U ziet hier openstaande facturen vanaf 1 januari 2025. Zoekt u een
-        andere factuur? Kijk dan bij{' '}
+        Zoekt u een andere factuur? Kijk dan bij{' '}
         <MaRouterLink href={afis.themaConfig.route.path}>
           {afis.themaConfig.title}
         </MaRouterLink>

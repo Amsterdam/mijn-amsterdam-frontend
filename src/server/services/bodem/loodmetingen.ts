@@ -15,10 +15,8 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
-import {
-  isRecentNotification,
-  sortAlpha,
-} from '../../../universal/helpers/utils.ts';
+import { sortAlpha } from '../../../universal/helpers/utils.ts';
+import { isRecentNotification } from '../../../universal/helpers/date.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { ONE_SECOND_MS } from '../../config/app.ts';
@@ -33,11 +31,8 @@ import { BffEndpoints } from '../../routing/bff-routes.ts';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token.ts';
 import { captureException } from '../monitoring.ts';
-import type {
-  DocumentDownloadData} from '../shared/document-download-route-handler.ts';
-import {
-  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE
-} from '../shared/document-download-route-handler.ts';
+import type { DocumentDownloadData } from '../shared/document-download-route-handler.ts';
+import { DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE } from '../shared/document-download-route-handler.ts';
 
 export function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
   if (authProfileAndToken.profile.authMethod === 'digid') {

@@ -20,6 +20,7 @@ import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 import { useAppStateNotifications } from '../../hooks/useNotifications.ts';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
+import { Afspraken } from '../Thema/KlantContact/KlantContactThema.tsx';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
 
@@ -62,6 +63,7 @@ export function Dashboard() {
         }}
       >
         <PageContentCell spanWide={7}>
+          <Afspraken compact={true} />
           <Heading level={2} className="ams-mb-m">
             Recente berichten{' '}
             {total > notifications.length && (

@@ -42,15 +42,38 @@
   }
 }
 
-.MaButtonInline {
-  border: 0;
+.InlineButton {
+  --ams-button-padding-block: 0rem;
+  --ams-button-padding-inline: 0rem;
   background: none;
+  border: 0;
+  color: var(--ams-color-interactive-default);
+  appearance: none;
   cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  color: var(--ams-link-color);
+  font-family: var(--ams-link-font-family);
+  font-size: var(--ams-link-font-size);
+  font-weight: var(--ams-link-font-weight);
+  line-height: var(--ams-link-line-height);
+  outline-offset: var(--ams-link-outline-offset);
+  text-decoration-thickness: var(--ams-link-text-decoration-thickness);
+  text-underline-offset: var(--ams-link-text-underline-offset);
+  text-rendering: optimizeLegibility;
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  text-align: left;
 
   &:hover {
-    text-decoration: underline;
     color: var(--ams-link-hover-color);
-    text-decoration-thickness: var(--ams-link-hover-text-decoration-thickness);
-    text-underline-offset: var(--ams-link-hover-text-underline-offset);
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    color: var(--ams-color-interactive-disabled);
+    cursor: default;
+    text-decoration: none;
   }
 }

@@ -1,12 +1,11 @@
 // Modules are imported inside try/catch to enable captureException handling the errors.
+
+import { delay } from '../universal/helpers/utils.ts';
+
 // As few modules as possible are imported to avoid potential errors in modules that are not needed for the job.
 const JOB_SUCCESS_CODE = 0;
 const JOB_FAILURE_CODE = 1;
 const MINUTE_IN_MS = 60 * 1000;
-
-function delay(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
 
 async function trackEventStarted() {
   const { trackEvent } = await import('../server/services/monitoring.ts');

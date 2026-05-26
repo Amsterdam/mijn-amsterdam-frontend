@@ -17,8 +17,8 @@ import type {
 } from './afis-types.ts';
 import AFIS_AFGEHANDELDE_FACTUREN from './test-fixtures/afgehandelde-facturen.json' with { type: 'json' };
 import AFIS_OPENSTAAANDE_FACTUREN from './test-fixtures/openstaande-facturen.json' with { type: 'json' };
-import ARC_DOC from '../../../../mocks/fixtures/afis/arc-doc-id.json' with { type: 'json' };
-import DOCUMENT_DOWNLOAD_RESPONSE from '../../../../mocks/fixtures/afis/document.json' with { type: 'json' };
+import ARC_DOC from '../../../mocks-server/fixtures/afis/arc-doc-id.json' with { type: 'json' };
+import DOCUMENT_DOWNLOAD_RESPONSE from '../../../mocks-server/fixtures/afis/document.json' with { type: 'json' };
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 
 const mocks = vi.hoisted(() => {
@@ -145,7 +145,7 @@ describe('afis-facturen', async () => {
         title: 'Factuur 1234567890',
         to: '/facturen-en-betalen/factuur/open/1234567890',
       },
-      paylink: 'http://localhost:3100/mocks-server/afis/paylink',
+      paylink: 'http://localhost:3100/mocks-api/afis/paylink',
       paymentDueDate: '2023-12-21T00:00:00',
       paymentDueDateFormatted: '21 december 2023',
       status: 'gedeeltelijke-betaling',
@@ -166,8 +166,10 @@ describe('afis-facturen', async () => {
     expect(geldTerugInvoice?.status).toBe('geld-terug');
     expect(geldTerugInvoice?.statusDescription.includes('-')).toBe(false);
 
-    const unknownStatusInvoice = response.content?.facturen[4];
-    expect(unknownStatusInvoice?.status).toBe('onbekend');
+    const incassoInvoice = response.content?.facturen[4];
+    expect(incassoInvoice?.status).toBe('automatische-incasso');
+
+    expect(incassoInvoice?.eMandateId).toBe('123123123');
   });
 
   test('Afgehandelde factuur data is transformed and url is correctly formatted', async () => {
@@ -424,7 +426,7 @@ describe('afis-facturen', async () => {
         AccountingDocumentCreationDate: '2023-11-22T00:00:00',
         ProfitCenterName: 'Profit Center 2',
         ReverseDocument: '',
-        SEPAMandate: 'SEPA123',
+        SEPAMandate: 123123123,
         PaymentTerms: '',
       },
       'factuur-in-termijnen': {
@@ -464,7 +466,7 @@ describe('afis-facturen', async () => {
         AccountingDocumentCreationDate: '2023-11-22T00:00:00',
         ProfitCenterName: 'Profit Center 2',
         ReverseDocument: '',
-        SEPAMandate: 'SEPA123',
+        SEPAMandate: 123123123,
         PaymentTerms: '',
       },
       'in-dispuut': {
@@ -824,7 +826,7 @@ describe('afis-facturen', async () => {
       AmountInBalanceTransacCrcy: '10.00',
       DocumentReferenceID: '1234567890',
       AccountingDocument: '1234567890',
-      Paylink: 'http://localhost:3100/mocks-server/afis/paylink',
+      Paylink: 'http://localhost:3100/mocks-api/afis/paylink',
       IsCleared: false,
     };
 

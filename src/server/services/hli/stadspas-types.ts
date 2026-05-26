@@ -154,6 +154,7 @@ export interface StadspasBudget {
   budgetBalanceFormatted: string;
   dateEnd: string;
   dateEndFormatted: string;
+  readMoreLink: LinkProps | null;
 }
 
 export interface StadspasOwner {
