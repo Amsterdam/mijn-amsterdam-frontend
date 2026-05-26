@@ -149,7 +149,7 @@
     "sanitize-html": "^2.17.4",
     "sass": "^1.99.0",
     "slugme": "^1.1.1",
-    "stack-trace": "1.0.0-pre2",
+    "stack-trace": "1.0.0",
     "supercluster": "^7.1.5",
     "thenby": "^1.3.4",
     "throttle-debounce": "^5.0.2",
