@@ -1,3 +1,13 @@
+export type ContactgegevenType =
+  | 'Email'
+  | 'Telefoonnummer'
+  | 'ApplicatieId'
+  // MA specifieke types, worden niet ondersteund in de profieldienst maar zijn wel onderdeel van de FE logica
+  | 'Berichtenbox'
+  | 'Postadres';
+
+export type IdentificatieType = 'BSN' | 'KVK' | 'RSIN';
+
 export type PartijIdentificatieSource = {
   identificatieType: string;
   identificatieNummer: string;
@@ -6,7 +16,7 @@ export type PartijIdentificatieSource = {
 export type IdentificatieSource = PartijIdentificatieSource;
 
 export type DienstSource = {
-  id: number;
+  id: string;
   beschrijving: string;
 };
 
@@ -22,7 +32,7 @@ export type ScopeSource = {
 };
 
 export type VoorkeurSource = {
-  id: number;
+  id: string;
   voorkeurType: string;
   waarde: string;
   createdAt: string; // ISO date string
@@ -31,33 +41,26 @@ export type VoorkeurSource = {
 };
 
 export type ContactgegevenSource = {
-  id: number;
-  type: 'Email' | 'Telefoon' | string; // TODO: see list in source?
+  id: string;
+  type: ContactgegevenType;
   waarde: string;
   isGeverifieerd: boolean;
-  isValid: boolean;
+  isDefault: boolean;
   createdAt: string; // ISO date string
   lastUpdated: string; // ISO date string
   scopes: ScopeSource[];
 };
 
 export type ContactProfieldienstResponseSource = {
-  partijId: number;
+  partijId: string;
   identificaties: IdentificatieSource[];
   voorkeuren: VoorkeurSource[];
   contactgegevens: ContactgegevenSource[];
 };
 
-// TODO: Gelijktrekken met types uit API, dan is er geen transformatie nodig.
-export type ContactgegevenTypeFrontend =
-  | 'email'
-  | 'phone'
-  | 'app'
-  | 'berichtenbox'
-  | 'postadres'; // MA only.
-
 export type ContactgegevenFrontend = {
-  type: ContactgegevenTypeFrontend;
+  id: ContactgegevenSource['id'] | null;
+  type: ContactgegevenType;
   value: string | null;
   dateModified: string | null; // ISO date string
   dateModifiedFormatted: string | null;
@@ -65,47 +68,48 @@ export type ContactgegevenFrontend = {
   disabled?: boolean;
 };
 
-export type CommunicatievoorkeurFrontend = {
-  id: CommunicatievoorkeurPayloadSource['id'];
-  // Hebben we wel een naam + beschrijving nodig van de dienst?
+type ContactGegegevenScopeSource = {
+  dienstverlenerNaam: string;
   dienstNaam: string;
-  dienstBeschrijving: string;
-  settings: ContactgegevenFrontend[];
 };
 
-export type IdentificatieType = 'BSN' | 'KVK' | 'RSIN';
-
-// Van BFF naar Profieldienst API
-export type CommunicatievoorkeurPayloadSource = {
-  id?: VoorkeurSource['id'];
+export type ContactgegevenPayloadSource = {
+  identificatieType: IdentificatieType;
+  identificatieNummer: string; // BSN of KVK nummer
   type: ContactgegevenSource['type'];
   waarde: string;
-  scope: {
-    scopeIdentificatieType: IdentificatieType;
-    scopeIdentificatieNummer: string;
-    dienstId?: DienstSource['id'];
-  };
+  scope?: ContactGegegevenScopeSource;
+  isDefault: boolean;
 };
 
-export type ContactvoorkeurPerTypeFrontend = Record<
-  ContactgegevenTypeFrontend,
+export type ContactgegevenPerTypeFrontend = Record<
+  ContactgegevenType,
   ContactgegevenFrontend
 >;
 
 export type CommunicatievoorkeurenResponseFrontend = {
-  voorkeuren: CommunicatievoorkeurFrontend[];
-  standaardContactvoorkeurPerType: ContactvoorkeurPerTypeFrontend | null;
+  standaardContactgegevens: ContactgegevenPerTypeFrontend | null;
   aangeslotenDiensten?: DienstSource[];
 };
 
-// Van FE naar BFF
 export type CommunicatievoorkeurPayloadFrontend = {
-  type: ContactgegevenTypeFrontend;
+  type: ContactgegevenType;
   value: ContactgegevenFrontend['value'];
   dienstId?: DienstSource['id'];
   voorkeurId?: VoorkeurSource['id'];
 };
 
-export type SetCommunicatievoorkeurResponseFrontend = {
+export type DeleteContactgegevenResponseFrontend = {
   success: boolean;
+};
+
+export type VerifyVerificationRequestPayload = {
+  email: string;
+  identificatieNummer: string;
+  identificatieType: IdentificatieType;
+  verificatieCode: string;
+};
+
+export type VerifyVerificationRequestResponse = {
+  verified: boolean;
 };

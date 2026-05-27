@@ -1,54 +1,28 @@
 import createDebugger from 'debug';
 import type { Request } from 'express';
 
-import { fetchCommunicatievoorkeuren } from './klantcontact-communicatievoorkeuren.ts';
 import {
+  ContactgegevenType,
+  fetchCommunicatievoorkeuren,
+} from './klantcontact-communicatievoorkeuren.ts';
+import {
+  createContactgegeven,
+  deleteContactgegeven,
   fetchDienstverlener,
-  setContactgegeven,
+  verifyContactgegeven,
 } from './klantcontact-profieldienst.ts';
 import {
-  createVerificationRequest,
-  verifyVerificationRequest,
-} from './klantcontact-verify.ts';
-import {
   sendBadRequest,
+  sendBadRequestInvalidInput,
   sendResponse,
   type ResponseAuthenticated,
 } from '../../routing/route-helpers.ts';
-import { captureException } from '../monitoring.ts';
 
 const debugContactRequestData = createDebugger(
   'contact-api:route-request-data'
 );
 
-export async function handleCreateVerificationRequest(
-  req: Request,
-  res: ResponseAuthenticated
-) {
-  debugContactRequestData(req.body);
-
-  const { email, phone } = req.body;
-
-  if (!email && !phone) {
-    return sendBadRequest(res, 'E-mail or phone is required');
-  }
-
-  try {
-    const response = await createVerificationRequest(
-      res.locals.authProfileAndToken,
-      {
-        email,
-        phone,
-      }
-    );
-    return sendResponse(res, response);
-  } catch (error) {
-    captureException(error);
-    return sendBadRequest(res, 'Failed to create verification request');
-  }
-}
-
-export async function handleVerifyVerificationRequest(
+export async function handleVerifyContactgegeven(
   req: Request,
   res: ResponseAuthenticated
 ) {
@@ -60,13 +34,10 @@ export async function handleVerifyVerificationRequest(
     return sendBadRequest(res, 'E-mail and code are required');
   }
 
-  const response = await verifyVerificationRequest(
-    res.locals.authProfileAndToken,
-    {
-      email,
-      code,
-    }
-  );
+  const response = await verifyContactgegeven(res.locals.authProfileAndToken, {
+    email,
+    code,
+  });
 
   return sendResponse(res, response);
 }
@@ -82,23 +53,41 @@ export async function handleFetchCommunicatievoorkeuren(
   return sendResponse(res, communicatievoorkeurenResponse);
 }
 
-export async function handleSetContactgegeven(
+export async function handleCreateContactgegeven(
   req: Request,
   res: ResponseAuthenticated
 ) {
-  const { value, type, serviceId, voorkeurId } = req.body;
+  const { value, type } = req.body;
 
-  // TODO: Use ZOD
-  // if (typeof email === 'undefined') {
-  //   return sendBadRequest(res, 'E-mail is required');
-  // }
+  if (!(type in ContactgegevenType)) {
+    return sendBadRequestInvalidInput(
+      res,
+      `payloadType ${type} is not supported`
+    );
+  }
 
-  const response = await setContactgegeven(
+  const response = await createContactgegeven(
     res.locals.authProfileAndToken,
     type,
-    value,
-    serviceId,
-    voorkeurId
+    value
+  );
+
+  return sendResponse(res, response);
+}
+
+export async function handleDeleteContactgegeven(
+  req: Request,
+  res: ResponseAuthenticated
+) {
+  const { id } = req.body;
+
+  if (!id) {
+    return sendBadRequest(res, 'Contactgegeven ID is required');
+  }
+
+  const response = await deleteContactgegeven(
+    res.locals.authProfileAndToken,
+    id
   );
 
   return sendResponse(res, response);

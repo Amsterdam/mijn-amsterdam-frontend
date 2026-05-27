@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router';
 
+import { ContactgegevenType } from './CommunicatieVoorkeuren-config.ts';
 import { EmailInstellen } from './EmailvoorkeurInstellen.tsx';
 import { useCommunicatieVoorkeurInstellen } from './useCommunicatieVoorkeuren.ts';
 import { PageContentCell } from '../../../../components/Page/Page.tsx';
@@ -7,38 +8,35 @@ import ThemaDetailPagina from '../../../../components/Thema/ThemaDetailPagina.ts
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
 import { useKlantcontactData } from '../useKlantcontactData.hook.tsx';
 
-export function CommunicatievoorkeurInstellen() {
+export function ContactgegevenInstellen() {
   const { themaConfig, breadcrumbs, isLoading, isError } =
     useKlantcontactData();
-  const { voorkeur, medium, title, update, routeConfig } =
+  const { contactgegevenType, title, update, routeConfig } =
     useCommunicatieVoorkeurInstellen();
   useHTMLDocumentTitle(routeConfig);
 
   const navigate = useNavigate();
   function navigateToThemaPage() {
-    navigate(routeConfig.path);
+    navigate(themaConfig.route.path);
   }
 
   return (
     <ThemaDetailPagina
       title={title}
       themaId={themaConfig.id}
-      isLoading={isLoading}
-      isError={isError}
-      zaak={voorkeur ?? {}}
+      zaak={{}}
+      isLoading={false}
+      isError={false}
       breadcrumbs={breadcrumbs}
       pageContentMain={
-        medium && (
+        contactgegevenType && (
           <PageContentCell spanWide={8}>
-            {medium.type === 'email' && (
+            {contactgegevenType === ContactgegevenType.Email && (
               <EmailInstellen
-                voorkeur={voorkeur}
-                medium={medium}
                 onFinished={(email) => {
                   update({
-                    type: 'email',
+                    type: ContactgegevenType.Email,
                     value: email,
-                    voorkeurId: voorkeur?.id,
                   });
                   navigateToThemaPage();
                 }}

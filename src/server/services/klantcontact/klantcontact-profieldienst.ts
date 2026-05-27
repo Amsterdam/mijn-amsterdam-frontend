@@ -1,39 +1,46 @@
-import type { ContactgegevenType } from './klantcontact-communicatievoorkeuren.ts';
 import {
-  getProfileType,
-  payloadTypeByMediumType,
+  getIdentificatieType,
+  transformContactgegevenSource,
 } from './klantcontact-helpers.ts';
 import type {
   ContactProfieldienstResponseSource,
-  CommunicatievoorkeurPayloadSource,
+  ContactgegevenFrontend,
+  ContactgegevenPayloadSource,
+  ContactgegevenSource,
+  ContactgegevenType,
+  VerifyVerificationRequestPayload,
+  VerifyVerificationRequestResponse,
 } from './klantcontact-profieldienst-types.ts';
 import type { DienstverlenerSource } from './klantcontact-profieldienst-types.ts';
 import { profieldienstRequestConfig } from './klantcontact-service-config.ts';
-import {
-  apiErrorResult,
-  type ApiResponse,
-} from '../../../universal/helpers/api.ts';
+import { type ApiResponse } from '../../../universal/helpers/api.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
-import { GEMEENTE_CODE_AMSTERDAM } from '../brp/brp-config.ts';
 
-const DEFAULT_OIN = GEMEENTE_CODE_AMSTERDAM;
 const DEFAULT_DIENSTVERLENER = 'amsterdam';
 
 export async function fetchProfiel(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<ContactProfieldienstResponseSource>> {
-  const profileType = getProfileType(authProfileAndToken.profile.profileType);
+  const identificatieType = getIdentificatieType(
+    authProfileAndToken.profile.profileType
+  );
 
   const apiConfig = getCustomApiConfig(profieldienstRequestConfig, {
-    method: 'get',
-    params: {
+    method: 'POST',
+    data: {
+      identificatieType,
+      identificatieNummer: authProfileAndToken.profile.id,
       dienstverlener: DEFAULT_DIENSTVERLENER,
-      oin: DEFAULT_OIN,
+      // dienstNaam: 'zorgned-jzd',
+    },
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     formatUrl({ url }) {
-      return `${url}/${profileType}/${authProfileAndToken.profile.id}`;
+      return `${url}/partij`;
     },
     enableCache: false, // For testing
   });
@@ -51,69 +58,130 @@ export async function fetchDienstverlener(
   dienstverlenerNaam: string = DEFAULT_DIENSTVERLENER
 ): Promise<ApiResponse<DienstverlenerSource>> {
   const apiConfig = getCustomApiConfig(profieldienstRequestConfig, {
-    method: 'get',
+    method: 'GET',
     formatUrl({ url }) {
       return `${url}/dienstverlener/${dienstverlenerNaam}`;
     },
     enableCache: false, // For testing
+    transformResponse: (response: DienstverlenerSource) => {
+      return {
+        ...response,
+        diensten: [
+          ...(response.diensten ?? []),
+          { id: 'zorgned', beschrijving: 'WMO en Jeugdzaken' }, // TEMPORARY, until we have real data from the API
+        ],
+      };
+    },
   });
 
   return requestData<DienstverlenerSource>(apiConfig, authProfileAndToken);
 }
 
-export async function setContactgegeven(
+// This api call also sends a verification request to the given phone or email.
+// The data will be added but isGeverifieerd will be false until the user verifies with the received code.
+export async function createContactgegeven(
   authProfileAndToken: AuthProfileAndToken,
   contactgegevenType: ContactgegevenType,
-  contactgegevenWaarde: string,
-  serviceId?: number,
-  voorkeurId?: number
-): Promise<ApiResponse<null>> {
-  const scope: CommunicatievoorkeurPayloadSource['scope'] = {
-    scopeIdentificatieType: getProfileType(
-      authProfileAndToken.profile.profileType
-    ),
-    scopeIdentificatieNummer: authProfileAndToken.profile.id,
-  };
-
-  if (serviceId) {
-    scope.dienstId = serviceId;
-  }
-
-  const payloadType = payloadTypeByMediumType[contactgegevenType];
-  if (!payloadType) {
-    return apiErrorResult(
-      `payloadType ${contactgegevenType} is not supported`,
-      null
-    );
-  }
-
-  const profileType = getProfileType(authProfileAndToken.profile.profileType);
-  const payload: CommunicatievoorkeurPayloadSource = {
-    type: payloadType,
+  contactgegevenWaarde: string
+): Promise<ApiResponse<ContactgegevenFrontend>> {
+  const identificatieType = getIdentificatieType(
+    authProfileAndToken.profile.profileType
+  );
+  const payload: ContactgegevenPayloadSource = {
+    identificatieType,
+    identificatieNummer: authProfileAndToken.profile.id,
+    type: contactgegevenType,
     waarde: contactgegevenWaarde,
-    scope: {
-      scopeIdentificatieType: profileType,
-      scopeIdentificatieNummer: authProfileAndToken.profile.id,
-      dienstId: serviceId,
-    },
+    isDefault: true,
+    // scope: {
+    //   dienstverlenerNaam: 'string',
+    //   dienstNaam: 'string',
+    // },
   };
-
-  if (voorkeurId) {
-    payload.id = voorkeurId;
-  }
 
   const apiConfig = getCustomApiConfig(profieldienstRequestConfig, {
-    method: 'put',
+    method: 'POST',
     data: payload,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     formatUrl({ url }) {
-      return `${url}/contactgegeven/${profileType}/${authProfileAndToken.profile.id}`;
+      return `${url}/contactgegeven`;
+    },
+    transformResponse: (response) => {
+      return transformContactgegevenSource(response, contactgegevenType);
+    },
+    enableCache: false, // For testing
+  });
+
+  return requestData<ContactgegevenFrontend>(apiConfig);
+}
+
+export async function deleteContactgegeven(
+  authProfileAndToken: AuthProfileAndToken,
+  contactgegevenId: ContactgegevenSource['id']
+): Promise<ApiResponse<null>> {
+  const identificatieType = getIdentificatieType(
+    authProfileAndToken.profile.profileType
+  );
+
+  const apiConfig = getCustomApiConfig(profieldienstRequestConfig, {
+    method: 'DELETE',
+    data: {
+      identificatieType,
+      identificatieNummer: authProfileAndToken.profile.id,
+    },
+    formatUrl({ url }) {
+      return `${url}/contactgegeven/${contactgegevenId}`;
     },
     enableCache: false, // For testing
   });
 
   return requestData<null>(apiConfig);
+}
+
+type VerifyVerificationRequestProps = {
+  email: string;
+  code: string;
+};
+
+export async function verifyContactgegeven(
+  authProfileAndToken: AuthProfileAndToken,
+  { email, code }: VerifyVerificationRequestProps
+) {
+  const identificatieType = getIdentificatieType(
+    authProfileAndToken.profile.profileType
+  );
+  const data: VerifyVerificationRequestPayload = {
+    email,
+    identificatieNummer: authProfileAndToken.profile.id,
+    identificatieType,
+    verificatieCode: code,
+  };
+
+  const apiConfig = getCustomApiConfig(profieldienstRequestConfig, {
+    method: 'POST',
+    data,
+    formatUrl({ url }) {
+      return `${url}/emailverificatie`;
+    },
+    enableCache: false, // For testing
+  });
+
+  const verificationResponse =
+    await requestData<VerifyVerificationRequestResponse>(apiConfig);
+
+  if (verificationResponse.content?.verified) {
+    const profileResponse = await fetchProfiel(authProfileAndToken);
+    if (
+      !profileResponse.content?.contactgegevens.some(
+        (contactgegeven) => contactgegeven.isDefault
+      )
+    ) {
+      // MAKE DEFAULT
+    }
+  }
+
+  return verificationResponse;
 }

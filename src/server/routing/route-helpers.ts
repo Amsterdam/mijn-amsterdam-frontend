@@ -153,6 +153,10 @@ export function sendBadRequestInvalidInput(res: Response, error: unknown) {
           `for property '${e.path.join('.') || '.'}' with error '${e.message}'`
       )
       .join(' - ');
+  } else if (error instanceof Error) {
+    inputValidationError = error.message;
+  } else if (typeof error === 'string') {
+    inputValidationError = error;
   }
 
   return sendBadRequest(res, inputValidationError);

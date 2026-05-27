@@ -1,92 +1,139 @@
+import merge from 'lodash.merge';
 import { useParams } from 'react-router';
 
-import { MediumByTypeLabels } from './CommunicatieVoorkeuren-config.ts';
+import { ContactgegevenByTypeLabels } from './CommunicatieVoorkeuren-config.ts';
 import type {
-  CommunicatievoorkeurPayloadFrontend,
-  SetCommunicatievoorkeurResponseFrontend,
+  ContactgegevenType,
+  ContactgegevenFrontend,
 } from '../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
-import type { ContactgegevenTypeFrontend } from '../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
 import {
   capitalizeFirstLetter,
   lowercaseFirstLetter,
 } from '../../../../../universal/helpers/text.ts';
+import { BFFApiUrls } from '../../../../config/api.ts';
 import {
   sendFormPostRequest,
   useBffApi,
 } from '../../../../hooks/api/useBffApi.ts';
 import {
+  useAppStateStore,
+  type AppStateStore,
+} from '../../../../hooks/useAppStateStore.ts';
+import {
   themaConfig,
   type InstelAction,
 } from '../KlantContact-thema-config.ts';
-import { useKlantcontactData } from '../useKlantcontactData.hook.tsx';
+
+type UpdateProps = {
+  contactgegeven: ContactgegevenFrontend;
+  appState: AppStateStore;
+};
+
+function updateCommunicatievoorkeurState({
+  contactgegeven,
+  appState,
+}: UpdateProps) {
+  appState.setAppState(
+    merge(
+      { KLANT_CONTACT: appState.KLANT_CONTACT },
+      {
+        KLANT_CONTACT: {
+          content: {
+            communicatievoorkeuren: {
+              standaardContactgegevens: {
+                [contactgegeven.type]: {
+                  value: contactgegeven.value,
+                  isValidated: contactgegeven.isValidated ?? false, // We can only set this to true after the validation step, but we want to optimistically update the UI immediately after the user sets a contactgegeven.
+                  dateModified:
+                    contactgegeven.dateModified ?? new Date().toISOString(),
+                  dateModifiedFormatted:
+                    contactgegeven.dateModifiedFormatted ??
+                    new Date().toLocaleDateString('nl-NL', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    }),
+                },
+              },
+            },
+          },
+        },
+      }
+    )
+  );
+}
 
 function useSetCommunicatievoorkeur() {
-  return useBffApi<SetCommunicatievoorkeurResponseFrontend>(
-    'http://localhost:5000/api/v1/services/contact/communicatievoorkeuren/set',
+  const appState = useAppStateStore();
+  return useBffApi<ContactgegevenFrontend>(
+    BFFApiUrls.KLANTCONTACT_CONTACTGEGEVEN_CREATE,
     {
       fetchImmediately: false,
       sendRequest: async (url, init) => {
-        return sendFormPostRequest<SetCommunicatievoorkeurResponseFrontend>(
-          url,
-          init
-        ).then((response) => {
-          if (response.content?.success === true) {
-            // update
+        return sendFormPostRequest<ContactgegevenFrontend>(url, init).then(
+          (response) => {
+            if (response.content?.id) {
+              updateCommunicatievoorkeurState({
+                contactgegeven: response.content,
+                appState,
+              });
+            }
+            return response;
           }
-          return response;
-        });
+        );
       },
     }
   );
 }
 
 export function useCommunicatieVoorkeurInstellen() {
-  const { communicatievoorkeuren } = useKlantcontactData();
+  // const { communicatievoorkeuren } = useKlantcontactData();
   const { fetch: updateCommunicatievoorkeur } = useSetCommunicatievoorkeur();
   const params = useParams<{
-    medium: ContactgegevenTypeFrontend;
+    contactgegeven: ContactgegevenType;
     action: InstelAction;
     id?: string;
   }>();
-
-  const voorkeuren = communicatievoorkeuren?.voorkeuren ?? [];
-  const aangeslotenDiensten = communicatievoorkeuren?.aangeslotenDiensten ?? [];
-  const standaardContactvoorkeurPerType =
-    communicatievoorkeuren?.standaardContactvoorkeurPerType ?? null;
-
-  const voorkeur =
-    voorkeuren.find((voorkeur) => voorkeur.id === params.id) ?? null;
-
-  let medium =
-    voorkeur?.settings.find((medium) => medium.type === params.medium) ?? null;
-  // If the medium is not set in the voorkeur, use the default value if available
-  if (!medium && params.medium) {
-    medium = standaardContactvoorkeurPerType?.[params.medium] ?? null;
-  }
+  // const aangeslotenDiensten = communicatievoorkeuren?.aangeslotenDiensten ?? [];
+  // const standaardContactgegevens =
+  //   communicatievoorkeuren?.standaardContactgegevens ?? null;
 
   return {
-    title: `${params.action ? capitalizeFirstLetter(params.action) : 'Instellen'} ${lowercaseFirstLetter(MediumByTypeLabels[medium?.type ?? (params.medium as ContactgegevenTypeFrontend)] ?? '')}`,
-    voorkeur,
-    medium,
-    routeConfig: themaConfig.detailPageCommunicatievoorkeurInstellen.route,
-    update(payload: CommunicatievoorkeurPayloadFrontend) {
-      if (standaardContactvoorkeurPerType) {
-        // optimisticUpdateContent({
-        //   voorkeuren,
-        //   aangeslotenDiensten,
-        //   standaardContactvoorkeurPerType: {
-        //     ...standaardContactvoorkeurPerType,
-        //     [payload.type]: {
-        //       ...standaardContactvoorkeurPerType[payload.type],
-        //       value: payload.value,
-        //       isValidated: true,
-        //       dateModified: new Date().toISOString(),
-        //       dateModifiedFormatted: defaultDateFormat(new Date()),
-        //     },
-        //   },
-        // });
-      }
-      return updateCommunicatievoorkeur({ payload });
+    title: `${params.action ? capitalizeFirstLetter(params.action) : 'Instellen'} ${params.contactgegeven ? lowercaseFirstLetter(ContactgegevenByTypeLabels[params.contactgegeven]) : 'contactgegeven'}`,
+    routeConfig: themaConfig.detailPageContactgegevenInstellen.route,
+    contactgegevenType: params.contactgegeven,
+    update(contactgegeven: { type: ContactgegevenType; value: string | null }) {
+      return updateCommunicatievoorkeur({ payload: contactgegeven });
     },
+  };
+}
+
+export function useCommunicatieVoorkeurVerwijderen(
+  contactgegeven: ContactgegevenFrontend
+) {
+  const appState = useAppStateStore();
+  return function handleDelete() {
+    return sendFormPostRequest<ContactgegevenFrontend>(
+      BFFApiUrls.KLANTCONTACT_CONTACTGEGEVEN_DELETE,
+      {
+        payload: {
+          id: contactgegeven.id,
+        },
+      }
+    ).then((response) => {
+      if (response.status === 'OK') {
+        updateCommunicatievoorkeurState({
+          contactgegeven: {
+            type: contactgegeven.type,
+            value: null,
+            id: null,
+            dateModified: null,
+            dateModifiedFormatted: null,
+          },
+          appState,
+        });
+      }
+      return response;
+    });
   };
 }

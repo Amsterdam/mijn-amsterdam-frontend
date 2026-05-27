@@ -1,4 +1,9 @@
-import { useCallback, useState, type ChangeEventHandler } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useState,
+  type ChangeEventHandler,
+} from 'react';
 
 import {
   Button,
@@ -12,10 +17,11 @@ import OTPInput from 'react-otp-input';
 
 import styles from './EmailInputAndValidation.module.scss';
 import type {
-  CreateVerificationRequestResponse,
+  ContactgegevenSource,
   VerifyVerificationRequestResponse,
-} from '../../../../../server/services/klantcontact/klantcontact-verify.types.ts';
+} from '../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
 import { Spinner } from '../../../../components/Spinner/Spinner.tsx';
+import { BFFApiUrls } from '../../../../config/api.ts';
 import {
   sendFormPostRequest,
   useBffApi,
@@ -38,7 +44,7 @@ export function EmailVerify({ email, onValidated }: EmailVerifyProps) {
 
   const { fetch, isLoading, isError } =
     useBffApi<VerifyVerificationRequestResponse>(
-      'http://localhost:5000/api/v1/services/contact/verification-request/verify',
+      BFFApiUrls.KLANTCONTACT_CONTACTGEGEVEN_VERIFY,
       {
         fetchImmediately: false,
         sendRequest: async (url, init) => {
@@ -175,30 +181,36 @@ function EmailInput({
 
 type EmailFormProps = {
   email: string;
-  onSubmit: (formData: { email: string }) => void;
+  onSubmit: (formData: { email: string }, success: boolean) => void;
 };
 
 export function EmailForm({ email, onSubmit }: EmailFormProps) {
-  const emailValue = email || '';
-  const [emailToVerify, setEmailToVerify] = useState<string>(emailValue);
+  const [emailToVerify, setEmailToVerify] = useState<string>(email);
   const [isInvalid, setIsInvalid] = useState(false);
 
-  const { fetch, isLoading, isError } =
-    useBffApi<CreateVerificationRequestResponse>(
-      'http://localhost:5000/api/v1/services/contact/verification-request/create',
-      {
-        fetchImmediately: false,
-        sendRequest: async (url, init) => {
-          return sendFormPostRequest<CreateVerificationRequestResponse>(
-            url,
-            init
-          ).then((response) => {
-            onSubmit({ email: emailToVerify });
+  useEffect(() => {
+    setEmailToVerify(email);
+  }, [email]);
+
+  const { fetch, isLoading, isError } = useBffApi<ContactgegevenSource>(
+    BFFApiUrls.KLANTCONTACT_CONTACTGEGEVEN_CREATE,
+    {
+      fetchImmediately: false,
+      sendRequest: async (url, init) => {
+        return sendFormPostRequest<ContactgegevenSource>(url, init).then(
+          (response) => {
+            onSubmit(
+              {
+                email: emailToVerify,
+              },
+              !!response.content?.id
+            );
             return response;
-          });
-        },
-      }
-    );
+          }
+        );
+      },
+    }
+  );
 
   // Onsubmit, send to backend and setStep to 2 OTP validation
   const submitForm: React.FormEventHandler<HTMLFormElement> = useCallback(
@@ -210,7 +222,8 @@ export function EmailForm({ email, onSubmit }: EmailFormProps) {
         return;
       }
 
-      fetch({ payload: { email: emailToVerify } });
+      setEmailToVerify(emailToVerify);
+      fetch({ payload: { type: 'email', value: emailToVerify } });
     },
     [emailToVerify]
   );

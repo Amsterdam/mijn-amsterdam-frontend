@@ -23,8 +23,7 @@ const THEMA_TITLE = 'Contact met de gemeente';
 
 type ContactThema = ThemaConfigBase &
   WithPageConfig<'listPageContactmomenten'> &
-  WithPageConfig<'detailPageCommunicatievoorkeurInstellen'> &
-  WithPageConfig<'detailPageCommunicatieMediumInstellen'> &
+  WithPageConfig<'detailPageContactgegevenInstellen'> &
   WithPageConfig<'listPageAfspraken'>;
 
 const BASE_PATH = '/mijn-contact';
@@ -62,21 +61,12 @@ export const themaConfig = {
       trackingUrl: null,
     },
   },
-  detailPageCommunicatievoorkeurInstellen: {
+  detailPageContactgegevenInstellen: {
     route: {
       get path(): string {
-        return `/${themaConfig.route.path}/:action/:id/:medium/:step`;
+        return `/${themaConfig.route.path}/contactgegeven-instellen/:contactgegeven/:step`;
       },
-      documentTitle: `Communicatievoorkeur instellen | ${THEMA_TITLE}`,
-      trackingUrl: null,
-    },
-  },
-  detailPageCommunicatieMediumInstellen: {
-    route: {
-      get path(): string {
-        return `/${themaConfig.route.path}/:action/:medium/:step`;
-      },
-      documentTitle: `Communicatievoorkeur instellen | ${THEMA_TITLE}`,
+      documentTitle: `Contactgegeven instellen | ${THEMA_TITLE}`,
       trackingUrl: null,
     },
   },

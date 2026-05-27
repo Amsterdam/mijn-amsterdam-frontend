@@ -3,7 +3,7 @@ import { create, type StateCreator } from 'zustand';
 import type { AppState } from '../../universal/types/App.types.ts';
 import { PRISTINE_APPSTATE } from '../AppState.ts';
 
-type AppStateStore = AppState & {
+export type AppStateStore = AppState & {
   setAppState: (appState: Partial<AppState>, isReady?: boolean) => void;
   isReady: boolean;
   setIsAppStateReady: (isReady: boolean) => void;
@@ -15,6 +15,7 @@ export const appStateStoreCreator: StateCreator<AppStateStore> = (set) => ({
   ...INITIAL_APPSTATE,
   isReady: false,
   setAppState: (appState, isReady) => {
+    // Performs a partial update.
     set((state) => {
       return {
         ...appState,

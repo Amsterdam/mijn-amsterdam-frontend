@@ -6,41 +6,41 @@ import {
   Alert,
 } from '@amsterdam/design-system-react';
 
-import { MediumValue } from './CommunicatieMediumValue.tsx';
-import { MediumByTypeLabels } from './CommunicatieVoorkeuren-config.ts';
+import { ContactgegevenByTypeLabels } from './CommunicatieVoorkeuren-config.ts';
 import styles from './CommunicatieVoorkeuren.module.scss';
+import { ContactgegevenValue } from './ContactgegevenValue.tsx';
 import type {
-  CommunicatievoorkeurFrontend,
-  ContactvoorkeurPerTypeFrontend,
+  ContactgegevenPerTypeFrontend,
   DienstSource,
 } from '../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
 import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
 
 type CommunicatieVoorkeurenProps = {
-  voorkeuren: CommunicatievoorkeurFrontend[];
-  standaardContactvoorkeurPerType: ContactvoorkeurPerTypeFrontend | null;
+  standaardContactgegevens: ContactgegevenPerTypeFrontend | null;
   aangeslotenDiensten?: DienstSource[];
 };
 
 export function CommunicatieVoorkeuren({
-  voorkeuren,
   aangeslotenDiensten,
-  standaardContactvoorkeurPerType,
+  standaardContactgegevens,
 }: CommunicatieVoorkeurenProps) {
-  const rows = Object.values(standaardContactvoorkeurPerType ?? {})
-    .filter((medium) => !medium.disabled)
-    .map((medium) => ({
-      label: MediumByTypeLabels[medium.type as keyof typeof MediumByTypeLabels],
+  const rows = Object.values(standaardContactgegevens ?? {})
+    .filter((contactgegeven) => !contactgegeven.disabled)
+    .map((contactgegeven) => ({
+      label:
+        ContactgegevenByTypeLabels[
+          contactgegeven.type as keyof typeof ContactgegevenByTypeLabels
+        ],
       content: (
         <article className={styles.MediumValue}>
-          <MediumValue medium={medium} />
+          <ContactgegevenValue contactgegeven={contactgegeven} />
         </article>
       ),
     }));
 
   const hasValidatedEmail = !!(
-    standaardContactvoorkeurPerType?.email?.value &&
-    standaardContactvoorkeurPerType.email.isValidated
+    standaardContactgegevens?.Email?.value &&
+    standaardContactgegevens.Email.isValidated
   );
 
   return (
@@ -48,7 +48,9 @@ export function CommunicatieVoorkeuren({
       <div className="ams-mb-l">
         <Heading level={2}>Post per e-mail</Heading>
         <Paragraph className="ams-mb-s">
-          U kunt voor de volgende diensten post per e-mail ontvangen:
+          U kunt post van de gemeente Amsterdam per e-mail ontvangen. U krijgt
+          dan post van onderstaande diensten. Er kunnen meer diensten worden
+          toegevoegd in de toekomst.
         </Paragraph>
         <UnorderedList className="ams-mb-m">
           {aangeslotenDiensten?.map((dienst) => (
@@ -80,7 +82,7 @@ export function CommunicatieVoorkeuren({
               onChange={function fie() {}}
               onClick={function fie() {}}
             >
-              Ja, ik wil post per e-mail ontvangen voor bovenstaande diensten.
+              Ja, ik wil post per e-mail ontvangen van de gemeente Amsterdam.
             </Checkbox>
           </form>
         )}

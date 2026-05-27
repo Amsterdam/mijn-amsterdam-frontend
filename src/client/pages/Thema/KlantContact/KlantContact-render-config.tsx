@@ -1,7 +1,7 @@
 import { ConnectedCirclesIcon } from '@amsterdam/design-system-react-icons';
 
 import { AfspraakListPage } from './Afspraken/AfspraakListPage.tsx';
-import { CommunicatievoorkeurInstellen } from './Communicatievoorkeuren/CommunicatievoorkeurInstellen.tsx';
+import { ContactgegevenInstellen } from './Communicatievoorkeuren/ContactgegevenInstellen.tsx';
 import { ContactmomentenListPage } from './Contactmomenten/ContactmomentenListPage.tsx';
 import { themaConfig } from './KlantContact-thema-config.ts';
 import { KlantContactThema } from './KlantContactThema.tsx';
@@ -29,13 +29,8 @@ export const KlantContactRoutes = [
     isActive: themaConfig.featureToggle.afspraken.active,
   },
   {
-    route: themaConfig.detailPageCommunicatievoorkeurInstellen.route.path,
-    Component: CommunicatievoorkeurInstellen,
-    isActive: themaConfig.featureToggle.communicatievoorkeuren.active,
-  },
-  {
-    route: themaConfig.detailPageCommunicatieMediumInstellen.route.path,
-    Component: CommunicatievoorkeurInstellen,
+    route: themaConfig.detailPageContactgegevenInstellen.route.path,
+    Component: ContactgegevenInstellen,
     isActive: themaConfig.featureToggle.communicatievoorkeuren.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];

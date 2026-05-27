@@ -14,16 +14,13 @@ import { getFullAddress } from '../../../universal/helpers/brp.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { fetchMyLocations } from '../bag/my-locations.ts';
 
-const ContactgegevenTypeFrontend = {
-  EMAIL: 'email',
-  PHONE: 'phone',
-  APP: 'app',
-  BERICHTENBOX: 'berichtenbox',
-  POSTADRES: 'postadres',
+export const ContactgegevenType = {
+  Email: 'Email',
+  Telefoonnummer: 'Telefoonnummer',
+  ApplicatieId: 'ApplicatieId',
+  Berichtenbox: 'Berichtenbox',
+  Postadres: 'Postadres',
 } as const;
-
-export type ContactgegevenType =
-  (typeof ContactgegevenTypeFrontend)[keyof typeof ContactgegevenTypeFrontend];
 
 export async function fetchCommunicatievoorkeuren(
   authProfileAndToken: AuthProfileAndToken
@@ -39,23 +36,33 @@ export async function fetchCommunicatievoorkeuren(
       fetchDienstverlener(authProfileAndToken),
     ]);
 
-  const email = getMostRecentByContactgegevenType(profiel, 'email');
-  const phone = getMostRecentByContactgegevenType(profiel, 'phone');
-  const app = getMostRecentByContactgegevenType(profiel, 'app');
+  const email = getMostRecentByContactgegevenType(
+    profiel,
+    ContactgegevenType.Email
+  );
+  const phone = getMostRecentByContactgegevenType(
+    profiel,
+    ContactgegevenType.Telefoonnummer
+  );
+  const app = getMostRecentByContactgegevenType(
+    profiel,
+    ContactgegevenType.ApplicatieId
+  );
 
   return apiSuccessResult({
     aangeslotenDiensten: (
       dienstverlenerResponse.content?.diensten ?? []
     ).filter((dienst) => dienst.beschrijving !== 'Alles'),
-    standaardContactvoorkeurPerType: {
-      email,
-      phone: {
+    standaardContactgegevens: {
+      [ContactgegevenType.Email]: email,
+      [ContactgegevenType.Telefoonnummer]: {
         ...phone,
         disabled: true,
       },
-      app,
-      postadres: {
-        type: ContactgegevenTypeFrontend.POSTADRES,
+      [ContactgegevenType.ApplicatieId]: app,
+      [ContactgegevenType.Postadres]: {
+        id: null,
+        type: ContactgegevenType.Postadres,
         dateModified: null,
         value: locationsResponse.content?.[0]?.address
           ? getFullAddress(locationsResponse.content?.[0]?.address)
@@ -63,15 +70,14 @@ export async function fetchCommunicatievoorkeuren(
         dateModifiedFormatted: null,
       },
       // Berichtenbox wordt nog niet ondersteund in de profieldienst.
-      berichtenbox: {
-        type: ContactgegevenTypeFrontend.BERICHTENBOX,
+      [ContactgegevenType.Berichtenbox]: {
+        id: null,
+        type: ContactgegevenType.Berichtenbox,
         value: null,
         dateModified: null,
         dateModifiedFormatted: null,
         disabled: true,
       },
     },
-    // Voorkeuren worden nu nog niet gebruikt. We kunnen deze in de toekomst vullen op basis van de scopes die we ontvangen in het profiel.
-    voorkeuren: [],
   });
 }

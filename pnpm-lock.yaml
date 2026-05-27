@@ -107,6 +107,9 @@ importers:
       '@types/lodash.keyby':
         specifier: ^4.6.9
         version: 4.6.9
+      '@types/lodash.merge':
+        specifier: ^4.6.9
+        version: 4.6.9
       '@types/memoizee':
         specifier: ^0.4.12
         version: 0.4.12
@@ -245,9 +248,6 @@ importers:
       leaflet:
         specifier: ^1.9.4
         version: 1.9.4
-      lodash.chunk:
-        specifier: ^4.2.0
-        version: 4.2.0
       lodash.clonedeep:
         specifier: ^4.5.0
         version: 4.5.0
@@ -257,12 +257,9 @@ importers:
       lodash.isequal:
         specifier: ^4.5.0
         version: 4.5.0
-      lodash.iserror:
-        specifier: ^3.1.1
-        version: 3.1.1
-      lodash.keyby:
-        specifier: ^4.6.0
-        version: 4.6.0
+      lodash.merge:
+        specifier: ^4.6.2
+        version: 4.6.2
       log-that-http:
         specifier: ^1.0.1
         version: 1.0.1
@@ -1576,6 +1573,9 @@ packages:
 
   '@types/lodash.keyby@4.6.9':
     resolution: {integrity: sha512-N8xfQdZ2ADNPDL72TaLozIL4K1xFCMG1C1T9GN4dOFI+sn1cjl8d4U+POp8PRCAnNxDCMkYAZVD/rOBIWYPT5g==}
+
+  '@types/lodash.merge@4.6.9':
+    resolution: {integrity: sha512-23sHDPmzd59kUgWyKGiOMO2Qb9YtqRO/x4IhkgNUiPQ1+5MUVqi6bCZeq9nBJ17msjIMbEIO5u+XW4Kz6aGUhQ==}
 
   '@types/lodash@4.17.24':
     resolution: {integrity: sha512-gIW7lQLZbue7lRSWEFql49QJJWThrTFFeIMJdp3eH4tKoxm1OvEPg02rm4wCCSHS0cL3/Fizimb35b7k8atwsQ==}
@@ -3156,9 +3156,6 @@ packages:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
     engines: {node: '>=10'}
 
-  lodash.chunk@4.2.0:
-    resolution: {integrity: sha512-ZzydJKfUHJwHa+hF5X66zLFCBrWn5GeF28OHEr4WVWtNDXlQ/IjWKPBiikqKo2ne0+v6JgCgJ0GzJp8k8bHC7w==}
-
   lodash.clonedeep@4.5.0:
     resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
 
@@ -3175,9 +3172,6 @@ packages:
     resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
     deprecated: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
 
-  lodash.iserror@3.1.1:
-    resolution: {integrity: sha512-eT/VeNns9hS7vAj1NKW/rRX6b+C3UX3/IAAqEE7aC4Oo2C0iD82NaP5IS4bSlQsammTii4qBJ8G1zd1LTL8hCw==}
-
   lodash.isinteger@4.0.4:
     resolution: {integrity: sha512-DBwtEWN2caHQ9/imiNeEA5ys1JoRtRfY3d7V9wkqtbycnAmTvRRmbHKDV4a0EYc678/dia0jrte4tjYwVBaZUA==}
 
@@ -3189,9 +3183,6 @@ packages:
 
   lodash.isstring@4.0.1:
     resolution: {integrity: sha512-0wJxfxH1wgO3GrbuP+dTTk7op+6L41QCXbGINEmD+ny/G/eCqGzxyCsh7159S+mgDDcoarnBw6PC1PS5+wUGgw==}
-
-  lodash.keyby@4.6.0:
-    resolution: {integrity: sha512-PRe4Cn20oJM2Sn6ljcZMeKgyhTHpzvzFmdsp9rK+6K0eJs6Tws0MqgGFpfX/o2HjcoQcBny1Eik9W7BnVTzjIQ==}
 
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
@@ -5696,6 +5687,10 @@ snapshots:
     dependencies:
       '@types/lodash': 4.17.24
 
+  '@types/lodash.merge@4.6.9':
+    dependencies:
+      '@types/lodash': 4.17.24
+
   '@types/lodash@4.17.24': {}
 
   '@types/memoizee@0.4.12': {}
@@ -7587,8 +7582,6 @@ snapshots:
     dependencies:
       p-locate: 5.0.0
 
-  lodash.chunk@4.2.0: {}
-
   lodash.clonedeep@4.5.0: {}
 
   lodash.escaperegexp@4.1.2: {}
@@ -7599,8 +7592,6 @@ snapshots:
 
   lodash.isequal@4.5.0: {}
 
-  lodash.iserror@3.1.1: {}
-
   lodash.isinteger@4.0.4: {}
 
   lodash.isnumber@3.0.3: {}
@@ -7608,8 +7599,6 @@ snapshots:
   lodash.isplainobject@4.0.6: {}
 
   lodash.isstring@4.0.1: {}
-
-  lodash.keyby@4.6.0: {}
 
   lodash.merge@4.6.2: {}
 

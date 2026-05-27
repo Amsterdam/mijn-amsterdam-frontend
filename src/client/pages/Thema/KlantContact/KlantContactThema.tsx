@@ -76,9 +76,8 @@ export function KlantContactThema() {
               className={getRedactedClass(null, 'full')}
             >
               <CommunicatieVoorkeuren
-                voorkeuren={communicatievoorkeuren?.voorkeuren}
-                standaardContactvoorkeurPerType={
-                  communicatievoorkeuren?.standaardContactvoorkeurPerType
+                standaardContactgegevens={
+                  communicatievoorkeuren?.standaardContactgegevens
                 }
                 aangeslotenDiensten={
                   communicatievoorkeuren?.aangeslotenDiensten
