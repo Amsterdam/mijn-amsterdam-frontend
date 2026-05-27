@@ -55,7 +55,7 @@ function updateCommunicatievoorkeurState({
 }
 
 export function useSetCommunicatievoorkeur(
-  onSubmit: (
+  onCallback: (
     contactgegeven: ContactgegevenFrontend | null,
     success: boolean
   ) => void
@@ -74,7 +74,7 @@ export function useSetCommunicatievoorkeur(
                 appState,
               });
             }
-            onSubmit(response.content ?? null, true);
+            onCallback(response.content ?? null, true);
             return response;
           }
         );
@@ -84,7 +84,7 @@ export function useSetCommunicatievoorkeur(
 }
 
 export function useVerifyCommunicatievoorkeur(
-  onSubmit: (verified: boolean) => void
+  onCallback: (verified: boolean) => void
 ) {
   const appState = useAppStateStore();
   return useBffApi<
@@ -113,7 +113,7 @@ export function useVerifyCommunicatievoorkeur(
             appState,
           });
         }
-        onSubmit(success);
+        onCallback(success);
         return response;
       });
     },
