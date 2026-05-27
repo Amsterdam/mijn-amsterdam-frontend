@@ -24,10 +24,7 @@ import {
   useVerifyCommunicatievoorkeur,
 } from './useCommunicatieVoorkeuren.ts';
 import styles from './ValueInputAndValidation.module.scss';
-import {
-  type ContactgegevenFrontend,
-  type ContactgegevenType,
-} from '../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
+import { type ContactgegevenType } from '../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
 import { Spinner } from '../../../../components/Spinner/Spinner.tsx';
 
 const VERIFICATION_CODE_LENGTH = 6;
@@ -36,10 +33,7 @@ function validateCodeFormat(code: string) {
   return code.split('').filter(Boolean).length === VERIFICATION_CODE_LENGTH;
 }
 
-type ContactgegevenVerifyProps<
-  V = ContactgegevenFrontend['value'],
-  T = ContactgegevenType,
-> = {
+type ContactgegevenVerifyProps<V = string, T = ContactgegevenType> = {
   value: V;
   type: T;
   onVerified: (formData: { otp: string; value: V; type: T }) => void;
@@ -163,12 +157,12 @@ function ValueInput({
         </ErrorMessage>
       )}
       {isError && (
-        <ErrorMessage id="error2">
+        <ErrorMessage id="error3">
           Het {typeLabel} kan nu niet geverifieerd worden.
         </ErrorMessage>
       )}
       <TextInput
-        aria-describedby="description2 error2"
+        aria-describedby="description2 error2 error3"
         aria-required
         id="input3"
         invalid={isInvalid}
@@ -177,7 +171,7 @@ function ValueInput({
         placeholder={`Vul hier uw ${typeLabel} in`}
         onChange={onChange}
         type="text"
-        name="emailToVerify"
+        name="valueToVerify"
         disabled={isLoading}
       />
     </Field>
@@ -187,13 +181,13 @@ function ValueInput({
 type ContactgegevenProps<V = string, T = ContactgegevenType> = {
   value: V;
   type: T;
-  onSubmit: (formData: { value: V; type: T }, success: boolean) => void;
+  onCallback: (formData: { value: V; type: T }, success: boolean) => void;
 };
 
 export function ContactgegevenForm({
   value,
   type,
-  onSubmit,
+  onCallback,
 }: ContactgegevenProps) {
   const [valueToVerify, setValueToVerify] = useState<string>(value);
   const [isInvalid, setIsInvalid] = useState(false);
@@ -204,7 +198,7 @@ export function ContactgegevenForm({
 
   const { fetch, isLoading, isError } = useSetCommunicatievoorkeur(
     (_contactgegeven, success) => {
-      onSubmit({ value: valueToVerify, type }, success);
+      onCallback({ value: valueToVerify, type }, success);
     }
   );
 
