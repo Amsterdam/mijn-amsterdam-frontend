@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import {
   Heading,
   Paragraph,
@@ -36,6 +38,8 @@ export function CommunicatieVoorkeuren({
     hasEmail && standaardContactgegevens.Email.isVerified
   );
 
+  const [isEmailPostAccepted, setIsEmailPostAccepted] = useState(false);
+
   return (
     <>
       <div className="ams-mb-l">
@@ -71,13 +75,25 @@ export function CommunicatieVoorkeuren({
         {hasValidatedEmail && (
           <form>
             <Checkbox
-              id=""
-              onChange={function fie() {}}
-              onClick={function fie() {}}
+              id="accept-email-checkbox"
+              checked={isEmailPostAccepted}
+              onChange={(e) => setIsEmailPostAccepted(e.target.checked)}
             >
               Ja, ik wil post per e-mail ontvangen van de gemeente Amsterdam.
             </Checkbox>
           </form>
+        )}
+        {hasValidatedEmail && isEmailPostAccepted && (
+          <Alert
+            // severity="info"
+            heading="Post per e-mail geaccepteerd"
+            headingLevel={3}
+          >
+            <Paragraph>
+              U ontvangt nu post van de gemeente Amsterdam per e-mail op{' '}
+              <strong>{standaardContactgegevens?.Email.value}</strong>.
+            </Paragraph>
+          </Alert>
         )}
       </div>
       <div>
