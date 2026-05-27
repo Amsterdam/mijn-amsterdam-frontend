@@ -28,7 +28,7 @@ export function transformContactgegevenSource(
     id: contactgegeven?.id ?? null,
     type: contactgegevenType,
     value: contactgegeven?.waarde ?? null,
-    isValidated: contactgegeven?.isGeverifieerd ?? false,
+    isVerified: contactgegeven?.isGeverifieerd ?? false,
     dateModified: contactgegeven?.lastUpdated ?? null,
     dateModifiedFormatted: toDateFormatted(contactgegeven?.lastUpdated),
   };

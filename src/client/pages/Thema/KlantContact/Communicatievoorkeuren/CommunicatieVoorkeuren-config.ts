@@ -14,7 +14,7 @@ export const ContactgegevenByTypeLabels = {
   Postadres: 'Postadres',
 } as const satisfies Record<ContactgegevenType_, string>;
 
-export const ContactgegevenType = {
+export const ContactgegevenTypeEnum = {
   Email: 'Email',
   Telefoonnummer: 'Telefoonnummer',
   ApplicatieId: 'ApplicatieId',

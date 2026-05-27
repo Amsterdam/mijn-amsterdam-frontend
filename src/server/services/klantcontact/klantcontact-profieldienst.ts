@@ -1,3 +1,5 @@
+import { HttpStatusCode } from 'axios';
+
 import {
   getIdentificatieType,
   transformContactgegevenSource,
@@ -142,19 +144,22 @@ export async function deleteContactgegeven(
 }
 
 type VerifyVerificationRequestProps = {
-  email: string;
+  value: string;
   code: string;
+  type: ContactgegevenType;
 };
 
 export async function verifyContactgegeven(
   authProfileAndToken: AuthProfileAndToken,
-  { email, code }: VerifyVerificationRequestProps
+  { value, code, type }: VerifyVerificationRequestProps
 ) {
+  // TODO: based on type, we might want to send the verification request to a different endpoint or with a different payload structure.
+  // For now we only support email verification, but the API supports phone verification as well, and in the future we might want to add more types.
   const identificatieType = getIdentificatieType(
     authProfileAndToken.profile.profileType
   );
   const data: VerifyVerificationRequestPayload = {
-    email,
+    email: value,
     identificatieNummer: authProfileAndToken.profile.id,
     identificatieType,
     verificatieCode: code,
@@ -166,22 +171,11 @@ export async function verifyContactgegeven(
     formatUrl({ url }) {
       return `${url}/emailverificatie`;
     },
+    transformResponse: (_response: unknown, _headers, status) => {
+      return { verified: status === HttpStatusCode.Ok };
+    },
     enableCache: false, // For testing
   });
 
-  const verificationResponse =
-    await requestData<VerifyVerificationRequestResponse>(apiConfig);
-
-  if (verificationResponse.content?.verified) {
-    const profileResponse = await fetchProfiel(authProfileAndToken);
-    if (
-      !profileResponse.content?.contactgegevens.some(
-        (contactgegeven) => contactgegeven.isDefault
-      )
-    ) {
-      // MAKE DEFAULT
-    }
-  }
-
-  return verificationResponse;
+  return requestData<VerifyVerificationRequestResponse>(apiConfig);
 }

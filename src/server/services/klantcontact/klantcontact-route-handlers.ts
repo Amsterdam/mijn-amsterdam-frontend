@@ -28,14 +28,15 @@ export async function handleVerifyContactgegeven(
 ) {
   debugContactRequestData(req.body);
 
-  const { email, code } = req.body;
+  const { value, code, type } = req.body;
 
-  if (!email || !code) {
-    return sendBadRequest(res, 'E-mail and code are required');
+  if (!value || !code || !(type in ContactgegevenType)) {
+    return sendBadRequest(res, 'value, type and code are required');
   }
 
   const response = await verifyContactgegeven(res.locals.authProfileAndToken, {
-    email,
+    type,
+    value,
     code,
   });
 
@@ -59,7 +60,7 @@ export async function handleCreateContactgegeven(
 ) {
   const { value, type } = req.body;
 
-  if (!(type in ContactgegevenType)) {
+  if (!(type in ContactgegevenType) || !value) {
     return sendBadRequestInvalidInput(
       res,
       `payloadType ${type} is not supported`

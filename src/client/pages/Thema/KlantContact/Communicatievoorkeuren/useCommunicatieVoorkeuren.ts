@@ -5,6 +5,7 @@ import { ContactgegevenByTypeLabels } from './CommunicatieVoorkeuren-config.ts';
 import type {
   ContactgegevenType,
   ContactgegevenFrontend,
+  VerifyVerificationRequestResponse,
 } from '../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
 import {
   capitalizeFirstLetter,
@@ -25,7 +26,9 @@ import {
 } from '../KlantContact-thema-config.ts';
 
 type UpdateProps = {
-  contactgegeven: ContactgegevenFrontend;
+  contactgegeven: Partial<Omit<ContactgegevenFrontend, 'type'>> & {
+    type: ContactgegevenType;
+  };
   appState: AppStateStore;
 };
 
@@ -41,19 +44,7 @@ function updateCommunicatievoorkeurState({
           content: {
             communicatievoorkeuren: {
               standaardContactgegevens: {
-                [contactgegeven.type]: {
-                  value: contactgegeven.value,
-                  isValidated: contactgegeven.isValidated ?? false, // We can only set this to true after the validation step, but we want to optimistically update the UI immediately after the user sets a contactgegeven.
-                  dateModified:
-                    contactgegeven.dateModified ?? new Date().toISOString(),
-                  dateModifiedFormatted:
-                    contactgegeven.dateModifiedFormatted ??
-                    new Date().toLocaleDateString('nl-NL', {
-                      day: 'numeric',
-                      month: 'long',
-                      year: 'numeric',
-                    }),
-                },
+                [contactgegeven.type]: contactgegeven,
               },
             },
           },
@@ -63,7 +54,12 @@ function updateCommunicatievoorkeurState({
   );
 }
 
-function useSetCommunicatievoorkeur() {
+export function useSetCommunicatievoorkeur(
+  onSubmit: (
+    contactgegeven: ContactgegevenFrontend | null,
+    success: boolean
+  ) => void
+) {
   const appState = useAppStateStore();
   return useBffApi<ContactgegevenFrontend>(
     BFFApiUrls.KLANTCONTACT_CONTACTGEGEVEN_CREATE,
@@ -78,6 +74,7 @@ function useSetCommunicatievoorkeur() {
                 appState,
               });
             }
+            onSubmit(response.content ?? null, true);
             return response;
           }
         );
@@ -86,9 +83,44 @@ function useSetCommunicatievoorkeur() {
   );
 }
 
+export function useVerifyCommunicatievoorkeur(
+  onSubmit: (verified: boolean) => void
+) {
+  const appState = useAppStateStore();
+  return useBffApi<
+    VerifyVerificationRequestResponse,
+    { type: ContactgegevenType; value: string; code: string }
+  >(BFFApiUrls.KLANTCONTACT_CONTACTGEGEVEN_VERIFY, {
+    fetchImmediately: false,
+    sendRequest: async (url, init) => {
+      return sendFormPostRequest<VerifyVerificationRequestResponse>(
+        url,
+        init
+      ).then((response) => {
+        const success = response.content?.verified ?? false;
+        if (success && init?.payload) {
+          updateCommunicatievoorkeurState({
+            contactgegeven: {
+              type: init.payload.type,
+              isVerified: true,
+              dateModified: new Date().toISOString(),
+              dateModifiedFormatted: new Date().toLocaleDateString('nl-NL', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              }),
+            },
+            appState,
+          });
+        }
+        onSubmit(success);
+        return response;
+      });
+    },
+  });
+}
+
 export function useCommunicatieVoorkeurInstellen() {
-  // const { communicatievoorkeuren } = useKlantcontactData();
-  const { fetch: updateCommunicatievoorkeur } = useSetCommunicatievoorkeur();
   const params = useParams<{
     contactgegeven: ContactgegevenType;
     action: InstelAction;
@@ -99,12 +131,9 @@ export function useCommunicatieVoorkeurInstellen() {
   //   communicatievoorkeuren?.standaardContactgegevens ?? null;
 
   return {
-    title: `${params.action ? capitalizeFirstLetter(params.action) : 'Instellen'} ${params.contactgegeven ? lowercaseFirstLetter(ContactgegevenByTypeLabels[params.contactgegeven]) : 'contactgegeven'}`,
+    title: `${params.action ? capitalizeFirstLetter(params.action) : 'Instellen'} ${params.contactgegeven ? lowercaseFirstLetter(ContactgegevenByTypeLabels[params.contactgegeven] ?? '') : 'contactgegeven'}`,
     routeConfig: themaConfig.detailPageContactgegevenInstellen.route,
     contactgegevenType: params.contactgegeven,
-    update(contactgegeven: { type: ContactgegevenType; value: string | null }) {
-      return updateCommunicatievoorkeur({ payload: contactgegeven });
-    },
   };
 }
 

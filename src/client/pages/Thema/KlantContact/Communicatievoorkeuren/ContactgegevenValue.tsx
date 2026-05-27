@@ -5,7 +5,7 @@ import { differenceInCalendarMonths } from 'date-fns';
 import { generatePath } from 'react-router';
 
 import {
-  ContactgegevenType,
+  ContactgegevenTypeEnum,
   MAXIMUM_AGE_BEFORE_VALIDATION,
 } from './CommunicatieVoorkeuren-config.ts';
 import { useCommunicatieVoorkeurVerwijderen } from './useCommunicatieVoorkeuren.ts';
@@ -115,19 +115,20 @@ export function ContactgegevenValue({
     });
 
   switch (contactgegeven.type) {
-    case ContactgegevenType.Email: {
+    case ContactgegevenTypeEnum.Email: {
       const isOld =
-        !!(contactgegeven.dateModified && contactgegeven.isValidated) &&
+        !!(contactgegeven.dateModified && contactgegeven.isVerified) &&
         differenceInCalendarMonths(new Date(), contactgegeven.dateModified) >=
           MAXIMUM_AGE_BEFORE_VALIDATION;
       const needsValidation =
-        !!contactgegeven.value && (!contactgegeven.isValidated || isOld);
+        !!contactgegeven.value && (!contactgegeven.isVerified || isOld);
       return (
         <>
           <Value contactgegeven={contactgegeven} />
-          {contactgegeven.value && contactgegeven.isValidated && (
+          {contactgegeven.value && contactgegeven.isVerified && (
             <>(Laatst gewijzigd op {contactgegeven.dateModifiedFormatted})</>
-          )}{' '}
+          )}
+          <br />
           {needsValidation && (
             <>
               <Badge label="!" color="red" /> Dit e-mailadres is nog niet
@@ -151,7 +152,7 @@ export function ContactgegevenValue({
         </>
       );
     }
-    case ContactgegevenType.Telefoonnummer: {
+    case ContactgegevenTypeEnum.Telefoonnummer: {
       return (
         <Paragraph>
           <Value contactgegeven={contactgegeven} />
@@ -159,14 +160,14 @@ export function ContactgegevenValue({
         </Paragraph>
       );
     }
-    case ContactgegevenType.ApplicatieId: {
+    case ContactgegevenTypeEnum.ApplicatieId: {
       return (
         <Paragraph>
           <Value
             contactgegeven={contactgegeven}
             noValueText="Nog niet gekoppeld"
           />
-          {contactgegeven.value && contactgegeven.isValidated && (
+          {contactgegeven.value && contactgegeven.isVerified && (
             <>(Gekoppeld op {contactgegeven.dateModifiedFormatted})</>
           )}
         </Paragraph>
@@ -183,7 +184,7 @@ export function ContactgegevenValue({
     //   );
     // }
     // Add more cases for other communication mediums
-    case ContactgegevenType.Postadres: {
+    case ContactgegevenTypeEnum.Postadres: {
       return (
         <Paragraph>
           <Value

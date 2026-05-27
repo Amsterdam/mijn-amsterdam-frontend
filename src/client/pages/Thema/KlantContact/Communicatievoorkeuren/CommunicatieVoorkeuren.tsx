@@ -7,7 +7,6 @@ import {
 } from '@amsterdam/design-system-react';
 
 import { ContactgegevenByTypeLabels } from './CommunicatieVoorkeuren-config.ts';
-import styles from './CommunicatieVoorkeuren.module.scss';
 import { ContactgegevenValue } from './ContactgegevenValue.tsx';
 import type {
   ContactgegevenPerTypeFrontend,
@@ -27,20 +26,14 @@ export function CommunicatieVoorkeuren({
   const rows = Object.values(standaardContactgegevens ?? {})
     .filter((contactgegeven) => !contactgegeven.disabled)
     .map((contactgegeven) => ({
-      label:
-        ContactgegevenByTypeLabels[
-          contactgegeven.type as keyof typeof ContactgegevenByTypeLabels
-        ],
-      content: (
-        <article className={styles.MediumValue}>
-          <ContactgegevenValue contactgegeven={contactgegeven} />
-        </article>
-      ),
+      label: ContactgegevenByTypeLabels[contactgegeven.type],
+      content: <ContactgegevenValue contactgegeven={contactgegeven} />,
     }));
 
+  const hasEmail = !!standaardContactgegevens?.Email?.value;
+
   const hasValidatedEmail = !!(
-    standaardContactgegevens?.Email?.value &&
-    standaardContactgegevens.Email.isValidated
+    hasEmail && standaardContactgegevens.Email.isVerified
   );
 
   return (
@@ -66,7 +59,7 @@ export function CommunicatieVoorkeuren({
         {!hasValidatedEmail && (
           <Alert
             severity="warning"
-            heading="E-mailadres ontbreekt"
+            heading={`E-mailadres ${hasEmail ? 'niet gevalideerd' : 'ontbreekt'}`}
             headingLevel={3}
           >
             <Paragraph>

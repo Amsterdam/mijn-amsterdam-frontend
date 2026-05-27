@@ -15,17 +15,20 @@ import {
 } from '@amsterdam/design-system-react';
 import OTPInput from 'react-otp-input';
 
-import styles from './EmailInputAndValidation.module.scss';
-import type {
-  ContactgegevenSource,
-  VerifyVerificationRequestResponse,
+import {
+  ContactgegevenByTypeLabels,
+  ContactgegevenTypeEnum,
+} from './CommunicatieVoorkeuren-config.ts';
+import {
+  useSetCommunicatievoorkeur,
+  useVerifyCommunicatievoorkeur,
+} from './useCommunicatieVoorkeuren.ts';
+import styles from './ValueInputAndValidation.module.scss';
+import {
+  type ContactgegevenFrontend,
+  type ContactgegevenType,
 } from '../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
 import { Spinner } from '../../../../components/Spinner/Spinner.tsx';
-import { BFFApiUrls } from '../../../../config/api.ts';
-import {
-  sendFormPostRequest,
-  useBffApi,
-} from '../../../../hooks/api/useBffApi.ts';
 
 const VERIFICATION_CODE_LENGTH = 6;
 
@@ -33,31 +36,30 @@ function validateCodeFormat(code: string) {
   return code.split('').filter(Boolean).length === VERIFICATION_CODE_LENGTH;
 }
 
-type EmailVerifyProps = {
-  email: string;
-  onValidated: (formData: { otp: string; email: string }) => void;
+type ContactgegevenVerifyProps<
+  V = ContactgegevenFrontend['value'],
+  T = ContactgegevenType,
+> = {
+  value: V;
+  type: T;
+  onVerified: (formData: { otp: string; value: V; type: T }) => void;
 };
 
-export function EmailVerify({ email, onValidated }: EmailVerifyProps) {
+export function ContactgegevenVerify({
+  value,
+  type,
+  onVerified,
+}: ContactgegevenVerifyProps) {
   const [otp, setOtp] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
 
-  const { fetch, isLoading, isError } =
-    useBffApi<VerifyVerificationRequestResponse>(
-      BFFApiUrls.KLANTCONTACT_CONTACTGEGEVEN_VERIFY,
-      {
-        fetchImmediately: false,
-        sendRequest: async (url, init) => {
-          return sendFormPostRequest<VerifyVerificationRequestResponse>(
-            url,
-            init
-          ).then((response) => {
-            onValidated({ otp, email });
-            return response;
-          });
-        },
+  const { fetch, isLoading, isError } = useVerifyCommunicatievoorkeur(
+    (isVerified) => {
+      if (isVerified) {
+        onVerified({ otp, value, type });
       }
-    );
+    }
+  );
 
   const hasApiError = !isLoading && isError;
 
@@ -65,12 +67,12 @@ export function EmailVerify({ email, onValidated }: EmailVerifyProps) {
     async (code: string) => {
       const isValid = validateCodeFormat(code);
       if (isValid) {
-        fetch({ payload: { email, code } });
+        fetch({ payload: { value, type, code } });
       } else {
         setIsInvalid(true);
       }
     },
-    [otp, email]
+    [otp, value, type]
   );
 
   return (
@@ -79,13 +81,13 @@ export function EmailVerify({ email, onValidated }: EmailVerifyProps) {
         event.preventDefault();
         submit(otp);
       }}
-      name="email-adjust-form"
+      name="contactgegeven-value-form"
     >
       <Field invalid={isInvalid} className="ams-mb-m">
         <Label htmlFor="input3">Vul de code in</Label>
         <Paragraph id="description2" size="small">
           Wij hebben een code met {VERIFICATION_CODE_LENGTH} cijfers gestuurd
-          naar <strong>{email}</strong>. Vul deze code hieronder in.
+          naar <strong>{value}</strong>. Vul deze code hieronder in.
         </Paragraph>
         {isInvalid && (
           <ErrorMessage id="error">De code is niet correct.</ErrorMessage>
@@ -131,35 +133,38 @@ export function EmailVerify({ email, onValidated }: EmailVerifyProps) {
   );
 }
 
-type EmailInputProps = {
+type ValueInputProps = {
   value: string;
+  type: ContactgegevenType;
   isInvalid: boolean;
   isError: boolean;
   isLoading: boolean;
   onChange: ChangeEventHandler<HTMLInputElement>;
 };
 
-function EmailInput({
+function ValueInput({
   value,
+  type,
   onChange,
   isInvalid = false,
   isError = false,
   isLoading = false,
-}: EmailInputProps) {
+}: ValueInputProps) {
+  const typeLabel = ContactgegevenByTypeLabels[type];
   return (
     <Field invalid={isInvalid} className="ams-mb-m">
       <Paragraph id="description2">
-        Zorg ervoor dat u een geldig e-mailadres invult. U ontvangt een code op
-        dit e-mailadres. De code moet u straks invullen.
+        Zorg ervoor dat u een geldig {typeLabel} invult. U ontvangt een code op
+        dit {typeLabel}. De code moet u straks invullen.
       </Paragraph>
       {isInvalid && (
         <ErrorMessage id="error2">
-          Dit lijkt geen valide e-mailadres.
+          Dit lijkt geen valide {typeLabel}.
         </ErrorMessage>
       )}
       {isError && (
         <ErrorMessage id="error2">
-          Het e-mailadres kan nu niet geverifieerd worden.
+          Het {typeLabel} kan nu niet geverifieerd worden.
         </ErrorMessage>
       )}
       <TextInput
@@ -169,7 +174,7 @@ function EmailInput({
         invalid={isInvalid}
         size={26}
         value={value}
-        placeholder="naam@domein.nl"
+        placeholder={`Vul hier uw ${typeLabel} in`}
         onChange={onChange}
         type="text"
         name="emailToVerify"
@@ -179,36 +184,27 @@ function EmailInput({
   );
 }
 
-type EmailFormProps = {
-  email: string;
-  onSubmit: (formData: { email: string }, success: boolean) => void;
+type ContactgegevenProps<V = string, T = ContactgegevenType> = {
+  value: V;
+  type: T;
+  onSubmit: (formData: { value: V; type: T }, success: boolean) => void;
 };
 
-export function EmailForm({ email, onSubmit }: EmailFormProps) {
-  const [emailToVerify, setEmailToVerify] = useState<string>(email);
+export function ContactgegevenForm({
+  value,
+  type,
+  onSubmit,
+}: ContactgegevenProps) {
+  const [valueToVerify, setValueToVerify] = useState<string>(value);
   const [isInvalid, setIsInvalid] = useState(false);
 
   useEffect(() => {
-    setEmailToVerify(email);
-  }, [email]);
+    setValueToVerify(value);
+  }, [value]);
 
-  const { fetch, isLoading, isError } = useBffApi<ContactgegevenSource>(
-    BFFApiUrls.KLANTCONTACT_CONTACTGEGEVEN_CREATE,
-    {
-      fetchImmediately: false,
-      sendRequest: async (url, init) => {
-        return sendFormPostRequest<ContactgegevenSource>(url, init).then(
-          (response) => {
-            onSubmit(
-              {
-                email: emailToVerify,
-              },
-              !!response.content?.id
-            );
-            return response;
-          }
-        );
-      },
+  const { fetch, isLoading, isError } = useSetCommunicatievoorkeur(
+    (_contactgegeven, success) => {
+      onSubmit({ value: valueToVerify, type }, success);
     }
   );
 
@@ -217,27 +213,31 @@ export function EmailForm({ email, onSubmit }: EmailFormProps) {
     (event) => {
       event.preventDefault();
 
-      if (!emailToVerify.includes('@')) {
+      if (
+        type === ContactgegevenTypeEnum.Email &&
+        !valueToVerify.includes('@')
+      ) {
         setIsInvalid(true);
         return;
       }
 
-      setEmailToVerify(emailToVerify);
-      fetch({ payload: { type: 'email', value: emailToVerify } });
+      setValueToVerify(valueToVerify);
+      fetch({ payload: { type, value: valueToVerify } });
     },
-    [emailToVerify]
+    [valueToVerify, type]
   );
 
   return (
-    <form onSubmit={submitForm} name="email-adjust-form">
+    <form onSubmit={submitForm} name="contactgegeven-value-form">
       <Field>
-        <EmailInput
-          value={emailToVerify}
+        <ValueInput
+          value={valueToVerify}
+          type={type}
           isInvalid={isInvalid}
           isError={isError}
           isLoading={isLoading}
           onChange={(e) => {
-            setEmailToVerify(e.target.value);
+            setValueToVerify(e.target.value);
             setIsInvalid(false);
           }}
         />
