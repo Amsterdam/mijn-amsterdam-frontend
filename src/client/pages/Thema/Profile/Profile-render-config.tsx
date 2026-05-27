@@ -18,7 +18,7 @@ export const ProfileRoutes = [
   {
     route: themaConfig.BRP.detailPageVvE.route.path,
     Component: VvEDetail,
-    isActive: themaConfig.BRP.featureToggle.wonenActive,
+    isActive: themaConfig.BRP.featureToggle.vveActive,
   },
 ];
 
