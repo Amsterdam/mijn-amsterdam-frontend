@@ -198,7 +198,13 @@ async function generateOverview() {
       fs.writeFileSync(CACHE_PATH, JSON.stringify(resultsByUser));
     }
 
-    const fileName = `${TARGET_DIRECTORY}/userdata-overview.xlsx`;
+    const now = new Date();
+    const [day, month, year] = [
+      now.getDate(),
+      now.getMonth() + 1,
+      now.getFullYear(),
+    ].map((d) => d.toString());
+    const fileName = `${TARGET_DIRECTORY}/userdata-overview_${day}-${month}-${year}.xlsx`;
     const workbook = XLSX.utils.book_new();
 
     const serviceNames = getAllServiceNames(resultsByUser);
@@ -216,7 +222,7 @@ async function generateOverview() {
     const testUserLoginTable = createDigidTestUserTable(resultsByUser);
     fs.writeFileSync(
       args['out-file-path-digid-test-accounts'],
-      JSON.stringify(testUserLoginTable, null, 2)
+      JSON.stringify(testUserLoginTable, null, 2) + '\n'
     );
 
     XLSX.writeFile(workbook, fileName, { compression: true });
