@@ -13,17 +13,17 @@
  *
  * How to use
  * ==========
- * pnpx tsx generate-user-data-overview.ts
- * add --from-disk or -d to use cache and use cached data. To refresh the cache add the --refresh-cache flag.
+ * pnpx tsx src/scripts/generate-user-data-overview.ts
+ * add --from-disk or -d to save to disk and use cached data. To refresh the cache add the --refresh-cache flag.
  * add --out-file-path-digid-test-accounts=<filepath> to decide where to save the test account json overview -
- * this will overwrite the local file per default.
+ * this will overwrite the local file by default.
  *
  * Tips
  * =========
- * - The script can be run from disk see `FROM_DISK` in this file.
+ * - The script can be run from disk, see `FROM_DISK` in this file.
  * - Use a tool like watchexec for rerunning the script when debugging
  * ```sh
- * watchexec -c -e ts pnpx tsx ./scripts/generate-user-data-overview.ts
+ * watchexec -c -e ts pnpx tsx src/scripts/generate-user-data-overview.ts
  * ```
  */
 
@@ -86,7 +86,7 @@ function cleanTestUsername(username: string): string {
   return username.trim().replace('Provincie-', '');
 }
 
-/** Extra hardcoded additions are to display certain services like they're their own thema.
+/** Extra hardcoded additions are to display certain services as if they were their own thema.
  */
 const themas = [
   { id: themaProfiles.BRP.id, title: themaProfiles.BRP.title },
@@ -181,7 +181,7 @@ if (!BASE_URL) {
   throw new Error(`BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL = ${BASE_URL}`);
 }
 
-// Configuartion for row/columns.
+// Configuration for row/columns.
 const HPX_DEFAULT = 22;
 const WCH_DEFAULT = 25;
 
@@ -1008,7 +1008,7 @@ function sheetThemaContent(resultsByUser: ResultsByUser): SheetData {
       }, base);
 
       if (Array.isArray(serviceResults.VERGUNNINGEN?.content)) {
-        // Add the count of all the different kinds of verguninngen.
+        // Add the count of all the different kinds of vergunningen.
         for (const vergunning of serviceResults.VERGUNNINGEN.content) {
           const id = vergunning.caseType;
           if (!resVal[id]) {
