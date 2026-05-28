@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
+import { configDefaults } from 'vitest/config';
 import svgr from 'vite-plugin-svgr';
 import path from 'node:path';
 
@@ -38,6 +39,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'happy-dom', // NOTE: overridden with 'node' when testing bff application
+    exclude: [...configDefaults.exclude, '**/__tmp-routes-*/**'],
     environmentOptions: {
       happyDOM: {
         settings: {

@@ -41,7 +41,7 @@ export async function loadRoutes(
 
   const routes = discoveredRouteLists.flat();
 
-  logger.info(
+  logger.debug(
     {
       routeModuleCount: routeFiles.length,
       routeCount: routes.length,

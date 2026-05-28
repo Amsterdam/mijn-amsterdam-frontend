@@ -440,8 +440,8 @@ importers:
         version: 8.59.2(eslint@9.39.4)(typescript@6.0.2)
     optionalDependencies:
       '@rollup/rollup-linux-x64-gnu':
-        specifier: 4.60.1
-        version: 4.60.1
+        specifier: 4.60.4
+        version: 4.60.4
 
 packages:
 
@@ -1295,6 +1295,12 @@ packages:
 
   '@rollup/rollup-linux-x64-gnu@4.60.1':
     resolution: {integrity: sha512-77PpsFQUCOiZR9+LQEFg9GClyfkNXj1MP6wRnzYs0EeWbPcHs02AXu4xuUbM1zhwn3wqaizle3AEYg5aeoohhg==}
+    cpu: [x64]
+    os: [linux]
+    libc: [glibc]
+
+  '@rollup/rollup-linux-x64-gnu@4.60.4':
+    resolution: {integrity: sha512-Boiz5+MsaROEWDf+GGEwF8VMHGhlUoQMtIPjOgA5fv4osupqTVnJteQNKJwUcnUog2G55jYXH7KZFFiJe0TEzQ==}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
@@ -5406,6 +5412,9 @@ snapshots:
     optional: true
 
   '@rollup/rollup-linux-x64-gnu@4.60.1':
+    optional: true
+
+  '@rollup/rollup-linux-x64-gnu@4.60.4':
     optional: true
 
   '@rollup/rollup-linux-x64-musl@4.60.1':

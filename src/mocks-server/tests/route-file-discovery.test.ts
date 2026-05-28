@@ -23,7 +23,9 @@ describe('loadRoutes', () => {
   });
 
   it('loads and flattens routes from discovered route modules', async () => {
-    const loggerSpy = vi.spyOn(logger, 'info').mockImplementation(() => logger);
+    const loggerSpy = vi
+      .spyOn(logger, 'debug')
+      .mockImplementation(() => logger);
     const tempDir = await mkdtemp(path.join(routesDir, '__tmp-routes-'));
     createdDirs.push(tempDir);
 
