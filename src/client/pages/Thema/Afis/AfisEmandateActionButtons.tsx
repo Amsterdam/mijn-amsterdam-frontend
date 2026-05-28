@@ -16,9 +16,12 @@ import type {
   AfisEMandateSignRequestResponse,
   AfisEMandateStatusChangeResponse,
 } from '../../../../server/services/afis/afis-types.ts';
+import { delay } from '../../../../universal/helpers/utils.ts';
 import { Modal } from '../../../components/Modal/Modal.tsx';
 import { Spinner } from '../../../components/Spinner/Spinner.tsx';
+import { trackLinkClick } from '../../../hooks/analytics.hook.ts';
 import type { BFFApiHook } from '../../../hooks/api/useBffApi.ts';
+import { useProfileTypeValue } from '../../../hooks/useProfileType.ts';
 
 type ActionConfirmationModalProps = {
   confirmationText: ReactElement | string;
@@ -137,13 +140,25 @@ export function AfisEMandateActionButtons({
   redirectUrlApi,
   deactivateApi,
 }: AfisEMandateActionButtonsProps) {
+  const profileType = useProfileTypeValue();
   const isActive = eMandate.status === EMANDATE_STATUS_ACTIVE;
   return (
     <>
       {eMandate.signRequestUrl && (
         <ApiActionButton
           api={redirectUrlApi}
-          fetch={() => redirectUrlApi.requestRedirectUrl(isActive)}
+          fetch={async () => {
+            if (eMandate.signRequestUrl) {
+              trackLinkClick(
+                'AfisEMandateActionButtons',
+                eMandate.signRequestUrl,
+                isActive ? 'Rekening wijzigen' : 'Activeren',
+                profileType
+              );
+              await delay(300); // Add slight delay to ensure the analytics event is sent before the redirect happens
+            }
+            return redirectUrlApi.requestRedirectUrl(isActive);
+          }}
           label={isActive ? 'Rekening wijzigen' : 'Activeren'}
           doConfirm={false}
         />
@@ -166,9 +181,10 @@ function ApiDeactivateButton({
   deactivateApi: BFFApiHook<AfisEMandateStatusChangeResponse | null>;
   eMandate: AfisEMandateFrontend;
 }) {
+  const profileType = useProfileTypeValue();
   const { facturenByState } = useAfisFacturenData();
-  const openFacturen = facturenByState?.open?.facturen ?? [];
   const confirmationModalProps = useMemo(() => {
+    const openFacturen = facturenByState?.open?.facturen ?? [];
     const facturenByEmandateId = openFacturen.filter(
       (factuur) => factuur.eMandateId === eMandate.eMandateIdSource
     );
@@ -230,12 +246,23 @@ function ApiDeactivateButton({
       ),
       confirmLabel: 'Ja, stopzetten',
     };
-  }, [eMandate.eMandateIdSource, openFacturen]);
+  }, [eMandate.eMandateIdSource, facturenByState?.open?.facturen]);
 
   return (
     <ApiActionButton
       api={deactivateApi}
-      fetch={() => deactivateApi.fetch()}
+      fetch={async () => {
+        if (eMandate.deactivateUrl) {
+          trackLinkClick(
+            'ApiDeactivateButton',
+            eMandate.deactivateUrl,
+            'Stopzetten',
+            profileType
+          );
+          await delay(300); // Add slight delay to ensure the analytics event is sent before the redirect happens
+        }
+        return deactivateApi.fetch();
+      }}
       label="Stopzetten"
       doConfirm
       confirmationModal={confirmationModalProps}
