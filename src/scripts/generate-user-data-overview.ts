@@ -1,16 +1,11 @@
 /**
- * Script to fetch, transform and save testdata for every account -
- * in the MA_TEST_ACCOUNTS environment variable to a excel file.
+ * Script to fetch, transform and save testdata for every account.
+
  * This is used for quickly looking up what user has, which thema's/data -
  * without needing to separately login to every account.
  *
  * When debugging locally
  * ======================
- *
- * Make sure MA_TEST_ACCOUNTS is filled with testaccounts like so:
- *   {account_name}={bsn},{account_name}={bsn},...
- * Put that in your .env.local file
- *
  * To connect to our test environment fill BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL with
  * `https://{azure_default_domain}/api/v1` where azure_default_domain is found -
  * on our test Appservice in Azure Portal.
@@ -19,7 +14,9 @@
  * How to use
  * ==========
  * pnpx tsx generate-user-data-overview.ts
- * add --from-disk or -d to use cached data. To refresh the cache remove this flag.
+ * add --from-disk or -d to use cache and use cached data. To refresh the cache add the --refresh-cache flag.
+ * add --out-file-path-digid-test-accounts=<filepath> to decide where to save the test account json overview -
+ * this will overwrite the local file per default.
  *
  * Tips
  * =========
@@ -158,6 +155,11 @@ const { values: args } = parseArgs({
       type: 'string',
       default: './src/universal/config/digid-test-accounts.json',
     },
+    'refresh-cache': {
+      type: 'boolean',
+      short: 'r',
+      default: false,
+    },
   },
 });
 
@@ -187,7 +189,12 @@ generateOverview();
 
 async function generateOverview() {
   return getServiceResults().then((resultsByUser) => {
-    if (!fs.existsSync(CACHE_PATH) || !FROM_DISK) {
+    const fileExists = fs.existsSync(CACHE_PATH);
+    if (fileExists) {
+      if (args['refresh-cache']) {
+        fs.writeFileSync(CACHE_PATH, JSON.stringify(resultsByUser));
+      }
+    } else if (FROM_DISK) {
       fs.writeFileSync(CACHE_PATH, JSON.stringify(resultsByUser));
     }
 
