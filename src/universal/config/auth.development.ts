@@ -1,8 +1,9 @@
-import { IS_PRODUCTION } from './env.ts';
-import { getFromEnv } from '../../server/helpers/env.ts';
 import { readFileSync } from 'fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import { IS_PRODUCTION } from './env.ts';
+import { getFromEnv } from '../../server/helpers/env.ts';
 
 export const testAccountDataDigid = getTestAccountData('MA_TEST_ACCOUNTS');
 export const testAccountDataEherkenning = getTestAccountData(
@@ -50,5 +51,6 @@ function getTestAccountData(
       ? join(dirOfThisFile, './digid-test-accounts.json')
       : join(dirOfThisFile, './eherkenning-test-accounts.json');
   const jsonString = readFileSync(testAccountPath).toString();
+
   return JSON.parse(jsonString);
 }

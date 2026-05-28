@@ -35,6 +35,8 @@ import '../server/helpers/load-env.ts';
 
 import * as XLSX from 'xlsx';
 import * as fs from 'node:fs';
+import assert from 'node:assert';
+import { parseArgs } from 'node:util';
 import { defaultDateFormat } from '../universal/helpers/date.ts';
 import { getFullAddress, isMokum } from '../universal/helpers/brp.ts';
 import {
@@ -144,10 +146,24 @@ const testAccounts = testAccountDataDigid.accounts.map(
 );
 
 XLSX.set_fs(fs);
+
+const { values: args } = parseArgs({
+  options: {
+    'from-disk': {
+      type: 'boolean',
+      short: 'd',
+      default: false,
+    },
+    'out-file-path-digid-test-accounts': {
+      type: 'string',
+      default: './src/universal/config/digid-test-accounts.json',
+    },
+  },
+});
+
 // If true then get data extracted out of services from disk.
 // This greatly speeds up this script and is therefore nice for debugging.
-const firstArg = process.argv[2];
-const FROM_DISK: boolean = firstArg === '--from-disk' || firstArg === '-d';
+const FROM_DISK: boolean = args['from-disk'];
 
 // Describes where we should save the transformed data from our services.
 const TARGET_DIRECTORY: string = '.';
@@ -191,7 +207,10 @@ async function generateOverview() {
     ]);
 
     const testUserLoginTable = createDigidTestUserTable(resultsByUser);
-    writeTestUserLoginTable(testUserLoginTable);
+    fs.writeFileSync(
+      args['out-file-path-digid-test-accounts'],
+      JSON.stringify(testUserLoginTable, null, 2)
+    );
 
     XLSX.writeFile(workbook, fileName, { compression: true });
 
@@ -200,19 +219,9 @@ async function generateOverview() {
 }
 
 function createDigidTestUserTable(resultsByUser: ResultsByUser): TestUserData {
-  const tableHeaders: TestUserData['tableHeaders'] = [
-    { displayName: 'Gebruikersnaam', key: 'username' },
-    { displayName: 'BSN', key: 'profileId' },
-    { displayName: 'Mokum', key: 'mokum' },
-    { displayName: 'Heeft kinderen', key: 'hasChildren' },
-    { displayName: 'Partner', key: 'partnerName' },
-    { displayName: 'Ouder dan 18', key: 'isOlderThan18' },
-    { displayName: 'Heeft ouders', key: 'hasParents' },
-    { displayName: 'Heeft VOW', key: 'hasVertrokkenOnbekendWaarheen' },
-    { displayName: 'is AIO', key: 'isAdresInOnderzoek' },
-    { displayName: 'Heeft Stadspas', key: 'heeftStadspas' },
-    { displayName: 'Themas', key: 'availableThemas' },
-  ];
+  assert(testAccountDataDigid?.tableHeaders, 'tableHeaders are required');
+  const tableHeaders: TestUserData['tableHeaders'] =
+    testAccountDataDigid.tableHeaders;
 
   const accounts: TestUserAccount[] = Object.entries(resultsByUser).map(
     ([username, serviceResults]) => {
@@ -265,11 +274,6 @@ function getBRPBasedProperties(
       brpContent.persoon?.vertrokkenOnbekendWaarheen ?? false,
     isAdresInOnderzoek: brpContent.persoon?.adresInOnderzoek !== null,
   };
-}
-
-function writeTestUserLoginTable(testUserLoginTable: TestUserData): void {
-  const filePath = './src/universal/config/digid-test-accounts.json';
-  fs.writeFileSync(filePath, JSON.stringify(testUserLoginTable, null, 2));
 }
 
 type ResultsByUser = Record<string, ServiceResults>;
