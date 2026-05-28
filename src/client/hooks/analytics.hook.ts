@@ -73,7 +73,8 @@ export function trackLinkClick(
       href,
       linkTitle,
       isInternalDestination:
-        new URL(href).hostname === window.location.hostname,
+        new URL(href, window.location.href).hostname ===
+        window.location.hostname,
       customDimensions: [profileTypeDimension(profileType)],
     })
   );

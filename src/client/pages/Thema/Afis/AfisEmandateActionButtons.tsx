@@ -75,7 +75,7 @@ function ActionConfirmationModal({
 
 type ApiActionButtonProps<T> = {
   api: BFFApiHook<T>;
-  fetch: () => void;
+  fetch: (() => void) | (() => Promise<void>);
   label: string;
   doConfirm: boolean;
   confirmationModal?: Pick<
@@ -97,16 +97,22 @@ function ApiActionButton<T>({
 }: ApiActionButtonProps<T>) {
   const [isConfirmationModalActive, setIsConfirmationModalActive] =
     useState(false);
+  const [isFetching, setIsFetching] = useState(false);
+  const doFetch = async () => {
+    setIsFetching(true);
+    await fetch();
+    setIsFetching(false);
+  };
   return (
     <>
       <Button
         variant="secondary"
         disabled={api.isLoading}
         onClick={
-          doConfirm ? () => setIsConfirmationModalActive(true) : () => fetch()
+          doConfirm ? () => setIsConfirmationModalActive(true) : () => doFetch()
         }
       >
-        {api.isLoading && <Spinner />}
+        {(api.isLoading || isFetching) && <Spinner />}
         {label}
       </Button>
       {isConfirmationModalActive && (
@@ -116,7 +122,7 @@ function ApiActionButton<T>({
           title={confirmationModal.title}
           onConfirm={() => {
             setIsConfirmationModalActive(false);
-            fetch();
+            doFetch();
           }}
           onClose={() => {
             setIsConfirmationModalActive(false);
@@ -142,23 +148,29 @@ export function AfisEMandateActionButtons({
 }: AfisEMandateActionButtonsProps) {
   const profileType = useProfileTypeValue();
   const isActive = eMandate.status === EMANDATE_STATUS_ACTIVE;
+  const fetchAndRedirect = (() => {
+    let isWaiting = false;
+    return async () => {
+      if (eMandate.signRequestUrl && !isWaiting) {
+        isWaiting = true;
+        trackLinkClick(
+          'AfisEMandateActionButtons',
+          eMandate.signRequestUrl,
+          isActive ? 'Rekening wijzigen' : 'Activeren',
+          profileType
+        );
+        await delay(300); // Add slight delay to ensure the analytics event is sent before the redirect happens
+        isWaiting = false;
+      }
+      return redirectUrlApi.requestRedirectUrl(isActive);
+    };
+  })();
   return (
     <>
       {eMandate.signRequestUrl && (
         <ApiActionButton
           api={redirectUrlApi}
-          fetch={async () => {
-            if (eMandate.signRequestUrl) {
-              trackLinkClick(
-                'AfisEMandateActionButtons',
-                eMandate.signRequestUrl,
-                isActive ? 'Rekening wijzigen' : 'Activeren',
-                profileType
-              );
-              await delay(300); // Add slight delay to ensure the analytics event is sent before the redirect happens
-            }
-            return redirectUrlApi.requestRedirectUrl(isActive);
-          }}
+          fetch={fetchAndRedirect}
           label={isActive ? 'Rekening wijzigen' : 'Activeren'}
           doConfirm={false}
         />
