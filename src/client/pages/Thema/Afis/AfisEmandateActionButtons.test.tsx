@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { vi, describe, it, expect } from 'vitest';
 
@@ -71,6 +71,39 @@ describe('AfisEMandateActionButtons', () => {
     ).toBeInTheDocument();
   });
 
+  it('calls requestRedirectUrl when activating an eMandate', async () => {
+    const user = userEvent.setup();
+
+    const eMandate = {
+      signRequestUrl: 'https://example.com',
+      status: '0',
+      eMandateIdSource: '1',
+    } as AfisEMandateFrontend;
+
+    const redirectUrlApi = {
+      isLoading: false,
+      requestRedirectUrl: vi.fn(),
+    } as unknown as AfisEMandateActionButtonsProps['redirectUrlApi'];
+
+    const deactivateApi = {
+      isLoading: false,
+    } as AfisEMandateActionButtonsProps['deactivateApi'];
+
+    render(
+      <AfisEMandateActionButtons
+        eMandate={eMandate}
+        redirectUrlApi={redirectUrlApi}
+        deactivateApi={deactivateApi}
+      />
+    );
+
+    await user.click(screen.getByRole('button', { name: /Activeren/i }));
+
+    await waitFor(() => {
+      expect(redirectUrlApi.requestRedirectUrl).toHaveBeenCalledWith(false);
+    });
+  });
+
   it('shows confirmation modal and calls deactivate when confirming stopzetten', async () => {
     const user = userEvent.setup();
 
@@ -141,6 +174,8 @@ describe('AfisEMandateActionButtons', () => {
     const confirmBtn = screen.getByRole('button', { name: /Ja, stopzetten/i });
     await user.click(confirmBtn);
 
-    expect(deactivateApi.fetch).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(deactivateApi.fetch).toHaveBeenCalled();
+    });
   });
 });
