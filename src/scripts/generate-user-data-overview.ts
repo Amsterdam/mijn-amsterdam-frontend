@@ -122,14 +122,27 @@ if (IS_PRODUCTION) {
   throw Error('This script cannot be run inside of production.');
 }
 
-const stdin = fs.readFileSync(process.stdin.fd, 'utf-8').toString();
-let testAccountDataDigid = importedDigidTestAccounts;
-if (stdin.length > 0) {
-  testAccountDataDigid = JSON.parse(stdin);
-  if (!(testAccountDataDigid?.accounts && testAccountDataDigid?.tableHeaders)) {
-    throw new Error('Invalid JSON schema!');
+function parseStdinOrFallback(): TestUserData | null {
+  let input: string;
+  try {
+    input = fs.readFileSync(process.stdin.fd, 'utf-8');
+  } catch {
+    return importedDigidTestAccounts;
   }
+
+  if (input.length <= 0) {
+    return importedDigidTestAccounts;
+  }
+
+  const parsed: TestUserData = JSON.parse(input);
+  if (!parsed?.accounts || !parsed?.tableHeaders) {
+    throw new Error('Invalid JSON schema! Expected { accounts, tableHeaders }');
+  }
+  return parsed;
 }
+
+const testAccountDataDigid = parseStdinOrFallback();
+
 if (!testAccountDataDigid) {
   throw new Error(
     'testAccountDataDigid is empty. Check if MA_TEST_ACCOUNTS has data or pipe a json string into this script.'
