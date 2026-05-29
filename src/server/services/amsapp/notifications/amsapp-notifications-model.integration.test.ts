@@ -1,3 +1,7 @@
+import { resolve } from 'node:path';
+
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import type { Pool } from 'pg';
 import {
   afterAll,
@@ -9,23 +13,25 @@ import {
   vi,
 } from 'vitest';
 
-import { NOTIFICATIONS_TABLE_NAME } from './amsapp-notifications-model.ts';
 import type {
   BSN,
   NotificationsService,
 } from './amsapp-notifications-types.ts';
-import { setupPgTestDb } from '../../db/pg-test-utils.ts';
+import {
+  setupPgTestDb,
+  truncatePgSchemaTables,
+} from '../../db/pg-test-utils.ts';
+import { notificationsTable } from '../../db/schema/amsapp-notifications.ts';
 
 const RUN_DB_TESTS = process.env.RUN_DB_TESTS === 'true';
 const describePg = RUN_DB_TESTS ? describe : describe.skip;
 
 describePg('amsapp-notifications-model (postgres integration)', () => {
   let pool: Pool;
+  let db: ReturnType<typeof drizzle>;
   let teardown: (() => Promise<void>) | undefined;
 
   const databaseName = 'mijnadam_test';
-  const tableName = NOTIFICATIONS_TABLE_NAME;
-  const databaseTable = `public.${tableName}`;
 
   const profileId: BSN = '999999999' as BSN;
 
@@ -46,28 +52,40 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
   };
 
   beforeAll(async () => {
-    vi.useFakeTimers();
     const ctx = await setupPgTestDb({
       databaseName,
       envOverrides: { BFF_DB_ENABLED: 'true' },
     });
+
     pool = ctx.pool;
+    db = drizzle(pool);
     teardown = ctx.teardown;
 
+    await migrate(db, {
+      migrationsFolder: resolve(process.cwd(), 'drizzle'),
+    });
+
     await import('./amsapp-notifications-model.ts');
-  });
+
+    // Testcontainers and migration startup need real timers.
+    vi.useFakeTimers();
+  }, 120_000);
 
   afterAll(async () => {
     vi.useRealTimers();
     try {
-      await pool.query(`TRUNCATE TABLE ${databaseTable}`);
+      if (pool) {
+        await truncatePgSchemaTables(pool);
+      }
     } finally {
       await teardown?.();
     }
-  });
+  }, 60_000);
 
   beforeEach(async () => {
-    await pool.query(`TRUNCATE TABLE ${databaseTable}`);
+    if (pool) {
+      await truncatePgSchemaTables(pool);
+    }
     vi.setSystemTime(new Date(defaultTime));
   });
 
@@ -179,13 +197,14 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
       ]);
       await model.storeNotifications(profileId, [SERVICE_A, SERVICE_B]);
 
-      const row = await pool.query(
-        `SELECT content FROM ${databaseTable} LIMIT 1`
-      );
+      const row = await db
+        .select({ content: notificationsTable.content })
+        .from(notificationsTable)
+        .limit(1);
 
-      expect(row.rows).toHaveLength(1);
+      expect(row).toHaveLength(1);
 
-      const services = row.rows[0]?.content?.services ?? {};
+      const services = row[0]?.content?.services ?? {};
       expect(Object.keys(services)).toStrictEqual([SERVICE_A.serviceId]);
     });
 
@@ -200,12 +219,13 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
       await model.storeNotifications(profileId, [SERVICE_A]);
       await model.storeNotifications(profileId, [SERVICE_B]);
 
-      const row = await pool.query(
-        `SELECT content FROM ${databaseTable} LIMIT 1`
-      );
-      expect(row.rows).toHaveLength(1);
+      const row = await db
+        .select({ content: notificationsTable.content })
+        .from(notificationsTable)
+        .limit(1);
+      expect(row).toHaveLength(1);
 
-      const services = row.rows[0]?.content?.services ?? {};
+      const services = row[0]?.content?.services ?? {};
       expect(Object.keys(services)).toStrictEqual(
         expect.arrayContaining([SERVICE_A.serviceId, SERVICE_B.serviceId])
       );
@@ -216,21 +236,22 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
     it('is ordered on created_at for offset/limit to work properly', async () => {
       const model = await import('./amsapp-notifications-model.ts');
 
-      const insertQuery = `INSERT INTO ${NOTIFICATIONS_TABLE_NAME} (id, profile_id, date_created) VALUES ($1, $2, $3)`;
-      await pool.query(insertQuery, [
-        'id-1',
-        '1',
-        new Date('2020-01-01T01:00:00.000Z'),
-      ]);
-      await pool.query(insertQuery, [
-        'id-2',
-        '2',
-        new Date('2020-01-01T00:00:00.000Z'),
-      ]);
-      await pool.query(insertQuery, [
-        'id-3',
-        '3',
-        new Date('2020-01-01T02:00:00.000Z'),
+      await db.insert(notificationsTable).values([
+        {
+          id: 'id-1',
+          profileId: '1',
+          dateCreated: new Date('2020-01-01T01:00:00.000Z'),
+        },
+        {
+          id: 'id-2',
+          profileId: '2',
+          dateCreated: new Date('2020-01-01T00:00:00.000Z'),
+        },
+        {
+          id: 'id-3',
+          profileId: '3',
+          dateCreated: new Date('2020-01-01T02:00:00.000Z'),
+        },
       ]);
 
       const firstPage = await model.listProfiles({ limit: 2, offset: 0 });
