@@ -29,9 +29,8 @@
 
 /* eslint-disable */
 import '../server/helpers/load-env.ts';
-
 import * as XLSX from 'xlsx';
-import * as fs from 'node:fs';
+import fs from 'node:fs';
 import assert from 'node:assert';
 import { parseArgs } from 'node:util';
 import { defaultDateFormat } from '../universal/helpers/date.ts';
@@ -39,7 +38,7 @@ import { getFullAddress, isMokum } from '../universal/helpers/brp.ts';
 import {
   type TestUserAccount,
   type TestUserData,
-  testAccountDataDigid,
+  testAccountDataDigid as importedDigidTestAccounts,
   type OptionalTestUserAccountProperties,
 } from '../universal/config/auth.development.ts';
 
@@ -123,9 +122,17 @@ if (IS_PRODUCTION) {
   throw Error('This script cannot be run inside of production.');
 }
 
+const stdin = fs.readFileSync(process.stdin.fd, 'utf-8').toString();
+let testAccountDataDigid = importedDigidTestAccounts;
+if (stdin.length > 0) {
+  testAccountDataDigid = JSON.parse(stdin);
+  if (!(testAccountDataDigid?.accounts && testAccountDataDigid?.tableHeaders)) {
+    throw new Error('Invalid JSON schema!');
+  }
+}
 if (!testAccountDataDigid) {
   throw new Error(
-    'testAccountDataDigid is empty. Check if MA_TEST_ACCOUNTS has data.'
+    'testAccountDataDigid is empty. Check if MA_TEST_ACCOUNTS has data or pipe a json string into this script.'
   );
 }
 
