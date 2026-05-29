@@ -1,6 +1,10 @@
 import { index, jsonb, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
 
-import type { NotificationsService } from '../../amsapp/notifications/amsapp-notifications-types.ts';
+import type {
+  ConsumerId,
+  NotificationsService,
+  ServiceId,
+} from '../../amsapp/notifications/amsapp-notifications-types.ts';
 
 export const NOTIFICATIONS_TABLE_NAME = 'bff_notifications';
 
@@ -12,10 +16,12 @@ export const notificationsTable = pgTable(
     profileName: varchar('profile_name', { length: 200 }),
     consumerIds: varchar('consumer_ids', { length: 100 })
       .array()
+      .$type<ConsumerId[]>()
       .notNull()
       .default([]),
     serviceIds: varchar('service_ids', { length: 50 })
       .array()
+      .$type<ServiceId[]>()
       .notNull()
       .default([]),
     content: jsonb('content').$type<{

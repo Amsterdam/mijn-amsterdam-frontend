@@ -266,15 +266,8 @@ components:
           items:
             type: object
             properties:
-              consumerDetails:
-                type: array
-                description: Preferred active consumer-detail payload for this visible profile.
-                items:
-                  $ref: '#/components/schemas/ConsumerDetail'
               consumerIds:
-                deprecated: true
                 type: array
-                description: Deprecated compatibility projection of the same active consumers in consumerDetails.
                 items:
                   type: string
                   default: '123'
@@ -304,18 +297,7 @@ components:
         totalItems:
           type: integer
           minimum: 0
-          description: Total number of visible profiles after dateFrom and active-consumer filtering (ignores offset/limit)
-
-    ConsumerDetail:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Consumer identifier.
-        loginExpiryDate:
-          type: string
-          format: date-time
-          description: Consumer registration expiry timestamp (ISO 8601).
+          description: Total number matching the dateFrom filter (ignores offset/limit)
 
     ServiceResultBase:
       type: object
@@ -379,11 +361,7 @@ components:
           type: string
           format: date-time
           nullable: true
-          description: Last profile login timestamp (ISO 8601) or null when unknown/never.
-        loginExpiryDate:
-          type: string
-          format: date-time
-          description: Consumer registration expiry timestamp (ISO 8601).
+          description: Last consumer login timestamp (ISO 8601) or null when unknown/never.
     ConsumerRegistered:
       type: object
       properties:
