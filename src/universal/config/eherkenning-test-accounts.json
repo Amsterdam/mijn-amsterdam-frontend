@@ -1,16 +1,16 @@
 {
   "tableHeaders": [
     {
-      "displayName": "Gebruikersnaam",
+      "displayName": "Bedrijfsnaam",
       "key": "username"
     },
     {
-      "displayName": "Mokum",
-      "key": "mokum"
+      "displayName": "KVK",
+      "key": "profileId"
     },
     {
-      "displayName": "Digid",
-      "key": "hasDigid"
+      "displayName": "PBH",
+      "key": "plaatsBezoekadresHoofdvestiging"
     },
     {
       "displayName": "Beschrijving",
