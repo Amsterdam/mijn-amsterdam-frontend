@@ -286,9 +286,14 @@ function getBRPBasedProperties(
   const brpContent = serviceResults.BRP?.content as AppState['BRP']['content'];
 
   if (!brpContent) {
-    throw new Error(
-      `BRP Content not found for '${username}', which has a required profileId property`
+    const backup = testAccountDataDigid?.accounts.find(
+      (account) => account.username === username
     );
+    // This assert should not fail since we know to have the account.
+    assert(backup, `Testaccount named '${username}' is not found.`);
+    return {
+      profileId: backup.profileId,
+    };
   }
 
   const profileId = brpContent.persoon?.bsn ?? '';
