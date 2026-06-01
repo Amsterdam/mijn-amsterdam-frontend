@@ -9,6 +9,7 @@ import tseslint from 'typescript-eslint';
 // eslint-disable-next-line import/no-default-export
 export default [
   { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
+  { ignores: ['public/js/usabilla*.js'] },
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
