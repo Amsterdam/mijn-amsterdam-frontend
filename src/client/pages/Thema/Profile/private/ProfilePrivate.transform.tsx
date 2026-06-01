@@ -292,7 +292,7 @@ export function formatBrpProfileData(brpData: BrpFrontend): BrpProfileData {
 
 const privacyNoticeForDeathDates = (
   <PageContentCell>
-    <ParagaphSuppressed className="ams-mb-m">
+    <ParagaphSuppressed className="ams-mb-m" data-testid="privacy-notice">
       Wij mogen een overlijdensdatum van ouders of kinderen niet laten zien. Dit
       komt door{' '}
       <Link href="https://www.amsterdam.nl/privacy/" rel="noopener noreferrer">
