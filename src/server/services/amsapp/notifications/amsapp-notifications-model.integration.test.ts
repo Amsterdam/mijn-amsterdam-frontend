@@ -22,6 +22,7 @@ import {
   truncatePgSchemaTables,
 } from '../../db/pg-test-utils.ts';
 import { notificationsTable } from '../../db/schema/amsapp-notifications.ts';
+import { notificationsConsumerDetailsTable } from '../../db/schema/amsapp-notifications.ts';
 
 const RUN_DB_TESTS = process.env.RUN_DB_TESTS === 'true';
 const describePg = RUN_DB_TESTS ? describe : describe.skip;
@@ -229,6 +230,87 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
       expect(Object.keys(services)).toStrictEqual(
         expect.arrayContaining([SERVICE_A.serviceId, SERVICE_B.serviceId])
       );
+    });
+  });
+
+  describe('consumer details table (phase 2 additive)', () => {
+    it('rejects linking consumer details via profile_id instead of notification row id', async () => {
+      const model = await import('./amsapp-notifications-model.ts');
+
+      await model.upsertConsumer(profileId, 'Test Person', 'consumer-legacy', [
+        SERVICE_A.serviceId,
+      ]);
+
+      const notificationRows = await db
+        .select({
+          id: notificationsTable.id,
+          profileId: notificationsTable.profileId,
+        })
+        .from(notificationsTable)
+        .limit(1);
+
+      expect(notificationRows).toHaveLength(1);
+      const notificationRow = notificationRows[0];
+      expect(notificationRow).toBeDefined();
+
+      await expect(
+        db.insert(notificationsConsumerDetailsTable).values({
+          consumerId: 'consumer-links-via-notification-row-id',
+          notificationRowId: notificationRow.profileId,
+          loginExpiryDate: new Date('2020-04-01T00:00:00.000Z'),
+        })
+      ).rejects.toThrow();
+    });
+
+    it('links consumer details by notification profile primary key id and keeps current reads unchanged', async () => {
+      const model = await import('./amsapp-notifications-model.ts');
+
+      await model.upsertConsumer(profileId, 'Test Person', 'consumer-legacy', [
+        SERVICE_A.serviceId,
+      ]);
+
+      const notificationRows = await db
+        .select({
+          id: notificationsTable.id,
+          profileId: notificationsTable.profileId,
+        })
+        .from(notificationsTable)
+        .limit(1);
+
+      expect(notificationRows).toHaveLength(1);
+      const notificationRow = notificationRows[0];
+      expect(notificationRow).toBeDefined();
+
+      const loginExpiryDate = new Date('2020-04-01T00:00:00.000Z');
+
+      await db.insert(notificationsConsumerDetailsTable).values({
+        consumerId: 'consumer-details-1',
+        notificationRowId: notificationRow.id,
+        loginExpiryDate,
+      });
+
+      const detailsRows = await db
+        .select({
+          consumerId: notificationsConsumerDetailsTable.consumerId,
+          notificationRowId:
+            notificationsConsumerDetailsTable.notificationRowId,
+          loginExpiryDate: notificationsConsumerDetailsTable.loginExpiryDate,
+        })
+        .from(notificationsConsumerDetailsTable);
+
+      expect(detailsRows).toHaveLength(1);
+      expect(detailsRows[0]).toMatchObject({
+        consumerId: 'consumer-details-1',
+        notificationRowId: notificationRow.id,
+      });
+      expect(detailsRows[0]?.loginExpiryDate?.toISOString()).toBe(
+        loginExpiryDate.toISOString()
+      );
+
+      const legacyProfile = await model.getProfileByConsumer('consumer-legacy');
+      expect(legacyProfile).toMatchObject({
+        serviceIds: [SERVICE_A.serviceId],
+      });
     });
   });
 

@@ -7,6 +7,8 @@ import type {
 } from '../../amsapp/notifications/amsapp-notifications-types.ts';
 
 export const NOTIFICATIONS_TABLE_NAME = 'bff_notifications';
+export const NOTIFICATIONS_CONSUMER_DETAILS_TABLE_NAME =
+  'bff_notification_consumer_details';
 
 export const notificationsTable = pgTable(
   NOTIFICATIONS_TABLE_NAME,
@@ -40,6 +42,30 @@ export const notificationsTable = pgTable(
     index('bff_notifications_consumer_ids_gin_idx').using(
       'gin',
       table.consumerIds
+    ),
+  ]
+);
+
+export const notificationsConsumerDetailsTable = pgTable(
+  NOTIFICATIONS_CONSUMER_DETAILS_TABLE_NAME,
+  {
+    consumerId: varchar('consumer_id', { length: 100 })
+      .$type<ConsumerId>()
+      .notNull()
+      .primaryKey(),
+    notificationRowId: varchar('notification_row_id', {
+      length: 64,
+    })
+      .notNull()
+      .references(() => notificationsTable.id, { onDelete: 'cascade' }),
+    loginExpiryDate: timestamp('login_expiry_date', { withTimezone: true }),
+  },
+  (table) => [
+    index('bff_notification_consumer_details_notification_row_id_idx').on(
+      table.notificationRowId
+    ),
+    index('bff_notification_consumer_details_login_expiry_date_idx').on(
+      table.loginExpiryDate
     ),
   ]
 );

@@ -15,6 +15,13 @@
       "when": 1780060075514,
       "tag": "0001_fresh_vindicator",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1780299836253,
+      "tag": "0002_acoustic_daimon_hellstrom",
+      "breakpoints": true
     }
   ]
 }
