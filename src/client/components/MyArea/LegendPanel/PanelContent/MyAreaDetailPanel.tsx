@@ -1,9 +1,6 @@
-import type {
-  DatasetCategoryId} from '../../../../../universal/config/myarea-datasets.ts';
-import {
-  getDatasetCategoryId,
-} from '../../../../../universal/config/myarea-datasets.ts';
-import ErrorAlert from '../../../Alert/Alert.tsx';
+import type { DatasetCategoryId } from '../../../../../universal/config/myarea-datasets.ts';
+import { getDatasetCategoryId } from '../../../../../universal/config/myarea-datasets.ts';
+import { ErrorAlert } from '../../../Alert/Alert.tsx';
 import LoadingContent from '../../../LoadingContent/LoadingContent.tsx';
 import { useLoadingFeature, useSelectedFeature } from '../../MyArea.hooks.ts';
 import styles from '../PanelComponent.module.scss';

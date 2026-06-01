@@ -22,7 +22,7 @@ import {
   IconAfvalRest,
   IconAfvalTextiel,
 } from '../../../assets/icons/map/index.tsx';
-import ErrorAlert from '../../../components/Alert/Alert.tsx';
+import { ErrorAlert } from '../../../components/Alert/Alert.tsx';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import LoadingContent from '../../../components/LoadingContent/LoadingContent.tsx';
 import { MaintenanceNotifications } from '../../../components/MaintenanceNotifications/MaintenanceNotifications.tsx';

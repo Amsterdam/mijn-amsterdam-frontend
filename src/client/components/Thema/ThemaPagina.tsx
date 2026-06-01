@@ -4,7 +4,7 @@ import { LinkList } from '@amsterdam/design-system-react';
 
 import styles from './ThemaPagina.module.scss';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
-import ErrorAlert from '../Alert/Alert.tsx';
+import { ErrorAlert } from '../Alert/Alert.tsx';
 import type { BarConfig } from '../LoadingContent/LoadingContent.tsx';
 import LoadingContent from '../LoadingContent/LoadingContent.tsx';
 import { MaintenanceNotifications } from '../MaintenanceNotifications/MaintenanceNotifications.tsx';

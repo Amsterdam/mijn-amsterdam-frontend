@@ -4,7 +4,7 @@ import type {
   LinkProps,
   ZaakAanvraagDetail,
 } from '../../../universal/types/App.types.ts';
-import ErrorAlert from '../Alert/Alert.tsx';
+import { ErrorAlert } from '../Alert/Alert.tsx';
 import type { BarConfig } from '../LoadingContent/LoadingContent.tsx';
 import LoadingContent from '../LoadingContent/LoadingContent.tsx';
 import { PageContentCell, PageV2 } from '../Page/Page.tsx';

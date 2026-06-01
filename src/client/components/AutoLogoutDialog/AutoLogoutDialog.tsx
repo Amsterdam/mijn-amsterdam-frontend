@@ -1,4 +1,4 @@
-import type { ReactNode} from 'react';
+import type { ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 import { ActionGroup, Paragraph } from '@amsterdam/design-system-react';
@@ -18,7 +18,7 @@ import {
 import { Colors } from '../../config/app.ts';
 import { logger } from '../../helpers/logging.ts';
 import { ONE_SECOND_MS, useLogout } from '../../hooks/api/useSessionApi.ts';
-import type { CounterProps} from '../../hooks/timer.hook.ts';
+import type { CounterProps } from '../../hooks/timer.hook.ts';
 import { useCounter } from '../../hooks/timer.hook.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import { MaButtonLink } from '../MaLink/MaLink.tsx';
@@ -113,7 +113,7 @@ export function AutoLogoutDialog({
   const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
 
   function logtime() {
-     logger.info(
+    logger.info(
       'Dialog opens in %s seconds, expires in %s seconds at %s',
       formattedTimeFromSeconds(
         getExpiresInSeconds(expiresAtMilliseconds) -
