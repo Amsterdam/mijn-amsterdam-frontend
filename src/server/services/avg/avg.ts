@@ -10,8 +10,7 @@ import type {
   SmileAvgThemesResponse,
 } from './types.ts';
 import { themaConfig } from '../../../client/pages/Thema/AVG/AVG-thema-config.ts';
-import type {
-  ApiSuccessResponse} from '../../../universal/helpers/api.ts';
+import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
 import {
   apiDependencyError,
   apiSuccessResult,

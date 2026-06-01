@@ -10,7 +10,7 @@ import type {
   AfisEMandateFrontend,
   AfisFacturenOverviewResponse,
 } from '../../../../server/services/afis/afis-types.ts';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 
 describe('AfisEMandateActionButtons', () => {
   it('renders Activeren when signRequestUrl present and eMandate inactive', () => {

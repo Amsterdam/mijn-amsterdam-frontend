@@ -1,10 +1,10 @@
 import type { LatLngLiteral } from 'leaflet';
 
 import { FitBounds } from './FitBounds.tsx';
-import BaseLayer from './Map/BaseLayer.tsx';
-import Map from './Map/Map.tsx';
+import { BaseLayer } from './Map/BaseLayer.tsx';
+import { MaMap as Map } from './Map/Map.tsx';
 import styles from './MyAreaDashboard.module.scss';
-import MyAreaLoadingIndicator from './MyAreaLoadingIndicator.tsx';
+import { MyAreaLoadingIndicator } from './MyAreaLoadingIndicator.tsx';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker.tsx';
 import type { BAGLocation } from '../../../server/services/bag/bag.types.ts';
 import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets.ts';
@@ -83,5 +83,3 @@ export function MyAreaDashboardMap() {
     </Map>
   );
 }
-
-export default MyAreaDashboardMap;

@@ -10,7 +10,7 @@ type Props = {
 
 export const MAP_SERVER_ROOT = 'https://{s}.data.amsterdam.nl';
 
-const BaseLayer: React.FC<Props> = ({
+export const BaseLayer: React.FC<Props> = ({
   baseLayer = `${MAP_SERVER_ROOT}/topo_rd/{z}/{x}/{y}.png`,
   options = {
     subdomains: ['t1', 't2', 't3', 't4'],
@@ -33,5 +33,3 @@ const BaseLayer: React.FC<Props> = ({
     />
   );
 };
-
-export default BaseLayer;

@@ -4,7 +4,7 @@ import { panelConfig } from './ProfileCommercial.transform.tsx';
 import { useProfileData } from './useProfileData.hook.ts';
 import { PageContentCell } from '../../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
-import ThemaPagina from '../../../../components/Thema/ThemaPagina.tsx';
+import { ThemaPagina } from '../../../../components/Thema/ThemaPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
 import { ProfileSectionPanel } from '../ProfileSectionPanel.tsx';
 

@@ -10,7 +10,7 @@ export interface MaMapProps extends MapProps {
   className?: any;
 }
 
-export default function MaMap({
+export function MaMap({
   children,
   options,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

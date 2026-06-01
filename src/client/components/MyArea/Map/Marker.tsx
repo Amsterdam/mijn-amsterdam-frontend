@@ -15,7 +15,12 @@ type Props = {
   setInstance?: (markerInstance?: MarkerType) => void;
 };
 
-const Marker: React.FC<Props> = ({ latLng, events, options, setInstance }) => {
+export const Marker: React.FC<Props> = ({
+  latLng,
+  events,
+  options,
+  setInstance,
+}) => {
   const [markerInstance, setMarkerInstance] = useState<MarkerType>();
 
   useEffect(() => {
@@ -47,5 +52,3 @@ const Marker: React.FC<Props> = ({ latLng, events, options, setInstance }) => {
     />
   );
 };
-
-export default Marker;

@@ -14,7 +14,10 @@ import { ONE_HOUR_MS, ONE_SECOND_MS } from '../../config/app.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
-import { isSuccessStatus, requestData } from '../../helpers/source-api-request.ts';
+import {
+  isSuccessStatus,
+  requestData,
+} from '../../helpers/source-api-request.ts';
 import { captureException } from '../monitoring.ts';
 
 export async function fetchSSOURL(authProfileAndToken: AuthProfileAndToken) {

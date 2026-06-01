@@ -4,7 +4,7 @@ declare global {
   var MA_FEATURETOGGLES: FeatureToggles;
 
   interface Navigator {
-    // Internet explorer compatibility.
+    // Exists in Internet explorer.
     msSaveOrOpenBlob?: (blob: Blob, defaultName?: string) => boolean;
   }
 }

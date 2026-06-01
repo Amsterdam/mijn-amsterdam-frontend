@@ -11,7 +11,7 @@ type Props = {
   mapOffset?: any;
 };
 
-const ViewerContainer: React.FC<Props> = ({
+export const ViewerContainer: React.FC<Props> = ({
   bottomLeft,
   topLeft,
   topRight,
@@ -49,5 +49,3 @@ const ViewerContainer: React.FC<Props> = ({
     </div>
   );
 };
-
-export default ViewerContainer;

@@ -5,8 +5,10 @@ import type {
   ZaakAanvraagDetail,
 } from '../../../universal/types/App.types.ts';
 import { ErrorAlert } from '../Alert/Alert.tsx';
-import type { BarConfig } from '../LoadingContent/LoadingContent.tsx';
-import LoadingContent from '../LoadingContent/LoadingContent.tsx';
+import {
+  LoadingContent,
+  type BarConfig,
+} from '../LoadingContent/LoadingContent.tsx';
 import { PageContentCell, PageV2 } from '../Page/Page.tsx';
 import { Steps } from '../StatusSteps/StatusSteps.tsx';
 
@@ -35,9 +37,7 @@ interface ThemaDetailPaginaProps<T> {
   showStatusSteps?: boolean;
 }
 
-export default function ThemaDetailPagina<
-  T extends Partial<ZaakAanvraagDetail>,
->({
+export function ThemaDetailPagina<T extends Partial<ZaakAanvraagDetail>>({
   themaId,
   zaak,
   title = 'Detailpagina',

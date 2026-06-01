@@ -6,7 +6,7 @@ import { MijnBedrijfsGegevensThema } from './ProfileCommercial.tsx';
 import type { KvkResponseFrontend } from '../../../../../server/services/hr-kvk/hr-kvk.types.ts';
 import { getFullAddress } from '../../../../../universal/helpers/brp.ts';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
-import MockApp from '../../../MockApp.tsx';
+import { MockApp } from '../../../MockApp.tsx';
 import { themaConfig } from '../Profile-thema-config.ts';
 
 const responseData: KvkResponseFrontend = {

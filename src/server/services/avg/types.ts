@@ -1,5 +1,8 @@
 import type { ZaakAanvraagDetail } from '../../../universal/types/App.types.ts';
-import type { SmileSourceResponse, SmileFieldValue } from '../smile/smile-types.ts';
+import type {
+  SmileSourceResponse,
+  SmileFieldValue,
+} from '../smile/smile-types.ts';
 
 export type AVGResponse = {
   aantal: number;

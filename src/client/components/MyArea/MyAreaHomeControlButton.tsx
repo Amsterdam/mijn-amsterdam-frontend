@@ -12,7 +12,7 @@ interface MyAreaHomeControlButtonProps {
   zoom?: number;
 }
 
-export default function HomeControlButton({
+export function HomeControlButton({
   latlng,
   zoom = HOOD_ZOOM,
 }: MyAreaHomeControlButtonProps) {

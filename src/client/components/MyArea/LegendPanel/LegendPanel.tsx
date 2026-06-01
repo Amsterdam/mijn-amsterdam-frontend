@@ -6,7 +6,7 @@ import { useLandScape, useWidescreen } from '../../../hooks/media.hook.ts';
 import { useFetchPanelFeature, useLoadingFeature } from '../MyArea.hooks.ts';
 import { DatasetCategoryPanel } from './DatasetCategoryPanel.tsx';
 import { PanelComponent } from './PanelComponent.tsx';
-import MyAreaDetailPanel from './PanelContent/MyAreaDetailPanel.tsx';
+import { MyAreaDetailPanel } from './PanelContent/MyAreaDetailPanel.tsx';
 import { PanelState, useLegendPanelCycle } from './panelCycle.ts';
 
 interface LegendPanelProps {

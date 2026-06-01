@@ -7,7 +7,7 @@ import { SearchPageRoute } from './Search-routes.ts';
 import { SearchPage } from './Search.tsx';
 import { bffApi } from '../../../testing/utils.ts';
 import type { AppState } from '../../../universal/types/App.types.ts';
-import MockApp from '../../pages/MockApp.tsx';
+import { MockApp } from '../../pages/MockApp.tsx';
 
 const testState = {
   WPI_AANVRAGEN: {

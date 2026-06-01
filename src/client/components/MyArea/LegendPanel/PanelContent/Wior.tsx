@@ -1,4 +1,4 @@
-import GenericBase from './GenericBase.tsx';
+import { GenericBase } from './GenericBase.tsx';
 import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
 import type { Unshaped } from '../../../../../universal/types/App.types.ts';
 import type { Row, RowSet } from '../../../Datalist/Datalist.tsx';
@@ -9,7 +9,7 @@ interface MyArePanelContentWIORProps {
   datasetId: string;
 }
 
-export default function MyArePanelContentWIOR({
+export function MyArePanelContentWIOR({
   datasetId,
   panelItem,
 }: MyArePanelContentWIORProps) {

@@ -22,8 +22,10 @@ import { isError, isLoading } from '../../../../universal/helpers/api.ts';
 import { dateSort } from '../../../../universal/helpers/date.ts';
 import { ErrorAlert } from '../../../components/Alert/Alert.tsx';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
-import type { BarConfig } from '../../../components/LoadingContent/LoadingContent.tsx';
-import LoadingContent from '../../../components/LoadingContent/LoadingContent.tsx';
+import {
+  LoadingContent,
+  type BarConfig,
+} from '../../../components/LoadingContent/LoadingContent.tsx';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { Modal } from '../../../components/Modal/Modal.tsx';
 import { PageContentCell, PageV2 } from '../../../components/Page/Page.tsx';

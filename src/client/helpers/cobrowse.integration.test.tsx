@@ -12,7 +12,7 @@ import type {
 import type { AppState } from '../../universal/types/App.types.ts';
 import { DashboardRoute } from '../pages/Dashboard/Dashboard-routes.ts';
 import { Dashboard } from '../pages/Dashboard/Dashboard.tsx';
-import MockApp from '../pages/MockApp.tsx';
+import { MockApp } from '../pages/MockApp.tsx';
 import { MyNotificationsPage } from '../pages/MyNotifications/MyNotifications.tsx';
 import { themaConfig as themaConfigAfis } from '../pages/Thema/Afis/Afis-thema-config.ts';
 import { themaConfig as themaConfigBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-thema-config.ts';

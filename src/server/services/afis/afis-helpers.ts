@@ -2,11 +2,8 @@ import { parseISO } from 'date-fns';
 import createDebugger from 'debug';
 
 import { EMANDATE_ENDDATE_INDICATOR } from './afis-e-mandates-config.ts';
-import type {
-  AfisApiFeedResponseSource} from './afis-types.ts';
-import {
-  type BusinessPartnerId,
-} from './afis-types.ts';
+import type { AfisApiFeedResponseSource } from './afis-types.ts';
+import { type BusinessPartnerId } from './afis-types.ts';
 import { fetchAfisTokenHeader } from './afis.ts';
 import { toDateFormatted } from '../../../universal/helpers/date.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';

@@ -10,7 +10,7 @@ import type {
 } from '../../../universal/types/App.types.ts';
 import { usePageTypeSetting } from '../../hooks/useThemaMenuItems.ts';
 import { ErrorAlert } from '../Alert/Alert.tsx';
-import LoadingContent from '../LoadingContent/LoadingContent.tsx';
+import { LoadingContent } from '../LoadingContent/LoadingContent.tsx';
 import { PageContentCell, PageV2 } from '../Page/Page.tsx';
 import { PaginationV2 } from '../Pagination/PaginationV2.tsx';
 import type { DisplayProps } from '../Table/TableV2.tsx';

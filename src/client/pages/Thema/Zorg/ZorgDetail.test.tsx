@@ -4,7 +4,7 @@ import { generatePath } from 'react-router';
 import { themaConfig } from './Zorg-thema-config.ts';
 import { ZorgDetail } from './ZorgDetail.tsx';
 import type { AppState } from '../../../../universal/types/App.types.ts';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 
 const testState = {
   WMO: {

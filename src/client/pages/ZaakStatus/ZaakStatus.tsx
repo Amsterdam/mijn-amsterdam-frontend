@@ -11,7 +11,7 @@ import type {
   LinkProps,
 } from '../../../universal/types/App.types.ts';
 import { ErrorAlert } from '../../components/Alert/Alert.tsx';
-import LoadingContent from '../../components/LoadingContent/LoadingContent.tsx';
+import { LoadingContent } from '../../components/LoadingContent/LoadingContent.tsx';
 import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
 import {

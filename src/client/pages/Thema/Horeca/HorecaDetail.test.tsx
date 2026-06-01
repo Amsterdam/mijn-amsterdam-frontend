@@ -8,7 +8,7 @@ import { HorecaDetail } from './HorecaDetail.tsx';
 import type { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken.ts';
 import { bffApi } from '../../../../testing/utils.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 
 const vergunning2: HorecaVergunningFrontend = {
   ...structuredClone(vergunning),

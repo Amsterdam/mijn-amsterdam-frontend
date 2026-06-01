@@ -1,4 +1,4 @@
-import type { ReactNode} from 'react';
+import type { ReactNode } from 'react';
 import { useMemo } from 'react';
 
 import { DatasetControlPanel } from './DatasetControlPanel.tsx';

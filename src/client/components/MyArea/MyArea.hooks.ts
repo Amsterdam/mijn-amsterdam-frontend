@@ -17,7 +17,8 @@ import type {
   DatasetFilterSelection,
   DatasetId,
   DatasetPropertyName,
-  DatasetPropertyValue} from '../../../universal/config/myarea-datasets.ts';
+  DatasetPropertyValue,
+} from '../../../universal/config/myarea-datasets.ts';
 import {
   ACTIVE_DATASET_IDS_INITIAL,
   HOOD_ZOOM,

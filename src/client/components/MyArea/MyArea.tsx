@@ -17,25 +17,22 @@ import {
   WIDE_PANEL_TIP_WIDTH,
   WIDE_PANEL_WIDTH,
 } from './LegendPanel/panelCycle.ts';
-import BaseLayerToggle, {
+import {
   AERIAL_AMSTERDAM_LAYERS,
+  BaseLayerToggle,
   BaseLayerType,
   DEFAULT_AMSTERDAM_LAYERS,
 } from './Map/BaseLayerToggle.tsx';
-import Map from './Map/Map.tsx';
-import ViewerContainer from './Map/ViewerContainer.tsx';
-import ZoomControl from './Map/ZoomControl.tsx';
+import { MaMap as Map } from './Map/Map.tsx';
+import { ViewerContainer } from './Map/ViewerContainer.tsx';
+import { ZoomControl } from './Map/ZoomControl.tsx';
 import { routeConfig } from './MyArea-thema-config.ts';
-import type {
-  MapLocationMarker} from './MyArea.hooks.ts';
-import {
-  useMapLocations,
-  useSetMapCenterAtLocation,
-} from './MyArea.hooks.ts';
+import type { MapLocationMarker } from './MyArea.hooks.ts';
+import { useMapLocations, useSetMapCenterAtLocation } from './MyArea.hooks.ts';
 import styles from './MyArea.module.scss';
-import MyAreaCustomLocationControlButton from './MyAreaCustomLocationControlButton.tsx';
+import { MyAreaCustomLocationControlButton } from './MyAreaCustomLocationControlButton.tsx';
 import { MyAreaDatasets } from './MyAreaDatasets.tsx';
-import HomeControlButton from './MyAreaHomeControlButton.tsx';
+import { HomeControlButton } from './MyAreaHomeControlButton.tsx';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker.tsx';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 import { AmsMainMenuClassname } from '../MainHeader/MainHeader.tsx';
@@ -87,7 +84,7 @@ function updateViewportHeight() {
   );
 }
 
-export default function MyArea({
+export function MyArea({
   datasetIds,
   showPanels = true,
   centerMarker,
