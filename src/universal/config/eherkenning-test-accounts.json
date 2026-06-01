@@ -17,5 +17,12 @@
       "key": "description"
     }
   ],
-  "accounts": []
+  "accounts": [
+    {
+      "username": "ma-dev-profile",
+      "profileId": "999999999",
+      "plaatsBezoekadresHoofdvestiging": "",
+      "description": ""
+    }
+  ]
 }
