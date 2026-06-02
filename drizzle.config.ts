@@ -1,4 +1,11 @@
+import dotenv from 'dotenv';
+import dotenvExpand from 'dotenv-expand';
 import { defineConfig } from 'drizzle-kit';
+
+// This file is used for drizzle cli commands
+
+const envConfig = dotenv.config({ path: '.env.local' });
+dotenvExpand.expand(envConfig);
 
 export default defineConfig({
   dialect: 'postgresql',
