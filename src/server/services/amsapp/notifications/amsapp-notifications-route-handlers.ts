@@ -202,7 +202,6 @@ export async function handleSendNotificationsResponse(
   }
 
   const { dateFrom, offset, limit } = result.data;
-
   const rowCount_ = getProfilesCount({
     dateFrom,
   });

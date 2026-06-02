@@ -4,6 +4,7 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 
 import type {
   BSN,
+  ConsumerDetail,
   ConsumerId,
   ConsumerProfile,
   NotificationsService,
@@ -280,13 +281,23 @@ export async function getProfilesCount(options: {
 }): Promise<number> {
   return withDBEnabled(
     async (drizzleDb) => {
+      const hasActiveConsumerCondition = sql`EXISTS (
+        SELECT 1
+        FROM ${notificationsConsumerDetailsTable}
+        WHERE ${notificationsConsumerDetailsTable.notificationRowId} = ${notificationsTable.id}
+          AND ${notificationsConsumerDetailsTable.loginExpiryDate} > ${new Date()}
+      )`;
+
       const rows = await drizzleDb
         .select({ rowCount: sql<number>`COUNT(*)::int` })
         .from(notificationsTable)
         .where(
-          options.dateFrom
-            ? sql`${notificationsTable.dateUpdated} >= ${options.dateFrom}`
-            : sql`TRUE`
+          and(
+            options.dateFrom
+              ? sql`${notificationsTable.dateUpdated} >= ${options.dateFrom}`
+              : sql`TRUE`,
+            hasActiveConsumerCondition
+          )
         );
 
       return rows[0]?.rowCount ?? 0;
@@ -299,24 +310,51 @@ export async function listProfiles(options: {
   dateFrom?: string;
   offset?: number;
   limit?: number;
-}) {
+}): Promise<ConsumerProfile[]> {
+  const now = new Date();
+
   return withDBEnabled(
     async (drizzleDb) => {
       let query = drizzleDb
         .select({
-          id: notificationsTable.id,
           profileId: notificationsTable.profileId,
           serviceIds: notificationsTable.serviceIds,
           content: notificationsTable.content,
           dateUpdated: notificationsTable.dateUpdated,
           lastLoginDate: notificationsTable.lastLoginDate,
+          consumerDetails: sql<
+            {
+              id: string;
+              loginExpiryDate: string | null;
+            }[]
+          >`COALESCE(
+            JSON_AGG(
+              JSON_BUILD_OBJECT(
+                'id', ${notificationsConsumerDetailsTable.consumerId},
+                'loginExpiryDate', ${notificationsConsumerDetailsTable.loginExpiryDate}
+              )
+              ORDER BY ${notificationsConsumerDetailsTable.loginExpiryDate} ASC
+            ) FILTER (WHERE ${notificationsConsumerDetailsTable.consumerId} IS NOT NULL),
+            '[]'::json
+          )`,
         })
         .from(notificationsTable)
+        .innerJoin(
+          notificationsConsumerDetailsTable,
+          and(
+            eq(
+              notificationsConsumerDetailsTable.notificationRowId,
+              notificationsTable.id
+            ),
+            sql`${notificationsConsumerDetailsTable.loginExpiryDate} > ${now}`
+          )
+        )
         .where(
           options.dateFrom
             ? sql`${notificationsTable.dateUpdated} >= ${options.dateFrom}`
             : sql`TRUE`
         )
+        .groupBy(notificationsTable.id)
         .orderBy(asc(notificationsTable.dateCreated))
         .$dynamic();
 
@@ -329,41 +367,29 @@ export async function listProfiles(options: {
 
       const rows = await query;
 
-      const notificationRowIds = rows.map((row) => row.id);
-      const consumerRows = notificationRowIds.length
-        ? await drizzleDb
-            .select({
-              notificationRowId:
-                notificationsConsumerDetailsTable.notificationRowId,
-              consumerId: notificationsConsumerDetailsTable.consumerId,
-            })
-            .from(notificationsConsumerDetailsTable)
-            .where(
-              inArray(
-                notificationsConsumerDetailsTable.notificationRowId,
-                notificationRowIds
-              )
-            )
-        : [];
+      return rows.map((row) => {
+        // The JSON_AGG casts all values in consumerDetails to a string. To comply with our ConsumerDetail type, we need to transform the loginExpiryDate back to a Date or null.
+        const consumerDetails: ConsumerDetail[] = row.consumerDetails.map(
+          (consumerDetail) => ({
+            id: consumerDetail.id,
+            loginExpiryDate: consumerDetail.loginExpiryDate
+              ? new Date(consumerDetail.loginExpiryDate)
+              : null,
+          })
+        );
 
-      const consumersByNotificationRowId = consumerRows.reduce(
-        (acc, consumerRow) => {
-          const currentConsumers = acc.get(consumerRow.notificationRowId) ?? [];
-          currentConsumers.push(consumerRow.consumerId);
-          acc.set(consumerRow.notificationRowId, currentConsumers);
-          return acc;
-        },
-        new Map<string, ConsumerId[]>()
-      );
-
-      return rows.map((row) => ({
-        profileId: row.profileId,
-        consumerIds: consumersByNotificationRowId.get(row.id) ?? [],
-        serviceIds: row.serviceIds,
-        content: row.content,
-        dateUpdated: row.dateUpdated,
-        lastLoginDate: row.lastLoginDate,
-      })) as unknown as ConsumerProfile[];
+        return {
+          profileId: row.profileId,
+          consumerIds: consumerDetails.map(
+            (consumerDetail) => consumerDetail.id
+          ),
+          consumerDetails,
+          serviceIds: row.serviceIds,
+          content: row.content,
+          dateUpdated: row.dateUpdated,
+          lastLoginDate: row.lastLoginDate,
+        };
+      });
     },
     async () => []
   );

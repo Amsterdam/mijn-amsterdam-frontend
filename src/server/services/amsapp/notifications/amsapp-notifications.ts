@@ -138,7 +138,13 @@ export async function batchFetchNotifications(options: {
 }) {
   const profiles = await listProfiles(options);
   return profiles.map((profile) => ({
-    consumerIds: profile.consumerIds,
+    consumerDetails: profile.consumerDetails.map((consumerDetail) => ({
+      id: consumerDetail.id,
+      loginExpiryDate: toISOString(consumerDetail.loginExpiryDate) ?? '',
+    })),
+    consumerIds: profile.consumerDetails.map(
+      (consumerDetail) => consumerDetail.id
+    ),
     dateUpdated: toISOString(profile.dateUpdated) ?? '',
     lastLoginDate: profile.lastLoginDate
       ? toISOString(profile.lastLoginDate)

@@ -7,18 +7,24 @@ export type BSN = AuthProfile['id'];
 export type ConsumerId = string;
 export type ServiceId = keyof typeof notificationServices.private;
 
+export type ConsumerDetail = {
+  id: ConsumerId;
+  loginExpiryDate: Date | null;
+};
+
 export type ConsumerProfile = {
   profileId: BSN;
   consumerIds: ConsumerId[];
+  consumerDetails: ConsumerDetail[];
   serviceIds: ServiceId[];
-  dateUpdated: string;
-  lastLoginDate: string | null;
-  content: { services: Record<ServiceId, NotificationsService> } | null;
+  dateUpdated: Date;
+  lastLoginDate: Date | null;
+  content: { services?: Record<ServiceId, NotificationsService> } | null;
 };
 
 export type ConsumerProfileCompact = Omit<
   ConsumerProfile,
-  'profileId' | 'content' | 'consumerIds'
+  'profileId' | 'content' | 'consumerIds' | 'consumerDetails'
 >;
 
 export type ConsumerRegistrationProfile = ConsumerProfileCompact & {

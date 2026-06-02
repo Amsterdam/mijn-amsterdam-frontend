@@ -1,6 +1,6 @@
 import { resolve } from 'node:path';
 
-import { addMonths } from 'date-fns';
+import { addDays, addHours, addMonths } from 'date-fns';
 import { eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
@@ -40,18 +40,18 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
 
   const profileId: BSN = '999999999' as BSN;
 
-  const defaultTime = '2020-01-01T00:00:00.000Z';
-  const defaultTimePlusHour = '2020-01-01T01:00:00.000Z';
+  const DEFAULT_TIME = new Date('2020-01-01T00:00:00.000Z');
+  const defaultTimePlusHour = addHours(DEFAULT_TIME, 1);
 
   const SERVICE_A: NotificationsService = {
     serviceId: 'afis',
-    dateUpdated: defaultTime,
+    dateUpdated: DEFAULT_TIME.toISOString(),
     status: 'OK',
     content: [],
   };
   const SERVICE_B: NotificationsService = {
     serviceId: 'avg',
-    dateUpdated: defaultTimePlusHour,
+    dateUpdated: defaultTimePlusHour.toISOString(),
     status: 'OK',
     content: [],
   };
@@ -91,7 +91,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
     if (pool) {
       await truncatePgSchemaTables(pool);
     }
-    vi.setSystemTime(new Date(defaultTime));
+    vi.setSystemTime(DEFAULT_TIME);
   });
 
   describe('upsertConsumer', () => {
@@ -154,7 +154,10 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
     it('resets consumer loginExpiryDate to three calendar months on each registration', async () => {
       const model = await import('./amsapp-notifications-model.ts');
 
-      vi.setSystemTime(new Date('2020-01-31T10:00:00.000Z'));
+      const firstRegistrationDate = addHours(addDays(DEFAULT_TIME, 30), 10);
+      const secondRegistrationDate = addHours(addDays(DEFAULT_TIME, 59), 10);
+
+      vi.setSystemTime(firstRegistrationDate);
       await model.upsertConsumer(profileId, 'Test Person', 'consumer-1', [
         SERVICE_A.serviceId,
       ]);
@@ -168,11 +171,11 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
         .limit(1);
 
       const firstLoginExpiryDate = firstRows[0]?.loginExpiryDate;
-      expect(firstLoginExpiryDate?.toISOString()).toBe(
-        addMonths(new Date('2020-01-31T10:00:00.000Z'), 3).toISOString()
+      expect(firstLoginExpiryDate).toStrictEqual(
+        addMonths(firstRegistrationDate, 3)
       );
 
-      vi.setSystemTime(new Date('2020-02-29T10:00:00.000Z'));
+      vi.setSystemTime(secondRegistrationDate);
       await model.upsertConsumer(profileId, 'Test Person', 'consumer-1', [
         SERVICE_B.serviceId,
       ]);
@@ -186,8 +189,8 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
         .limit(1);
 
       const secondLoginExpiryDate = secondRows[0]?.loginExpiryDate;
-      expect(secondLoginExpiryDate?.toISOString()).toBe(
-        addMonths(new Date('2020-02-29T10:00:00.000Z'), 3).toISOString()
+      expect(secondLoginExpiryDate).toStrictEqual(
+        addMonths(secondRegistrationDate, 3)
       );
     });
   });
@@ -216,7 +219,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
   });
 
   describe('getProfilesCount', () => {
-    it('returns the total profile count', async () => {
+    it('returns the total number of visible profiles with active consumers', async () => {
       const model = await import('./amsapp-notifications-model.ts');
 
       await model.upsertConsumer('1', 'Test Person 1', 'consumer-1', [
@@ -230,22 +233,46 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
       expect(totalItems).toBe(2);
     });
 
-    it('returns the total profile count after dateFrom', async () => {
+    it('returns the total visible profile count where dateUpdated is after dateFrom', async () => {
       const model = await import('./amsapp-notifications-model.ts');
 
-      vi.setSystemTime(new Date(defaultTime));
+      vi.setSystemTime(DEFAULT_TIME);
       await model.upsertConsumer('1', 'Test Person 1', 'consumer-1', [
         SERVICE_A.serviceId,
       ]);
 
-      vi.setSystemTime(new Date(defaultTimePlusHour));
+      vi.setSystemTime(defaultTimePlusHour);
       await model.upsertConsumer('2', 'Test Person 2', 'consumer-2', [
         SERVICE_A.serviceId,
       ]);
 
+      vi.setSystemTime(addHours(DEFAULT_TIME, 2));
       const totalItems = await model.getProfilesCount({
-        dateFrom: defaultTimePlusHour,
+        dateFrom: addHours(DEFAULT_TIME, 1).toISOString(),
       });
+      expect(totalItems).toBe(1);
+    });
+
+    it('excludes profiles that have only expired consumers', async () => {
+      const model = await import('./amsapp-notifications-model.ts');
+
+      await model.upsertConsumer('1', 'Test Person 1', 'consumer-active', [
+        SERVICE_A.serviceId,
+      ]);
+      await model.upsertConsumer('2', 'Test Person 2', 'consumer-expired', [
+        SERVICE_A.serviceId,
+      ]);
+
+      await db
+        .update(notificationsConsumerDetailsTable)
+        .set({ loginExpiryDate: addMonths(DEFAULT_TIME, -1) })
+        .where(
+          eq(notificationsConsumerDetailsTable.consumerId, 'consumer-expired')
+        );
+
+      vi.setSystemTime(DEFAULT_TIME);
+      const totalItems = await model.getProfilesCount({});
+
       expect(totalItems).toBe(1);
     });
   });
@@ -391,39 +418,147 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
         db.insert(notificationsConsumerDetailsTable).values({
           consumerId: 'consumer-links-via-notification-row-id',
           notificationRowId: notificationRow.profileId,
-          loginExpiryDate: new Date('2020-04-01T00:00:00.000Z'),
+          loginExpiryDate: addMonths(DEFAULT_TIME, 3),
         })
       ).rejects.toThrow();
     });
   });
 
   describe('listProfiles', () => {
-    it('is ordered on created_at for offset/limit to work properly', async () => {
+    it('paginates visible profiles and excludes profiles without or with only expired consumers', async () => {
       const model = await import('./amsapp-notifications-model.ts');
+
+      const now = addDays(DEFAULT_TIME, 9);
 
       await db.insert(notificationsTable).values([
         {
           id: 'id-1',
           profileId: '1',
-          dateCreated: new Date('2020-01-01T01:00:00.000Z'),
+          dateCreated: addHours(DEFAULT_TIME, 1),
         },
         {
           id: 'id-2',
           profileId: '2',
-          dateCreated: new Date('2020-01-01T00:00:00.000Z'),
+          dateCreated: DEFAULT_TIME,
         },
         {
           id: 'id-3',
           profileId: '3',
-          dateCreated: new Date('2020-01-01T02:00:00.000Z'),
+          dateCreated: addHours(DEFAULT_TIME, 2),
+        },
+        {
+          id: 'id-4',
+          profileId: '4',
+          dateCreated: addHours(DEFAULT_TIME, 3),
         },
       ]);
 
-      const firstPage = await model.listProfiles({ limit: 2, offset: 0 });
+      await db.insert(notificationsConsumerDetailsTable).values([
+        {
+          consumerId: 'consumer-1-active',
+          notificationRowId: 'id-1',
+          loginExpiryDate: addMonths(DEFAULT_TIME, 2),
+        },
+        {
+          consumerId: 'consumer-2-expired',
+          notificationRowId: 'id-2',
+          loginExpiryDate: addMonths(DEFAULT_TIME, -1),
+        },
+        {
+          consumerId: 'consumer-3-active',
+          notificationRowId: 'id-3',
+          loginExpiryDate: addMonths(DEFAULT_TIME, 1),
+        },
+      ]);
+
+      vi.setSystemTime(now);
+
+      const firstPage = await model.listProfiles({
+        limit: 2,
+        offset: 0,
+      });
       expect(firstPage).toHaveLength(2);
-      expect(firstPage.map((p) => p.profileId)).toStrictEqual(
-        expect.arrayContaining(['1', '2'])
-      );
+      expect(firstPage.map((p) => p.profileId)).toStrictEqual(['1', '3']);
+    });
+
+    it('orders consumerDetails by earliest loginExpiryDate first', async () => {
+      const model = await import('./amsapp-notifications-model.ts');
+
+      await db.insert(notificationsTable).values({
+        id: 'id-consumer-order',
+        profileId: 'consumer-order-profile',
+        dateCreated: DEFAULT_TIME,
+      });
+
+      await db.insert(notificationsConsumerDetailsTable).values([
+        {
+          consumerId: 'consumer-latest-expiry',
+          notificationRowId: 'id-consumer-order',
+          loginExpiryDate: addMonths(DEFAULT_TIME, 3),
+        },
+        {
+          consumerId: 'consumer-earliest-expiry',
+          notificationRowId: 'id-consumer-order',
+          loginExpiryDate: addMonths(DEFAULT_TIME, 1),
+        },
+        {
+          consumerId: 'consumer-middle-expiry',
+          notificationRowId: 'id-consumer-order',
+          loginExpiryDate: addMonths(DEFAULT_TIME, 2),
+        },
+      ]);
+
+      vi.setSystemTime(addDays(DEFAULT_TIME, 9));
+
+      const rows = await model.listProfiles({});
+
+      expect(rows).toHaveLength(1);
+      expect(rows[0].consumerDetails.map((c) => c.id)).toStrictEqual([
+        'consumer-earliest-expiry',
+        'consumer-middle-expiry',
+        'consumer-latest-expiry',
+      ]);
+      expect(rows[0].consumerIds).toStrictEqual([
+        'consumer-earliest-expiry',
+        'consumer-middle-expiry',
+        'consumer-latest-expiry',
+      ]);
+    });
+
+    it('returns only active consumers and exposes consumerDetails + consumerIds from the same set', async () => {
+      const model = await import('./amsapp-notifications-model.ts');
+
+      await db.insert(notificationsTable).values({
+        id: 'id-active-consumers',
+        profileId: 'profile-active-consumers',
+        dateCreated: DEFAULT_TIME,
+      });
+
+      await db.insert(notificationsConsumerDetailsTable).values([
+        {
+          consumerId: 'consumer-active',
+          notificationRowId: 'id-active-consumers',
+          loginExpiryDate: addMonths(DEFAULT_TIME, 1),
+        },
+        {
+          consumerId: 'consumer-expired',
+          notificationRowId: 'id-active-consumers',
+          loginExpiryDate: addMonths(DEFAULT_TIME, -1),
+        },
+      ]);
+
+      vi.setSystemTime(addDays(DEFAULT_TIME, 9));
+
+      const rows = await model.listProfiles({});
+
+      expect(rows).toHaveLength(1);
+      expect(rows[0].consumerDetails).toStrictEqual([
+        {
+          id: 'consumer-active',
+          loginExpiryDate: addMonths(DEFAULT_TIME, 1),
+        },
+      ]);
+      expect(rows[0].consumerIds).toStrictEqual(['consumer-active']);
     });
   });
 });
