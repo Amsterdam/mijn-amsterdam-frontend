@@ -71,6 +71,8 @@ import { getFromEnv } from './helpers/env.ts';
 import { router as privateNetworkRouter } from './routing/app-router-private.ts';
 import { getDirname } from './helpers/dir.ts';
 import { router as adminRouter } from './routing/app-router-admin.ts';
+import { runMigrations } from './services/db/migrate.ts';
+import { endPool } from './services/db/postgres.ts';
 
 const app = express();
 
@@ -195,6 +197,20 @@ async function startServerBFF() {
     if (!IS_PRODUCTION) {
       await import('log-that-http');
     }
+  }
+
+  try {
+    await runMigrations();
+    logger.info('Drizzle migrations completed successfully.');
+  } catch (error) {
+    captureException(error, {
+      properties: {
+        message: 'Drizzle migrations failed.',
+      },
+    });
+    process.exit(1);
+  } finally {
+    await endPool();
   }
 
   const server = app.listen(BFF_PORT, () => {
