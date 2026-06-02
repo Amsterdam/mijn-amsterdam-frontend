@@ -16,11 +16,6 @@ export const notificationsTable = pgTable(
     id: varchar('id', { length: 64 }).notNull().primaryKey(),
     profileId: varchar('profile_id', { length: 43 }).notNull(),
     profileName: varchar('profile_name', { length: 200 }),
-    consumerIds: varchar('consumer_ids', { length: 100 })
-      .array()
-      .$type<ConsumerId[]>()
-      .notNull()
-      .default([]),
     serviceIds: varchar('service_ids', { length: 50 })
       .array()
       .$type<ServiceId[]>()
@@ -35,15 +30,9 @@ export const notificationsTable = pgTable(
     dateCreated: timestamp('date_created', { withTimezone: true })
       .notNull()
       .defaultNow(),
-    lastLoginDate: varchar('last_login_date', { length: 200 }),
+    lastLoginDate: timestamp('last_login_date', { withTimezone: true }),
   },
-  (table) => [
-    index('bff_notifications_date_created_idx').on(table.dateCreated),
-    index('bff_notifications_consumer_ids_gin_idx').using(
-      'gin',
-      table.consumerIds
-    ),
-  ]
+  (table) => [index('bff_notifications_date_created_idx').on(table.dateCreated)]
 );
 
 export const notificationsConsumerDetailsTable = pgTable(

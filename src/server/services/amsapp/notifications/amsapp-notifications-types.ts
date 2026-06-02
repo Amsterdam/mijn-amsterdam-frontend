@@ -21,6 +21,10 @@ export type ConsumerProfileCompact = Omit<
   'profileId' | 'content' | 'consumerIds'
 >;
 
+export type ConsumerRegistrationProfile = ConsumerProfileCompact & {
+  loginExpiryDate: string | null;
+};
+
 export type NotificationsService = {
   serviceId: ServiceId;
   dateUpdated: string;

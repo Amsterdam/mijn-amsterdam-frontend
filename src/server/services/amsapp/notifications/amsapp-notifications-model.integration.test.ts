@@ -1,5 +1,7 @@
 import { resolve } from 'node:path';
 
+import { addMonths } from 'date-fns';
+import { eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import type { Pool } from 'pg';
@@ -21,8 +23,10 @@ import {
   setupPgTestDb,
   truncatePgSchemaTables,
 } from '../../db/pg-test-utils.ts';
-import { notificationsTable } from '../../db/schema/amsapp-notifications.ts';
-import { notificationsConsumerDetailsTable } from '../../db/schema/amsapp-notifications.ts';
+import {
+  notificationsConsumerDetailsTable,
+  notificationsTable,
+} from '../../db/schema/amsapp-notifications.ts';
 
 const RUN_DB_TESTS = process.env.RUN_DB_TESTS === 'true';
 const describePg = RUN_DB_TESTS ? describe : describe.skip;
@@ -91,7 +95,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
   });
 
   describe('upsertConsumer', () => {
-    it('inserts/updates consumer_ids and overwrites service_ids', async () => {
+    it('projects consumers from consumer details and overwrites service_ids', async () => {
       const model = await import('./amsapp-notifications-model.ts');
 
       await model.upsertConsumer(profileId, 'Test Person', 'consumer-1', [
@@ -115,6 +119,97 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
       expect(rows2[0]).toMatchObject({
         profileId: '999999999',
         consumerIds: expect.arrayContaining(['consumer-1', 'consumer-2']),
+        serviceIds: [SERVICE_B.serviceId],
+      });
+    });
+
+    it('keeps old and new profiles until reconciliation runs', async () => {
+      const model = await import('./amsapp-notifications-model.ts');
+
+      await model.upsertConsumer('1', 'Test Person 1', 'consumer-1', [
+        SERVICE_A.serviceId,
+      ]);
+      await model.upsertConsumer('2', 'Test Person 2', 'consumer-1', [
+        SERVICE_B.serviceId,
+      ]);
+
+      const profiles = await model.listProfileIds();
+      expect(profiles).toHaveLength(2);
+      expect(profiles).toContainEqual(
+        expect.objectContaining({
+          profileId: '1',
+          consumerIds: [],
+          serviceIds: [SERVICE_A.serviceId],
+        })
+      );
+      expect(profiles).toContainEqual(
+        expect.objectContaining({
+          profileId: '2',
+          consumerIds: ['consumer-1'],
+          serviceIds: [SERVICE_B.serviceId],
+        })
+      );
+    });
+
+    it('resets consumer loginExpiryDate to three calendar months on each registration', async () => {
+      const model = await import('./amsapp-notifications-model.ts');
+
+      vi.setSystemTime(new Date('2020-01-31T10:00:00.000Z'));
+      await model.upsertConsumer(profileId, 'Test Person', 'consumer-1', [
+        SERVICE_A.serviceId,
+      ]);
+
+      const firstRows = await db
+        .select({
+          loginExpiryDate: notificationsConsumerDetailsTable.loginExpiryDate,
+        })
+        .from(notificationsConsumerDetailsTable)
+        .where(eq(notificationsConsumerDetailsTable.consumerId, 'consumer-1'))
+        .limit(1);
+
+      const firstLoginExpiryDate = firstRows[0]?.loginExpiryDate;
+      expect(firstLoginExpiryDate?.toISOString()).toBe(
+        addMonths(new Date('2020-01-31T10:00:00.000Z'), 3).toISOString()
+      );
+
+      vi.setSystemTime(new Date('2020-02-29T10:00:00.000Z'));
+      await model.upsertConsumer(profileId, 'Test Person', 'consumer-1', [
+        SERVICE_B.serviceId,
+      ]);
+
+      const secondRows = await db
+        .select({
+          loginExpiryDate: notificationsConsumerDetailsTable.loginExpiryDate,
+        })
+        .from(notificationsConsumerDetailsTable)
+        .where(eq(notificationsConsumerDetailsTable.consumerId, 'consumer-1'))
+        .limit(1);
+
+      const secondLoginExpiryDate = secondRows[0]?.loginExpiryDate;
+      expect(secondLoginExpiryDate?.toISOString()).toBe(
+        addMonths(new Date('2020-02-29T10:00:00.000Z'), 3).toISOString()
+      );
+    });
+  });
+
+  describe('deleteOrphanProfiles', () => {
+    it('moves an already-registered consumer to another profile and deletes orphaned profile rows', async () => {
+      const model = await import('./amsapp-notifications-model.ts');
+
+      await model.upsertConsumer('1', 'Test Person 1', 'consumer-1', [
+        SERVICE_A.serviceId,
+      ]);
+      await model.upsertConsumer('2', 'Test Person 2', 'consumer-1', [
+        SERVICE_B.serviceId,
+      ]);
+
+      await model.deleteOrphanProfiles();
+
+      const profiles = await model.listProfileIds();
+      expect(profiles).toHaveLength(1);
+      expect(profiles[0]).toMatchObject({
+        profileId: '2',
+        consumerIds: ['consumer-1'],
         serviceIds: [SERVICE_B.serviceId],
       });
     });
@@ -175,7 +270,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
       expect(profilesWithOneConsumer[0].consumerIds).toHaveLength(1);
     });
 
-    it('removes the row when consumer_ids becomes empty', async () => {
+    it('removes the row when the last consumer detail is deleted', async () => {
       const model = await import('./amsapp-notifications-model.ts');
 
       await model.upsertConsumer(profileId, 'Test Person', 'consumer-1', [
@@ -186,6 +281,45 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
       expect(deletedCount).toBe(1);
       const profilesEmpty = await model.listProfileIds();
       expect(profilesEmpty).toHaveLength(0);
+    });
+
+    it('deletes orphaned profile when the last consumer detail is removed', async () => {
+      const model = await import('./amsapp-notifications-model.ts');
+
+      await model.upsertConsumer('1', 'Test Person 1', 'consumer-1', [
+        SERVICE_A.serviceId,
+      ]);
+
+      await model.deleteConsumer('consumer-1');
+
+      const profileRows = await db
+        .select({ id: notificationsTable.id })
+        .from(notificationsTable)
+        .limit(1);
+
+      expect(profileRows).toHaveLength(0);
+    });
+  });
+
+  describe('getProfileByConsumer', () => {
+    it('returns loginExpiryDate alongside profile data for registered consumers', async () => {
+      const model = await import('./amsapp-notifications-model.ts');
+
+      const loginDate = new Date('2020-03-01T12:00:00.000Z');
+      const expectedLoginExpiryDate = new Date('2020-06-01T11:00:00.000Z');
+
+      vi.setSystemTime(loginDate);
+      await model.upsertConsumer(profileId, 'Test Person', 'consumer-1', [
+        SERVICE_A.serviceId,
+      ]);
+
+      const profile = await model.getProfileByConsumer('consumer-1');
+      expect(profile).toMatchObject({
+        profileName: 'Test Person',
+        serviceIds: [SERVICE_A.serviceId],
+      });
+
+      expect(profile?.loginExpiryDate).toStrictEqual(expectedLoginExpiryDate);
     });
   });
 
@@ -260,57 +394,6 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
           loginExpiryDate: new Date('2020-04-01T00:00:00.000Z'),
         })
       ).rejects.toThrow();
-    });
-
-    it('links consumer details by notification profile primary key id and keeps current reads unchanged', async () => {
-      const model = await import('./amsapp-notifications-model.ts');
-
-      await model.upsertConsumer(profileId, 'Test Person', 'consumer-legacy', [
-        SERVICE_A.serviceId,
-      ]);
-
-      const notificationRows = await db
-        .select({
-          id: notificationsTable.id,
-          profileId: notificationsTable.profileId,
-        })
-        .from(notificationsTable)
-        .limit(1);
-
-      expect(notificationRows).toHaveLength(1);
-      const notificationRow = notificationRows[0];
-      expect(notificationRow).toBeDefined();
-
-      const loginExpiryDate = new Date('2020-04-01T00:00:00.000Z');
-
-      await db.insert(notificationsConsumerDetailsTable).values({
-        consumerId: 'consumer-details-1',
-        notificationRowId: notificationRow.id,
-        loginExpiryDate,
-      });
-
-      const detailsRows = await db
-        .select({
-          consumerId: notificationsConsumerDetailsTable.consumerId,
-          notificationRowId:
-            notificationsConsumerDetailsTable.notificationRowId,
-          loginExpiryDate: notificationsConsumerDetailsTable.loginExpiryDate,
-        })
-        .from(notificationsConsumerDetailsTable);
-
-      expect(detailsRows).toHaveLength(1);
-      expect(detailsRows[0]).toMatchObject({
-        consumerId: 'consumer-details-1',
-        notificationRowId: notificationRow.id,
-      });
-      expect(detailsRows[0]?.loginExpiryDate?.toISOString()).toBe(
-        loginExpiryDate.toISOString()
-      );
-
-      const legacyProfile = await model.getProfileByConsumer('consumer-legacy');
-      expect(legacyProfile).toMatchObject({
-        serviceIds: [SERVICE_A.serviceId],
-      });
     });
   });
 

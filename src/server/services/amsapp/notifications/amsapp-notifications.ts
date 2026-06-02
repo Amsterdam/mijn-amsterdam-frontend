@@ -2,6 +2,7 @@ import { getAuthProfileAndTokenWithoutSession } from './amsapp-notifications-hel
 import {
   listProfileIds,
   upsertConsumer,
+  deleteOrphanProfiles,
   listProfiles,
   truncate,
   deleteConsumer,
@@ -12,9 +13,8 @@ import { DISCRETE_GENERIC_MESSAGE } from './amsapp-notifications-service-config.
 import type {
   BSN,
   ConsumerId,
-  ServiceId,
-  ConsumerProfileCompact,
   NotificationsLean,
+  ServiceId,
 } from './amsapp-notifications-types.ts';
 import {
   apiErrorResult,
@@ -38,7 +38,10 @@ export async function registerConsumer(
   consumerId: ConsumerId,
   serviceIds: ServiceId[] = []
 ) {
-  return upsertConsumer(profileId, profileName, consumerId, serviceIds);
+  await upsertConsumer(profileId, profileName, consumerId, serviceIds);
+
+  // Cleanup runs in the background so registration is not blocked by removal of orphan profiles.
+  void deleteOrphanProfiles().catch(() => undefined);
 }
 
 export async function unregisterConsumer(consumerId: ConsumerId) {
@@ -47,14 +50,24 @@ export async function unregisterConsumer(consumerId: ConsumerId) {
 }
 
 export async function getConsumerProfile(consumerId: ConsumerId) {
-  const profile = (await getProfileByConsumer(consumerId)) as
-    | (ConsumerProfileCompact & { isRegistered: boolean })
-    | null;
+  const profile = await getProfileByConsumer(consumerId);
 
   if (profile == null) {
     return { isRegistered: false };
   }
-  return { ...profile, isRegistered: true };
+
+  return {
+    profileName: profile.profileName,
+    serviceIds: profile.serviceIds,
+    dateUpdated: toISOString(profile.dateUpdated) ?? '',
+    lastLoginDate: profile.lastLoginDate
+      ? toISOString(profile.lastLoginDate)
+      : null,
+    loginExpiryDate: profile.loginExpiryDate
+      ? toISOString(profile.loginExpiryDate)
+      : null,
+    isRegistered: true,
+  };
 }
 
 export async function batchDeleteNotifications() {
@@ -72,8 +85,9 @@ export async function storeNotificationsResponses(
     updateLastLoginDate?: boolean;
   }
 ): Promise<void> {
-  const now = toISOString(new Date());
-  const lastLoginDate = options?.updateLastLoginDate ? now : null;
+  const nowDate = new Date();
+  const now = toISOString(nowDate);
+  const lastLoginDate = options?.updateLastLoginDate ? nowDate : null;
 
   const temporaryExcludedServices: ServiceId[] = ['belasting'] as const; // MIJN-12971: Temporary filter to not push notifications repeatedly for notifications that have a datePublished set to today everyday
   const responses = entries(serviceResponses)
@@ -125,8 +139,10 @@ export async function batchFetchNotifications(options: {
   const profiles = await listProfiles(options);
   return profiles.map((profile) => ({
     consumerIds: profile.consumerIds,
-    dateUpdated: profile.dateUpdated,
-    lastLoginDate: profile.lastLoginDate,
+    dateUpdated: toISOString(profile.dateUpdated) ?? '',
+    lastLoginDate: profile.lastLoginDate
+      ? toISOString(profile.lastLoginDate)
+      : null,
     services: Object.values(profile.content?.services || {}),
   }));
 }

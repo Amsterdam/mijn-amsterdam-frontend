@@ -1,4 +1,5 @@
-import { and, asc, eq, sql } from 'drizzle-orm';
+import { addMonths } from 'date-fns';
+import { and, asc, eq, inArray, sql } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/node-postgres';
 
 import type {
@@ -9,18 +10,19 @@ import type {
   ServiceId,
 } from './amsapp-notifications-types.ts';
 import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
-import { toISOString } from '../../../../universal/helpers/date.ts';
 import { decrypt, encrypt } from '../../../helpers/encrypt-decrypt.ts';
 import { hashWithPepper } from '../../../helpers/hash.ts';
 import { IS_DB_ENABLED } from '../../db/config.ts';
 import { getPool } from '../../db/postgres.ts';
 import {
   NOTIFICATIONS_TABLE_NAME,
+  notificationsConsumerDetailsTable,
   notificationsTable,
 } from '../../db/schema/amsapp-notifications.ts';
 
-// POSTGRES is case insensitive. We therefore always use snake_case within postgres
 export { NOTIFICATIONS_TABLE_NAME };
+
+const LOGIN_EXPIRY_MONTHS = 3;
 
 function getDrizzleDb() {
   return drizzle(getPool());
@@ -44,6 +46,10 @@ function getRowId(profileId: BSN): string {
 function encryptProfileId(profileId: BSN): string {
   const [encryptedProfileId] = encrypt(profileId);
   return encryptedProfileId;
+}
+
+function getLoginExpiryDate(now: Date) {
+  return addMonths(now, LOGIN_EXPIRY_MONTHS);
 }
 
 export async function truncate() {
@@ -87,9 +93,17 @@ export async function getProfileByConsumer(consumerId: ConsumerId) {
           serviceIds: notificationsTable.serviceIds,
           dateUpdated: notificationsTable.dateUpdated,
           lastLoginDate: notificationsTable.lastLoginDate,
+          loginExpiryDate: notificationsConsumerDetailsTable.loginExpiryDate,
         })
-        .from(notificationsTable)
-        .where(sql`${consumerId} = ANY(${notificationsTable.consumerIds})`)
+        .from(notificationsConsumerDetailsTable)
+        .innerJoin(
+          notificationsTable,
+          eq(
+            notificationsTable.id,
+            notificationsConsumerDetailsTable.notificationRowId
+          )
+        )
+        .where(eq(notificationsConsumerDetailsTable.consumerId, consumerId))
         .limit(1);
 
       return rows[0] ?? null;
@@ -118,7 +132,8 @@ export async function upsertConsumer(
 ) {
   const id = getRowId(profileId);
   const encryptedProfileId = encryptProfileId(profileId);
-  const now = toISOString(new Date());
+  const nowDate = new Date();
+  const loginExpiryDate = getLoginExpiryDate(nowDate);
 
   return withDBEnabled(
     async (drizzleDb) => {
@@ -128,10 +143,9 @@ export async function upsertConsumer(
           id,
           profileId: encryptedProfileId,
           profileName,
-          consumerIds: [consumerId],
           serviceIds,
-          dateUpdated: new Date(now),
-          lastLoginDate: now,
+          dateUpdated: nowDate,
+          lastLoginDate: nowDate,
         })
         .onConflictDoUpdate({
           target: notificationsTable.id,
@@ -139,14 +153,24 @@ export async function upsertConsumer(
             id: sql`excluded.id`,
             profileId: sql`excluded.profile_id`,
             profileName: sql`excluded.profile_name`,
-            consumerIds: sql`(
-              SELECT ARRAY(
-                SELECT DISTINCT unnest(array_append(${notificationsTable.consumerIds}, ${consumerId}))
-              )
-            )`,
             serviceIds: sql`excluded.service_ids`,
             dateUpdated: sql`excluded.date_updated`,
             lastLoginDate: sql`excluded.last_login_date`,
+          },
+        });
+
+      await drizzleDb
+        .insert(notificationsConsumerDetailsTable)
+        .values({
+          consumerId,
+          notificationRowId: id,
+          loginExpiryDate,
+        })
+        .onConflictDoUpdate({
+          target: notificationsConsumerDetailsTable.consumerId,
+          set: {
+            notificationRowId: id,
+            loginExpiryDate,
           },
         });
     },
@@ -154,36 +178,62 @@ export async function upsertConsumer(
   );
 }
 
-// This should work in one query with a CTE, but it does not delete the row correctly.
-// Therefore, multiple queries are used
+export async function deleteOrphanProfiles(
+  notificationRowIds?: string[],
+  now: Date = new Date()
+) {
+  return withDBEnabled(
+    async (drizzleDb) => {
+      // When row ids are explicitly provided, only those profiles are candidates.
+      if (notificationRowIds?.length === 0) {
+        return;
+      }
+
+      const uniqueNotificationRowIds = [...new Set(notificationRowIds ?? [])];
+
+      const orphanCondition = sql`NOT EXISTS (
+        SELECT 1
+        FROM ${notificationsConsumerDetailsTable}
+        WHERE ${notificationsConsumerDetailsTable.notificationRowId} = ${notificationsTable.id}
+          AND ${notificationsConsumerDetailsTable.loginExpiryDate} > ${now}
+      )`;
+
+      if (uniqueNotificationRowIds.length > 0) {
+        await drizzleDb
+          .delete(notificationsTable)
+          .where(
+            and(
+              inArray(notificationsTable.id, uniqueNotificationRowIds),
+              orphanCondition
+            )
+          );
+        return;
+      }
+
+      await drizzleDb.delete(notificationsTable).where(orphanCondition);
+    },
+    async () => undefined
+  );
+}
+
 export async function deleteConsumer(consumerId: ConsumerId) {
   return withDBEnabled(
     async (drizzleDb) => {
-      const rows = await drizzleDb
-        .update(notificationsTable)
-        .set({
-          consumerIds: sql`array_remove(${notificationsTable.consumerIds}, ${consumerId})`,
-        })
-        .where(sql`${consumerId} = ANY(${notificationsTable.consumerIds})`)
+      const deletedConsumerDetails = await drizzleDb
+        .delete(notificationsConsumerDetailsTable)
+        .where(eq(notificationsConsumerDetailsTable.consumerId, consumerId))
         .returning({
-          id: notificationsTable.id,
-          consumerIds: notificationsTable.consumerIds,
+          notificationRowId:
+            notificationsConsumerDetailsTable.notificationRowId,
         });
 
-      for (const { id, consumerIds } of rows) {
-        if (!consumerIds || consumerIds.length === 0) {
-          await drizzleDb
-            .delete(notificationsTable)
-            .where(
-              and(
-                eq(notificationsTable.id, id),
-                sql`${notificationsTable.consumerIds} = '{}'::varchar[]`
-              )
-            );
-        }
-      }
+      const notificationRowIds = deletedConsumerDetails.map(
+        (detail) => detail.notificationRowId
+      );
 
-      return rows.length;
+      await deleteOrphanProfiles(notificationRowIds);
+
+      return deletedConsumerDetails.length;
     },
     async () => 0
   );
@@ -192,21 +242,20 @@ export async function deleteConsumer(consumerId: ConsumerId) {
 export async function storeNotifications(
   profileId: BSN,
   services: NotificationsService[],
-  lastLoginDate: string | null = null
+  lastLoginDate: Date | null = null
 ) {
   const servicesObj = services.reduce(
     (acc, service) => ({ ...acc, [service.serviceId]: service }),
     {}
   );
   const id = getRowId(profileId);
-  const now = toISOString(new Date());
 
   return withDBEnabled(
     async (drizzleDb) => {
       await drizzleDb
         .update(notificationsTable)
         .set({
-          dateUpdated: new Date(now),
+          dateUpdated: new Date(),
           lastLoginDate: sql`COALESCE(${lastLoginDate}, ${notificationsTable.lastLoginDate})`,
           content: sql`jsonb_set(
             coalesce(${notificationsTable.content}, '{}'::jsonb),
@@ -253,10 +302,10 @@ export async function listProfiles(options: {
 }) {
   return withDBEnabled(
     async (drizzleDb) => {
-      const baseQuery = drizzleDb
+      let query = drizzleDb
         .select({
+          id: notificationsTable.id,
           profileId: notificationsTable.profileId,
-          consumerIds: notificationsTable.consumerIds,
           serviceIds: notificationsTable.serviceIds,
           content: notificationsTable.content,
           dateUpdated: notificationsTable.dateUpdated,
@@ -268,20 +317,53 @@ export async function listProfiles(options: {
             ? sql`${notificationsTable.dateUpdated} >= ${options.dateFrom}`
             : sql`TRUE`
         )
-        .orderBy(asc(notificationsTable.dateCreated));
+        .orderBy(asc(notificationsTable.dateCreated))
+        .$dynamic();
 
-      const query =
-        options.offset !== undefined && options.limit !== undefined
-          ? baseQuery.offset(options.offset).limit(options.limit)
-          : options.offset !== undefined
-            ? baseQuery.offset(options.offset)
-            : options.limit !== undefined
-              ? baseQuery.limit(options.limit)
-              : baseQuery;
+      if (options.offset !== undefined) {
+        query = query.offset(options.offset);
+      }
+      if (options.limit !== undefined) {
+        query = query.limit(options.limit);
+      }
 
       const rows = await query;
 
-      return rows as unknown as ConsumerProfile[];
+      const notificationRowIds = rows.map((row) => row.id);
+      const consumerRows = notificationRowIds.length
+        ? await drizzleDb
+            .select({
+              notificationRowId:
+                notificationsConsumerDetailsTable.notificationRowId,
+              consumerId: notificationsConsumerDetailsTable.consumerId,
+            })
+            .from(notificationsConsumerDetailsTable)
+            .where(
+              inArray(
+                notificationsConsumerDetailsTable.notificationRowId,
+                notificationRowIds
+              )
+            )
+        : [];
+
+      const consumersByNotificationRowId = consumerRows.reduce(
+        (acc, consumerRow) => {
+          const currentConsumers = acc.get(consumerRow.notificationRowId) ?? [];
+          currentConsumers.push(consumerRow.consumerId);
+          acc.set(consumerRow.notificationRowId, currentConsumers);
+          return acc;
+        },
+        new Map<string, ConsumerId[]>()
+      );
+
+      return rows.map((row) => ({
+        profileId: row.profileId,
+        consumerIds: consumersByNotificationRowId.get(row.id) ?? [],
+        serviceIds: row.serviceIds,
+        content: row.content,
+        dateUpdated: row.dateUpdated,
+        lastLoginDate: row.lastLoginDate,
+      })) as unknown as ConsumerProfile[];
     },
     async () => []
   );
@@ -292,18 +374,45 @@ export async function listProfileIds() {
     async (drizzleDb) => {
       const rows = await drizzleDb
         .select({
+          id: notificationsTable.id,
           profileId: notificationsTable.profileId,
-          consumerIds: notificationsTable.consumerIds,
           serviceIds: notificationsTable.serviceIds,
         })
         .from(notificationsTable);
+
+      const notificationRowIds = rows.map((row) => row.id);
+      const consumerRows = notificationRowIds.length
+        ? await drizzleDb
+            .select({
+              notificationRowId:
+                notificationsConsumerDetailsTable.notificationRowId,
+              consumerId: notificationsConsumerDetailsTable.consumerId,
+            })
+            .from(notificationsConsumerDetailsTable)
+            .where(
+              inArray(
+                notificationsConsumerDetailsTable.notificationRowId,
+                notificationRowIds
+              )
+            )
+        : [];
+
+      const consumersByNotificationRowId = consumerRows.reduce(
+        (acc, consumerRow) => {
+          const currentConsumers = acc.get(consumerRow.notificationRowId) ?? [];
+          currentConsumers.push(consumerRow.consumerId);
+          acc.set(consumerRow.notificationRowId, currentConsumers);
+          return acc;
+        },
+        new Map<string, ConsumerId[]>()
+      );
 
       return rows.map((row) => {
         const decryptedProfileID = decrypt(row.profileId);
         return {
           profileId: decryptedProfileID,
           serviceIds: row.serviceIds,
-          consumerIds: row.consumerIds,
+          consumerIds: consumersByNotificationRowId.get(row.id) ?? [],
         };
       });
     },

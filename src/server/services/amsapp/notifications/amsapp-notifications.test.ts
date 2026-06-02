@@ -17,6 +17,7 @@ const mocks = vi.hoisted(() => {
     model: {
       listProfileIds: vi.fn(),
       upsertConsumer: vi.fn(),
+      deleteOrphanProfiles: vi.fn(),
       listProfiles: vi.fn(),
       truncate: vi.fn(),
       deleteConsumer: vi.fn(),
@@ -44,6 +45,7 @@ vi.mock('../../tips-and-notifications', () => mocks.tipsAndNotifications);
 
 import {
   getConsumerProfile,
+  registerConsumer,
   storeNotificationsResponses,
   unregisterConsumer,
 } from './amsapp-notifications.ts';
@@ -64,6 +66,23 @@ describe('amsapp-notifications', () => {
   });
 
   describe('Consumer', () => {
+    it('registerConsumer upserts and starts removing orphan profiles (in the background)', async () => {
+      mocks.model.upsertConsumer.mockResolvedValue(undefined);
+      mocks.model.deleteOrphanProfiles.mockResolvedValue(undefined);
+
+      await registerConsumer('123456789', 'Jane Doe', 'consumer-1', [
+        'serviceA',
+      ] as any);
+
+      expect(mocks.model.upsertConsumer).toHaveBeenCalledWith(
+        '123456789',
+        'Jane Doe',
+        'consumer-1',
+        ['serviceA']
+      );
+      expect(mocks.model.deleteOrphanProfiles).toHaveBeenCalledWith();
+    });
+
     it('unregisterConsumer returns true when at least one row was deleted', async () => {
       mocks.model.deleteConsumer.mockResolvedValue(1);
 
@@ -79,17 +98,19 @@ describe('amsapp-notifications', () => {
 
     it('getConsumerProfile returns profile data + isRegistered=true when found', async () => {
       mocks.model.getProfileByConsumer.mockResolvedValue({
-        profileId: '123456789',
         profileName: 'Jane Doe',
         serviceIds: ['serviceA'],
-        dateUpdated: '2026-03-01T00:00:00.000Z',
+        dateUpdated: new Date('2026-03-01T00:00:00.000Z'),
+        lastLoginDate: new Date('2026-04-01T00:00:00.000Z'),
+        loginExpiryDate: new Date('2026-06-01T00:00:00.000Z'),
       });
 
       await expect(getConsumerProfile('consumer-1')).resolves.toStrictEqual({
-        profileId: '123456789',
         profileName: 'Jane Doe',
         serviceIds: ['serviceA'],
         dateUpdated: '2026-03-01T00:00:00.000Z',
+        lastLoginDate: '2026-04-01T00:00:00.000Z',
+        loginExpiryDate: '2026-06-01T00:00:00.000Z',
         isRegistered: true,
       });
     });
@@ -206,7 +227,7 @@ describe('amsapp-notifications', () => {
     expect(mocks.model.storeNotifications).toHaveBeenCalledWith(
       '123456789',
       expect.any(Array),
-      systemTime.toISOString()
+      systemTime
     );
   });
 
@@ -239,7 +260,7 @@ describe('amsapp-notifications', () => {
           content: [],
         },
       ],
-      systemTime.toISOString()
+      systemTime
     );
   });
 });

@@ -362,6 +362,11 @@ components:
           format: date-time
           nullable: true
           description: Last consumer login timestamp (ISO 8601) or null when unknown/never.
+        loginExpiryDate:
+          type: string
+          format: date-time
+          nullable: false
+          description: Consumer registration expiry timestamp (ISO 8601)
     ConsumerRegistered:
       type: object
       properties:
