@@ -9,7 +9,7 @@ export type ServiceId = keyof typeof notificationServices.private;
 
 export type ConsumerDetail = {
   id: ConsumerId;
-  loginExpiryDate: Date | null;
+  loginExpiryDate: Date;
 };
 
 export type ConsumerProfile = {

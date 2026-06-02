@@ -24,7 +24,8 @@
           "name": "login_expiry_date",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "NOW() + INTERVAL '3 months'"
         }
       },
       "indexes": {
@@ -64,12 +65,8 @@
           "name": "bff_notification_consumer_details_notification_row_id_bff_notifications_id_fk",
           "tableFrom": "bff_notification_consumer_details",
           "tableTo": "bff_notifications",
-          "columnsFrom": [
-            "notification_row_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["notification_row_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }

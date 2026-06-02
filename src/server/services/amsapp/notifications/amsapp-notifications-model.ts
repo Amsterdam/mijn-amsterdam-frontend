@@ -325,7 +325,7 @@ export async function listProfiles(options: {
           consumerDetails: sql<
             {
               id: string;
-              loginExpiryDate: string | null;
+              loginExpiryDate: string;
             }[]
           >`COALESCE(
             JSON_AGG(
@@ -372,9 +372,7 @@ export async function listProfiles(options: {
         const consumerDetails: ConsumerDetail[] = row.consumerDetails.map(
           (consumerDetail) => ({
             id: consumerDetail.id,
-            loginExpiryDate: consumerDetail.loginExpiryDate
-              ? new Date(consumerDetail.loginExpiryDate)
-              : null,
+            loginExpiryDate: new Date(consumerDetail.loginExpiryDate),
           })
         );
 
