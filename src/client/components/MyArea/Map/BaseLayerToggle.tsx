@@ -43,7 +43,7 @@ export const AERIAL_AMSTERDAM_LAYERS: MapLayer[] = [
   },
 ];
 
-export const BaseLayerToggle: React.FC<Props> = ({
+export function BaseLayerToggle({
   onChangeLayer,
   aerialLayers = AERIAL_AMSTERDAM_LAYERS,
   topoLayers = DEFAULT_AMSTERDAM_LAYERS,
@@ -52,7 +52,7 @@ export const BaseLayerToggle: React.FC<Props> = ({
   activeLayer = BaseLayerType.Topo,
   options,
   ...otherProps
-}) => {
+}: Props) {
   const didMount = useRef(false);
   const [toggleBaseLayerType, setToggleBaseLayerType] = useState(activeLayer);
 
@@ -112,4 +112,4 @@ export const BaseLayerToggle: React.FC<Props> = ({
       />
     </div>
   );
-};
+}

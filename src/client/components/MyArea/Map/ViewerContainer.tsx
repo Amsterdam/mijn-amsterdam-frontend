@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 
 import styles from './ViewerContainer.module.scss';
+import type { MapOffset } from '../MyArea';
 
 type Props = {
   topLeft?: React.ReactNode;
@@ -8,10 +9,10 @@ type Props = {
   bottomLeft?: React.ReactNode;
   bottomRight?: React.ReactNode;
   metaData?: Array<string>;
-  mapOffset?: any;
+  mapOffset?: MapOffset;
 };
 
-export const ViewerContainer: React.FC<Props> = ({
+export function ViewerContainer({
   bottomLeft,
   topLeft,
   topRight,
@@ -19,7 +20,7 @@ export const ViewerContainer: React.FC<Props> = ({
   metaData,
   mapOffset,
   ...otherProps
-}) => {
+}: Props) {
   return (
     <div
       {...otherProps}
@@ -48,4 +49,4 @@ export const ViewerContainer: React.FC<Props> = ({
       </div>
     </div>
   );
-};
+}

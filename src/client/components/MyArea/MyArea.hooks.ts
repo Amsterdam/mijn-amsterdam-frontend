@@ -232,19 +232,22 @@ export function useSelectedFeatureCSS(
 export function useOnMarkerClick() {
   const { setLoadingFeature } = useLoadingFeature();
 
-  return useCallback((event: LeafletEvent) => {
-    const isCluster =
-      event?.propagatedFrom?.feature?.properties?.cluster === true;
-    if (!isCluster) {
-      const id = event?.propagatedFrom?.feature?.properties?.id;
-      const datasetId = event?.propagatedFrom?.feature?.properties?.datasetId;
+  return useCallback(
+    (event: LeafletEvent) => {
+      const isCluster =
+        event?.propagatedFrom?.feature?.properties?.cluster === true;
+      if (!isCluster) {
+        const id = event?.propagatedFrom?.feature?.properties?.id;
+        const datasetId = event?.propagatedFrom?.feature?.properties?.datasetId;
 
-      setLoadingFeature({
-        datasetId,
-        id,
-      });
-    }
-  }, []);
+        setLoadingFeature({
+          datasetId,
+          id,
+        });
+      }
+    },
+    [setLoadingFeature]
+  );
 }
 
 type DatasetResponseContent = {

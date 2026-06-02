@@ -84,6 +84,12 @@ function updateViewportHeight() {
   );
 }
 
+export type MapOffset =
+  | {
+      left: string;
+    }
+  | undefined;
+
 export function MyArea({
   datasetIds,
   showPanels = true,
@@ -134,7 +140,7 @@ export function MyArea({
 
   const { detailState, filterState } = useLegendPanelCycle();
 
-  const mapOffset = useMemo(() => {
+  const mapOffset: MapOffset = useMemo(() => {
     if (!showPanels) {
       return { left: '0' };
     }

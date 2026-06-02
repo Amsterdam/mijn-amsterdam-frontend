@@ -6,8 +6,8 @@ import styles from '../MyArea.module.scss';
 
 export interface MaMapProps extends MapProps {
   fullScreen?: boolean;
-  children: any;
-  className?: any;
+  children: React.ReactNode;
+  className?: string;
 }
 
 export function MaMap({
