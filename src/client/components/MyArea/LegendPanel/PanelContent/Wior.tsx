@@ -6,11 +6,9 @@ import { Datalist } from '../../../Datalist/Datalist.tsx';
 
 interface MyArePanelContentWIORProps {
   panelItem: Unshaped;
-  datasetId: string;
 }
 
 export function MyArePanelContentWIOR({
-  datasetId,
   panelItem,
 }: MyArePanelContentWIORProps) {
   const rows: Array<Row | RowSet> = [

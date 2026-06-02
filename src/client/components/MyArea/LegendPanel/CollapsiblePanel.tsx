@@ -81,7 +81,7 @@ export function MyAreaCollapsiblePanel({
         heading={heading}
         onClick={
           hasChildren
-            ? (event) => {
+            ? () => {
                 setCollapsedState(
                   isExpanded(collapsedState)
                     ? CollapsedState.Collapsed

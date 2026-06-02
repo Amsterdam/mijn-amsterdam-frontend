@@ -12,7 +12,6 @@ interface MyArePanelContentBekendmakingProps {
 }
 
 export function MyArePanelContentBekendmaking({
-  datasetId,
   panelItem,
 }: MyArePanelContentBekendmakingProps) {
   const rows: Row[] = [

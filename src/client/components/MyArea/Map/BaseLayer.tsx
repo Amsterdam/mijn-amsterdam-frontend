@@ -10,13 +10,13 @@ type Props = {
 
 export const MAP_SERVER_ROOT = 'https://{s}.data.amsterdam.nl';
 
-export const BaseLayer: React.FC<Props> = ({
+export function BaseLayer({
   baseLayer = `${MAP_SERVER_ROOT}/topo_rd/{z}/{x}/{y}.png`,
   options = {
     subdomains: ['t1', 't2', 't3', 't4'],
     tms: true,
   },
-}) => {
+}: Props) {
   const [baseLayerInstance, setBaseLayerInstance] = useState<TileLayerType>();
 
   useEffect(() => {
@@ -32,4 +32,4 @@ export const BaseLayer: React.FC<Props> = ({
       options={options}
     />
   );
-};
+}

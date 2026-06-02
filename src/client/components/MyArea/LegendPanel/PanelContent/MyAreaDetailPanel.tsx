@@ -2,6 +2,7 @@ import type { DatasetCategoryId } from '../../../../../universal/config/myarea-d
 import { getDatasetCategoryId } from '../../../../../universal/config/myarea-datasets.ts';
 import { ErrorAlert } from '../../../Alert/Alert.tsx';
 import { LoadingContent } from '../../../LoadingContent/LoadingContent.tsx';
+import type { SelectedFeature } from '../../MyArea.hooks.ts';
 import { useLoadingFeature, useSelectedFeature } from '../../MyArea.hooks.ts';
 import styles from '../PanelComponent.module.scss';
 import { MyArePanelContentAfval as MyAreaPanelContentAfval } from './Afval.tsx';
@@ -15,7 +16,7 @@ import { MyArePanelContentWIOR as MyAreaPanelContentWIOR } from './Wior.tsx';
 
 interface MyAreaPanelContentSwitchProps {
   datasetCategoryId: DatasetCategoryId;
-  feature: any;
+  feature: SelectedFeature;
 }
 
 function MyAreaPanelContentSwitch({
@@ -31,12 +32,7 @@ function MyAreaPanelContentSwitch({
         />
       );
     case 'afvalcontainers':
-      return (
-        <MyAreaPanelContentAfval
-          datasetId={feature?.datasetId}
-          panelItem={feature}
-        />
-      );
+      return <MyAreaPanelContentAfval panelItem={feature} />;
     case 'bekendmakingen':
       return (
         <MyAreaPanelContentBekendmaking
@@ -59,12 +55,7 @@ function MyAreaPanelContentSwitch({
         />
       );
     case 'wior':
-      return (
-        <MyAreaPanelContentWIOR
-          datasetId={feature?.datasetId}
-          panelItem={feature}
-        />
-      );
+      return <MyAreaPanelContentWIOR panelItem={feature} />;
     case 'meldingenBuurt':
       return (
         <MyAreaPanelContentMeldingenBuurt

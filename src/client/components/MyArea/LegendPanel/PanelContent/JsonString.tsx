@@ -1,5 +1,7 @@
+import type { JSONValue } from '../../../../../universal/types/App.types';
+
 interface JsonStringProps {
-  data: any;
+  data: JSONValue;
 }
 
 export function JsonString({ data }: JsonStringProps) {

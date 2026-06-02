@@ -21,7 +21,6 @@ function displayCategoryTitle(category: string) {
 }
 
 export function MyArePanelContentMeldingenBuurt({
-  datasetId,
   panelItem,
 }: MyArePanelContentMeldingenBuurtProps) {
   const rows: Row[] = [

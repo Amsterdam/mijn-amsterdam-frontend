@@ -1,6 +1,7 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { GenericBase } from './GenericBase.tsx';
+import type { Unshaped } from '../../../../../universal/types/App.types.ts';
 
 const afvalUrls: Record<string, string> = {
   rest: 'https://www.milieucentraal.nl/minder-afval/afval-scheiden/restafval',
@@ -13,12 +14,10 @@ const afvalUrls: Record<string, string> = {
 };
 
 interface MyArePanelContentAfvalProps {
-  panelItem: Record<string, string>;
-  datasetId: string;
+  panelItem: Unshaped;
 }
 
 export function MyArePanelContentAfval({
-  datasetId,
   panelItem,
 }: MyArePanelContentAfvalProps) {
   const infoUrl =

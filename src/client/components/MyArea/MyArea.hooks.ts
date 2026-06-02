@@ -146,7 +146,7 @@ export const useLoadingFeature = create<LoadingFeatureStore>((set) => ({
   setLoadingFeature: (feature) => set({ loadingFeature: feature }),
 }));
 
-type SelectedFeature = {
+export type SelectedFeature = {
   id: string;
   datasetId: string;
   [string: string]: unknown;

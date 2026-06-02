@@ -10,7 +10,6 @@ interface MyArePanelContentBedrijvenInvesteringsZonesProps {
 }
 
 export function MyArePanelContentBedrijvenInvesteringsZones({
-  datasetId,
   panelItem,
 }: MyArePanelContentBedrijvenInvesteringsZonesProps) {
   const rows: Row[] = [

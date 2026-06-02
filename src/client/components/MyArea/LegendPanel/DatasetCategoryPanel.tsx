@@ -22,7 +22,7 @@ export function DatasetCategoryPanel() {
   const onFilterControlItemChange = useFilterControlItemChange();
   const { activeDatasetIds } = useActiveDatasetIds();
   const datasets = useMemo(() => {
-    return Object.entries(DATASETS).filter(([categoryId, category]) => {
+    return Object.entries(DATASETS).filter(([, category]) => {
       return (
         !Array.isArray(category.profileType) ||
         category.profileType.includes(profileType)
@@ -33,7 +33,7 @@ export function DatasetCategoryPanel() {
   return (
     <CategoryPanel>
       {datasets
-        .filter(([categoryId, category]) => !category.isDisabled)
+        .filter(([, category]) => !category.isDisabled)
         .map(([categoryId, category]) => (
           <PanelListItem
             className={styles.PanelListItem}
