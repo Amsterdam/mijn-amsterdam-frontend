@@ -384,7 +384,6 @@ export const panelConfig: PanelConfig<
         ]
       : [],
   }),
-
   ouders: () => ({
     title: 'Ouders',
     actionLinks: [],
@@ -403,7 +402,6 @@ export const panelConfig: PanelConfig<
       : [],
     contentAfterTheTitle: privacyNoticeForDeathDates,
   }),
-
   adresHistorisch: () => ({
     title: 'Vorige adressen',
     actionLinks: [],
