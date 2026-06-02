@@ -182,16 +182,21 @@ describe('<Profile />', () => {
 
     const button = screen.getByTitle('Toon inhoud over Ouders');
     await userEvent.click(button);
-    expect(screen.getByTestId('privacy-notice')).toBeInTheDocument();
 
     screen.getByText('Hendrik');
     screen.getByText('Marie');
 
     const button2 = screen.getByTitle('Toon inhoud over Kinderen');
     await userEvent.click(button2);
-    expect(screen.getByTestId('privacy-notice')).toBeInTheDocument();
 
     screen.getByText('Dirkje');
+
+    // getAllByRole with 'paragraph' fails, is this element accessible?
+    expect(
+      screen.getAllByText(
+        /Wij mogen een overlijdensdatum van ouders of kinderen niet laten zien/
+      )
+    ).toHaveLength(2);
   });
 
   test('Non-Mokum does not display certain panels', async () => {
