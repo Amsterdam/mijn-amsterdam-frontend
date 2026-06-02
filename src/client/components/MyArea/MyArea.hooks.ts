@@ -462,7 +462,7 @@ export function getQueryConfig(searchEntry: string): QueryConfig {
         let value = undefined;
         try {
           value = v ? JSON.parse(v) : undefined;
-        } catch (error) {
+        } catch {
           captureMessage('Could not parse Queryparams', {
             properties: {
               key: k,
@@ -659,6 +659,7 @@ export function useSetMapCenterAtLocation(
     }
     // Disable because we don't want to re-center the map everytime the zoom level changes.
     // Whenever centerMarker changes, and a new zoom level was provided at the same time, the effect will also take new zoom into account.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customLocationMarker, homeLocationMarker, mapInstance]);
 
   useEffect(() => {

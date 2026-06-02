@@ -136,6 +136,7 @@ export function MyArea({
       return options;
       // Disable hook dependencies, the mapOptions only need to be determined once.
       // Using memo here because we don't need the options to cause re-renders of the <Map/> component.
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
   const { detailState, filterState } = useLegendPanelCycle();
