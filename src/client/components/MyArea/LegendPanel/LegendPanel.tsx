@@ -44,6 +44,8 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
       detailPanelCycle.reset();
       filterPanelCycle.reset();
     };
+    // Reason: detailPanelCycle and filterPanelCycle both get mutated and will cause recursion.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Set panel state without explicit panel interaction. Effect reacts to loading detailed features.
