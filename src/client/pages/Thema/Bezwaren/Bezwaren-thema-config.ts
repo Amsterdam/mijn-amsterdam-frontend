@@ -66,15 +66,9 @@ export const themaConfig: ThemaConfigBezwaren = {
 } as const;
 
 const displayPropsBezwaren: DisplayProps<BezwaarFrontend> = {
-  props: {
-    detailLinkComponent: 'Zaaknummer',
-    ontvangstdatumFormatted: 'Ontvangen op',
-    omschrijving: 'Onderwerp',
-  },
-  colWidths: {
-    large: ['25%', '25%', '50%'],
-    small: ['50%', '0', '0'],
-  },
+  detailLinkComponent: 'Zaaknummer',
+  ontvangstdatumFormatted: 'Ontvangen op',
+  omschrijving: 'Onderwerp',
 };
 
 export const listPageParamKind = {
