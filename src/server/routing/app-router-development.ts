@@ -234,7 +234,9 @@ function formatForTable(accountData: TestUserData): [TableHeaders, TableRows] {
 
   const missingKeys: string[] = [];
 
-  if (accountData.accounts.length <= 0) return [tableHeaders, []];
+  if (accountData.accounts.length <= 0) {
+    return [tableHeaders, []];
+  }
   Object.keys(accountData.accounts[0]).forEach((key) => {
     if (
       !accountData.tableHeaders.some((th) => {
