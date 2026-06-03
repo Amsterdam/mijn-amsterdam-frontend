@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import MockApp from '../MockApp.tsx';
+import { MockApp } from '../MockApp.tsx';
 import { MyNotificationsRoute } from './MyNotifications-routes.ts';
 import { MyNotificationsPage } from './MyNotifications.tsx';
 import type { AppState } from '../../../universal/types/App.types.ts';

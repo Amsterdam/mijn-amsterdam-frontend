@@ -7,7 +7,7 @@ import {
   MissingDocumentMailto,
   type MissingDocumentMailtoConfig,
 } from '../../../../components/DocumentList/MissingDocumentMailto/MissingDocumentMailto.tsx';
-import LoadingContent from '../../../../components/LoadingContent/LoadingContent.tsx';
+import { LoadingContent } from '../../../../components/LoadingContent/LoadingContent.tsx';
 
 type GenericVergunning = { identifier: string };
 

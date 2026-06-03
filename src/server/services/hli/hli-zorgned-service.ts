@@ -9,11 +9,9 @@ import {
 import type {
   ZorgnedAanvraagTransformed,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
-  ZorgnedPersoonsgegevensNAWResponse} from '../zorgned/zorgned-types.ts';
-import {
-  ZORGNED_GEMEENTE_CODE,
-  type BSN,
+  ZorgnedPersoonsgegevensNAWResponse,
 } from '../zorgned/zorgned-types.ts';
+import { ZORGNED_GEMEENTE_CODE, type BSN } from '../zorgned/zorgned-types.ts';
 
 function transformToAdministratienummer(identificatie: number): string {
   const padLength = 10;

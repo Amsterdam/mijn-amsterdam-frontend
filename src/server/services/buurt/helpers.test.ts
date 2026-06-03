@@ -6,10 +6,9 @@ import type {
   DatasetResponse,
   MaFeature,
   MaPointFeature,
-  MaPolylineFeature} from './datasets.ts';
-import {
-  datasetEndpoints,
+  MaPolylineFeature,
 } from './datasets.ts';
+import { datasetEndpoints } from './datasets.ts';
 import { forTesting as datasetsForTesting } from './datasets.ts';
 import {
   getDsoApiEmbeddedResponse,

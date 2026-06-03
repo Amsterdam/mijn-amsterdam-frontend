@@ -4,8 +4,8 @@ import { themaConfig } from './Bodem-thema-config.ts';
 import { useBodemData } from './useBodemData.hook.tsx';
 import type { LoodMetingFrontend } from '../../../../server/services/bodem/types.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
-import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
+import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function BodemThema() {

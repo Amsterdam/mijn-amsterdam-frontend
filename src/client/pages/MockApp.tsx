@@ -1,4 +1,4 @@
-import type { ComponentType} from 'react';
+import type { ComponentType } from 'react';
 import { useEffect } from 'react';
 
 import { MemoryRouter, Route, Routes } from 'react-router';
@@ -13,7 +13,7 @@ interface MockAppProps {
   component: ComponentType;
 }
 
-export default function MockApp({
+export function MockApp({
   routePath = '/',
   routeEntry = '/',
   state,

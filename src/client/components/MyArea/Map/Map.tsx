@@ -6,11 +6,11 @@ import styles from '../MyArea.module.scss';
 
 export interface MaMapProps extends MapProps {
   fullScreen?: boolean;
-  children: any;
-  className?: any;
+  children: React.ReactNode;
+  className?: string;
 }
 
-export default function MaMap({
+export function MaMap({
   children,
   options,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

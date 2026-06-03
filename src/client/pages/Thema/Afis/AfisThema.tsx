@@ -14,7 +14,7 @@ import { useAfisThemaData } from './useAfisThemaData.hook.tsx';
 import { entries } from '../../../../universal/helpers/utils.ts';
 import { MaButtonRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
-import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 function PageContentTop({

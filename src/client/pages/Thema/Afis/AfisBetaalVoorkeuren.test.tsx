@@ -6,7 +6,7 @@ import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren.tsx';
 import type { AfisBusinessPartnerDetailsTransformed } from '../../../../server/services/afis/afis-types.ts';
 import { bffApi } from '../../../../testing/utils.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 
 const businessPartnerIdEncrypted = 'xxx-123-xxx';
 

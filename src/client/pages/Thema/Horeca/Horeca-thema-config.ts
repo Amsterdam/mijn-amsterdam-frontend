@@ -8,8 +8,7 @@ import type {
   WithDetailPage,
   WithListPage,
 } from '../../../config/thema-types.ts';
-import type {
-  ListPageParamKind as ListPageParamKindVergunningen} from '../Vergunningen/Vergunningen-thema-config.ts';
+import type { ListPageParamKind as ListPageParamKindVergunningen } from '../Vergunningen/Vergunningen-thema-config.ts';
 import {
   listPageParamKind as listPageParamKindVergunningen,
   tableConfig as tableConfigVergunningen,

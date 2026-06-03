@@ -6,7 +6,7 @@ interface UrlProps {
   urlTitle?: string;
 }
 
-export default function Url({ url, urlTitle }: UrlProps) {
+export function Url({ url, urlTitle }: UrlProps) {
   const theUrl =
     url.startsWith('www.') ||
     (!url.startsWith('http') && !url.startsWith('mailto'))

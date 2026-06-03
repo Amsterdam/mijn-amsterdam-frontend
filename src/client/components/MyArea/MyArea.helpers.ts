@@ -31,7 +31,7 @@ export function pointsCircle(count: number, centerPt: L.Point) {
   return points;
 }
 
-export function pointsSpiral(count: number, centerPt: L.Point) {
+export function pointsSpiral(centerPt: L.Point) {
   const points = [];
   let angle = 0;
   let i = 0;
@@ -87,7 +87,7 @@ export function processFeatures(map: L.Map, features: MaSuperClusterFeature[]) {
       const MIN_FEATURE_COUNT_FOR_SPIRAL = 11;
       const pts =
         featureCount > MIN_FEATURE_COUNT_FOR_SPIRAL
-          ? pointsSpiral(featureCount, centerPoint)
+          ? pointsSpiral(centerPoint)
           : pointsCircle(featureCount, centerPoint);
 
       const modifiedMarkers = pts

@@ -18,11 +18,11 @@ import {
 } from '../../../../server/services/afis/afis-types.ts';
 import { entries } from '../../../../universal/helpers/utils.ts';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
-import LoadingContent from '../../../components/LoadingContent/LoadingContent.tsx';
+import { LoadingContent } from '../../../components/LoadingContent/LoadingContent.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
-import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
+import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 type AfisBusinessPartnerProps = {

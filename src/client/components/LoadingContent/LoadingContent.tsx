@@ -24,7 +24,7 @@ const defaultBarConfig: BarConfig = [
   ['40%', '2rem', '0'],
 ];
 
-export default function LoadingContent({
+export function LoadingContent({
   barConfig = defaultBarConfig,
   inline = false,
   className,

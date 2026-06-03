@@ -5,7 +5,7 @@ import { describe, expect, vi } from 'vitest';
 import { ZAAK_STATUS_ROUTE } from './ZaakStatus-config.ts';
 import { forTesting, ZaakStatus } from './ZaakStatus.tsx';
 import type { AppState } from '../../../universal/types/App.types.ts';
-import MockApp from '../MockApp.tsx';
+import { MockApp } from '../MockApp.tsx';
 import { themaConfig as themaVergunningen } from '../Thema/Vergunningen/Vergunningen-thema-config.ts';
 
 const mocks = vi.hoisted(() => {

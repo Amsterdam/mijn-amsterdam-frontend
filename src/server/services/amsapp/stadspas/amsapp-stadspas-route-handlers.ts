@@ -11,7 +11,10 @@ import { getAuth } from '../../../auth/auth-helpers.ts';
 import type { AuthProfileAndToken } from '../../../auth/auth-types.ts';
 import { encrypt, decrypt } from '../../../helpers/encrypt-decrypt.ts';
 import { requestData } from '../../../helpers/source-api-request.ts';
-import { sendResponse, sendBadRequest } from '../../../routing/route-helpers.ts';
+import {
+  sendResponse,
+  sendBadRequest,
+} from '../../../routing/route-helpers.ts';
 import { fetchAdministratienummer } from '../../hli/hli-zorgned-service.ts';
 import { fetchStadspassenByAdministratienummer } from '../../hli/stadspas-gpass-service.ts';
 import type {

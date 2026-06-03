@@ -1,11 +1,9 @@
 import type {
   MouseEvent as ReactMouseEvent,
   PropsWithChildren,
-  ReactNode} from 'react';
-import {
-  Children,
-  useState,
+  ReactNode,
 } from 'react';
+import { Children, useState } from 'react';
 
 import { Button } from '@amsterdam/design-system-react';
 import {
@@ -68,7 +66,7 @@ type MyAreaCollapsiblePanelProps = PropsWithChildren<{
   initialState?: CollapsedState;
 }>;
 
-export default function MyAreaCollapsiblePanel({
+export function MyAreaCollapsiblePanel({
   children,
   title,
   heading,
@@ -83,7 +81,7 @@ export default function MyAreaCollapsiblePanel({
         heading={heading}
         onClick={
           hasChildren
-            ? (event) => {
+            ? () => {
                 setCollapsedState(
                   isExpanded(collapsedState)
                     ? CollapsedState.Collapsed

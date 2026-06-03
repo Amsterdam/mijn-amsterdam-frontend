@@ -1,6 +1,4 @@
-import {
-  tableConfig, themaConfig,
-} from './Parkeren-thema-config.ts';
+import { tableConfig, themaConfig } from './Parkeren-thema-config.ts';
 import type { DecosParkeerVergunning } from '../../../../server/services/parkeren/config-and-types.ts';
 import type { DecosZaakFrontend } from '../../../../server/services/vergunningen/config-and-types.ts';
 import { isError, isLoading } from '../../../../universal/helpers/api.ts';

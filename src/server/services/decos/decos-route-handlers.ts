@@ -8,17 +8,15 @@ import {
   ZAAK_SUB_TYPE,
 } from './decos-service.ts';
 import type { DecosZaakBase } from './decos-types.ts';
-import type {
-  TestUserData} from '../../../universal/config/auth.development.ts';
+import type { TestUserData } from '../../../universal/config/auth.development.ts';
 import {
   testAccountDataDigid as testAccountDataDigid,
-  testAccountDataEherkenning as testAccountDataEherkenning
+  testAccountDataEherkenning as testAccountDataEherkenning,
 } from '../../../universal/config/auth.development.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import type {
-  RequestWithQueryParams} from '../../routing/route-helpers.ts';
+import type { RequestWithQueryParams } from '../../routing/route-helpers.ts';
 import {
   sendBadRequest,
   sendResponse,

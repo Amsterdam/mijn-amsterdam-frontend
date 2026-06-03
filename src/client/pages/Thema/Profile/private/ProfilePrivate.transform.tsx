@@ -14,7 +14,7 @@ import {
 } from '../../../../../universal/helpers/brp.ts';
 import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
-import LoadingContent from '../../../../components/LoadingContent/LoadingContent.tsx';
+import { LoadingContent } from '../../../../components/LoadingContent/LoadingContent.tsx';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import {
   BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN,

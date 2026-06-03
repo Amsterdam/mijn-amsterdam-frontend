@@ -1,7 +1,11 @@
 import { describe, it, expect, vi } from 'vitest';
 import type { Mock } from 'vitest';
 
-import { AANTAL_INGESCHREVEN_PERSONEN_NOT_SET, ADRES_IN_ONDERZOEK_A, ADRES_IN_ONDERZOEK_B } from './brp-config.ts';
+import {
+  AANTAL_INGESCHREVEN_PERSONEN_NOT_SET,
+  ADRES_IN_ONDERZOEK_A,
+  ADRES_IN_ONDERZOEK_B,
+} from './brp-config.ts';
 import {
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,

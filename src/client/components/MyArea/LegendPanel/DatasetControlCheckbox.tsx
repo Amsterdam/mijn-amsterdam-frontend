@@ -3,7 +3,7 @@ import type { FormEvent, ReactNode } from 'react';
 import classnames from 'classnames';
 
 import styles from './PanelComponent.module.scss';
-import Checkbox from '../../Checkbox/Checkbox.tsx';
+import { Checkbox } from '../../Checkbox/Checkbox.tsx';
 
 interface DatasetControlCheckboxProps {
   id: string;

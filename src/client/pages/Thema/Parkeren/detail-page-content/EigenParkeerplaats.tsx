@@ -2,7 +2,10 @@ import { Link } from '@amsterdam/design-system-react';
 
 import type { EigenParkeerplaats } from '../../../../../server/services/parkeren/config-and-types.ts';
 import type { DecosZaakFrontend } from '../../../../../server/services/vergunningen/config-and-types.ts';
-import { Datalist, type Row } from '../../../../components/Datalist/Datalist.tsx';
+import {
+  Datalist,
+  type Row,
+} from '../../../../components/Datalist/Datalist.tsx';
 import { AddressDisplayAndModal } from '../../../../components/LocationModal/LocationModal.tsx';
 import {
   commonTransformers,

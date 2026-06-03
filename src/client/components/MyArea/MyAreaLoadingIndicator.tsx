@@ -7,9 +7,7 @@ interface MyAreaLoadingIndicatorProps {
   label: string;
 }
 
-export default function MyAreaLoadingIndicator({
-  label,
-}: MyAreaLoadingIndicatorProps) {
+export function MyAreaLoadingIndicator({ label }: MyAreaLoadingIndicatorProps) {
   const profileType = useProfileTypeValue();
   return (
     <div className={styles.MyAreaLoader}>

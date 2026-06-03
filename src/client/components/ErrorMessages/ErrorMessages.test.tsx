@@ -4,7 +4,7 @@ import { describe, it, expect } from 'vitest';
 
 import { ErrorMessages } from './ErrorMessages.tsx';
 import type { AppState } from '../../../universal/types/App.types.ts';
-import MockApp from '../../pages/MockApp.tsx';
+import { MockApp } from '../../pages/MockApp.tsx';
 
 describe('<ErrorMessages />', () => {
   function Component() {

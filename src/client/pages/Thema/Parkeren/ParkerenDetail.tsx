@@ -10,7 +10,7 @@ import type { DecosParkeerVergunning } from '../../../../server/services/parkere
 import type { DecosZaakFrontend } from '../../../../server/services/vergunningen/config-and-types.ts';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { ThemaDetailPagina } from '../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { VergunningDetailDocumentsList } from '../Vergunningen/detail-page-content/VergunningDetailDocumentsList.tsx';
 import { useVergunningenDetailData } from '../Vergunningen/useVergunningenDetailData.hook.ts';

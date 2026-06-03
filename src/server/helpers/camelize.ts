@@ -49,7 +49,7 @@ function walk(obj: any, shallow = false): any {
   }, {} as any);
 }
 
-export default function camelize<T, S extends boolean = false>(
+export function camelize<T, S extends boolean = false>(
   /**
    * Value to be camelized
    */
