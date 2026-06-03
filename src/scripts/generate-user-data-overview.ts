@@ -379,7 +379,7 @@ function unpackZaken(
 }
 
 async function getServiceResults(): Promise<ResultsByUser> {
-  if (fs.existsSync(CACHE_PATH) && FROM_DISK) {
+  if (!args['refresh-cache'] && fs.existsSync(CACHE_PATH) && FROM_DISK) {
     const data = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8').toString());
     return data;
   }
