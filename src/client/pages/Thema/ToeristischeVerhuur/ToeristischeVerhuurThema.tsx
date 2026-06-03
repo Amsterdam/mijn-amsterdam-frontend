@@ -11,7 +11,7 @@ import type {
 import { entries } from '../../../../universal/helpers/utils.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import ThemaPaginaZaken from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function ToeristischeVerhuurThema() {
@@ -80,7 +80,7 @@ export function ToeristischeVerhuurThema() {
       { title, displayProps, filter, sort, maxItems, listPageRoute },
     ]) => {
       return (
-        <ThemaPaginaTable<ToeristischeVerhuurVergunning>
+        <ThemaPaginaZaken<ToeristischeVerhuurVergunning>
           key={kind}
           title={title}
           zaken={vergunningen.filter(filter).sort(sort)}
@@ -93,7 +93,7 @@ export function ToeristischeVerhuurThema() {
   );
 
   const registratieTable = (
-    <ThemaPaginaTable<LVVRegistratie>
+    <ThemaPaginaZaken<LVVRegistratie>
       key="lvv-registraties"
       title={tableConfigLVVRegistraties.title}
       zaken={lvvRegistraties}

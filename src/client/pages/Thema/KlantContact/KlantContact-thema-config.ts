@@ -80,7 +80,7 @@ const contactmomentenDisplayProps: DisplayProps<ContactmomentProps> = {
     datePublishedFormatted: 'Datum',
     referenceNumber: 'Referentienummer',
   },
-  colWidths: {
+  config: {
     large: ['25%', '40%', '20%', '15%'],
     small: ['30%', '50%', '20%', '0'],
   },

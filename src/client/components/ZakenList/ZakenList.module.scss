@@ -1,0 +1,21 @@
+.IconFW {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.ListView {
+}
+.ListViewProp {
+  display: block;
+}
+.ListViewArticle {
+  padding-right: var(--ams-space-l);
+  padding-bottom: var(--ams-space-m);
+  margin-block-end: var(--ams-space-s);
+  position: relative;
+  --ams-heading-color: var(--ams-link-color);
+  // --ams-paragraph-color: var(--ams-link-color);
+  border-block-end: var(--ams-table-cell-border-block-end);
+}

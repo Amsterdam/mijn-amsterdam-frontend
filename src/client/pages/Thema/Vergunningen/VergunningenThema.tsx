@@ -5,7 +5,7 @@ import { type ZaakFrontendCombined } from '../../../../server/services/vergunnin
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import ThemaPaginaZaken from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { themaConfig } from '../Parkeren/Parkeren-thema-config.ts';
 
@@ -46,7 +46,7 @@ export function VergunningenThema() {
       { title, displayProps, filter, sort, listPageRoute, maxItems },
     ]) => {
       return (
-        <ThemaPaginaTable<ZaakFrontendCombined>
+        <ThemaPaginaZaken<ZaakFrontendCombined>
           key={kind}
           title={title}
           zaken={vergunningen.filter(filter).sort(sort)}

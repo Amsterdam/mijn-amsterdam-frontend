@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router';
 
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app.ts';
+import { MAX_ZAKEN_ON_THEMA_PAGINA } from '../../config/app.ts';
 import { MaRouterLink } from '../MaLink/MaLink.tsx';
 
 interface LinkToListPageProps {
@@ -16,7 +16,7 @@ interface LinkToListPageProps {
 export function LinkToListPage({
   label = 'Toon meer',
   linkTitle,
-  threshold = MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+  threshold = MAX_ZAKEN_ON_THEMA_PAGINA,
   count,
   route,
   params,

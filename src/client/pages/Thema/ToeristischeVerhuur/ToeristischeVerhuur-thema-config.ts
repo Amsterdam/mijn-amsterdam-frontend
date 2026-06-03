@@ -95,7 +95,7 @@ const DISPLAY_PROPS_HUIDIGE_VERGUNNINGEN: DisplayProps<ToeristischeVerhuurVergun
       dateStartFormatted: 'Vanaf',
       dateEndFormatted: 'Tot',
     },
-    colWidths: {
+    config: {
       large: ['30%', '40%', '15%', '15%'],
       small: ['100%', '0', '0', '0'],
     },

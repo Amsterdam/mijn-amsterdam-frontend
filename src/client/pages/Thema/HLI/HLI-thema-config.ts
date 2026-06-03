@@ -6,7 +6,7 @@ import type { HLIRegelingFrontend } from '../../../../server/services/hli/hli-re
 import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { dateSort } from '../../../../universal/helpers/date.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
+import { MAX_ZAKEN_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import { propagateFeatureToggles } from '../../../config/feature-toggles.ts';
 import type {
   PageConfig,
@@ -119,14 +119,14 @@ export const kindTegoedPageLinkItem = {
   to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
 } as const;
 
-const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_ZAKEN_ON_THEMA_PAGINA;
 
 const displayPropsHuidigeRegelingen: DisplayProps<HLIRegelingFrontend> = {
   props: {
     detailLinkComponent: 'Regeling',
     betrokkenen: 'Ontvangers',
   },
-  colWidths: {
+  config: {
     large: ['80%', '20%'],
     small: ['100%', '0'],
   },
@@ -138,7 +138,7 @@ const displayPropsEerdereRegelingen: DisplayProps<HLIRegelingFrontend> = {
     displayStatus: 'Status',
     betrokkenen: 'Ontvangers',
   },
-  colWidths: {
+  config: {
     large: ['80%', '20%'],
     small: ['100%', '0'],
   },
@@ -179,7 +179,7 @@ export const tableConfig = {
       regeling.displayStatus.startsWith('In behandeling'),
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    maxItems: MAX_ZAKEN_ON_THEMA_PAGINA,
     listPageRoute: generatePath(themaConfig.regelingenListPage.route.path, {
       kind: listPageParamKind.lopend,
       page: null,
@@ -191,7 +191,7 @@ export const tableConfig = {
       regeling.isActual && !regeling.displayStatus.startsWith('In behandeling'),
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    maxItems: MAX_ZAKEN_ON_THEMA_PAGINA,
     listPageRoute: generatePath(themaConfig.regelingenListPage.route.path, {
       kind: listPageParamKind.actual,
       page: null,

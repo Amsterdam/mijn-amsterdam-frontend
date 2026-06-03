@@ -6,7 +6,7 @@ import type { WMOVoorzieningFrontend } from '../../../../server/services/jzd/wmo
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import ThemaPaginaZaken from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export const WMO_HELPDESK_PHONENUMBER = '0800 0643' as const;
@@ -63,7 +63,7 @@ export function ZorgThema() {
       { title, displayProps, textNoContent, filter, maxItems, listPageRoute },
     ]) => {
       return (
-        <ThemaPaginaTable<WMOVoorzieningFrontend>
+        <ThemaPaginaZaken<WMOVoorzieningFrontend>
           key={kind}
           title={title}
           zaken={voorzieningen.filter(filter)}

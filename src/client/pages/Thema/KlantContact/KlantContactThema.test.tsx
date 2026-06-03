@@ -8,7 +8,7 @@ import type {
   AfspraakFrontend,
 } from '../../../../server/services/klantcontact/klantcontact.types.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
+import { MAX_ZAKEN_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import { componentCreator } from '../../MockApp.tsx';
 
 const createMijnContactThemaComponent = componentCreator({
@@ -120,7 +120,7 @@ test('Shows afspraken and empty contactmomenten', async () => {
     },
   };
   const state = getState({
-    afspraken: new Array(MAX_TABLE_ROWS_ON_THEMA_PAGINA + 1)
+    afspraken: new Array(MAX_ZAKEN_ON_THEMA_PAGINA + 1)
       .fill(afspraak)
       .map((a, i) => ({ ...a, caseReference: i })),
   });
@@ -134,7 +134,7 @@ test('Shows afspraken and empty contactmomenten', async () => {
   expect(screen.queryByText(noAppointmentsText)).not.toBeInTheDocument();
 
   expect(screen.getAllByText(afspraakTitle)).toHaveLength(
-    MAX_TABLE_ROWS_ON_THEMA_PAGINA
+    MAX_ZAKEN_ON_THEMA_PAGINA
   );
   screen.getByRole('link', { name: 'Toon meer' });
 });

@@ -5,7 +5,7 @@ import { useBodemData } from './useBodemData.hook.tsx';
 import type { LoodMetingFrontend } from '../../../../server/services/bodem/types.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import ThemaPaginaZaken from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function BodemThema() {
@@ -19,7 +19,7 @@ export function BodemThema() {
       { title, displayProps, filter, sort, listPageRoute, maxItems },
     ]) => {
       return (
-        <ThemaPaginaTable<LoodMetingFrontend>
+        <ThemaPaginaZaken<LoodMetingFrontend>
           key={kind}
           title={title}
           zaken={items.filter(filter).sort(sort)}

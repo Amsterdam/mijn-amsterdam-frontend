@@ -22,7 +22,7 @@ import LoadingContent from '../../../components/LoadingContent/LoadingContent.ts
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import ThemaPaginaZaken from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 type AfisBusinessPartnerProps = {
@@ -127,7 +127,7 @@ export function AfisBetaalVoorkeuren() {
     isLoadingEMandates;
 
   const eMandatesTable = themaConfig.featureToggle.emandates.active && (
-    <ThemaPaginaTable<AfisEMandateFrontend>
+    <ThemaPaginaZaken<AfisEMandateFrontend>
       displayProps={eMandateTableConfig.displayProps}
       maxItems={-1}
       title={eMandateTableConfig.title}

@@ -6,8 +6,8 @@ import type {
 } from '../../../../server/services/wpi/wpi-types.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import {
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
+  MAX_ZAKEN_ON_THEMA_PAGINA,
+  MAX_ZAKEN_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app.ts';
 import type {
   PageConfig,
@@ -144,7 +144,7 @@ const lopendeAanvragenDisplayProps: DisplayProps<WpiRequestProcess> = {
     dateStartFormatted: 'Datum aanvraag',
     displayStatus: 'Status',
   },
-  colWidths: {
+  config: {
     large: ['50%', '25%', '25%'],
     small: ['100%', '0', '0'],
   },
@@ -156,7 +156,7 @@ const afgehandeldeAanvragenDisplayProps: DisplayProps<WpiRequestProcess> = {
     dateStartFormatted: 'Datum aanvraag',
     dateEndFormatted: 'Datum besluit',
   },
-  colWidths: {
+  config: {
     large: ['50%', '25%', '25%'],
     small: ['100%', '0', '0'],
   },
@@ -170,7 +170,7 @@ const specificatiesTableDisplayProps: DisplayProps<
     datePublishedFormatted: 'Datum',
     documentUrl: 'Document',
   },
-  colWidths: {
+  config: {
     large: ['50%', '25%', '25%'],
     small: ['0', '75%', '25%'],
   },
@@ -184,7 +184,7 @@ const jaaropgavenTableDisplayProps: DisplayProps<
     datePublishedFormatted: 'Datum',
     documentUrl: 'Document',
   },
-  colWidths: {
+  config: {
     large: ['50%', '25%', '25%'],
     small: ['75%', '0', '25%'],
   },
@@ -199,7 +199,7 @@ export const tableConfig = {
       );
     },
     displayProps: lopendeAanvragenDisplayProps,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
+    maxItems: MAX_ZAKEN_ON_THEMA_PAGINA_LOPEND,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.lopend,
       page: null,
@@ -213,7 +213,7 @@ export const tableConfig = {
       );
     },
     displayProps: afgehandeldeAanvragenDisplayProps,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    maxItems: MAX_ZAKEN_ON_THEMA_PAGINA,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.eerder,
       page: null,
@@ -225,7 +225,7 @@ export const tableConfigSpecificaties = {
   [listPageParamKind.uitkering]: {
     title: 'Uitkeringsspecificaties',
     displayProps: specificatiesTableDisplayProps,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    maxItems: MAX_ZAKEN_ON_THEMA_PAGINA,
     listPageRoute: generatePath(themaConfig.listPageSpecificaties.route.path, {
       kind: listPageParamKind.uitkering,
       page: null,
@@ -234,7 +234,7 @@ export const tableConfigSpecificaties = {
   [listPageParamKind.jaaropgaven]: {
     title: 'Jaaropgaven',
     displayProps: jaaropgavenTableDisplayProps,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    maxItems: MAX_ZAKEN_ON_THEMA_PAGINA,
     listPageRoute: generatePath(themaConfig.listPageSpecificaties.route.path, {
       kind: listPageParamKind.jaaropgaven,
       page: null,

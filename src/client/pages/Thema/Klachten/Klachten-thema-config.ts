@@ -4,8 +4,8 @@ import type { KlachtFrontend } from '../../../../server/services/klachten/types.
 import { dateSort } from '../../../../universal/helpers/date.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import {
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
+  MAX_ZAKEN_ON_THEMA_PAGINA,
+  MAX_ZAKEN_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app.ts';
 import type {
   ThemaConfigBase,
@@ -88,7 +88,7 @@ const displayProps: DisplayProps<KlachtFrontend> = {
     ontvangstDatumFormatted: 'Ontvangen op',
     onderwerp: 'Onderwerp',
   },
-  colWidths: {
+  config: {
     large: ['25%', '25%', '50%'],
     small: ['50%', '50%', '0'],
   },
@@ -98,7 +98,7 @@ export const tableConfig = {
   [listPageParamKind.lopend]: {
     title: 'Openstaande klachten',
     displayProps,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
+    maxItems: MAX_ZAKEN_ON_THEMA_PAGINA_LOPEND,
     listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.lopend,
       page: null,
@@ -109,7 +109,7 @@ export const tableConfig = {
   [listPageParamKind.eerder]: {
     title: 'Afgehandelde klachten',
     displayProps,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    maxItems: MAX_ZAKEN_ON_THEMA_PAGINA,
     listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.eerder,
       page: null,

@@ -16,7 +16,7 @@ import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import ThemaPaginaZaken from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function HistoricItemsMention() {
@@ -66,7 +66,7 @@ function Stadspassen({
 
   return (
     <PageContentCell>
-      <ThemaPaginaTable<StadspasDisplayProps>
+      <ThemaPaginaZaken<StadspasDisplayProps>
         displayProps={stadspasDisplayProps}
         zaken={passen}
         className={styles.Stadspassen}
@@ -122,7 +122,7 @@ export function HLIThema() {
             { title, displayProps, filter, sort, maxItems, listPageRoute },
           ]) => {
             return (
-              <ThemaPaginaTable<HLIRegelingFrontend>
+              <ThemaPaginaZaken<HLIRegelingFrontend>
                 key={kind}
                 title={title}
                 zaken={regelingen.filter(filter).sort(sort)}
@@ -152,7 +152,7 @@ export function HLIThema() {
               />
             )}
             {!!specificaties.length && (
-              <ThemaPaginaTable<HLIRegelingSpecificatieFrontend>
+              <ThemaPaginaZaken<HLIRegelingSpecificatieFrontend>
                 title={specificatieTableConfig.title}
                 displayProps={specificatieTableConfig.displayProps}
                 zaken={specificaties.sort(specificatieTableConfig.sort)}

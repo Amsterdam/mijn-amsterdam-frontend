@@ -4,7 +4,7 @@ import { useKlachtenThemaData } from './useKlachtenThemaData.hook.ts';
 import type { KlachtFrontend } from '../../../../server/services/klachten/types.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import ThemaPaginaZaken from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 const pageContentTop = (
@@ -31,7 +31,7 @@ export function KlachtenThema() {
 
   const tables = Object.values(tableConfig).map((conf) => {
     return (
-      <ThemaPaginaTable<KlachtFrontend>
+      <ThemaPaginaZaken<KlachtFrontend>
         key={conf.title}
         title={conf.title}
         listPageRoute={conf.listPageRoute}

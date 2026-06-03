@@ -7,7 +7,7 @@ import { MaButtonLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
-import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable.tsx';
+import ThemaPaginaZaken from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { useProfileTypeValue } from '../../../hooks/useProfileType.ts';
 
@@ -73,7 +73,7 @@ export function ParkerenThema() {
       { title, displayProps, filter, sort, listPageRoute, maxItems },
     ]) => {
       return (
-        <ThemaPaginaTable<DecosZaakFrontend>
+        <ThemaPaginaZaken<DecosZaakFrontend>
           key={kind}
           title={title}
           zaken={vergunningen.filter(filter).sort(sort)}

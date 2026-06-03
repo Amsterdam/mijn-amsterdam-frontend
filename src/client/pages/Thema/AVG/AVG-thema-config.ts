@@ -5,8 +5,8 @@ import { dateSort } from '../../../../universal/helpers/date.ts';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text.ts';
 import { type DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import {
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
+  MAX_ZAKEN_ON_THEMA_PAGINA,
+  MAX_ZAKEN_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app.ts';
 import type {
   ThemaConfigBase,
@@ -78,7 +78,7 @@ const displayPropsAanvragen: DisplayProps<AVGRequestFrontend> = {
     ontvangstDatumFormatted: 'Ontvangen op',
     themas: 'Onderwerp(en)',
   },
-  colWidths: {
+  config: {
     large: ['15%', '35%', '50%'],
     small: ['20%', '80%', '0'],
   },
@@ -96,7 +96,7 @@ export const tableConfig = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
     filter: (avgVerzoek: AVGRequestFrontend) => !avgVerzoek.datumAfhandeling,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
+    maxItems: MAX_ZAKEN_ON_THEMA_PAGINA_LOPEND,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.inProgress,
       page: null,
@@ -106,7 +106,7 @@ export const tableConfig = {
   [listPageParamKind.completed]: {
     title: 'Afgehandelde aanvragen',
     filter: (avgVerzoek: AVGRequestFrontend) => avgVerzoek.datumAfhandeling,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    maxItems: MAX_ZAKEN_ON_THEMA_PAGINA,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.completed,
       page: null,

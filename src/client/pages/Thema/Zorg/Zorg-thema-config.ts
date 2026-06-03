@@ -2,7 +2,7 @@ import { generatePath } from 'react-router';
 
 import type { WMOVoorzieningFrontend } from '../../../../server/services/jzd/wmo/wmo-types.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
+import { MAX_ZAKEN_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import type {
   ThemaConfigBase,
   WithDetailPage,
@@ -10,7 +10,7 @@ import type {
 } from '../../../config/thema-types.ts';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
-const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_ZAKEN_ON_THEMA_PAGINA;
 
 type ZorgThemaConfig = ThemaConfigBase & WithListPage & WithDetailPage;
 
@@ -74,7 +74,7 @@ const displayProps: DisplayProps<WMOVoorzieningFrontend> = {
     displayStatus: 'Status',
     statusDateFormatted: 'Datum',
   },
-  colWidths: {
+  config: {
     large: ['50%', '25%', '25%'],
     small: ['100%', '0', '0'],
   },

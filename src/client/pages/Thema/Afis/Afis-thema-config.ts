@@ -12,7 +12,7 @@ import type {
   EmandateStatusCode,
 } from '../../../../server/services/afis/afis-types.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
+import { MAX_ZAKEN_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import {
   isEnabled,
   propagateFeatureToggles,
@@ -101,9 +101,8 @@ export const titleEMandaatPage = 'E-Mandaat';
 
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN = 5;
-const MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED =
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA;
-const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED = MAX_ZAKEN_ON_THEMA_PAGINA;
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_ZAKEN_ON_THEMA_PAGINA;
 
 const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
   props: {
@@ -112,9 +111,9 @@ const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
     paymentDueDateFormatted: 'Vervaldatum',
     statusDescription: 'Status',
   },
-  colWidths: {
+  config: {
     large: ['15%', '25%', '25%', '35%'],
-    small: ['25%', '0', '0', '75%'],
+    small: [true, true, false, false],
   },
 };
 
@@ -125,9 +124,9 @@ const displayPropsFacturenAfgehandeldOfOvergedragen: DisplayProps<AfisFactuurFro
       afzender: 'Afzender',
       statusDescription: 'Status',
     },
-    colWidths: {
+    config: {
       large: ['25%', '25%', '50%'],
-      small: ['100%', '0', '0'],
+      small: [true, true, false],
     },
   };
 
@@ -139,7 +138,7 @@ export const displayPropsTermijnenTable: DisplayProps<AfisFactuurTermijn> = {
     paymentStatus: 'Status',
     statusDescription: 'Termijn',
   },
-  colWidths: {
+  config: {
     large: ['10%', '25%', '20%', '45%', '0'],
     small: ['0', '0', '0', '0', '100%'],
   },
@@ -279,7 +278,7 @@ export const eMandateHistoryDisplayProps: DisplayProps<
     senderName: 'Naam rekeninghouder',
     senderIBAN: 'Rekeningnummer',
   },
-  colWidths: {
+  config: {
     large: ['15%', '15%', '15%', '25%', '30%'],
     small: ['50%', '0', '50%'],
   },
