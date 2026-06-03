@@ -191,7 +191,6 @@ describe('<Profile />', () => {
 
     screen.getByText('Dirkje');
 
-    // getAllByRole with 'paragraph' fails, is this element accessible?
     expect(
       screen.getAllByText(
         /Wij mogen een overlijdensdatum van ouders of kinderen niet laten zien/
