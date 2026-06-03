@@ -8,7 +8,7 @@ import {
   apiResponseErrors,
 } from './amsapp-notifications-service-config.ts';
 import {
-  unregisterConsumer,
+  unregisterConsumers,
   getConsumerProfile,
   registerConsumer,
   batchFetchAndStoreNotifications,
@@ -52,8 +52,8 @@ export async function handleUnregisterConsumer(
   req: Request<{ consumerId: string }>,
   res: Response
 ) {
-  const isUnregistered = await unregisterConsumer(req.params.consumerId);
-  if (isUnregistered) {
+  const deletedConsumerIds = await unregisterConsumers([req.params.consumerId]);
+  if (deletedConsumerIds.length > 0) {
     return res.send(apiSuccessResult('Consumer deleted'));
   }
   return res.send(apiErrorResult('Not Found', null, HttpStatusCode.NotFound));

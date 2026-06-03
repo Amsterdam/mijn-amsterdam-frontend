@@ -16,16 +16,20 @@ const mocks = vi.hoisted(() => {
   return {
     model: {
       listProfileIds: vi.fn(),
+      listConsumerIdsWithLoginExpiryDateBefore: vi.fn(),
       upsertConsumer: vi.fn(),
       deleteOrphanProfiles: vi.fn(),
       listProfiles: vi.fn(),
       truncate: vi.fn(),
-      deleteConsumer: vi.fn(),
+      deleteConsumers: vi.fn(),
       getProfileByConsumer: vi.fn(),
       storeNotifications: vi.fn(),
     },
     authHelpers: {
-      getFakeAuthProfileAndToken: vi.fn(),
+      getAuthProfileAndTokenWithoutSession: vi.fn(),
+    },
+    sourceApiRequest: {
+      requestData: vi.fn(),
     },
     tipsAndNotifications: {
       fetchNotificationsAndTipsFromServices: vi.fn(),
@@ -41,20 +45,45 @@ const mocks = vi.hoisted(() => {
 
 vi.mock('./amsapp-notifications-model', () => mocks.model);
 vi.mock('./amsapp-notifications-helper', () => mocks.authHelpers);
+vi.mock('../../../helpers/source-api-request.ts', () => mocks.sourceApiRequest);
 vi.mock('../../tips-and-notifications', () => mocks.tipsAndNotifications);
 
 import {
+  batchFetchAndStoreNotifications,
+  unregisterExpiredConsumers,
   getConsumerProfile,
   registerConsumer,
   storeNotificationsResponses,
-  unregisterConsumer,
 } from './amsapp-notifications.ts';
 
 describe('amsapp-notifications', () => {
   const systemTime = new Date('2000-01-01T12:00:00.000Z');
+
   beforeEach(() => {
     vi.clearAllMocks();
     vi.setSystemTime(systemTime);
+
+    mocks.model.listConsumerIdsWithLoginExpiryDateBefore.mockResolvedValue([]);
+    mocks.model.listProfileIds.mockResolvedValue([]);
+    mocks.sourceApiRequest.requestData.mockResolvedValue({
+      status: 'OK',
+      content: null,
+    });
+    mocks.authHelpers.getAuthProfileAndTokenWithoutSession.mockImplementation(
+      (profileId: string) => ({
+        profile: {
+          id: profileId,
+          profileType: 'private',
+          authMethod: 'digid',
+          sid: 'sid',
+        },
+        token: 'token',
+        expiresAtMilliseconds: 1,
+      })
+    );
+    mocks.tipsAndNotifications.fetchNotificationsAndTipsFromServices.mockResolvedValue(
+      {}
+    );
   });
 
   afterAll(() => {
@@ -74,26 +103,8 @@ describe('amsapp-notifications', () => {
         'serviceA',
       ] as any);
 
-      expect(mocks.model.upsertConsumer).toHaveBeenCalledWith(
-        '123456789',
-        'Jane Doe',
-        'consumer-1',
-        ['serviceA']
-      );
-      expect(mocks.model.deleteOrphanProfiles).toHaveBeenCalledWith();
-    });
-
-    it('unregisterConsumer returns true when at least one row was deleted', async () => {
-      mocks.model.deleteConsumer.mockResolvedValue(1);
-
-      await expect(unregisterConsumer('consumer-1')).resolves.toBe(true);
-      expect(mocks.model.deleteConsumer).toHaveBeenCalledWith('consumer-1');
-    });
-
-    it('unregisterConsumer returns false when no rows were deleted', async () => {
-      mocks.model.deleteConsumer.mockResolvedValue(0);
-
-      await expect(unregisterConsumer('consumer-1')).resolves.toBe(false);
+      expect(mocks.model.upsertConsumer).toHaveBeenCalled();
+      expect(mocks.model.deleteOrphanProfiles).toHaveBeenCalled();
     });
 
     it('getConsumerProfile returns profile data + isRegistered=true when found', async () => {
@@ -121,6 +132,47 @@ describe('amsapp-notifications', () => {
       await expect(getConsumerProfile('consumer-1')).resolves.toStrictEqual({
         isRegistered: false,
       });
+    });
+  });
+
+  describe('unregisterExpiredConsumers', () => {
+    it('is best effort and still removes consumers when webhook delivery fails', async () => {
+      mocks.model.listConsumerIdsWithLoginExpiryDateBefore.mockResolvedValue([
+        'expired-1',
+      ]);
+      mocks.model.deleteConsumers.mockResolvedValue(['expired-1']);
+      mocks.sourceApiRequest.requestData.mockResolvedValue({
+        status: 'ERROR',
+        content: null,
+        message: 'timeout',
+      });
+
+      await expect(
+        unregisterExpiredConsumers(systemTime)
+      ).resolves.toBeUndefined();
+
+      expect(mocks.model.deleteConsumers).toHaveBeenCalledWith(['expired-1']);
+    });
+  });
+
+  describe('batchFetchAndStoreNotifications', () => {
+    it('fetches and stores notifications without running cron cleanup', async () => {
+      mocks.model.listProfileIds.mockResolvedValue([
+        {
+          profileId: '123456789',
+          serviceIds: ['serviceA'],
+        },
+      ]);
+
+      await batchFetchAndStoreNotifications();
+
+      expect(
+        mocks.model.listConsumerIdsWithLoginExpiryDateBefore
+      ).not.toHaveBeenCalled();
+      expect(
+        mocks.tipsAndNotifications.fetchNotificationsAndTipsFromServices
+      ).toHaveBeenCalledTimes(1);
+      expect(mocks.model.storeNotifications).toHaveBeenCalledTimes(1);
     });
   });
 

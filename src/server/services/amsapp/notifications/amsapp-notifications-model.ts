@@ -1,5 +1,5 @@
 import { addMonths } from 'date-fns';
-import { and, asc, eq, inArray, sql } from 'drizzle-orm';
+import { and, asc, eq, inArray, lte, sql } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/node-postgres';
 
 import type {
@@ -217,26 +217,61 @@ export async function deleteOrphanProfiles(
   );
 }
 
-export async function deleteConsumer(consumerId: ConsumerId) {
+export async function deleteConsumers(
+  consumerIds: ConsumerId[]
+): Promise<ConsumerId[]> {
+  const uniqueConsumerIds = [...new Set(consumerIds)];
+
   return withDBEnabled(
     async (drizzleDb) => {
       const deletedConsumerDetails = await drizzleDb
         .delete(notificationsConsumerDetailsTable)
-        .where(eq(notificationsConsumerDetailsTable.consumerId, consumerId))
+        .where(
+          inArray(
+            notificationsConsumerDetailsTable.consumerId,
+            uniqueConsumerIds
+          )
+        )
         .returning({
+          consumerId: notificationsConsumerDetailsTable.consumerId,
           notificationRowId:
             notificationsConsumerDetailsTable.notificationRowId,
         });
 
-      const notificationRowIds = deletedConsumerDetails.map(
-        (detail) => detail.notificationRowId
-      );
+      const notificationRowIds = [
+        ...new Set(
+          deletedConsumerDetails.map((detail) => detail.notificationRowId)
+        ),
+      ];
 
       await deleteOrphanProfiles(notificationRowIds);
 
-      return deletedConsumerDetails.length;
+      return deletedConsumerDetails.map((detail) => detail.consumerId);
     },
-    async () => 0
+    async () => []
+  );
+}
+
+export async function listConsumerIdsWithLoginExpiryDateBefore(
+  loginExpiryDateUpperBound: Date
+): Promise<ConsumerId[]> {
+  return withDBEnabled(
+    async (drizzleDb) => {
+      const rows = await drizzleDb
+        .select({
+          consumerId: notificationsConsumerDetailsTable.consumerId,
+        })
+        .from(notificationsConsumerDetailsTable)
+        .where(
+          lte(
+            notificationsConsumerDetailsTable.loginExpiryDate,
+            loginExpiryDateUpperBound
+          )
+        );
+
+      return rows.map((row) => row.consumerId);
+    },
+    async () => []
   );
 }
 

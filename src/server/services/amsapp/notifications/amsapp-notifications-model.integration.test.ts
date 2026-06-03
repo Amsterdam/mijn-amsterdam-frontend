@@ -277,7 +277,52 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
     });
   });
 
-  describe('deleteConsumer', () => {
+  describe('listConsumerIdsWithLoginExpiryDateBefore', () => {
+    it('returns consumers with loginExpiryDate on or before the provided upper bound', async () => {
+      const model = await import('./amsapp-notifications-model.ts');
+
+      await model.upsertConsumer('1', 'Test Person 1', 'consumer-expired', [
+        SERVICE_A.serviceId,
+      ]);
+      await model.upsertConsumer('2', 'Test Person 2', 'consumer-at-bound', [
+        SERVICE_A.serviceId,
+      ]);
+      await model.upsertConsumer('3', 'Test Person 3', 'consumer-active', [
+        SERVICE_A.serviceId,
+      ]);
+
+      await db
+        .update(notificationsConsumerDetailsTable)
+        .set({ loginExpiryDate: addDays(DEFAULT_TIME, -1) })
+        .where(
+          eq(notificationsConsumerDetailsTable.consumerId, 'consumer-expired')
+        );
+
+      await db
+        .update(notificationsConsumerDetailsTable)
+        .set({ loginExpiryDate: DEFAULT_TIME })
+        .where(
+          eq(notificationsConsumerDetailsTable.consumerId, 'consumer-at-bound')
+        );
+
+      await db
+        .update(notificationsConsumerDetailsTable)
+        .set({ loginExpiryDate: addDays(DEFAULT_TIME, 1) })
+        .where(
+          eq(notificationsConsumerDetailsTable.consumerId, 'consumer-active')
+        );
+
+      const consumerIds =
+        await model.listConsumerIdsWithLoginExpiryDateBefore(DEFAULT_TIME);
+
+      expect(consumerIds.sort()).toStrictEqual([
+        'consumer-at-bound',
+        'consumer-expired',
+      ]);
+    });
+  });
+
+  describe('deleteConsumers', () => {
     it('removes the consumer when there is more than one consumer', async () => {
       const model = await import('./amsapp-notifications-model.ts');
 
@@ -291,7 +336,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
       expect(profilesWith2Consumers).toHaveLength(1);
       expect(profilesWith2Consumers[0].consumerIds).toHaveLength(2);
 
-      await model.deleteConsumer('consumer-2');
+      await model.deleteConsumers(['consumer-2']);
       const profilesWithOneConsumer = await model.listProfileIds();
       expect(profilesWithOneConsumer).toHaveLength(1);
       expect(profilesWithOneConsumer[0].consumerIds).toHaveLength(1);
@@ -304,10 +349,33 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
         SERVICE_A.serviceId,
       ]);
 
-      const deletedCount = await model.deleteConsumer('consumer-1');
-      expect(deletedCount).toBe(1);
+      const deletedConsumerIds = await model.deleteConsumers(['consumer-1']);
+      expect(deletedConsumerIds).toStrictEqual(['consumer-1']);
       const profilesEmpty = await model.listProfileIds();
       expect(profilesEmpty).toHaveLength(0);
+    });
+
+    it('deletes multiple consumers in a single call', async () => {
+      const model = await import('./amsapp-notifications-model.ts');
+
+      await model.upsertConsumer(profileId, 'Test Person', 'consumer-1', [
+        SERVICE_A.serviceId,
+      ]);
+      await model.upsertConsumer(profileId, 'Test Person', 'consumer-2', [
+        SERVICE_A.serviceId,
+      ]);
+
+      const deletedConsumerIds = await model.deleteConsumers([
+        'consumer-1',
+        'consumer-2',
+      ]);
+
+      expect(deletedConsumerIds.sort()).toStrictEqual([
+        'consumer-1',
+        'consumer-2',
+      ]);
+      const profiles = await model.listProfileIds();
+      expect(profiles).toHaveLength(0);
     });
 
     it('deletes orphaned profile when the last consumer detail is removed', async () => {
@@ -317,7 +385,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
         SERVICE_A.serviceId,
       ]);
 
-      await model.deleteConsumer('consumer-1');
+      await model.deleteConsumers(['consumer-1']);
 
       const profileRows = await db
         .select({ id: notificationsTable.id })

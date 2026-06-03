@@ -162,6 +162,8 @@ process.env.BFF_BELASTINGEN_ENDPOINT = `${remoteApiHost}/belastingen`;
 
 process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT = `${remoteApiHost}/amsapp/session/credentials`;
 process.env.BFF_AMSAPP_NONCE = '123456789123456789123456';
+process.env.BFF_AMSAPP_URL = `${remoteApiHost}/amsapp`;
+process.env.BFF_AMSAPP_API_KEY = 'xxxAMSAPPxxx';
 process.env.DEBUG_RESPONSE_DATA = '';
 process.env.DEBUG_REQUEST_DATA = '';
 

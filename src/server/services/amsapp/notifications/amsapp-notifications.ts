@@ -1,11 +1,12 @@
 import { getAuthProfileAndTokenWithoutSession } from './amsapp-notifications-helper.ts';
 import {
   listProfileIds,
+  listConsumerIdsWithLoginExpiryDateBefore,
   upsertConsumer,
   deleteOrphanProfiles,
   listProfiles,
   truncate,
-  deleteConsumer,
+  deleteConsumers,
   getProfileByConsumer,
   storeNotifications,
 } from './amsapp-notifications-model.ts';
@@ -23,6 +24,8 @@ import {
 } from '../../../../universal/helpers/api.ts';
 import { toISOString } from '../../../../universal/helpers/date.ts';
 import { entries, pick } from '../../../../universal/helpers/utils.ts';
+import { getApiConfig } from '../../../helpers/source-api-helpers.ts';
+import { requestData } from '../../../helpers/source-api-request.ts';
 import {
   fetchNotificationsAndTipsFromServices,
   notificationServices,
@@ -31,6 +34,41 @@ import {
 /**
  * The Notification service allows batch handling of notifications for previously verified consumers
  */
+
+type UnregisterConsumerOptions = {
+  triggerAmsAppUnregisterConsumerWebhook?: boolean;
+};
+
+async function sendAmsAppUnregisterConsumerWebhook(consumerIds: ConsumerId[]) {
+  const requestConfig = getApiConfig('AMSAPP', {
+    formatUrl: ({ url }) => {
+      return `${url}/notifications/logout`;
+    },
+    enableCache: false,
+    data: {
+      consumerIds,
+    },
+  });
+
+  // Best effort attempt, no need to triage
+  await requestData<unknown>(requestConfig);
+}
+
+export async function unregisterConsumers(
+  consumerIds: ConsumerId[],
+  options: UnregisterConsumerOptions = {}
+) {
+  const deletedConsumerIds = await deleteConsumers(consumerIds);
+
+  if (
+    options.triggerAmsAppUnregisterConsumerWebhook &&
+    deletedConsumerIds.length > 0
+  ) {
+    await sendAmsAppUnregisterConsumerWebhook(deletedConsumerIds);
+  }
+
+  return deletedConsumerIds;
+}
 
 export async function registerConsumer(
   profileId: BSN,
@@ -44,9 +82,16 @@ export async function registerConsumer(
   void deleteOrphanProfiles().catch(() => undefined);
 }
 
-export async function unregisterConsumer(consumerId: ConsumerId) {
-  const numDeleted = await deleteConsumer(consumerId);
-  return numDeleted > 0;
+export async function unregisterExpiredConsumers(
+  loginExpiryDateUpperBound: Date = new Date()
+) {
+  const expiredConsumerIds = await listConsumerIdsWithLoginExpiryDateBefore(
+    loginExpiryDateUpperBound
+  );
+
+  await unregisterConsumers(expiredConsumerIds, {
+    triggerAmsAppUnregisterConsumerWebhook: true,
+  });
 }
 
 export async function getConsumerProfile(consumerId: ConsumerId) {
