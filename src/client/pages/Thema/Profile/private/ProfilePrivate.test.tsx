@@ -90,18 +90,6 @@ describe('<Profile />', () => {
         }}
       />
     );
-
-    // <PageContentCell>
-    //   <ParagaphSuppressed className="ams-mb-m" data-testid="privacy-notice">
-    //     Wij mogen een overlijdensdatum van ouders of kinderen niet laten zien.
-    //     Dit komt door{' '}
-    //     <Link to="https://www.amsterdam.nl/privacy/" rel="noopener noreferrer">
-    //       privacyregels
-    //     </Link>
-    //     .
-    //   </ParagaphSuppressed>
-    // </PageContentCell>;
-
     expect(
       screen.getByRole('heading', {
         name: 'Mijn gegevens',
