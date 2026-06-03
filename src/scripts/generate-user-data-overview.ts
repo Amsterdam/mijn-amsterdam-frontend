@@ -310,7 +310,7 @@ function getBRPBasedProperties(
     hasParents: brpContent.ouders.length > 0,
     hasVertrokkenOnbekendWaarheen:
       brpContent.persoon?.vertrokkenOnbekendWaarheen ?? false,
-    isAdresInOnderzoek: brpContent.persoon?.adresInOnderzoek !== null,
+    isAdresInOnderzoek: !!brpContent.persoon?.adresInOnderzoek,
   };
 }
 
