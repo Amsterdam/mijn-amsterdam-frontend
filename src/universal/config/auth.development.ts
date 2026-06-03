@@ -15,16 +15,12 @@ export type TestUserData = {
   accounts: TestUserAccount[];
 };
 
-/** An object describing the name of the table header and the key it is mapped to -
- * inside of TestUserAccount.
- */
 type TableHeader = {
   displayName: string;
+  // Maps to a property of TestUserAccount, e.q. key: 'foo'; { ->  foo: 'data' }.
   key: string;
 };
 
-/** Fields of the table data, the optional fields are not only used for -
- * informational purposes. */
 export type TestUserAccount = {
   username: string;
   profileId: string;
