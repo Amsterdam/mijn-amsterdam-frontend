@@ -33,6 +33,7 @@ import * as XLSX from 'xlsx';
 import fs from 'node:fs';
 import assert from 'node:assert';
 import { parseArgs } from 'node:util';
+import slug from 'slugme';
 import { defaultDateFormat } from '../universal/helpers/date.ts';
 import { getFullAddress, isMokum } from '../universal/helpers/brp.ts';
 import {
@@ -387,7 +388,7 @@ async function getServiceResults(): Promise<ResultsByUser> {
   const allResults: ResultsByUser = {};
 
   for (const [username, profileId] of testAccounts) {
-    const loginURL = `${BASE_URL}/auth/digid/login/${cleanTestUsername(username).toLowerCase()}?redirectUrl=noredirect`;
+    const loginURL = `${BASE_URL}/auth/digid/login/${slug(cleanTestUsername(username))}?redirectUrl=noredirect`;
     try {
       const loginResponse = await fetch(loginURL);
       const cookie = loginResponse.headers.get('set-cookie');
