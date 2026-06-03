@@ -41,6 +41,7 @@ import {
   type TestUserData,
   testAccountDataDigid as importedDigidTestAccounts,
   type OptionalTestUserAccountProperties,
+  DIGID_TEST_ACCOUNTS_PATH,
 } from '../universal/config/auth.development.ts';
 
 import { differenceInYears, parseISO } from 'date-fns';
@@ -174,7 +175,7 @@ const { values: args } = parseArgs({
     },
     'out-file-path-digid-test-accounts': {
       type: 'string',
-      default: './src/universal/config/digid-test-accounts.json',
+      default: DIGID_TEST_ACCOUNTS_PATH,
     },
     'refresh-cache': {
       type: 'boolean',
