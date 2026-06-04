@@ -42,11 +42,11 @@ type UnregisterConsumerOptions = {
 async function sendAmsAppUnregisterConsumerWebhook(consumerIds: ConsumerId[]) {
   const requestConfig = getApiConfig('AMSAPP', {
     formatUrl: ({ url }) => {
-      return `${url}/notifications/logout`;
+      return `${url}/mijnamsterdam/api/v1/logout-notification`;
     },
     enableCache: false,
     data: {
-      consumerIds,
+      device_ids: consumerIds,
     },
   });
 

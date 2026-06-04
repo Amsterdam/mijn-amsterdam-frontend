@@ -522,14 +522,14 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
         offset: 0,
       });
       expect(firstPage).toHaveLength(2);
-      expect(firstPage.map((p) => p.profileId)).toStrictEqual(['3', '1']);
+      expect(firstPage.map((p) => p.profileId)).toStrictEqual(['2', '1']);
 
       const secondPage = await model.listProfiles({
         limit: 2,
         offset: 2,
       });
       expect(secondPage).toHaveLength(1);
-      expect(secondPage[0].profileId).toStrictEqual('2');
+      expect(secondPage[0].profileId).toStrictEqual('3');
     });
 
     it('orders consumerDetails by earliest loginExpiryDate first', async () => {

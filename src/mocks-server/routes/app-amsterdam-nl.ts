@@ -14,12 +14,12 @@ export const routes: MockRouteDefinition[] = [
   },
   {
     id: 'post-amsapp-notifications-logout',
-    url: `${MOCK_BASE_PATH}/amsapp/notifications/logout`,
+    url: `${MOCK_BASE_PATH}/amsapp/mijnamsterdam/api/v1/logout-notification`,
     method: 'POST',
     handler: {
       type: 'json',
       status: 200,
-      body: { detail: 'Success' },
+      body: { status: 'OK' },
     },
   },
 ];
