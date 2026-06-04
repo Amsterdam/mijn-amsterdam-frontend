@@ -38,14 +38,6 @@ _Avoid_: Session expiry, token expiry, last login date
 A Consumer Detail whose Login Expiry Date is after the current time. Cronjob cleanup treats non-active Consumer Details as expired and removes them.
 _Avoid_: Expired consumer, stale registration
 
-**Visible Profile**:
-A Profile returned by Fetch Notifications. Today this means a Profile with at least one linked Consumer Detail; read-time filtering on Login Expiry Date is not applied in the fetch endpoint itself.
-_Avoid_: Empty profile row
-
-**Visible Pagination**:
-Fetch Notifications pagination and totalItems are calculated from Profiles that have at least one linked Consumer Detail and match `dateFrom` when provided.
-_Avoid_: Raw-row pagination
-
 **Cronjob Cleanup**:
 The cronjob first removes expired Consumer Details and immediately removes any Profiles that no longer have Consumer Details. Only after cleanup does it fetch and store notifications for the remaining Profiles.
 _Avoid_: Refresh-before-cleanup
@@ -87,11 +79,8 @@ Domain expert: Registration is authoritative, so we move the Consumer Detail to 
 Dev: Do we merge the new services with the old services on that Profile?
 Domain expert: No. Registration replaces the Profile's Service IDs with the new set.
 
-Dev: Which consumers are returned by Fetch Notifications?
-Domain expert: The endpoint returns linked Consumer Details from storage. Expired consumers are primarily removed by cronjob cleanup rather than read-time filtering.
-
-Dev: What if a Profile has no active consumers left after that filtering?
-Domain expert: There is no read-time active filtering today. A Profile is omitted when it has no linked Consumer Details.
+Dev: Are expired consumers filtered at read time by Fetch Notifications?
+Domain expert: No. The endpoint returns linked Consumer Details from storage, and expired consumers are primarily removed by cronjob cleanup.
 
 Dev: What do offset, limit, and totalItems refer to?
 Domain expert: They refer to Profiles with at least one linked Consumer Detail (and matching `dateFrom` when provided), not to all raw stored rows.
