@@ -31,12 +31,8 @@ Profile-scoped metadata that belongs to the Profile, not to any individual Consu
 _Avoid_: Consumer expiry, registration expiry
 
 **Login Expiry Date**:
-Consumer-scoped expiry metadata stored on the Consumer Detail. It is set when a Consumer registers and is reset to three calendar months from the registration time on each successful re-registration.
+Consumer-scoped expiry metadata stored on the Consumer Detail. It is set when a Consumer registers and is reset to three calendar months from the registration time on each successful re-registration. Consumer Details with `loginExpiryDate <= now` are expired and are removed by cronjob cleanup.
 _Avoid_: Session expiry, token expiry, last login date
-
-**Active Consumer Detail**:
-A Consumer Detail whose Login Expiry Date is after the current time. Cronjob cleanup treats non-active Consumer Details as expired and removes them.
-_Avoid_: Expired consumer, stale registration
 
 **Cronjob Cleanup**:
 The cronjob first removes expired Consumer Details and immediately removes any Profiles that no longer have Consumer Details. Only after cleanup does it fetch and store notifications for the remaining Profiles.
