@@ -268,13 +268,12 @@ components:
             properties:
               consumerDetails:
                 type: array
-                description: Preferred active consumer projection for this profile.
+                description: Preferred consumer projection for this profile.
                 items:
                   $ref: '#/components/schemas/ConsumerDetail'
               consumerIds:
                 deprecated: true
-                description: Deprecated compatibility projection of active consumers. Mirrors consumerDetails[].id.
-                type: array
+                description: Deprecated compatibility projection of consumers. Mirrors consumerDetails[].id.
                 items:
                   type: string
                   default: '123'
