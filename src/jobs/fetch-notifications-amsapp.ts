@@ -54,12 +54,9 @@ async function runJob() {
   try {
     await trackEventStarted();
 
-    const {
-      unregisterExpiredConsumers: cleanupExpiredConsumersForCron,
-      batchFetchAndStoreNotifications,
-    } =
+    const { unregisterExpiredConsumers, batchFetchAndStoreNotifications } =
       await import('../server/services/amsapp/notifications/amsapp-notifications.ts');
-    await cleanupExpiredConsumersForCron(new Date());
+    await unregisterExpiredConsumers(new Date());
     await batchFetchAndStoreNotifications();
 
     // We close the Postgres pool to ensure the process can exit cleanly.
