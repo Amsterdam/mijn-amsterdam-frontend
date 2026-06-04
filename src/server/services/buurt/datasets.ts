@@ -38,7 +38,7 @@ import type {
   DataRequestConfig,
   DataRequestHeaders,
 } from '../../config/source-api.ts';
-import type FileCache from '../../helpers/file-cache.ts';
+import type { FileCache } from '../../helpers/file-cache.ts';
 import {
   getNextUrlFromLinkHeader,
   requestData,

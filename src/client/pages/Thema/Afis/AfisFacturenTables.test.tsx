@@ -7,7 +7,7 @@ import {
   useAfisFacturenData,
   type AfisFacturenThemaContextParams,
 } from './useAfisThemaData.hook.tsx';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 
 vi.mock('./useAfisThemaData.hook');
 

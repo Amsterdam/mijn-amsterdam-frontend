@@ -7,7 +7,7 @@ import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import { DocumentLink } from '../../../components/DocumentList/DocumentLink.tsx';
 import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { ThemaDetailPagina } from '../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 function BodemDetailContent({ meting }: { meting: LoodMetingFrontend }) {

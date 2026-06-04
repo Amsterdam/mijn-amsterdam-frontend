@@ -3,7 +3,8 @@ import classnames from 'classnames';
 
 import styles from './InkomenSpecificaties.module.scss';
 import { useInkomenSpecificatiesListPageData } from './useInkomenSpecificatiesListPageData.hook.ts';
-import DateInput, {
+import {
+  DateInput,
   isNativeDatePickerInputSupported,
 } from '../../../components/DateInput/DateInput.tsx';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';

@@ -17,11 +17,11 @@ import {
 } from './useAfisThemaData.hook.tsx';
 import type { AfisFactuurStateFrontend } from '../../../../server/services/afis/afis-types.ts';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
-import LoadingContent from '../../../components/LoadingContent/LoadingContent.tsx';
+import { LoadingContent } from '../../../components/LoadingContent/LoadingContent.tsx';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { TableV2 } from '../../../components/Table/TableV2.tsx';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { ThemaDetailPagina } from '../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 

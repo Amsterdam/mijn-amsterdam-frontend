@@ -5,7 +5,7 @@ import { renderHook } from '@testing-library/react';
 import { useTrackThemas } from './useTrackThemas.hook.ts';
 import type { AppState } from '../../universal/types/App.types.ts';
 import { trackEvent } from '../helpers/monitoring.ts';
-import MockApp from '../pages/MockApp.tsx';
+import { MockApp } from '../pages/MockApp.tsx';
 
 vi.mock('../helpers/monitoring', () => ({
   trackEvent: vi.fn(),

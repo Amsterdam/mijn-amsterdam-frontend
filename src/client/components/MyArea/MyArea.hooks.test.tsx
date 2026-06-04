@@ -4,7 +4,7 @@ import { describe, expect, it, test, vi } from 'vitest';
 
 import { useMapLocations, useSetMapCenterAtLocation } from './MyArea.hooks.ts';
 import type { AppState } from '../../../universal/types/App.types.ts';
-import MockApp from '../../pages/MockApp.tsx';
+import { MockApp } from '../../pages/MockApp.tsx';
 
 const mapInstanceMock = {
   setView: vi.fn(),

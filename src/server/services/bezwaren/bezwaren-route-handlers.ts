@@ -1,6 +1,5 @@
 import { fetchBezwaarDetail } from './bezwaren.ts';
-import type {
-  RequestWithQueryParams} from '../../routing/route-helpers.ts';
+import type { RequestWithQueryParams } from '../../routing/route-helpers.ts';
 import {
   sendResponse,
   type ResponseAuthenticated,

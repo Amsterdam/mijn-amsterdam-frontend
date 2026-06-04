@@ -1,4 +1,4 @@
-import GenericBase from './GenericBase.tsx';
+import { GenericBase } from './GenericBase.tsx';
 import type { Unshaped } from '../../../../../universal/types/App.types.ts';
 
 interface MyArePanelContentParkerenProps {
@@ -6,7 +6,7 @@ interface MyArePanelContentParkerenProps {
   datasetId: string;
 }
 
-export default function MyArePanelContentParkeren({
+export function MyArePanelContentParkeren({
   datasetId,
   panelItem,
 }: MyArePanelContentParkerenProps) {

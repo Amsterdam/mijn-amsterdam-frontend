@@ -9,7 +9,7 @@ import type {
 } from '../../../../universal/config/myarea-datasets.ts';
 import { getIcon } from '../dataset-icons.tsx';
 import { categoryCheckboxState } from './checkbox-helpers.ts';
-import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel.tsx';
+import { CollapsedState, MyAreaCollapsiblePanel } from './CollapsiblePanel.tsx';
 import { DatasetControlCheckbox } from './DatasetControlCheckbox.tsx';
 import { DatasetPanel } from './DatasetPanel.tsx';
 import { PanelList, PanelListItem } from './PanelList.tsx';

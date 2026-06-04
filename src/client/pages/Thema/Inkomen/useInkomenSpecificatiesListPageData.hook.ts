@@ -3,7 +3,10 @@ import { useMemo, useState, useEffect, useCallback } from 'react';
 import { parseISO } from 'date-fns';
 import { useParams, generatePath, useNavigate } from 'react-router';
 
-import { tableConfigSpecificaties, themaConfig } from './Inkomen-thema-config.ts';
+import {
+  tableConfigSpecificaties,
+  themaConfig,
+} from './Inkomen-thema-config.ts';
 import { useInkomenThemaData } from './useInkomenThemaData.hook.ts';
 
 export function useInkomenSpecificatiesListPageData() {

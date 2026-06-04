@@ -1,7 +1,7 @@
+import { IS_DB_ENABLED } from './config.ts';
 import { APP_MODE } from '../../../universal/config/env.ts';
 import { delay } from '../../../universal/helpers/utils.ts';
 import { captureException } from '../monitoring.ts';
-import { IS_DB_ENABLED } from './config.ts';
 
 const DELAY_BEFORE_EXIT_MS = 15_000;
 const JOB_FAILED_CODE = 1;

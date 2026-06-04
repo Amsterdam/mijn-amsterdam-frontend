@@ -3,7 +3,10 @@ import { describe, it, expect, vi } from 'vitest';
 
 import { handleFetchDecosDocumentsList } from './decos-route-handlers.ts';
 import { fetchDecosDocumentList } from './decos-service.ts';
-import { RequestMock, ResponseAuthenticatedMock } from '../../../testing/utils.ts';
+import {
+  RequestMock,
+  ResponseAuthenticatedMock,
+} from '../../../testing/utils.ts';
 import type { RequestWithQueryParams } from '../../routing/route-helpers.ts';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param.ts';
 

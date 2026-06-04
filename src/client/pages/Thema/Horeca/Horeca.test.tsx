@@ -6,7 +6,7 @@ import { HorecaThema } from './HorecaThema.tsx';
 import type { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken.ts';
 import { bffApiHost } from '../../../../testing/setup.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 
 export const DOC_API_PATH =
   '/api/v1/services/decos/documents?id=oP2F-VKO2Z5y9ZJAIjyKseyH-V1K-2hVGrhNehA38i_gG-24x0rQFAf9avn531EgFKea2ULcC-FPBnW25VGYi01c867Jks1tjYkhfXtHt1Q';

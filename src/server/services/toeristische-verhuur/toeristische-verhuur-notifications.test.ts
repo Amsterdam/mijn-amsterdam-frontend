@@ -1,5 +1,5 @@
 import MockDate from 'mockdate';
-import type { Mock} from 'vitest';
+import type { Mock } from 'vitest';
 import { vi } from 'vitest';
 
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur-notifications.ts';

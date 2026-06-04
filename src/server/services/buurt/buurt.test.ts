@@ -27,7 +27,7 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
 import { jsonCopy, omit } from '../../../universal/helpers/utils.ts';
-import FileCache from '../../helpers/file-cache.ts';
+import { FileCache } from '../../helpers/file-cache.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 
 const DUMMY_DATA_RESPONSE = apiSuccessResult([

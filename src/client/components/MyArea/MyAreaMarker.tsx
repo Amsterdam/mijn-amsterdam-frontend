@@ -8,7 +8,7 @@ import type {
 } from 'leaflet';
 import L from 'leaflet';
 
-import Marker from './Map/Marker.tsx';
+import { Marker } from './Map/Marker.tsx';
 import styles from './MyArea.module.scss';
 import { useMapRef } from './useMap.ts';
 import { LOCATION_ZOOM } from '../../../universal/config/myarea-datasets.ts';

@@ -9,7 +9,7 @@ import {
   GENERAL_INFO_PAGE_DOCUMENT_TITLE,
   GeneralInfoRoute,
 } from '../../pages/GeneralInfo/GeneralInfo-routes.ts';
-import LoadingContent from '../LoadingContent/LoadingContent.tsx';
+import { LoadingContent } from '../LoadingContent/LoadingContent.tsx';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 
 type ThemaLinkLoaderProps = {

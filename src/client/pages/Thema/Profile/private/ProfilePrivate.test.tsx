@@ -12,7 +12,7 @@ import type { WonenDataFrontend } from '../../../../../server/services/wonen/won
 import { bffApiHost } from '../../../../../testing/setup.ts';
 import { bffApi } from '../../../../../testing/utils.ts';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
-import MockApp from '../../../MockApp.tsx';
+import { MockApp } from '../../../MockApp.tsx';
 import { themaConfig } from '../Profile-thema-config.ts';
 
 const testState = (

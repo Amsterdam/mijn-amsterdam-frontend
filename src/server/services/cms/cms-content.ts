@@ -1,11 +1,8 @@
 import type { IOptions } from 'sanitize-html';
 import sanitizeHtml from 'sanitize-html';
 
-import type {
-  ApiResponse_DEPRECATED} from '../../../universal/helpers/api.ts';
-import {
-  type ApiResponse,
-} from '../../../universal/helpers/api.ts';
+import type { ApiResponse_DEPRECATED } from '../../../universal/helpers/api.ts';
+import { type ApiResponse } from '../../../universal/helpers/api.ts';
 import { ONE_HOUR_MS } from '../../config/app.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
@@ -45,7 +42,7 @@ export function sanitizeCmsContent(
     allowedAttributes: ATTR_ALLOWED,
 
     // Filter out empty tags
-    exclusiveFilter (frame: { text: string }) {
+    exclusiveFilter(frame: { text: string }) {
       return !frame.text.trim();
     },
   }

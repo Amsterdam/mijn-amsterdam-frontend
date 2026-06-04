@@ -135,7 +135,8 @@ function AppLanding() {
 }
 
 export function App() {
-  const { enableLinkTracking } = usePiwik();
+  const { enableLinkTracking, pushInstruction } = usePiwik();
+  pushInstruction('disableLinkTracking'); // Disables automatic download and outlink tracking by piwik
   enableLinkTracking(['amsterdam.nl']);
 
   return (

@@ -11,7 +11,7 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
-import FileCache from '../../helpers/file-cache.ts';
+import { FileCache } from '../../helpers/file-cache.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import { captureMessage } from '../monitoring.ts';
 import type {

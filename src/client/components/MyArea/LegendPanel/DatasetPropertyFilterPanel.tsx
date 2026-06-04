@@ -1,4 +1,4 @@
-import type { ReactNode} from 'react';
+import type { ReactNode } from 'react';
 import { useMemo } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';

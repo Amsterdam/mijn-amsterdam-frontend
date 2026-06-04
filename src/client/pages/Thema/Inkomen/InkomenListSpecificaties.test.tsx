@@ -9,7 +9,7 @@ import { transformIncomSpecificationResponse } from '../../../../server/services
 import type { WpiIncomeSpecificationResponseData } from '../../../../server/services/wpi/wpi-types.ts';
 import { dateSort } from '../../../../universal/helpers/date.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 
 vi.mock('../../../components/DateInput/DateInput', async (importOriginal) => {
   const original = (await importOriginal()) as object;

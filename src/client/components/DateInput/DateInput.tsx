@@ -29,7 +29,7 @@ export interface ComponentProps {
   hasNativeSupport?: boolean;
 }
 
-export default function DateInput({
+export function DateInput({
   onChange,
   value,
   className,
