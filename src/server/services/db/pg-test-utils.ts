@@ -91,12 +91,12 @@ function allowDockerEngineNetwork(host: string) {
 
   return (
     normalizedHost === 'localhost' ||
-    normalizedHost === 'localhost:80' ||
+    normalizedHost.startsWith('localhost:') ||
     normalizedHost === '127.0.0.1' ||
-    normalizedHost === '127.0.0.1:80' ||
+    normalizedHost.startsWith('127.0.0.1:') ||
     normalizedHost === '::1' ||
     normalizedHost === '[::1]' ||
-    normalizedHost === '[::1]:80' ||
+    normalizedHost.startsWith('[::1]:') ||
     normalizedHost.includes('/var/run/docker.sock')
   );
 }
