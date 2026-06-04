@@ -316,11 +316,10 @@ export async function getProfilesCount(options: {
 }): Promise<number> {
   return withDBEnabled(
     async (drizzleDb) => {
-      const hasActiveConsumerCondition = sql`EXISTS (
+      const hasLinkedConsumerCondition = sql`EXISTS (
         SELECT 1
         FROM ${notificationsConsumerDetailsTable}
         WHERE ${notificationsConsumerDetailsTable.notificationRowId} = ${notificationsTable.id}
-          AND ${notificationsConsumerDetailsTable.loginExpiryDate} > ${new Date()}
       )`;
 
       const rows = await drizzleDb
@@ -331,7 +330,7 @@ export async function getProfilesCount(options: {
             options.dateFrom
               ? sql`${notificationsTable.dateUpdated} >= ${options.dateFrom}`
               : sql`TRUE`,
-            hasActiveConsumerCondition
+            hasLinkedConsumerCondition
           )
         );
 
@@ -346,8 +345,6 @@ export async function listProfiles(options: {
   offset?: number;
   limit?: number;
 }): Promise<ConsumerProfile[]> {
-  const now = new Date();
-
   return withDBEnabled(
     async (drizzleDb) => {
       let query = drizzleDb
@@ -376,12 +373,9 @@ export async function listProfiles(options: {
         .from(notificationsTable)
         .innerJoin(
           notificationsConsumerDetailsTable,
-          and(
-            eq(
-              notificationsConsumerDetailsTable.notificationRowId,
-              notificationsTable.id
-            ),
-            sql`${notificationsConsumerDetailsTable.loginExpiryDate} > ${now}`
+          eq(
+            notificationsConsumerDetailsTable.notificationRowId,
+            notificationsTable.id
           )
         )
         .where(

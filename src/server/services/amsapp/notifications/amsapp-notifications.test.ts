@@ -136,6 +136,20 @@ describe('amsapp-notifications', () => {
   });
 
   describe('unregisterExpiredConsumers', () => {
+    it('removes consumers selected by expiry cutoff when cron cleanup runs', async () => {
+      mocks.model.listConsumerIdsWithLoginExpiryDateBefore.mockResolvedValue([
+        'expired-1',
+      ]);
+      mocks.model.deleteConsumers.mockResolvedValue(['expired-1']);
+
+      await unregisterExpiredConsumers(systemTime);
+
+      expect(
+        mocks.model.listConsumerIdsWithLoginExpiryDateBefore
+      ).toHaveBeenCalledWith(systemTime);
+      expect(mocks.model.deleteConsumers).toHaveBeenCalledWith(['expired-1']);
+    });
+
     it('is best effort and still removes consumers when webhook delivery fails', async () => {
       mocks.model.listConsumerIdsWithLoginExpiryDateBefore.mockResolvedValue([
         'expired-1',

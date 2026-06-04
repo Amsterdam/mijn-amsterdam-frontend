@@ -252,31 +252,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
       });
       expect(totalItems).toBe(1);
     });
-
-    it('excludes profiles that have only expired consumers', async () => {
-      const model = await import('./amsapp-notifications-model.ts');
-
-      await model.upsertConsumer('1', 'Test Person 1', 'consumer-active', [
-        SERVICE_A.serviceId,
-      ]);
-      await model.upsertConsumer('2', 'Test Person 2', 'consumer-expired', [
-        SERVICE_A.serviceId,
-      ]);
-
-      await db
-        .update(notificationsConsumerDetailsTable)
-        .set({ loginExpiryDate: addMonths(DEFAULT_TIME, -1) })
-        .where(
-          eq(notificationsConsumerDetailsTable.consumerId, 'consumer-expired')
-        );
-
-      vi.setSystemTime(DEFAULT_TIME);
-      const totalItems = await model.getProfilesCount({});
-
-      expect(totalItems).toBe(1);
-    });
   });
-
   describe('listConsumerIdsWithLoginExpiryDateBefore', () => {
     it('returns consumers with loginExpiryDate on or before the provided upper bound', async () => {
       const model = await import('./amsapp-notifications-model.ts');
@@ -493,7 +469,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
   });
 
   describe('listProfiles', () => {
-    it('paginates visible profiles and excludes profiles without or with only expired consumers', async () => {
+    it('paginates profiles with linked consumers and excludes profiles without consumers', async () => {
       const model = await import('./amsapp-notifications-model.ts');
 
       const now = addDays(DEFAULT_TIME, 9);
@@ -523,17 +499,17 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
 
       await db.insert(notificationsConsumerDetailsTable).values([
         {
-          consumerId: 'consumer-1-active',
+          consumerId: 'consumer-1-second',
           notificationRowId: 'id-1',
           loginExpiryDate: addMonths(DEFAULT_TIME, 2),
         },
         {
-          consumerId: 'consumer-2-expired',
+          consumerId: 'consumer-2-last',
           notificationRowId: 'id-2',
-          loginExpiryDate: addMonths(DEFAULT_TIME, -1),
+          loginExpiryDate: addMonths(DEFAULT_TIME, 4),
         },
         {
-          consumerId: 'consumer-3-active',
+          consumerId: 'consumer-3-first',
           notificationRowId: 'id-3',
           loginExpiryDate: addMonths(DEFAULT_TIME, 1),
         },
@@ -546,7 +522,14 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
         offset: 0,
       });
       expect(firstPage).toHaveLength(2);
-      expect(firstPage.map((p) => p.profileId)).toStrictEqual(['1', '3']);
+      expect(firstPage.map((p) => p.profileId)).toStrictEqual(['3', '1']);
+
+      const secondPage = await model.listProfiles({
+        limit: 2,
+        offset: 2,
+      });
+      expect(secondPage).toHaveLength(1);
+      expect(secondPage[0].profileId).toStrictEqual('2');
     });
 
     it('orders consumerDetails by earliest loginExpiryDate first', async () => {
@@ -593,7 +576,7 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
       ]);
     });
 
-    it('returns only active consumers and exposes consumerDetails + consumerIds from the same set', async () => {
+    it('returns consumers and exposes consumerDetails + consumerIds from the same set', async () => {
       const model = await import('./amsapp-notifications-model.ts');
 
       await db.insert(notificationsTable).values({
@@ -607,11 +590,6 @@ describePg('amsapp-notifications-model (postgres integration)', () => {
           consumerId: 'consumer-active',
           notificationRowId: 'id-active-consumers',
           loginExpiryDate: addMonths(DEFAULT_TIME, 1),
-        },
-        {
-          consumerId: 'consumer-expired',
-          notificationRowId: 'id-active-consumers',
-          loginExpiryDate: addMonths(DEFAULT_TIME, -1),
         },
       ]);
 
