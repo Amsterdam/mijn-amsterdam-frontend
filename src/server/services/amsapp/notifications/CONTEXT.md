@@ -19,7 +19,7 @@ The read model returned for a specific consumerId. It may include profile-scoped
 _Avoid_: Profile-only lookup, expiry-blind registration check
 
 **Consumer Details**:
-The preferred batch-response collection of Consumer Detail projections for a Profile. `consumerIds` remains only as a legacy compatibility alias and reflects the same active visible consumers.
+The preferred batch-response collection of Consumer Detail projections for a Profile. `consumerIds` remains only as a legacy compatibility alias and reflects the same returned consumers as `consumerDetails`.
 _Avoid_: Consumers, consumerIds
 
 **Consumer**:
@@ -35,23 +35,23 @@ Consumer-scoped expiry metadata stored on the Consumer Detail. It is set when a 
 _Avoid_: Session expiry, token expiry, last login date
 
 **Active Consumer Detail**:
-A Consumer Detail whose Login Expiry Date is after the current time. Fetch Notifications and other read paths only include active Consumer Details and exclude expired ones from the response.
+A Consumer Detail whose Login Expiry Date is after the current time. Cronjob cleanup treats non-active Consumer Details as expired and removes them.
 _Avoid_: Expired consumer, stale registration
 
 **Visible Profile**:
-A Profile returned by Fetch Notifications after read-time filtering. A Visible Profile must still have at least one active Consumer Detail.
-_Avoid_: Empty profile row, inactive profile response
+A Profile returned by Fetch Notifications. Today this means a Profile with at least one linked Consumer Detail; read-time filtering on Login Expiry Date is not applied in the fetch endpoint itself.
+_Avoid_: Empty profile row
 
 **Visible Pagination**:
-Fetch Notifications pagination and totalItems are calculated from Visible Profiles, not from raw stored Profile rows.
-_Avoid_: Raw-row pagination, pre-filter totals
+Fetch Notifications pagination and totalItems are calculated from Profiles that have at least one linked Consumer Detail and match `dateFrom` when provided.
+_Avoid_: Raw-row pagination
 
 **Cronjob Cleanup**:
 The cronjob first removes expired Consumer Details and immediately removes any Profiles that no longer have Consumer Details. Only after cleanup does it fetch and store notifications for the remaining Profiles.
 _Avoid_: Refresh-before-cleanup
 
 **Logout Notification**:
-The APP server webhook call made only for cronjob-driven Consumer Detail removal. The payload is a single object with a batched `consumer_ids` array, and delivery is best-effort.
+The APP server webhook call made only for cronjob-driven Consumer Detail removal. The payload is a single object with a batched `consumerIds` array, and delivery is best-effort.
 _Avoid_: Device logout, token revocation callback
 
 **Unregister Consumer**:
@@ -66,9 +66,9 @@ _Avoid_: Login refresh, background sync
 Profile-scoped service configuration attached to a Profile. On Registration, the Profile's Service IDs are replaced by the new Service IDs payload.
 _Avoid_: Consumer services, merged entitlements
 
-**Model Split**:
-Profile persistence and Consumer Detail persistence live in separate model modules. The service layer may orchestrate both, but profile tables and queries stay separate from consumer-detail tables and queries.
-_Avoid_: Shared persistence blob, mixed model file
+**Model Shape**:
+Profile persistence and Consumer Detail persistence use separate tables, but are currently implemented in the same model module.
+_Avoid_: Assuming module-level separation
 
 ## Flagged Ambiguities
 
@@ -88,34 +88,22 @@ Dev: Do we merge the new services with the old services on that Profile?
 Domain expert: No. Registration replaces the Profile's Service IDs with the new set.
 
 Dev: Which consumers are returned by Fetch Notifications?
-Domain expert: Only active Consumer Details, meaning the current time is still before their loginExpiryDate. Read paths exclude expired consumers instead of removing them immediately.
+Domain expert: The endpoint returns linked Consumer Details from storage. Expired consumers are primarily removed by cronjob cleanup rather than read-time filtering.
 
 Dev: What if a Profile has no active consumers left after that filtering?
-Domain expert: Then it is omitted from the Fetch Notifications response.
+Domain expert: There is no read-time active filtering today. A Profile is omitted when it has no linked Consumer Details.
 
 Dev: What do offset, limit, and totalItems refer to?
-Domain expert: They refer to the visible filtered profiles, not to raw stored profile rows.
-
-Dev: Why does the payload use `id` instead of `consumerId`?
-Domain expert: Inside `consumerDetails`, `id` is the consumer identifier by definition.
+Domain expert: They refer to Profiles with at least one linked Consumer Detail (and matching `dateFrom` when provided), not to all raw stored rows.
 
 Dev: Which field should callers move to?
-Domain expert: `consumerDetails` is the preferred field. `consumerIds` only remains for backward compatibility and contains the same active visible consumers as a thin projection.
-
-Dev: Does the single-consumer lookup also return loginExpiryDate?
-Domain expert: Yes. The consumer profile lookup can return the consumer-specific loginExpiryDate alongside the profile data.
+Domain expert: `consumerDetails` is the preferred field. `consumerIds` only remains for backward compatibility and contains the same returned consumers as a thin projection.
 
 Dev: In what order does the cronjob work?
 Domain expert: First it removes expired Consumer Details and orphaned Profiles, then it refreshes notifications for the remaining Profiles.
 
 Dev: What do invalidation paths send to the APP server?
-Domain expert: All invalidation paths use unregisterConsumer, but only cronjob removal enables `triggerAmsAppUnregisterConsumerWebhook` and calls the logout-notification webhook with a single object containing batched consumer_ids. The Consumer is still removed even if that webhook fails.
-
-Dev: Where do the notifications live then?
-Domain expert: On the Profile. The Consumer Detail only points at the Profile and stores its own loginExpiryDate.
+Domain expert: All invalidation paths use unregisterConsumer, but only cronjob removal enables `triggerAmsAppUnregisterConsumerWebhook` and calls the logout-notification webhook with a single object containing batched consumerIds. The Consumer is still removed even if that webhook fails.
 
 Dev: Do those two concerns still share one model layer?
-Domain expert: No. Profile queries and Consumer Detail queries are split into separate model modules.
-
-Dev: Can a Profile exist without any consumers?
-Domain expert: No. When the last Consumer Detail is removed, the Profile is removed immediately as well.
+Domain expert: Yes. They use separate tables but currently live in the same model module.
