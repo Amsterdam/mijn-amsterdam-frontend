@@ -208,9 +208,8 @@ async function startServerBFF() {
         message: 'Drizzle migrations failed.',
       },
     });
-    process.exit(1);
-  } finally {
     await endPool();
+    process.exit(1);
   }
 
   const server = app.listen(BFF_PORT, () => {
