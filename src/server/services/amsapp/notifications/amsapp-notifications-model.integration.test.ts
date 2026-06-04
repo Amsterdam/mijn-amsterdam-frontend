@@ -28,10 +28,7 @@ import {
   notificationsTable,
 } from '../../db/schema/amsapp-notifications.ts';
 
-const RUN_DB_TESTS = process.env.RUN_DB_TESTS === 'true';
-const describePg = RUN_DB_TESTS ? describe : describe.skip;
-
-describePg('amsapp-notifications-model (postgres integration)', () => {
+describe('amsapp-notifications-model (postgres integration)', () => {
   let pool: Pool;
   let db: ReturnType<typeof drizzle>;
   let teardown: (() => Promise<void>) | undefined;

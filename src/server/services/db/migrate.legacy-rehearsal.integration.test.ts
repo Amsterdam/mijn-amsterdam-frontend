@@ -6,9 +6,6 @@ import { setupPgTestDb, truncatePgSchemaTables } from './pg-test-utils.ts';
 
 // TODO: REMOVE TEMPORARY TEST: Can be removed after succesful deployment and verification of the migration in production.
 
-const RUN_DB_TESTS = process.env.RUN_DB_TESTS === 'true';
-const describePg = RUN_DB_TESTS ? describe : describe.skip;
-
 async function seedLegacyNotificationsSchema(pool: Pool) {
   await pool.query(`
     CREATE TABLE "bff_notifications" (
@@ -110,7 +107,7 @@ async function seedLegacyNotificationsData(pool: Pool) {
   );
 }
 
-describePg('drizzle migrations legacy rehearsal (postgres integration)', () => {
+describe('drizzle migrations legacy rehearsal (postgres integration)', () => {
   let pool: Pool;
   let teardown: (() => Promise<void>) | undefined;
 
