@@ -64,9 +64,6 @@ export async function handleConsumerRegistrationProfile(
   res: Response
 ) {
   const profile = await getConsumerProfile(req.params.consumerId);
-  if (!profile) {
-    return res.send(apiErrorResult('Not Found', null, HttpStatusCode.NotFound));
-  }
   return res.send(apiSuccessResult(profile));
 }
 

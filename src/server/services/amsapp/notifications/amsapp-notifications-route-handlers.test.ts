@@ -25,6 +25,7 @@ describe('amsapp notifications route handlers', () => {
   let res: ReturnType<typeof ResponseMock.new>;
   let batchFetchNotifications: MockInstance;
   let batchFetchAndStoreNotifications: MockInstance;
+  let getProfileByConsumer: MockInstance;
   let getConsumerProfile: MockInstance;
   let unregisterConsumers: MockInstance;
   let getProfilesCount: MockInstance;
@@ -41,6 +42,7 @@ describe('amsapp notifications route handlers', () => {
       notifications,
       'batchFetchAndStoreNotifications'
     );
+    getProfileByConsumer = vi.spyOn(model, 'getProfileByConsumer');
     getConsumerProfile = vi.spyOn(notifications, 'getConsumerProfile');
     unregisterConsumers = vi.spyOn(notifications, 'unregisterConsumers');
     getProfilesCount = vi.spyOn(model, 'getProfilesCount');
@@ -79,17 +81,15 @@ describe('amsapp notifications route handlers', () => {
     });
   });
 
-  test('handleConsumerRegistrationProfile returns not found when profile lookup returns null', async () => {
-    getConsumerProfile.mockResolvedValue(null);
+  test('handleConsumerRegistrationProfile returns isRegistered false when profile lookup returns null', async () => {
+    getProfileByConsumer.mockResolvedValue(null);
 
     req.params = { consumerId: 'consumer-1' } as any;
     await handleConsumerRegistrationProfile(req as any, res);
 
     expect(res.send).toHaveBeenCalledWith({
-      message: 'Not Found',
-      content: null,
-      status: 'ERROR',
-      code: HttpStatusCode.NotFound,
+      content: { isRegistered: false },
+      status: 'OK',
     });
   });
 
