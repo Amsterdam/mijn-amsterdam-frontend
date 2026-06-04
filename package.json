@@ -23,7 +23,7 @@
     "bff-api:watch": "nodemon -e ts -w ./src/server -w ./src/universal -w ./.env.local -x pnpm run bff-api:serve-dev",
     "bff-api:test:dirs": "cross-env MA_APP_MODE=unittest vitest --environment=node",
     "bff-api:test": "pnpm run bff-api:test:dirs src/server src/universal src/scripts src/mocks-server",
-    "bff-api:test:db:amsapp-notifications": "cross-env MA_APP_MODE=unittest RUN_DB_TESTS=true BFF_DB_ENABLED=true pnpm run bff-api:test:dirs src/server/services/amsapp/notifications/amsapp-notifications-model.integration.test.ts",
+    "bff-api:test:integration": "cross-env MA_APP_MODE=unittest RUN_DB_TESTS=true BFF_DB_ENABLED=true pnpm run bff-api:test:dirs --run $(find src/server -type f -name '*.integration.test.ts')",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "cross-env BFF_DB_ENABLED=true ts-node ./src/server/services/db/migrate.ts",
     "db:studio": "drizzle-kit studio",
