@@ -19,29 +19,8 @@
     {
       "idx": 2,
       "version": "7",
-      "when": 1780299836253,
-      "tag": "0002_acoustic_daimon_hellstrom",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1780302978118,
-      "tag": "0003_cloudy_ben_parker",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1780407300190,
-      "tag": "0004_lovely_mole_man",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1780572635546,
-      "tag": "0005_flashy_felicia_hardy",
+      "when": 1780581340453,
+      "tag": "0002_short_kulan_gath",
       "breakpoints": true
     }
   ]

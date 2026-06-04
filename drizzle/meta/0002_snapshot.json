@@ -1,5 +1,5 @@
 {
-  "id": "b0c63b3f-bbd8-4a44-b2c3-2bb971deafc5",
+  "id": "60621634-1ae2-41f9-86a2-2b7083260cc8",
   "prevId": "f4d365ca-8d30-44cf-9826-47a8bf42cf3b",
   "version": "7",
   "dialect": "postgresql",
@@ -24,7 +24,8 @@
           "name": "login_expiry_date",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "NOW() + INTERVAL '3 months'"
         }
       },
       "indexes": {
@@ -138,7 +139,7 @@
         },
         "last_login_date": {
           "name": "last_login_date",
-          "type": "varchar(200)",
+          "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": false
         }

@@ -144,6 +144,7 @@ export async function upsertConsumer(
           id,
           profileId: encryptedProfileId,
           profileName,
+          consumerIds: [consumerId], // TODO MIJN-13137: Remove temporary consumerIds column after rollout window and update onConflictDoUpdate accordingly.
           serviceIds,
           dateUpdated: nowDate,
           lastLoginDate: nowDate,
@@ -154,6 +155,16 @@ export async function upsertConsumer(
             id: sql`excluded.id`,
             profileId: sql`excluded.profile_id`,
             profileName: sql`excluded.profile_name`,
+            consumerIds: sql`(
+              SELECT ARRAY(
+                SELECT DISTINCT unnest(
+                  array_append(
+                    coalesce(${notificationsTable.consumerIds}, '{}'::varchar[]),
+                    ${consumerId}
+                  )
+                )
+              )
+            )`,
             serviceIds: sql`excluded.service_ids`,
             dateUpdated: sql`excluded.date_updated`,
             lastLoginDate: sql`excluded.last_login_date`,
@@ -174,6 +185,19 @@ export async function upsertConsumer(
             loginExpiryDate,
           },
         });
+
+      // Keep legacy consumer_ids in sync when a consumer moves between profiles.
+      await drizzleDb
+        .update(notificationsTable)
+        .set({
+          consumerIds: sql`array_remove(${notificationsTable.consumerIds}, ${consumerId})`,
+        })
+        .where(
+          and(
+            sql`${notificationsTable.id} <> ${id}`,
+            sql`${consumerId} = ANY(${notificationsTable.consumerIds})`
+          )
+        );
     },
     async () => undefined
   );
@@ -243,6 +267,21 @@ export async function deleteConsumers(
           deletedConsumerDetails.map((detail) => detail.notificationRowId)
         ),
       ];
+
+      // TODO MIJN-13137: Remove temporary consumerIds column after rollout window and remove the following block that keeps the legacy consumerIds in sync.
+      const deletedConsumerIds = [
+        ...new Set(deletedConsumerDetails.map((detail) => detail.consumerId)),
+      ];
+      for (const deletedConsumerId of deletedConsumerIds) {
+        await drizzleDb
+          .update(notificationsTable)
+          .set({
+            consumerIds: sql`array_remove(${notificationsTable.consumerIds}, ${deletedConsumerId})`,
+          })
+          .where(
+            sql`${deletedConsumerId} = ANY(${notificationsTable.consumerIds})`
+          );
+      }
 
       await deleteOrphanProfiles(notificationRowIds);
 

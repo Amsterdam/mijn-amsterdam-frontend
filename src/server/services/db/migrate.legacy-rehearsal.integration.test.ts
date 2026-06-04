@@ -195,7 +195,8 @@ describePg('drizzle migrations legacy rehearsal (postgres integration)', () => {
         AND column_name = 'consumer_ids'
     `);
 
-    expect(Number(legacyColumnCheck.rows[0]?.count ?? '0')).toBe(0);
+    // TODO MIJN-13137: Remove legacy column check after rollout window.
+    expect(Number(legacyColumnCheck.rows[0]?.count ?? '0')).toBe(1);
 
     const lastLoginDateTypeCheck = await pool.query<{ data_type: string }>(`
       SELECT data_type

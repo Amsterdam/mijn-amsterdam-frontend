@@ -17,6 +17,12 @@ export const notificationsTable = pgTable(
     id: varchar('id', { length: 64 }).notNull().primaryKey(),
     profileId: varchar('profile_id', { length: 43 }).notNull(),
     profileName: varchar('profile_name', { length: 200 }),
+    // TODO MIJN-13137: Compatibility column kept during rollout window so older app versions can still read consumer linkage.
+    consumerIds: varchar('consumer_ids', { length: 100 })
+      .array()
+      .$type<ConsumerId[]>()
+      .notNull()
+      .default([]),
     serviceIds: varchar('service_ids', { length: 50 })
       .array()
       .$type<ServiceId[]>()
@@ -33,7 +39,13 @@ export const notificationsTable = pgTable(
       .defaultNow(),
     lastLoginDate: timestamp('last_login_date', { withTimezone: true }),
   },
-  (table) => [index('bff_notifications_date_created_idx').on(table.dateCreated)]
+  (table) => [
+    index('bff_notifications_date_created_idx').on(table.dateCreated),
+    index('bff_notifications_consumer_ids_gin_idx').using(
+      'gin',
+      table.consumerIds
+    ),
+  ]
 );
 
 export const notificationsConsumerDetailsTable = pgTable(
