@@ -51,7 +51,7 @@ The cronjob first removes expired Consumer Details and immediately removes any P
 _Avoid_: Refresh-before-cleanup
 
 **Logout Notification**:
-The APP server webhook call made only for cronjob-driven Consumer Detail removal. The payload is a single object with a batched `consumerIds` array, and delivery is best-effort.
+The APP server webhook call made only for cronjob-driven Consumer Detail removal. The payload is a single object with a batched `device_ids` array equal to `consumerIds`, and delivery is best-effort.
 _Avoid_: Device logout, token revocation callback
 
 **Unregister Consumer**:
@@ -103,7 +103,7 @@ Dev: In what order does the cronjob work?
 Domain expert: First it removes expired Consumer Details and orphaned Profiles, then it refreshes notifications for the remaining Profiles.
 
 Dev: What do invalidation paths send to the APP server?
-Domain expert: All invalidation paths use unregisterConsumer, but only cronjob removal enables `triggerAmsAppUnregisterConsumerWebhook` and calls the logout-notification webhook with a single object containing batched consumerIds. The Consumer is still removed even if that webhook fails.
+Domain expert: All invalidation paths use unregisterConsumer, but only cronjob removal enables `triggerAmsAppUnregisterConsumerWebhook` and calls the logout-notification webhook with a single object containing batched device_ids (consumerIds). The Consumer is still removed even if that webhook fails.
 
 Dev: Do those two concerns still share one model layer?
 Domain expert: Yes. They use separate tables but currently live in the same model module.

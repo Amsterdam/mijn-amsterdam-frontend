@@ -177,6 +177,7 @@
     "@testcontainers/postgresql": "^12.0.1",
     "@types/debug": "^4.1.13",
     "@types/jsonwebtoken": "^9.0.10",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^9.39.4",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5",

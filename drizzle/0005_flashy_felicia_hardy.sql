@@ -1,0 +1,1 @@
+ALTER TABLE "bff_notification_consumer_details" ALTER COLUMN "login_expiry_date" SET NOT NULL;

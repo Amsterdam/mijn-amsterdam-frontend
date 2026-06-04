@@ -108,9 +108,7 @@ export async function getConsumerProfile(consumerId: ConsumerId) {
     lastLoginDate: profile.lastLoginDate
       ? toISOString(profile.lastLoginDate)
       : null,
-    loginExpiryDate: profile.loginExpiryDate
-      ? toISOString(profile.loginExpiryDate)
-      : null,
+    loginExpiryDate: toISOString(profile.loginExpiryDate),
     isRegistered: true,
   };
 }

@@ -50,7 +50,9 @@ export const notificationsConsumerDetailsTable = pgTable(
       .references(() => notificationsTable.id, { onDelete: 'cascade' }),
     loginExpiryDate: timestamp('login_expiry_date', {
       withTimezone: true,
-    }).default(sql`NOW() + INTERVAL '3 months'`),
+    })
+      .notNull()
+      .default(sql`NOW() + INTERVAL '3 months'`),
   },
   (table) => [
     index('bff_notification_consumer_details_notification_row_id_idx').on(
