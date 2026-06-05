@@ -22,6 +22,10 @@ parameters:
     displayName: BFF image tag used if btdBuild is false. Examples bff-$(Build.BuildId),bff-latest
     type: string
     default: bff-$(Build.BuildId)
+  - name: uiImageTag
+    displayName: UI image tag used if btdBuild is false. Examples ui-$(Build.BuildId),ui-latest
+    type: string
+    default: ui-$(Build.BuildId)
   - name: dtapName
     type: string
     default: t
@@ -49,5 +53,6 @@ jobs:
       btdTest: ${{ parameters.btdTest }}
       btdDeploy: ${{ parameters.btdDeploy }}
       bffImageTag: ${{ parameters.bffImageTag }}
+      uiImageTag: ${{ parameters.uiImageTag }}
       btdAppBFF: ${{ parameters.btdAppBFF }}
       btdAppUI: ${{ parameters.btdAppUI }}
