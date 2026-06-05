@@ -17,16 +17,18 @@ export async function runMigrations() {
 export async function runMigrationsCommand() {
   await import('../../helpers/load-env.ts');
 
-  const [{ logger }, { captureException }, { endPool }] = await Promise.all([
-    import('../../logging.ts'),
+  const [{ captureException }, { endPool }] = await Promise.all([
     import('../monitoring.ts'),
     import('./postgres.ts'),
   ]);
 
   try {
     await runMigrations();
-    logger.info('Drizzle migrations completed successfully.');
+    // Logger is not emitting when called from the migrate pipeline sow we use console.log
+    console.log('Drizzle migrations completed successfully.');
   } catch (error) {
+    // Logger is not emitting when called from the migrate pipeline sow we use console.log
+    console.log('Drizzle migrations Error.');
     captureException(error, {
       properties: {
         message: 'Drizzle migrations failed.',
@@ -41,7 +43,9 @@ export async function runMigrationsCommand() {
 const scriptName = path.parse(process.argv.at(1) ?? '').name;
 
 if (import.meta.main || scriptName === 'migrate') {
-  runMigrationsCommand().catch(() => {
+  try {
+    await runMigrationsCommand();
+  } catch {
     process.exit(1);
-  });
+  }
 }
