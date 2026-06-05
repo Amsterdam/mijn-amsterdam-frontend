@@ -28,14 +28,14 @@ parameters:
     type: boolean
     default: true
   - name: bffImageTag
-    displayName: BFF image tag used if btdBuild is false. Examples bff-$(Build.BuildId),bff-latest
+    displayName: BFF image tag - used if btdBuild is false. Examples bff-$(Build.BuildId) bff-latest
     type: string
     default: bff-$(Build.BuildId)
   - name: btdAppUI
     type: boolean
     default: true
   - name: uiImageTag
-    displayName: UI image tag used if btdBuild is false. Examples ui-$(Build.BuildId),ui-latest
+    displayName: UI image tag - used if btdBuild is false. Examples ui-$(Build.BuildId) ui-latest
     type: string
     default: ui-$(Build.BuildId)
 
