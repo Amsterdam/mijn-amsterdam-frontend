@@ -10,7 +10,7 @@ dotenvExpand.expand(envConfig);
 export default defineConfig({
   dialect: 'postgresql',
   schema: './src/server/services/db/schema/*.ts',
-  out: './drizzle',
+  out: './db-migrations',
   dbCredentials: {
     host: process.env.PGHOST ?? 'localhost',
     port: Number(process.env.PGPORT ?? '5432'),

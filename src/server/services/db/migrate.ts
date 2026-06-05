@@ -10,7 +10,7 @@ export async function runMigrations() {
   const db = drizzle(getPool());
 
   await migrate(db, {
-    migrationsFolder: resolve(process.cwd(), 'drizzle'),
+    migrationsFolder: resolve(process.cwd(), 'db-migrations'),
   });
 }
 

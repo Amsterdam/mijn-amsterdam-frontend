@@ -64,7 +64,7 @@ describe('amsapp-notifications-model (postgres integration)', () => {
     teardown = ctx.teardown;
 
     await migrate(db, {
-      migrationsFolder: resolve(process.cwd(), 'drizzle'),
+      migrationsFolder: resolve(process.cwd(), 'db-migrations'),
     });
 
     await import('./amsapp-notifications-model.ts');
