@@ -19,11 +19,9 @@ parameters:
     type: boolean
     default: true
   - name: bffImageTag
+    displayName: BFF image tag used if btdBuild is false. Examples bff-$(Build.BuildId),bff-latest
     type: string
     default: bff-$(Build.BuildId)
-    values:
-      - bff-$(Build.BuildId)
-      - bff-latest
   - name: dtapName
     type: string
     default: t
