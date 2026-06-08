@@ -22,7 +22,7 @@ import {
 } from '../../../universal/helpers/api.ts';
 import { defaultDateTimeFormat } from '../../../universal/helpers/date.ts';
 import { isNumeric, omit, pick } from '../../../universal/helpers/utils.ts';
-import camelize from '../../helpers/camelize.ts';
+import { camelize } from '../../helpers/camelize.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import { captureMessage } from '../monitoring.ts';

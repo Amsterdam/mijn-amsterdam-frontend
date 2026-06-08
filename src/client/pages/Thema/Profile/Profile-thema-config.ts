@@ -22,7 +22,8 @@ export const themaConfig = {
     title: THEMA_TITLE_BRP,
     featureToggle: {
       active: true,
-      wonenActive: isEnabled('WONEN.vve'),
+      vveActive: isEnabled('WONEN.vve'),
+      vveMonumentstatusActive: isEnabled('WONEN.vve.monumentstatus'),
       get aantalBewonersOpAdresTonenActive(): boolean {
         return (
           themaConfig[THEMA_ID_BRP].featureToggle.active &&

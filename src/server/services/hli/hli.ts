@@ -26,8 +26,7 @@ import {
   filterCombineUpcPcvData,
 } from './status-line-items/regeling-pcvergoeding.ts';
 import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config.ts';
-import type {
-  ApiResponse} from '../../../universal/helpers/api.ts';
+import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
   apiSuccessResult,
   getFailedDependencies,
@@ -50,11 +49,8 @@ import {
   sortZorgnedAanvragenByDateAndId,
 } from '../zorgned/zorgned-service.ts';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items.ts';
-import type {
-  ZorgnedAanvraagWithRelatedPersonsTransformed} from '../zorgned/zorgned-types.ts';
-import {
-  type ZorgnedPerson,
-} from '../zorgned/zorgned-types.ts';
+import type { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types.ts';
+import { type ZorgnedPerson } from '../zorgned/zorgned-types.ts';
 
 export type GetDisplayStatusFn<
   T extends ZaakDisplayStatus = ZaakDisplayStatus,

@@ -25,7 +25,7 @@ import type {
 import { getMissingDocumentsEmailForCaseType } from '../../../../server/services/vergunningen/config-and-types.ts';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { ThemaDetailPagina } from '../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 interface DetailPageContentProps<V> {

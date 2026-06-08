@@ -19,7 +19,8 @@ import type {
   DatasetFilterSelection,
   DatasetId,
   DatasetPropertyFilter,
-  DatasetPropertyValueWithCount} from '../../../universal/config/myarea-datasets.ts';
+  DatasetPropertyValueWithCount,
+} from '../../../universal/config/myarea-datasets.ts';
 import {
   DATASETS,
   getDatasetCategoryId,

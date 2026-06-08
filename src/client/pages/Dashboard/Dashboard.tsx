@@ -8,7 +8,7 @@ import styles from './Dashboard.module.scss';
 import { DashboardHeader } from './DashboardHeader.tsx';
 import { WelcomeHeading } from './WelcomHeading.tsx';
 import { isLoading } from '../../../universal/helpers/api.ts';
-import LoadingContent from '../../components/LoadingContent/LoadingContent.tsx';
+import { LoadingContent } from '../../components/LoadingContent/LoadingContent.tsx';
 import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 import { MyAreaDashboard } from '../../components/MyArea/MyAreaDashboard.tsx';
 import { MyNotification } from '../../components/MyNotification/MyNotification.tsx';

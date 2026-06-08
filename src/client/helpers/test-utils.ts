@@ -1,4 +1,4 @@
-import type { RenderResult} from '@testing-library/react';
+import type { RenderResult } from '@testing-library/react';
 import { within } from '@testing-library/react';
 
 export function getTable(

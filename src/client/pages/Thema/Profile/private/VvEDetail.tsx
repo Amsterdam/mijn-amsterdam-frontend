@@ -9,8 +9,9 @@ import {
   type RowSet,
 } from '../../../../components/Datalist/Datalist.tsx';
 import { PageContentCell } from '../../../../components/Page/Page.tsx';
-import ThemaDetailPagina from '../../../../components/Thema/ThemaDetailPagina.tsx';
+import { ThemaDetailPagina } from '../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
+import { themaConfig } from '../Profile-thema-config.ts';
 
 type VveDetailsProps = {
   vve: VvEDataFrontend;
@@ -41,6 +42,7 @@ function VveDetail({ vve }: VveDetailsProps) {
     {
       label: 'Monumentstatus',
       content: vve.monumentStatus ? 'Ja' : 'Nee',
+      isVisible: themaConfig.BRP.featureToggle.vveMonumentstatusActive,
     },
   ].filter((row) => !!row.content);
 

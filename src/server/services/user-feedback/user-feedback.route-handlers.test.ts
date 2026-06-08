@@ -4,7 +4,10 @@ import { describe, expect, vi, beforeEach } from 'vitest';
 
 import * as routeHandlers from './user-feedback.route-handlers.ts';
 import * as userFeedback from './user-feedback.ts';
-import { ResponseAuthenticatedMock, RequestMock } from '../../../testing/utils.ts';
+import {
+  ResponseAuthenticatedMock,
+  RequestMock,
+} from '../../../testing/utils.ts';
 import type { ResponseAuthenticated } from '../../routing/route-helpers.ts';
 
 const {

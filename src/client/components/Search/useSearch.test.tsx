@@ -18,7 +18,7 @@ import {
 import type { DecosZaakFrontend } from '../../../server/services/vergunningen/config-and-types.ts';
 import { bffApi } from '../../../testing/utils.ts';
 import type { AppState } from '../../../universal/types/App.types.ts';
-import MockApp from '../../pages/MockApp.tsx';
+import { MockApp } from '../../pages/MockApp.tsx';
 import { routeConfig } from '../MyArea/MyArea-thema-config.ts';
 
 export function setupFetchStub(data: any) {

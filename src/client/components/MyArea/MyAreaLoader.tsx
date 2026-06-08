@@ -3,9 +3,13 @@ import { lazy, Suspense } from 'react';
 import type { MyAreaProps } from './MyArea.tsx';
 import styles from './MyAreaLoadingIndicator.module.scss';
 
-export const MyAreaLazy = lazy(() => import('./MyArea.tsx'));
-export const MyAreaDashboardLazy = lazy(
-  () => import('./MyAreaDashboardMap.tsx')
+export const MyAreaLazy = lazy(() =>
+  import('./MyArea.tsx').then((m) => ({ default: m.MyArea }))
+);
+export const MyAreaDashboardLazy = lazy(() =>
+  import('./MyAreaDashboardMap.tsx').then((m) => ({
+    default: m.MyAreaDashboardMap,
+  }))
 );
 
 interface MyAreaLoaderProps extends MyAreaProps {

@@ -14,7 +14,7 @@ import type {
 import { jsonCopy } from '../../../../universal/helpers/utils.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
 import { expectHeaders, getTable } from '../../../helpers/test-utils.ts';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 
 type ExploitatieAanvraag = VarenZakenFrontend<ZaakVergunningExploitatieType>;
 const exploitatieInProgress = {

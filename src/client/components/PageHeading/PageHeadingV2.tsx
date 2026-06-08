@@ -1,4 +1,4 @@
-import type { ReactNode} from 'react';
+import type { ReactNode } from 'react';
 import { type ReactElement } from 'react';
 
 import { Breadcrumb, Heading, Icon } from '@amsterdam/design-system-react';

@@ -1,7 +1,9 @@
+import type { JSONValue } from '../../../../../universal/types/App.types';
+
 interface JsonStringProps {
-  data: any;
+  data: JSONValue;
 }
 
-export default function JsonString({ data }: JsonStringProps) {
+export function JsonString({ data }: JsonStringProps) {
   return <pre>{JSON.stringify(data, null, '  ')}</pre>;
 }

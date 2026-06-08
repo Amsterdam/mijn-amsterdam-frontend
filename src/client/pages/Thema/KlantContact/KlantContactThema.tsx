@@ -5,7 +5,7 @@ import { CommunicatieVoorkeuren } from './Communicatievoorkeuren/CommunicatieVoo
 import { ContactMomenten } from './Contactmomenten/ContactmomentenTable.tsx';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
-import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
+import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
 import { getRedactedClass } from '../../../helpers/cobrowse.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 

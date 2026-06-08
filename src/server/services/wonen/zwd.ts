@@ -15,7 +15,7 @@ import type {
   DataRequestConfig,
   DataRequestHeaders,
 } from '../../config/source-api.ts';
-import camelize from '../../helpers/camelize.ts';
+import { camelize } from '../../helpers/camelize.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import {

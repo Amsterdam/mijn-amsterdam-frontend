@@ -10,10 +10,10 @@ import type { Row, RowSet } from '../../../components/Datalist/Datalist.tsx';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import { DocumentListV2 } from '../../../components/DocumentList/DocumentListV2.tsx';
 import { MissingDocumentMailto } from '../../../components/DocumentList/MissingDocumentMailto/MissingDocumentMailto.tsx';
-import LoadingContent from '../../../components/LoadingContent/LoadingContent.tsx';
+import { LoadingContent } from '../../../components/LoadingContent/LoadingContent.tsx';
 import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { ThemaDetailPagina } from '../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { useVergunningDocumentList } from '../Vergunningen/detail-page-content/useVergunningDocumentsList.hook.ts';
 

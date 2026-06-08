@@ -23,7 +23,7 @@ const PiwikTrackerConfig: UserOptions = {
   heartBeat: {
     active: false,
   },
-  urlTransformer: urlTransformers.redactIdLikePathSegments,
+  urlTransformer: urlTransformers.redactIdLikeSegmentsInUrl,
 };
 
 // See dimension Ids specified in aansluitgids MIJN-5416
@@ -59,6 +59,26 @@ export const trackPageView = memoize(_trackPageView, {
   length: 1,
   max: 1,
 });
+
+export function trackLinkClick(
+  componentName: string,
+  href: string,
+  linkTitle: string,
+  profileType: ProfileType
+) {
+  return (
+    piwikInstance &&
+    piwikInstance.trackLinkClick({
+      componentName,
+      href,
+      linkTitle,
+      isInternalDestination:
+        new URL(href, window.location.href).hostname ===
+        window.location.hostname,
+      customDimensions: [profileTypeDimension(profileType)],
+    })
+  );
+}
 
 export function trackDownload(
   downloadDescription: string,

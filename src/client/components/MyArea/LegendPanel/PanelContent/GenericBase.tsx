@@ -4,7 +4,7 @@ import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import styles from './GenericBase.module.scss';
-import JsonString from './JsonString.tsx';
+import { JsonString } from './JsonString.tsx';
 import {
   DATASETS,
   getDatasetCategoryId,
@@ -35,11 +35,7 @@ export function GenericContent({ datasetId, panelItem }: GenericContentProps) {
   );
 }
 
-export default function GenericBase({
-  title,
-  supTitle,
-  children,
-}: GenericBaseProps) {
+export function GenericBase({ title, supTitle, children }: GenericBaseProps) {
   const isPhone = useSmallScreen();
   return (
     <div className={styles.GenericBase}>

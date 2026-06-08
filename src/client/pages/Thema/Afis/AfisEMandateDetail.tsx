@@ -22,7 +22,7 @@ import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { Spinner } from '../../../components/Spinner/Spinner.tsx';
 import { TableV2 } from '../../../components/Table/TableV2.tsx';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { useWidescreen } from '../../../hooks/media.hook.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 

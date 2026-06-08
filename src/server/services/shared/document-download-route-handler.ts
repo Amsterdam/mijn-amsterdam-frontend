@@ -8,8 +8,7 @@ import type {
   ApiSuccessResponse,
 } from '../../../universal/helpers/api.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import type {
-  RequestWithRouteAndQueryParams} from '../../routing/route-helpers.ts';
+import type { RequestWithRouteAndQueryParams } from '../../routing/route-helpers.ts';
 import {
   sendResponse,
   type RecordStr2,

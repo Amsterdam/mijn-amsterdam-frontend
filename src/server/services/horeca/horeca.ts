@@ -1,11 +1,10 @@
 import type { HorecaVergunningFrontend } from './decos-zaken.ts';
 import { decosZaakTransformers } from './decos-zaken.ts';
 import { themaConfig } from '../../../client/pages/Thema/Horeca/Horeca-thema-config.ts';
-import type {
-  ApiResponse} from '../../../universal/helpers/api.ts';
+import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
   apiSuccessResult,
-  apiDependencyError
+  apiDependencyError,
 } from '../../../universal/helpers/api.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import {

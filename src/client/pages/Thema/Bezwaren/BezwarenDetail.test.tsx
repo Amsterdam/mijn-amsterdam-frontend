@@ -4,7 +4,7 @@ import { generatePath } from 'react-router';
 import { themaConfig } from './Bezwaren-thema-config.ts';
 import { BezwarenDetail } from './BezwarenDetail.tsx';
 import type { AppState } from '../../../../universal/types/App.types.ts';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 
 const testState = {
   BEZWAREN: {

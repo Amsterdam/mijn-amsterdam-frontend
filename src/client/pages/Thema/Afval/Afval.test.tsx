@@ -7,7 +7,7 @@ import type { AfvalFractionData } from '../../../../server/services/afval/afval.
 import { jsonCopy } from '../../../../universal/helpers/utils.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
 import { useProfileTypeValue } from '../../../hooks/useProfileType.ts';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 
 //const { BRP, AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
 

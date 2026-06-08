@@ -1,7 +1,5 @@
 import { fetchDecosParkeerVergunningen } from './parkeren-decos-service.ts';
-import {
-  themaConfig,
-} from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config.ts';
+import { themaConfig } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config.ts';
 import {
   apiSuccessResult,
   apiDependencyError,

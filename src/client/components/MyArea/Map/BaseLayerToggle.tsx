@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import classnames from 'classnames';
 import type { TileLayerOptions } from 'leaflet';
 
-import BaseLayer, { MAP_SERVER_ROOT } from './BaseLayer.tsx';
+import { BaseLayer, MAP_SERVER_ROOT } from './BaseLayer.tsx';
 import styles from './BaseLayerToggle.module.scss';
 
 export enum BaseLayerType {
@@ -43,7 +43,7 @@ export const AERIAL_AMSTERDAM_LAYERS: MapLayer[] = [
   },
 ];
 
-const BaseLayerToggle: React.FC<Props> = ({
+export function BaseLayerToggle({
   onChangeLayer,
   aerialLayers = AERIAL_AMSTERDAM_LAYERS,
   topoLayers = DEFAULT_AMSTERDAM_LAYERS,
@@ -52,7 +52,7 @@ const BaseLayerToggle: React.FC<Props> = ({
   activeLayer = BaseLayerType.Topo,
   options,
   ...otherProps
-}) => {
+}: Props) {
   const didMount = useRef(false);
   const [toggleBaseLayerType, setToggleBaseLayerType] = useState(activeLayer);
 
@@ -112,6 +112,4 @@ const BaseLayerToggle: React.FC<Props> = ({
       />
     </div>
   );
-};
-
-export default BaseLayerToggle;
+}

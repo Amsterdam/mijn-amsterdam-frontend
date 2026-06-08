@@ -12,7 +12,10 @@ import {
   sendResponse,
   type ResponseAuthenticated,
 } from '../../routing/route-helpers.ts';
-import { fetchAanvragenRaw, fetchDocument } from '../zorgned/zorgned-service.ts';
+import {
+  fetchAanvragenRaw,
+  fetchDocument,
+} from '../zorgned/zorgned-service.ts';
 
 type TransactionKeysEncryptedRequest = Request<{
   transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted'];
