@@ -1,6 +1,6 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import ThemaPaginaTable from '../../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaTable } from '../../../../components/Thema/ThemaPaginaTable.tsx';
 import {
   type ContactmomentFrontendFinal,
   tableConfigs,

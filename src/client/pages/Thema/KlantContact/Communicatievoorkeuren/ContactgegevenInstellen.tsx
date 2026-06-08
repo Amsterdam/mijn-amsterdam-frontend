@@ -6,7 +6,7 @@ import {
   ContactgegevenVerify,
 } from './ValueInputAndValidation.tsx';
 import { PageContentCell } from '../../../../components/Page/Page.tsx';
-import ThemaDetailPagina from '../../../../components/Thema/ThemaDetailPagina.tsx';
+import { ThemaDetailPagina } from '../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useSessionStorage } from '../../../../hooks/storage.hook.ts';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
 import { useKlantcontactData } from '../useKlantcontactData.hook.tsx';
