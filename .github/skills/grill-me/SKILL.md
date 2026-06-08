@@ -21,7 +21,7 @@ During codebase exploration, also look for existing documentation:
 
 ### File structure
 
-The `CONTEXT-MAP.md` exists at the root and points to where each specific context lives:
+If present, `CONTEXT-MAP.md` at the repo root points to where each specific context lives:
 
 ```
 /

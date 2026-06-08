@@ -1,6 +1,6 @@
 ---
 name: write-a-prd
-description: Create a PRD through user interview, codebase exploration, and module design, then write the PRD to a date-prefixed feature folder under /docs/plan/ (alongside plan.md if it exists). Use when user wants to write a PRD, create a product requirements document, or plan a new feature.
+description: Create a PRD through user interview, codebase exploration, and module design, then write the PRD to a date-prefixed feature folder under ./docs/plan/ (alongside plan.md if it exists). Use when user wants to write a PRD, create a product requirements document, or plan a new feature.
 ---
 
 This skill will be invoked when the user wants to create a PRD. You may skip steps if you don't consider them necessary.
@@ -17,7 +17,7 @@ A deep module (as opposed to a shallow module) is one which encapsulates a lot o
 
 Check with the user that these modules match their expectations. Check with the user which modules they want tests written for.
 
-5. Once you have a complete understanding of the problem and solution, use the template below to write the PRD. Create or reuse a date-prefixed feature folder in /docs/plan with the pattern `YYYY-MM-DD-feature-name`, and save the PRD there as `prd.md` (for example, `/docs/plan/2026-06-02-split-amsapp-notification-profiles/prd.md`).
+5. Once you have a complete understanding of the problem and solution, use the template below to write the PRD. Create or reuse a date-prefixed feature folder in ./docs/plan with the pattern `YYYY-MM-DD-feature-name`, and save the PRD there as `prd.md` (for example, `./docs/plan/2026-06-02-split-amsapp-notification-profiles/prd.md`).
 
 <prd-template>
 

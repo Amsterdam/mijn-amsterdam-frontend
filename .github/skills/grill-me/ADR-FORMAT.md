@@ -38,7 +38,7 @@ If a decision is easy to reverse, skip it — you'll just reverse it. If it's no
 
 ### What qualifies
 
-- **Architectural shape.** "This is a monorepo. Persistence is mostly left to other municipal and govermental source API's. Our own persistence layer is a Postgres DB."
+- **Architectural shape.** "This is a monorepo. Persistence is mostly left to other municipal and governmental source APIs. Our own persistence layer is a Postgres DB."
 - **Integration patterns between contexts.** "The frontend consumes BFF domain endpoints; the BFF aggregates/normalizes municipal source APIs and can pass through OIDC bearer tokens when required."
 - **Technology choices that carry lock-in.** "Authentication is built around DigiD/eHerkenning (OIDC), and runtime feature toggles come from Azure App Configuration."
 - **Boundary and scope decisions.** "`src/universal` contains only code that can run in both browser and Node; UI concerns stay in `src/client`, and I/O/integration concerns stay in `src/server`." The explicit no-s are as valuable as the yes-s.
