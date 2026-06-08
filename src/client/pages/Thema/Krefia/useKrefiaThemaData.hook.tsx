@@ -1,8 +1,7 @@
 import { krefiaTableConfig, themaConfig } from './Krefia-thema-config.ts';
-import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.types.ts';
 import { isError, isLoading } from '../../../../universal/helpers/api.ts';
 import type { LinkProps } from '../../../../universal/types/App.types.ts';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { MaLink } from '../../../components/MaLink/MaLink.tsx';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 
 const kredietBankLink: LinkProps = {
@@ -18,13 +17,16 @@ const FIBULink: LinkProps = {
 export function useKrefiaThemaData() {
   const { KREFIA } = useAppStateGetter();
   const linkListItems: LinkProps[] = [];
-  const deepLinks_ = KREFIA.content?.deepLinks ?? [];
-
-  const deepLinks = addLinkElementToProperty<KrefiaDeepLink>(
-    deepLinks_,
-    'title',
-    true
-  );
+  const deepLinks = (KREFIA.content?.deepLinks ?? []).map((deepLink) => {
+    return {
+      ...deepLink,
+      detailLinkComponent: (
+        <MaLink href={deepLink.link.to} rel="noopener noreferrer">
+          {deepLink.link.title}
+        </MaLink>
+      ),
+    };
+  });
 
   const hasKredietbank = !!deepLinks?.find(
     ({ type }) => type === 'schuldhulp' || type === 'lening'

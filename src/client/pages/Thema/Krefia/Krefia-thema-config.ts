@@ -35,7 +35,7 @@ export const themaConfig: KrefiaThemaConfig = {
 
 const displayPropsDeeplink: DisplayProps<KrefiaDeepLink> = {
   props: {
-    displayStatus: 'Status',
+    title: 'Status',
     detailLinkComponent: 'Bekijk op Krefia',
   },
   config: {

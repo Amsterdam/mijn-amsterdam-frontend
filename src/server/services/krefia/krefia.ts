@@ -60,7 +60,7 @@ function transformKrefiaResponse(responseData: KrefiaSourceResponse): Krefia {
         const deepLinkType = key as KrefiaDeepLink['type'];
         const title = getLinkText(deepLinkType);
         const krefiaDeepLink: KrefiaDeepLink = {
-          displayStatus: deepLink.title,
+          title: deepLink.title,
           link: {
             to: deepLink.url,
             title,
