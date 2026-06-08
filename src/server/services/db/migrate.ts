@@ -1,4 +1,17 @@
+/* eslint-disable no-console */
 import path, { resolve } from 'node:path';
+
+async function checkDatabaseConnectivity() {
+  const { getPool } = await import('./postgres.ts');
+
+  try {
+    await getPool().query('SELECT 1;');
+    console.log('Database connectivity pre-check succeeded.');
+  } catch (error) {
+    console.error('Database connectivity pre-check failed.');
+    throw error;
+  }
+}
 
 export async function runMigrations() {
   const [{ drizzle }, { migrate }, { getPool }] = await Promise.all([
@@ -6,6 +19,8 @@ export async function runMigrations() {
     import('drizzle-orm/node-postgres/migrator'),
     import('./postgres.ts'),
   ]);
+
+  await checkDatabaseConnectivity();
 
   const db = drizzle(getPool());
 

@@ -10,7 +10,8 @@ export const pgDbConfig: PoolConfig = {
   ssl: IS_DEVELOPMENT ? false : { rejectUnauthorized: false },
   max: 20,
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
+  // TODO(MIJN-12965): rever temporary timeout increase after testing back to 2000
+  connectionTimeoutMillis: 10000,
   // See https://node-postgres.com/features/pooling#pool-options
   maxUses: 5000,
   maxLifetimeSeconds: 900,
