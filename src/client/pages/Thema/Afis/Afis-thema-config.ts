@@ -106,14 +106,15 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_ZAKEN_ON_THEMA_PAGINA;
 
 const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
   props: {
+    factuurNummer: 'Factuurnummer',
     factuurNummerEl: 'Factuurnummer',
     afzender: 'Afzender',
     paymentDueDateFormatted: 'Vervaldatum',
     statusDescription: 'Status',
   },
   config: {
-    large: ['15%', '25%', '25%', '35%'],
-    small: [true, true, false, false],
+    large: [false, '15%', '25%', '25%', '35%'],
+    small: [true, false, true, false, false],
   },
 };
 
