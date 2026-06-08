@@ -141,8 +141,8 @@ export const displayPropsTermijnenTable: DisplayProps<AfisFactuurTermijn> = {
     statusDescription: 'Termijn',
   },
   config: {
-    large: ['10%', '25%', '20%', '45%', '0'],
-    small: ['0', '0', '0', '0', '100%'],
+    large: ['10%', '25%', '20%', '45%', false],
+    small: [false, false, false, false, '100%'],
   },
 };
 
