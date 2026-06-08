@@ -30,7 +30,7 @@ export function useDisplayPropsEntries<T extends DisplayProps<object>>(
       : undefined;
     return [
       key,
-      { label: value, width: typeof width === 'number' ? width : 0 },
+      { label: value, width: typeof width === 'string' ? width : undefined },
     ] as const;
   });
 }

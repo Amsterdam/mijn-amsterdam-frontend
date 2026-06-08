@@ -1,6 +1,6 @@
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
 
-import type { ContactmomentProps } from './KlantContact-thema-config.ts';
+import type { ContactmomentFrontend_ } from './KlantContact-thema-config.ts';
 import { useContactmomentenListData } from './useContactmomentenListData.hook.tsx';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import { AfspraakCard } from '../../../components/AfspraakCard/AfspraakCard.tsx';
@@ -120,7 +120,7 @@ function ContactMomenten() {
     useContactmomentenListData();
 
   return (
-    <ThemaPaginaZaken<ContactmomentProps>
+    <ThemaPaginaZaken<ContactmomentFrontend_>
       contentAfterTheTitle={
         <>
           <Paragraph className="ams-mb-m">

@@ -10,10 +10,11 @@ import type {
   WithPageConfig,
 } from '../../../config/thema-types.ts';
 
-export type ContactmomentProps = ContactmomentFrontend & {
-  kanaalEl: ReactNode;
-  subjectLink: ReactNode;
+export type ContactmomentFrontend_ = ContactmomentFrontend & {
   className: string;
+  title: ReactNode;
+  titleLink: ReactNode;
+  kanaalEl: ReactNode;
 };
 
 const THEMA_ID = 'CONTACT';
@@ -73,16 +74,17 @@ export const themaConfig = {
   ],
 } as const satisfies ContactThema;
 
-const contactmomentenDisplayProps: DisplayProps<ContactmomentProps> = {
+const contactmomentenDisplayProps: DisplayProps<ContactmomentFrontend_> = {
   props: {
+    title: 'Onderwerp',
+    titleLink: 'Onderwerp',
     kanaalEl: 'Contactvorm',
-    subjectLink: 'Onderwerp',
     datePublishedFormatted: 'Datum',
     referenceNumber: 'Referentienummer',
   },
   config: {
-    large: ['25%', '40%', '20%', '15%'],
-    small: ['30%', '50%', '20%', '0'],
+    large: [false, true, true, true, true],
+    small: [true, false, true, true, true],
   },
 };
 

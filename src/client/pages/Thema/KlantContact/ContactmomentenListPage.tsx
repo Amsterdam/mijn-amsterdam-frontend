@@ -1,4 +1,4 @@
-import type { ContactmomentProps } from './KlantContact-thema-config.ts';
+import type { ContactmomentFrontend_ } from './KlantContact-thema-config.ts';
 import { useContactmomentenListData } from './useContactmomentenListData.hook.tsx';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
@@ -17,7 +17,7 @@ export function ContactmomentenListPage() {
   useHTMLDocumentTitle(routeConfig);
 
   return (
-    <ListPagePaginated<ContactmomentProps>
+    <ListPagePaginated<ContactmomentFrontend_>
       items={contactmomenten}
       themaId={id}
       title={`Alle ${tableConfig.title.toLowerCase()}`}

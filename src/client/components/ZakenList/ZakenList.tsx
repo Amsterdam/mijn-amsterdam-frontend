@@ -14,13 +14,35 @@ import { MaRouterLink } from '../MaLink/MaLink.tsx';
 import type { DisplayProps } from '../Table/TableV2.tsx';
 import { useDisplayPropsEntries } from '../Table/useDisplayPropEntries.hook.ts';
 
+function LinkOrFragment({
+  children,
+  link,
+}: {
+  children: React.ReactNode;
+  link?: LinkProps;
+}) {
+  if (link?.to) {
+    return (
+      <MaRouterLink
+        href={link.to}
+        maVariant="fatNoUnderline"
+        className={styles.ZakenListLink}
+      >
+        {children}
+        <Icon svg={ChevronForwardIcon} className={styles.IconFW} aria-hidden />
+      </MaRouterLink>
+    );
+  }
+  return <>{children}</>;
+}
+
 type ZakenListProps<T> = {
   zaken: T[];
   className?: string;
   displayProps: DisplayProps<T>;
 };
 
-export function ZakenList<T extends { link: LinkProps; title: string }>({
+export function ZakenList<T extends { link?: LinkProps; title: string }>({
   zaken,
   className,
   displayProps,
@@ -28,9 +50,9 @@ export function ZakenList<T extends { link: LinkProps; title: string }>({
   const displayPropEntries = useDisplayPropsEntries(displayProps);
   const firstZaak = zaken[0] ?? ({} as T);
   const titleAttribute = (
-    typeof displayPropEntries[0][0] === 'string'
+    firstZaak[displayPropEntries[0][0] as keyof T]
       ? displayPropEntries[0][0]
-      : 'title' in firstZaak && typeof firstZaak.title === 'string'
+      : typeof firstZaak.title === 'string'
         ? 'title'
         : Object.keys(firstZaak).filter(
             (key) =>
@@ -38,6 +60,7 @@ export function ZakenList<T extends { link: LinkProps; title: string }>({
               typeof firstZaak[key as keyof T] !== 'object'
           )[0]
   ) as keyof T;
+
   return (
     <UnorderedList
       markers={false}
@@ -49,14 +72,10 @@ export function ZakenList<T extends { link: LinkProps; title: string }>({
         );
         return (
           <OrderedList.Item key={key} className={styles.ListViewItem}>
-            <MaRouterLink
-              href={zaak.link.to}
-              key={key}
-              maVariant="fatNoUnderline"
-            >
+            <LinkOrFragment link={zaak.link}>
               <article className={styles.ListViewArticle}>
                 <Heading level={4} size="level-4">
-                  {zaak[titleAttribute]}
+                  {zaak[titleAttribute] as React.ReactNode}
                 </Heading>
 
                 <Paragraph>
@@ -64,18 +83,13 @@ export function ZakenList<T extends { link: LinkProps; title: string }>({
                     .slice(1)
                     .map(([propKey, { label }], i) => (
                       <span key={propKey} className={styles.ListViewProp}>
-                        {i > 0 ? <strong>{label}:</strong> : label}{' '}
-                        {String(zaak[propKey as keyof T] ?? '')}
+                        <strong>{label}:</strong>{' '}
+                        {zaak[propKey as keyof T] as React.ReactNode}
                       </span>
                     ))}
                 </Paragraph>
-                <Icon
-                  svg={ChevronForwardIcon}
-                  className={styles.IconFW}
-                  aria-hidden
-                />
               </article>
-            </MaRouterLink>
+            </LinkOrFragment>
           </OrderedList.Item>
         );
       })}

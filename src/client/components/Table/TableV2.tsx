@@ -84,15 +84,11 @@ export function TableV2<T extends object = ZaakAanvraagDetail>({
         {showTHead && (
           <Table.Header>
             <Table.Row>
-              {displayPropEntries.map(([key, { label, width }], index) => {
+              {displayPropEntries.map(([key, { label, width }]) => {
                 if (label) {
+                  const st = width ? { width } : undefined;
                   return (
-                    <Table.HeaderCell
-                      key={`th-${key}`}
-                      style={{
-                        width,
-                      }}
-                    >
+                    <Table.HeaderCell key={`th-${key}`} style={st}>
                       {label}
                     </Table.HeaderCell>
                   );

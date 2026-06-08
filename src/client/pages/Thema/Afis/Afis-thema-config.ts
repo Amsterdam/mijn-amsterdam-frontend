@@ -121,13 +121,14 @@ const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
 const displayPropsFacturenAfgehandeldOfOvergedragen: DisplayProps<AfisFactuurFrontend> =
   {
     props: {
+      factuurNummer: 'Factuurnummer',
       factuurNummerEl: 'Factuurnummer',
       afzender: 'Afzender',
       statusDescription: 'Status',
     },
     config: {
-      large: ['25%', '25%', '50%'],
-      small: [true, true, false],
+      large: [false, '25%', '25%', '50%'],
+      small: [true, false, true, false],
     },
   };
 

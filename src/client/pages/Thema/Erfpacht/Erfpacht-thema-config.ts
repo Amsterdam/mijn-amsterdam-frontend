@@ -137,8 +137,15 @@ export function getTableConfig(erfpachtData: ErfpachtDossiersResponse | null) {
   const dossiersBase = erfpachtData?.dossiers;
 
   const displayPropsDossiers: DisplayPropsDossiers = {
-    voorkeursadres: dossiersBase?.titelVoorkeursAdres,
-    dossierNummer: dossiersBase?.titelDossiernummer,
+    props: {
+      detailLinkComponent: dossiersBase?.titelVoorkeursAdres,
+      dossierNummer: dossiersBase?.titelDossiernummer,
+      voorkeursadres: dossiersBase?.titelVoorkeursAdres,
+    },
+    config: {
+      large: [true, true, false],
+      small: [false, true, true],
+    },
   };
 
   const titleDossiers = erfpachtData?.titelDossiersKop;

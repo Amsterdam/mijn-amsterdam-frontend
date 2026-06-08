@@ -24,6 +24,7 @@ interface ThemaPaginaZakenProps<T> {
   totalItems?: number;
   textNoContent?: string;
   contentAfterTheTitle?: ReactNode;
+  contentAfterTheZaken?: ReactNode;
   title?: string;
   listPageLinkLabel?: string;
   listPageLinkTitle?: string;
@@ -36,6 +37,7 @@ export default function ThemaPaginaZaken<
 >({
   title = '',
   contentAfterTheTitle = '',
+  contentAfterTheZaken = '',
   zaken,
   className,
   textNoContent,
@@ -55,17 +57,15 @@ export default function ThemaPaginaZaken<
   const zaken_ = hasListPage ? zaken.slice(0, maxItems) : zaken;
   const isSmallScreen = useSmallScreen();
 
-  const list =
+  const zakenList =
     (isSmallScreen && variant !== 'table') || variant === 'list' ? (
       <>
-        <Heading level={2} size="level-2" className="ams-mb-m">
+        <Heading level={2} size="level-2" className="ams-mb-s">
           {title}
         </Heading>
         {contentAfterTheTitle}
-        {zaken_.length > 0 ? (
+        {zaken_.length > 0 && (
           <ZakenList<T> zaken={zaken_} displayProps={displayProps} />
-        ) : (
-          <Paragraph>{textNoContent ?? textNoContentDefault}</Paragraph>
         )}
       </>
     ) : (
@@ -81,7 +81,8 @@ export default function ThemaPaginaZaken<
 
   return (
     <PageContentCell>
-      {list}
+      {zakenList}
+      {contentAfterTheZaken}
       {!zaken_.length && (
         <Paragraph>{textNoContent ?? textNoContentDefault}</Paragraph>
       )}

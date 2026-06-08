@@ -1,5 +1,3 @@
-import type { ReactNode } from 'react';
-
 import { Paragraph } from '@amsterdam/design-system-react';
 
 import { listPageParamKind } from './HLI-thema-config.ts';
@@ -9,7 +7,10 @@ import type {
   HLIRegelingFrontend,
   HLIRegelingSpecificatieFrontend,
 } from '../../../../server/services/hli/hli-regelingen-types.ts';
-import { type StadspasResponseFrontend } from '../../../../server/services/hli/stadspas-types.ts';
+import {
+  type StadspasFrontend,
+  type StadspasResponseFrontend,
+} from '../../../../server/services/hli/stadspas-types.ts';
 import { entries } from '../../../../universal/helpers/utils.ts';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
@@ -28,56 +29,61 @@ export function HistoricItemsMention() {
   );
 }
 
-type StadspasDisplayProps = {
-  owner: ReactNode;
-  actief: ReactNode;
+type StadspasFrontend_ = Omit<StadspasFrontend, 'owner' | 'actief'> & {
+  owner: string;
+  ownerEl: React.ReactNode;
+  actief: string;
 };
 
-const stadspasDisplayProps: DisplayProps<StadspasDisplayProps> = {
-  owner: '',
-  actief: 'Status',
+const stadspasDisplayProps: DisplayProps<StadspasFrontend_> = {
+  props: {
+    owner: 'Naam',
+    ownerEl: '',
+    balanceFormatted: 'Saldo',
+    actief: 'Status',
+  },
+  config: {
+    large: [false, '30%', '20%', '50%'],
+    small: [true, false, true, true],
+  },
 };
 
 function Stadspassen({
   stadspassen,
   dateExpiryFormatted,
 }: StadspasResponseFrontend) {
+  console.log('stadspassen', stadspassen);
   const passen = stadspassen.map((pas) => {
     return {
-      owner: (
+      ...pas,
+      ownerEl: (
         <MaRouterLink maVariant="fatNoUnderline" href={pas.link?.to}>
           <span
             className={styles.Stadspas_owner}
           >{`Stadspas van ${pas.owner.firstname}`}</span>
-          {!!pas.balance && (
-            <span className={styles.Stadspas_balance}>
-              Saldo {pas.balanceFormatted}
-            </span>
-          )}
         </MaRouterLink>
       ),
-      actief: (
-        <span className={styles.StatusValue}>
-          {pas.actief ? 'Actief' : 'Geblokkeerd'}
-        </span>
-      ),
+      owner: `Stadspas van ${pas.owner.firstname}`,
+      actief: pas.actief ? 'Actief' : 'Inactief',
     };
   });
 
   return (
-    <PageContentCell>
-      <ThemaPaginaZaken<StadspasDisplayProps>
+    <>
+      <ThemaPaginaZaken<StadspasFrontend>
         displayProps={stadspasDisplayProps}
         zaken={passen}
         className={styles.Stadspassen}
+        contentAfterTheZaken={
+          !!stadspassen?.length &&
+          dateExpiryFormatted && (
+            <Paragraph size="small">
+              Het huidige stadspasjaar eindigt op {dateExpiryFormatted}.
+            </Paragraph>
+          )
+        }
       />
-
-      {!!stadspassen?.length && dateExpiryFormatted && (
-        <Paragraph size="small">
-          Het huidige stadspasjaar eindigt op {dateExpiryFormatted}.
-        </Paragraph>
-      )}
-    </PageContentCell>
+    </>
   );
 }
 

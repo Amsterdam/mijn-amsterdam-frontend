@@ -37,7 +37,7 @@ const displayPropsHuidigeVergunningen: VergunningFrontendExpireableDisplayProps 
     },
     config: {
       large: ['20%', '45%', '15%', '15%'],
-      small: ['50%', '50%', '0', '0'],
+      small: [true, true, false, false],
     },
   };
 
@@ -50,7 +50,7 @@ const displayPropsLopendeAanvragen: VergunningFrontendDisplayProps = {
   },
   config: {
     large: ['20%', '45%', '15%', '15%'],
-    small: ['50%', '50%', '0', '0'],
+    small: [true, false, false, true],
   },
 };
 
@@ -62,7 +62,7 @@ const displayPropsEerdereVergunningen: VergunningFrontendDisplayProps = {
   },
   config: {
     large: ['20%', '45%', '30%', '0%'],
-    small: ['50%', '50%', '0'],
+    small: [true, true, false],
   },
 };
 
