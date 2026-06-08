@@ -16,6 +16,8 @@ import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
 import { LoadingContent } from '../../../../components/LoadingContent/LoadingContent.tsx';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
+import { PageContentCell } from '../../../../components/Page/Page.tsx';
+import { ParagaphSuppressed } from '../../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
 import {
   BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN,
   profileLinks,
@@ -288,6 +290,19 @@ export function formatBrpProfileData(brpData: BrpFrontend): BrpProfileData {
   return profileData;
 }
 
+const privacyNoticeForDeathDates = (
+  <PageContentCell>
+    <ParagaphSuppressed className="ams-mb-m">
+      Wij mogen een overlijdensdatum van ouders of kinderen niet laten zien. Dit
+      komt door{' '}
+      <Link href="https://www.amsterdam.nl/privacy/" rel="noopener noreferrer">
+        privacyregels
+      </Link>
+      .
+    </ParagaphSuppressed>
+  </PageContentCell>
+);
+
 export const panelConfig: PanelConfig<
   BRPPanelKey,
   AppState['BRP'],
@@ -372,6 +387,7 @@ export const panelConfig: PanelConfig<
   ouders: () => ({
     title: 'Ouders',
     actionLinks: [],
+    contentAfterTheTitle: privacyNoticeForDeathDates,
   }),
   kinderen: (BRP) => ({
     title: 'Kinderen',
@@ -384,6 +400,7 @@ export const panelConfig: PanelConfig<
           },
         ]
       : [],
+    contentAfterTheTitle: privacyNoticeForDeathDates,
   }),
   adresHistorisch: () => ({
     title: 'Vorige adressen',
