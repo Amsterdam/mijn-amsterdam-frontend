@@ -10,7 +10,7 @@ import classNames from 'classnames';
 
 import styles from './ZakenList.module.scss';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
-import { MaRouterLink } from '../MaLink/MaLink.tsx';
+import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 import type { DisplayProps } from '../Table/TableV2.tsx';
 import { useDisplayPropsEntries } from '../Table/useDisplayPropEntries.hook.ts';
 
@@ -22,15 +22,16 @@ function LinkOrFragment({
   link?: LinkProps;
 }) {
   if (link?.to) {
+    const LinkComponent = link.to.startsWith('http') ? MaLink : MaRouterLink;
     return (
-      <MaRouterLink
+      <LinkComponent
         href={link.to}
         maVariant="fatNoUnderline"
         className={styles.ZakenListLink}
       >
         {children}
         <Icon svg={ChevronForwardIcon} className={styles.IconFW} aria-hidden />
-      </MaRouterLink>
+      </LinkComponent>
     );
   }
   return <>{children}</>;
