@@ -114,7 +114,7 @@ const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
   },
   config: {
     large: [false, '15%', '25%', '25%', '35%'],
-    small: [true, false, true, false, false],
+    small: [true, false, true, true, false],
   },
 };
 
