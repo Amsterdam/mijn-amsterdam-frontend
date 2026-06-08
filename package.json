@@ -95,7 +95,7 @@
     "core-js": "^3.49.0",
     "cors": "^2.8.6",
     "cross-env": "^7.0.3",
-    "date-fns": "^4.3.0",
+    "date-fns": "^4.4.0",
     "debug": "^4.4.3",
     "decimal.js": "^10.6.0",
     "dotenv": "^16.6.1",
@@ -107,12 +107,12 @@
     "express-session": "^1.19.0",
     "flat-cache": "^6.1.22",
     "form-data": "^4.0.5",
-    "fuse.js": "^7.3.0",
+    "fuse.js": "^7.4.0",
     "html-react-parser": "^5.2.17",
     "ibantools": "^4.5.2",
     "install": "^0.13.0",
     "jose": "^5.10.0",
-    "js-cookie": "^3.0.5",
+    "js-cookie": "^3.0.8",
     "jsonwebtoken": "^9.0.3",
     "jw-paginate": "^1.0.4",
     "jwks-rsa": "^3.2.2",
@@ -157,16 +157,16 @@
     "typescript": "^6.0.2",
     "uid-safe": "^2.1.5",
     "use-debounce": "^10.1.1",
-    "vite": "^6.4.2",
+    "vite": "^6.4.3",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.5.0",
-    "vitest": "^3.2.4",
+    "vitest": "^3.2.6",
     "xlsx": "file:vendor/xlsx-0.20.2.tgz",
     "zod": "^4.3.6",
-    "zustand": "^5.0.12"
+    "zustand": "^5.0.14"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.60.4"
+    "@rollup/rollup-linux-x64-gnu": "4.61.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
