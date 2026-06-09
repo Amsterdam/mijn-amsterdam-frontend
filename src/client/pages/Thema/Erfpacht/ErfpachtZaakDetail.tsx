@@ -3,7 +3,7 @@ import { UnorderedList } from '@amsterdam/design-system-react';
 import { useZaakDetailData } from './useErfpachtZaakData.hook.ts';
 import { Datalist, type Row } from '../../../components/Datalist/Datalist.tsx';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { ThemaDetailPagina } from '../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function ErfpachtZaakDetail() {
