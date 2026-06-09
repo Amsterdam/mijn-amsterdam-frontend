@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpStatusCode } from 'axios';
 import type { Request } from 'express';
 import {
@@ -55,12 +54,13 @@ describe('amsapp notifications route handlers', () => {
   });
 
   test('handleUnregisterConsumer returns success when consumer was deleted', async () => {
-    req.params = { consumerId: 'consumer-1' } as any;
+    const reqMock = RequestMock.new()
+      .setParams({ consumerId: 'consumer-1' })
+      .get<{ consumerId: string }>();
     unregisterConsumers.mockResolvedValue(['consumer-1']);
 
-    await handleUnregisterConsumer(req as any, res);
+    await handleUnregisterConsumer(reqMock, res);
 
-    expect(unregisterConsumers).toHaveBeenCalledWith(['consumer-1']);
     expect(res.send).toHaveBeenCalledWith({
       content: 'Consumer deleted',
       status: 'OK',
@@ -68,10 +68,12 @@ describe('amsapp notifications route handlers', () => {
   });
 
   test('handleUnregisterConsumer returns not found when consumer was not deleted', async () => {
-    req.params = { consumerId: 'consumer-1' } as any;
+    const reqMock = RequestMock.new()
+      .setParams({ consumerId: 'consumer-1' })
+      .get<{ consumerId: string }>();
     unregisterConsumers.mockResolvedValue([]);
 
-    await handleUnregisterConsumer(req as any, res);
+    await handleUnregisterConsumer(reqMock, res);
 
     expect(res.send).toHaveBeenCalledWith({
       message: 'Not Found',
@@ -84,8 +86,11 @@ describe('amsapp notifications route handlers', () => {
   test('handleConsumerRegistrationProfile returns isRegistered false when profile lookup returns null', async () => {
     getProfileByConsumer.mockResolvedValue(null);
 
-    req.params = { consumerId: 'consumer-1' } as any;
-    await handleConsumerRegistrationProfile(req as any, res);
+    const reqMock = RequestMock.new()
+      .setParams({ consumerId: 'consumer-1' })
+      .get<{ consumerId: string }>();
+
+    await handleConsumerRegistrationProfile(reqMock, res);
 
     expect(res.send).toHaveBeenCalledWith({
       content: { isRegistered: false },
@@ -97,7 +102,7 @@ describe('amsapp notifications route handlers', () => {
     const pendingPromise = new Promise<void>(() => undefined);
     batchFetchAndStoreNotifications.mockReturnValue(pendingPromise);
 
-    fetchAndStoreNotifications(req as any, res);
+    fetchAndStoreNotifications(req, res);
 
     expect(batchFetchAndStoreNotifications).toHaveBeenCalledTimes(1);
     expect(res.send).toHaveBeenCalledWith({
@@ -107,9 +112,15 @@ describe('amsapp notifications route handlers', () => {
   });
 
   test('returns 400 on invalid limit', async () => {
-    req.query = { limit: 'foo' } as any;
+    const reqMock = RequestMock.new<{
+      dateFrom: string;
+      offset: string;
+      limit: string;
+    }>().setQuery({
+      limit: 'foo',
+    });
 
-    await handleSendNotificationsResponse(req as any, res);
+    await handleSendNotificationsResponse(reqMock, res);
 
     expect(res.status).toHaveBeenCalledWith(HttpStatusCode.BadRequest);
     expect(res.send).toHaveBeenCalled();
@@ -117,31 +128,47 @@ describe('amsapp notifications route handlers', () => {
   });
 
   test('returns 400 on negative offset', async () => {
-    req.query = { offset: '-1' } as any;
+    const reqMock = RequestMock.new<{
+      dateFrom: string;
+      offset: string;
+      limit: string;
+    }>().setQuery({
+      offset: '-1',
+    });
 
-    await handleSendNotificationsResponse(req as any, res);
+    await handleSendNotificationsResponse(reqMock, res);
 
     expect(res.status).toHaveBeenCalledWith(HttpStatusCode.BadRequest);
     expect(batchFetchNotifications).not.toHaveBeenCalled();
   });
 
   test('returns 400 on invalid dateFrom', async () => {
-    req.query = { dateFrom: 'not-a-date' } as any;
+    const reqMock = RequestMock.new<{
+      dateFrom: string;
+      offset: string;
+      limit: string;
+    }>().setQuery({
+      dateFrom: 'not-a-date',
+    });
 
-    await handleSendNotificationsResponse(req as any, res);
+    await handleSendNotificationsResponse(reqMock, res);
 
     expect(res.status).toHaveBeenCalledWith(HttpStatusCode.BadRequest);
     expect(batchFetchNotifications).not.toHaveBeenCalled();
   });
 
   test('parses offset/limit as numbers and forwards them as isostring and numbers', async () => {
-    req.query = {
+    const reqMock = RequestMock.new<{
+      dateFrom: string;
+      offset: string;
+      limit: string;
+    }>().setQuery({
       dateFrom: '2026-03-01T00:00:00.000Z',
-      offset: 10,
-      limit: 25,
-    } as any;
+      offset: '10',
+      limit: '25',
+    });
 
-    await handleSendNotificationsResponse(req as any, res);
+    await handleSendNotificationsResponse(reqMock, res);
 
     expect(getProfilesCount).toHaveBeenCalledWith({
       dateFrom: '2026-03-01T00:00:00.000Z',

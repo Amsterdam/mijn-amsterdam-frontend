@@ -54,9 +54,9 @@ export async function handleUnregisterConsumer(
 ) {
   const deletedConsumerIds = await unregisterConsumers([req.params.consumerId]);
   if (deletedConsumerIds.length > 0) {
-    return res.send(apiSuccessResult('Consumer deleted'));
+    return res.send(apiSuccessResult('Consumers deleted'));
   }
-  return res.send(apiErrorResult('Not Found', null, HttpStatusCode.NotFound));
+  return res.send(apiErrorResult('Not Found', null, HttpStatusCode.not));
 }
 
 export async function handleConsumerRegistrationProfile(

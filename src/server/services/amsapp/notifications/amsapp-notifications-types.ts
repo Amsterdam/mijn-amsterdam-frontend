@@ -12,22 +12,20 @@ export type ConsumerDetail = {
   loginExpiryDate: Date;
 };
 
-export type ConsumerProfile = {
-  profileId: BSN;
-  consumerIds: ConsumerId[];
-  consumerDetails: ConsumerDetail[];
+export type ConsumerProfileBase = {
   serviceIds: ServiceId[];
   dateUpdated: Date;
   lastLoginDate: Date | null;
+};
+
+export type ConsumerProfile = ConsumerProfileBase & {
+  profileId: BSN;
+  consumerIds: ConsumerId[];
+  consumerDetails: ConsumerDetail[];
   content: { services?: Record<ServiceId, NotificationsService> } | null;
 };
 
-export type ConsumerProfileCompact = Omit<
-  ConsumerProfile,
-  'profileId' | 'content' | 'consumerIds' | 'consumerDetails'
->;
-
-export type ConsumerRegistrationProfile = ConsumerProfileCompact & {
+export type ConsumerRegistrationProfile = ConsumerProfileBase & {
   loginExpiryDate: string | null;
 };
 

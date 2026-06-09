@@ -303,7 +303,7 @@ components:
         totalItems:
           type: integer
           minimum: 0
-          description: Total number of visible profiles with active consumers that match dateFrom (ignores offset/limit)
+          description: Total number of profiles with consumers that match dateFrom (ignores offset/limit)
 
     ConsumerDetail:
       type: object

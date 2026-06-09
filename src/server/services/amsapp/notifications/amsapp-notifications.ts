@@ -185,6 +185,7 @@ export async function batchFetchNotifications(options: {
       id: consumerDetail.id,
       loginExpiryDate: toISOString(consumerDetail.loginExpiryDate) ?? '',
     })),
+    // deprecated: consumerIds is a compatibility projection of consumers. Mirrors consumerDetails[].id.
     consumerIds: profile.consumerDetails.map(
       (consumerDetail) => consumerDetail.id
     ),
