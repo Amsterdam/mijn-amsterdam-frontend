@@ -21,7 +21,7 @@ Tooling: Vitest (usually `node` env). Global setup: `src/testing/setup.ts`.
 
 ## Commands
 
-- Build + serve BFF build: `pnpm bff-api:build && BFF_SKIP_APPCONFIG=1 pnpm bff-api:serve-build`
+- Build + serve BFF build: `pnpm bff-api:build && BFF_SKIP_APPCONFIG=true pnpm bff-api:serve-build`
 - Lint (shared): `pnpm lint`
 
 - Run backend tests: `pnpm bff-api:test`
