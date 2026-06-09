@@ -9,13 +9,18 @@ import { themaConfig } from '../KlantContact-thema-config.ts';
 type AfsprakenProps = {
   compact?: boolean;
   afspraken: AfspraakFrontend[];
+  className?: string;
 };
 
-export function Afspraken({ compact = false, afspraken = [] }: AfsprakenProps) {
+export function Afspraken({
+  compact = false,
+  afspraken = [],
+  className,
+}: AfsprakenProps) {
   const MAX_AMOUNT_AFSPRAKEN_DISPLAYED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
   return (
-    <>
+    <div className={className}>
       <Heading level={2} className="ams-mb-m">
         Afspraken bij een stadsloket
       </Heading>
@@ -40,6 +45,6 @@ export function Afspraken({ compact = false, afspraken = [] }: AfsprakenProps) {
       ) : (
         <Paragraph>U heeft geen afspraken.</Paragraph>
       )}
-    </>
+    </div>
   );
 }
