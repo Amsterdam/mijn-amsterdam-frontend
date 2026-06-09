@@ -273,6 +273,47 @@ describe('jzd-voorzieningen-api-service', () => {
       });
     });
 
+    it('should include / exclude voorzieningen based on multiple configs and their include and exclude matchers', () => {
+      const voorziening = {
+        type: 'example',
+        status: 'active',
+      } as unknown as ZorgnedAanvraagTransformed;
+      const voorziening2 = {
+        type: 'example',
+        status: 'active',
+        id: 'excluded-id',
+      } as unknown as ZorgnedAanvraagTransformed;
+
+      const apiPropsConfig = {
+        include: {
+          type: 'example',
+          status: 'active',
+        },
+        exclude: {
+          id: 'excluded-id',
+        },
+        assign: {
+          maActies: ['assign-foo-bar'],
+        },
+      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
+
+      const voorzieningTransformed1 = forTesting.addMaApiPropsToVoorziening(
+        [apiPropsConfig],
+        voorziening
+      );
+
+      expect(voorzieningTransformed1).toHaveProperty('maActies', [
+        'assign-foo-bar',
+      ]);
+
+      const voorzieningTransformed2 = forTesting.addMaApiPropsToVoorziening(
+        [apiPropsConfig],
+        voorziening2
+      );
+
+      expect(voorzieningTransformed2).not.toHaveProperty('maActies');
+    });
+
     it('should merge and deduplicate array properties if they already exist', () => {
       const voorziening = {
         type: 'example',
