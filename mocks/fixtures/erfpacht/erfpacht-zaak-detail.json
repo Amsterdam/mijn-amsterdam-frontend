@@ -1,0 +1,613 @@
+{
+  "url": "http://example.com",
+  "uuid": "095be615-a8ad-4c33-8e9c-c7612fbf6c9f",
+  "identificatie": "string",
+  "bronorganisatie": "string",
+  "omschrijving": "string",
+  "toelichting": "string",
+  "zaaktype": "http://example.com",
+  "registratiedatum": "2019-08-24",
+  "verantwoordelijkeOrganisatie": "string",
+  "startdatum": "2019-08-24",
+  "einddatum": "2019-08-24",
+  "einddatumGepland": "2019-08-24",
+  "uiterlijkeEinddatumAfdoening": "2019-08-24",
+  "publicatiedatum": "2019-08-24",
+  "communicatiekanaal": "http://example.com",
+  "productenOfDiensten": ["http://example.com"],
+  "vertrouwelijkheidaanduiding": "openbaar",
+  "betalingsindicatie": "nvt",
+  "betalingsindicatieWeergave": "string",
+  "laatsteBetaaldatum": "2019-08-24T14:15:22Z",
+  "zaakgeometrie": {
+    "type": "Point",
+    "coordinates": [0, 0]
+  },
+  "verlenging": {
+    "reden": "string",
+    "duur": "string"
+  },
+  "opschorting": {
+    "indicatie": true,
+    "reden": "string"
+  },
+  "selectielijstklasse": "http://example.com",
+  "hoofdzaak": "http://example.com",
+  "deelzaken": ["http://example.com"],
+  "relevanteAndereZaken": [
+    {
+      "url": "http://example.com",
+      "aardRelatie": "vervolg"
+    }
+  ],
+  "eigenschappen": ["http://example.com"],
+  "rollen": ["http://example.com"],
+  "status": "http://example.com",
+  "zaakinformatieobjecten": ["http://example.com"],
+  "zaakobjecten": ["http://example.com"],
+  "kenmerken": [
+    {
+      "kenmerk": "string",
+      "bron": "string"
+    }
+  ],
+  "archiefnominatie": "blijvend_bewaren",
+  "archiefstatus": "nog_te_archiveren",
+  "archiefactiedatum": "2019-08-24",
+  "resultaat": "http://example.com",
+  "opdrachtgevendeOrganisatie": "string",
+  "processobjectaard": "string",
+  "startdatumBewaartermijn": "2019-08-24",
+  "processobject": {
+    "datumkenmerk": "string",
+    "identificatie": "string",
+    "objecttype": "string",
+    "registratie": "string"
+  },
+  "_expand": {
+    "zaaktype": {
+      "url": "http://example.com",
+      "identificatie": "string",
+      "omschrijving": "string",
+      "omschrijvingGeneriek": "string",
+      "vertrouwelijkheidaanduiding": "openbaar",
+      "doel": "string",
+      "aanleiding": "string",
+      "toelichting": "string",
+      "indicatieInternOfExtern": "intern",
+      "handelingInitiator": "string",
+      "onderwerp": "string",
+      "handelingBehandelaar": "string",
+      "doorlooptijd": "string",
+      "servicenorm": "string",
+      "opschortingEnAanhoudingMogelijk": true,
+      "verlengingMogelijk": true,
+      "verlengingstermijn": "string",
+      "trefwoorden": ["string"],
+      "publicatieIndicatie": true,
+      "publicatietekst": "string",
+      "verantwoordingsrelatie": ["string"],
+      "productenOfDiensten": ["http://example.com"],
+      "selectielijstProcestype": "http://example.com",
+      "referentieproces": {
+        "naam": "string",
+        "link": "http://example.com"
+      },
+      "verantwoordelijke": "string",
+      "zaakobjecttypen": ["http://example.com"],
+      "broncatalogus": {
+        "url": "http://example.com",
+        "domein": "strin",
+        "rsin": "string"
+      },
+      "bronzaaktype": {
+        "url": "http://example.com",
+        "identificatie": "string",
+        "omschrijving": "string"
+      },
+      "catalogus": "http://example.com",
+      "statustypen": ["http://example.com"],
+      "resultaattypen": ["http://example.com"],
+      "eigenschappen": ["http://example.com"],
+      "informatieobjecttypen": ["http://example.com"],
+      "informatieobjecttypeOmschrijving": ["string"],
+      "roltypen": ["http://example.com"],
+      "besluittypen": ["http://example.com"],
+      "besluittypeOmschrijving": ["string"],
+      "deelzaaktypen": ["http://example.com"],
+      "gerelateerdeZaaktypen": [
+        {
+          "zaaktype": "http://example.com",
+          "aardRelatie": "vervolg",
+          "toelichting": "string"
+        }
+      ],
+      "beginGeldigheid": "2019-08-24",
+      "eindeGeldigheid": "2019-08-24",
+      "beginObject": "2019-08-24",
+      "eindeObject": "2019-08-24",
+      "versiedatum": "2019-08-24",
+      "concept": true
+    },
+    "communicatiekanaal": {},
+    "productenOfDiensten": [{}],
+    "selectielijstklasse": {},
+    "hoofdzaak": {},
+    "deelzaken": [{}],
+    "relevanteAndereZaken": [{}],
+    "eigenschappen": [
+      {
+        "url": "http://example.com",
+        "uuid": "095be615-a8ad-4c33-8e9c-c7612fbf6c9f",
+        "zaak": "http://example.com",
+        "eigenschap": "http://example.com",
+        "naam": "string",
+        "waarde": "string",
+        "_expand": {
+          "eigenschap": {
+            "url": "http://example.com",
+            "naam": "string",
+            "catalogus": "http://example.com",
+            "definitie": "string",
+            "specificatie": {
+              "groep": "string",
+              "formaat": "tekst",
+              "lengte": "string",
+              "kardinaliteit": "str",
+              "waardenverzameling": ["string"]
+            },
+            "toelichting": "string",
+            "zaaktype": "http://example.com",
+            "zaaktypeIdentificatie": "string",
+            "statustype": "http://example.com",
+            "beginGeldigheid": "2019-08-24",
+            "eindeGeldigheid": "2019-08-24",
+            "beginObject": "2019-08-24",
+            "eindeObject": "2019-08-24"
+          }
+        }
+      }
+    ],
+    "rollen": [
+      {
+        "url": "http://example.com",
+        "uuid": "095be615-a8ad-4c33-8e9c-c7612fbf6c9f",
+        "zaak": "http://example.com",
+        "betrokkene": "http://example.com",
+        "betrokkeneType": "natuurlijk_persoon",
+        "afwijkendeNaamBetrokkene": "string",
+        "roltype": "http://example.com",
+        "omschrijving": "string",
+        "omschrijvingGeneriek": "string",
+        "roltoelichting": "string",
+        "registratiedatum": "2019-08-24T14:15:22Z",
+        "indicatieMachtiging": "gemachtigde",
+        "contactpersoonRol": {
+          "emailadres": "user@example.com",
+          "functie": "string",
+          "telefoonnummer": "string",
+          "naam": "string"
+        },
+        "statussen": ["http://example.com"],
+        "_expand": {
+          "betrokkene": {},
+          "roltype": {
+            "url": "http://example.com",
+            "zaaktype": "http://example.com",
+            "zaaktypeIdentificatie": "string",
+            "omschrijving": "string",
+            "omschrijvingGeneriek": "adviseur",
+            "catalogus": "http://example.com",
+            "beginGeldigheid": "2019-08-24",
+            "eindeGeldigheid": "2019-08-24",
+            "beginObject": "2019-08-24",
+            "eindeObject": "2019-08-24"
+          },
+          "statussen": [
+            {
+              "url": "http://example.com",
+              "uuid": "095be615-a8ad-4c33-8e9c-c7612fbf6c9f",
+              "zaak": "http://example.com",
+              "statustype": "http://example.com",
+              "datumStatusGezet": "2019-08-24T14:15:22Z",
+              "statustoelichting": "string",
+              "indicatieLaatstGezetteStatus": true,
+              "gezetdoor": "http://example.com",
+              "zaakinformatieobjecten": ["http://example.com"],
+              "_expand": {
+                "zaak": {
+                  "url": "http://example.com",
+                  "uuid": "095be615-a8ad-4c33-8e9c-c7612fbf6c9f",
+                  "identificatie": "string",
+                  "bronorganisatie": "string",
+                  "omschrijving": "string",
+                  "toelichting": "string",
+                  "zaaktype": "http://example.com",
+                  "registratiedatum": "2019-08-24",
+                  "verantwoordelijkeOrganisatie": "string",
+                  "startdatum": "2019-08-24",
+                  "einddatum": "2019-08-24",
+                  "einddatumGepland": "2019-08-24",
+                  "uiterlijkeEinddatumAfdoening": "2019-08-24",
+                  "publicatiedatum": "2019-08-24",
+                  "communicatiekanaal": "http://example.com",
+                  "productenOfDiensten": [null],
+                  "vertrouwelijkheidaanduiding": "openbaar",
+                  "betalingsindicatie": "nvt",
+                  "betalingsindicatieWeergave": "string",
+                  "laatsteBetaaldatum": "2019-08-24T14:15:22Z",
+                  "zaakgeometrie": {},
+                  "verlenging": {},
+                  "opschorting": {},
+                  "selectielijstklasse": "http://example.com",
+                  "hoofdzaak": "http://example.com",
+                  "deelzaken": [null],
+                  "relevanteAndereZaken": [null],
+                  "eigenschappen": [null],
+                  "rollen": [null],
+                  "status": "http://example.com",
+                  "zaakinformatieobjecten": [null],
+                  "zaakobjecten": [null],
+                  "kenmerken": [null],
+                  "archiefnominatie": "blijvend_bewaren",
+                  "archiefstatus": "nog_te_archiveren",
+                  "archiefactiedatum": "2019-08-24",
+                  "resultaat": "http://example.com",
+                  "opdrachtgevendeOrganisatie": "string",
+                  "processobjectaard": "string",
+                  "startdatumBewaartermijn": "2019-08-24",
+                  "processobject": {}
+                },
+                "statustype": {
+                  "url": "http://example.com",
+                  "omschrijving": "string",
+                  "omschrijvingGeneriek": "string",
+                  "statustekst": "string",
+                  "zaaktype": "http://example.com",
+                  "catalogus": "http://example.com",
+                  "zaaktypeIdentificatie": "string",
+                  "volgnummer": 1,
+                  "isEindstatus": true,
+                  "informeren": true,
+                  "doorlooptijd": "string",
+                  "toelichting": "string",
+                  "checklistitemStatustype": [null],
+                  "eigenschappen": [null],
+                  "beginGeldigheid": "2019-08-24",
+                  "eindeGeldigheid": "2019-08-24",
+                  "beginObject": "2019-08-24",
+                  "eindeObject": "2019-08-24"
+                },
+                "gezetdoor": {},
+                "zaakinformatieobjecten": [{}]
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "status": {
+      "url": "http://example.com",
+      "uuid": "095be615-a8ad-4c33-8e9c-c7612fbf6c9f",
+      "zaak": "http://example.com",
+      "statustype": "http://example.com",
+      "datumStatusGezet": "2019-08-24T14:15:22Z",
+      "statustoelichting": "string",
+      "indicatieLaatstGezetteStatus": true,
+      "gezetdoor": "http://example.com",
+      "zaakinformatieobjecten": ["http://example.com"],
+      "_expand": {
+        "zaak": {
+          "url": "http://example.com",
+          "uuid": "095be615-a8ad-4c33-8e9c-c7612fbf6c9f",
+          "identificatie": "string",
+          "bronorganisatie": "string",
+          "omschrijving": "string",
+          "toelichting": "string",
+          "zaaktype": "http://example.com",
+          "registratiedatum": "2019-08-24",
+          "verantwoordelijkeOrganisatie": "string",
+          "startdatum": "2019-08-24",
+          "einddatum": "2019-08-24",
+          "einddatumGepland": "2019-08-24",
+          "uiterlijkeEinddatumAfdoening": "2019-08-24",
+          "publicatiedatum": "2019-08-24",
+          "communicatiekanaal": "http://example.com",
+          "productenOfDiensten": ["http://example.com"],
+          "vertrouwelijkheidaanduiding": "openbaar",
+          "betalingsindicatie": "nvt",
+          "betalingsindicatieWeergave": "string",
+          "laatsteBetaaldatum": "2019-08-24T14:15:22Z",
+          "zaakgeometrie": {
+            "type": "Point",
+            "coordinates": [0, 0]
+          },
+          "verlenging": {
+            "reden": "string",
+            "duur": "string"
+          },
+          "opschorting": {
+            "indicatie": true,
+            "reden": "string"
+          },
+          "selectielijstklasse": "http://example.com",
+          "hoofdzaak": "http://example.com",
+          "deelzaken": ["http://example.com"],
+          "relevanteAndereZaken": [
+            {
+              "url": "http://example.com",
+              "aardRelatie": "vervolg"
+            }
+          ],
+          "eigenschappen": ["http://example.com"],
+          "rollen": ["http://example.com"],
+          "status": "http://example.com",
+          "zaakinformatieobjecten": ["http://example.com"],
+          "zaakobjecten": ["http://example.com"],
+          "kenmerken": [
+            {
+              "kenmerk": "string",
+              "bron": "string"
+            }
+          ],
+          "archiefnominatie": "blijvend_bewaren",
+          "archiefstatus": "nog_te_archiveren",
+          "archiefactiedatum": "2019-08-24",
+          "resultaat": "http://example.com",
+          "opdrachtgevendeOrganisatie": "string",
+          "processobjectaard": "string",
+          "startdatumBewaartermijn": "2019-08-24",
+          "processobject": {
+            "datumkenmerk": "string",
+            "identificatie": "string",
+            "objecttype": "string",
+            "registratie": "string"
+          }
+        },
+        "statustype": {
+          "url": "http://example.com",
+          "omschrijving": "string",
+          "omschrijvingGeneriek": "string",
+          "statustekst": "string",
+          "zaaktype": "http://example.com",
+          "catalogus": "http://example.com",
+          "zaaktypeIdentificatie": "string",
+          "volgnummer": 1,
+          "isEindstatus": true,
+          "informeren": true,
+          "doorlooptijd": "string",
+          "toelichting": "string",
+          "checklistitemStatustype": [
+            {
+              "itemnaam": "string",
+              "toelichting": "string",
+              "vraagstelling": "string",
+              "verplicht": true
+            }
+          ],
+          "eigenschappen": ["http://example.com"],
+          "beginGeldigheid": "2019-08-24",
+          "eindeGeldigheid": "2019-08-24",
+          "beginObject": "2019-08-24",
+          "eindeObject": "2019-08-24"
+        },
+        "gezetdoor": {
+          "url": "http://example.com",
+          "uuid": "095be615-a8ad-4c33-8e9c-c7612fbf6c9f",
+          "zaak": "http://example.com",
+          "betrokkene": "http://example.com",
+          "betrokkeneType": "natuurlijk_persoon",
+          "afwijkendeNaamBetrokkene": "string",
+          "roltype": "http://example.com",
+          "omschrijving": "string",
+          "omschrijvingGeneriek": "string",
+          "roltoelichting": "string",
+          "registratiedatum": "2019-08-24T14:15:22Z",
+          "indicatieMachtiging": "gemachtigde",
+          "contactpersoonRol": {
+            "emailadres": "user@example.com",
+            "functie": "string",
+            "telefoonnummer": "string",
+            "naam": "string"
+          },
+          "statussen": ["http://example.com"],
+          "_expand": {
+            "betrokkene": {},
+            "roltype": {
+              "url": "http://example.com",
+              "zaaktype": "http://example.com",
+              "zaaktypeIdentificatie": "string",
+              "omschrijving": "string",
+              "omschrijvingGeneriek": "adviseur",
+              "catalogus": "http://example.com",
+              "beginGeldigheid": "2019-08-24",
+              "eindeGeldigheid": "2019-08-24",
+              "beginObject": "2019-08-24",
+              "eindeObject": "2019-08-24"
+            },
+            "statussen": [null]
+          }
+        },
+        "zaakinformatieobjecten": [
+          {
+            "url": "http://example.com",
+            "uuid": "095be615-a8ad-4c33-8e9c-c7612fbf6c9f",
+            "informatieobject": "http://example.com",
+            "zaak": "http://example.com",
+            "aardRelatieWeergave": "Hoort bij, omgekeerd: kent",
+            "titel": "string",
+            "beschrijving": "string",
+            "registratiedatum": "2019-08-24T14:15:22Z",
+            "vernietigingsdatum": "2019-08-24T14:15:22Z",
+            "status": "http://example.com",
+            "_expand": {
+              "informatieobject": {
+                "url": "http://example.com",
+                "identificatie": "string",
+                "bronorganisatie": "string",
+                "creatiedatum": "2019-08-24",
+                "titel": "string",
+                "vertrouwelijkheidaanduiding": "openbaar",
+                "tonenAanInitiator": false,
+                "auteur": "string",
+                "status": "in_bewerking",
+                "inhoudIsVervallen": true,
+                "formaat": "string",
+                "taal": "str",
+                "versie": 0,
+                "beginRegistratie": "2019-08-24T14:15:22Z",
+                "bestandsnaam": "string",
+                "inhoud": "http://example.com",
+                "bestandsomvang": 9223372036854776000,
+                "link": "http://example.com",
+                "beschrijving": "string",
+                "ontvangstdatum": "2019-08-24",
+                "verzenddatum": "2019-08-24",
+                "indicatieGebruiksrecht": true,
+                "verschijningsvorm": "string",
+                "ondertekening": {
+                  "soort": "analoog",
+                  "datum": "2019-08-24"
+                },
+                "integriteit": {
+                  "algoritme": "crc_16",
+                  "waarde": "string",
+                  "datum": "2019-08-24"
+                },
+                "informatieobjecttype": "http://example.com",
+                "locked": true,
+                "bestandsdelen": [{}],
+                "trefwoorden": ["bouwtekening", "vergunning", "aanvraag"]
+              }
+            }
+          }
+        ]
+      }
+    },
+    "zaakinformatieobjecten": [
+      {
+        "url": "http://example.com",
+        "identificatie": "string",
+        "bronorganisatie": "string",
+        "creatiedatum": "2019-08-24",
+        "titel": "string",
+        "vertrouwelijkheidaanduiding": "openbaar",
+        "tonenAanInitiator": false,
+        "auteur": "string",
+        "status": "in_bewerking",
+        "inhoudIsVervallen": true,
+        "formaat": "string",
+        "taal": "str",
+        "versie": 0,
+        "beginRegistratie": "2019-08-24T14:15:22Z",
+        "bestandsnaam": "string",
+        "inhoud": "http://example.com",
+        "bestandsomvang": 9223372036854776000,
+        "link": "http://example.com",
+        "beschrijving": "string",
+        "ontvangstdatum": "2019-08-24",
+        "verzenddatum": "2019-08-24",
+        "indicatieGebruiksrecht": true,
+        "verschijningsvorm": "string",
+        "ondertekening": {
+          "soort": "analoog",
+          "datum": "2019-08-24"
+        },
+        "integriteit": {
+          "algoritme": "crc_16",
+          "waarde": "string",
+          "datum": "2019-08-24"
+        },
+        "informatieobjecttype": "http://example.com",
+        "locked": true,
+        "bestandsdelen": [
+          {
+            "url": "http://example.com",
+            "volgnummer": 0,
+            "omvang": 0,
+            "voltooid": true,
+            "lock": "string"
+          }
+        ],
+        "trefwoorden": ["bouwtekening", "vergunning", "aanvraag"]
+      }
+    ],
+    "zaakobjecten": [
+      {
+        "url": "http://example.com",
+        "uuid": "095be615-a8ad-4c33-8e9c-c7612fbf6c9f",
+        "zaak": "http://example.com",
+        "object": "http://example.com",
+        "zaakobjecttype": "http://example.com",
+        "objectType": "adres",
+        "objectTypeOverige": "string",
+        "objectTypeOverigeDefinitie": {
+          "url": "http://example.com",
+          "schema": "string",
+          "objectData": "string"
+        },
+        "relatieomschrijving": "string",
+        "_expand": {
+          "object": {},
+          "zaakobjecttype": {
+            "url": "http://example.com",
+            "anderObjecttype": true,
+            "beginGeldigheid": "2019-08-24",
+            "eindeGeldigheid": "2019-08-24",
+            "beginObject": "2019-08-24",
+            "eindeObject": "2019-08-24",
+            "objecttype": "http://example.com",
+            "relatieOmschrijving": "string",
+            "zaaktype": "http://example.com",
+            "zaaktypeIdentificatie": "string",
+            "resultaattypen": ["http://example.com"],
+            "resultaattypeOmschrijving": ["string"],
+            "statustypen": ["http://example.com"],
+            "catalogus": "http://example.com"
+          }
+        }
+      }
+    ],
+    "resultaat": {
+      "url": "http://example.com",
+      "uuid": "095be615-a8ad-4c33-8e9c-c7612fbf6c9f",
+      "zaak": "http://example.com",
+      "resultaattype": "http://example.com",
+      "toelichting": "string",
+      "_expand": {
+        "resultaattype": {
+          "url": "http://example.com",
+          "zaaktype": "http://example.com",
+          "zaaktypeIdentificatie": "string",
+          "omschrijving": "string",
+          "resultaattypeomschrijving": "http://example.com",
+          "omschrijvingGeneriek": "string",
+          "selectielijstklasse": "http://example.com",
+          "toelichting": "string",
+          "archiefnominatie": "blijvend_bewaren",
+          "archiefactietermijn": "string",
+          "brondatumArchiefprocedure": {
+            "afleidingswijze": "afgehandeld",
+            "datumkenmerk": "string",
+            "einddatumBekend": true,
+            "objecttype": "adres",
+            "registratie": "string",
+            "procestermijn": "string"
+          },
+          "procesobjectaard": "string",
+          "catalogus": "http://example.com",
+          "beginGeldigheid": "2019-08-24",
+          "eindeGeldigheid": "2019-08-24",
+          "beginObject": "2019-08-24",
+          "eindeObject": "2019-08-24",
+          "indicatieSpecifiek": true,
+          "procestermijn": "string",
+          "besluittypen": ["http://example.com"],
+          "besluittypeOmschrijving": ["string"],
+          "informatieobjecttypen": ["http://example.com"],
+          "informatieobjecttypeOmschrijving": ["string"]
+        }
+      }
+    }
+  }
+}

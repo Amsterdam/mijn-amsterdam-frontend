@@ -1,5 +1,6 @@
 import { generatePath } from 'react-router';
 
+import { dataRequestConfig } from './erfpacht-service-config.ts';
 import type {
   ErfpachtErpachterResponseSource,
   ErfpachtErpachterResponse,
@@ -15,7 +16,7 @@ import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import { jsonCopy, sortAlpha } from '../../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getFromEnv } from '../../helpers/env.ts';
-import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 
 function transformIsErfpachterResponseSource(
@@ -132,36 +133,41 @@ export function transformDossierResponse(
 }
 
 export async function fetchErfpacht(authProfileAndToken: AuthProfileAndToken) {
-  const config = getApiConfig('ERFPACHT');
+  const config = getCustomApiConfig(dataRequestConfig, {
+    formatUrl(requestConfig) {
+      return `${requestConfig.url}/vernise/api/erfpachter`;
+    },
+    transformResponse: (responseData: ErfpachtErpachterResponseSource) =>
+      transformIsErfpachterResponseSource(
+        responseData,
+        authProfileAndToken.profile.profileType
+      ),
+  });
 
   const erfpachterResponse = await requestData<ErfpachtErpachterResponse>(
-    {
-      ...config,
-      url: `${config.url}/vernise/api/erfpachter`,
-      transformResponse: (responseData: ErfpachtErpachterResponseSource) =>
-        transformIsErfpachterResponseSource(
-          responseData,
-          authProfileAndToken.profile.profileType
-        ),
-    },
+    config,
     authProfileAndToken
   );
 
   // Commerciële gebruikers (EHerkenning) maken gebruik van een eigen portaal (Patroon C)
+  // Het is niet nodig om voor deze gebruikers dossiers op te halen, omdat zij deze ook niet in het portaal kunnen inzien.
   const isNotCommercial =
     authProfileAndToken.profile.profileType !== 'commercial';
 
   if (!!erfpachterResponse.content?.isKnown && isNotCommercial) {
-    return requestData<ErfpachtDossiersResponse | null>(
-      {
-        ...config,
-        url: `${config.url}/vernise/api/dossierinfo`,
-        transformResponse: (responseData: ErfpachtDossiersResponseSource) =>
-          transformDossierResponse(
-            responseData,
-            erfpachterResponse.content.relatieCode
-          ),
+    const config = getCustomApiConfig(dataRequestConfig, {
+      formatUrl(requestConfig) {
+        return `${requestConfig.url}/vernise/api/dossierinfo`;
       },
+      transformResponse: (responseData: ErfpachtDossiersResponseSource) =>
+        transformDossierResponse(
+          responseData,
+          erfpachterResponse.content.relatieCode
+        ),
+    });
+
+    return requestData<ErfpachtDossiersResponse | null>(
+      config,
       authProfileAndToken
     );
   }
@@ -173,20 +179,28 @@ export async function fetchErfpachtDossiersDetail(
   authProfileAndToken: AuthProfileAndToken,
   dossierId: string
 ) {
-  const config = getApiConfig('ERFPACHT');
-  const dossierInfoResponse = await requestData<ErfpachtDossiersDetail>(
-    {
-      ...config,
-      url: new URL(
-        `${config.url}/vernise/api/dossierinfo/${dossierId}`
-      ).toString(),
-      transformResponse: transformErfpachtDossierProperties,
+  const config = getCustomApiConfig(dataRequestConfig, {
+    formatUrl(requestConfig) {
+      return `${requestConfig.url}/vernise/api/dossierinfo/${dossierId}`;
     },
+    transformResponse: transformErfpachtDossierProperties,
+  });
+
+  const dossierInfoResponse = await requestData<ErfpachtDossiersDetail>(
+    config,
     authProfileAndToken
   );
 
   return dossierInfoResponse;
 }
+
+export async function fetchErfpachtZaken() {
+  const dataRequestConfig = {};
+}
+
+export async function fetchErfpachtZaakDetail() {}
+
+export async function fetchErfpachtZaakStatussen(zaakID: string) {}
 
 export const forTesting = {
   getDossierNummerUrlParam,

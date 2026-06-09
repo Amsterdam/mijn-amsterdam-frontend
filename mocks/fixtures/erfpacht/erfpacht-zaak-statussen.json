@@ -1,0 +1,19 @@
+{
+  "count": 123,
+  "next": "http://api.example.org/accounts/?page=2",
+  "previous": null,
+  "results": [
+    {
+      "url": "http://example.com",
+      "uuid": "095be615-a8ad-4c33-8e9c-c7612fbf6c9f",
+      "zaak": "http://example.com",
+      "statustype": "http://example.com",
+      "datumStatusGezet": "2019-08-24T14:15:22Z",
+      "statustoelichting": "string",
+      "indicatieLaatstGezetteStatus": true,
+      "gezetdoor": "http://example.com",
+      "zaakinformatieobjecten": [],
+      "_expand": {}
+    }
+  ]
+}
