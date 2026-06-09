@@ -62,7 +62,7 @@ describe('amsapp notifications route handlers', () => {
     await handleUnregisterConsumer(reqMock, res);
 
     expect(res.send).toHaveBeenCalledWith({
-      content: 'Consumer deleted',
+      content: 'Consumers deleted',
       status: 'OK',
     });
   });
