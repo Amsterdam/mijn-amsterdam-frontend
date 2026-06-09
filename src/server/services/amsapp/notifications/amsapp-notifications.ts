@@ -3,7 +3,6 @@ import {
   listProfileIds,
   listConsumerIds,
   upsertConsumer,
-  deleteOrphanProfiles,
   listProfiles,
   truncate,
   deleteConsumers,
@@ -77,9 +76,6 @@ export async function registerConsumer(
   serviceIds: ServiceId[] = []
 ) {
   await upsertConsumer(profileId, profileName, consumerId, serviceIds);
-
-  // Cleanup runs in the background so registration is not blocked by removal of orphan profiles.
-  void deleteOrphanProfiles().catch(() => undefined);
 }
 
 export async function unregisterExpiredConsumers(

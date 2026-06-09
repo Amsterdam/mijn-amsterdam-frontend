@@ -58,7 +58,6 @@ import {
   batchFetchAndStoreNotifications,
   unregisterExpiredConsumers,
   getConsumerProfile,
-  registerConsumer,
   storeNotificationsResponses,
 } from './amsapp-notifications.ts';
 
@@ -101,16 +100,6 @@ describe('amsapp-notifications', () => {
   });
 
   describe('Consumer', () => {
-    it('registerConsumer upserts and starts removing orphan profiles (in the background)', async () => {
-      mocks.model.upsertConsumer.mockResolvedValue(undefined);
-      mocks.model.deleteOrphanProfiles.mockResolvedValue(undefined);
-
-      await registerConsumer('123456789', 'Jane Doe', 'consumer-1', ['afis']);
-
-      expect(mocks.model.upsertConsumer).toHaveBeenCalled();
-      expect(mocks.model.deleteOrphanProfiles).toHaveBeenCalled();
-    });
-
     it('getConsumerProfile returns profile data + isRegistered=true when found', async () => {
       mocks.model.getProfileByConsumer.mockResolvedValue({
         profileName: 'Jane Doe',
