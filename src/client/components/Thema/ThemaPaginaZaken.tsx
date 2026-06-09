@@ -2,7 +2,10 @@ import type { ReactNode } from 'react';
 
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
 
-import type { ZaakAanvraagDetail } from '../../../universal/types/App.types.ts';
+import type {
+  LinkProps,
+  ZaakAanvraagDetail,
+} from '../../../universal/types/App.types.ts';
 import { MAX_ZAKEN_ON_THEMA_PAGINA } from '../../config/app.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { LinkToListPage } from '../LinkToListPage/LinkToListPage.tsx';
@@ -32,8 +35,8 @@ interface ThemaPaginaZakenProps<T> {
   variant?: 'table' | 'list';
 }
 
-export default function ThemaPaginaZaken<
-  T extends object = ZaakAanvraagDetail,
+export function ThemaPaginaZaken<
+  T extends { title: string; link?: LinkProps } = ZaakAanvraagDetail,
 >({
   title = '',
   contentAfterTheTitle = '',
