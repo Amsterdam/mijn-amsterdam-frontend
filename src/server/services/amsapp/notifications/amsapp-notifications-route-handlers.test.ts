@@ -1,13 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import type { Request } from 'express';
-import {
-  beforeEach,
-  describe,
-  expect,
-  test,
-  vi,
-  type MockInstance,
-} from 'vitest';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import * as model from './amsapp-notifications-model.ts';
 import {
@@ -20,40 +12,18 @@ import * as notifications from './amsapp-notifications.ts';
 import { RequestMock, ResponseMock } from '../../../../testing/utils.ts';
 
 describe('amsapp notifications route handlers', () => {
-  let req: Request;
   let res: ReturnType<typeof ResponseMock.new>;
-  let batchFetchNotifications: MockInstance;
-  let batchFetchAndStoreNotifications: MockInstance;
-  let getProfileByConsumer: MockInstance;
-  let getConsumerProfile: MockInstance;
-  let unregisterConsumers: MockInstance;
-  let getProfilesCount: MockInstance;
 
   beforeEach(() => {
-    req = RequestMock.new().get();
     res = ResponseMock.new();
+  });
 
-    batchFetchNotifications = vi.spyOn(
-      notifications,
-      'batchFetchNotifications'
-    );
-    batchFetchAndStoreNotifications = vi.spyOn(
-      notifications,
-      'batchFetchAndStoreNotifications'
-    );
-    getProfileByConsumer = vi.spyOn(model, 'getProfileByConsumer');
-    getConsumerProfile = vi.spyOn(notifications, 'getConsumerProfile');
-    unregisterConsumers = vi.spyOn(notifications, 'unregisterConsumers');
-    getProfilesCount = vi.spyOn(model, 'getProfilesCount');
-
-    batchFetchNotifications.mockResolvedValue([]);
-    batchFetchAndStoreNotifications.mockResolvedValue(undefined);
-    getConsumerProfile.mockResolvedValue({ isRegistered: false });
-    unregisterConsumers.mockResolvedValue([]);
-    getProfilesCount.mockResolvedValue(0);
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   test('handleUnregisterConsumer returns success when consumer was deleted', async () => {
+    const unregisterConsumers = vi.spyOn(notifications, 'unregisterConsumers');
     const reqMock = RequestMock.new()
       .setParams({ consumerId: 'consumer-1' })
       .get<{ consumerId: string }>();
@@ -68,6 +38,7 @@ describe('amsapp notifications route handlers', () => {
   });
 
   test('handleUnregisterConsumer returns not found when consumer was not deleted', async () => {
+    const unregisterConsumers = vi.spyOn(notifications, 'unregisterConsumers');
     const reqMock = RequestMock.new()
       .setParams({ consumerId: 'consumer-1' })
       .get<{ consumerId: string }>();
@@ -84,7 +55,8 @@ describe('amsapp notifications route handlers', () => {
   });
 
   test('handleConsumerRegistrationProfile returns isRegistered false when profile lookup returns null', async () => {
-    getProfileByConsumer.mockResolvedValue(null);
+    const getConsumerProfile = vi.spyOn(notifications, 'getConsumerProfile');
+    getConsumerProfile.mockResolvedValue({ isRegistered: false });
 
     const reqMock = RequestMock.new()
       .setParams({ consumerId: 'consumer-1' })
@@ -99,10 +71,14 @@ describe('amsapp notifications route handlers', () => {
   });
 
   test('fetchAndStoreNotifications triggers background fetch and returns success immediately', () => {
+    const batchFetchAndStoreNotifications = vi.spyOn(
+      notifications,
+      'batchFetchAndStoreNotifications'
+    );
     const pendingPromise = new Promise<void>(() => undefined);
     batchFetchAndStoreNotifications.mockReturnValue(pendingPromise);
 
-    fetchAndStoreNotifications(req, res);
+    fetchAndStoreNotifications(RequestMock.new().get(), res);
 
     expect(batchFetchAndStoreNotifications).toHaveBeenCalledTimes(1);
     expect(res.send).toHaveBeenCalledWith({
@@ -112,6 +88,12 @@ describe('amsapp notifications route handlers', () => {
   });
 
   test('returns 400 on invalid limit', async () => {
+    const batchFetchNotifications = vi.spyOn(
+      notifications,
+      'batchFetchNotifications'
+    );
+    batchFetchNotifications.mockResolvedValue([]);
+
     const reqMock = RequestMock.new<{
       dateFrom: string;
       offset: string;
@@ -128,6 +110,12 @@ describe('amsapp notifications route handlers', () => {
   });
 
   test('returns 400 on negative offset', async () => {
+    const batchFetchNotifications = vi.spyOn(
+      notifications,
+      'batchFetchNotifications'
+    );
+    batchFetchNotifications.mockResolvedValue([]);
+
     const reqMock = RequestMock.new<{
       dateFrom: string;
       offset: string;
@@ -143,6 +131,12 @@ describe('amsapp notifications route handlers', () => {
   });
 
   test('returns 400 on invalid dateFrom', async () => {
+    const batchFetchNotifications = vi.spyOn(
+      notifications,
+      'batchFetchNotifications'
+    );
+    batchFetchNotifications.mockResolvedValue([]);
+
     const reqMock = RequestMock.new<{
       dateFrom: string;
       offset: string;
@@ -158,6 +152,14 @@ describe('amsapp notifications route handlers', () => {
   });
 
   test('parses offset/limit as numbers and forwards them as isostring and numbers', async () => {
+    const getProfilesCount = vi.spyOn(model, 'getProfilesCount');
+    const batchFetchNotifications = vi.spyOn(
+      notifications,
+      'batchFetchNotifications'
+    );
+    getProfilesCount.mockResolvedValue(0);
+    batchFetchNotifications.mockResolvedValue([]);
+
     const reqMock = RequestMock.new<{
       dateFrom: string;
       offset: string;
