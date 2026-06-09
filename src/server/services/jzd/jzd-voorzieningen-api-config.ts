@@ -18,63 +18,34 @@ export type FetchWmoVoorzieningenApiOptions = Omit<
   'bsn'
 >;
 
-// These productIdentificaties correspond to WRA products that can be repaired.
-const PRODUCT_IDS_WITH_REPARATIEVERZOEK_ACTION = [
-  '13W10',
-  '13W11',
-  '13W12',
-  '13W14',
+// This list should be kept in sync with the list of productIdentificaties given to use by JZD - Zorgned FB
+const PRODUCT_IDS_EXCLUDED_FROM_REPARATIEVERZOEK_ACTION = [
+  '13W13',
   '13W15',
-  '13W18',
-  '13W19',
-  '13W20',
-  '13W21',
-  '13W22',
-  '13W23',
-  '13W24',
-  '13W25',
-  '13W26',
-  '13W27',
-  '13W28',
-  '13W29',
-  '13W30',
-  '13W31',
+  '13W37',
   '13W32',
+  '13W33',
   '13W34',
-  '13W40',
-  '13W41',
-  '13W42',
-  '13W43',
-  '13W44',
-  '13W46',
-  '13W47',
-  '13W48',
+  '13W49',
   '13W50',
-  '13W51',
-  '13W52',
-  '13W54',
   '13W55',
-  '13W56',
   '13W57',
-  '13W70',
-  '13W71',
+  '13W85',
+  '13W86',
+  '13W94',
+  '13W95',
+  '13W98',
+  '13W99',
+  '13W44',
+  '13W45',
+  '13W46',
+  '13W53',
+  '13W54',
+  '13W52',
   '13W73',
   '13W74',
-  '13W75',
-  '13W76',
-  '13W77',
-  '13W78',
-  '13W79',
-  '13W80',
-  '13W81',
   '13W82',
-  '13W84',
-  '13W90',
-  '13W91',
-  '13W92',
-  '13W93',
-  '13W94',
-  '13W96',
+  '13W83',
 ];
 
 export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
@@ -82,10 +53,12 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
   // Reparatieverzoek action for WRA products with ZIN leveringsvorm // // //
   // // // // // // // // // // // // // // // // // // // // // // // // //
   {
-    match: {
-      leveringsVorm: 'ZIN',
+    include: {
       isActueel: true,
-      productIdentificatie: PRODUCT_IDS_WITH_REPARATIEVERZOEK_ACTION,
+      productsoortCode: ['WRA', 'WRA1', 'WRA2', 'WRA3', 'WRA4', 'WRA5'],
+    },
+    exclude: {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_REPARATIEVERZOEK_ACTION,
     },
     assign: {
       maActies: ['reparatieverzoek'],
@@ -104,7 +77,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['A-LLV'],
       maActies: ['stopzetten', 'stopzetten-tijdelijk'],
     },
-    match: {
+    include: {
       isActueel: true,
       productIdentificatie: [
         'LLVFV',
@@ -131,7 +104,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
         };
       },
     },
-    match: {
+    include: {
       leveringsVorm: (voorziening) => voorziening.leveringsVorm !== 'PGB',
       isActueel: true,
       productsoortCode: [
@@ -165,7 +138,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['C-01'],
       maActies: ['stopzetten'],
     },
-    match: {
+    include: {
       leveringsVorm: 'PGB',
       isActueel: true,
       productsoortCode: ['WMH'],
@@ -179,7 +152,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['C-02'],
       maActies: ['stopzetten'],
     },
-    match: {
+    include: {
       leveringsVorm: 'PGB',
       isActueel: true,
       productsoortCode: [
@@ -212,7 +185,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['C-03'],
       maActies: ['stopzetten', 'stopzetten-tijdelijk'],
     },
-    match: {
+    include: {
       leveringsVorm: 'PGB',
       isActueel: true,
       productsoortCode: ['VVD'],
@@ -226,7 +199,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['D-01'],
       maActies: ['stopzetten'],
     },
-    match: {
+    include: {
       leveringsVorm: 'ZIN',
       isActueel: true,
       productsoortCode: [
@@ -250,7 +223,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['D-02'],
       maActies: ['stopzetten'],
     },
-    match: {
+    include: {
       leveringsVorm: 'PGB',
       isActueel: true,
       productsoortCode: ['AAN', 'FIE', 'ROL', 'SCO', 'OVE', 'RWD', 'RWT'],
@@ -264,7 +237,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['D-03'],
       maActies: ['stopzetten'],
     },
-    match: {
+    include: {
       leveringsVorm: 'ZIN',
       isActueel: true,
       productsoortCode: ['WGW', 'WRA', 'WRA2', 'WRA3', 'WRA5', 'OVW'],
@@ -278,7 +251,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['D-04'],
       maActies: ['stopzetten'],
     },
-    match: {
+    include: {
       leveringsVorm: 'PGB',
       isActueel: true,
       productsoortCode: ['WGW', 'WRA', 'WRA2', 'WRA3', 'WRA5', 'OVW', 'WRA1'],
@@ -292,7 +265,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['D-05'],
       maActies: ['stopzetten'],
     },
-    match: {
+    include: {
       isActueel: true,
       productsoortCode: ['WRA1'],
     },
@@ -305,7 +278,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['D-06'],
       maActies: ['stopzetten'],
     },
-    match: {
+    include: {
       isActueel: true,
       productsoortCode: ['FIN', 'MVV', 'VVK'],
     },
@@ -325,7 +298,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
         };
       },
     },
-    match: {
+    include: {
       isActueel: true,
       productsoortCode: ['VHK'],
     },
@@ -338,7 +311,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['D-08'],
       maActies: ['stopzetten'],
     },
-    match: {
+    include: {
       isActueel: true,
       productsoortCode: ['WRA4'],
     },
@@ -351,7 +324,7 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['E-01'],
       maActies: ['stopzetten'],
     },
-    match: {
+    include: {
       isActueel: true,
       productsoortCode: ['AOV'],
     },
@@ -371,9 +344,9 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
       };
 
       return {
-        match: Object.fromEntries(
+        include: Object.fromEntries(
           entries(match).filter(([_, value]) => typeof value !== 'undefined')
-        ) as JzdApiConfig['match'],
+        ) as JzdApiConfig['include'],
         assign: {
           maProductgroep: lineItemConfig.productgroep,
         },
