@@ -186,7 +186,7 @@ export async function upsertConsumer(
           },
         });
 
-      // Keep legacy consumer_ids in sync when a consumer moves between profiles.
+      // TODO MIJN-13137: Keep legacy consumer_ids in sync when a consumer moves between profiles. Can be removed after consumerIds column is removed.
       await drizzleDb
         .update(notificationsTable)
         .set({
