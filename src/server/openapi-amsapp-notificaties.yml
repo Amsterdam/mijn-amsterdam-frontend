@@ -107,12 +107,12 @@ paths:
       responses:
         '200':
           description: Consumer deleted
-        '404':
-          description: Consumer not found
+        '304':
+          description: Consumer not Modified
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/ErrorNotFound'
+                $ref: '#/components/schemas/ErrorNotModified'
         '500':
           description: |
             Returns Application error, any error in code or from failed requests.

@@ -56,7 +56,9 @@ export async function handleUnregisterConsumer(
   if (deletedConsumerIds.length > 0) {
     return res.send(apiSuccessResult('Consumers deleted'));
   }
-  return res.send(apiErrorResult('Not Found', null, HttpStatusCode.not));
+  return res.send(
+    apiErrorResult('Not Modified', null, HttpStatusCode.NotModified)
+  );
 }
 
 export async function handleConsumerRegistrationProfile(

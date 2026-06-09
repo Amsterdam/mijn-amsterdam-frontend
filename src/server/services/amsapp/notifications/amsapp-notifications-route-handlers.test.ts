@@ -76,10 +76,10 @@ describe('amsapp notifications route handlers', () => {
     await handleUnregisterConsumer(reqMock, res);
 
     expect(res.send).toHaveBeenCalledWith({
-      message: 'Not Found',
+      message: 'Not Modified',
       content: null,
       status: 'ERROR',
-      code: HttpStatusCode.NotFound,
+      code: HttpStatusCode.NotModified,
     });
   });
 
