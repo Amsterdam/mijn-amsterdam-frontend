@@ -34,10 +34,6 @@ import {
  * The Notification service allows batch handling of notifications for previously verified consumers
  */
 
-type UnregisterConsumerOptions = {
-  triggerAmsAppUnregisterConsumerWebhook?: boolean;
-};
-
 async function sendAmsAppUnregisterConsumerWebhook(consumerIds: ConsumerId[]) {
   const requestConfig = getApiConfig('AMSAPP', {
     formatUrl: ({ url }) => {
@@ -55,7 +51,7 @@ async function sendAmsAppUnregisterConsumerWebhook(consumerIds: ConsumerId[]) {
 
 export async function unregisterConsumers(
   consumerIds: ConsumerId[],
-  options: UnregisterConsumerOptions = {}
+  options: { triggerAmsAppUnregisterConsumerWebhook?: boolean } = {}
 ) {
   const deletedConsumerIds = await deleteConsumers(consumerIds);
 
