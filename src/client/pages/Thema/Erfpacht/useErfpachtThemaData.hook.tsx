@@ -34,6 +34,7 @@ export function useErfpachtThemaData() {
           zaak?.zaakDossiers?.map((dossierId) => {
             return (
               <MaRouterLink
+                maVariant="noUnderline"
                 key={dossierId}
                 href={generatePath(themaConfig.detailPageDossier.route.path, {
                   dossierId,
