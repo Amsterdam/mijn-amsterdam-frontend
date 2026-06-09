@@ -1,3 +1,5 @@
+import { isValidElement } from 'react';
+
 import {
   Heading,
   Icon,
@@ -82,12 +84,19 @@ export function ZakenList<T extends { link?: LinkProps; title: string }>({
                 <Paragraph>
                   {displayPropEntries
                     .slice(1)
-                    .map(([propKey, { label }], i) => (
-                      <span key={propKey} className={styles.ListViewProp}>
-                        <strong>{label}:</strong>{' '}
-                        {zaak[propKey as keyof T] as React.ReactNode}
-                      </span>
-                    ))}
+                    .map(([propKey, { label }], i) => {
+                      const value = zaak[propKey as keyof T];
+                      return (
+                        <span key={propKey} className={styles.ListViewProp}>
+                          <strong>{label}:</strong>{' '}
+                          {isValidElement(value)
+                            ? value
+                            : typeof value === 'object'
+                              ? JSON.stringify(value)
+                              : String(value)}
+                        </span>
+                      );
+                    })}
                 </Paragraph>
               </article>
             </LinkOrFragment>
