@@ -46,6 +46,63 @@ export function StatusStepDocuments({
   );
 }
 
+function Step({
+  step: item,
+  isSubstep,
+  children,
+}: {
+  step: StatusLineItem;
+  isSubstep?: boolean;
+  children?: ReactNode;
+}) {
+  const StepComponent = isSubstep ? ProgressList.Substep : ProgressList.Step;
+  return (
+    <StepComponent
+      key={item.id}
+      heading={item.status}
+      status={
+        item.isActive ? 'current' : item.isChecked ? 'completed' : undefined
+      }
+      className={styles.Step}
+      aria-label={
+        item.isChecked && !item.isActive
+          ? 'Status Afgerond'
+          : item.isActive
+            ? 'Huidige status'
+            : 'Toekomstige status'
+      }
+    >
+      {!item.substeps?.length && (
+        <time className={styles.StepStatusDate} dateTime={item.datePublished}>
+          {defaultDateFormat(item.datePublished)}
+        </time>
+      )}
+      {item.description && (
+        <div>
+          {parseHTML(item.description)}
+          {!!item.actionButtonItems?.length && (
+            <ActionGroup className={styles.PanelActionGroup}>
+              {item.actionButtonItems.map(({ to, title }) => (
+                <MaButtonLink key={to} href={to} variant="secondary">
+                  {title}
+                  <Icon svg={LinkExternalIcon} size="heading-5" />
+                </MaButtonLink>
+              ))}
+            </ActionGroup>
+          )}
+        </div>
+      )}
+      {!!(item.altDocumentContent || item.documents?.length) && (
+        <StatusStepDocuments
+          documents={item.documents}
+          altDocumentContent={item.altDocumentContent}
+        />
+      )}
+      {children}
+    </StepComponent>
+  );
+}
+
 type StepsProps = {
   steps: StatusLineItem[];
   title?: string;
@@ -59,56 +116,17 @@ export function Steps({ steps, title }: StepsProps) {
           {title}
         </Heading>
       )}
-
       <ProgressList headingLevel={3} collapsible={false}>
         {steps.map((item) => (
-          <ProgressList.Step
-            key={item.id}
-            heading={item.status}
-            status={
-              item.isActive
-                ? 'current'
-                : item.isChecked
-                  ? 'completed'
-                  : undefined
-            }
-            className={styles.Step}
-            aria-label={
-              item.isChecked && !item.isActive
-                ? 'Status Afgerond'
-                : item.isActive
-                  ? 'Huidige status'
-                  : 'Toekomstige status'
-            }
-          >
-            <time
-              className={styles.StepStatusDate}
-              dateTime={item.datePublished}
-            >
-              {defaultDateFormat(item.datePublished)}
-            </time>
-            {item.description && (
-              <div>
-                {parseHTML(item.description)}
-                {!!item.actionButtonItems?.length && (
-                  <ActionGroup className={styles.PanelActionGroup}>
-                    {item.actionButtonItems.map(({ to, title }) => (
-                      <MaButtonLink key={to} href={to} variant="secondary">
-                        {title}
-                        <Icon svg={LinkExternalIcon} size="heading-5" />
-                      </MaButtonLink>
-                    ))}
-                  </ActionGroup>
-                )}
-              </div>
+          <Step key={item.id} step={item}>
+            {!!steps.length && (
+              <ProgressList.Substeps>
+                {item.substeps?.map((substep) => (
+                  <Step key={substep.id} step={substep} isSubstep />
+                ))}
+              </ProgressList.Substeps>
             )}
-            {!!(item.altDocumentContent || item.documents?.length) && (
-              <StatusStepDocuments
-                documents={item.documents}
-                altDocumentContent={item.altDocumentContent}
-              />
-            )}
-          </ProgressList.Step>
+          </Step>
         ))}
       </ProgressList>
     </section>

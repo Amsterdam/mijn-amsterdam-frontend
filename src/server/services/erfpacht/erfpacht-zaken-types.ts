@@ -1,5 +1,8 @@
 import type { ErfpachtDossiersDetailSource } from './erfpacht-types.ts';
-import type { ZaakAanvraagDetail } from '../../../universal/types/App.types.ts';
+import type {
+  LinkProps,
+  ZaakAanvraagDetail,
+} from '../../../universal/types/App.types.ts';
 
 export type ErfpachtZaakDetailSource = {
   url: string;
@@ -369,7 +372,7 @@ export type ZaakStatusSource = {
   url: string;
   uuid: string;
   zaak: string;
-  statustype: string;
+  statustype: ZaakStatusTypeSource; // TODO: Is dit de juiste property voor de specifieke status van een zaak? Of is er nog een andere property die aangeeft wat de status is?
   datumStatusGezet: string;
   statustoelichting?: string;
   indicatieLaatstGezetteStatus?: boolean;
@@ -379,17 +382,19 @@ export type ZaakStatusSource = {
 };
 
 export type ZaakStatusExpand = {
-  [key: string]: unknown;
+  statustype?: {
+    statustekst?: ZaakStatusTypeSource;
+  };
 };
 
 export type ZaakInfoSource = {
   zaakNummer: string;
   zaakUuid: string; // TODO: Must be added to the ZaakInfo response. Delegate to Vernise Team.
   zaakOmschrijving: string;
-  statusOmschrijving: string;
+  statusOmschrijving: ZaakStatusTypeSource;
   formattedStatusDatum: string;
   zaakUrl: string;
-  zaakDossiers: ErfpachtDossiersDetailSource['dossierId'][];
+  zaakDossiers?: ErfpachtDossiersDetailSource['dossierId'][];
   titelZaakNummer: string;
   titelZaakOmschrijving: string;
   titelStatusOmschrijving: string;
@@ -444,15 +449,46 @@ export type ErfpachtZaakDetailFrontend = Prettify<
       | 'betalingsindicatie'
       | 'betalingsindicatieWeergave'
       | 'laatsteBetaaldatum'
+      | 'resultaat'
     >
 >;
 
+export type ZaakStatusTypeSource =
+  | 'Aanvraag'
+
+  // Meer informatie nodig
+  | 'Informatie opgevraagd'
+  | 'Informatie aangeleverd'
+
+  // In behandeling
+  | 'Aanvraag beoordelen'
+  | 'Aanvraag gereed voor behandeling'
+  | 'Behandeling'
+  | 'Indicatie verstuurd'
+  | 'Aanbieding'
+  | 'Acceptatie ontvangen'
+
+  // Bij Notaris
+  | 'Besluit verstuurd'
+  | 'Akte gepasseerd'
+
+  // Afgehandeld
+  | 'Aanvraag afgerond'
+
+  // Onbekend
+  | 'Onbekend';
+
 export type ZaakStatusFrontend =
   | 'Ontvangen'
-  | 'In behandeling'
+  | 'Aanvraag'
   | 'Meer informatie nodig'
-  | 'Afgehandeld';
+  | 'In behandeling'
+  | 'Aanpassing akte bij de notaris'
+  | 'Afgehandeld'
+  | 'Onbekend';
 
 export type ZaakInfoFrontend = ZaakInfoSource & {
   fetchZaakDetailUrl: string;
+  link: LinkProps;
+  displayStatus: string;
 };

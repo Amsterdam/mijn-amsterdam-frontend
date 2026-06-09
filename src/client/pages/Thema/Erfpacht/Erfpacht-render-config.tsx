@@ -4,10 +4,12 @@ import {
   erfpachtFacturenTableConfig,
   themaConfig,
 } from './Erfpacht-thema-config.ts';
-import { ErfpachtDetail } from './ErfpachtDetail.tsx';
+import { ErfpachtDossierDetail } from './ErfpachtDossierDetail.tsx';
 import { default as ErfpachtIcon } from './ErfpachtIcon.svg?react';
-import { ErfpachtList } from './ErfpachtList.tsx';
+import { ErfpachtDossiersList } from './ErfpachtListDossiers.tsx';
+import { ErfpachtZakenList } from './ErfpachtListZaken.tsx';
 import { ErfpachtThema } from './ErfpachtThema.tsx';
+import { ErfpachtZaakDetail } from './ErfpachtZaakDetail.tsx';
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook.ts';
 import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { isLoading } from '../../../../universal/helpers/api.ts';
@@ -21,13 +23,23 @@ import { AfisList } from '../Afis/AfisList.tsx';
 
 export const ErfpachtRoutes = [
   {
-    route: themaConfig.listPage.route.path,
-    Component: ErfpachtList,
+    route: themaConfig.listPageDossiers.route.path,
+    Component: ErfpachtDossiersList,
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: themaConfig.detailPage.route.path,
-    Component: ErfpachtDetail,
+    route: themaConfig.listPageZaken.route.path,
+    Component: ErfpachtZakenList,
+    isActive: themaConfig.featureToggle.active,
+  },
+  {
+    route: themaConfig.detailPageDossier.route.path,
+    Component: ErfpachtDossierDetail,
+    isActive: themaConfig.featureToggle.active,
+  },
+  {
+    route: themaConfig.detailPageZaak.route.path,
+    Component: ErfpachtZaakDetail,
     isActive: themaConfig.featureToggle.active,
   },
   {

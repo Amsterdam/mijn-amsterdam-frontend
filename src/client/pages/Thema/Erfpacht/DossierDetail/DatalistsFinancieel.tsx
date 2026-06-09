@@ -15,7 +15,7 @@ import type { Row } from '../../../../components/Datalist/Datalist.tsx';
 import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../../config/app.ts';
 import { LINKS } from '../Erfpacht-thema-config.ts';
-import styles from '../ErfpachtDetail.module.scss';
+import styles from '../ErfpachtDossierDetail.module.scss';
 
 interface DatalistFinancieelPeriodeProps<T> {
   periode: T;

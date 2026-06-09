@@ -3,29 +3,29 @@ import { useErfpachtThemaData } from './useErfpachtThemaData.hook.ts';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
-export function ErfpachtList() {
+export function ErfpachtZakenList() {
   const {
     themaId,
     isLoading,
     isError,
-    dossiers,
+    zaken,
     tableConfig,
     breadcrumbs,
     themaConfig,
   } = useErfpachtThemaData();
-  useHTMLDocumentTitle(themaConfig.listPage.route);
+  useHTMLDocumentTitle(themaConfig.listPageZaken.route);
 
-  const tableConfigDossiers = tableConfig?.[listPageParamKind.erfpachtDossiers];
-  const displayPropsDossiers = tableConfigDossiers?.displayProps ?? {};
+  const tableConfigZaken = tableConfig?.[listPageParamKind.erfpachtZaken];
+  const displayPropsZaken = tableConfigZaken?.displayProps ?? {};
 
   return (
     <ListPagePaginated
-      items={dossiers}
+      items={zaken}
       themaId={themaId}
-      title={tableConfigDossiers?.title ?? 'Erfpachtrechten'}
-      appRoute={tableConfigDossiers?.listPageRoute ?? ''}
+      title={tableConfigZaken?.title ?? 'Lopende zaken'}
+      appRoute={tableConfigZaken?.listPageRoute ?? ''}
       breadcrumbs={breadcrumbs}
-      displayProps={displayPropsDossiers}
+      displayProps={displayPropsZaken}
       isLoading={isLoading}
       isError={isError}
     />

@@ -20,6 +20,7 @@ import type {
   ZaakInfoResponseSource,
   ZaakInfoSource,
   ZaakStatusFrontend,
+  ZaakStatusTypeSource,
 } from './erfpacht-zaken-types.ts';
 import { themaConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
 import {
@@ -113,7 +114,7 @@ export function transformErfpachtDossierProperties<
     title,
     id: dossierId ?? dossier.voorkeursadres,
     link: {
-      to: generatePath(themaConfig.detailPage.route.path, {
+      to: generatePath(themaConfig.detailPageDossier.route.path, {
         dossierId,
       }),
       title,
@@ -244,7 +245,7 @@ function transformErfpachtZakenResponse(
   zakenResponseSource: ZaakInfoResponseSource
 ): ZaakInfoFrontend[] {
   return (zakenResponseSource.content ?? []).map((zaakInfo) => {
-    return {
+    const zaak: ZaakInfoFrontend = {
       ...zaakInfo,
       fetchZaakDetailUrl: generateFullApiUrlBFF(
         routes.protected.ERFPACHT_ZAAK_DETAILS,
@@ -253,7 +254,15 @@ function transformErfpachtZakenResponse(
           zaakUrl: zaakInfo.zaakUrl,
         }
       ),
+      link: {
+        to: generatePath(themaConfig.detailPageZaak.route.path, {
+          uuid: zaakInfo.zaakUuid,
+        }),
+        title: zaakInfo.zaakOmschrijving,
+      },
+      displayStatus: `${getStatus(zaakInfo.statusOmschrijving)}: ${zaakInfo.statusOmschrijving}`,
     };
+    return zaak;
   });
 }
 
@@ -328,7 +337,7 @@ async function fetchErfpachtZaakDetail(
 ): Promise<ApiResponse<ErfpachtZaakDetailFrontend>> {
   const config = getCustomApiConfig(dataRequestConfig, {
     formatUrl(requestConfig) {
-      return `${requestConfig.url}/vernise/api/zaakinfo/${uuid}`;
+      return `${requestConfig.url}/vernise/api/ozgv/zaak/${uuid}`;
     },
     transformResponse: transformErfpachtZaakDetailResponse,
   });
@@ -341,37 +350,111 @@ async function fetchErfpachtZaakDetail(
   return zaakInfoResponse;
 }
 
-function getStatus(statustype: string): ZaakStatusFrontend {
-  // TODO: implement
-  return 'Ontvangen';
+function getStatus(statustekst?: ZaakStatusTypeSource): ZaakStatusFrontend {
+  switch (statustekst) {
+    case 'Aanvraag':
+    case 'Aanvraag beoordelen':
+    case 'Aanvraag gereed voor behandeling':
+    case 'Informatie opgevraagd':
+    case 'Informatie aangeleverd':
+      return 'Ontvangen';
+    case 'Behandeling':
+    case 'Indicatie verstuurd':
+    case 'Aanbieding':
+    case 'Acceptatie ontvangen':
+    case 'Besluit verstuurd':
+      return 'In behandeling';
+    case 'Akte gepasseerd':
+      return 'Aanpassing akte bij de notaris';
+    case 'Aanvraag afgerond':
+      return 'Afgehandeld';
+    default:
+      return 'Onbekend';
+  }
 }
 
 function transformErfpachtZaakStatussenResponse(
-  zaakStatussenResponseSource: ErfpachtZaakStatussenSource
-): StatusLineItem<ZaakStatusFrontend>[] {
-  return zaakStatussenResponseSource.results.map((status) => {
-    return {
-      id: status.uuid,
-      status: getStatus(status.statustype),
-      datePublished: status.datumStatusGezet,
-      isActive: false,
-      isChecked: false,
-    };
-  });
+  zaak: ErfpachtZaakDetailFrontend,
+  zaakStatussenResponseSource: ErfpachtZaakStatussenSource,
+  useSubsteps = true
+): Array<StatusLineItem<ZaakStatusFrontend, ZaakStatusTypeSource> | null> {
+  const stepStatusFixed: ZaakStatusFrontend[] = [
+    'Ontvangen',
+    // 'Aanvraag',
+    // 'Meer informatie nodig',
+    'In behandeling',
+    'Aanpassing akte bij de notaris',
+    'Afgehandeld',
+  ];
+
+  const stepsFixed: StatusLineItem<ZaakStatusFrontend, ZaakStatusTypeSource>[] =
+    stepStatusFixed
+      .map((statusFixed) => {
+        const substeps: StatusLineItem<ZaakStatusTypeSource>[] =
+          zaakStatussenResponseSource.results
+            .filter(
+              (statusSource) =>
+                getStatus(statusSource._expand?.statustype?.statustekst) ===
+                statusFixed
+            )
+            .map((statusSource) => {
+              const substatus =
+                statusSource._expand?.statustype?.statustekst ?? 'Onbekend';
+              return {
+                id: statusSource.uuid,
+                status: substatus,
+                description: substatus,
+                datePublished: statusSource.datumStatusGezet,
+                isActive: false,
+                isChecked: true,
+              };
+            });
+
+        if (statusFixed === 'Meer informatie nodig' && substeps.length === 0) {
+          return null;
+        }
+
+        return {
+          id: statusFixed,
+          status: statusFixed,
+          datePublished: substeps.at(-1)?.datePublished ?? '',
+          isActive: false,
+          isChecked:
+            !!substeps.length && substeps.every((substep) => substep.isChecked),
+          substeps: useSubsteps && substeps.length > 1 ? substeps : [],
+        };
+      })
+      .filter((step) => step !== null);
+
+  const lastStepWithSubsteps = stepsFixed.findLast((step) => step?.isChecked);
+
+  if (lastStepWithSubsteps) {
+    lastStepWithSubsteps.isActive = true;
+    const lastSubstep = lastStepWithSubsteps.substeps?.at(-1);
+    if (lastSubstep) {
+      lastSubstep.isActive = true;
+    }
+  }
+  return stepsFixed;
 }
 
 async function fetchErfpachtZaakStatussen(
   authProfileAndToken: AuthProfileAndToken,
-  zaakUrl: ErfpachtZaakDetailSource['url']
+  zaak: ErfpachtZaakDetailFrontend
 ): Promise<ApiResponse<StatusLineItem<ZaakStatusFrontend>[]>> {
   const config = getCustomApiConfig(dataRequestConfig, {
     formatUrl(requestConfig) {
-      return `${requestConfig.url}/vernise/api/zaakinfo/statussen`;
+      return `${requestConfig.url}/vernise/api/ozgv/statussen`;
     },
     params: {
-      zaak: zaakUrl,
+      zaak: zaak.url,
     },
-    transformResponse: transformErfpachtZaakStatussenResponse,
+    transformResponse(zaakStatussenResponse) {
+      return transformErfpachtZaakStatussenResponse(
+        zaak,
+        zaakStatussenResponse
+      );
+    },
   });
 
   const zaakStatussenResponse = await requestData<
@@ -386,27 +469,23 @@ export async function fetchZaakDetailWithStatussen(
   uuid: ZaakInfoSource['zaakUuid'],
   zaakUrl: ZaakInfoSource['zaakUrl']
 ): Promise<ApiResponse<ErfpachtZaakDetailFrontend>> {
-  const zaakDetailRequest = fetchErfpachtZaakDetail(authProfileAndToken, uuid);
-  const zaakStatussenRequest = fetchErfpachtZaakStatussen(
+  const zaakDetailResponse = await fetchErfpachtZaakDetail(
     authProfileAndToken,
-    zaakUrl
+    uuid
   );
 
-  const [zaakDetailResponse, zaakStatussenResponse] = await Promise.allSettled([
-    zaakDetailRequest,
-    zaakStatussenRequest,
-  ]);
-
-  const zaakDetailResult = getSettledResult(zaakDetailResponse);
-  const zaakStatussenResult = getSettledResult(zaakStatussenResponse);
-
-  if (zaakDetailResult.status !== 'OK' || zaakStatussenResult.status !== 'OK') {
-    return apiErrorResult('Failed to fetch zaak detail or status', null);
+  if (zaakDetailResponse.status !== 'OK') {
+    return apiErrorResult('Failed to fetch zaak detail', null);
   }
 
+  const zaakStatussenResponse = await fetchErfpachtZaakStatussen(
+    authProfileAndToken,
+    zaakDetailResponse.content
+  );
+
   return apiSuccessResult({
-    ...zaakDetailResult.content,
-    steps: zaakStatussenResult.content,
+    ...zaakDetailResponse.content,
+    steps: zaakStatussenResponse.content ?? [],
   });
 }
 

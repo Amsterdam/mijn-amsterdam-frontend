@@ -9,7 +9,7 @@ import { ThemaDetailPagina } from '../../../components/Thema/ThemaDetailPagina.t
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { useAfisThemaData } from '../Afis/useAfisThemaData.hook.tsx';
 
-export function ErfpachtDetail() {
+export function ErfpachtDossierDetail() {
   const {
     dossier,
     isError,
@@ -23,7 +23,7 @@ export function ErfpachtDetail() {
     themaConfig,
   } = useDossierDetailData();
   const afis = useAfisThemaData();
-  useHTMLDocumentTitle(themaConfig.detailPage.route);
+  useHTMLDocumentTitle(themaConfig.detailPageDossier.route);
   return (
     <ThemaDetailPagina
       themaId={themaId}

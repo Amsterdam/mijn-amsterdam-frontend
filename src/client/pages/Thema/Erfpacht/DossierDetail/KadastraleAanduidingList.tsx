@@ -1,7 +1,7 @@
 import { OrderedList } from '@amsterdam/design-system-react';
 
 import type { ErfpachtDossiersDetail } from '../../../../../server/services/erfpacht/erfpacht-types.ts';
-import styles from '../ErfpachtDetail.module.scss';
+import styles from '../ErfpachtDossierDetail.module.scss';
 
 interface KadastraleAanduidingListListProps {
   kadastraleaanduidingen?: ErfpachtDossiersDetail['kadastraleaanduidingen'];

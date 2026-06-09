@@ -5,7 +5,7 @@
   "results": [
     {
       "url": "http://example.com",
-      "uuid": "095be615-a8ad-4c33-8e9c-c7612fbf6c9f",
+      "uuid": "1",
       "zaak": "http://example.com",
       "statustype": "http://example.com",
       "datumStatusGezet": "2019-08-24T14:15:22Z",
@@ -20,6 +20,152 @@
           "statustekst": "string"
         }
       }
+    },
+    {
+      "url": "http://example.com",
+      "uuid": "2",
+      "zaak": "http://example.com",
+      "statustype": "http://example.com",
+      "datumStatusGezet": "2019-08-24T14:15:22Z",
+      "statustoelichting": "string",
+      "indicatieLaatstGezetteStatus": true,
+      "gezetdoor": "http://example.com",
+      "zaakinformatieobjecten": [],
+      "_expand": { "statustype": { "statustekst": "Aanvraag" } }
+    },
+    {
+      "url": "http://example.com",
+      "uuid": "3",
+      "zaak": "http://example.com",
+      "statustype": "http://example.com",
+      "datumStatusGezet": "2019-08-24T14:15:22Z",
+      "statustoelichting": "string",
+      "indicatieLaatstGezetteStatus": true,
+      "gezetdoor": "http://example.com",
+      "zaakinformatieobjecten": [],
+      "_expand": { "statustype": { "statustekst": "Informatie opgevraagd" } }
+    },
+    {
+      "url": "http://example.com",
+      "uuid": "4",
+      "zaak": "http://example.com",
+      "statustype": "http://example.com",
+      "datumStatusGezet": "2019-08-24T14:15:22Z",
+      "statustoelichting": "string",
+      "indicatieLaatstGezetteStatus": true,
+      "gezetdoor": "http://example.com",
+      "zaakinformatieobjecten": [],
+      "_expand": { "statustype": { "statustekst": "Informatie aangeleverd" } }
+    },
+    {
+      "url": "http://example.com",
+      "uuid": "5",
+      "zaak": "http://example.com",
+      "statustype": "http://example.com",
+      "datumStatusGezet": "2019-08-24T14:15:22Z",
+      "statustoelichting": "string",
+      "indicatieLaatstGezetteStatus": true,
+      "gezetdoor": "http://example.com",
+      "zaakinformatieobjecten": [],
+      "_expand": { "statustype": { "statustekst": "Aanvraag beoordelen" } }
+    },
+    {
+      "url": "http://example.com",
+      "uuid": "6",
+      "zaak": "http://example.com",
+      "statustype": "http://example.com",
+      "datumStatusGezet": "2019-08-24T14:15:22Z",
+      "statustoelichting": "string",
+      "indicatieLaatstGezetteStatus": true,
+      "gezetdoor": "http://example.com",
+      "zaakinformatieobjecten": [],
+      "_expand": {
+        "statustype": { "statustekst": "Aanvraag gereed voor behandeling" }
+      }
+    },
+    {
+      "url": "http://example.com",
+      "uuid": "7",
+      "zaak": "http://example.com",
+      "statustype": "http://example.com",
+      "datumStatusGezet": "2019-08-24T14:15:22Z",
+      "statustoelichting": "string",
+      "indicatieLaatstGezetteStatus": true,
+      "gezetdoor": "http://example.com",
+      "zaakinformatieobjecten": [],
+      "_expand": { "statustype": { "statustekst": "Behandeling" } }
+    },
+    {
+      "url": "http://example.com",
+      "uuid": "8",
+      "zaak": "http://example.com",
+      "statustype": "http://example.com",
+      "datumStatusGezet": "2019-08-24T14:15:22Z",
+      "statustoelichting": "string",
+      "indicatieLaatstGezetteStatus": true,
+      "gezetdoor": "http://example.com",
+      "zaakinformatieobjecten": [],
+      "_expand": { "statustype": { "statustekst": "Indicatie verstuurd" } }
+    },
+    {
+      "url": "http://example.com",
+      "uuid": "9",
+      "zaak": "http://example.com",
+      "statustype": "http://example.com",
+      "datumStatusGezet": "2019-08-24T14:15:22Z",
+      "statustoelichting": "string",
+      "indicatieLaatstGezetteStatus": true,
+      "gezetdoor": "http://example.com",
+      "zaakinformatieobjecten": [],
+      "_expand": { "statustype": { "statustekst": "Aanbieding" } }
+    },
+    {
+      "url": "http://example.com",
+      "uuid": "10",
+      "zaak": "http://example.com",
+      "statustype": "http://example.com",
+      "datumStatusGezet": "2019-08-24T14:15:22Z",
+      "statustoelichting": "string",
+      "indicatieLaatstGezetteStatus": true,
+      "gezetdoor": "http://example.com",
+      "zaakinformatieobjecten": [],
+      "_expand": { "statustype": { "statustekst": "Acceptatie ontvangen" } }
+    },
+    {
+      "url": "http://example.com",
+      "uuid": "11",
+      "zaak": "http://example.com",
+      "statustype": "http://example.com",
+      "datumStatusGezet": "2019-08-24T14:15:22Z",
+      "statustoelichting": "string",
+      "indicatieLaatstGezetteStatus": true,
+      "gezetdoor": "http://example.com",
+      "zaakinformatieobjecten": [],
+      "_expand": { "statustype": { "statustekst": "Besluit verstuurd" } }
+    },
+    {
+      "url": "http://example.com",
+      "uuid": "12",
+      "zaak": "http://example.com",
+      "statustype": "http://example.com",
+      "datumStatusGezet": "2019-08-24T14:15:22Z",
+      "statustoelichting": "string",
+      "indicatieLaatstGezetteStatus": true,
+      "gezetdoor": "http://example.com",
+      "zaakinformatieobjecten": [],
+      "_expand": { "statustype": { "statustekst": "Akte gepasseerd" } }
+    },
+    {
+      "url": "http://example.com",
+      "uuid": "13",
+      "zaak": "http://example.com",
+      "statustype": "http://example.com",
+      "datumStatusGezet": "2019-08-24T14:15:22Z",
+      "statustoelichting": "string",
+      "indicatieLaatstGezetteStatus": true,
+      "gezetdoor": "http://example.com",
+      "zaakinformatieobjecten": [],
+      "_expand": { "statustype": { "statustekst": "Aanvraag afgerond" } }
     }
   ]
 }

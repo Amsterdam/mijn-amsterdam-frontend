@@ -2,16 +2,15 @@ import { generatePath } from 'react-router';
 
 import type {
   ErfpachtDossierFrontend,
-  ErfpachtDossiersResponse,
+  ErfpachtResponseFrontend,
 } from '../../../../server/services/erfpacht/erfpacht-types.ts';
+import type { ZaakInfoFrontend } from '../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
 import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { propagateFeatureToggles } from '../../../config/feature-toggles.ts';
 import type {
   PageConfig,
   ThemaConfigBase,
-  WithDetailPage,
-  WithListPage,
 } from '../../../config/thema-types.ts';
 import {
   getAfisListPageDocumentTitle,
@@ -36,18 +35,22 @@ export const LINKS = {
 
 type WithDetailPageFactuur = PageConfig<'detailPageFactuur'>;
 type WithListPageFacturen = PageConfig<'listPageFacturen'>;
+type WithListPageZaken = PageConfig<'listPageZaken'>;
+type WithListPageDossiers = PageConfig<'listPageDossiers'>;
 type WithDetailPageZaak = PageConfig<'detailPageZaak'>;
+type WithDetailPageDossier = PageConfig<'detailPageDossier'>;
 
 type ThemaConfigErfpacht = ThemaConfigBase &
-  WithDetailPage &
+  WithDetailPageDossier &
   WithDetailPageZaak &
-  WithListPage &
+  WithListPageDossiers &
   WithDetailPageFactuur &
   WithListPageFacturen &
   WithDetailPageFactuur &
-  WithListPageFacturen;
+  WithListPageFacturen &
+  WithListPageZaken;
 
-export const themaConfig: ThemaConfigErfpacht = {
+export const themaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
   redactedScope: 'none',
@@ -81,7 +84,7 @@ export const themaConfig: ThemaConfigErfpacht = {
     documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
   },
-  detailPage: {
+  detailPageDossier: {
     route: {
       path: '/erfpacht/dossier/:dossierId',
       trackingUrl: '/erfpacht/dossier',
@@ -95,10 +98,17 @@ export const themaConfig: ThemaConfigErfpacht = {
       documentTitle: `Erfpacht wijzigingsaanvraag | ${THEMA_TITLE}`,
     },
   },
-  listPage: {
+  listPageDossiers: {
     route: {
       path: '/erfpacht/dossiers/:page?',
       documentTitle: `Lijst met dossiers | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
+  listPageZaken: {
+    route: {
+      path: '/erfpacht/zaken/:page?',
+      documentTitle: `Lijst met zaken | ${THEMA_TITLE}`,
       trackingUrl: null,
     },
   },
@@ -116,10 +126,11 @@ export const themaConfig: ThemaConfigErfpacht = {
       trackingUrl: null,
     },
   },
-};
+} as const satisfies ThemaConfigErfpacht;
 
 export const listPageParamKind = {
   erfpachtDossiers: 'erfpacht-dossiers',
+  erfpachtZaken: 'erfpacht-zaken',
 } as const;
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
@@ -141,21 +152,39 @@ export const erfpachtFacturenTableConfig = getFacturenTableConfig({
 });
 
 type DisplayPropsDossiers = DisplayProps<ErfpachtDossierFrontend>;
+type DisplayPropsZaken = DisplayProps<ZaakInfoFrontend>;
 
-export function getTableConfig(erfpachtData: ErfpachtDossiersResponse | null) {
+export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
   const dossiersBase = erfpachtData?.dossiers;
+  const [firstZaak] = erfpachtData?.zaken ?? [];
 
   const displayPropsDossiers: DisplayPropsDossiers = {
     voorkeursadres: dossiersBase?.titelVoorkeursAdres,
     dossierNummer: dossiersBase?.titelDossiernummer,
   };
 
+  const displayPropsZaken: DisplayPropsZaken = {
+    zaakNummer: firstZaak?.titelZaakNummer,
+    // zaakDossiers: 'Dossiers',
+    displayStatus: 'Status',
+    // statusOmschrijving: firstZaak?.titelStatusOmschrijving,
+    formattedStatusDatum: firstZaak?.titelFormattedStatusDatum,
+  };
+
   const titleDossiers = erfpachtData?.titelDossiersKop;
 
   const tableConfig = {
+    [listPageParamKind.erfpachtZaken]: {
+      title: 'Lopende wijzigingsaanvragen',
+      displayProps: displayPropsZaken,
+      listPageRoute: generatePath(themaConfig.listPageZaken.route.path, {
+        page: null,
+      }),
+      maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS,
+    },
     [listPageParamKind.erfpachtDossiers]: {
       title: titleDossiers ?? 'Erfpachtrechten',
-      listPageRoute: generatePath(themaConfig.listPage.route.path, {
+      listPageRoute: generatePath(themaConfig.listPageDossiers.route.path, {
         page: null,
       }),
       displayProps: displayPropsDossiers,

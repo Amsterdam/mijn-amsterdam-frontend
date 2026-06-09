@@ -4,7 +4,6 @@ import {
   listPageParamKind,
   themaConfig,
 } from './Erfpacht-thema-config.ts';
-import type { ErfpachtDossiersResponse } from '../../../../server/services/erfpacht/erfpacht-types.ts';
 import { isError, isLoading } from '../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
@@ -12,14 +11,19 @@ import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
 
 export function useErfpachtThemaData() {
   const { ERFPACHT } = useAppStateGetter();
-  const erfpachtData = ERFPACHT.content as ErfpachtDossiersResponse | null;
-  // Dossiers
-  const dossiersBase = erfpachtData?.dossiers ?? null;
+  const erfpachtData =
+    ERFPACHT.content && 'dossiers' in ERFPACHT.content
+      ? ERFPACHT.content
+      : null;
 
+  const dossiersBase = erfpachtData?.dossiers ?? null;
   const dossiers = addLinkElementToProperty(
     dossiersBase?.dossiers ?? [],
     'voorkeursadres'
   );
+
+  const zakenBase = erfpachtData?.zaken ?? null;
+  const zaken = addLinkElementToProperty(zakenBase ?? [], 'zaakNummer');
 
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
   const tableConfig = getTableConfig(erfpachtData);
@@ -27,9 +31,9 @@ export function useErfpachtThemaData() {
   return {
     themaId: themaConfig.id,
     title: themaConfig.title,
-    erfpachtData,
     relatieCode: erfpachtData?.relatieCode,
     dossiers,
+    zaken,
     isLoading: isLoading(ERFPACHT),
     isError: isError(ERFPACHT),
     pageLinks: themaConfig.pageLinks,

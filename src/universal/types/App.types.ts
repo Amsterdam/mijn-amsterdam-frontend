@@ -114,7 +114,10 @@ export type ZaakDisplayStatus =
   | 'Niet verleend'
   | 'Onbekend';
 
-export interface StatusLineItem<T extends ZaakStatus = string> {
+export interface StatusLineItem<
+  T extends ZaakStatus = string,
+  S extends ZaakStatus = string,
+> {
   id: string;
   status: T;
   datePublished: string;
@@ -125,6 +128,7 @@ export interface StatusLineItem<T extends ZaakStatus = string> {
   isVisible?: boolean;
   altDocumentContent?: AltDocumentContent;
   actionButtonItems?: LinkProps[];
+  substeps?: StatusLineItem<S>[];
 }
 
 export interface ZaakAanvraagDetail<T extends ZaakStatus = string> {

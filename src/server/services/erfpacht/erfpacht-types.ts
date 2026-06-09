@@ -1,4 +1,4 @@
-import type { ZaakInfoSource } from './erfpacht-zaken-types.ts';
+import type { ZaakInfoFrontend } from './erfpacht-zaken-types.ts';
 import type { ZaakAanvraagDetail } from '../../../universal/types/App.types.ts';
 
 export type ErfpachtErpachterResponseSource = {
@@ -221,5 +221,5 @@ export type ErfpachtDossiersResponse = Prettify<
 >;
 
 export type ErfpachtResponseFrontend = ErfpachtDossiersResponse & {
-  zaken: ZaakInfoSource[];
+  zaken: ZaakInfoFrontend[];
 };
