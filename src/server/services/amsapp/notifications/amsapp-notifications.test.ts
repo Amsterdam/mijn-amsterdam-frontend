@@ -1,5 +1,4 @@
 /* eslint-disable import/order */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   beforeEach,
   beforeAll,
@@ -11,6 +10,12 @@ import {
 } from 'vitest';
 
 import { DISCRETE_GENERIC_MESSAGE } from './amsapp-notifications-service-config.ts';
+import type { ServiceId } from './amsapp-notifications-types.ts';
+import type { NotificationsAndTipsResponse } from '../../tips-and-notifications.ts';
+
+type ServiceResponses = Partial<
+  Record<ServiceId, NotificationsAndTipsResponse>
+>;
 
 const mocks = vi.hoisted(() => {
   return {
@@ -35,8 +40,9 @@ const mocks = vi.hoisted(() => {
       fetchNotificationsAndTipsFromServices: vi.fn(),
       notificationServices: {
         private: {
-          serviceA: vi.fn(),
-          serviceB: vi.fn(),
+          afis: vi.fn(),
+          avg: vi.fn(),
+          belasting: vi.fn(),
         },
       },
     },
@@ -99,9 +105,7 @@ describe('amsapp-notifications', () => {
       mocks.model.upsertConsumer.mockResolvedValue(undefined);
       mocks.model.deleteOrphanProfiles.mockResolvedValue(undefined);
 
-      await registerConsumer('123456789', 'Jane Doe', 'consumer-1', [
-        'serviceA',
-      ] as any);
+      await registerConsumer('123456789', 'Jane Doe', 'consumer-1', ['afis']);
 
       expect(mocks.model.upsertConsumer).toHaveBeenCalled();
       expect(mocks.model.deleteOrphanProfiles).toHaveBeenCalled();
@@ -110,7 +114,7 @@ describe('amsapp-notifications', () => {
     it('getConsumerProfile returns profile data + isRegistered=true when found', async () => {
       mocks.model.getProfileByConsumer.mockResolvedValue({
         profileName: 'Jane Doe',
-        serviceIds: ['serviceA'],
+        serviceIds: ['afis'],
         dateUpdated: new Date('2026-03-01T00:00:00.000Z'),
         lastLoginDate: new Date('2026-04-01T00:00:00.000Z'),
         loginExpiryDate: new Date('2026-06-01T00:00:00.000Z'),
@@ -118,7 +122,7 @@ describe('amsapp-notifications', () => {
 
       await expect(getConsumerProfile('consumer-1')).resolves.toStrictEqual({
         profileName: 'Jane Doe',
-        serviceIds: ['serviceA'],
+        serviceIds: ['afis'],
         dateUpdated: '2026-03-01T00:00:00.000Z',
         lastLoginDate: '2026-04-01T00:00:00.000Z',
         loginExpiryDate: '2026-06-01T00:00:00.000Z',
@@ -168,7 +172,7 @@ describe('amsapp-notifications', () => {
       mocks.model.listProfileIds.mockResolvedValue([
         {
           profileId: '123456789',
-          serviceIds: ['serviceA'],
+          serviceIds: ['afis'],
         },
       ]);
 
@@ -185,15 +189,15 @@ describe('amsapp-notifications', () => {
   it('storeNotificationsResponses transforms and stores notifications by service and ignores tips and notifications without datePublished', async () => {
     mocks.model.storeNotifications.mockResolvedValue(undefined);
 
-    const serviceResponses = {
-      serviceA: {
+    const serviceResponses: ServiceResponses = {
+      afis: {
         status: 'OK',
         content: {
           notifications: [
-            null,
             {
               id: 'n-tip',
               themaID: 'THEMA',
+              themaTitle: 'Thema',
               title: 'Tip',
               isTip: true,
               isAlert: false,
@@ -202,42 +206,42 @@ describe('amsapp-notifications', () => {
             {
               id: 'n-no-date',
               themaID: 'THEMA',
+              themaTitle: 'Thema',
               title: 'No date',
-              isTip: false,
               isAlert: false,
-              datePublished: undefined,
+              datePublished: '',
             },
             {
               id: 'n-1',
               themaID: 'THEMA',
+              themaTitle: 'Thema',
               title: 'Actual title (should be hidden)',
-              isTip: false,
               isAlert: true,
               datePublished: '2026-03-06T00:00:00.000Z',
             },
           ],
         },
       },
-      serviceB: {
+      avg: {
         status: 'ERROR',
         content: null,
         message: 'failed',
       },
-    } as any;
+    };
 
     await storeNotificationsResponses('123456789', serviceResponses);
 
     expect(mocks.model.storeNotifications).toHaveBeenCalledTimes(1);
 
-    const [profileIdArg, servicesArg, lastLoginDateArg] = mocks.model
-      .storeNotifications.mock.calls[0] as unknown as [string, any[], any];
+    const [profileIdArg, servicesArg, lastLoginDateArg] =
+      mocks.model.storeNotifications.mock.calls[0];
 
     expect(profileIdArg).toBe('123456789');
     expect(servicesArg).toHaveLength(1);
     expect(lastLoginDateArg).toBeNull();
 
     expect(servicesArg[0]).toStrictEqual({
-      serviceId: 'serviceA',
+      serviceId: 'afis',
       dateUpdated: systemTime.toISOString(),
       status: 'OK',
       content: [
@@ -253,13 +257,15 @@ describe('amsapp-notifications', () => {
   it('storeNotificationsResponses stores an empty array when all service responses are not OK', async () => {
     mocks.model.storeNotifications.mockResolvedValue(undefined);
 
-    await storeNotificationsResponses('123456789', {
-      serviceA: {
+    const serviceResponses: ServiceResponses = {
+      afis: {
         status: 'ERROR',
         content: null,
         message: 'nope',
       },
-    } as any);
+    };
+
+    await storeNotificationsResponses('123456789', serviceResponses);
 
     expect(mocks.model.storeNotifications).toHaveBeenCalledWith(
       '123456789',
@@ -274,11 +280,11 @@ describe('amsapp-notifications', () => {
     await storeNotificationsResponses(
       '123456789',
       {
-        serviceA: {
+        afis: {
           status: 'OK',
           content: { notifications: [] },
         },
-      } as any,
+      },
       { updateLastLoginDate: true }
     );
 
@@ -296,7 +302,7 @@ describe('amsapp-notifications', () => {
     await storeNotificationsResponses(
       '123456789',
       {
-        serviceA: {
+        afis: {
           status: 'OK',
           content: { notifications: [] },
         },
@@ -304,7 +310,7 @@ describe('amsapp-notifications', () => {
           status: 'OK',
           content: { notifications: [] },
         },
-      } as any,
+      },
       { updateLastLoginDate: true }
     );
 
@@ -312,7 +318,7 @@ describe('amsapp-notifications', () => {
       '123456789',
       [
         {
-          serviceId: 'serviceA',
+          serviceId: 'afis',
           dateUpdated: systemTime.toISOString(),
           status: 'OK',
           content: [],
