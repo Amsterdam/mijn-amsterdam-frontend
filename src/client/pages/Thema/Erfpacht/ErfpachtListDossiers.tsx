@@ -1,5 +1,5 @@
 import { listPageParamKind } from './Erfpacht-thema-config.ts';
-import { useErfpachtThemaData } from './useErfpachtThemaData.hook.ts';
+import { useErfpachtThemaData } from './useErfpachtThemaData.hook.tsx';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 

@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import { generatePath } from 'react-router';
 
 import type {
@@ -152,7 +154,9 @@ export const erfpachtFacturenTableConfig = getFacturenTableConfig({
 });
 
 type DisplayPropsDossiers = DisplayProps<ErfpachtDossierFrontend>;
-type DisplayPropsZaken = DisplayProps<ZaakInfoFrontend>;
+type DisplayPropsZaken = DisplayProps<
+  ZaakInfoFrontend & { dossierLinks: ReactNode[] }
+>;
 
 export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
   const dossiersBase = erfpachtData?.dossiers;
@@ -165,7 +169,7 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
 
   const displayPropsZaken: DisplayPropsZaken = {
     zaakNummer: firstZaak?.titelZaakNummer,
-    // zaakDossiers: 'Dossiers',
+    dossierLinks: 'Erfpachtdossier',
     displayStatus: 'Status',
     // statusOmschrijving: firstZaak?.titelStatusOmschrijving,
     formattedStatusDatum: firstZaak?.titelFormattedStatusDatum,

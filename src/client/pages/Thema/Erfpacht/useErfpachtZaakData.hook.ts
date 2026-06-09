@@ -1,6 +1,6 @@
-import { generatePath, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
-import { useErfpachtThemaData } from './useErfpachtThemaData.hook.ts';
+import { useErfpachtThemaData } from './useErfpachtThemaData.hook.tsx';
 import type { ErfpachtZaakDetailFrontend } from '../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
 import { useBffApi } from '../../../hooks/api/useBffApi.ts';
 
@@ -29,15 +29,7 @@ export function useZaakDetailData() {
     themaId,
     title: zaak?.title ?? 'Wijzigen Erfpachtrecht',
     zaak,
-    dossiersLinks:
-      zaakBase?.zaakDossiers?.map((dossierId) => {
-        return {
-          url: generatePath(themaConfig.detailPageDossier.route.path, {
-            dossierId,
-          }),
-          title: dossierId,
-        };
-      }) ?? [],
+    dossierLinks: zaakBase?.dossierLinks ?? [],
     isLoading,
     isError,
     isLoadingThemaData,

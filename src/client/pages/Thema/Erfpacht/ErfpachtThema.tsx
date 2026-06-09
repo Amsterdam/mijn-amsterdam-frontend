@@ -4,7 +4,7 @@ import {
   filterErfpachtFacturen,
   mapErfpachtFacturen,
 } from './Erfpacht-helpers.tsx';
-import { useErfpachtThemaData } from './useErfpachtThemaData.hook.ts';
+import { useErfpachtThemaData } from './useErfpachtThemaData.hook.tsx';
 import type { ErfpachtDossierFrontend } from '../../../../server/services/erfpacht/erfpacht-types.ts';
 import type { ZaakInfoFrontend } from '../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
 import { entries } from '../../../../universal/helpers/utils.ts';

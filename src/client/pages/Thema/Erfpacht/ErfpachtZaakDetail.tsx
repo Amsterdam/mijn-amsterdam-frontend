@@ -2,14 +2,13 @@ import { UnorderedList } from '@amsterdam/design-system-react';
 
 import { useZaakDetailData } from './useErfpachtZaakData.hook.ts';
 import { Datalist, type Row } from '../../../components/Datalist/Datalist.tsx';
-import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { ThemaDetailPagina } from '../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function ErfpachtZaakDetail() {
   const {
     zaak,
-    dossiersLinks,
+    dossierLinks,
     isLoading,
     isError,
     isLoadingThemaData,
@@ -28,10 +27,8 @@ export function ErfpachtZaakDetail() {
       label: 'Dossiers',
       content: (
         <UnorderedList>
-          {dossiersLinks.map((link) => (
-            <UnorderedList.Item key={link.url}>
-              <MaRouterLink href={link.url}>{link.title}</MaRouterLink>
-            </UnorderedList.Item>
+          {dossierLinks.map((linkEl, index) => (
+            <UnorderedList.Item key={index}>{linkEl}</UnorderedList.Item>
           ))}
         </UnorderedList>
       ),

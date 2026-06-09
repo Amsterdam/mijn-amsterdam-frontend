@@ -481,14 +481,14 @@ export async function fetchZaakDetailWithStatussen(
     return apiErrorResult('Failed to fetch zaak detail', null);
   }
 
-  const zaakStatussenResponse = await fetchErfpachtZaakStatussen(
-    authProfileAndToken,
-    zaakDetailResponse.content
-  );
+  // const zaakStatussenResponse = await fetchErfpachtZaakStatussen(
+  //   authProfileAndToken,
+  //   zaakDetailResponse.content
+  // );
 
   return apiSuccessResult({
     ...zaakDetailResponse.content,
-    steps: zaakStatussenResponse.content ?? [],
+    steps: [],
   });
 }
 
