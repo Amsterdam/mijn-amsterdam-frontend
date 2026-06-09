@@ -106,7 +106,7 @@ export default [
             {
               group: ['**/pg-test-utils.ts'],
               message:
-                'pg-test-utils is test-only. Import setupPgTestDb only from *.integration.test files.',
+                'pg-test-utils is test-only. Import setupPgTestDb is only allowed from *.integration.test files.',
             },
           ],
         },
