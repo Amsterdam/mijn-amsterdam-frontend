@@ -273,11 +273,7 @@
         "naam",
         "Verduurzamen",
         "Verhuizing doorgeven",
-        "Correctie doorgeven",
-        "Contactmomenten",
-        "Chat",
-        "Contactformulier",
-        "Telefoon"
+        "Correctie doorgeven"
       ],
       "profileTypes": ["private"]
     },
@@ -286,6 +282,31 @@
       "displayTitle": "Aantal ingeschreven bewoners op mijn adres",
       "description": "Hoeveel personen zijn er ingeschreven op mijn adres.",
       "keywords": ["Aantal", "bewoners", "ingeschreven", "hoeveel"],
+      "profileTypes": ["private"]
+    },
+    {
+      "url": "/mijn-contact",
+      "displayTitle": "Contact met de gemeente",
+      "description": "Uw afspraken, communicatievoorkeuren en contactmomenten met de gemeente.",
+      "keywords": [
+        "Contact",
+        "gemeente",
+        "telefoon",
+        "email",
+        "formulier",
+        "Contactmomenten",
+        "Chat",
+        "Contactformulier",
+        "Telefoon",
+        "E-mail",
+        "afspraak",
+        "afspraken",
+        "Communicatievoorkeuren",
+        "Communicatie",
+        "voorkeuren",
+        "stadsloket",
+        "balie"
+      ],
       "profileTypes": ["private"]
     },
     {

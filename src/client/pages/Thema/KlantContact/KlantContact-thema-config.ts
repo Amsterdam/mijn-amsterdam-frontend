@@ -6,6 +6,7 @@ import type { ContactmomentFrontend } from '../../../../server/services/klantcon
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { isEnabled } from '../../../config/feature-toggles.ts';
 import type {
+  InfoSection,
   ThemaConfigBase,
   WithPageConfig,
 } from '../../../config/thema-types.ts';
@@ -80,12 +81,20 @@ export const themaConfig = {
       title: 'Bel 14 020',
     },
   ],
-  uitlegPageSections: [
-    {
-      title: THEMA_TITLE,
-      listItems: ['Contactmomenten', 'Afspraken'],
-    },
-  ],
+  get uitlegPageSections(): InfoSection[] {
+    return [
+      {
+        title: THEMA_TITLE,
+        listItems: [
+          'Contactmomenten',
+          themaConfig.featureToggle.afspraken.active ? 'Afspraken' : '',
+          themaConfig.featureToggle.communicatievoorkeuren.active
+            ? 'Communicatievoorkeuren'
+            : '',
+        ].filter(Boolean),
+      },
+    ];
+  },
 } as const satisfies ContactThema;
 
 const contactmomentenDisplayProps: DisplayProps<ContactmomentFrontendFinal> = {
