@@ -1,23 +1,20 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { listPageParamKind } from './HLI-thema-config.ts';
+import { listPageParamKind, stadspasDisplayProps } from './HLI-thema-config.ts';
 import styles from './HLIThema.module.scss';
 import { useHliThemaData } from './useHliThemaData.ts';
 import type {
   HLIRegelingFrontend,
   HLIRegelingSpecificatieFrontend,
 } from '../../../../server/services/hli/hli-regelingen-types.ts';
-import {
-  type StadspasFrontend,
-  type StadspasResponseFrontend,
-} from '../../../../server/services/hli/stadspas-types.ts';
+import { type StadspasResponseFrontend } from '../../../../server/services/hli/stadspas-types.ts';
 import { entries } from '../../../../universal/helpers/utils.ts';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
-import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
 import ThemaPaginaZaken from '../../../components/Thema/ThemaPaginaZaken.tsx';
+import { useSmallScreen } from '../../../hooks/media.hook.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function HistoricItemsMention() {
@@ -29,30 +26,12 @@ export function HistoricItemsMention() {
   );
 }
 
-type StadspasFrontend_ = Omit<StadspasFrontend, 'owner' | 'actief'> & {
-  owner: string;
-  ownerEl: React.ReactNode;
-  actief: string;
-};
-
-const stadspasDisplayProps: DisplayProps<StadspasFrontend_> = {
-  props: {
-    owner: 'Naam',
-    ownerEl: '',
-    balanceFormatted: 'Saldo',
-    actief: 'Status',
-  },
-  config: {
-    large: [false, '30%', '20%', '50%'],
-    small: [true, false, true, true],
-  },
-};
-
 function Stadspassen({
   stadspassen,
   dateExpiryFormatted,
 }: StadspasResponseFrontend) {
-  console.log('stadspassen', stadspassen);
+  const isSmallScreen = useSmallScreen();
+
   const passen = stadspassen.map((pas) => {
     return {
       ...pas,
@@ -70,9 +49,10 @@ function Stadspassen({
 
   return (
     <>
-      <ThemaPaginaZaken<StadspasFrontend>
+      <ThemaPaginaZaken
         displayProps={stadspasDisplayProps}
         zaken={passen}
+        title={isSmallScreen ? 'Stadspassen' : undefined}
         className={styles.Stadspassen}
         contentAfterTheZaken={
           !!stadspassen?.length &&
