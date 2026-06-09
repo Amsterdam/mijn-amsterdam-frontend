@@ -114,7 +114,6 @@ describe('drizzle migrations legacy rehearsal (postgres integration)', () => {
   beforeAll(async () => {
     const ctx = await setupPgTestDb({
       databaseName: 'mijnadam_legacy_rehearsal_test',
-      envOverrides: { BFF_DB_ENABLED: 'true' },
     });
 
     pool = ctx.pool;

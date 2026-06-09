@@ -156,6 +156,7 @@ export async function setupPgTestDb(
       PGUSER: container.getUsername(),
       PGPASSWORD: container.getPassword(),
       PGDATABASE: container.getDatabase(),
+      BFF_DB_ENABLED: 'true',
     });
 
     const postgres = await import('./postgres.ts');

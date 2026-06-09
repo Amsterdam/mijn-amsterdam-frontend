@@ -56,7 +56,6 @@ describe('amsapp-notifications-model (postgres integration)', () => {
   beforeAll(async () => {
     const ctx = await setupPgTestDb({
       databaseName,
-      envOverrides: { BFF_DB_ENABLED: 'true' },
     });
 
     pool = ctx.pool;

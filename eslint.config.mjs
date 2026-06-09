@@ -95,4 +95,22 @@ export default [
       ],
     },
   },
+  {
+    files: ['src/**/*.{js,mjs,cjs,ts,jsx,tsx}'],
+    ignores: ['src/**/*.integration.test.{js,mjs,cjs,ts,jsx,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['**/pg-test-utils.ts'],
+              message:
+                'pg-test-utils is test-only. Import setupPgTestDb only from *.integration.test files.',
+            },
+          ],
+        },
+      ],
+    },
+  },
 ];
