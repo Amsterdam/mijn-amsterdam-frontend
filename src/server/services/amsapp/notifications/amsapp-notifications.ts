@@ -50,7 +50,7 @@ async function sendAmsAppUnregisterConsumerWebhook(consumerIds: ConsumerId[]) {
     },
   });
 
-  // Best effort attempt, no need to triage
+  // Best effort attempt, no need to triage or retry if this fails
   await requestData<unknown>(requestConfig);
 }
 
