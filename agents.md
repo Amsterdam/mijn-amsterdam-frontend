@@ -9,7 +9,7 @@ Tell the agent the target path + expected behavior.
 
 ## Running tests without watch mode (Vitest)
 
-For any `pnpm run` script that executes `vitest`, append `--run --reporter=verbose`.
+For any `pnpm run` script that executes `vitest`, append `-- --run --reporter=verbose`.
 
 ## Test env conventions
 
