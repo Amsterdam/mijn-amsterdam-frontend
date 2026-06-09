@@ -250,7 +250,7 @@ describe('amsapp-notifications-model (postgres integration)', () => {
       expect(totalItems).toBe(1);
     });
   });
-  describe('listConsumerIdsWithLoginExpiryDateBefore', () => {
+  describe('listConsumerIds', () => {
     it('returns consumers with loginExpiryDate on or before the provided upper bound', async () => {
       const model = await import('./amsapp-notifications-model.ts');
 
@@ -285,8 +285,7 @@ describe('amsapp-notifications-model (postgres integration)', () => {
           eq(notificationsConsumerDetailsTable.consumerId, 'consumer-active')
         );
 
-      const consumerIds =
-        await model.listConsumerIdsWithLoginExpiryDateBefore(DEFAULT_TIME);
+      const consumerIds = await model.listConsumerIds(DEFAULT_TIME);
 
       expect(consumerIds.sort()).toStrictEqual([
         'consumer-at-bound',

@@ -291,7 +291,7 @@ export async function deleteConsumers(
   );
 }
 
-export async function listConsumerIdsWithLoginExpiryDateBefore(
+export async function listConsumerIds(
   loginExpiryDateUpperBound: Date
 ): Promise<ConsumerId[]> {
   return withDBEnabled(

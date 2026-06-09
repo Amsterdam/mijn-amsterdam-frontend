@@ -1,7 +1,7 @@
 import { getAuthProfileAndTokenWithoutSession } from './amsapp-notifications-helper.ts';
 import {
   listProfileIds,
-  listConsumerIdsWithLoginExpiryDateBefore,
+  listConsumerIds,
   upsertConsumer,
   deleteOrphanProfiles,
   listProfiles,
@@ -85,9 +85,7 @@ export async function registerConsumer(
 export async function unregisterExpiredConsumers(
   loginExpiryDateUpperBound: Date = new Date()
 ) {
-  const expiredConsumerIds = await listConsumerIdsWithLoginExpiryDateBefore(
-    loginExpiryDateUpperBound
-  );
+  const expiredConsumerIds = await listConsumerIds(loginExpiryDateUpperBound);
 
   await unregisterConsumers(expiredConsumerIds, {
     triggerAmsAppUnregisterConsumerWebhook: true,

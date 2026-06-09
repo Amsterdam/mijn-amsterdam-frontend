@@ -16,7 +16,7 @@ const mocks = vi.hoisted(() => {
   return {
     model: {
       listProfileIds: vi.fn(),
-      listConsumerIdsWithLoginExpiryDateBefore: vi.fn(),
+      listConsumerIds: vi.fn(),
       upsertConsumer: vi.fn(),
       deleteOrphanProfiles: vi.fn(),
       listProfiles: vi.fn(),
@@ -63,7 +63,7 @@ describe('amsapp-notifications', () => {
     vi.clearAllMocks();
     vi.setSystemTime(systemTime);
 
-    mocks.model.listConsumerIdsWithLoginExpiryDateBefore.mockResolvedValue([]);
+    mocks.model.listConsumerIds.mockResolvedValue([]);
     mocks.model.listProfileIds.mockResolvedValue([]);
     mocks.sourceApiRequest.requestData.mockResolvedValue({
       status: 'OK',
@@ -137,23 +137,17 @@ describe('amsapp-notifications', () => {
 
   describe('unregisterExpiredConsumers', () => {
     it('removes consumers selected by expiry cutoff when cron cleanup runs', async () => {
-      mocks.model.listConsumerIdsWithLoginExpiryDateBefore.mockResolvedValue([
-        'expired-1',
-      ]);
+      mocks.model.listConsumerIds.mockResolvedValue(['expired-1']);
       mocks.model.deleteConsumers.mockResolvedValue(['expired-1']);
 
       await unregisterExpiredConsumers(systemTime);
 
-      expect(
-        mocks.model.listConsumerIdsWithLoginExpiryDateBefore
-      ).toHaveBeenCalledWith(systemTime);
+      expect(mocks.model.listConsumerIds).toHaveBeenCalledWith(systemTime);
       expect(mocks.model.deleteConsumers).toHaveBeenCalledWith(['expired-1']);
     });
 
     it('is best effort and still removes consumers when webhook delivery fails', async () => {
-      mocks.model.listConsumerIdsWithLoginExpiryDateBefore.mockResolvedValue([
-        'expired-1',
-      ]);
+      mocks.model.listConsumerIds.mockResolvedValue(['expired-1']);
       mocks.model.deleteConsumers.mockResolvedValue(['expired-1']);
       mocks.sourceApiRequest.requestData.mockResolvedValue({
         status: 'ERROR',
@@ -180,9 +174,7 @@ describe('amsapp-notifications', () => {
 
       await batchFetchAndStoreNotifications();
 
-      expect(
-        mocks.model.listConsumerIdsWithLoginExpiryDateBefore
-      ).not.toHaveBeenCalled();
+      expect(mocks.model.listConsumerIds).not.toHaveBeenCalled();
       expect(
         mocks.tipsAndNotifications.fetchNotificationsAndTipsFromServices
       ).toHaveBeenCalledTimes(1);
