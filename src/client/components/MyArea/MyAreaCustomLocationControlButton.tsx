@@ -12,7 +12,7 @@ interface MyAreaCustomLocationControlButtonProps {
   label: string;
 }
 
-export default function MyAreaCustomLocationControlButton({
+export function MyAreaCustomLocationControlButton({
   latlng,
   zoom = HOOD_ZOOM,
   label,

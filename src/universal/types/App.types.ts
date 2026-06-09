@@ -27,6 +27,14 @@ export interface Action {
   payload?: any;
 }
 
+export type JSONValue =
+  | string
+  | number
+  | boolean
+  | null
+  | JSONValue[]
+  | { [key: string]: JSONValue };
+
 export interface LinkProps {
   to: string;
   title: string;

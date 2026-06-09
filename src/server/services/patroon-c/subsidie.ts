@@ -10,7 +10,10 @@ import {
 import { themaConfig } from '../../../client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
-import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types.ts';
+import type {
+  AuthProfile,
+  AuthProfileAndToken,
+} from '../../auth/auth-types.ts';
 import { encrypt } from '../../helpers/encrypt-decrypt.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 import {

@@ -22,8 +22,7 @@ import {
   themaId,
   themaTitle,
 } from '../../../client/pages/MyNotifications/MyNotifications-config.ts';
-import type {
-  ApiResponse} from '../../../universal/helpers/api.ts';
+import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
   apiSuccessResult,
   getFailedDependencies,

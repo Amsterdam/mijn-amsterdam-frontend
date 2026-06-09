@@ -4,8 +4,8 @@ import { links } from './Bezwaren-thema-config.ts';
 import { useBezwarenThemaData } from './useBezwarenThemaData.hook.ts';
 import type { BezwaarFrontend } from '../../../../server/services/bezwaren/types.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
-import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
-import ThemaPaginaZaken from '../../../components/Thema/ThemaPaginaZaken.tsx';
+import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
+import { ThemaPaginaZaken } from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 const pageContentTop = (

@@ -24,8 +24,8 @@ import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import { MaButtonLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
-import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
-import ThemaPaginaZaken from '../../../components/Thema/ThemaPaginaZaken.tsx';
+import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
+import { ThemaPaginaZaken } from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 const pageContentTop = (

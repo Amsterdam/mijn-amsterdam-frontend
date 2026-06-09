@@ -8,7 +8,7 @@ interface LinkToListPageProps {
   route: string;
   label?: string;
   linkTitle?: string;
-  params?: Record<string, any>;
+  params?: Record<string, string>;
   threshold?: number;
   translateX?: string;
 }

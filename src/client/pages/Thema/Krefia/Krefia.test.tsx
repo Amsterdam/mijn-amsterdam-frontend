@@ -7,7 +7,7 @@ import KrefiaData from '../../../../mocks-server/fixtures/krefia.json' with { ty
 import { forTesting } from '../../../../server/services/krefia/krefia.ts';
 import type { KrefiaSourceResponse } from '../../../../server/services/krefia/krefia.types.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 
 const testState = {
   KREFIA: {

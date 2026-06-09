@@ -1,4 +1,4 @@
-function LogoEherkenning() {
+export function LogoEherkenning() {
   return (
     <svg
       width="46px"
@@ -34,5 +34,3 @@ function LogoEherkenning() {
     </svg>
   );
 }
-
-export default LogoEherkenning;

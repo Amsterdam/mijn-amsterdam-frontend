@@ -4,7 +4,7 @@ import { generatePath } from 'react-router';
 import { themaConfig } from './Klachten-thema-config.ts';
 import { KlachtenDetail } from './KlachtenDetail.tsx';
 import type { AppState } from '../../../../universal/types/App.types.ts';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 
 const testState = {
   KLACHTEN: {

@@ -9,7 +9,7 @@ export interface ComponentProps {
   className?: string;
 }
 
-export default function ErrorAlert({
+export function ErrorAlert({
   children,
   title = 'Foutmelding',
   severity = 'error',

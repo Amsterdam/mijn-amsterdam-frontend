@@ -10,12 +10,12 @@ import type { Onderneming } from '../../../../../server/services/hr-kvk/hr-kvk.t
 import type { AppState } from '../../../../../universal/types/App.types.ts';
 import { ListExpandable } from '../../../../components/ListExpandable/ListExpandable.tsx';
 import { PreWrap } from '../../../../components/PreWrap/PreWrap.tsx';
+import type { ProfileLabels } from '../profileDataFormatter.ts';
+import { formatProfileSectionData } from '../profileDataFormatter.ts';
 import type {
-  ProfileLabels} from '../profileDataFormatter.ts';
-import {
-  formatProfileSectionData,
-} from '../profileDataFormatter.ts';
-import type { PanelConfig, ProfileSectionData } from '../ProfileSectionPanel.tsx';
+  PanelConfig,
+  ProfileSectionData,
+} from '../ProfileSectionPanel.tsx';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading

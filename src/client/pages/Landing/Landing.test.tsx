@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { LandingPage } from './Landing.tsx';
 import { bffApi } from '../../../testing/utils.ts';
 import type { SessionState } from '../../hooks/api/useSessionApi.ts';
-import MockApp from '../MockApp.tsx';
+import { MockApp } from '../MockApp.tsx';
 
 const appState = { isAuthenticated: false } as SessionState;
 

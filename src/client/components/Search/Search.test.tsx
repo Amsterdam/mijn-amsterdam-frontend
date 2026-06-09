@@ -7,7 +7,7 @@ import * as remoteConfig from './search-config.json' with { type: 'json' };
 import { Search } from './Search.tsx';
 import { bffApi } from '../../../testing/utils.ts';
 import type { AppState } from '../../../universal/types/App.types.ts';
-import MockApp from '../../pages/MockApp.tsx';
+import { MockApp } from '../../pages/MockApp.tsx';
 
 const appStateMock = {
   VERGUNNINGEN: {

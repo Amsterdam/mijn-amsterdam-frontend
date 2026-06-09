@@ -7,7 +7,7 @@ import type {
   AppState,
   MyNotification as MyNotificationType,
 } from '../../../universal/types/App.types.ts';
-import MockApp from '../../pages/MockApp.tsx';
+import { MockApp } from '../../pages/MockApp.tsx';
 
 describe('<MyNotification />', () => {
   const callback = vi.fn();

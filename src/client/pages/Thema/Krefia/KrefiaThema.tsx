@@ -4,8 +4,8 @@ import { useKrefiaThemaData } from './useKrefiaThemaData.hook.tsx';
 import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.types.ts';
 import { entries } from '../../../../universal/helpers/utils.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
-import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
-import ThemaPaginaZaken from '../../../components/Thema/ThemaPaginaZaken.tsx';
+import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
+import { ThemaPaginaZaken } from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function KrefiaThema() {

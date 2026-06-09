@@ -1,6 +1,6 @@
 import jose from 'node-jose';
 
-import type { ApiPatternResponseA} from './api-service.ts';
+import type { ApiPatternResponseA } from './api-service.ts';
 import { fetchService } from './api-service.ts';
 import * as MILIEUZONE from '../../../client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
 import * as OVERTREDINGEN from '../../../client/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';

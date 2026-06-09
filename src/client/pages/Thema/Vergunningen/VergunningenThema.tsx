@@ -4,8 +4,8 @@ import { useVergunningenThemaData } from './useVergunningenThemaData.hook.ts';
 import { type ZaakFrontendCombined } from '../../../../server/services/vergunningen/config-and-types.ts';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
-import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
-import ThemaPaginaZaken from '../../../components/Thema/ThemaPaginaZaken.tsx';
+import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
+import { ThemaPaginaZaken } from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { themaConfig } from '../Parkeren/Parkeren-thema-config.ts';
 

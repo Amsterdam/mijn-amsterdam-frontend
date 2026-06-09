@@ -1,24 +1,22 @@
-import type {
-  DatasetCategoryId} from '../../../../../universal/config/myarea-datasets.ts';
-import {
-  getDatasetCategoryId,
-} from '../../../../../universal/config/myarea-datasets.ts';
-import ErrorAlert from '../../../Alert/Alert.tsx';
-import LoadingContent from '../../../LoadingContent/LoadingContent.tsx';
+import type { DatasetCategoryId } from '../../../../../universal/config/myarea-datasets.ts';
+import { getDatasetCategoryId } from '../../../../../universal/config/myarea-datasets.ts';
+import { ErrorAlert } from '../../../Alert/Alert.tsx';
+import { LoadingContent } from '../../../LoadingContent/LoadingContent.tsx';
+import type { SelectedFeature } from '../../MyArea.hooks.ts';
 import { useLoadingFeature, useSelectedFeature } from '../../MyArea.hooks.ts';
 import styles from '../PanelComponent.module.scss';
-import MyAreaPanelContentAfval from './Afval.tsx';
-import MyAreaPanelContentBedrijvenInvesteringsZones from './BedrijvenInvesteringsZones.tsx';
-import MyAreaPanelContentBekendmaking from './Bekendmaking.tsx';
+import { MyArePanelContentAfval as MyAreaPanelContentAfval } from './Afval.tsx';
+import { MyArePanelContentBedrijvenInvesteringsZones as MyAreaPanelContentBedrijvenInvesteringsZones } from './BedrijvenInvesteringsZones.tsx';
+import { MyArePanelContentBekendmaking as MyAreaPanelContentBekendmaking } from './Bekendmaking.tsx';
 import { GenericContent } from './GenericBase.tsx';
-import MyAreaPanelContentMeldingenBuurt from './MeldingenBuurt.tsx';
-import MyAreaPanelContentParkeren from './Parkeren.tsx';
-import MyAreaPanelContentSport from './Sport.tsx';
-import MyAreaPanelContentWIOR from './Wior.tsx';
+import { MyArePanelContentMeldingenBuurt as MyAreaPanelContentMeldingenBuurt } from './MeldingenBuurt.tsx';
+import { MyArePanelContentParkeren as MyAreaPanelContentParkeren } from './Parkeren.tsx';
+import { MyArePanelContentSport as MyAreaPanelContentSport } from './Sport.tsx';
+import { MyArePanelContentWIOR as MyAreaPanelContentWIOR } from './Wior.tsx';
 
 interface MyAreaPanelContentSwitchProps {
   datasetCategoryId: DatasetCategoryId;
-  feature: any;
+  feature: SelectedFeature;
 }
 
 function MyAreaPanelContentSwitch({
@@ -34,12 +32,7 @@ function MyAreaPanelContentSwitch({
         />
       );
     case 'afvalcontainers':
-      return (
-        <MyAreaPanelContentAfval
-          datasetId={feature?.datasetId}
-          panelItem={feature}
-        />
-      );
+      return <MyAreaPanelContentAfval panelItem={feature} />;
     case 'bekendmakingen':
       return (
         <MyAreaPanelContentBekendmaking
@@ -62,12 +55,7 @@ function MyAreaPanelContentSwitch({
         />
       );
     case 'wior':
-      return (
-        <MyAreaPanelContentWIOR
-          datasetId={feature?.datasetId}
-          panelItem={feature}
-        />
-      );
+      return <MyAreaPanelContentWIOR panelItem={feature} />;
     case 'meldingenBuurt':
       return (
         <MyAreaPanelContentMeldingenBuurt
@@ -79,7 +67,7 @@ function MyAreaPanelContentSwitch({
   return <GenericContent datasetId={feature?.datasetId} panelItem={feature} />;
 }
 
-export default function MyAreaDetailPanel() {
+export function MyAreaDetailPanel() {
   const { selectedFeature } = useSelectedFeature();
   const { loadingFeature } = useLoadingFeature();
 

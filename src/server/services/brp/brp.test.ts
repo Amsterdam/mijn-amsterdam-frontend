@@ -1,7 +1,11 @@
 import { describe, it, expect, vi } from 'vitest';
 import type { Mock } from 'vitest';
 
-import { AANTAL_INGESCHREVEN_PERSONEN_NOT_SET, ADRES_IN_ONDERZOEK_A, ADRES_IN_ONDERZOEK_B } from './brp-config.ts';
+import {
+  AANTAL_INGESCHREVEN_PERSONEN_NOT_SET,
+  ADRES_IN_ONDERZOEK_A,
+  ADRES_IN_ONDERZOEK_B,
+} from './brp-config.ts';
 import {
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
@@ -321,6 +325,79 @@ describe('brp.ts', () => {
       expect(result).toHaveProperty('fetchUrlAantalIngeschrevenPersonen', null);
       expect(result).toHaveProperty('adres.isBewoner', true);
       expect(result).toHaveProperty('adres.isBriefadres', false);
+    });
+
+    it('should not return overlijdensdatum for ouders and kinderen', () => {
+      const persoon = {
+        naam: { volledigeNaam: 'John Doe' },
+        geboorte: {
+          datum: {
+            type: 'Datum',
+            datum: '1980-01-01',
+            langFormaat: '1 januari 1980',
+          },
+        },
+        overlijden: {
+          datum: {
+            type: 'Datum',
+            datum: '2024-06-01',
+            langFormaat: '1 juni 2024',
+          },
+        },
+        verblijfplaats: { type: 'VerblijfplaatsOnbekend' },
+        gemeenteVanInschrijving: { code: '0363' },
+        ouders: [
+          {
+            naam: { volledigeNaam: 'Parent Doe' },
+            geboorte: {
+              datum: {
+                type: 'Datum',
+                datum: '1950-01-01',
+                langFormaat: '1 januari 1950',
+              },
+            },
+            overlijden: {
+              datum: {
+                type: 'Datum',
+                datum: '2022-10-10',
+                langFormaat: '10 oktober 2022',
+              },
+            },
+          },
+        ],
+        kinderen: [
+          {
+            naam: { volledigeNaam: 'Child Doe' },
+            geboorte: {
+              datum: {
+                type: 'Datum',
+                datum: '2010-08-08',
+                langFormaat: '8 augustus 2010',
+              },
+            },
+            overlijden: {
+              datum: {
+                type: 'Datum',
+                datum: '2023-09-09',
+                langFormaat: '9 september 2023',
+              },
+            },
+          },
+        ],
+      };
+
+      const result = transformBenkBrpResponse(
+        'xx-aa',
+        persoon as unknown as PersoonSource
+      );
+
+      expect(result.persoon).toHaveProperty('overlijdensdatum', '2024-06-01');
+      expect(result.ouders[0]).not.toHaveProperty('overlijdensdatum');
+      expect(result.ouders[0]).not.toHaveProperty('overlijdensdatumFormatted');
+      expect(result.kinderen[0]).not.toHaveProperty('overlijdensdatum');
+      expect(result.kinderen[0]).not.toHaveProperty(
+        'overlijdensdatumFormatted'
+      );
     });
   });
 

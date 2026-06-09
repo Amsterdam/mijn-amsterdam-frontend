@@ -12,7 +12,7 @@ import {
 } from '../../../../../universal/helpers/brp.ts';
 import { PageContentCell } from '../../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
-import ThemaPagina from '../../../../components/Thema/ThemaPagina.tsx';
+import { ThemaPagina } from '../../../../components/Thema/ThemaPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
 
 function ProfilePrivateSectionPanels() {

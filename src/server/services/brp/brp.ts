@@ -111,7 +111,10 @@ function getAdres(verblijfplaats: VerblijfplaatsSource) {
   };
 }
 
-function getPersoonBasis(persoon: PersoonBasisSource): PersoonBasis {
+function getPersoonBasis(
+  persoon: PersoonBasisSource,
+  includeOverlijdensdatum: boolean
+): PersoonBasis {
   return {
     voornamen: persoon.naam?.voornamen ?? null,
     voorvoegselGeslachtsnaam: persoon.naam?.voorvoegsel ?? null,
@@ -126,8 +129,13 @@ function getPersoonBasis(persoon: PersoonBasisSource): PersoonBasis {
     geboortelandnaam: persoon.geboorte?.land?.omschrijving ?? null,
     geboorteplaatsnaam: persoon.geboorte?.plaats?.omschrijving ?? null,
 
-    overlijdensdatum: getDatum(persoon.overlijden?.datum),
-    overlijdensdatumFormatted: persoon.overlijden?.datum?.langFormaat ?? null,
+    ...(includeOverlijdensdatum
+      ? {
+          overlijdensdatum: getDatum(persoon.overlijden?.datum),
+          overlijdensdatumFormatted:
+            persoon.overlijden?.datum?.langFormaat ?? null,
+        }
+      : {}),
   };
 }
 
@@ -198,7 +206,7 @@ function transformBenkBrpResponse(
           ]
         )
       : null;
-  const persoonBasis = getPersoonBasis(persoon);
+  const persoonBasis = getPersoonBasis(persoon, true);
   const responseContent: BrpFrontend = {
     persoon: {
       ...persoonBasis,
@@ -243,7 +251,7 @@ function transformBenkBrpResponse(
           ),
           datumOntbindingFormatted:
             partner.ontbindingHuwelijkPartnerschap?.datum?.langFormaat ?? null,
-          persoon: getPersoonBasis(partner),
+          persoon: getPersoonBasis(partner, false),
         }
       : null,
     ouders:
@@ -257,7 +265,7 @@ function transformBenkBrpResponse(
               ouder.naam.volledigeNaam
             )
         )
-        .map((ouder) => getPersoonBasis(ouder)) ?? [],
+        .map((ouder) => getPersoonBasis(ouder, false)) ?? [],
     kinderen:
       persoon.kinderen
         ?.filter(
@@ -269,7 +277,7 @@ function transformBenkBrpResponse(
               kind.naam.volledigeNaam
             )
         )
-        ?.map((kind) => getPersoonBasis(kind)) ?? [],
+        ?.map((kind) => getPersoonBasis(kind, false)) ?? [],
     adres: persoon.verblijfplaats?.verblijfadres
       ? getAdres(persoon.verblijfplaats)
       : null,

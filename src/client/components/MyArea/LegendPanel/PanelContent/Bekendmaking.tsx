@@ -1,5 +1,5 @@
-import GenericBase from './GenericBase.tsx';
-import Url from './Url.tsx';
+import { GenericBase } from './GenericBase.tsx';
+import { Url } from './Url.tsx';
 import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
 import { capitalizeFirstLetter } from '../../../../../universal/helpers/text.ts';
 import type { Unshaped } from '../../../../../universal/types/App.types.ts';
@@ -11,8 +11,7 @@ interface MyArePanelContentBekendmakingProps {
   datasetId: string;
 }
 
-export default function MyArePanelContentBekendmaking({
-  datasetId,
+export function MyArePanelContentBekendmaking({
   panelItem,
 }: MyArePanelContentBekendmakingProps) {
   const rows: Row[] = [

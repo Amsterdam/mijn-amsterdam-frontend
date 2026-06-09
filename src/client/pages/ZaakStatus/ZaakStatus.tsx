@@ -6,9 +6,12 @@ import { useLocation, useNavigate } from 'react-router';
 import { ZAAK_STATUS_PAGE_DOCUMENT_TITLE } from './ZaakStatus-routes.ts';
 import styles from './ZaakStatus.module.scss';
 import { isError, isLoading } from '../../../universal/helpers/api.ts';
-import type { AppStateBase, LinkProps } from '../../../universal/types/App.types.ts';
-import ErrorAlert from '../../components/Alert/Alert.tsx';
-import LoadingContent from '../../components/LoadingContent/LoadingContent.tsx';
+import type {
+  AppStateBase,
+  LinkProps,
+} from '../../../universal/types/App.types.ts';
+import { ErrorAlert } from '../../components/Alert/Alert.tsx';
+import { LoadingContent } from '../../components/LoadingContent/LoadingContent.tsx';
 import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
 import {

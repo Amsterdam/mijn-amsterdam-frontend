@@ -17,7 +17,8 @@ import type {
   DatasetFilterSelection,
   DatasetId,
   DatasetPropertyName,
-  DatasetPropertyValue} from '../../../universal/config/myarea-datasets.ts';
+  DatasetPropertyValue,
+} from '../../../universal/config/myarea-datasets.ts';
 import {
   ACTIVE_DATASET_IDS_INITIAL,
   HOOD_ZOOM,
@@ -145,7 +146,7 @@ export const useLoadingFeature = create<LoadingFeatureStore>((set) => ({
   setLoadingFeature: (feature) => set({ loadingFeature: feature }),
 }));
 
-type SelectedFeature = {
+export type SelectedFeature = {
   id: string;
   datasetId: string;
   [string: string]: unknown;
@@ -231,19 +232,22 @@ export function useSelectedFeatureCSS(
 export function useOnMarkerClick() {
   const { setLoadingFeature } = useLoadingFeature();
 
-  return useCallback((event: LeafletEvent) => {
-    const isCluster =
-      event?.propagatedFrom?.feature?.properties?.cluster === true;
-    if (!isCluster) {
-      const id = event?.propagatedFrom?.feature?.properties?.id;
-      const datasetId = event?.propagatedFrom?.feature?.properties?.datasetId;
+  return useCallback(
+    (event: LeafletEvent) => {
+      const isCluster =
+        event?.propagatedFrom?.feature?.properties?.cluster === true;
+      if (!isCluster) {
+        const id = event?.propagatedFrom?.feature?.properties?.id;
+        const datasetId = event?.propagatedFrom?.feature?.properties?.datasetId;
 
-      setLoadingFeature({
-        datasetId,
-        id,
-      });
-    }
-  }, []);
+        setLoadingFeature({
+          datasetId,
+          id,
+        });
+      }
+    },
+    [setLoadingFeature]
+  );
 }
 
 type DatasetResponseContent = {
@@ -458,7 +462,7 @@ export function getQueryConfig(searchEntry: string): QueryConfig {
         let value = undefined;
         try {
           value = v ? JSON.parse(v) : undefined;
-        } catch (error) {
+        } catch {
           captureMessage('Could not parse Queryparams', {
             properties: {
               key: k,
@@ -655,6 +659,7 @@ export function useSetMapCenterAtLocation(
     }
     // Disable because we don't want to re-center the map everytime the zoom level changes.
     // Whenever centerMarker changes, and a new zoom level was provided at the same time, the effect will also take new zoom into account.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customLocationMarker, homeLocationMarker, mapInstance]);
 
   useEffect(() => {

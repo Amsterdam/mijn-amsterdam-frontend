@@ -8,7 +8,7 @@ import {
   useAfisFacturenData,
 } from './useAfisThemaData.hook.tsx';
 import { entries } from '../../../../universal/helpers/utils.ts';
-import ThemaPaginaZaken from '../../../components/Thema/ThemaPaginaZaken.tsx';
+import { ThemaPaginaZaken } from '../../../components/Thema/ThemaPaginaZaken.tsx';
 
 type FacturenTablesProps = {
   themaContextParams?: AfisFacturenThemaContextParams;

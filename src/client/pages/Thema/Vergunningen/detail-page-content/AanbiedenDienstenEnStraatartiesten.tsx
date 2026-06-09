@@ -3,10 +3,9 @@ import type { ReactNode } from 'react';
 import { commonTransformers, getRows } from './fields-config.tsx';
 import type {
   AanbiedenDiensten,
-  Straatartiesten} from '../../../../../server/services/vergunningen/config-and-types.ts';
-import {
-  type ZaakFrontendCombined,
+  Straatartiesten,
 } from '../../../../../server/services/vergunningen/config-and-types.ts';
+import { type ZaakFrontendCombined } from '../../../../../server/services/vergunningen/config-and-types.ts';
 import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
 
 export function AanbiedenDienstenEnStraatartiestenContent({

@@ -6,7 +6,7 @@ import { useMapInstance } from '@amsterdam/react-maps';
 import styles from './ZoomControl.module.scss';
 import { IconEnlarge, IconMinimise } from '../../../assets/icons/index.tsx';
 
-function ZoomControl() {
+export const ZoomControl = memo(function ZoomControl() {
   const mapInstance = useMapInstance();
 
   const handleZoom = (out = false) => {
@@ -39,6 +39,4 @@ function ZoomControl() {
       </Button>
     </div>
   );
-}
-
-export default memo(ZoomControl);
+});

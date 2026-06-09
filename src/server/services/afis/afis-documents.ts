@@ -12,10 +12,9 @@ import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import type {
   DocumentDownloadData,
-  DocumentDownloadResponse} from '../shared/document-download-route-handler.ts';
-import {
-  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE
+  DocumentDownloadResponse,
 } from '../shared/document-download-route-handler.ts';
+import { DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE } from '../shared/document-download-route-handler.ts';
 
 export async function fetchAfisDocument(
   _authProfileAndToken: AuthProfileAndToken,

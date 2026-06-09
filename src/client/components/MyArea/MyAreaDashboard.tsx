@@ -10,7 +10,7 @@ import { isLoading } from '../../../universal/helpers/api.ts';
 import { isMokum } from '../../../universal/helpers/brp.ts';
 import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
-import LoadingContent from '../LoadingContent/LoadingContent.tsx';
+import { LoadingContent } from '../LoadingContent/LoadingContent.tsx';
 
 export function MyAreaDashboard() {
   const profileType = useProfileTypeValue();

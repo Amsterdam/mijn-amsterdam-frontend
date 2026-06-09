@@ -45,7 +45,6 @@ export function useSSE({ path, eventName, callback, postpone }: useSSEProps) {
 
   const handleError = useCallback(
     (_error: Event) => {
-       
       logger.info(
         '[SSE] Error connecting, ES ReadyState:',
         es?.readyState,
@@ -85,7 +84,6 @@ export function useSSE({ path, eventName, callback, postpone }: useSSEProps) {
       try {
         messageData = JSON.parse(message.data);
       } catch (_error) {
-         
         logger.error('[SSE] Parsing sse message data failed.');
       }
 

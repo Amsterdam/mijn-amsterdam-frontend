@@ -91,11 +91,9 @@ export function DocumentLink({
 
           if (!blob) {
             downloadFile(document);
-          } else if (
-            window.navigator &&
-            (window.navigator as any).msSaveOrOpenBlob
-          ) {
-            (window.navigator as any).msSaveOrOpenBlob(blob, documentTitle);
+            // Check if on Internet Explorer.
+          } else if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+            window.navigator.msSaveOrOpenBlob(blob, documentTitle);
           } else {
             try {
               const fileUrl = window.URL.createObjectURL(blob);

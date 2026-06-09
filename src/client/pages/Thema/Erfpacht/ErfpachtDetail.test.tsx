@@ -16,7 +16,7 @@ import {
 } from '../../../../server/services/erfpacht/erfpacht.ts';
 import { bffApi } from '../../../../testing/utils.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 
 function mockDetailFetch(
   content: unknown = transformErfpachtDossierProperties(

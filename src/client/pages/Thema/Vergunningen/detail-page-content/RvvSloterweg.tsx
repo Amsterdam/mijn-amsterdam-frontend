@@ -5,10 +5,9 @@ import type {
 } from '../../../../../server/services/vergunningen/config-and-types.ts';
 import type {
   RowSet,
-  WrappedRow} from '../../../../components/Datalist/Datalist.tsx';
-import {
-  Datalist
+  WrappedRow,
 } from '../../../../components/Datalist/Datalist.tsx';
+import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
 
 export function RvvSloterweg({
   vergunning,

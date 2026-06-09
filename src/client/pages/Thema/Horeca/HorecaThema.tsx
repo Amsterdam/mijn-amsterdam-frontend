@@ -3,8 +3,8 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import { useHorecaThemaData } from './useHorecaThemaData.hook.ts';
 import type { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
-import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
-import ThemaPaginaZaken from '../../../components/Thema/ThemaPaginaZaken.tsx';
+import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
+import { ThemaPaginaZaken } from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 const pageContentTop = (

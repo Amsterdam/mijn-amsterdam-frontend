@@ -13,7 +13,8 @@ import {
 import type {
   StadspasAdministratieNummer,
   StadspasBudget,
-  StadspasFrontend} from './stadspas-types.ts';
+  StadspasFrontend,
+} from './stadspas-types.ts';
 import {
   type PasblokkadeByPasnummer,
   type StadspasResponseFrontend,

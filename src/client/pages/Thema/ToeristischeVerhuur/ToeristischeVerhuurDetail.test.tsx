@@ -8,7 +8,7 @@ import type { BBVergunningFrontend } from '../../../../server/services/toeristis
 import type { VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
 import { bffApi } from '../../../../testing/utils.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 
 const vergunning: VakantieverhuurVergunningFrontend = {
   id: 'Z-XXX-000007C',

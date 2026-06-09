@@ -72,7 +72,7 @@ export function cacheOverview() {
 }
 
 const DEFAULT_TRIES_UNTIL_CONSIDERED_STALE = 5;
-export default class FileCache {
+export class FileCache {
   name: string;
   cache: FlatCache;
   expire: number | false;

@@ -22,9 +22,9 @@ import {
   IconAfvalRest,
   IconAfvalTextiel,
 } from '../../../assets/icons/map/index.tsx';
-import ErrorAlert from '../../../components/Alert/Alert.tsx';
+import { ErrorAlert } from '../../../components/Alert/Alert.tsx';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
-import LoadingContent from '../../../components/LoadingContent/LoadingContent.tsx';
+import { LoadingContent } from '../../../components/LoadingContent/LoadingContent.tsx';
 import { MaintenanceNotifications } from '../../../components/MaintenanceNotifications/MaintenanceNotifications.tsx';
 import { MaButtonLink } from '../../../components/MaLink/MaLink.tsx';
 import { routeConfig as buurtRouteConfig } from '../../../components/MyArea/MyArea-thema-config.ts';

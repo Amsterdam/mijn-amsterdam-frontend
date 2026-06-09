@@ -1,4 +1,4 @@
-import GenericBase from './GenericBase.tsx';
+import { GenericBase } from './GenericBase.tsx';
 import { DATASETS } from '../../../../../universal/config/myarea-datasets.ts';
 import { dateTimeFormatYear } from '../../../../../universal/helpers/date.ts';
 import { capitalizeFirstLetter } from '../../../../../universal/helpers/text.ts';
@@ -20,8 +20,7 @@ function displayCategoryTitle(category: string) {
   return config?.title ?? displayCategory;
 }
 
-export default function MyArePanelContentMeldingenBuurt({
-  datasetId,
+export function MyArePanelContentMeldingenBuurt({
   panelItem,
 }: MyArePanelContentMeldingenBuurtProps) {
   const rows: Row[] = [

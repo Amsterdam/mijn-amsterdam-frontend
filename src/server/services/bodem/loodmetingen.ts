@@ -15,8 +15,8 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
-import { sortAlpha } from '../../../universal/helpers/utils.ts';
 import { isRecentNotification } from '../../../universal/helpers/date.ts';
+import { sortAlpha } from '../../../universal/helpers/utils.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { ONE_SECOND_MS } from '../../config/app.ts';

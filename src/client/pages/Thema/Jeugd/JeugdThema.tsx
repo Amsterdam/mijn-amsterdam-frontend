@@ -4,8 +4,8 @@ import { useJeugdThemaData } from './useJeugdThemaData.ts';
 import type { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jzd/jeugd/jeugd.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
-import ThemaPagina from '../../../components/Thema/ThemaPagina.tsx';
-import ThemaPaginaZaken from '../../../components/Thema/ThemaPaginaZaken.tsx';
+import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
+import { ThemaPaginaZaken } from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import {
   WMO_HELPDESK_HREF_TEL_LINK,
