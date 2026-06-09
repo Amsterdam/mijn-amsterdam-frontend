@@ -3,9 +3,10 @@ const settings = require('../settings.cjs');
 const ERFPACHT_V2_RESPONSES = {
   ERFPACHTER: require('../fixtures/erfpacht/erfpacht-v2-erfpachter.json'),
   DOSSIERS: require('../fixtures/erfpacht/erfpacht-v2-dossiers.json'),
+  ZAAKINFO: require('../fixtures/erfpacht/erfpacht-zaakinfo.json'),
   DOSSIER_INFO_DETAILS: require('../fixtures/erfpacht/erfpacht-v2-dossierinfo-bsn.json'),
-  ZAAK_DETAIL: require('../fixtures/erfpacht/erfpacht-v2-zaakdetail.json'),
-  ZAAK_STATUSSEN: require('../fixtures/erfpacht/erfpacht-v2-zaak-statussen.json'),
+  ZAAK_DETAIL: require('../fixtures/erfpacht/erfpacht-zaak-detail.json'),
+  ZAAK_STATUSSEN: require('../fixtures/erfpacht/erfpacht-zaak-statussen.json'),
 };
 
 module.exports = [
@@ -35,6 +36,21 @@ module.exports = [
         options: {
           status: 200,
           body: ERFPACHT_V2_RESPONSES.DOSSIERS,
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-erfpacht-zaakinfo',
+    url: `${settings.MOCK_BASE_PATH}/erfpachtv2/vernise/api/zaakinfo`,
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'json',
+        options: {
+          status: 200,
+          body: ERFPACHT_V2_RESPONSES.ZAAKINFO,
         },
       },
     ],

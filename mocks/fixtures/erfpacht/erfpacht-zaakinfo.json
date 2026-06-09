@@ -1,0 +1,51 @@
+{
+  "totalElements": 0,
+  "totalPages": 0,
+  "first": true,
+  "last": true,
+  "size": 0,
+  "content": [
+    {
+      "zaakNummer": "ZAAK-2025-0000011488",
+      "zaakUuid": "1234-5678-9012-9999",
+      "zaakOmschrijving": "Wijzigen Erfpachtrecht",
+      "statusOmschrijving": "Aanvraag Beoordelen",
+      "formattedStatusDatum": "15-07-2025",
+      "titelZaakNummer": "Zaak nummer",
+      "titelZaakOmschrijving": "Zaak onderwerp",
+      "titelStatusOmschrijving": "Status",
+      "titelFormattedStatusDatum": "Datum status"
+    },
+    {
+      "zaakNummer": "ZAAK-2025-0000010602",
+      "zaakUuid": "1234-5678-9012-8888",
+      "zaakOmschrijving": "Wijzigen Erfpachtrecht",
+      "statusOmschrijving": "Aanvraag Beoordelen",
+      "formattedStatusDatum": "30-06-2025",
+      "titelZaakNummer": "Zaak nummer",
+      "titelZaakOmschrijving": "Zaak onderwerp",
+      "titelStatusOmschrijving": "Status",
+      "titelFormattedStatusDatum": "Datum status"
+    }
+  ],
+  "number": 0,
+  "sort": {
+    "empty": true,
+    "sorted": true,
+    "unsorted": true
+  },
+  "numberOfElements": 0,
+  "pageable": {
+    "offset": 0,
+    "sort": {
+      "empty": true,
+      "sorted": true,
+      "unsorted": true
+    },
+    "pageSize": 0,
+    "paged": true,
+    "pageNumber": 0,
+    "unpaged": true
+  },
+  "empty": true
+}

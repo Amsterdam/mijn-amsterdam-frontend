@@ -38,7 +38,7 @@ erfpachtRouterProtected.get(
   async (
     req: Request<{
       zaakUrl: ZaakInfoSource['zaakUrl'];
-      uuid: ZaakInfoSource['uuid'];
+      uuid: ZaakInfoSource['zaakUuid'];
     }>,
     res: ResponseAuthenticated
   ) => {

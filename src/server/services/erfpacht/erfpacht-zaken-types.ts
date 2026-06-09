@@ -384,7 +384,7 @@ export type ZaakStatusExpand = {
 
 export type ZaakInfoSource = {
   zaakNummer: string;
-  uuid: string; // TODO: Must be added to the ZaakInfo response. Delegate to Vernise Team.
+  zaakUuid: string; // TODO: Must be added to the ZaakInfo response. Delegate to Vernise Team.
   zaakOmschrijving: string;
   statusOmschrijving: string;
   formattedStatusDatum: string;
@@ -446,3 +446,13 @@ export type ErfpachtZaakDetailFrontend = Prettify<
       | 'laatsteBetaaldatum'
     >
 >;
+
+export type ZaakStatusFrontend =
+  | 'Ontvangen'
+  | 'In behandeling'
+  | 'Meer informatie nodig'
+  | 'Afgehandeld';
+
+export type ZaakInfoFrontend = ZaakInfoSource & {
+  fetchZaakDetailUrl: string;
+};

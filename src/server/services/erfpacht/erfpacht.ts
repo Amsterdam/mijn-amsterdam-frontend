@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router';
 
-import { dataRequestConfig } from './erfpacht-service-config.ts';
+import { dataRequestConfig, routes } from './erfpacht-service-config.ts';
 import type {
   ErfpachtErpachterResponseSource,
   ErfpachtErpachterResponse,
@@ -9,14 +9,17 @@ import type {
   ErfpachtDossiersDetailSource,
   ErfpachtDossierSource,
   ErfpachtDossierPropsFrontend,
+  ErfpachtResponseFrontend,
 } from './erfpacht-types.ts';
 import { type ErfpachtDossiersResponseSource } from './erfpacht-types.ts';
 import type {
   ErfpachtZaakDetailFrontend,
   ErfpachtZaakDetailSource,
   ErfpachtZaakStatussenSource,
+  ZaakInfoFrontend,
   ZaakInfoResponseSource,
   ZaakInfoSource,
+  ZaakStatusFrontend,
 } from './erfpacht-zaken-types.ts';
 import { themaConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
 import {
@@ -33,6 +36,7 @@ import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 
 function transformIsErfpachterResponseSource(
   responseData: ErfpachtErpachterResponseSource,
@@ -65,6 +69,7 @@ export function transformErfpachtDossierProperties<
     return null;
   }
 
+  // Copy dossierSource to avoid mutating the original object, as we need to make some adjustments to the properties for frontend use.
   const dossier: D = jsonCopy(dossierSource);
 
   const dossierId =
@@ -147,7 +152,9 @@ export function transformDossierResponse(
   return responseData;
 }
 
-export async function fetchErfpacht(authProfileAndToken: AuthProfileAndToken) {
+export async function fetchErfpacht(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<ApiResponse<ErfpachtResponseFrontend | ErfpachtErpachterResponse>> {
   const config = getCustomApiConfig(dataRequestConfig, {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/vernise/api/erfpachter`;
@@ -179,10 +186,16 @@ export async function fetchErfpacht(authProfileAndToken: AuthProfileAndToken) {
       dossierInfoRequest,
       zaakInfoRequest,
     ]);
-    const responseContent = {
-      erfpachter: erfpachterResponse.content,
-      dossiers: getSettledResult(dossierInfoResponse),
-      zaken: getSettledResult(zaakInfoResponse),
+    const dossierInfoResult = getSettledResult(dossierInfoResponse);
+    const zaakInfoResult = getSettledResult(zaakInfoResponse);
+
+    if (dossierInfoResult.status !== 'OK') {
+      return apiErrorResult('Failed to fetch dossier info', null);
+    }
+
+    const responseContent: ErfpachtResponseFrontend = {
+      ...dossierInfoResult.content,
+      zaken: zaakInfoResult.content ?? [],
     };
     return apiSuccessResult(
       responseContent,
@@ -196,7 +209,7 @@ export async function fetchErfpacht(authProfileAndToken: AuthProfileAndToken) {
 async function fetchErfpachtDossierInfo(
   relatieCode: string,
   authProfileAndToken: AuthProfileAndToken
-) {
+): Promise<ApiResponse<ErfpachtDossiersResponse>> {
   const config = getCustomApiConfig(dataRequestConfig, {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/vernise/api/dossierinfo`;
@@ -205,16 +218,13 @@ async function fetchErfpachtDossierInfo(
       transformDossierResponse(responseData, relatieCode),
   });
 
-  return requestData<ErfpachtDossiersResponse | null>(
-    config,
-    authProfileAndToken
-  );
+  return requestData<ErfpachtDossiersResponse>(config, authProfileAndToken);
 }
 
 export async function fetchErfpachtDossiersDetail(
   authProfileAndToken: AuthProfileAndToken,
   dossierId: string
-) {
+): Promise<ApiResponse<ErfpachtDossiersDetail>> {
   const config = getCustomApiConfig(dataRequestConfig, {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/vernise/api/dossierinfo/${dossierId}`;
@@ -232,13 +242,24 @@ export async function fetchErfpachtDossiersDetail(
 
 function transformErfpachtZakenResponse(
   zakenResponseSource: ZaakInfoResponseSource
-) {
-  return zakenResponseSource.content ?? [];
+): ZaakInfoFrontend[] {
+  return (zakenResponseSource.content ?? []).map((zaakInfo) => {
+    return {
+      ...zaakInfo,
+      fetchZaakDetailUrl: generateFullApiUrlBFF(
+        routes.protected.ERFPACHT_ZAAK_DETAILS,
+        {
+          uuid: zaakInfo.zaakUuid,
+          zaakUrl: zaakInfo.zaakUrl,
+        }
+      ),
+    };
+  });
 }
 
 export async function fetchErfpachtZaakInfo(
   authProfileAndToken: AuthProfileAndToken
-) {
+): Promise<ApiResponse<ZaakInfoFrontend[]>> {
   const config = getCustomApiConfig(dataRequestConfig, {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/vernise/api/zaakinfo`;
@@ -251,7 +272,7 @@ export async function fetchErfpachtZaakInfo(
     transformResponse: transformErfpachtZakenResponse,
   });
 
-  const zaakInfoResponse = await requestData<ZaakInfoSource[]>(
+  const zaakInfoResponse = await requestData<ZaakInfoFrontend[]>(
     config,
     authProfileAndToken
   );
@@ -303,8 +324,8 @@ function transformErfpachtZaakDetailResponse(
 
 async function fetchErfpachtZaakDetail(
   authProfileAndToken: AuthProfileAndToken,
-  uuid: ZaakInfoSource['uuid']
-) {
+  uuid: ZaakInfoSource['zaakUuid']
+): Promise<ApiResponse<ErfpachtZaakDetailFrontend>> {
   const config = getCustomApiConfig(dataRequestConfig, {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/vernise/api/zaakinfo/${uuid}`;
@@ -320,18 +341,14 @@ async function fetchErfpachtZaakDetail(
   return zaakInfoResponse;
 }
 
-function getStatus(
-  statustype: string
-): 'Ontvangen' | 'In behandeling' | 'Meer informatie nodig' | 'Afgehandeld' {
+function getStatus(statustype: string): ZaakStatusFrontend {
   // TODO: implement
   return 'Ontvangen';
 }
 
 function transformErfpachtZaakStatussenResponse(
   zaakStatussenResponseSource: ErfpachtZaakStatussenSource
-): StatusLineItem<
-  'Ontvangen' | 'In behandeling' | 'Meer informatie nodig' | 'Afgehandeld'
->[] {
+): StatusLineItem<ZaakStatusFrontend>[] {
   return zaakStatussenResponseSource.results.map((status) => {
     return {
       id: status.uuid,
@@ -346,7 +363,7 @@ function transformErfpachtZaakStatussenResponse(
 async function fetchErfpachtZaakStatussen(
   authProfileAndToken: AuthProfileAndToken,
   zaakUrl: ErfpachtZaakDetailSource['url']
-) {
+): Promise<ApiResponse<StatusLineItem<ZaakStatusFrontend>[]>> {
   const config = getCustomApiConfig(dataRequestConfig, {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/vernise/api/zaakinfo/statussen`;
@@ -358,9 +375,7 @@ async function fetchErfpachtZaakStatussen(
   });
 
   const zaakStatussenResponse = await requestData<
-    StatusLineItem<
-      'Ontvangen' | 'In behandeling' | 'Meer informatie nodig' | 'Afgehandeld'
-    >[]
+    StatusLineItem<ZaakStatusFrontend>[]
   >(config, authProfileAndToken);
 
   return zaakStatussenResponse;
@@ -368,7 +383,7 @@ async function fetchErfpachtZaakStatussen(
 
 export async function fetchZaakDetailWithStatussen(
   authProfileAndToken: AuthProfileAndToken,
-  uuid: ZaakInfoSource['uuid'],
+  uuid: ZaakInfoSource['zaakUuid'],
   zaakUrl: ZaakInfoSource['zaakUrl']
 ): Promise<ApiResponse<ErfpachtZaakDetailFrontend>> {
   const zaakDetailRequest = fetchErfpachtZaakDetail(authProfileAndToken, uuid);
