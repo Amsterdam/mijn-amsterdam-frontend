@@ -65,7 +65,7 @@ export async function fetchStadspas(
         urlTransactions,
         transactionsKeyEncrypted,
         link: {
-          to: generatePath(themaConfig.stadspasDetailPage.route.path, {
+          to: generatePath(themaConfig.detailPageStadspas.route.path, {
             passNumber: `${stadspas.passNumber}`,
           }),
           title: `Stadspas van ${stadspas.owner.firstname}`,

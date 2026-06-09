@@ -99,7 +99,7 @@ export function AfisBetaalVoorkeuren() {
     belastingenLinkListItem,
   } = useAfisThemaData();
 
-  useHTMLDocumentTitle(themaConfig.betaalVoorkeurenPage.route);
+  useHTMLDocumentTitle(themaConfig.detailPageBetaalvoorkeuren.route);
 
   const {
     title,

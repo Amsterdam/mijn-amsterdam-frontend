@@ -446,7 +446,7 @@ function transformEMandateSource(
       .map((eMandateCompact) => omit(eMandateCompact, ['currentStatus']))
       .toSorted(sortByNumber('eMandateIdSource', 'desc')),
     link: {
-      to: generatePath(themaConfig.detailEMandatePage.route.path, { id }),
+      to: generatePath(themaConfig.detailPageEMandate.route.path, { id }),
       title: creditor.name,
     },
   };
@@ -571,7 +571,7 @@ function createEMandateSignRequestPayload(
   signRequestPayload: EMandateSignRequestPayload
 ): POMSignRequestUrlPayload {
   const returnUrl = generateFullApiUrlBFF(
-    themaConfig.detailEMandatePage.route.path,
+    themaConfig.detailPageEMandate.route.path,
     [
       // In development we mock the API responses from the payment provider, for convenience we add the creditor IBAN to the URL so we can determine in the mock API which response to return.
       IS_DEVELOPMENT ? { iban: creditor.iban } : {},

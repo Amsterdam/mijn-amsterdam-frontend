@@ -469,7 +469,7 @@ function transformRTMRegelingenFrontend(
     const title = mostRecentAanvraag.titel;
     const betrokkenen = getBetrokkenen(betrokkenenMapStr, aanvragen);
 
-    const route = generatePath(themaConfig.regelingenDetailPage.route.path, {
+    const route = generatePath(themaConfig.detailPageRegeling.route.path, {
       id,
       regeling: slug(title),
     });

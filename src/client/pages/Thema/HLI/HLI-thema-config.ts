@@ -18,10 +18,10 @@ export const regelingenTitle = 'Regelingen bij laag inkomen' as const;
 export const stadspasTitle = 'Stadspas' as const;
 
 type HLIThemaConfig = ThemaConfigBase &
-  PageConfig<'regelingenDetailPage'> &
-  PageConfig<'stadspasDetailPage'> &
-  PageConfig<'specificatieListPage'> &
-  PageConfig<'regelingenListPage'>;
+  PageConfig<'detailPageRegeling'> &
+  PageConfig<'detailPageStadspas'> &
+  PageConfig<'listPageSpecificaties'> &
+  PageConfig<'listPageRegelingen'>;
 
 export const themaConfig = {
   id: 'HLI' as const,
@@ -56,14 +56,14 @@ export const themaConfig = {
       to: 'https://www.amsterdam.nl/stadspas',
     },
   ],
-  specificatieListPage: {
+  listPageSpecificaties: {
     route: {
       path: '/regelingen-bij-laag-inkomen/lijst/specificaties/:page?',
       trackingUrl: null,
       documentTitle: `Specificaties | ${THEMA_TITLE}`,
     },
   },
-  regelingenListPage: {
+  listPageRegelingen: {
     route: {
       path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
       trackingUrl: null,
@@ -71,14 +71,14 @@ export const themaConfig = {
         `${params?.kind === 'eerdere-en-afgewezen-regelingen' ? 'Eerdere' : 'Huidige'} regelingen | ${THEMA_TITLE}`,
     },
   },
-  regelingenDetailPage: {
+  detailPageRegeling: {
     route: {
       path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
       trackingUrl: '/regelingen-bij-laag-inkomen/regeling',
       documentTitle: `Regeling | ${THEMA_TITLE}`,
     },
   },
-  stadspasDetailPage: {
+  detailPageStadspas: {
     route: {
       path: '/regelingen-bij-laag-inkomen/stadspas/:passNumber',
       trackingUrl: '/regelingen-bij-laag-inkomen/stadspas',
@@ -180,7 +180,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(themaConfig.regelingenListPage.route.path, {
+    listPageRoute: generatePath(themaConfig.listPageRegelingen.route.path, {
       kind: listPageParamKind.lopend,
       page: null,
     }),
@@ -192,7 +192,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(themaConfig.regelingenListPage.route.path, {
+    listPageRoute: generatePath(themaConfig.listPageRegelingen.route.path, {
       kind: listPageParamKind.actual,
       page: null,
     }),
@@ -203,7 +203,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
-    listPageRoute: generatePath(themaConfig.regelingenListPage.route.path, {
+    listPageRoute: generatePath(themaConfig.listPageRegelingen.route.path, {
       kind: listPageParamKind.historic,
       page: null,
     }),
@@ -215,7 +215,7 @@ export const specificatieTableConfig = {
   sort: dateSort('datePublished', 'desc'),
   displayProps: specificatieDisplayProps,
   maxItems: 3,
-  listPageRoute: generatePath(themaConfig.specificatieListPage.route.path, {
+  listPageRoute: generatePath(themaConfig.listPageSpecificaties.route.path, {
     page: null,
   }),
 };
