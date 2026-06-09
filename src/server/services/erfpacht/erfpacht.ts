@@ -337,9 +337,11 @@ async function fetchErfpachtZaakDetail(
 ): Promise<ApiResponse<ErfpachtZaakDetailFrontend>> {
   const config = getCustomApiConfig(dataRequestConfig, {
     formatUrl(requestConfig) {
-      return `${requestConfig.url}/vernise/api/ozgv/zaak/${uuid}`;
+      return `${requestConfig.url}/vernise/api/zaak/${uuid}/status`;
     },
-    transformResponse: transformErfpachtZaakDetailResponse,
+    // transformResponse: transformErfpachtZaakDetailResponse,
+    transformResponse: (zaakDetailResponseSource: ErfpachtZaakDetailSource) =>
+      zaakDetailResponseSource,
   });
 
   const zaakInfoResponse = await requestData<ErfpachtZaakDetailFrontend>(
