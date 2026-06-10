@@ -251,7 +251,7 @@ describe('route-helpers', () => {
         generateFullApiUrlBFF('/services/test/:id', { wrongKey: '123' })
       ).toThrow();
     });
-    test('generateFullApiUrlBFF allows base URL that does not match mijn amsterdam urls in Non production env', () => {
+    test('generateFullApiUrlBFF allows base URL that does not match mijn amsterdam production urls in Non production env', () => {
       const value = generateFullApiUrlBFF(
         '/services/test/:id',
         { id: '123' },
