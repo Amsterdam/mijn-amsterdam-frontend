@@ -303,5 +303,17 @@ describe('route-helpers', () => {
       const value = generateMaFrontendUrl('///some//route///');
       expect(value).toBe(`${MA_FRONTEND_URL}/some/route/`);
     });
+
+    test('generateMaFrontendUrl with routePath that has spaces and special characters', () => {
+      const value = generateMaFrontendUrl('/some route/with special chars?');
+      expect(value).toBe(
+        `${MA_FRONTEND_URL}/some%20route/with%20special%20chars?`
+      );
+    });
+
+    test('generateMaFrontendUrl with routePath that starts with query params returns MA_FRONTEND_URL', () => {
+      const value = generateMaFrontendUrl('?some=query');
+      expect(value).toBe(MA_FRONTEND_URL);
+    });
   });
 });

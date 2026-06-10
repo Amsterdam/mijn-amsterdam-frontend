@@ -108,7 +108,7 @@ oidcRouter.get(
     if (auth?.profile.id) {
       countLoggedInVisit(auth.profile.id);
     }
-    return res.redirect(generateMaFrontendUrl(`?authMethod=digid`));
+    return res.redirect(generateMaFrontendUrl(`/?authMethod=digid`));
   }
 );
 
@@ -150,7 +150,7 @@ oidcRouter.get(
     if (auth?.profile.id) {
       countLoggedInVisit(auth.profile.id, 'eherkenning');
     }
-    return res.redirect(generateMaFrontendUrl(`?authMethod=eherkenning`));
+    return res.redirect(generateMaFrontendUrl(`/?authMethod=eherkenning`));
   }
 );
 
