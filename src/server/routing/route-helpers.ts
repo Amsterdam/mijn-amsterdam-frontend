@@ -84,6 +84,7 @@ export function generateMaFrontendUrl(routePath: string): string {
   ).origin;
 
   // This check should be enough to prevent SSRF.
+  // We do not allow anything other than a path (starting with a slash) to be passed in.
   if (!routePath_.startsWith('/')) {
     return EXPECTED_FRONTEND_ORIGIN;
   }
