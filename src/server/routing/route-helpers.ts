@@ -75,19 +75,22 @@ function sanitizePath(path: string) {
 }
 
 export function generateMaFrontendUrl(routePath: string): string {
+  // Sanitize the routePath to prevent potential SSRF vulnerabilities by ensuring it cannot manipulate the URL structure.
+  // Constructing a URL object with a path beginning with multiple slashes (e.g. //malicious.com) would result in the URL's origin being set to the malicious domain, even if we use the MA_FRONTEND_URL as the base.
   const routePath_ = sanitizePath(routePath);
 
-  if (!routePath_.startsWith('/')) {
-    return MA_FRONTEND_URL;
-  }
-
-  const urlWithRoute = new URL(routePath_, MA_FRONTEND_URL);
   const EXPECTED_FRONTEND_ORIGIN = new URL(
     IS_PRODUCTION ? MIJN_AMSTERDAM_URL_PRODUCTION : MA_FRONTEND_URL
   ).origin;
 
-  // Redundant check to ensure the generated URL is always within the MA_FRONTEND_URL origin.
+  // This check should be enough to prevent SSRF.
+  if (!routePath_.startsWith('/')) {
+    return EXPECTED_FRONTEND_ORIGIN;
+  }
 
+  const urlWithRoute = new URL(routePath_, MA_FRONTEND_URL);
+
+  // Redundant check to ensure the generated URL is always within the MA_FRONTEND_URL origin.
   if (urlWithRoute.origin !== EXPECTED_FRONTEND_ORIGIN) {
     return EXPECTED_FRONTEND_ORIGIN;
   }
