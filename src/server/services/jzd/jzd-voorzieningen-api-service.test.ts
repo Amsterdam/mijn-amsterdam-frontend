@@ -107,7 +107,7 @@ describe('jzd-voorzieningen-api-service', () => {
       ).toBe(false);
     });
 
-    it('should return true if at least one exclude matcher matches the voorziening', () => {
+    it('should return true when all exclude matchers match the voorziening', () => {
       const voorziening = {
         type: 'example',
         status: 'active',

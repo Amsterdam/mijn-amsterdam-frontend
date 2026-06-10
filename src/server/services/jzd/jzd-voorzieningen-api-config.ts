@@ -18,7 +18,7 @@ export type FetchWmoVoorzieningenApiOptions = Omit<
   'bsn'
 >;
 
-// This list should be kept in sync with the list of productIdentificaties given to use by JZD - Zorgned FB
+// This list should be kept in sync with the list of productIdentificaties given to us by JZD - Zorgned FB
 const PRODUCT_IDS_EXCLUDED_FROM_REPARATIEVERZOEK_ACTION = [
   '13W13',
   '13W15',
@@ -49,9 +49,9 @@ const PRODUCT_IDS_EXCLUDED_FROM_REPARATIEVERZOEK_ACTION = [
 ];
 
 export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
-  // // // // // // // // // // // // // // // // // // // // // // // // //
-  // Reparatieverzoek action for WRA products with ZIN leveringsvorm // // //
-  // // // // // // // // // // // // // // // // // // // // // // // // //
+  // // // // // // // // // // // // // // // // // //
+  // Reparatieverzoek action for WRA products  // // //
+  // // // // // // // // // // // // // // // // // //
   {
     include: {
       isActueel: true,
