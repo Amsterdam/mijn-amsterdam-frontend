@@ -22,12 +22,14 @@ export const MA_FRONTEND_URL = getFromEnv(
 // In production, enforce that predefined base urls starts with the expected production URL to prevent misconfiguration.
 if (
   IS_PRODUCTION &&
-  (!MA_FRONTEND_URL.startsWith(MIJN_AMSTERDAM_URL_PRODUCTION) ||
-    !BFF_API_ADMIN_BASE_URL.startsWith(MIJN_AMSTERDAM_URL_PRODUCTION) ||
-    !BFF_API_BASE_URL.startsWith(MIJN_AMSTERDAM_URL_PRODUCTION))
+  !(
+    new URL(MA_FRONTEND_URL).origin === MIJN_AMSTERDAM_URL_PRODUCTION &&
+    new URL(BFF_API_BASE_URL).origin === MIJN_AMSTERDAM_URL_PRODUCTION &&
+    new URL(BFF_API_ADMIN_BASE_URL).origin === MIJN_AMSTERDAM_URL_PRODUCTION
+  )
 ) {
   throw new Error(
-    `In production, MA_FRONTEND_URL must start with ${MIJN_AMSTERDAM_URL_PRODUCTION}. Current value: ${MA_FRONTEND_URL}`
+    `In production, all predefined base URLs must start with ${MIJN_AMSTERDAM_URL_PRODUCTION}. Current values: MA_FRONTEND_URL=${MA_FRONTEND_URL}, BFF_API_BASE_URL=${BFF_API_BASE_URL}, BFF_API_ADMIN_BASE_URL=${BFF_API_ADMIN_BASE_URL}`
   );
 }
 
