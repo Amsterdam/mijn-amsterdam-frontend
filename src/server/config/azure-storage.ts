@@ -1,9 +1,61 @@
+import assert from 'node:assert';
+
+import type { ContainerClient } from '@azure/storage-blob';
 import { BlobServiceClient } from '@azure/storage-blob';
 
-import { getFromEnv } from '../helpers/env.ts';
+import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
 
-const connectionString = getFromEnv('STORAGE_CONNECTION_STRING');
-if (connectionString) {
-  const blobServiceClient =
-    BlobServiceClient.fromConnectionString(connectionString);
+const skipBlobStorage = process.env.BFF_SKIP_APPCONFIG === 'true';
+
+let _blobServiceClient: BlobServiceClient | undefined;
+
+export async function startBlobStorage() {
+  if (skipBlobStorage) {
+    return;
+  }
+
+  const connectionString = process.env.STORAGE_CONNECTION_STRING;
+
+  if (!connectionString) {
+    if (IS_DEVELOPMENT) {
+      return;
+    }
+    throw new Error(
+      'Environment variables STORAGE_CONNECTION_STRING is not defined'
+    );
+  }
+
+  _blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
+}
+
+export function blobServiceClient(): BlobServiceClient {
+  assert(
+    _blobServiceClient,
+    'Call startBlobStorage before calling this function to initialize the _blobServiceClient'
+  );
+  return _blobServiceClient;
+}
+
+/** You can get a containerClient from calling blobServiceClient.getContainerClient */
+export async function downloadBlob(
+  containerClient: ContainerClient,
+  blobName: string
+): Promise<string> {
+  assert(
+    containerClient,
+    'Blob storage not initialized. Call `startBlobStorage` first.'
+  );
+
+  const blobClient = containerClient.getBlobClient(blobName);
+  const response = await blobClient.download();
+  const stream = response.readableStreamBody;
+
+  assert(stream, `No readable stream returned for blob: ${blobName}`);
+
+  const chunks: Buffer[] = [];
+  for await (const chunk of stream) {
+    chunks.push(Buffer.from(chunk));
+  }
+
+  return Buffer.concat(chunks).toString('utf-8');
 }
