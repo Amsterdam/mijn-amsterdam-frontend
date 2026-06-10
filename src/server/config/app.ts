@@ -25,7 +25,7 @@ if (
   )
 ) {
   throw new Error(
-    `In production, all predefined base URLs must start with ${MIJN_AMSTERDAM_URL_PRODUCTION}. Current values: MA_FRONTEND_URL=${MA_FRONTEND_URL}, BFF_API_BASE_URL=${BFF_API_BASE_URL}, BFF_API_ADMIN_BASE_URL=${BFF_API_ADMIN_BASE_URL}`
+    `In production, all predefined base URL origins must equal ${MIJN_AMSTERDAM_URL_PRODUCTION}. Current values: MA_FRONTEND_URL=${MA_FRONTEND_URL}, BFF_API_BASE_URL=${BFF_API_BASE_URL}, BFF_API_ADMIN_BASE_URL=${BFF_API_ADMIN_BASE_URL}`
   );
 }
 
