@@ -1,3 +1,4 @@
+import { IS_PRODUCTION } from '../../universal/config/env.ts';
 import { getFromEnv } from '../helpers/env.ts';
 import { BFF_BASE_PATH, BFF_BASE_PATH_ADMIN } from '../routing/bff-routes.ts';
 
@@ -10,7 +11,15 @@ export const BFF_API_BASE_URL = process.env.BFF_API_BASE_URL ?? BFF_BASE_PATH;
 export const BFF_API_ADMIN_BASE_URL =
   process.env.BFF_API_BASE_URL_ADMIN ?? BFF_BASE_PATH_ADMIN;
 
+export const MA_FRONTEND_URL_PRODUCTION = 'https://mijn.amsterdam.nl';
 export const MA_FRONTEND_URL = getFromEnv('MA_FRONTEND_URL', true, true)!;
+
+// In production, enforce that MA_FRONTEND_URL starts with the expected production URL to prevent misconfiguration.
+if (IS_PRODUCTION && !MA_FRONTEND_URL.startsWith(MA_FRONTEND_URL_PRODUCTION)) {
+  throw new Error(
+    `In production, MA_FRONTEND_URL must start with ${MA_FRONTEND_URL_PRODUCTION}. Current value: ${MA_FRONTEND_URL}`
+  );
+}
 
 export const RELEASE_VERSION = `mijnamsterdam-bff@${process.env.MA_RELEASE_VERSION_TAG ?? 'notset'}`;
 

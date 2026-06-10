@@ -62,7 +62,11 @@ import {
   nocache,
   requestID,
 } from './routing/route-handlers.ts';
-import { generateFullApiUrlBFF, send404 } from './routing/route-helpers.ts';
+import {
+  generateFullApiUrlBFF,
+  generateMaFrontendUrl,
+  send404,
+} from './routing/route-helpers.ts';
 import { authRouterDevelopment } from './routing/app-router-development.ts';
 import { oidcRouter } from './routing/app-router-oidc.ts';
 import { router as protectedRouter } from './routing/app-router-protected.ts';
@@ -171,7 +175,7 @@ app.use(function onError(
     },
   });
 
-  const redirectUrl = `${MA_FRONTEND_URL}/server-error-500`;
+  const redirectUrl = generateMaFrontendUrl('/server-error-500');
 
   if (!IS_PRODUCTION) {
     return res.redirect(

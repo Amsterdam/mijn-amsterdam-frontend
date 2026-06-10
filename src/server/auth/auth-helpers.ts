@@ -17,8 +17,9 @@ import type {
 import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config.ts';
 import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
 import { PROFILE_TYPES } from '../../universal/types/App.types.ts';
-import { MA_FRONTEND_URL, ONE_SECOND_MS } from '../config/app.ts';
+import { ONE_SECOND_MS } from '../config/app.ts';
 import { logger } from '../logging.ts';
+import { generateMaFrontendUrl } from '../routing/route-helpers.ts';
 import { captureException } from '../services/monitoring.ts';
 
 export function getZaakStatusQueryParams(
@@ -32,7 +33,7 @@ export function getZaakStatusQueryParams(
 }
 export function getReturnToUrlZaakStatus(queryParams?: ParsedQs) {
   const params = getZaakStatusQueryParams(queryParams);
-  const redirectUrl = `${MA_FRONTEND_URL}${ZAAK_STATUS_ROUTE}${params}`;
+  const redirectUrl = generateMaFrontendUrl(`${ZAAK_STATUS_ROUTE}${params}`);
   return redirectUrl;
 }
 

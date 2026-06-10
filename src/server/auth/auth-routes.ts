@@ -1,3 +1,4 @@
+import { MA_FRONTEND_URL_PRODUCTION } from '../config/app.ts';
 import { getFromEnv } from '../helpers/env.ts';
 
 export const AUTH_BASE = '/auth';
@@ -13,7 +14,7 @@ export const AUTH_LOGOUT = `${getFromEnv('BFF_OIDC_LOGOUT', false) ?? '/logout'}
 export const AUTH_CALLBACK = `${getFromEnv('BFF_OIDC_CALLBACK', false) ?? '/callback'}`;
 
 export const BFF_OIDC_BASE_URL = `${
-  getFromEnv('BFF_OIDC_BASE_URL') ?? 'https://mijn.amsterdam.nl'
+  getFromEnv('BFF_OIDC_BASE_URL') ?? MA_FRONTEND_URL_PRODUCTION
 }`;
 
 export const BFF_OIDC_ISSUER_BASE_URL = `${getFromEnv('BFF_OIDC_ISSUER_BASE_URL')}`;

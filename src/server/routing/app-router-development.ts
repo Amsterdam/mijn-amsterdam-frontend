@@ -8,6 +8,7 @@ import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes.ts';
 import {
   createBFFRouter,
   generateFullApiUrlBFF,
+  generateMaFrontendUrl,
   sendBadRequest,
   sendUnauthorized,
 } from './route-helpers.ts';
@@ -204,7 +205,7 @@ authRouterDevelopment.get(
         ? String(req.query.redirectUrl)
         : req.query.returnTo
           ? getReturnToUrl(req.query)
-          : `${MA_FRONTEND_URL}?authMethod=${req.params.authMethod}`;
+          : generateMaFrontendUrl(`?authMethod=${req.params.authMethod}`);
 
     return res.redirect(redirectUrl);
   }
