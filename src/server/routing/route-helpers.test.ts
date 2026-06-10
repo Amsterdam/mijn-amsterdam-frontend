@@ -241,7 +241,7 @@ describe('route-helpers', () => {
       const value = generateFullApiUrlBFF('/services/test', [{ foo: 'bar' }]);
       expect(value).toBe(`${bffApiHost}/api/v1/services/test?foo=bar`);
     });
-    test('generateFullApiUrlBFF with only query params', () => {
+    test('generateFullApiUrlBFF with only query params throws error if path params are missing', () => {
       expect(() =>
         generateFullApiUrlBFF('/services/test/:id', [{ foo: 'bar' }])
       ).toThrow();
