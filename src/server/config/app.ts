@@ -15,7 +15,7 @@ export const BFF_API_ADMIN_BASE_URL = getFromEnv(
 )!;
 export const MA_FRONTEND_URL = getFromEnv('MA_FRONTEND_URL', true, true)!;
 
-// In production, enforce that predefined base urls starts with the expected production URL to prevent misconfiguration.
+// In production, enforce that predefined base URL origins equal the expected production origin to prevent misconfiguration.
 if (
   IS_PRODUCTION &&
   !(
