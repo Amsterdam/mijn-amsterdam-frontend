@@ -21,6 +21,21 @@ import { apiErrorResult } from '../../universal/helpers/api.ts';
 import { oidcConfigDigid, oidcConfigEherkenning } from '../auth/auth-config.ts';
 import { MA_FRONTEND_URL } from '../config/app.ts';
 
+const mocks = vi.hoisted(() => {
+  return {
+    IS_PRODUCTION: false,
+  };
+});
+
+vi.mock('../../universal/config/env.ts', async (importActual) => {
+  return {
+    ...(await importActual()),
+    get IS_PRODUCTION() {
+      return mocks.IS_PRODUCTION;
+    },
+  };
+});
+
 describe('route-helpers', () => {
   const digidClientId = oidcConfigDigid.clientID;
   const eherkenningClientId = oidcConfigEherkenning.clientID;
@@ -37,7 +52,6 @@ describe('route-helpers', () => {
   afterAll(() => {
     oidcConfigEherkenning.clientID = digidClientId;
     oidcConfigDigid.clientID = eherkenningClientId;
-
     Mockdate.reset();
   });
 
@@ -232,12 +246,44 @@ describe('route-helpers', () => {
         generateFullApiUrlBFF('/services/test/:id', [{ foo: 'bar' }])
       ).toThrow();
     });
+    test('generateFullApiUrlBFF with invalid path params', () => {
+      expect(() =>
+        generateFullApiUrlBFF('/services/test/:id', { wrongKey: '123' })
+      ).toThrow();
+    });
+    test('generateFullApiUrlBFF allows base URL that does not match mijn amsterdam urls in Non production env', () => {
+      const value = generateFullApiUrlBFF(
+        '/services/test/:id',
+        { id: '123' },
+        'http://some.mijn.amsterdam.nl'
+      );
+      expect(value).toBe('http://some.mijn.amsterdam.nl/services/test/123');
+    });
+    test('generateFullApiUrlBFF does not allow non production base url in production', () => {
+      mocks.IS_PRODUCTION = true;
+
+      const value = generateFullApiUrlBFF(
+        '/services/test/:id',
+        { id: '123' },
+        'https://mijn.amsterdam.nl.malicious'
+      );
+      expect(value).toBe('https://mijn.amsterdam.nl');
+
+      mocks.IS_PRODUCTION = false;
+    });
   });
 
   describe('generateMaFrontendUrl', () => {
     test('generateMaFrontendUrl with valid routePath', () => {
       const value = generateMaFrontendUrl('/some-route');
       expect(value).toBe(`${MA_FRONTEND_URL}/some-route`);
+    });
+
+    test('generateMaFrontendUrl with valid routePath in production returns production URL if the MA_FRONTEND_URL does not match the production URL', () => {
+      mocks.IS_PRODUCTION = true;
+      const value = generateMaFrontendUrl('/some-route');
+      expect(value).toBe(`https://mijn.amsterdam.nl`);
+      mocks.IS_PRODUCTION = false;
     });
 
     test('generateMaFrontendUrl with invalid routePath', () => {

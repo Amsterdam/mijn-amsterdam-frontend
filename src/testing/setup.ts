@@ -88,6 +88,7 @@ process.env.LOG_LEVEL = '';
 process.env.BFF_DB_FILE = ':memory:';
 process.env.REACT_APP_BFF_API_URL = bffApiHost;
 process.env.BFF_API_BASE_URL = `${bffApiHost}/api/v1`;
+process.env.BFF_API_BASE_URL_ADMIN = `${process.env.BFF_API_BASE_URL}/admin`;
 process.env.BFF_DATA_AMSTERDAM_API_KEY = '';
 
 process.env.BFF_DISABLE_MOCK_ADAPTER = 'true';

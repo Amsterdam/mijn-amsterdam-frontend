@@ -12,6 +12,7 @@ import {
 } from './admin-route-handlers.ts';
 import { RequestMock, ResponseMock } from '../../../testing/utils.ts';
 import { DEFAULT_REQUEST_CONFIG } from '../../config/source-api.ts';
+import { generateFullApiAdminUrlBFF } from '../../routing/route-helpers.ts';
 
 beforeEach(() => {
   vi.resetAllMocks();
@@ -27,7 +28,9 @@ describe('admin-route-handlers', () => {
     isAuthenticatedAdmin(req, res, next);
 
     expect(res.redirect).toHaveBeenCalledWith(
-      '/api/v1/admin/auth/signin?originalUrl=%2Fadmin%2Fprotected%2Froute'
+      generateFullApiAdminUrlBFF(
+        `/auth/signin?originalUrl=%2Fadmin%2Fprotected%2Froute`
+      )
     );
   });
 
@@ -77,7 +80,7 @@ describe('admin-route-handlers', () => {
       expect.objectContaining({
         isAuthenticated: false,
         links: {
-          Inloggen: '/api/v1/admin/auth/signin',
+          Inloggen: generateFullApiAdminUrlBFF('/auth/signin'),
         },
         title: 'Mijn Amsterdam Admin',
         username: undefined,

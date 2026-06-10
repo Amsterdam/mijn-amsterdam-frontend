@@ -7,17 +7,27 @@ export const BFF_REQUEST_CACHE_ENABLED =
     ? String(process.env.BFF_REQUEST_CACHE_ENABLED).toLowerCase() === 'true'
     : true;
 
-export const BFF_API_BASE_URL = process.env.BFF_API_BASE_URL ?? BFF_BASE_PATH;
+export const MIJN_AMSTERDAM_URL_PRODUCTION = 'https://mijn.amsterdam.nl';
+export const BFF_API_BASE_URL =
+  getFromEnv('BFF_API_BASE_URL', true, IS_PRODUCTION) ?? BFF_BASE_PATH;
 export const BFF_API_ADMIN_BASE_URL =
-  process.env.BFF_API_BASE_URL_ADMIN ?? BFF_BASE_PATH_ADMIN;
-
-export const MA_FRONTEND_URL_PRODUCTION = 'https://mijn.amsterdam.nl';
-export const MA_FRONTEND_URL = getFromEnv('MA_FRONTEND_URL', true, true)!;
+  getFromEnv('BFF_API_BASE_URL_ADMIN', true, IS_PRODUCTION) ??
+  BFF_BASE_PATH_ADMIN;
+export const MA_FRONTEND_URL = getFromEnv(
+  'MA_FRONTEND_URL',
+  true,
+  IS_PRODUCTION
+)!;
 
 // In production, enforce that MA_FRONTEND_URL starts with the expected production URL to prevent misconfiguration.
-if (IS_PRODUCTION && !MA_FRONTEND_URL.startsWith(MA_FRONTEND_URL_PRODUCTION)) {
+if (
+  IS_PRODUCTION &&
+  (!MA_FRONTEND_URL.startsWith(MIJN_AMSTERDAM_URL_PRODUCTION) ||
+    !BFF_API_ADMIN_BASE_URL.startsWith(MIJN_AMSTERDAM_URL_PRODUCTION) ||
+    !BFF_API_BASE_URL.startsWith(MIJN_AMSTERDAM_URL_PRODUCTION))
+) {
   throw new Error(
-    `In production, MA_FRONTEND_URL must start with ${MA_FRONTEND_URL_PRODUCTION}. Current value: ${MA_FRONTEND_URL}`
+    `In production, MA_FRONTEND_URL must start with ${MIJN_AMSTERDAM_URL_PRODUCTION}. Current value: ${MA_FRONTEND_URL}`
   );
 }
 

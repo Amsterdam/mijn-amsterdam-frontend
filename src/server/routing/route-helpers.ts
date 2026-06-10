@@ -15,6 +15,7 @@ import {
   BFF_API_ADMIN_BASE_URL,
   BFF_API_BASE_URL,
   MA_FRONTEND_URL,
+  MIJN_AMSTERDAM_URL_PRODUCTION,
 } from '../config/app.ts';
 
 function nextRouter(_req: Request, _res: Response, next: NextFunction) {
@@ -69,6 +70,31 @@ export function queryParams<T extends Record<string, any>>(req: Request) {
   return req.query as T;
 }
 
+function sanitizePath(path: string) {
+  return path.trim().replace(/\/{2,}/g, '/');
+}
+
+export function generateMaFrontendUrl(routePath: string): string {
+  const routePath_ = sanitizePath(routePath);
+
+  if (!routePath_.startsWith('/')) {
+    return MA_FRONTEND_URL;
+  }
+
+  const urlWithRoute = new URL(routePath_, MA_FRONTEND_URL);
+
+  // Redundant check to ensure the generated URL is always within the MA_FRONTEND_URL origin.
+  const expectedOrigin = IS_PRODUCTION
+    ? MIJN_AMSTERDAM_URL_PRODUCTION
+    : MA_FRONTEND_URL;
+
+  if (urlWithRoute.origin !== expectedOrigin) {
+    return expectedOrigin;
+  }
+
+  return urlWithRoute.href;
+}
+
 /** Helper for prepending a route with a baseUrl and optionally interpolating route parameters.
  *
  * # Params
@@ -85,19 +111,33 @@ export function generateFullApiUrlBFF(
   params?: PathParams | QueryAndOrPathParams,
   baseUrl: string = BFF_API_BASE_URL
 ) {
+  const path_ = sanitizePath(path);
+
+  if (!path_.startsWith('/')) {
+    return BFF_API_BASE_URL;
+  }
+
   // QueryParams are only provided when pathParams is a tuple.
   const [queryParams, pathParams] = Array.isArray(params)
     ? params
     : [undefined, params];
   const query = queryParams ? `?${new URLSearchParams(queryParams)}` : '';
-  const url = new URL(`${baseUrl}${generatePath(path, pathParams)}${query}`);
+
+  const urlGenerated = new URL(
+    `${baseUrl}${generatePath(path_, pathParams)}${query}`
+  );
   const baseUrl_ = new URL(baseUrl);
 
-  if (url.origin !== baseUrl_.origin) {
-    return baseUrl_.href;
+  // In production, base urls must always match the expected production origin to prevent SSRF vulnerabilities.
+  const expectedOrigin = IS_PRODUCTION
+    ? MIJN_AMSTERDAM_URL_PRODUCTION
+    : baseUrl_.origin;
+
+  if (urlGenerated.origin !== expectedOrigin) {
+    return expectedOrigin;
   }
 
-  return url.href;
+  return urlGenerated.href;
 }
 
 export function generateFullApiAdminUrlBFF(
@@ -105,23 +145,6 @@ export function generateFullApiAdminUrlBFF(
   params?: PathParams | QueryAndOrPathParams
 ) {
   return generateFullApiUrlBFF(path, params, BFF_API_ADMIN_BASE_URL);
-}
-
-export function generateMaFrontendUrl(routePath: string): string {
-  const routePath_ = routePath.trim().replace(/\/{2,}/g, '/');
-
-  if (!routePath_.startsWith('/')) {
-    return MA_FRONTEND_URL;
-  }
-
-  const urlWithRoute = new URL(routePath_, MA_FRONTEND_URL);
-
-  // Redundant check to ensure the generated URL is always within the MA_FRONTEND_URL origin.
-  if (urlWithRoute.origin !== MA_FRONTEND_URL) {
-    return MA_FRONTEND_URL;
-  }
-
-  return urlWithRoute.href;
 }
 
 /** Sets the right statuscode and sends a response. */
