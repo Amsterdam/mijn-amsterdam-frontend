@@ -74,6 +74,10 @@ function sanitizePath(path: string) {
   return path.trim().replace(/\/{2,}/g, '/');
 }
 
+const EXPECTED_FRONTEND_ORIGIN = new URL(
+  IS_PRODUCTION ? MIJN_AMSTERDAM_URL_PRODUCTION : MA_FRONTEND_URL
+).origin;
+
 export function generateMaFrontendUrl(routePath: string): string {
   const routePath_ = sanitizePath(routePath);
 
@@ -84,12 +88,9 @@ export function generateMaFrontendUrl(routePath: string): string {
   const urlWithRoute = new URL(routePath_, MA_FRONTEND_URL);
 
   // Redundant check to ensure the generated URL is always within the MA_FRONTEND_URL origin.
-  const expectedOrigin = new URL(
-    IS_PRODUCTION ? MIJN_AMSTERDAM_URL_PRODUCTION : MA_FRONTEND_URL
-  ).origin;
 
-  if (urlWithRoute.origin !== expectedOrigin) {
-    return expectedOrigin;
+  if (urlWithRoute.origin !== EXPECTED_FRONTEND_ORIGIN) {
+    return EXPECTED_FRONTEND_ORIGIN;
   }
 
   return urlWithRoute.href;
