@@ -84,9 +84,9 @@ export function generateMaFrontendUrl(routePath: string): string {
   const urlWithRoute = new URL(routePath_, MA_FRONTEND_URL);
 
   // Redundant check to ensure the generated URL is always within the MA_FRONTEND_URL origin.
-  const expectedOrigin = IS_PRODUCTION
-    ? MIJN_AMSTERDAM_URL_PRODUCTION
-    : MA_FRONTEND_URL;
+  const expectedOrigin = new URL(
+    IS_PRODUCTION ? MIJN_AMSTERDAM_URL_PRODUCTION : MA_FRONTEND_URL
+  ).origin;
 
   if (urlWithRoute.origin !== expectedOrigin) {
     return expectedOrigin;
