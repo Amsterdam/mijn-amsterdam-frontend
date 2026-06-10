@@ -1,6 +1,5 @@
 import { IS_PRODUCTION } from '../../universal/config/env.ts';
 import { getFromEnv } from '../helpers/env.ts';
-import { BFF_BASE_PATH, BFF_BASE_PATH_ADMIN } from '../routing/bff-routes.ts';
 
 export const BFF_REQUEST_CACHE_ENABLED =
   typeof process.env.BFF_REQUEST_CACHE_ENABLED !== 'undefined'
@@ -8,16 +7,13 @@ export const BFF_REQUEST_CACHE_ENABLED =
     : true;
 
 export const MIJN_AMSTERDAM_URL_PRODUCTION = 'https://mijn.amsterdam.nl';
-export const BFF_API_BASE_URL =
-  getFromEnv('BFF_API_BASE_URL', true, IS_PRODUCTION) ?? BFF_BASE_PATH;
-export const BFF_API_ADMIN_BASE_URL =
-  getFromEnv('BFF_API_BASE_URL_ADMIN', true, IS_PRODUCTION) ??
-  BFF_BASE_PATH_ADMIN;
-export const MA_FRONTEND_URL = getFromEnv(
-  'MA_FRONTEND_URL',
+export const BFF_API_BASE_URL = getFromEnv('BFF_API_BASE_URL', true, true)!;
+export const BFF_API_ADMIN_BASE_URL = getFromEnv(
+  'BFF_API_BASE_URL_ADMIN',
   true,
-  IS_PRODUCTION
+  true
 )!;
+export const MA_FRONTEND_URL = getFromEnv('MA_FRONTEND_URL', true, true)!;
 
 // In production, enforce that predefined base urls starts with the expected production URL to prevent misconfiguration.
 if (
