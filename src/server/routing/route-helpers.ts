@@ -74,10 +74,6 @@ function sanitizePath(path: string) {
   return path.trim().replace(/\/{2,}/g, '/');
 }
 
-const EXPECTED_FRONTEND_ORIGIN = new URL(
-  IS_PRODUCTION ? MIJN_AMSTERDAM_URL_PRODUCTION : MA_FRONTEND_URL
-).origin;
-
 export function generateMaFrontendUrl(routePath: string): string {
   const routePath_ = sanitizePath(routePath);
 
@@ -86,6 +82,9 @@ export function generateMaFrontendUrl(routePath: string): string {
   }
 
   const urlWithRoute = new URL(routePath_, MA_FRONTEND_URL);
+  const EXPECTED_FRONTEND_ORIGIN = new URL(
+    IS_PRODUCTION ? MIJN_AMSTERDAM_URL_PRODUCTION : MA_FRONTEND_URL
+  ).origin;
 
   // Redundant check to ensure the generated URL is always within the MA_FRONTEND_URL origin.
 
