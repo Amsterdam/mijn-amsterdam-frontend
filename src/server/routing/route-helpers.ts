@@ -108,7 +108,7 @@ export function generateFullApiAdminUrlBFF(
 }
 
 export function generateMaFrontendUrl(routePath: string): string {
-  const routePath_ = routePath.trim();
+  const routePath_ = routePath.trim().replace(/\/{2,}/g, '/');
 
   if (!routePath_.startsWith('/')) {
     return MA_FRONTEND_URL;

@@ -252,5 +252,10 @@ describe('route-helpers', () => {
       const value2 = generateMaFrontendUrl('@evil.example/');
       expect(value2).toBe(MA_FRONTEND_URL);
     });
+
+    test('generateMaFrontendUrl with routePath that has multiple slashes', () => {
+      const value = generateMaFrontendUrl('///some//route///');
+      expect(value).toBe(`${MA_FRONTEND_URL}/some/route/`);
+    });
   });
 });
