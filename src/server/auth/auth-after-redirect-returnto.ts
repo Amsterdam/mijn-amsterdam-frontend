@@ -34,14 +34,19 @@ export function getReturnToUrl(
 
   switch (queryParams?.returnTo) {
     case RETURNTO_MAMS_FRONTEND_ROUTE: {
-      return generateMaFrontendUrl(queryParams.route as string);
+      return generateMaFrontendUrl(
+        typeof queryParams.route === 'string' ? queryParams.route : '/'
+      );
     }
     case RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER:
       return generateFullApiUrlBFF(
         amsappStadspasRoutes.public
           .STADSPAS_AMSAPP_EXCHANGE_ADMINISTRATIENUMMER,
         {
-          token: queryParams['amsapp-session-token'] as string,
+          token:
+            typeof queryParams['amsapp-session-token'] === 'string'
+              ? queryParams['amsapp-session-token']
+              : '',
         }
       );
     // This return to url is used for all AmsApp routes that require Digid login/logout.
@@ -54,7 +59,10 @@ export function getReturnToUrl(
         amsappNotificationsRoutes.public
           .NOTIFICATIONS_CONSUMER_REGISTRATION_ACTION,
         {
-          consumerId: queryParams.consumerId as string,
+          consumerId:
+            typeof queryParams.consumerId === 'string'
+              ? queryParams.consumerId
+              : '',
         }
       );
     case ZAAK_STATUS_ROUTE:
