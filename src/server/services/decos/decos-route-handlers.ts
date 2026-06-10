@@ -9,10 +9,7 @@ import {
 } from './decos-service.ts';
 import type { DecosZaakBase } from './decos-types.ts';
 import type { TestUserData } from '../../../universal/config/auth.development.ts';
-import {
-  testAccountDataDigid as testAccountDataDigid,
-  testAccountDataEherkenning as testAccountDataEherkenning,
-} from '../../../universal/config/auth.development.ts';
+import { getTestAccountData } from '../../../universal/config/auth.development.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
@@ -110,8 +107,14 @@ export async function fetchZakenByUserIDs(
 
   const userIDsFromEnv =
     req.query.profileType === 'private'
-      ? getUserIds(testAccountDataDigid, req.query.username)
-      : getUserIds(testAccountDataEherkenning, req.query.username);
+      ? getUserIds(
+          await getTestAccountData('MA_TEST_ACCOUNTS'),
+          req.query.username
+        )
+      : getUserIds(
+          await getTestAccountData('MA_TEST_ACCOUNTS_EH'),
+          req.query.username
+        );
 
   // Only allow fetching zaken for test accounts in non-production environments
   const userIDs =
