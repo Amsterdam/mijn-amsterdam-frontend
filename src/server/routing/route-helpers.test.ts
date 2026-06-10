@@ -4,6 +4,7 @@ import z from 'zod';
 import {
   createBFFRouter,
   generateFullApiUrlBFF,
+  generateMaFrontendUrl,
   queryParams,
   send404,
   sendBadRequest,
@@ -18,6 +19,7 @@ import { RequestMock, ResponseMock } from '../../testing/utils.ts';
 import type { ApiResponse_DEPRECATED } from '../../universal/helpers/api.ts';
 import { apiErrorResult } from '../../universal/helpers/api.ts';
 import { oidcConfigDigid, oidcConfigEherkenning } from '../auth/auth-config.ts';
+import { MA_FRONTEND_URL } from '../config/app.ts';
 
 describe('route-helpers', () => {
   const digidClientId = oidcConfigDigid.clientID;
@@ -229,6 +231,26 @@ describe('route-helpers', () => {
       expect(() =>
         generateFullApiUrlBFF('/services/test/:id', [{ foo: 'bar' }])
       ).toThrow();
+    });
+  });
+
+  describe('generateMaFrontendUrl', () => {
+    test('generateMaFrontendUrl with valid routePath', () => {
+      const value = generateMaFrontendUrl('/some-route');
+      expect(value).toBe(`${MA_FRONTEND_URL}/some-route`);
+    });
+
+    test('generateMaFrontendUrl with invalid routePath', () => {
+      const value = generateMaFrontendUrl('invalid-route');
+      expect(value).toBe(MA_FRONTEND_URL);
+    });
+
+    test('generateMaFrontendUrl with routePath that tries to break out of origin', () => {
+      const value = generateMaFrontendUrl('.evil.example/phish'); // Thanks!
+      expect(value).toBe(MA_FRONTEND_URL);
+
+      const value2 = generateMaFrontendUrl('@evil.example/');
+      expect(value2).toBe(MA_FRONTEND_URL);
     });
   });
 });

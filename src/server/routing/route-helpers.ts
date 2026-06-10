@@ -11,7 +11,11 @@ import {
   apiErrorResult,
 } from '../../universal/helpers/api.ts';
 import type { AuthProfileAndToken } from '../auth/auth-types.ts';
-import { BFF_API_ADMIN_BASE_URL, BFF_API_BASE_URL } from '../config/app.ts';
+import {
+  BFF_API_ADMIN_BASE_URL,
+  BFF_API_BASE_URL,
+  MA_FRONTEND_URL,
+} from '../config/app.ts';
 
 function nextRouter(_req: Request, _res: Response, next: NextFunction) {
   next('router');
@@ -86,7 +90,14 @@ export function generateFullApiUrlBFF(
     ? params
     : [undefined, params];
   const query = queryParams ? `?${new URLSearchParams(queryParams)}` : '';
-  return `${baseUrl}${generatePath(path, pathParams)}${query}`;
+  const url = new URL(`${baseUrl}${generatePath(path, pathParams)}${query}`);
+  const baseUrl_ = new URL(baseUrl);
+
+  if (url.origin !== baseUrl_.origin) {
+    return baseUrl_.href;
+  }
+
+  return url.href;
 }
 
 export function generateFullApiAdminUrlBFF(
@@ -94,6 +105,23 @@ export function generateFullApiAdminUrlBFF(
   params?: PathParams | QueryAndOrPathParams
 ) {
   return generateFullApiUrlBFF(path, params, BFF_API_ADMIN_BASE_URL);
+}
+
+export function generateMaFrontendUrl(routePath: string): string {
+  const routePath_ = routePath.trim();
+
+  if (!routePath_.startsWith('/')) {
+    return MA_FRONTEND_URL;
+  }
+
+  const urlWithRoute = new URL(routePath_, MA_FRONTEND_URL);
+
+  // Redundant check to ensure the generated URL is always within the MA_FRONTEND_URL origin.
+  if (urlWithRoute.origin !== MA_FRONTEND_URL) {
+    return MA_FRONTEND_URL;
+  }
+
+  return urlWithRoute.href;
 }
 
 /** Sets the right statuscode and sends a response. */

@@ -3,7 +3,10 @@ import type { ParsedQs } from 'qs';
 import { getReturnToUrlZaakStatus } from './auth-helpers.ts';
 import { authRoutes } from './auth-routes.ts';
 import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config.ts';
-import { generateFullApiUrlBFF } from '../routing/route-helpers.ts';
+import {
+  generateFullApiUrlBFF,
+  generateMaFrontendUrl,
+} from '../routing/route-helpers.ts';
 import { routes as amsappNotificationsRoutes } from '../services/amsapp/notifications/amsapp-notifications-service-config.ts';
 import { routes as amsappStadspasRoutes } from '../services/amsapp/stadspas/amsapp-stadspas-service-config.ts';
 
@@ -31,9 +34,7 @@ export function getReturnToUrl(
 
   switch (queryParams?.returnTo) {
     case RETURNTO_MAMS_FRONTEND_ROUTE: {
-      const route = queryParams.route as string;
-      const redirectUrl = `${process.env.MA_FRONTEND_URL}${route}`;
-      return redirectUrl;
+      return generateMaFrontendUrl(queryParams.route as string);
     }
     case RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER:
       return generateFullApiUrlBFF(
