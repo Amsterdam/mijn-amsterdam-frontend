@@ -113,10 +113,6 @@ export function generateFullApiUrlBFF(
 ) {
   const path_ = sanitizePath(path);
 
-  if (!path_.startsWith('/')) {
-    return BFF_API_BASE_URL;
-  }
-
   // QueryParams are only provided when pathParams is a tuple.
   const [queryParams, pathParams] = Array.isArray(params)
     ? params
