@@ -14,14 +14,14 @@ export async function startBlobStorage() {
     return;
   }
 
-  const connectionString = process.env.STORAGE_CONNECTION_STRING;
+  const connectionString = process.env.APP_STORAGE_CONNECTION_STRING;
 
   if (!connectionString) {
     if (IS_DEVELOPMENT) {
       return;
     }
     throw new Error(
-      'Environment variables STORAGE_CONNECTION_STRING is not defined'
+      'Environment variables APP_STORAGE_CONNECTION_STRING is not defined'
     );
   }
 
