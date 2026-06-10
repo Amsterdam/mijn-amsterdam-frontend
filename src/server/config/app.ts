@@ -19,7 +19,7 @@ export const MA_FRONTEND_URL = getFromEnv(
   IS_PRODUCTION
 )!;
 
-// In production, enforce that MA_FRONTEND_URL starts with the expected production URL to prevent misconfiguration.
+// In production, enforce that predefined base urls starts with the expected production URL to prevent misconfiguration.
 if (
   IS_PRODUCTION &&
   (!MA_FRONTEND_URL.startsWith(MIJN_AMSTERDAM_URL_PRODUCTION) ||
