@@ -29,7 +29,7 @@ import {
   authRoutes,
 } from '../auth/auth-routes.ts';
 import type { AuthenticatedRequest } from '../auth/auth-types.ts';
-import { getFromEnv } from '../helpers/env.ts';
+import { MA_FRONTEND_URL } from '../config/app.ts';
 import { countLoggedInVisit } from '../services/admin/admin-visitors.ts';
 
 export const oidcRouter = createBFFRouter({ id: 'router-oidc' });
@@ -105,7 +105,7 @@ oidcRouter.get(
     if (auth?.profile.id) {
       countLoggedInVisit(auth.profile.id);
     }
-    return res.redirect(process.env.MA_FRONTEND_URL + '?authMethod=digid');
+    return res.redirect(`${MA_FRONTEND_URL}?authMethod=digid`);
   }
 );
 
@@ -147,9 +147,7 @@ oidcRouter.get(
     if (auth?.profile.id) {
       countLoggedInVisit(auth.profile.id, 'eherkenning');
     }
-    return res.redirect(
-      process.env.MA_FRONTEND_URL + '?authMethod=eherkenning'
-    );
+    return res.redirect(`${MA_FRONTEND_URL}?authMethod=eherkenning`);
   }
 );
 
@@ -190,7 +188,7 @@ oidcRouter.get(
 );
 
 async function authLogoutHandler(req: Request, res: Response) {
-  let redirectUrl = getFromEnv('MA_FRONTEND_URL', true) as string;
+  let redirectUrl = MA_FRONTEND_URL;
   let authMethodRequested = req.query.authMethod;
 
   if (hasSessionCookie(req) && !authMethodRequested) {
@@ -214,22 +212,19 @@ oidcRouter.get(authRoutes.AUTH_LOGOUT, authLogoutHandler);
 
 oidcRouter.get(
   authRoutes.AUTH_LOGOUT_DIGID,
-  createLogoutHandler(getFromEnv('MA_FRONTEND_URL', true) as string)
+  createLogoutHandler(MA_FRONTEND_URL)
 );
 
 oidcRouter.get(
   authRoutes.AUTH_LOGOUT_EHERKENNING,
-  createLogoutHandler(getFromEnv('MA_FRONTEND_URL', true) as string)
+  createLogoutHandler(MA_FRONTEND_URL)
 );
 
 const DO_IDP_LOGOUT = false;
 // Only destroys the BFF Application session, no logout of TMA in our case.
 oidcRouter.get(
   authRoutes.AUTH_LOGOUT_EHERKENNING_LOCAL,
-  createLogoutHandler(
-    getFromEnv('MA_FRONTEND_URL', true) as string,
-    DO_IDP_LOGOUT
-  )
+  createLogoutHandler(MA_FRONTEND_URL, DO_IDP_LOGOUT)
 );
 
 export const forTesting = {

@@ -15,7 +15,7 @@ import {
   oidcConfigEherkenning,
 } from '../auth/auth-config.ts';
 import { authRoutes } from '../auth/auth-routes.ts';
-import { getFromEnv } from '../helpers/env.ts';
+import { MA_FRONTEND_URL } from '../config/app.ts';
 
 const mocks = vi.hoisted(() => {
   const openIdAuthHandlerEH = vi.fn();
@@ -195,9 +195,7 @@ describe('router-oidc', () => {
 
       forTesting.authLogoutHandler(reqMock, resMock);
 
-      expect(resMock.redirect).toHaveBeenCalledWith(
-        getFromEnv('MA_FRONTEND_URL', true)
-      );
+      expect(resMock.redirect).toHaveBeenCalledWith(MA_FRONTEND_URL);
     });
 
     test('Eherkenning based on session data and cookie', async () => {
@@ -248,9 +246,7 @@ describe('router-oidc', () => {
 
       forTesting.authLogoutHandler(reqMock, resMock);
 
-      expect(resMock.redirect).toHaveBeenCalledWith(
-        getFromEnv('MA_FRONTEND_URL', true)
-      );
+      expect(resMock.redirect).toHaveBeenCalledWith(MA_FRONTEND_URL);
     });
   });
 

@@ -1,3 +1,4 @@
+import { getFromEnv } from '../helpers/env.ts';
 import { BFF_BASE_PATH, BFF_BASE_PATH_ADMIN } from '../routing/bff-routes.ts';
 
 export const BFF_REQUEST_CACHE_ENABLED =
@@ -8,6 +9,8 @@ export const BFF_REQUEST_CACHE_ENABLED =
 export const BFF_API_BASE_URL = process.env.BFF_API_BASE_URL ?? BFF_BASE_PATH;
 export const BFF_API_ADMIN_BASE_URL =
   process.env.BFF_API_BASE_URL_ADMIN ?? BFF_BASE_PATH_ADMIN;
+
+export const MA_FRONTEND_URL = getFromEnv('MA_FRONTEND_URL', true, true)!;
 
 export const RELEASE_VERSION = `mijnamsterdam-bff@${process.env.MA_RELEASE_VERSION_TAG ?? 'notset'}`;
 
