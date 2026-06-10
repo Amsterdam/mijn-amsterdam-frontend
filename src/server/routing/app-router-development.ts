@@ -205,7 +205,7 @@ authRouterDevelopment.get(
         ? String(req.query.redirectUrl)
         : req.query.returnTo
           ? getReturnToUrl(req.query)
-          : generateMaFrontendUrl(`?authMethod=${req.params.authMethod}`);
+          : generateMaFrontendUrl(`/?authMethod=${req.params.authMethod}`);
 
     return res.redirect(redirectUrl);
   }
