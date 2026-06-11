@@ -379,7 +379,7 @@ const ApiConfig_ = {
     url: `${getFromEnv('BFF_AMSAPP_URL')}`,
     method: 'POST',
     headers: {
-      'X-Api-Key': `${getFromEnv('BFF_AMSAPP_API_KEY')}`,
+      'X-Session-Credentials-Key': `${getFromEnv('BFF_AMSAPP_API_KEY')}`,
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
