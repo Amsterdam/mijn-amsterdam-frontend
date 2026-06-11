@@ -41,11 +41,6 @@ export async function downloadBlob(
   containerClient: ContainerClient,
   blobName: string
 ): Promise<string> {
-  assert(
-    containerClient,
-    'Blob storage not initialized. Call `startBlobStorage` first.'
-  );
-
   const blobClient = containerClient.getBlobClient(blobName);
   const response = await blobClient.download();
   const stream = response.readableStreamBody;
