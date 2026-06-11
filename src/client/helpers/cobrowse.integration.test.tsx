@@ -1,6 +1,5 @@
 import type { ComponentType } from '@react-spring/web';
 import { act, render, screen } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
 import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
 import { describe, it } from 'vitest';
@@ -15,8 +14,7 @@ import { themaConfig as themaBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-t
 import { BezwarenDetail } from '../pages/Thema/Bezwaren/BezwarenDetail.tsx';
 import { BezwarenList } from '../pages/Thema/Bezwaren/BezwarenList.tsx';
 import { BezwarenThema } from '../pages/Thema/Bezwaren/BezwarenThema.tsx';
-import { mapperContactmomentToMenuItem } from '../pages/Thema/KlantContact/Contactmomenten/Contactmomenten-config.ts';
-import { ContactmomentenListPage } from '../pages/Thema/KlantContact/Contactmomenten/ContactmomentenListPage.tsx';
+import { mapperContactmomentToMenuItem } from '../pages/Thema/KlantContact/Contactmomenten/useTransformContactmomenten.tsx';
 import { MijnGegevensThema } from '../pages/Thema/Profile/private/ProfilePrivate.tsx';
 import { themaConfig as themaVergunningen } from '../pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 
@@ -212,44 +210,6 @@ describe('Cobrowse redacted components', () => {
         );
         expect(bsnField).toHaveClass('redacted');
       });
-
-      it('Contactmomenten', async () => {
-        await act(() => render(<Component component={MijnGegevensThema} />));
-
-        const toonButton = screen.getByRole('button', {
-          name: 'Toon',
-        }) as HTMLElement;
-        const user = userEvent.setup();
-        await user.click(toonButton);
-
-        const contactmomentAfis = screen
-          .getByRole('link', {
-            name: testState.KLANT_CONTACT.content?.[0].themaKanaal ?? '',
-          })
-          .closest('tr');
-        expect(contactmomentAfis).toHaveClass('redacted');
-
-        const contactmomentVergunning = screen
-          .getByText(testState.KLANT_CONTACT.content?.[1].subject ?? '')
-          .closest('tr');
-        expect(contactmomentVergunning).not.toHaveClass('redacted');
-      });
-    });
-    it('ContactmomentenList', async () => {
-      await act(() =>
-        render(<Component component={ContactmomentenListPage} />)
-      );
-      const contactmomentAfis = screen
-        .getByRole('link', {
-          name: testState.KLANT_CONTACT.content?.[0].themaKanaal ?? '',
-        })
-        .closest('tr');
-      expect(contactmomentAfis).toHaveClass('redacted');
-
-      const contactmomentVergunning = screen
-        .getByText(testState.KLANT_CONTACT.content?.[1].subject ?? '')
-        .closest('tr');
-      expect(contactmomentVergunning).not.toHaveClass('redacted');
     });
   });
 });

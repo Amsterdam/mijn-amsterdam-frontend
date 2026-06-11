@@ -30,7 +30,7 @@ import styles from './Contactmomenten.module.scss';
 // TODO: Use all the individual thema ID's imported from the Thema Config files.
 const SVWIv1ORv2 = featureToggleSvwi.svwiActive ? themaIdSvwi : themaInkomen.id;
 
-const mapperContactmomentToMenuItem = {
+export const mapperContactmomentToMenuItem = {
   Parkeren: themaParkeren.id,
   Zorg: themaZorg.id,
   'Werk en Inkomen': SVWIv1ORv2,
