@@ -30,7 +30,7 @@ function isMaApiPropertyConfigMatch<T extends object>(
   actionConfig: JzdApiConfig<T>,
   matchType: 'include' | 'exclude' = 'include'
 ): boolean {
-  const IS_DEFAULT_MATCH = matchType === 'exclude' ? false : true; // If there are no matchers, we don't want to exclude any items, but we do want to include all items.
+const IS_DEFAULT_MATCH = matchType !== 'exclude'; // If there are no matchers, we don't want to exclude any items, but we do want to include all items.
   const matchConfig = actionConfig[matchType];
 
   if (!matchConfig) {
