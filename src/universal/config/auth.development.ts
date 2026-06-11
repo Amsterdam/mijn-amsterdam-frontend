@@ -3,7 +3,6 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { IS_PRODUCTION } from './env.ts';
-import { getFromEnv } from '../../server/helpers/env.ts';
 
 const dirOfThisFile = dirname(fileURLToPath(import.meta.url));
 
@@ -47,10 +46,6 @@ function getTestAccountData(
 ): TestUserData | null {
   if (IS_PRODUCTION) {
     return null;
-  }
-  const envValue = getFromEnv(envKey, false);
-  if (envValue) {
-    return JSON.parse(envValue);
   }
   const testAccountPath =
     envKey === 'MA_TEST_ACCOUNTS'

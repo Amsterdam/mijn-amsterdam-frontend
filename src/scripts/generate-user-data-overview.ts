@@ -182,6 +182,11 @@ const { values: args } = parseArgs({
       short: 'r',
       default: false,
     },
+    'update-test-accounts': {
+      type: 'boolean',
+      short: 'u',
+      default: false,
+    },
   },
 });
 
@@ -242,10 +247,15 @@ async function generateOverview() {
     ]);
 
     const testUserLoginTable = createDigidTestUserTable(resultsByUser);
-    fs.writeFileSync(
-      args['out-file-path-digid-test-accounts'],
-      JSON.stringify(testUserLoginTable, null, 2) + '\n'
-    );
+    const isNotDefault =
+      args['out-file-path-digid-test-accounts'] !== DIGID_TEST_ACCOUNTS_PATH;
+
+    if (isNotDefault || args['update-test-accounts']) {
+      fs.writeFileSync(
+        args['out-file-path-digid-test-accounts'],
+        JSON.stringify(testUserLoginTable, null, 2) + '\n'
+      );
+    }
 
     XLSX.writeFile(workbook, fileName, { compression: true });
 
