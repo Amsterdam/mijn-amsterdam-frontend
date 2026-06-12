@@ -8,6 +8,8 @@ import { configDefaults } from 'vitest/config';
 import svgr from 'vite-plugin-svgr';
 import path from 'node:path';
 
+const testExclude = [...configDefaults.exclude, '**/__tmp-routes-*/**'];
+
 export default defineConfig({
   server: {
     port: process.env.port ? parseInt(process.env.port, 10) : 3000,
@@ -39,7 +41,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'happy-dom', // NOTE: overridden with 'node' when testing bff application
-    exclude: [...configDefaults.exclude, '**/__tmp-routes-*/**'],
+    exclude: testExclude,
     environmentOptions: {
       happyDOM: {
         settings: {
@@ -51,6 +53,39 @@ export default defineConfig({
     },
     setupFiles: './src/testing/setup.ts',
     css: false,
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: 'frontend',
+          include: ['src/client/**/*.test.ts', 'src/client/**/*.test.tsx'],
+          exclude: [...testExclude],
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: 'unit',
+          environment: 'node',
+          include: [
+            'src/server/**/*.test.ts',
+            'src/universal/**/*.test.ts',
+            'src/scripts/**/*.test.ts',
+            'src/mocks-server/**/*.test.ts',
+          ],
+          exclude: [...testExclude, 'src/server/**/*.integration.test.ts'],
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: 'integration',
+          environment: 'node',
+          include: ['src/server/**/*.integration.test.ts'],
+          exclude: testExclude,
+        },
+      },
+    ],
   },
   plugins: [
     react(),

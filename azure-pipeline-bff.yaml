@@ -46,6 +46,8 @@ variables:
     value: true
   - name: btdTest
     value: true
+  - name: bffImageTag
+    value: bff-$(Build.BuildId)
   - name: dtapName
     value: t
   - ${{ if eq(variables['Build.SourceBranchName'], 'testen') }}:
@@ -69,6 +71,7 @@ jobs:
       btdBuild: ${{ variables.btdBuild }}
       btdTest: ${{ variables.btdTest }}
       btdDeploy: ${{ variables.btdDeploy }}
+      bffImageTag: ${{ variables.bffImageTag }}
 
       btdAppBFF: true
       btdAppUI: false
