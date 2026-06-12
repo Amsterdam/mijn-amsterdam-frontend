@@ -7,7 +7,7 @@ const skipBlobStorage = process.env.BFF_SKIP_APPCONFIG === 'true';
 
 let _blobServiceClient: BlobServiceClient | undefined;
 
-export async function startBlobStorage() {
+export function startBlobStorage() {
   if (skipBlobStorage) {
     return;
   }
