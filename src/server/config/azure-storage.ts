@@ -3,13 +3,11 @@ import assert from 'node:assert';
 import type { ContainerClient } from '@azure/storage-blob';
 import { BlobServiceClient } from '@azure/storage-blob';
 
-const skipBlobStorage = process.env.BFF_SKIP_APPCONFIG === 'true';
-
 let _blobServiceClient: BlobServiceClient | undefined;
 
 export function getBlobStorage(): BlobServiceClient | null {
   const connectionString = process.env.APP_STORAGE_CONNECTION_STRING;
-  if (skipBlobStorage || !connectionString) {
+  if (!connectionString) {
     return null;
   }
 
