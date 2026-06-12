@@ -1,7 +1,7 @@
 import { IS_DEVELOPMENT, IS_PRODUCTION } from './env.ts';
 import {
-  blobServiceClient,
   downloadBlob,
+  getBlobStorage,
 } from '../../server/config/azure-storage.ts';
 import { getFromEnv } from '../../server/helpers/env.ts';
 
@@ -69,12 +69,13 @@ export async function getTestAccountData(
     return null;
   }
 
-  if (IS_DEVELOPMENT) {
+  const client = getBlobStorage();
+
+  if (!client || IS_DEVELOPMENT) {
     return FALLBACK_TEST_USER_DATA;
   }
 
-  const containerClient =
-    blobServiceClient().getContainerClient('test-accounts');
+  const containerClient = client.getContainerClient('test-accounts');
 
   const fileName =
     envKey === 'MA_TEST_ACCOUNTS'

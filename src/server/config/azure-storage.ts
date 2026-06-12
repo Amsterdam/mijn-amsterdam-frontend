@@ -7,31 +7,17 @@ const skipBlobStorage = process.env.BFF_SKIP_APPCONFIG === 'true';
 
 let _blobServiceClient: BlobServiceClient | undefined;
 
-export function startBlobStorage() {
-  if (skipBlobStorage) {
-    return;
+export function getBlobStorage(): BlobServiceClient | null {
+  const connectionString = process.env.APP_STORAGE_CONNECTION_STRING;
+  if (skipBlobStorage || !connectionString) {
+    return null;
   }
 
   if (_blobServiceClient) {
-    throw Error(
-      'A BlobServiceClient is already initialized, there is no need to initialize it twice.'
-    );
+    return _blobServiceClient;
   }
 
-  const connectionString = process.env.APP_STORAGE_CONNECTION_STRING;
-  if (!connectionString) {
-    return;
-  }
-
-  _blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
-}
-
-export function blobServiceClient(): BlobServiceClient {
-  assert(
-    _blobServiceClient,
-    'Call startBlobStorage before calling this function to initialize the _blobServiceClient'
-  );
-  return _blobServiceClient;
+  return BlobServiceClient.fromConnectionString(connectionString);
 }
 
 /** You can get a containerClient from calling blobServiceClient.getContainerClient */
