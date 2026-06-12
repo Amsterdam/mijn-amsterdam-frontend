@@ -3,7 +3,7 @@ import assert from 'node:assert';
 import type { ContainerClient } from '@azure/storage-blob';
 import { BlobServiceClient } from '@azure/storage-blob';
 
-let _blobServiceClient: BlobServiceClient | undefined;
+let blobServiceClient: BlobServiceClient | undefined;
 
 export function getBlobStorage(): BlobServiceClient | null {
   const connectionString = process.env.APP_STORAGE_CONNECTION_STRING;
@@ -11,8 +11,8 @@ export function getBlobStorage(): BlobServiceClient | null {
     return null;
   }
 
-  if (_blobServiceClient) {
-    return _blobServiceClient;
+  if (blobServiceClient) {
+    return blobServiceClient;
   }
 
   return BlobServiceClient.fromConnectionString(connectionString);
