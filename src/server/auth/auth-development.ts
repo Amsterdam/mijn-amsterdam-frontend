@@ -1,5 +1,5 @@
-import { IS_PRODUCTION } from './env.ts';
-import { getFromEnv } from '../../server/helpers/env.ts';
+import { IS_PRODUCTION } from '../../universal/config/env.ts';
+import { getFromEnv } from '../helpers/env.ts';
 
 export const DEV_USER_ID_DEFAULT =
   getFromEnv('MA_PROFILE_DEV_ID', false) || 'I.M Mokum';

@@ -12,11 +12,6 @@ import {
   sendBadRequest,
   sendUnauthorized,
 } from './route-helpers.ts';
-import type { TestUserData } from '../../universal/config/auth.development.ts';
-import {
-  testAccountDataDigid,
-  testAccountDataEherkenning,
-} from '../../universal/config/auth.development.ts';
 import { apiSuccessResult } from '../../universal/helpers/api.ts';
 import { getReturnToUrl } from '../auth/auth-after-redirect-returnto.ts';
 import {
@@ -24,6 +19,11 @@ import {
   OIDC_SESSION_MAX_AGE_SECONDS,
   TOKEN_ID_ATTRIBUTE,
 } from '../auth/auth-config.ts';
+import {
+  testAccountDataDigid,
+  testAccountDataEherkenning,
+} from '../auth/auth-development.ts';
+import type { TestUserData } from '../auth/auth-development.ts';
 import {
   cleanTestUsername,
   signDevelopmentToken,
