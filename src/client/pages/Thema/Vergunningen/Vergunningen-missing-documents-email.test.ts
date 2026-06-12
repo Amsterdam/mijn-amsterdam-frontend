@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { getMissingDocumentsEmailForCaseType } from './config-and-types.ts';
+import { getMissingDocumentsEmailForCaseType } from './Vergunningen-thema-config.ts';
 
 describe('getMissingDocumentsEmailForCaseType', () => {
   it('returns the configured email for eligible case types', () => {
