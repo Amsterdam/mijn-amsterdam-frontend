@@ -3,8 +3,6 @@ import assert from 'node:assert';
 import type { ContainerClient } from '@azure/storage-blob';
 import { BlobServiceClient } from '@azure/storage-blob';
 
-import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
-
 const skipBlobStorage = process.env.BFF_SKIP_APPCONFIG === 'true';
 
 let _blobServiceClient: BlobServiceClient | undefined;
@@ -15,14 +13,8 @@ export async function startBlobStorage() {
   }
 
   const connectionString = process.env.APP_STORAGE_CONNECTION_STRING;
-
   if (!connectionString) {
-    if (IS_DEVELOPMENT) {
-      return;
-    }
-    throw new Error(
-      'Environment variables APP_STORAGE_CONNECTION_STRING is not defined'
-    );
+    return;
   }
 
   _blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
