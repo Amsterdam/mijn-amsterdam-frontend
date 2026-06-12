@@ -8,7 +8,10 @@ import {
 } from './Vergunningen-helpers.ts';
 import type { DecosZaakBase } from '../../../../server/services/decos/decos-types.ts';
 import { type DecosZaakFrontend } from '../../../../server/services/decos/decos-types.ts';
-import type { WithDateRange } from '../../../../server/services/vergunningen/config-and-types.ts';
+import type {
+  CaseTypeVergunningenOrPB,
+  WithDateRange,
+} from '../../../../server/services/vergunningen/config-and-types.ts';
 import { dateSort } from '../../../../universal/helpers/date.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
@@ -209,4 +212,42 @@ export function getListPageDocumentTitle(themaTitle: string) {
       ? `${tableConfig[kind].title} | ${themaTitle}`
       : themaTitle;
   };
+}
+
+export const missingDocumentsEmailByCaseType = {
+  'TVM - RVV - Object': null,
+  'Evenement melding': null,
+  'Evenement vergunning': null,
+  'E-RVV - TVM': null,
+  'Flyeren-Sampling': null,
+  Straatartiesten: null,
+  'Aanbieden van diensten': null,
+  Nachtwerkontheffing: null,
+  'Zwaar verkeer': null,
+  'RVV - Hele stad': null,
+  'RVV Sloterweg': null,
+  'Werk en vervoer op straat': null,
+
+  // VTH case types, they will get their own email address, but for now we use the same as the Toeristische Verhuur email address
+  'Ligplaatsvergunning woonboot': 'bedandbreakfast@amsterdam.nl',
+  'Ligplaatsvergunning bedrijfsvaartuig': 'bedandbreakfast@amsterdam.nl',
+  Omzettingsvergunning: 'bedandbreakfast@amsterdam.nl',
+  Samenvoegingsvergunning: 'bedandbreakfast@amsterdam.nl',
+  'Onttrekkingsvergunning voor sloop': 'bedandbreakfast@amsterdam.nl',
+  'Onttrekkingsvergunning voor ander gebruik': 'bedandbreakfast@amsterdam.nl',
+  Woningvormingsvergunning: 'bedandbreakfast@amsterdam.nl',
+  'Voorraadvergunning tweede woning': 'bedandbreakfast@amsterdam.nl',
+  Splitsingsvergunning: 'bedandbreakfast@amsterdam.nl',
+} satisfies Record<CaseTypeVergunningenOrPB, string | null>;
+
+export function getMissingDocumentsEmailForCaseType(
+  caseType: string | null | undefined
+): string | undefined {
+  if (!caseType) {
+    return undefined;
+  }
+
+  const email =
+    missingDocumentsEmailByCaseType[caseType as CaseTypeVergunningenOrPB];
+  return email ?? undefined;
 }
