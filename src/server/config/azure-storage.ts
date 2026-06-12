@@ -12,6 +12,12 @@ export async function startBlobStorage() {
     return;
   }
 
+  if (_blobServiceClient) {
+    throw Error(
+      'A BlobServiceClient is already initialized, there is no need to initialize it twice.'
+    );
+  }
+
   const connectionString = process.env.APP_STORAGE_CONNECTION_STRING;
   if (!connectionString) {
     return;
