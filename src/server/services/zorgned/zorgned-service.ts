@@ -60,9 +60,7 @@ async function fetchZorgnedByBSN<S, T>(
     burgerservicenummer: bsn,
     gemeentecode: ZORGNED_GEMEENTE_CODE,
   };
-  if (!options.dataRequestConfig) {
-    console.error(new Error('waaahh'));
-  }
+
   const url = options.dataRequestConfig.url + options.path;
 
   const dataRequestConfigLocal: DataRequestConfig = {
