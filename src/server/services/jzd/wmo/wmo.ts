@@ -32,8 +32,6 @@ import { generateFullApiUrlBFF } from '../../../routing/route-helpers.ts';
 import { getStatusLineItems } from '../../zorgned/zorgned-status-line-items.ts';
 import { type ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
 
-
-
 export function getDocuments(
   sessionID: SessionID,
   aanvraagTransformed: ZorgnedAanvraagTransformed,
