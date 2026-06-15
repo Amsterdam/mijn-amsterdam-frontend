@@ -19,12 +19,15 @@ export type MaApiPropMatchFN<T> = (voorziening: T) => boolean;
 export type VoorzieningKey<T> = Exclude<keyof T, 'link' | 'documenten'>;
 export type VoorzieningValue<T> = T[VoorzieningKey<T>];
 
+type MatchConfig<T> = Partial<
+  Record<
+    VoorzieningKey<T>,
+    VoorzieningValue<T> | VoorzieningValue<T>[] | MaApiPropMatchFN<T>
+  >
+>;
+
 export type JzdApiConfig<T extends object = ZorgnedAanvraagTransformed> = {
   assign: Prettify<Partial<WithMaApiPropsAssignments<T>>>;
-  match: Partial<
-    Record<
-      VoorzieningKey<T>,
-      VoorzieningValue<T> | VoorzieningValue<T>[] | MaApiPropMatchFN<T>
-    >
-  >;
+  include: MatchConfig<T>;
+  exclude?: MatchConfig<T>;
 };
