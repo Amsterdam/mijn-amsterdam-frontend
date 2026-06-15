@@ -1,16 +1,11 @@
 /* eslint-disable no-console */
 import path, { resolve } from 'node:path';
 
+// File: Logger is not emitting when called from the migrate pipeline so console.log is used instead
+
 async function checkDatabaseConnectivity() {
   const { getPool } = await import('./postgres.ts');
-
-  try {
-    await getPool().query('SELECT 1;');
-    console.log('Database connectivity pre-check succeeded.');
-  } catch (error) {
-    console.error('Database connectivity pre-check failed.');
-    throw error;
-  }
+  return await getPool().query('SELECT 1;');
 }
 
 export async function runMigrations() {
@@ -19,8 +14,6 @@ export async function runMigrations() {
     import('drizzle-orm/node-postgres/migrator'),
     import('./postgres.ts'),
   ]);
-
-  await checkDatabaseConnectivity();
 
   const db = drizzle(getPool());
 
@@ -38,15 +31,30 @@ export async function runMigrationsCommand() {
   ]);
 
   try {
-    await runMigrations();
-    // Logger is not emitting when called from the migrate pipeline sow we use console.log
-    console.log('Drizzle migrations completed successfully.');
+    await checkDatabaseConnectivity();
+    console.log('Database migration connectivity pre-check succeeded.');
   } catch (error) {
-    // Logger is not emitting when called from the migrate pipeline sow we use console.log
-    console.log('Drizzle migrations Error.');
+    console.log('Database migration connectivity pre-check failed.');
     captureException(error, {
       properties: {
-        message: 'Drizzle migrations failed.',
+        message: 'Database migration connectivity pre-check failed.',
+        module: 'database',
+      },
+    });
+    throw error;
+  } finally {
+    await endPool();
+  }
+
+  try {
+    await runMigrations();
+    console.log('Database migration completed successfully.');
+  } catch (error) {
+    console.log('Database migration Error.');
+    captureException(error, {
+      properties: {
+        message: 'Database migration failed.',
+        module: 'database',
       },
     });
     throw error;
