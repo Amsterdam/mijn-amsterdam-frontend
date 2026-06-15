@@ -4,7 +4,7 @@ import path, { resolve } from 'node:path';
 
 async function checkDatabaseConnectivity() {
   const { getPool } = await import('./postgres.ts');
-  return await getPool().query('SELECT 1;');
+  return getPool().query('SELECT 1;');
 }
 
 export async function runMigrations() {
