@@ -65,11 +65,6 @@ Tooling: Vitest (usually `node` env). Global setup: `src/testing/setup.ts`.
 - Use `RequestMock`/`ResponseMock` (and `ResponseAuthenticatedMock`) from `src/testing/utils.ts`.
 - OIDC-aware requests: `getReqMockWithOidc(...)`.
 
-## Reusing mock data
-
-- Prefer importing realistic fixtures from `mocks/fixtures/*.json`.
-- It’s OK to add `test-fixtures/` next to a service test when the dataset is only relevant there (there are existing examples).
-
 ## Test data boundaries
 
 - Never import backend test data from `src/mocks-server/fixtures/**`.
