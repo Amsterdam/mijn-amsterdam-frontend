@@ -19,10 +19,7 @@ import {
   OIDC_SESSION_MAX_AGE_SECONDS,
   TOKEN_ID_ATTRIBUTE,
 } from '../auth/auth-config.ts';
-import {
-  testAccountDataDigid,
-  testAccountDataEherkenning,
-} from '../auth/auth-development.ts';
+import { getTestAccountData } from '../auth/auth-development.ts';
 import type { TestUserData } from '../auth/auth-development.ts';
 import {
   cleanTestUsername,
@@ -111,8 +108,8 @@ authRouterDevelopment.get(
     const authMethod = req.params.authMethod;
     const testAccountData =
       authMethod === 'digid'
-        ? testAccountDataDigid
-        : testAccountDataEherkenning;
+        ? await getTestAccountData('MA_TEST_ACCOUNTS')
+        : await getTestAccountData('MA_TEST_ACCOUNTS_EH');
 
     if (!testAccountData) {
       return sendBadRequest(
