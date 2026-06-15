@@ -7,11 +7,29 @@ Tooling: Vitest (usually `node` env). Global setup: `src/testing/setup.ts`.
 ## Code map (backend)
 
 - BFF entry: `src/server/app-start.ts` → `src/server/app.ts` (Express).
-- Routes live in `src/server/routing/**`; auth in `src/server/auth/**`.
-- Upstream integrations + orchestration: `src/server/services/**`.
+- Routes live in `src/server/routing/**`; auth in `src/server/auth/**`.- Upstream integrations + orchestration: `src/server/services/**`.
 - Shared helpers/types/config used by both FE and BFF: `src/universal/**`.
 - Dev mock server: `src/mocks-server/**` (started via `pnpm mock-server`).
 - Jobs/scripts: `src/jobs/**`, `src/scripts/**` (keep imports side-effect free).
+- Service domains live in `src/server/services/**`.
+
+## Service structure best practice (JZD pattern)
+
+- Per service domain, follow the shape: `*-router.ts`, `*-route-handlers.ts`, `*-service-config.ts`, and focused `*-api-service.ts` files.
+- Treat `<service>-service-config.ts` as the single source of truth for a service domain.
+- Keep route path constants in `routes` (grouped by exposure, e.g. `private`, `protected`, `public`).
+- Keep upstream API configuration constants in the same config file whenever they are service-domain specific.
+
+### Responsibilities split
+
+- `*-router.ts`: route registration, middleware wiring, and handler binding only. Import route paths/roles/toggles from `*-service-config.ts`.
+- `*-route-handlers.ts`: request validation + orchestration. Import validators and config values from `*-service-config.ts`; avoid hardcoded paths, roles, and toggle keys.
+- `*-api-service.ts`: upstream calls and response mapping. Consume domain config from `*-service-config.ts`; avoid duplicating endpoint/auth configuration literals.
+
+### Test impact
+
+- Import route constants from `*-service-config.ts` in router tests to prevent string drift.
+- When adding/changing a route or domain toggle, update `*-service-config.ts` first, then wire router/handlers.
 
 ## Hard rules
 
@@ -52,9 +70,19 @@ Tooling: Vitest (usually `node` env). Global setup: `src/testing/setup.ts`.
 - Prefer importing realistic fixtures from `mocks/fixtures/*.json`.
 - It’s OK to add `test-fixtures/` next to a service test when the dataset is only relevant there (there are existing examples).
 
+## Test data boundaries
+
+- Never import backend test data from `src/mocks-server/fixtures/**`.
+- Keep mock-server data and test data separate.
+- Backend tests in separate directories must not share fixture files.
+
 ## Fixtures
 
-- Prefer `mocks/fixtures/*.json`. Add small local `test-fixtures/` only when truly specific.
+- Default to inline test data in the test file.
+- Use local `test-fixtures/` only when fixture data is large:
+	- A single fixture is more than 20 lines.
+	- Total fixture data in a test file would exceed 60 lines.
+- Share a local fixture within one directory only when the same large payload is needed by 3 or more tests in that directory.
 
 ## Feature toggles
 
@@ -88,4 +116,5 @@ Prefer the simplest approach that proves the behavior.
 - All upstream HTTP calls are stubbed with `remoteApi`/`bffApi`.
 - Assertions verify `status/content` shapes and key fields (avoid overly broad snapshots unless already the pattern).
 - Run the smallest relevant command (`pnpm bff-api:test:dirs <folder>`) and fix failures caused by the new test.
+- If routes/toggles/api config changed, `*-service-config.ts` is updated as the canonical source.
 
