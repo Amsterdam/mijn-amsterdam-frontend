@@ -3,10 +3,12 @@ import assert from 'node:assert';
 import type { ContainerClient } from '@azure/storage-blob';
 import { BlobServiceClient } from '@azure/storage-blob';
 
+import { logger } from '../logging.ts';
+
 let blobServiceClient: BlobServiceClient | undefined;
 
 export function getBlobStorage(): BlobServiceClient | null {
-  const connectionString = process.env.APP_STORAGE_CONNECTION_STRING;
+  const connectionString = 'malformed-string';
   if (!connectionString) {
     return null;
   }
@@ -15,7 +17,13 @@ export function getBlobStorage(): BlobServiceClient | null {
     return blobServiceClient;
   }
 
-  blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
+  try {
+    blobServiceClient =
+      BlobServiceClient.fromConnectionString(connectionString);
+  } catch (err) {
+    logger.error(err, 'Invalid Azure Storage connection string');
+    return null;
+  }
   return blobServiceClient;
 }
 
