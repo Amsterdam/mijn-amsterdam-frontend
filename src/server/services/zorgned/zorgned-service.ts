@@ -2,6 +2,7 @@ import { HttpStatusCode } from 'axios';
 import thenBy from 'thenby';
 
 import type {
+  Beschikking,
   BeschiktProduct,
   LeveringsVormTransformed,
   ZorgnedAanvraagTransformed,
@@ -12,11 +13,11 @@ import type {
   ZorgnedDocumentResponseSource,
   ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
+  ZorgnedProcesAanvraagTransformed,
   ZorgnedResponseDataSource,
 } from './zorgned-types.ts';
 import {
   ZORGNED_GEMEENTE_CODE,
-  type Beschikking,
   type BSN,
   type ZorgnedAanvraagSource,
 } from './zorgned-types.ts';
@@ -113,7 +114,64 @@ export function getZorgnedAanvraagID(
   return doHash ? hash(id) : id;
 }
 
+function transformZorgnedProcesAanvraag(
+  aanvraag: ZorgnedAanvraagSource
+): ZorgnedProcesAanvraagTransformed | null {
+  return aanvraag.procesAanvraag
+    ? {
+        omschrijving: aanvraag.procesAanvraag.omschrijving,
+        identificatie: aanvraag.procesAanvraag.identificatie,
+        datumStart: aanvraag.procesAanvraag.datumStart,
+        datumAfsluiten: aanvraag.procesAanvraag.datumAfsluiten,
+        acties:
+          aanvraag.procesAanvraag.acties?.map((actie) => ({
+            omschrijving: actie.omschrijving,
+            datum: actie.datum,
+            status: actie.status.omschrijving,
+          })) ?? [],
+      }
+    : null;
+}
+
 function transformZorgnedAanvraag(
+  aanvraag: ZorgnedAanvraagSource
+): ZorgnedAanvraagTransformed {
+  const id = `${aanvraag.identificatie}`;
+  const aanvraagTransformed: ZorgnedAanvraagTransformed = {
+    id,
+    prettyID: id,
+    procesIdentificatie: aanvraag.procesIdentificatie ?? null,
+    procesMeldingIdentificatie: aanvraag.procesMelding?.identificatie ?? null,
+    procesAanvraag: transformZorgnedProcesAanvraag(aanvraag),
+    datumAanvraag: aanvraag.datumAanvraag,
+    documenten: transformDocumenten(aanvraag.documenten ?? []),
+    isActueel: false,
+
+    // The following properties are not available when there is no beschikt product, so we set them to null or empty values.
+    datumBeginLevering: null,
+    datumBesluit: null,
+    datumEindeGeldigheid: null,
+    datumEindeLevering: null,
+    datumIngangGeldigheid: null,
+    datumOpdrachtLevering: null,
+    datumToewijzing: null,
+    leverancier: null,
+    leverancierIdentificatie: null,
+    leveringsVorm: null,
+    productsoortCode: null,
+    productIdentificatie: null,
+    beschiktProductIdentificatie: null,
+    beschikkingNummer: null,
+    resultaat: null,
+    titel: null,
+    betrokkenen: [],
+  };
+
+  return aanvraagTransformed;
+}
+
+// With beschikt product.
+function transformZorgnedVoorziening(
   aanvraag: ZorgnedAanvraagSource,
   beschikking: Beschikking,
   beschiktProduct: BeschiktProduct
@@ -151,15 +209,15 @@ function transformZorgnedAanvraag(
     ),
     procesIdentificatie: aanvraag.procesIdentificatie ?? null,
     procesMeldingIdentificatie: aanvraag.procesMelding?.identificatie ?? null,
+    procesAanvraag: transformZorgnedProcesAanvraag(aanvraag),
     datumAanvraag: aanvraag.datumAanvraag,
     datumBeginLevering: levering?.begindatum ?? null,
-    datumBesluit: aanvraag.beschikking.datumAfgifte ?? '', // See bug: MIJN-11809
+    datumBesluit: beschikking.datumAfgifte ?? '', // See bug: MIJN-11809
     datumEindeGeldigheid: toegewezenProduct?.datumEindeGeldigheid ?? null,
     datumEindeLevering: levering?.einddatum ?? null,
     datumIngangGeldigheid: toegewezenProduct?.datumIngangGeldigheid ?? null,
     datumOpdrachtLevering: toewijzing?.datumOpdracht ?? null,
     datumToewijzing: toewijzing?.toewijzingsDatumTijd ?? null,
-    procesAanvraagOmschrijving: aanvraag.procesAanvraag?.omschrijving ?? null,
     documenten: transformDocumenten(aanvraag.documenten ?? []),
     isActueel: toegewezenProduct?.actueel ?? false,
     leverancier: toegewezenProduct?.leverancier?.omschrijving ?? '',
@@ -169,7 +227,7 @@ function transformZorgnedAanvraag(
     productsoortCode,
     productIdentificatie,
     beschiktProductIdentificatie: beschiktProduct.identificatie,
-    beschikkingNummer: aanvraag.beschikking.beschikkingNummer,
+    beschikkingNummer: beschikking.beschikkingNummer,
     resultaat: beschiktProduct.resultaat,
     titel: beschiktProduct.product.omschrijving ?? '',
     betrokkenen: toegewezenProduct?.betrokkenen ?? [],
@@ -197,29 +255,23 @@ export function transformZorgnedAanvragen(
 
   for (const aanvraagSource of aanvragenSource) {
     const beschikking = aanvraagSource.beschikking;
+    const beschikteProducten = beschikking?.beschikteProducten ?? [];
 
-    if (!beschikking) {
-      continue;
-    }
-
-    const beschikteProducten = beschikking.beschikteProducten;
-
-    if (!beschikteProducten) {
-      continue;
-    }
-
-    for (const beschiktProduct of beschikteProducten) {
-      if (beschiktProduct) {
-        const aanvraagTransformed = transformZorgnedAanvraag(
-          aanvraagSource,
-          beschikking,
-          beschiktProduct
-        );
-
-        if (aanvraagTransformed) {
+    // Voorzieningen always have at least 1 beschikt product
+    if (beschikking && beschikteProducten.length) {
+      for (const beschiktProduct of beschikteProducten) {
+        if (beschiktProduct) {
+          const aanvraagTransformed = transformZorgnedVoorziening(
+            aanvraagSource,
+            beschikking,
+            beschiktProduct
+          );
           aanvragenTransformed.push(aanvraagTransformed);
         }
       }
+    } else {
+      const aanvraagTransformed = transformZorgnedAanvraag(aanvraagSource);
+      aanvragenTransformed.push(aanvraagTransformed);
     }
   }
 
@@ -279,7 +331,7 @@ function consolidateCasusAanvragenWithSingleBeschiktProduct(
     aanvragenByCasusID
   )) {
     const aanvragenWithBeschiktProduct = aanvragen.filter((aanvraag) => {
-      return aanvraag.beschikking?.beschikteProducten?.length > 0;
+      return !!aanvraag.beschikking?.beschikteProducten?.length;
     });
 
     const beschiktProductIds = uniqueArray(
@@ -559,7 +611,7 @@ export async function fetchPersoonsgegevensNAW(
 
 export const forTesting = {
   transformDocumenten,
-  transformZorgnedAanvraag,
+  transformZorgnedAanvraag: transformZorgnedVoorziening,
   transformZorgnedAanvragen,
   consolidateCasusAanvragenWithSingleBeschiktProduct,
   transformZorgnedPersonResponse,

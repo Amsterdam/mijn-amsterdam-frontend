@@ -61,7 +61,7 @@ export interface ZorgnedStatusLineItemsConfig<
   resultaat?: BeschikkingsResultaat;
 }
 
-export type LeveringsVorm = 'zin' | 'pgb' | '';
+export type LeveringsVorm = 'ZIN' | 'PGB' | '' | string;
 export type LeveringsVormTransformed = 'ZIN' | 'PGB' | '';
 export type ProductSoortCode = string;
 export type ProductIdentificatie = string;
@@ -128,6 +128,23 @@ export interface ZorgnedDocumentData {
   title: string;
 }
 
+type ZorgnedProcesAanvraagActieSource = {
+  omschrijving: string;
+  status: {
+    identificatie: string;
+    omschrijving: string;
+  };
+  datum: string;
+};
+
+export type ZorgnedProcesAanvraagSource = {
+  identificatie: ZorgnedAanvraagSource['identificatie']; // Is equal to ZorgnedAanvraagSource identificatie
+  omschrijving: string;
+  datumStart: string;
+  datumAfsluiten: string | null;
+  acties?: ZorgnedProcesAanvraagActieSource[];
+};
+
 export interface ZorgnedAanvraagSource {
   beschikking: Beschikking;
   datumAanvraag: string;
@@ -159,11 +176,27 @@ export interface ZorgnedResponseDataSource {
   _embedded: { aanvraag: ZorgnedAanvraagSource[] };
 }
 
+type ZorgnedProcesAanvraagActieTransformed = {
+  omschrijving: ZorgnedProcesAanvraagActieSource['omschrijving'];
+  status: ZorgnedProcesAanvraagActieSource['status']['omschrijving'];
+  datum: ZorgnedProcesAanvraagActieSource['datum'];
+};
+
+export type ZorgnedProcesAanvraagTransformed = {
+  identificatie: ZorgnedProcesAanvraagSource['identificatie'];
+  omschrijving: ZorgnedProcesAanvraagSource['omschrijving'];
+  datumStart: ZorgnedProcesAanvraagSource['datumStart'];
+  datumAfsluiten: ZorgnedProcesAanvraagSource['datumAfsluiten'];
+  acties: ZorgnedProcesAanvraagActieTransformed[];
+};
+
 export interface ZorgnedAanvraagTransformed {
+  beschikkingNummer: number | null;
+  beschiktProductIdentificatie: BeschiktProduct['identificatie'] | null;
   betrokkenen: string[];
   datumAanvraag: string;
   datumBeginLevering: string | null;
-  datumBesluit: string;
+  datumBesluit: string | null;
   datumEindeGeldigheid: string | null;
   datumEindeLevering: string | null;
   datumIngangGeldigheid: string | null;
@@ -172,20 +205,25 @@ export interface ZorgnedAanvraagTransformed {
   procesAanvraagOmschrijving: string | null;
   documenten: GenericDocument[];
   id: string;
+  isActueel: boolean;
+  leverancier: string | null;
+  leverancierIdentificatie: string | null;
+  leveringsVorm: LeveringsVorm | null;
   prettyID: string;
+  procesAanvraag: ZorgnedProcesAanvraagTransformed | null;
   procesIdentificatie: string;
   procesMeldingIdentificatie: string | null;
   isActueel: boolean;
   leverancier: string;
   leverancierIdentificatie: string;
   leveringsVorm: LeveringsVormTransformed;
-  productsoortCode: ProductSoortCode;
-  productIdentificatie?: ProductIdentificatie;
+  productsoortCode: ProductSoortCode | null;
+  productIdentificatie?: ProductIdentificatie | null;
   beschiktProductIdentificatie: BeschiktProduct['identificatie'];
   beschikkingNummer: number | null;
-  resultaat: BeschikkingsResultaat;
-  titel: string;
-}
+  resultaat: BeschikkingsResultaat | null;
+  titel: string | null;
+};
 
 export interface ZorgnedAanvraagWithRelatedPersonsTransformed extends ZorgnedAanvraagTransformed {
   betrokkenPersonen: ZorgnedPerson[];

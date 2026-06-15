@@ -94,40 +94,13 @@ describe('zorgned-service', () => {
 
   describe('transformZorgnedAanvragen', () => {
     test('should have properties after transform', () => {
-      const keys = [
-        'beschikkingNummer',
-        'beschiktProductIdentificatie',
-        'betrokkenen',
-        'datumAanvraag',
-        'datumBeginLevering',
-        'datumBesluit',
-        'datumEindeGeldigheid',
-        'datumEindeLevering',
-        'datumIngangGeldigheid',
-        'datumOpdrachtLevering',
-        'datumToewijzing',
-        'documenten',
-        'id',
-        'isActueel',
-        'leverancier',
-        'leverancierIdentificatie',
-        'leveringsVorm',
-        'prettyID',
-        'procesAanvraagOmschrijving',
-        'productIdentificatie',
-        'productsoortCode',
-        'procesIdentificatie',
-        'resultaat',
-        'titel',
-      ].join(',');
-
       forTesting
         .transformZorgnedAanvragen(
           ZORGNED_JZD_AANVRAGEN as unknown as ZorgnedResponseDataSource
         )
         .every((a) => {
           expect(Object.keys(a).sort().join(',')).toMatchInlineSnapshot(
-            `"beschikkingNummer,beschiktProductIdentificatie,betrokkenen,datumAanvraag,datumBeginLevering,datumBesluit,datumEindeGeldigheid,datumEindeLevering,datumIngangGeldigheid,datumOpdrachtLevering,datumToewijzing,documenten,id,isActueel,leverancier,leverancierIdentificatie,leveringsVorm,prettyID,procesAanvraagOmschrijving,procesIdentificatie,procesMeldingIdentificatie,productIdentificatie,productsoortCode,resultaat,titel"`
+            `"beschikkingNummer,beschiktProductIdentificatie,betrokkenen,datumAanvraag,datumBeginLevering,datumBesluit,datumEindeGeldigheid,datumEindeLevering,datumIngangGeldigheid,datumOpdrachtLevering,datumToewijzing,documenten,id,isActueel,leverancier,leverancierIdentificatie,leveringsVorm,prettyID,procesIdentificatie,procesMeldingIdentificatie,productIdentificatie,productsoortCode,resultaat,titel"`
           );
         });
     });
@@ -197,7 +170,7 @@ describe('zorgned-service', () => {
         leverancierIdentificatie: 'LA0994',
         leveringsVorm: 'ZIN',
         prettyID: '300111429-116841',
-        procesAanvraagOmschrijving: null,
+        procesAanvraag: null,
         procesIdentificatie: null,
         productIdentificatie: 'WRA',
         productsoortCode: 'WRA',
@@ -499,7 +472,7 @@ describe('zorgned-service', () => {
             leverancier: 'Gebr Koenen B.V.',
             leverancierIdentificatie: '',
             leveringsVorm: 'ZIN',
-            procesAanvraagOmschrijving: null,
+            procesAanvraag: null,
             productIdentificatie: 'WRA',
             procesIdentificatie: null,
             procesMeldingIdentificatie: null,
@@ -821,7 +794,7 @@ describe('fetchRelatedPersons', async () => {
     it('does __not__ combine documents if 1 or more aanvragen within same casus have more than 1 beschiktproduct', () => {
       const responseSource2 = structuredClone(responseSource);
       // Add another aanvraag with a different beschikt product in the same casus.
-      responseSource2._embedded.aanvraag[0].beschikking.beschikteProducten.push(
+      responseSource2._embedded.aanvraag?.[0].beschikking?.beschikteProducten.push(
         {
           identificatie: '789-beschikt-product',
           product: {

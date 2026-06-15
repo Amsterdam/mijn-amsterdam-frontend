@@ -24,13 +24,15 @@ export function isStatusLineItemTransformerMatch<
       : PASS_MATCH_DEFAULT;
 
   const hasProductSoortCodeMatch =
-    typeof config.productsoortCodes !== 'undefined'
+    typeof config.productsoortCodes !== 'undefined' &&
+    aanvraagTransformed.productsoortCode
       ? config.productsoortCodes.includes(aanvraagTransformed.productsoortCode)
       : PASS_MATCH_DEFAULT;
 
   const hasProductIdentificatieMatch =
     typeof config.productIdentificatie !== 'undefined'
-      ? typeof aanvraagTransformed.productIdentificatie !== 'undefined'
+      ? typeof aanvraagTransformed.productIdentificatie !== 'undefined' &&
+        aanvraagTransformed.productIdentificatie
         ? config.productIdentificatie.includes(
             aanvraagTransformed.productIdentificatie
           )
