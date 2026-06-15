@@ -50,7 +50,7 @@ export async function runMigrationsCommand() {
     await runMigrations();
     console.log('Database migration completed successfully.');
   } catch (error) {
-    console.log('Database migration Error.');
+    console.log('Database migration failed.');
     captureException(error, {
       properties: {
         message: 'Database migration failed.',
