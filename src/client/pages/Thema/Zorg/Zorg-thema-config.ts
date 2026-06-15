@@ -53,7 +53,7 @@ export const themaConfig: ZorgThemaConfig = {
   },
   detailPage: {
     route: {
-      path: '/zorg-en-ondersteuning/voorziening/:id',
+      path: '/zorg-en-ondersteuning/voorziening/:voorziening/:id',
       trackingUrl: '/zorg-en-ondersteuning/voorziening',
       documentTitle: `Voorziening | ${THEMA_TITLE}`,
     },

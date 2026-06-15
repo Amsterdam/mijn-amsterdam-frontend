@@ -1,4 +1,5 @@
 import { generatePath } from 'react-router';
+import slug from 'slugme';
 
 import { routes } from '../jzd-service-config.ts';
 import {
@@ -30,6 +31,8 @@ import {
 import { generateFullApiUrlBFF } from '../../../routing/route-helpers.ts';
 import { getStatusLineItems } from '../../zorgned/zorgned-status-line-items.ts';
 import { type ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
+
+
 
 export function getDocuments(
   sessionID: SessionID,
@@ -72,6 +75,7 @@ function transformVoorzieningForFrontend(
   const id = aanvraag.prettyID;
 
   const route = generatePath(themaConfig.detailPage.route.path, {
+    voorziening: slug(aanvraag.titel),
     id,
   });
 
