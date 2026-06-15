@@ -37,7 +37,7 @@ import * as XLSX from 'xlsx';
 import * as fs from 'node:fs';
 import { defaultDateFormat } from '../universal/helpers/date.ts';
 import { getFullAddress } from '../universal/helpers/brp.ts';
-import { testAccountDataDigid } from '../universal/config/auth.development.ts';
+import { testAccountDataDigid } from '../server/auth/auth-development.ts';
 
 import { differenceInYears, parseISO } from 'date-fns';
 
