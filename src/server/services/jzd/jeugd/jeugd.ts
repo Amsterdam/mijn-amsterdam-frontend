@@ -102,6 +102,7 @@ function transformVoorzieningenForFrontend(
         link: {
           title: 'Meer informatie',
           to: generatePath(themaConfig.detailPage.route.path, {
+            voorziening: aanvraag.titel,
             id,
           }),
         },
