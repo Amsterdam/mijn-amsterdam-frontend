@@ -58,7 +58,8 @@ export const themaConfig: ThemaConfigJeugd = {
     route: {
       path: `${detailRouteBase}/:voorziening/:id`,
       documentTitle: `Voorziening | ${THEMA_TITLE}`,
-      trackingUrl: detailRouteBase,
+      trackingUrl: (params) =>
+        `/${detailRouteBase}/${params?.voorziening ?? ''}`,
     },
   },
 } as const;
