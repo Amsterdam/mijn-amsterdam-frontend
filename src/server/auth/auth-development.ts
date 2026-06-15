@@ -71,7 +71,11 @@ export async function getTestAccountData(
 
   const client = getBlobStorage();
   if (!client) {
-    return JSON.parse(getFromEnv(envKey, true, true)!);
+    const testData = getFromEnv(envKey);
+    if (!testData) {
+      return FALLBACK_TEST_USER_DATA;
+    }
+    return JSON.parse(testData);
   }
 
   const containerClient = client.getContainerClient('test-accounts');
