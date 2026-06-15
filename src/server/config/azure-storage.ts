@@ -8,7 +8,7 @@ import { logger } from '../logging.ts';
 let blobServiceClient: BlobServiceClient | undefined;
 
 export function getBlobStorage(): BlobServiceClient | null {
-  const connectionString = 'malformed-string';
+  const connectionString = process.env.APP_STORAGE_CONNECTION_STRING;
   if (!connectionString) {
     return null;
   }
