@@ -1,4 +1,5 @@
 import { generatePath } from 'react-router';
+import slug from 'slugme';
 
 import { jeugdStatusLineItemsConfig } from './status-line-items.ts';
 import { themaConfig } from '../../../../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
@@ -102,7 +103,7 @@ function transformVoorzieningenForFrontend(
         link: {
           title: 'Meer informatie',
           to: generatePath(themaConfig.detailPage.route.path, {
-            voorziening: aanvraag.titel,
+            voorziening: slug(aanvraag.titel),
             id,
           }),
         },
