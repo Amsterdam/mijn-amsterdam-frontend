@@ -15,12 +15,13 @@ import {
   sendResponse,
   sendBadRequestInvalidInput,
   type ResponseAuthenticated,
+  type RequestWithQueryParams,
 } from '../../routing/route-helpers.ts';
-import {
+import type {
   fetchAanvragenRaw,
   fetchAllDocumentsRaw,
-  fetchDocument,
 } from '../zorgned/zorgned-service.ts';
+import { fetchDocument } from '../zorgned/zorgned-service.ts';
 
 export async function fetchZorgnedDocumentWMO(
   authProfileAndToken: AuthProfileAndToken,
@@ -34,26 +35,38 @@ export async function fetchZorgnedDocumentWMO(
   return response;
 }
 
-export async function fetchZorgnedDocumentsWMO(
-  req: Request,
-  res: ResponseAuthenticated
-) {
-  const response = await fetchAllDocumentsRaw(res.locals.userID, {
-    zorgnedApiConfigKey: ZORGNED_JZD_API_CONFIG_KEY,
-  });
+// These are different users in the Zorgned API.
+const ZORGNED_USER_KEYS = ['ZORGNED_JZD', 'ZORGNED_LEERLINGENVERVOER'] as const;
 
-  return sendResponse(res, response);
+function sendBadRequestInvalidKey(res: Response) {
+  return sendBadRequestInvalidInput(res, {
+    message: `Invalid key provided. Expected one of ${ZORGNED_USER_KEYS.join(
+      ', '
+    )}`,
+  });
 }
 
-export async function fetchZorgnedAanvragenWMO(
-  req: Request,
-  res: ResponseAuthenticated
+export function sendZorgnedResponseRAW(
+  service: typeof fetchAllDocumentsRaw | typeof fetchAanvragenRaw
 ) {
-  const response = await fetchAanvragenRaw(res.locals.userID, {
-    zorgnedApiConfigKey: ZORGNED_JZD_API_CONFIG_KEY,
-  });
+  return async function fetchZorgnedRAW(
+    req: RequestWithQueryParams<{
+      key?: (typeof ZORGNED_USER_KEYS)[number];
+    }>,
+    res: ResponseAuthenticated
+  ) {
+    const key = req.query.key || ZORGNED_JZD_API_CONFIG_KEY;
 
-  return sendResponse(res, response);
+    if (!ZORGNED_USER_KEYS.includes(key)) {
+      return sendBadRequestInvalidKey(res);
+    }
+
+    const response = await service(res.locals.userID, {
+      zorgnedApiConfigKey: key,
+    });
+
+    return sendResponse(res, response);
+  };
 }
 
 export async function handleVoorzieningenRequest(req: Request, res: Response) {

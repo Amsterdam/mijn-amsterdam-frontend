@@ -30,9 +30,9 @@ export const routes = {
   },
   protected: {
     WMO_DOCUMENT_DOWNLOAD: `/services/wmo/document`,
-    WMO_DOCUMENTS_LIST_RAW: `/services/wmo/raw/documents`,
-    WMO_AANVRAGEN_RAW: `/services/wmo/raw/aanvragen`,
     LLV_DOCUMENT_DOWNLOAD: `/services/llv/document`,
+    JZD_AANVRAGEN_RAW: `/services/jzd/raw/aanvragen`,
+    JZD_DOCUMENTS_LIST_RAW: `/services/jzd/raw/documents`,
   },
 } as const;
 

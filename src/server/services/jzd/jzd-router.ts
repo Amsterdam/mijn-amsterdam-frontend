@@ -1,9 +1,8 @@
 import {
-  fetchZorgnedAanvragenWMO,
   fetchZorgnedDocumentWMO,
-  fetchZorgnedDocumentsWMO,
   handleVoorzieningDetailRequest,
   handleVoorzieningenRequest,
+  sendZorgnedResponseRAW,
 } from './jzd-route-handlers.ts';
 import {
   featureToggle,
@@ -16,6 +15,10 @@ import { OAuthVerificationHandler } from '../../routing/route-handlers.ts';
 import { createBFFRouter } from '../../routing/route-helpers.ts';
 import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler.ts';
 import { fetchZorgnedDocumentLLV } from './jeugd/route-handlers.ts';
+import {
+  fetchAanvragenRaw,
+  fetchAllDocumentsRaw,
+} from '../zorgned/zorgned-service.ts';
 
 const jzdRouterPrivateNetwork = createBFFRouter({
   id: 'external-consumer-private-network-jzd',
@@ -53,12 +56,12 @@ attachDocumentDownloadRoute(
 );
 
 jzdRouterProtected.get(
-  routes.protected.WMO_AANVRAGEN_RAW,
-  fetchZorgnedAanvragenWMO
+  routes.protected.JZD_AANVRAGEN_RAW,
+  sendZorgnedResponseRAW(fetchAanvragenRaw)
 );
 jzdRouterProtected.get(
-  routes.protected.WMO_DOCUMENTS_LIST_RAW,
-  fetchZorgnedDocumentsWMO
+  routes.protected.JZD_DOCUMENTS_LIST_RAW,
+  sendZorgnedResponseRAW(fetchAllDocumentsRaw)
 );
 
 export const jzdRouter = {
