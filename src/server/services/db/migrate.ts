@@ -2,6 +2,12 @@
 /* eslint-disable no-console */
 import path, { resolve } from 'node:path';
 
+import { delay } from '../../../universal/helpers/utils.ts';
+
+const JOB_SUCCESS_CODE = 0;
+const JOB_FAILURE_CODE = 1;
+const TEN_SECONDS_MS = 10 * 1000;
+
 async function checkDatabaseConnectivity() {
   const { getPool } = await import('./postgres.ts');
   return getPool().query('SELECT 1;');
@@ -40,9 +46,8 @@ export async function runMigrationsCommand() {
         module: 'database',
       },
     });
-    throw error;
-  } finally {
     await endPool();
+    throw error;
   }
 
   try {
@@ -67,7 +72,11 @@ const scriptName = path.parse(process.argv.at(1) ?? '').name;
 if (import.meta.main || scriptName === 'migrate') {
   try {
     await runMigrationsCommand();
+    await delay(TEN_SECONDS_MS);
+    process.exit(JOB_SUCCESS_CODE);
   } catch {
-    process.exit(1);
+    // Ensure any event is sent before the process exits
+    await delay(TEN_SECONDS_MS);
+    process.exit(JOB_FAILURE_CODE);
   }
 }
