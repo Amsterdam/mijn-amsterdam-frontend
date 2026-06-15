@@ -1,7 +1,6 @@
+// Logger is not emitting when called from the migrate pipeline so console.log is used instead
 /* eslint-disable no-console */
 import path, { resolve } from 'node:path';
-
-// File: Logger is not emitting when called from the migrate pipeline so console.log is used instead
 
 async function checkDatabaseConnectivity() {
   const { getPool } = await import('./postgres.ts');
