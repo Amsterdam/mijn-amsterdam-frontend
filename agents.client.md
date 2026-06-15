@@ -34,11 +34,10 @@ Tooling: Vitest + Testing Library, `happy-dom`.
 - Match the closest existing sibling test file’s style.
 
 ## Stubbing
-Most client HTTP goes through `fetch` (e.g. `useBffApi`). Stub it directly:
+Use `bffApi`/`remoteApi` (`nock`) from `src/testing/utils.ts` for client HTTP stubbing, e.g. `bffApi.get('/services/...').reply(...)`.
 
-- Prefer `vi.stubGlobal('fetch', vi.fn().mockResolvedValue(...))`.
-- For quick “OK/error” responses, reuse `createFetchResponse(...)` from `src/testing/utils.ts`.
-- If you’re testing Node-side code (BFF services/helpers) that uses `axios`/Node HTTP, use the backend playbook’s `remoteApi`/`bffApi` (`nock`).
+- Keep stubs close to each test and cover every expected request path.
+- Reuse existing route patterns from nearby tests where possible.
 
 ## Fixtures
 
@@ -60,6 +59,6 @@ Most client HTTP goes through `fetch` (e.g. `useBffApi`). Stub it directly:
 ## Definition of done (client)
 
 - New/updated `*.test.ts(x)` near the code.
-- All HTTP calls are stubbed (typically by mocking `fetch`/`useBffApi`); no real network.
+- All HTTP calls are stubbed with `bffApi`/`remoteApi` (`nock`); no real network.
 - Assertions are stable (roles/text); avoid brittle selectors.
 - Run the smallest relevant command (`pnpm test:dirs <folder>`) and fix failures caused by the new test.
