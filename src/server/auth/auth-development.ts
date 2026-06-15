@@ -3,7 +3,7 @@ import {
   getBlobStorage,
 } from '../../server/config/azure-storage.ts';
 import { getFromEnv } from '../../server/helpers/env.ts';
-import { IS_PRODUCTION, IS_DEVELOPMENT } from '../../universal/config/env.ts';
+import { IS_PRODUCTION } from '../../universal/config/env.ts';
 
 export const DEV_USER_ID_DEFAULT =
   getFromEnv('MA_PROFILE_DEV_ID', false) || 'I.M Mokum';
@@ -70,9 +70,8 @@ export async function getTestAccountData(
   }
 
   const client = getBlobStorage();
-
-  if (!client || IS_DEVELOPMENT) {
-    return FALLBACK_TEST_USER_DATA;
+  if (!client) {
+    return JSON.parse(getFromEnv(envKey, true, true)!);
   }
 
   const containerClient = client.getContainerClient('test-accounts');
