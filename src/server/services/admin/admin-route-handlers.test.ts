@@ -27,7 +27,7 @@ describe('admin-route-handlers', () => {
     isAuthenticatedAdmin(req, res, next);
 
     expect(res.redirect).toHaveBeenCalledWith(
-      '/api/v1/admin/auth/signin?originalUrl=%2Fadmin%2Fprotected%2Froute'
+      'http://bff-api-host/api/v1/admin/auth/signin?originalUrl=%2Fadmin%2Fprotected%2Froute'
     );
   });
 
@@ -77,7 +77,7 @@ describe('admin-route-handlers', () => {
       expect.objectContaining({
         isAuthenticated: false,
         links: {
-          Inloggen: '/api/v1/admin/auth/signin',
+          Inloggen: 'http://bff-api-host/api/v1/admin/auth/signin',
         },
         title: 'Mijn Amsterdam Admin',
         username: undefined,

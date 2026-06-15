@@ -66,11 +66,11 @@ import {
 import { toDateFormatted } from '../../../universal/helpers/date.ts';
 import { omit, sortByNumber } from '../../../universal/helpers/utils.ts';
 import type { AuthProfile } from '../../auth/auth-types.ts';
+import { MA_FRONTEND_URL } from '../../config/app.ts';
 import {
   encrypt,
   encryptPayloadAndSessionID,
 } from '../../helpers/encrypt-decrypt.ts';
-import { getFromEnv } from '../../helpers/env.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
@@ -577,7 +577,7 @@ function createEMandateSignRequestPayload(
       IS_DEVELOPMENT ? { iban: creditor.iban } : {},
       { id: slug(creditor.name) },
     ],
-    getFromEnv('MA_FRONTEND_URL')
+    MA_FRONTEND_URL
   );
 
   const today = new Date();

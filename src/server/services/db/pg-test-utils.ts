@@ -1,6 +1,9 @@
-import { Pool } from 'pg';
-
-import { pgDbConfig } from './postgres.ts';
+import {
+  PostgreSqlContainer,
+  type StartedPostgreSqlContainer,
+} from '@testcontainers/postgresql';
+import nock from 'nock';
+import type { Pool } from 'pg';
 
 type EnvOverrides = Record<string, string | undefined>;
 
@@ -16,6 +19,31 @@ export type PgTestDbContext = {
   restoreEnv: () => void;
   teardown: () => Promise<void>;
 };
+
+/**
+ * Truncate all tables in a schema.
+ */
+export async function truncatePgSchemaTables(
+  pool: Pool,
+  schemaName = 'public'
+) {
+  const result = await pool.query<{ tablename: string }>(
+    'SELECT tablename FROM pg_tables WHERE schemaname = $1',
+    [schemaName]
+  );
+
+  if (!result.rows.length) {
+    return;
+  }
+
+  const fullyQualifiedTableNames = result.rows
+    .map(({ tablename }) => `"${schemaName}"."${tablename}"`)
+    .join(', ');
+
+  await pool.query(
+    `TRUNCATE TABLE ${fullyQualifiedTableNames} RESTART IDENTITY CASCADE`
+  );
+}
 
 function restoreEnvSnapshot(snapshot: NodeJS.ProcessEnv) {
   for (const key of Object.keys(process.env)) {
@@ -46,33 +74,51 @@ function applyEnvOverrides(envOverrides: EnvOverrides | undefined) {
   return () => restoreEnvSnapshot(snapshot);
 }
 
-async function ensureDatabaseExists(options: {
+async function startPostgresTestContainer(options: {
   databaseName: string;
-  adminDatabaseName: string;
-}) {
-  const adminPool = new Pool({
-    ...pgDbConfig,
-    database: options.adminDatabaseName,
-  });
+  username: string;
+  password: string;
+}): Promise<StartedPostgreSqlContainer> {
+  return new PostgreSqlContainer('postgres:16-alpine')
+    .withDatabase(options.databaseName)
+    .withUsername(options.username)
+    .withPassword(options.password)
+    .start();
+}
 
-  try {
-    const exists = await adminPool.query(
-      'SELECT 1 FROM pg_database WHERE datname = $1',
-      [options.databaseName]
-    );
+function allowDockerEngineNetwork(host: string) {
+  const normalizedHost = host.toLowerCase();
 
-    if (exists.rowCount === 0) {
-      await adminPool.query(`CREATE DATABASE "${options.databaseName}"`);
+  return (
+    normalizedHost === 'localhost' ||
+    normalizedHost.startsWith('localhost:') ||
+    normalizedHost === '127.0.0.1' ||
+    normalizedHost.startsWith('127.0.0.1:') ||
+    normalizedHost === '::1' ||
+    normalizedHost === '[::1]' ||
+    normalizedHost.startsWith('[::1]:') ||
+    normalizedHost.includes('/var/run/docker.sock')
+  );
+}
+
+// Open net access only while Testcontainers talks to the Docker engine.
+function withDockerNetworkAccess<TArgs extends unknown[], TResult>(
+  fn: (...args: TArgs) => Promise<TResult>
+) {
+  return async (...args: TArgs): Promise<TResult> => {
+    nock.enableNetConnect(allowDockerEngineNetwork);
+    try {
+      return await fn(...args);
+    } finally {
+      nock.disableNetConnect();
     }
-  } finally {
-    await adminPool.end();
-  }
+  };
 }
 
 /**
  * Bootstraps a Postgres database for integration tests.
  *
- * - Ensures the database exists (creates it if needed)
+ * - Starts an ephemeral Postgres test container
  * - Applies env overrides (and returns a restore function)
  * - Returns the app's Postgres singleton pool (and a teardown helper)
  */
@@ -80,15 +126,38 @@ export async function setupPgTestDb(
   options: PgTestDbOptions = {}
 ): Promise<PgTestDbContext> {
   const databaseName = options.databaseName || 'mijnadam_test';
-  const adminDatabaseName = options.adminDatabaseName || 'postgres';
+  const username = 'postgres';
+  const password = 'postgres';
 
-  const restoreEnv = applyEnvOverrides({
-    ...options.envOverrides,
-    PGDATABASE: databaseName,
+  let container: StartedPostgreSqlContainer | undefined;
+  let restoreEnv: (() => void) | undefined;
+
+  const stopContainer = withDockerNetworkAccess(async () => {
+    if (container) {
+      await container.stop();
+      container = undefined;
+    }
   });
 
   try {
-    await ensureDatabaseExists({ databaseName, adminDatabaseName });
+    container = await withDockerNetworkAccess(
+      async () =>
+        await startPostgresTestContainer({
+          databaseName,
+          username,
+          password,
+        })
+    )();
+
+    restoreEnv = applyEnvOverrides({
+      ...options.envOverrides,
+      PGHOST: container.getHost(),
+      PGPORT: String(container.getPort()),
+      PGUSER: container.getUsername(),
+      PGPASSWORD: container.getPassword(),
+      PGDATABASE: container.getDatabase(),
+      BFF_DB_ENABLED: 'true',
+    });
 
     const postgres = await import('./postgres.ts');
     // If a previous test did not end the pool, or env changed, allow recreation.
@@ -99,12 +168,19 @@ export async function setupPgTestDb(
 
     const teardown = async () => {
       await postgres.endPool();
-      restoreEnv();
+      await stopContainer();
+      restoreEnv?.();
     };
 
-    return { databaseName, pool, restoreEnv, teardown };
+    return {
+      databaseName,
+      pool,
+      restoreEnv: restoreEnv ?? (() => undefined),
+      teardown,
+    };
   } catch (error) {
-    restoreEnv();
+    await stopContainer();
+    restoreEnv?.();
     throw error;
   }
 }

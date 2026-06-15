@@ -1,44 +1,108 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpStatusCode } from 'axios';
-import type { Request } from 'express';
-import {
-  beforeEach,
-  describe,
-  expect,
-  test,
-  vi,
-  type MockInstance,
-} from 'vitest';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import * as model from './amsapp-notifications-model.ts';
-import { handleSendNotificationsResponse } from './amsapp-notifications-route-handlers.ts';
+import {
+  fetchAndStoreNotifications,
+  handleConsumerRegistrationProfile,
+  handleSendNotificationsResponse,
+  handleUnregisterConsumer,
+} from './amsapp-notifications-route-handlers.ts';
 import * as notifications from './amsapp-notifications.ts';
 import { RequestMock, ResponseMock } from '../../../../testing/utils.ts';
 
 describe('amsapp notifications route handlers', () => {
-  let req: Request;
   let res: ReturnType<typeof ResponseMock.new>;
-  let batchFetchNotifications: MockInstance;
-  let getProfilesCount: MockInstance;
 
   beforeEach(() => {
-    req = RequestMock.new().get();
     res = ResponseMock.new();
+  });
 
-    batchFetchNotifications = vi.spyOn(
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  test('handleUnregisterConsumer returns success when consumer was deleted', async () => {
+    const unregisterConsumers = vi.spyOn(notifications, 'unregisterConsumers');
+    const reqMock = RequestMock.new()
+      .setParams({ consumerId: 'consumer-1' })
+      .get<{ consumerId: string }>();
+    unregisterConsumers.mockResolvedValue(['consumer-1']);
+
+    await handleUnregisterConsumer(reqMock, res);
+
+    expect(res.send).toHaveBeenCalledWith({
+      content: 'Consumers deleted',
+      status: 'OK',
+    });
+  });
+
+  test('handleUnregisterConsumer returns not found when consumer was not deleted', async () => {
+    const unregisterConsumers = vi.spyOn(notifications, 'unregisterConsumers');
+    const reqMock = RequestMock.new()
+      .setParams({ consumerId: 'consumer-1' })
+      .get<{ consumerId: string }>();
+    unregisterConsumers.mockResolvedValue([]);
+
+    await handleUnregisterConsumer(reqMock, res);
+
+    expect(res.send).toHaveBeenCalledWith({
+      message: 'Not Modified',
+      content: null,
+      status: 'ERROR',
+      code: HttpStatusCode.NotModified,
+    });
+  });
+
+  test('handleConsumerRegistrationProfile returns isRegistered false when profile lookup returns null', async () => {
+    const getConsumerProfile = vi.spyOn(notifications, 'getConsumerProfile');
+    getConsumerProfile.mockResolvedValue({ isRegistered: false });
+
+    const reqMock = RequestMock.new()
+      .setParams({ consumerId: 'consumer-1' })
+      .get<{ consumerId: string }>();
+
+    await handleConsumerRegistrationProfile(reqMock, res);
+
+    expect(res.send).toHaveBeenCalledWith({
+      content: { isRegistered: false },
+      status: 'OK',
+    });
+  });
+
+  test('fetchAndStoreNotifications triggers background fetch and returns success immediately', () => {
+    const batchFetchAndStoreNotifications = vi.spyOn(
       notifications,
-      'batchFetchNotifications'
+      'batchFetchAndStoreNotifications'
     );
-    getProfilesCount = vi.spyOn(model, 'getProfilesCount');
+    const pendingPromise = new Promise<void>(() => undefined);
+    batchFetchAndStoreNotifications.mockReturnValue(pendingPromise);
 
-    batchFetchNotifications.mockResolvedValue([]);
-    getProfilesCount.mockResolvedValue(0);
+    fetchAndStoreNotifications(RequestMock.new().get(), res);
+
+    expect(batchFetchAndStoreNotifications).toHaveBeenCalledTimes(1);
+    expect(res.send).toHaveBeenCalledWith({
+      content: 'success',
+      status: 'OK',
+    });
   });
 
   test('returns 400 on invalid limit', async () => {
-    req.query = { limit: 'foo' } as any;
+    const batchFetchNotifications = vi.spyOn(
+      notifications,
+      'batchFetchNotifications'
+    );
+    batchFetchNotifications.mockResolvedValue([]);
 
-    await handleSendNotificationsResponse(req as any, res);
+    const reqMock = RequestMock.new<{
+      dateFrom: string;
+      offset: string;
+      limit: string;
+    }>().setQuery({
+      limit: 'foo',
+    });
+
+    await handleSendNotificationsResponse(reqMock, res);
 
     expect(res.status).toHaveBeenCalledWith(HttpStatusCode.BadRequest);
     expect(res.send).toHaveBeenCalled();
@@ -46,31 +110,67 @@ describe('amsapp notifications route handlers', () => {
   });
 
   test('returns 400 on negative offset', async () => {
-    req.query = { offset: '-1' } as any;
+    const batchFetchNotifications = vi.spyOn(
+      notifications,
+      'batchFetchNotifications'
+    );
+    batchFetchNotifications.mockResolvedValue([]);
 
-    await handleSendNotificationsResponse(req as any, res);
+    const reqMock = RequestMock.new<{
+      dateFrom: string;
+      offset: string;
+      limit: string;
+    }>().setQuery({
+      offset: '-1',
+    });
+
+    await handleSendNotificationsResponse(reqMock, res);
 
     expect(res.status).toHaveBeenCalledWith(HttpStatusCode.BadRequest);
     expect(batchFetchNotifications).not.toHaveBeenCalled();
   });
 
   test('returns 400 on invalid dateFrom', async () => {
-    req.query = { dateFrom: 'not-a-date' } as any;
+    const batchFetchNotifications = vi.spyOn(
+      notifications,
+      'batchFetchNotifications'
+    );
+    batchFetchNotifications.mockResolvedValue([]);
 
-    await handleSendNotificationsResponse(req as any, res);
+    const reqMock = RequestMock.new<{
+      dateFrom: string;
+      offset: string;
+      limit: string;
+    }>().setQuery({
+      dateFrom: 'not-a-date',
+    });
+
+    await handleSendNotificationsResponse(reqMock, res);
 
     expect(res.status).toHaveBeenCalledWith(HttpStatusCode.BadRequest);
     expect(batchFetchNotifications).not.toHaveBeenCalled();
   });
 
   test('parses offset/limit as numbers and forwards them as isostring and numbers', async () => {
-    req.query = {
-      dateFrom: '2026-03-01T00:00:00.000Z',
-      offset: 10,
-      limit: 25,
-    } as any;
+    const getProfilesCount = vi.spyOn(model, 'getProfilesCount');
+    const batchFetchNotifications = vi.spyOn(
+      notifications,
+      'batchFetchNotifications'
+    );
+    getProfilesCount.mockResolvedValue(0);
+    batchFetchNotifications.mockResolvedValue([]);
 
-    await handleSendNotificationsResponse(req as any, res);
+    const reqMock = RequestMock.new<{
+      dateFrom: string;
+      offset: string;
+      limit: string;
+    }>().setQuery({
+      dateFrom: '2026-03-01T00:00:00.000Z',
+      offset: '10',
+      limit: '25',
+    });
+
+    await handleSendNotificationsResponse(reqMock, res);
 
     expect(getProfilesCount).toHaveBeenCalledWith({
       dateFrom: '2026-03-01T00:00:00.000Z',

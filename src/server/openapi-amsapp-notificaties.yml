@@ -107,12 +107,12 @@ paths:
       responses:
         '200':
           description: Consumer deleted
-        '404':
-          description: Consumer not found
+        '304':
+          description: Consumer not Modified
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/ErrorNotFound'
+                $ref: '#/components/schemas/ErrorNotModified'
         '500':
           description: |
             Returns Application error, any error in code or from failed requests.
@@ -266,8 +266,14 @@ components:
           items:
             type: object
             properties:
-              consumerIds:
+              consumerDetails:
                 type: array
+                description: Preferred consumer projection for this profile.
+                items:
+                  $ref: '#/components/schemas/ConsumerDetail'
+              consumerIds:
+                deprecated: true
+                description: Deprecated compatibility projection of consumers. Mirrors consumerDetails[].id.
                 items:
                   type: string
                   default: '123'
@@ -297,7 +303,18 @@ components:
         totalItems:
           type: integer
           minimum: 0
-          description: Total number matching the dateFrom filter (ignores offset/limit)
+          description: Total number of profiles with consumers that match dateFrom (ignores offset/limit)
+
+    ConsumerDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Consumer identifier.
+        loginExpiryDate:
+          type: string
+          format: date-time
+          description: Consumer registration expiry timestamp (ISO 8601).
 
     ServiceResultBase:
       type: object
@@ -362,6 +379,11 @@ components:
           format: date-time
           nullable: true
           description: Last consumer login timestamp (ISO 8601) or null when unknown/never.
+        loginExpiryDate:
+          type: string
+          format: date-time
+          nullable: false
+          description: Consumer registration expiry timestamp (ISO 8601)
     ConsumerRegistered:
       type: object
       properties:

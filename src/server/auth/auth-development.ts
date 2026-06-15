@@ -1,9 +1,9 @@
-import { IS_DEVELOPMENT, IS_PRODUCTION } from './env.ts';
 import {
   downloadBlob,
   getBlobStorage,
 } from '../../server/config/azure-storage.ts';
 import { getFromEnv } from '../../server/helpers/env.ts';
+import { IS_PRODUCTION, IS_DEVELOPMENT } from '../../universal/config/env.ts';
 
 export const DEV_USER_ID_DEFAULT =
   getFromEnv('MA_PROFILE_DEV_ID', false) || 'I.M Mokum';
