@@ -52,7 +52,6 @@ function imposeZorgnedAanvraagTransformed(
     leveringsVorm: '',
     productsoortCode: '',
     beschiktProductIdentificatie: `  beschikt-product-${index}`,
-    procesAanvraagOmschrijving: '',
     beschikkingNummer: null,
     ...aanvraagProps,
     betrokkenPersonen:

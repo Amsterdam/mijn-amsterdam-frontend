@@ -1,7 +1,7 @@
 import { useParams } from 'react-router';
 
 import { useZorgThemaData } from './useZorgThemaData.ts';
-import type { WMOVoorzieningFrontend } from '../../../../server/services/jzd/wmo/wmo-types.ts';
+import type { JzdVoorzieningFrontend } from '../../../../server/services/jzd/jzd-types.ts';
 
 export function useZorgDetailData() {
   const {
@@ -12,7 +12,7 @@ export function useZorgDetailData() {
     themaId,
     themaConfig,
   } = useZorgThemaData();
-  const { id } = useParams<{ id: WMOVoorzieningFrontend['id'] }>();
+  const { id } = useParams<{ id: JzdVoorzieningFrontend['id'] }>();
   const voorziening = voorzieningen.find((item) => item.id === id);
 
   return {

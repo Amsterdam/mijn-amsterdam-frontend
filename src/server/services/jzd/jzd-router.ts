@@ -1,5 +1,5 @@
 import {
-  fetchZorgnedDocumentWMO,
+  fetchZorgnedDocumentJZD,
   handleVoorzieningDetailRequest,
   handleVoorzieningenRequest,
   sendZorgnedResponseRAW,
@@ -14,7 +14,6 @@ import { conditional } from '../../helpers/middleware.ts';
 import { OAuthVerificationHandler } from '../../routing/route-handlers.ts';
 import { createBFFRouter } from '../../routing/route-helpers.ts';
 import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler.ts';
-import { fetchZorgnedDocumentLLV } from './jeugd/route-handlers.ts';
 import {
   fetchAanvragenRaw,
   fetchAllDocumentsRaw,
@@ -45,14 +44,14 @@ const jzdRouterProtected = createBFFRouter({ id: 'protected-jzd' });
 attachDocumentDownloadRoute(
   jzdRouterProtected,
   routes.protected.LLV_DOCUMENT_DOWNLOAD,
-  fetchZorgnedDocumentLLV
+  fetchZorgnedDocumentJZD('ZORGNED_LEERLINGENVERVOER')
 );
 
 // WMO Zorgned Doc download
 attachDocumentDownloadRoute(
   jzdRouterProtected,
   routes.protected.WMO_DOCUMENT_DOWNLOAD,
-  fetchZorgnedDocumentWMO
+  fetchZorgnedDocumentJZD('ZORGNED_JZD')
 );
 
 jzdRouterProtected.get(

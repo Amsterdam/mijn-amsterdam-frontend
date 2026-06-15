@@ -302,7 +302,7 @@ function getSteps(
         const RTM2ProcesSteps = aanvraag.procesAanvragen?.length
           ? aanvraag.procesAanvragen.map((procesAanvraag) => {
               const lineItemConfig =
-                procesAanvraag.procesAanvraagOmschrijving?.endsWith(
+                procesAanvraag.procesAanvraag?.omschrijving?.endsWith(
                   'Beëindigen RTM'
                 )
                   ? lineItemConfigs.eindeRecht

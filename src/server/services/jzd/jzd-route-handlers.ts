@@ -3,6 +3,8 @@ import type { Request, Response } from 'express';
 import {
   voorzieningDetailRequestInput,
   voorzieningenRequestInput,
+  ZORGNED_USER_KEYS,
+  type ZorgnedApiConfigKey,
 } from './jzd-service-config.ts';
 import {
   fetchMaApiVoorzieningById,
@@ -23,20 +25,21 @@ import type {
 } from '../zorgned/zorgned-service.ts';
 import { fetchDocument } from '../zorgned/zorgned-service.ts';
 
-export async function fetchZorgnedDocumentWMO(
-  authProfileAndToken: AuthProfileAndToken,
-  documentId: string
+export function fetchZorgnedDocumentJZD(
+  zorgnedApiConfigKey: ZorgnedApiConfigKey
 ) {
-  const response = fetchDocument(
-    authProfileAndToken.profile.id,
-    ZORGNED_JZD_API_CONFIG_KEY,
-    documentId
-  );
-  return response;
+  return async function fetchZorgnedDocument(
+    authProfileAndToken: AuthProfileAndToken,
+    documentId: string
+  ) {
+    const response = fetchDocument(
+      authProfileAndToken.profile.id,
+      zorgnedApiConfigKey,
+      documentId
+    );
+    return response;
+  };
 }
-
-// These are different users in the Zorgned API.
-const ZORGNED_USER_KEYS = ['ZORGNED_JZD', 'ZORGNED_LEERLINGENVERVOER'] as const;
 
 function sendBadRequestInvalidKey(res: Response) {
   return sendBadRequestInvalidInput(res, {

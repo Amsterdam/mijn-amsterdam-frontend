@@ -4,7 +4,7 @@ import {
   tableConfig,
   themaConfig,
 } from './Zorg-thema-config.ts';
-import type { WMOVoorzieningFrontend } from '../../../../server/services/jzd/wmo/wmo-types.ts';
+import type { JzdVoorzieningFrontend } from '../../../../server/services/jzd/jzd-types.ts';
 import { isError, isLoading } from '../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
@@ -13,7 +13,7 @@ import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
 export function useZorgThemaData() {
   const { WMO } = useAppStateGetter();
 
-  const voorzieningen = addLinkElementToProperty<WMOVoorzieningFrontend>(
+  const voorzieningen = addLinkElementToProperty<JzdVoorzieningFrontend>(
     WMO.content ?? [],
     'title',
     true

@@ -1,4 +1,11 @@
-import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
+import type {
+  ZaakAanvraagDetail,
+  GenericDocument,
+} from '../../../universal/types/App.types.ts';
+import type {
+  ProductSoortCode,
+  ZorgnedAanvraagTransformed,
+} from '../zorgned/zorgned-types.ts';
 
 export type WithMaApiProps = {
   maCategorie: string[];
@@ -34,4 +41,17 @@ export type JzdApiConfig<T extends object = ZorgnedAanvraagTransformed> = {
   assign: Prettify<Partial<WithMaApiPropsAssignments<T>>>;
   include: MatchConfig<T>;
   exclude?: MatchConfig<T>;
+};
+
+export type JzdVoorzieningFrontend = ZaakAanvraagDetail & {
+  dateDecision: string;
+  dateDecisionFormatted: string;
+  decision: string;
+  documents: GenericDocument[];
+  isActual: boolean; // Indicates if this item is designated Current or Previous
+  itemTypeCode: ProductSoortCode | null;
+  statusDate: string;
+  statusDateFormatted: string;
+  supplier: string | null; // Leverancier
+  disclaimer?: string;
 };

@@ -9,7 +9,7 @@ import type { AppStateBase } from '../../../universal/types/App.types.ts';
 import type { Kind } from '../brp/brp-types.ts';
 import { isAmsterdamAddress } from '../buurt/helpers.ts';
 import type { HLIRegelingFrontend } from '../hli/hli-regelingen-types.ts';
-import type { WMOVoorzieningFrontend } from '../jzd/wmo/wmo-types.ts';
+import type { JzdVoorzieningFrontend } from '../jzd/jzd-types.ts';
 import type { BBVergunningFrontend } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types.ts';
 import type { WpiRequestProcess } from '../wpi/wpi-types.ts';
 
@@ -121,7 +121,7 @@ export const hasBijstandsuitkering: TipsPredicateFN = (
 
 export const hasAOV: TipsPredicateFN = (appState) => {
   return !!appState.WMO?.content?.some(
-    (wmo: WMOVoorzieningFrontend) => wmo.isActual && wmo.itemTypeCode === 'AOV'
+    (wmo: JzdVoorzieningFrontend) => wmo.isActual && wmo.itemTypeCode === 'AOV'
   );
 };
 

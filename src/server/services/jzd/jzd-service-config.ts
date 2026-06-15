@@ -66,4 +66,11 @@ export const voorzieningenRequestInput = z.object({
 export const voorzieningDetailRequestInput = z.object({
   bsn: ZodValidators.BSN.nonoptional(),
   id: z.string().nonoptional(),
-});
+}); // These are different users in the Zorgned API.
+
+export const ZORGNED_USER_KEYS = [
+  'ZORGNED_JZD',
+  'ZORGNED_LEERLINGENVERVOER',
+] as const;
+
+export type ZorgnedApiConfigKey = (typeof ZORGNED_USER_KEYS)[number];

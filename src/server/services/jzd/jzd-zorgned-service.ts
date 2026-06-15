@@ -1,4 +1,7 @@
-import { featureToggle } from '../jzd-service-config.ts';
+import {
+  featureToggle,
+  type ZorgnedApiConfigKey,
+} from './jzd-service-config.ts';
 import {
   FAKE_DECISION_DOCUMENT_ID,
   getDecisionDocument,
@@ -6,37 +9,41 @@ import {
   isCancelled,
   isDocumentDecisionDateActive,
   isEindeGeldigheidVerstreken,
-} from './status-line-items/wmo-generic.ts';
+} from './wmo/status-line-items/wmo-generic.ts';
 import {
   DATE_END_NOT_OLDER_THAN,
   DOCUMENT_TITLE_BESLUIT_STARTS_WITH,
   ZORGNED_JZD_API_CONFIG_KEY,
   ZORGNED_JZD_REGELING_IDENTIFICATIE,
-} from './wmo-config.ts';
-import { PRODUCTS_WITH_DELIVERY } from './wmo-status-line-items.ts';
+} from './wmo/wmo-config.ts';
+import { PRODUCTS_WITH_DELIVERY } from './wmo/wmo-status-line-items.ts';
 import {
   apiSuccessResult,
   type ApiResponse,
-} from '../../../../universal/helpers/api.ts';
-import type { GenericDocument } from '../../../../universal/types/App.types.ts';
+} from '../../../universal/helpers/api.ts';
+import type { GenericDocument } from '../../../universal/types/App.types.ts';
 import {
   fetchAanvragen,
   fetchCasusAanvragen,
-} from '../../zorgned/zorgned-service.ts';
-import type { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
-import { type BSN } from '../../zorgned/zorgned-types.ts';
+} from '../zorgned/zorgned-service.ts';
+import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
+import { type BSN } from '../zorgned/zorgned-types.ts';
 
 function isProductWithDelivery(
-  wmoProduct: Pick<
+  jzdProduct: Pick<
     ZorgnedAanvraagTransformed,
     'productsoortCode' | 'leveringsVorm'
   >
 ) {
-  const leveringsVorm = wmoProduct.leveringsVorm;
-  const productsoortCode = wmoProduct.productsoortCode;
+  const leveringsVorm = jzdProduct.leveringsVorm;
+  const productsoortCode = jzdProduct.productsoortCode;
 
   // This check matches the products that should / can / will receive a delivery of goods / service / product(eventually).
-  if (leveringsVorm in PRODUCTS_WITH_DELIVERY) {
+  if (
+    leveringsVorm &&
+    productsoortCode &&
+    leveringsVorm in PRODUCTS_WITH_DELIVERY
+  ) {
     return PRODUCTS_WITH_DELIVERY[leveringsVorm].includes(productsoortCode);
   }
 
@@ -50,6 +57,7 @@ function getFakeDecisionDocuments(
     isDocumentDecisionDateActive(aanvraagTransformed.datumAanvraag) &&
     !getDecisionDocument(aanvraagTransformed.documenten) &&
     aanvraagTransformed.resultaat === 'toegewezen' &&
+    aanvraagTransformed.datumBesluit &&
     (aanvraagTransformed.datumBeginLevering ||
       aanvraagTransformed.datumEindeGeldigheid ||
       aanvraagTransformed.datumEindeLevering)
@@ -106,21 +114,24 @@ export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
   return isActueel;
 }
 
-export async function fetchZorgnedAanvragenWMO(
-  bsn: BSN
+export async function fetchZorgnedAanvragenJZD(
+  bsn: BSN,
+  zorgnedApiConfigKey: ZorgnedApiConfigKey = ZORGNED_JZD_API_CONFIG_KEY,
+  regeling: string = ZORGNED_JZD_REGELING_IDENTIFICATIE
 ): Promise<ApiResponse<ZorgnedAanvraagTransformed[]>> {
   const requestBodyParams = {
     maxeinddatum: DATE_END_NOT_OLDER_THAN,
-    regeling: ZORGNED_JZD_REGELING_IDENTIFICATIE,
+    regeling,
   };
 
-  const fetchZorgnedAanvragen = featureToggle.service.fetchCasusAanvragen
-    .isEnabled
-    ? fetchCasusAanvragen
-    : fetchAanvragen;
+  const fetchZorgnedAanvragen =
+    featureToggle.service.fetchCasusAanvragen.isEnabled &&
+    zorgnedApiConfigKey === ZORGNED_JZD_API_CONFIG_KEY
+      ? fetchCasusAanvragen
+      : fetchAanvragen;
 
   const aanvragenResponse = await fetchZorgnedAanvragen(bsn, {
-    zorgnedApiConfigKey: ZORGNED_JZD_API_CONFIG_KEY,
+    zorgnedApiConfigKey,
     requestBodyParams,
   });
 
@@ -131,7 +142,8 @@ export async function fetchZorgnedAanvragenWMO(
         return !isCancelled(aanvraagTransformed);
       })
       ?.filter((aanvraagTransformed) => {
-        return isAfterWCAGValidDocumentsDate(aanvraagTransformed.datumBesluit)
+        return aanvraagTransformed.datumBesluit &&
+          isAfterWCAGValidDocumentsDate(aanvraagTransformed.datumBesluit)
           ? !!aanvraagTransformed.resultaat
           : true;
       })
@@ -153,7 +165,7 @@ export async function fetchZorgnedAanvragenWMO(
 }
 
 export const forTesting = {
-  fetchZorgnedAanvragenWMO,
+  fetchZorgnedAanvragenWMO: fetchZorgnedAanvragenJZD,
   getFakeDecisionDocuments,
   isActueel,
   isProductWithDelivery,

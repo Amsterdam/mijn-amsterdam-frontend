@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router';
 
-import type { WMOVoorzieningFrontend } from '../../../../server/services/jzd/wmo/wmo-types.ts';
+import type { JzdVoorzieningFrontend } from '../../../../server/services/jzd/jzd-types.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import type {
@@ -69,7 +69,7 @@ export const listPageParamKind = {
 type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
-const displayProps: DisplayProps<WMOVoorzieningFrontend> = {
+const displayProps: DisplayProps<JzdVoorzieningFrontend> = {
   props: {
     detailLinkComponent: 'Naam',
     displayStatus: 'Status',
@@ -89,7 +89,7 @@ export const listPageTitle = {
 export const tableConfig = {
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
-    filter: (regeling: WMOVoorzieningFrontend) => regeling.isActual,
+    filter: (regeling: JzdVoorzieningFrontend) => regeling.isActual,
     displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
     textNoContent: 'U heeft geen huidige voorzieningen.',
@@ -100,7 +100,7 @@ export const tableConfig = {
   },
   [listPageParamKind.historic]: {
     title: listPageTitle[listPageParamKind.historic],
-    filter: (regeling: WMOVoorzieningFrontend) => !regeling.isActual,
+    filter: (regeling: JzdVoorzieningFrontend) => !regeling.isActual,
     displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
     textNoContent:

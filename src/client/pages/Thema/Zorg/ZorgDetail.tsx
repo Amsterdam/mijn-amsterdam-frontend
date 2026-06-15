@@ -3,7 +3,7 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import { useZorgDetailData } from './useZorgDetailData.hook.ts';
 import { isVoorzieningActieAvailable } from './Zorg-helpers.ts';
 import { themaConfig } from './Zorg-thema-config.ts';
-import type { WMOVoorzieningFrontend } from '../../../../server/services/jzd/wmo/wmo-types.ts';
+import type { JzdVoorzieningFrontend } from '../../../../server/services/jzd/jzd-types.ts';
 import { ErrorAlert } from '../../../components/Alert/Alert.tsx';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import { DocumentListV2 } from '../../../components/DocumentList/DocumentListV2.tsx';
@@ -13,7 +13,7 @@ import { ThemaDetailPagina } from '../../../components/Thema/ThemaDetailPagina.t
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 type WMODetailContentProps = {
-  voorziening: WMOVoorzieningFrontend;
+  voorziening: JzdVoorzieningFrontend;
 };
 
 function WMODetailContent({ voorziening }: WMODetailContentProps) {

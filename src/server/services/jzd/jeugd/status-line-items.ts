@@ -8,7 +8,7 @@ import {
   MEER_INFORMATIE,
 } from '../wmo/status-line-items/wmo-generic.ts';
 
-export const jeugdStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
+export const llvStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   {
     productgroep: 'leerlingenvervoer',
     productIdentificatie: [

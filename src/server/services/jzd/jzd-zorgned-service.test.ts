@@ -1,11 +1,11 @@
 import Mockdate from 'mockdate';
 
-import { fetchZorgnedAanvragenWMO, forTesting } from './wmo-zorgned-service.ts';
-import { remoteApiHost } from '../../../../testing/setup.ts';
-import { remoteApi } from '../../../../testing/utils.ts';
-import * as request from '../../../helpers/source-api-request.ts';
-import type { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
-import { ZORGNED_GEMEENTE_CODE } from '../../zorgned/zorgned-types.ts';
+import { fetchZorgnedAanvragenJZD, forTesting } from './jzd-zorgned-service.ts';
+import { remoteApiHost } from '../../../testing/setup.ts';
+import { remoteApi } from '../../../testing/utils.ts';
+import * as request from '../../helpers/source-api-request.ts';
+import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
+import { ZORGNED_GEMEENTE_CODE } from '../zorgned/zorgned-types.ts';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -104,7 +104,7 @@ describe('wmo-zorgned-service', () => {
   it('should fetch voorzieningen', async () => {
     remoteApi.post('/zorgned/aanvragen').reply(200, []);
     const BSN = '123456789';
-    const result = await fetchZorgnedAanvragenWMO(BSN);
+    const result = await fetchZorgnedAanvragenJZD(BSN);
 
     expect(requestData).toHaveBeenCalledWith({
       url: `${remoteApiHost}/zorgned/aanvragen`,
@@ -178,7 +178,7 @@ describe('wmo-zorgned-service', () => {
       },
     });
 
-    const response = await fetchZorgnedAanvragenWMO('123456789');
+    const response = await fetchZorgnedAanvragenJZD('123456789');
 
     expect(response.content?.length).toBe(2);
     expect(response.content?.[1].beschikkingNummer).toBe('not-cancellable');

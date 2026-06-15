@@ -1,6 +1,5 @@
 import type { Entries } from 'type-fest';
 
-import { fetchZorgnedAanvragenJeugd } from './jeugd/jeugd.ts';
 import type {
   WithMaApiProps,
   JzdApiConfig,
@@ -10,9 +9,9 @@ import type {
 import { type FetchWmoVoorzieningenApiOptions } from './jzd-voorzieningen-api-config.ts';
 import {
   PICK_VOORZIENING_KEYS,
-  jzdVoorzieningenApiConfig,
+  wmoVoorzieningenApiConfig,
 } from './jzd-voorzieningen-api-config.ts';
-import { fetchZorgnedAanvragenWMO } from './wmo/wmo-zorgned-service.ts';
+import { fetchZorgnedAanvragenJZD } from './jzd-zorgned-service.ts';
 import {
   apiErrorResult,
   type ApiResponse,
@@ -25,7 +24,7 @@ import type {
   ZorgnedAanvraagTransformed,
 } from '../zorgned/zorgned-types.ts';
 
-function isMaApiPropertyConfigMatch<T extends ZorgnedAanvraagTransformed>(
+function isMaApiPropertyConfigMatch<T extends object>(
   voorziening: T,
   actionConfig: JzdApiConfig<T>,
   matchType: 'include' | 'exclude' = 'include'
@@ -109,12 +108,36 @@ function serviceErrorResult(
   );
 }
 
-export function transformVoorzieningForFrontendWithMaApiProps(
-  voorzieningen: ZorgnedAanvraagTransformed[],
+export async function fetchMaApiVoorzieningen(
+  bsn: BSN,
   options?: FetchWmoVoorzieningenApiOptions,
-  maVoorzieningenApiConfig: JzdApiConfig[] = jzdVoorzieningenApiConfig
-): ZorgnedAanvraagTransformedWithMaApiProps[] {
-  const voorzieningen_ = voorzieningen
+  maVoorzieningenApiConfig: JzdApiConfig[] = wmoVoorzieningenApiConfig
+): Promise<ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps[]>> {
+  const wmoVoorzieningenResponse = await fetchZorgnedAanvragenJZD(
+    bsn,
+    'ZORGNED_JZD'
+  );
+  const jeugdVoorzieningenResponse = await fetchZorgnedAanvragenJZD(
+    bsn,
+    'ZORGNED_LEERLINGENVERVOER'
+  );
+
+  if (
+    wmoVoorzieningenResponse.status !== 'OK' ||
+    jeugdVoorzieningenResponse.status !== 'OK'
+  ) {
+    return serviceErrorResult(
+      wmoVoorzieningenResponse,
+      jeugdVoorzieningenResponse
+    );
+  }
+
+  const responseContentCombined = [
+    ...(wmoVoorzieningenResponse.content ?? []),
+    ...(jeugdVoorzieningenResponse.content ?? []),
+  ];
+
+  const voorzieningen = responseContentCombined
     .map((voorziening) => {
       return addMaApiPropsToVoorziening(maVoorzieningenApiConfig, voorziening);
     })
@@ -142,38 +165,6 @@ export function transformVoorzieningForFrontendWithMaApiProps(
     })
     .toSorted(dateSort('datumBesluit', 'desc'));
 
-  return voorzieningen_;
-}
-
-export async function fetchMaApiVoorzieningen(
-  bsn: BSN,
-  options?: FetchWmoVoorzieningenApiOptions,
-  maVoorzieningenApiConfig: JzdApiConfig[] = jzdVoorzieningenApiConfig
-): Promise<ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps[]>> {
-  const wmoVoorzieningenResponse = await fetchZorgnedAanvragenWMO(bsn);
-  const jeugdVoorzieningenResponse = await fetchZorgnedAanvragenJeugd(bsn);
-
-  if (
-    wmoVoorzieningenResponse.status !== 'OK' ||
-    jeugdVoorzieningenResponse.status !== 'OK'
-  ) {
-    return serviceErrorResult(
-      wmoVoorzieningenResponse,
-      jeugdVoorzieningenResponse
-    );
-  }
-
-  const responseContentCombined = [
-    ...(wmoVoorzieningenResponse.content ?? []),
-    ...(jeugdVoorzieningenResponse.content ?? []),
-  ];
-
-  const voorzieningen = transformVoorzieningForFrontendWithMaApiProps(
-    responseContentCombined,
-    options,
-    maVoorzieningenApiConfig
-  );
-
   return apiSuccessResult(
     voorzieningen.map((voorziening) => {
       return pick(voorziening, PICK_VOORZIENING_KEYS);
@@ -184,10 +175,16 @@ export async function fetchMaApiVoorzieningen(
 export async function fetchMaApiVoorzieningById(
   bsn: BSN,
   id: ZorgnedAanvraagTransformedWithMaApiProps['id'],
-  maVoorzieningenApiConfig: JzdApiConfig[] = jzdVoorzieningenApiConfig
+  maVoorzieningenApiConfig: JzdApiConfig[] = wmoVoorzieningenApiConfig
 ): Promise<ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps>> {
-  const wmoVoorzieningenResponse = await fetchZorgnedAanvragenWMO(bsn);
-  const jeugdVoorzieningenResponse = await fetchZorgnedAanvragenJeugd(bsn);
+  const wmoVoorzieningenResponse = await fetchZorgnedAanvragenJZD(
+    bsn,
+    'ZORGNED_JZD'
+  );
+  const jeugdVoorzieningenResponse = await fetchZorgnedAanvragenJZD(
+    bsn,
+    'ZORGNED_LEERLINGENVERVOER'
+  );
 
   if (
     wmoVoorzieningenResponse.status !== 'OK' ||

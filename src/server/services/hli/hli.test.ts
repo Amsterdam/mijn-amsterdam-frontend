@@ -254,7 +254,6 @@ describe('HLI', () => {
       productsoortCode: '',
       bsnAanvrager: '123456789',
       beschiktProductIdentificatie: 'bpi-123',
-      procesAanvraagOmschrijving: null,
       beschikkingNummer: null,
     };
 
@@ -291,7 +290,6 @@ describe('HLI', () => {
         datumIngangGeldigheid: '2023-01-01',
         datumEindeGeldigheid: '2023-12-31',
         resultaat: 'toegewezen',
-        procesAanvraagOmschrijving: null,
         documenten: [],
         betrokkenPersonen: [
           {
@@ -378,7 +376,6 @@ describe('HLI', () => {
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
-        procesAanvraagOmschrijving: null,
         beschikkingNummer: null,
       };
 
@@ -409,7 +406,6 @@ describe('HLI', () => {
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
-        procesAanvraagOmschrijving: null,
         beschikkingNummer: null,
       };
 
@@ -440,7 +436,6 @@ describe('HLI', () => {
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
-        procesAanvraagOmschrijving: null,
         beschikkingNummer: null,
       };
 
@@ -471,7 +466,6 @@ describe('HLI', () => {
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
-        procesAanvraagOmschrijving: null,
         beschikkingNummer: null,
       };
 
@@ -502,7 +496,6 @@ describe('HLI', () => {
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
-        procesAanvraagOmschrijving: null,
         beschikkingNummer: null,
       };
 

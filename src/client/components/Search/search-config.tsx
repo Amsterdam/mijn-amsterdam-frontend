@@ -15,7 +15,7 @@ import type {
 import type { ErfpachtZaakExcerptFrontend } from '../../../server/services/erfpacht/erfpacht-zaken-types.ts';
 import type { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types.ts';
 import type { HorecaVergunningFrontend } from '../../../server/services/horeca/decos-zaken.ts';
-import type { WMOVoorzieningFrontend } from '../../../server/services/jzd/wmo/wmo-types.ts';
+import type { JzdVoorzieningFrontend } from '../../../server/services/jzd/jzd-types.ts';
 import type { KlachtFrontend } from '../../../server/services/klachten/types.ts';
 import type {
   Krefia,
@@ -353,11 +353,11 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     stateKey: 'WMO',
-    generateKeywords: (wmoItem: WMOVoorzieningFrontend): string[] =>
+    generateKeywords: (wmoItem: JzdVoorzieningFrontend): string[] =>
       uniqueArray(
         wmoItem.steps.flatMap((step) => [step.description, step.status])
       ),
-    displayTitle: (wmoItem: WMOVoorzieningFrontend) => {
+    displayTitle: (wmoItem: JzdVoorzieningFrontend) => {
       return (term: string) => {
         const segments = [wmoItem.title];
         if (wmoItem.supplier) {
