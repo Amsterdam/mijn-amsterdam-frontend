@@ -51,7 +51,7 @@ attachDocumentDownloadRoute(
 attachDocumentDownloadRoute(
   jzdRouterProtected,
   routes.protected.WMO_DOCUMENT_DOWNLOAD,
-  fetchZorgnedDocumentJZD('ZORGNED_JZD')
+  fetchZorgnedDocumentJZD('ZORGNED_WMO')
 );
 
 jzdRouterProtected.get(

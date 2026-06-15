@@ -8,7 +8,6 @@ import type {
   ZorgnedAanvraagTransformed,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedAanvragenServiceOptions,
-  ZorgnedApiConfigKey,
   ZorgnedDocument,
   ZorgnedDocumentResponseSource,
   ZorgnedPerson,
@@ -40,7 +39,8 @@ import {
   uniqueArray,
 } from '../../../universal/helpers/utils.ts';
 import type { GenericDocument } from '../../../universal/types/App.types.ts';
-import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import type { DataRequestConfig } from '../../config/source-api.ts';
+import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import {
   isSuccessStatus,
   requestData,
@@ -60,21 +60,25 @@ async function fetchZorgnedByBSN<S, T>(
     burgerservicenummer: bsn,
     gemeentecode: ZORGNED_GEMEENTE_CODE,
   };
+  if (!options.dataRequestConfig) {
+    console.error(new Error('waaahh'));
+  }
+  const url = options.dataRequestConfig.url + options.path;
 
-  const dataRequestConfig = getApiConfig(options.zorgnedApiConfigKey);
-  const url = dataRequestConfig.url + options.path;
-
-  const dataRequestConfig_ = {
-    ...dataRequestConfig,
+  const dataRequestConfigLocal: DataRequestConfig = {
     url,
     data: postBody,
     transformResponse: options.transform,
     validateStatus: options.validateStatus,
   };
-
   if (typeof options.useCache !== 'undefined') {
-    dataRequestConfig_.enableCache = options.useCache;
+    dataRequestConfigLocal.enableCache = options.useCache;
   }
+
+  const dataRequestConfig_ = getCustomApiConfig(
+    options.dataRequestConfig,
+    dataRequestConfigLocal
+  );
 
   const zorgnedResponse = await requestData<T>(dataRequestConfig_);
 
@@ -269,7 +273,10 @@ export function transformZorgnedAanvragen(
           aanvragenTransformed.push(aanvraagTransformed);
         }
       }
-    } else {
+    } else if (
+      aanvraagSource.procesAanvraag &&
+      aanvraagSource.procesAanvraag.acties?.length
+    ) {
       const aanvraagTransformed = transformZorgnedAanvraag(aanvraagSource);
       aanvragenTransformed.push(aanvraagTransformed);
     }
@@ -410,7 +417,7 @@ export async function fetchAanvragenRaw(
 
 export async function fetchAndMergeRelatedPersons(
   bsnAanvrager: BSN,
-  zorgnedApiConfigKey: ZorgnedApiConfigKey,
+  dataRequestConfig: DataRequestConfig,
   zorgnedAanvragenResponse: ApiSuccessResponse<ZorgnedAanvraagTransformed[]>,
   partnernaam: string | null
 ): Promise<ApiSuccessResponse<ZorgnedAanvraagWithRelatedPersonsTransformed[]>> {
@@ -424,7 +431,7 @@ export async function fetchAndMergeRelatedPersons(
 
   const relatedPersonsResponse = await fetchRelatedPersons(
     [...bsns, bsnAanvrager],
-    zorgnedApiConfigKey
+    dataRequestConfig
   );
 
   const personsByUserId = relatedPersonsResponse.content?.reduce(
@@ -480,12 +487,12 @@ export async function fetchAanvragenWithRelatedPersons(
   if (zorgnedAanvragenResponse.status === 'OK') {
     const persoonsgegevensNAW = await fetchPersoonsgegevensNAW(
       bsnAanvrager,
-      options.zorgnedApiConfigKey
+      options.dataRequestConfig
     );
 
     return fetchAndMergeRelatedPersons(
       bsnAanvrager,
-      options.zorgnedApiConfigKey,
+      options.dataRequestConfig,
       zorgnedAanvragenResponse,
       persoonsgegevensNAW.content?.persoon?.partnernaam ?? null
     );
@@ -518,7 +525,7 @@ function transformZorgnedDocumenten(
 
 export async function fetchDocument(
   bsn: BSN,
-  zorgnedApiConfigKey: ZorgnedApiConfigKey,
+  dataRequestConfig: DataRequestConfig,
   documentId: ZorgnedDocument['documentidentificatie']
 ) {
   const requestBodyParams = {
@@ -527,7 +534,7 @@ export async function fetchDocument(
 
   return fetchZorgnedByBSN(bsn, {
     path: '/document',
-    zorgnedApiConfigKey,
+    dataRequestConfig,
     transform: transformZorgnedDocumenten,
     requestBodyParams,
   });
@@ -560,10 +567,10 @@ function transformZorgnedPersonResponse(
 
 export async function fetchRelatedPersons(
   bsn: BSN[],
-  zorgnedApiConfigKey: ZorgnedApiConfigKey
+  dataRequestConfig: DataRequestConfig
 ) {
   const requests = bsn.map((userID) => {
-    return fetchPersoonsgegevensNAW(userID, zorgnedApiConfigKey);
+    return fetchPersoonsgegevensNAW(userID, dataRequestConfig);
   });
 
   const results = await Promise.allSettled(requests);
@@ -589,13 +596,13 @@ export async function fetchRelatedPersons(
 
 export async function fetchPersoonsgegevensNAW(
   bsn: BSN,
-  zorgnedApiConfigKey: ZorgnedApiConfigKey
+  dataRequestConfig: DataRequestConfig
 ): Promise<ApiResponse<ZorgnedPersoonsgegevensNAWResponse | null>> {
   return fetchZorgnedByBSN<
     ZorgnedPersoonsgegevensNAWResponse,
     ZorgnedPersoonsgegevensNAWResponse | null
   >(bsn, {
-    zorgnedApiConfigKey,
+    dataRequestConfig,
     path: '/persoonsgegevensNAW',
     validateStatus: (statusCode) =>
       // 404 means there is no record available in the ZORGNED api for the requested BSN

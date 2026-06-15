@@ -1,5 +1,6 @@
 import {
   featureToggle,
+  jzdDataRequestConfigs,
   type ZorgnedApiConfigKey,
 } from './jzd-service-config.ts';
 import {
@@ -13,8 +14,8 @@ import {
 import {
   DATE_END_NOT_OLDER_THAN,
   DOCUMENT_TITLE_BESLUIT_STARTS_WITH,
-  ZORGNED_JZD_API_CONFIG_KEY,
-  ZORGNED_JZD_REGELING_IDENTIFICATIE,
+  ZORGNED_WMO_API_CONFIG_KEY,
+  ZORGNED_WMO_REGELING_IDENTIFICATIE,
 } from './wmo/wmo-config.ts';
 import { PRODUCTS_WITH_DELIVERY } from './wmo/wmo-status-line-items.ts';
 import {
@@ -22,6 +23,7 @@ import {
   type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import type { GenericDocument } from '../../../universal/types/App.types.ts';
+import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import {
   fetchAanvragen,
   fetchCasusAanvragen,
@@ -116,8 +118,8 @@ export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
 
 export async function fetchZorgnedAanvragenJZD(
   bsn: BSN,
-  zorgnedApiConfigKey: ZorgnedApiConfigKey = ZORGNED_JZD_API_CONFIG_KEY,
-  regeling: string = ZORGNED_JZD_REGELING_IDENTIFICATIE
+  zorgnedApiConfigKey: ZorgnedApiConfigKey = ZORGNED_WMO_API_CONFIG_KEY,
+  regeling: string = ZORGNED_WMO_REGELING_IDENTIFICATIE
 ): Promise<ApiResponse<ZorgnedAanvraagTransformed[]>> {
   const requestBodyParams = {
     maxeinddatum: DATE_END_NOT_OLDER_THAN,
@@ -126,12 +128,14 @@ export async function fetchZorgnedAanvragenJZD(
 
   const fetchZorgnedAanvragen =
     featureToggle.service.fetchCasusAanvragen.isEnabled &&
-    zorgnedApiConfigKey === ZORGNED_JZD_API_CONFIG_KEY
+    zorgnedApiConfigKey === ZORGNED_WMO_API_CONFIG_KEY
       ? fetchCasusAanvragen
       : fetchAanvragen;
 
   const aanvragenResponse = await fetchZorgnedAanvragen(bsn, {
-    zorgnedApiConfigKey,
+    dataRequestConfig: getCustomApiConfig(
+      jzdDataRequestConfigs[zorgnedApiConfigKey]
+    ),
     requestBodyParams,
   });
 

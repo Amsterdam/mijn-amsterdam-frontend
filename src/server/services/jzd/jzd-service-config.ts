@@ -1,6 +1,17 @@
 import z from 'zod';
 
 import { isEnabled } from '../../config/azure-appconfiguration.ts';
+import https from 'node:https';
+
+import z from 'zod';
+
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
+import {
+  type DataRequestConfig,
+  httpsAgentConfigBFF,
+} from '../../config/source-api.ts';
+import { getCert } from '../../helpers/cert.ts';
+import { getFromEnv } from '../../helpers/env.ts';
 import { ZodValidators } from '../../helpers/validation.ts';
 
 export const featureToggle = {
@@ -69,8 +80,41 @@ export const voorzieningDetailRequestInput = z.object({
 }); // These are different users in the Zorgned API.
 
 export const ZORGNED_USER_KEYS = [
-  'ZORGNED_JZD',
+  'ZORGNED_WMO',
   'ZORGNED_LEERLINGENVERVOER',
 ] as const;
 
 export type ZorgnedApiConfigKey = (typeof ZORGNED_USER_KEYS)[number];
+
+const apiRequestConfigWMO: DataRequestConfig = {
+  method: 'post',
+  url: `${getFromEnv('BFF_ZORGNED_API_BASE_URL')}`,
+  headers: {
+    Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
+    'Content-type': 'application/json; charset=utf-8',
+    'x-cache-key-supplement': 'WMO',
+  },
+  httpsAgent: new https.Agent(httpsAgentConfigBFF),
+};
+
+const apiRequestConfigLLV: DataRequestConfig = {
+  method: 'post',
+  url: `${getFromEnv('BFF_ZORGNED_API_BASE_URL')}`,
+  headers: {
+    Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
+    'Content-type': 'application/json; charset=utf-8',
+    'x-cache-key-supplement': 'LLV',
+  },
+  httpsAgent: new https.Agent({
+    cert: getCert('BFF_ZORGNED_LEERLINGENVERVOER_CERT'),
+    key: getCert('BFF_ZORGNED_LEERLINGENVERVOER_KEY'),
+  }),
+};
+
+export const jzdDataRequestConfigs: Record<
+  ZorgnedApiConfigKey,
+  DataRequestConfig
+> = {
+  ZORGNED_WMO: apiRequestConfigWMO,
+  ZORGNED_LEERLINGENVERVOER: apiRequestConfigLLV,
+};

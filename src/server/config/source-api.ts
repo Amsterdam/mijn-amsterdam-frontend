@@ -10,14 +10,13 @@ import {
 } from './app.ts';
 import { themaConfig as themaConfigAfis } from '../../client/pages/Thema/Afis/Afis-thema-config.ts';
 import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config.ts';
-import { themaConfig as themaConfigJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
+import { themaConfig as themaConfigErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
 import { themaConfig as themaConfigToeristischeVerhuur } from '../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
 import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
 import { getCert } from '../helpers/cert.ts';
 import { getFromEnv } from '../helpers/env.ts';
 import { getHostNameFromUrl } from '../helpers/source-api-helpers.ts';
-import { featureToggle as featureToggleHLI } from '../services/hli/hli-service-config.ts';
 
 const RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS = ONE_HOUR_MS;
 export const FORCE_RENEW_CACHE_TTL_MS = 1;
@@ -153,44 +152,6 @@ const ApiConfig_ = {
       apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
     },
     url: `${getFromEnv('BFF_POM_API_BASE_URL')}`,
-  },
-  ZORGNED_JZD: {
-    method: 'post',
-    url: `${getFromEnv('BFF_ZORGNED_API_BASE_URL')}`,
-    headers: {
-      Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
-      'Content-type': 'application/json; charset=utf-8',
-      'x-cache-key-supplement': 'JZD',
-    },
-    httpsAgent: httpsAgentBFF,
-  },
-  ZORGNED_AV: {
-    method: 'post',
-    url: `${getFromEnv('BFF_ZORGNED_API_BASE_URL')}`,
-    headers: {
-      Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
-      'Content-type': 'application/json; charset=utf-8',
-      'x-cache-key-supplement': 'AV',
-    },
-    httpsAgent: new https.Agent({
-      cert: getCert('BFF_ZORGNED_AV_CERT'),
-      key: getCert('BFF_ZORGNED_AV_KEY'),
-    }),
-    postponeFetch: !featureToggleHLI.service.enabledAV,
-  },
-  ZORGNED_LEERLINGENVERVOER: {
-    method: 'post',
-    url: `${getFromEnv('BFF_ZORGNED_API_BASE_URL')}`,
-    headers: {
-      Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
-      'Content-type': 'application/json; charset=utf-8',
-      'x-cache-key-supplement': 'LLV',
-    },
-    httpsAgent: new https.Agent({
-      cert: getCert('BFF_ZORGNED_LEERLINGENVERVOER_CERT'),
-      key: getCert('BFF_ZORGNED_LEERLINGENVERVOER_KEY'),
-    }),
-    postponeFetch: !themaConfigJeugd.featureToggle.active,
   },
   GPASS: {
     url: `${getFromEnv('BFF_GPASS_API_BASE_URL')}`,

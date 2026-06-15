@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 
 import {
+  jzdDataRequestConfigs,
   voorzieningDetailRequestInput,
   voorzieningenRequestInput,
   ZORGNED_USER_KEYS,
@@ -10,9 +11,10 @@ import {
   fetchMaApiVoorzieningById,
   fetchMaApiVoorzieningen,
 } from './jzd-voorzieningen-api-service.ts';
-import { ZORGNED_JZD_API_CONFIG_KEY } from './wmo/wmo-config.ts';
+import { ZORGNED_WMO_API_CONFIG_KEY } from './wmo/wmo-config.ts';
 import { omit } from '../../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import {
   sendResponse,
   sendBadRequestInvalidInput,
@@ -34,7 +36,7 @@ export function fetchZorgnedDocumentJZD(
   ) {
     const response = fetchDocument(
       authProfileAndToken.profile.id,
-      zorgnedApiConfigKey,
+      getCustomApiConfig(jzdDataRequestConfigs[zorgnedApiConfigKey]),
       documentId
     );
     return response;
@@ -58,14 +60,14 @@ export function sendZorgnedResponseRAW(
     }>,
     res: ResponseAuthenticated
   ) {
-    const key = req.query.key || ZORGNED_JZD_API_CONFIG_KEY;
+    const key = req.query.key || ZORGNED_WMO_API_CONFIG_KEY;
 
     if (!ZORGNED_USER_KEYS.includes(key)) {
       return sendBadRequestInvalidKey(res);
     }
 
     const response = await service(res.locals.userID, {
-      zorgnedApiConfigKey: key,
+      dataRequestConfig: getCustomApiConfig(jzdDataRequestConfigs[key]),
     });
 
     return sendResponse(res, response);

@@ -1,5 +1,6 @@
 import type { GenericDocument } from '../../../universal/types/App.types.ts';
 import type { AuthProfile } from '../../auth/auth-types.ts';
+import type { DataRequestConfig } from '../../config/source-api.ts';
 import { GEMEENTE_CODE_AMSTERDAM } from '../brp/brp-config.ts';
 
 export const ZORGNED_GEMEENTE_CODE = GEMEENTE_CODE_AMSTERDAM;
@@ -300,12 +301,12 @@ export interface ZorgnedPerson {
 }
 
 export type ZorgnedApiConfigKey =
-  | 'ZORGNED_JZD'
+  | 'ZORGNED_WMO'
   | 'ZORGNED_AV'
   | 'ZORGNED_LEERLINGENVERVOER';
 
 export interface ZorgnedAanvragenServiceOptions {
-  zorgnedApiConfigKey: ZorgnedApiConfigKey;
+  dataRequestConfig: DataRequestConfig;
   requestBodyParams?: Record<string, string>;
 }
 

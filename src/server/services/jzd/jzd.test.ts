@@ -2,23 +2,19 @@ import Mockdate from 'mockdate';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 import { routes } from './jzd-service-config.ts';
-import { fetchJzd, forTesting } from './jzd.ts';
+import { forTesting } from './jzd.ts';
 import type { HulpmiddelenDisclaimerConfig } from './wmo/status-line-items/wmo-hulpmiddelen.ts';
 import { getHulpmiddelenDisclaimer } from './wmo/status-line-items/wmo-hulpmiddelen.ts';
-import ZORGNED_AANVRAGEN_WMO from '../../../mocks-server/fixtures/zorgned-jzd-aanvragen.json' with { type: 'json' };
+import ZORGNED_AANVRAGEN_WMO from '../../../mocks-server/fixtures/zorgned-wmo-aanvragen.json' with { type: 'json' };
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import { jsonCopy } from '../../../universal/helpers/utils.ts';
 import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
+import { wmoStatusLineItemsConfig } from './wmo/wmo-status-line-items.ts';
 
-vi.mock(
-  '../../../../server/helpers/encrypt-decrypt',
-  async (importOriginal) => ({
-    ...((await importOriginal()) as object),
-    encryptSessionIdWithRouteIdParam: vi
-      .fn()
-      .mockReturnValue('123-123-123-123'),
-  })
-);
+vi.mock('../../helpers/encrypt-decrypt', async (importOriginal) => ({
+  ...((await importOriginal()) as object),
+  encryptSessionIdWithRouteIdParam: vi.fn().mockReturnValue('123-123-123-123'),
+}));
 
 describe('Transform api items', () => {
   beforeEach(() => {
@@ -37,10 +33,12 @@ describe('Transform api items', () => {
     remoteApi.post('/zorgned/aanvragen').reply(200, ZORGNED_AANVRAGEN_WMO);
 
     expect(
-      await fetchJzd(
+      await forTesting.fetchJzd(
         getAuthProfileAndToken(),
-        'ZORGNED_JZD',
+        'ZORGNED_WMO',
         routes.protected.WMO_DOCUMENT_DOWNLOAD,
+        '/zorg-en-ondersteuning/voorzieningen/:voorziening/:id',
+        wmoStatusLineItemsConfig,
         'WMO'
       )
     ).toMatchSnapshot();

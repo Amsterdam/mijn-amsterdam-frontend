@@ -1,4 +1,5 @@
 import { generatePath } from 'react-router';
+import slug from 'slugme';
 
 import { routes, type ZorgnedApiConfigKey } from './jzd-service-config.ts';
 import { type JzdVoorzieningFrontend } from './jzd-types.ts';
@@ -81,6 +82,7 @@ function transformVoorzieningForFrontend(
   const id = aanvraag.prettyID;
 
   const route = generatePath(frontendDetailPageRoute, {
+    voorziening: slug(aanvraag.titel ?? ''),
     id,
   });
 
@@ -184,7 +186,7 @@ export async function fetchWmo(
 ): Promise<ApiResponse<JzdVoorzieningFrontend[]>> {
   return fetchJzd(
     authProfileAndToken,
-    'ZORGNED_JZD',
+    'ZORGNED_WMO',
     routes.protected.WMO_DOCUMENT_DOWNLOAD,
     themaConfigZorg.detailPage.route.path,
     wmoStatusLineItemsConfig,

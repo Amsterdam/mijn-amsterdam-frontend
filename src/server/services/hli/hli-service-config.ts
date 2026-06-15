@@ -1,3 +1,9 @@
+import https from 'https';
+
+import type { DataRequestConfig } from '../../config/source-api.ts';
+import { getCert } from '../../helpers/cert.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+
 export const featureToggle = {
   router: {
     protected: {
@@ -28,3 +34,17 @@ export const routes = {
 };
 
 export const ZORGNED_AV_API_CONFIG_KEY = 'ZORGNED_AV';
+
+export const dataRequestConfigAV: DataRequestConfig = {
+  method: 'post',
+  url: `${getFromEnv('BFF_ZORGNED_API_BASE_URL')}`,
+  headers: {
+    Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
+    'Content-type': 'application/json; charset=utf-8',
+    'x-cache-key-supplement': 'AV',
+  },
+  httpsAgent: new https.Agent({
+    cert: getCert('BFF_ZORGNED_AV_CERT'),
+    key: getCert('BFF_ZORGNED_AV_KEY'),
+  }),
+};

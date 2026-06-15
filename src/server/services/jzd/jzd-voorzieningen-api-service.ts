@@ -115,7 +115,7 @@ export async function fetchMaApiVoorzieningen(
 ): Promise<ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps[]>> {
   const wmoVoorzieningenResponse = await fetchZorgnedAanvragenJZD(
     bsn,
-    'ZORGNED_JZD'
+    'ZORGNED_WMO'
   );
   const jeugdVoorzieningenResponse = await fetchZorgnedAanvragenJZD(
     bsn,
@@ -179,7 +179,7 @@ export async function fetchMaApiVoorzieningById(
 ): Promise<ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps>> {
   const wmoVoorzieningenResponse = await fetchZorgnedAanvragenJZD(
     bsn,
-    'ZORGNED_JZD'
+    'ZORGNED_WMO'
   );
   const jeugdVoorzieningenResponse = await fetchZorgnedAanvragenJZD(
     bsn,

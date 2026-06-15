@@ -1,7 +1,8 @@
-import { ZORGNED_AV_API_CONFIG_KEY } from './hli-service-config.ts';
+import { dataRequestConfigAV } from './hli-service-config.ts';
 import { AV_CZM } from './status-line-items/regeling-czm.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import { isDateInPast } from '../../../universal/helpers/date.ts';
+import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import {
   fetchAanvragenWithRelatedPersons,
   fetchPersoonsgegevensNAW,
@@ -34,7 +35,7 @@ function transformZorgnedClientNummerResponse(
 export async function fetchAdministratienummer(bsn: BSN) {
   const response = await fetchPersoonsgegevensNAW(
     bsn,
-    ZORGNED_AV_API_CONFIG_KEY
+    getCustomApiConfig(dataRequestConfigAV)
   );
 
   let administratienummer: string | null = null;
@@ -85,7 +86,7 @@ function transformTitle(
 
 export async function fetchZorgnedAanvragenHLI(bsn: BSN) {
   const aanvragenResponse = await fetchAanvragenWithRelatedPersons(bsn, {
-    zorgnedApiConfigKey: ZORGNED_AV_API_CONFIG_KEY,
+    dataRequestConfig: getCustomApiConfig(dataRequestConfigAV),
   });
 
   if (aanvragenResponse.status === 'OK') {

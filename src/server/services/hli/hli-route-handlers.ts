@@ -1,6 +1,6 @@
 import type { Request } from 'express';
 
-import { ZORGNED_AV_API_CONFIG_KEY } from './hli-service-config.ts';
+import { dataRequestConfigAV } from './hli-service-config.ts';
 import type { StadspasBudget, StadspasFrontend } from './stadspas-types.ts';
 import {
   blockStadspas,
@@ -8,6 +8,7 @@ import {
   unblockStadspas,
 } from './stadspas.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import {
   sendResponse,
   type ResponseAuthenticated,
@@ -40,7 +41,7 @@ export async function fetchZorgnedAVDocument(
 ) {
   const response = fetchDocument(
     authProfileAndToken.profile.id,
-    ZORGNED_AV_API_CONFIG_KEY,
+    getCustomApiConfig(dataRequestConfigAV),
     documentId
   );
   return response;
@@ -75,7 +76,7 @@ export async function fetchZorgnedAVAanvragen(
   res: ResponseAuthenticated
 ) {
   const response = await fetchAanvragenRaw(res.locals.userID, {
-    zorgnedApiConfigKey: ZORGNED_AV_API_CONFIG_KEY,
+    dataRequestConfig: getCustomApiConfig(dataRequestConfigAV),
   });
 
   return sendResponse(res, response);
