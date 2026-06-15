@@ -15,7 +15,7 @@ export function getBlobStorage(): BlobServiceClient | null {
     return blobServiceClient;
   }
 
-  blobserviceclient = BlobServiceClient.fromConnectionString(connectionString);
+  blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
   return blobServiceClient;
 }
 
