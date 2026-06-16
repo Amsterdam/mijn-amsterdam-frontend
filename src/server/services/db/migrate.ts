@@ -3,6 +3,7 @@
 import path, { resolve } from 'node:path';
 
 import { delay } from '../../../universal/helpers/utils.ts';
+import { trackEvent } from '../monitoring.ts';
 
 const JOB_SUCCESS_CODE = 0;
 const JOB_FAILURE_CODE = 1;
@@ -35,9 +36,23 @@ export async function runMigrationsCommand() {
     import('./postgres.ts'),
   ]);
 
+  console.log('Database migration started.');
+  await trackEvent('Database migration started', {
+    properties: {
+      message: 'Database migration started.',
+      module: 'database',
+    },
+  });
+
   try {
     await checkDatabaseConnectivity();
     console.log('Database migration connectivity pre-check succeeded.');
+    await trackEvent('Database migration connectivity pre-check succeeded.', {
+      properties: {
+        message: 'Database migration connectivity pre-check succeeded.',
+        module: 'database',
+      },
+    });
   } catch (error) {
     console.log('Database migration connectivity pre-check failed.');
     captureException(error, {
@@ -49,10 +64,15 @@ export async function runMigrationsCommand() {
     await endPool();
     throw error;
   }
-
   try {
     await runMigrations();
     console.log('Database migration completed successfully.');
+    await trackEvent('Database migration completed successfully.', {
+      properties: {
+        message: 'Database migration completed successfully.',
+        module: 'database',
+      },
+    });
   } catch (error) {
     console.log('Database migration failed.');
     captureException(error, {
