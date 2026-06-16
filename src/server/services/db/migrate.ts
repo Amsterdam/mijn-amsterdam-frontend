@@ -3,7 +3,6 @@
 import path, { resolve } from 'node:path';
 
 import { delay } from '../../../universal/helpers/utils.ts';
-import { trackEvent } from '../monitoring.ts';
 
 const JOB_SUCCESS_CODE = 0;
 const JOB_FAILURE_CODE = 1;
@@ -31,7 +30,7 @@ export async function runMigrations() {
 export async function runMigrationsCommand() {
   await import('../../helpers/load-env.ts');
 
-  const [{ captureException }, { endPool }] = await Promise.all([
+  const [{ captureException, trackEvent }, { endPool }] = await Promise.all([
     import('../monitoring.ts'),
     import('./postgres.ts'),
   ]);
