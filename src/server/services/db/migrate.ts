@@ -7,7 +7,7 @@ import { delay } from '../../../universal/helpers/utils.ts';
 
 const JOB_SUCCESS_CODE = 0;
 const JOB_FAILURE_CODE = 1;
-const TEN_SECONDS_MS = 10 * 1000;
+const ONE_MINUTE_MS = 60 * 1000;
 
 async function checkDatabaseConnectivity() {
   const { getPool } = await import('./postgres.ts');
@@ -37,7 +37,7 @@ export async function runMigrationsCommand() {
   ]);
 
   console.log('Database migration started.');
-  await trackEvent('Database migration started', {
+  trackEvent('Database migration started', {
     properties: {
       message: 'Database migration started.',
       module: 'database',
@@ -54,7 +54,7 @@ export async function runMigrationsCommand() {
   try {
     await checkDatabaseConnectivity();
     console.log('Database migration connectivity pre-check succeeded.');
-    await trackEvent('Database migration connectivity pre-check succeeded.', {
+    trackEvent('Database migration connectivity pre-check succeeded.', {
       properties: {
         message: 'Database migration connectivity pre-check succeeded.',
         module: 'database',
@@ -74,7 +74,7 @@ export async function runMigrationsCommand() {
   try {
     await runMigrations();
     console.log('Database migration completed successfully.');
-    await trackEvent('Database migration completed successfully.', {
+    trackEvent('Database migration completed successfully.', {
       properties: {
         message: 'Database migration completed successfully.',
         module: 'database',
@@ -99,11 +99,11 @@ const scriptName = path.parse(process.argv.at(1) ?? '').name;
 if (import.meta.main || scriptName === 'migrate') {
   try {
     await runMigrationsCommand();
-    await delay(TEN_SECONDS_MS);
+    await delay(ONE_MINUTE_MS);
     process.exit(JOB_SUCCESS_CODE);
   } catch {
     // Ensure any event is sent before the process exits
-    await delay(TEN_SECONDS_MS);
+    await delay(ONE_MINUTE_MS);
     process.exit(JOB_FAILURE_CODE);
   }
 }
