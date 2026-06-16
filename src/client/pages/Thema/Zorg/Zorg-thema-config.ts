@@ -16,7 +16,7 @@ type ZorgThemaConfig = ThemaConfigBase & WithListPage & WithDetailPage;
 
 const THEMA_TITLE = 'Zorg en ondersteuning';
 
-export const themaConfig: ZorgThemaConfig = {
+export const themaConfig = {
   id: 'ZORG',
   title: THEMA_TITLE,
   featureToggle: {
@@ -47,7 +47,7 @@ export const themaConfig: ZorgThemaConfig = {
     route: {
       path: '/zorg-en-ondersteuning/lijst/:kind/:page?',
       documentTitle: (params) =>
-        `${params?.kind === listPageParamKind.actual ? 'Huidige' : 'Eerdere en afgewezen'} voorzieningen | ${THEMA_TITLE}`,
+        `${params?.kind === listPageParamKind.actual ? 'Huidige' : params?.kind === listPageParamKind.lopend ? 'Lopende' : 'Eerdere en afgewezen'} voorzieningen | ${THEMA_TITLE}`,
       trackingUrl: null,
     },
   },
@@ -59,9 +59,10 @@ export const themaConfig: ZorgThemaConfig = {
       documentTitle: `Voorziening | ${THEMA_TITLE}`,
     },
   },
-};
+} as const satisfies ZorgThemaConfig;
 
 export const listPageParamKind = {
+  lopend: 'lopende-aanvragen',
   actual: 'huidige-voorzieningen',
   historic: 'eerdere-en-afgewezen-voorzieningen',
 } as const;
@@ -83,13 +84,32 @@ const displayProps: DisplayProps<JzdVoorzieningFrontend> = {
 
 export const listPageTitle = {
   [listPageParamKind.actual]: 'Huidige voorzieningen',
+  [listPageParamKind.lopend]: 'Lopende aanvragen',
   [listPageParamKind.historic]: 'Eerdere en afgewezen voorzieningen',
 } as const;
 
 export const tableConfig = {
+  [listPageParamKind.lopend]: {
+    title: listPageTitle[listPageParamKind.lopend],
+    filter: (regeling: JzdVoorzieningFrontend) =>
+      regeling.steps.some(
+        (step) => step.status === 'Besluit' && !step.isChecked
+      ),
+    displayProps,
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
+    textNoContent: 'U heeft geen lopende aanvragen.',
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
+      kind: listPageParamKind.lopend,
+      page: null,
+    }),
+  },
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
-    filter: (regeling: JzdVoorzieningFrontend) => regeling.isActual,
+    filter: (regeling: JzdVoorzieningFrontend) =>
+      regeling.isActual &&
+      regeling.steps.some(
+        (step) => step.status === 'Besluit' && step.isChecked
+      ),
     displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
     textNoContent: 'U heeft geen huidige voorzieningen.',

@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router';
 
-import type { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jzd/jeugd/jeugd.ts';
+import type { JzdVoorzieningFrontend } from '../../../../server/services/jzd/jzd-types.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import type {
   ThemaConfigBase,
@@ -64,7 +64,7 @@ export const themaConfig: ThemaConfigJeugd = {
   },
 } as const;
 
-const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
+const displayProps: DisplayProps<JzdVoorzieningFrontend> = {
   props: {
     detailLinkComponent: 'Voorziening',
     displayStatus: 'Status',
@@ -77,6 +77,7 @@ const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
 };
 
 export const listPageParamKind = {
+  lopend: 'lopende-aanvragen',
   actual: 'huidige-voorzieningen',
   historic: 'eerdere-en-afgewezen-voorzieningen',
 } as const;
@@ -85,15 +86,33 @@ type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const listPageTitle = {
+  [listPageParamKind.lopend]: 'Lopende aanvragen',
   [listPageParamKind.actual]: 'Huidige voorzieningen',
   [listPageParamKind.historic]: 'Eerdere en afgewezen voorzieningen',
 } as const;
 
 export const tableConfig = {
+  [listPageParamKind.lopend]: {
+    title: listPageTitle[listPageParamKind.lopend],
+    filter: (regeling: JzdVoorzieningFrontend) =>
+      regeling.steps.some(
+        (step) => step.status === 'Besluit' && !step.isChecked
+      ),
+    displayProps,
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
+      kind: listPageParamKind.lopend,
+      page: null,
+    }),
+    maxItems: 5,
+    textNoContent: 'U heeft geen lopende aanvragen.',
+  },
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
-    filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
-      regeling.isActual,
+    filter: (regeling: JzdVoorzieningFrontend) =>
+      regeling.isActual &&
+      regeling.steps.some(
+        (step) => step.status === 'Besluit' && step.isChecked
+      ),
     displayProps,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.actual,
@@ -104,8 +123,7 @@ export const tableConfig = {
   },
   [listPageParamKind.historic]: {
     title: listPageTitle[listPageParamKind.historic],
-    filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
-      !regeling.isActual,
+    filter: (regeling: JzdVoorzieningFrontend) => !regeling.isActual,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.historic,
       page: null,

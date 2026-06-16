@@ -260,7 +260,12 @@ export function transformZorgnedAanvragen(
     const beschikteProducten = beschikking?.beschikteProducten ?? [];
 
     // Voorzieningen always have at least 1 beschikt product
-    if (beschikking && beschikteProducten.length) {
+    if (
+      beschikking &&
+      beschikteProducten.some(
+        (toegedeeldProduct) => !!toegedeeldProduct.toegewezenProduct
+      )
+    ) {
       for (const beschiktProduct of beschikteProducten) {
         if (beschiktProduct) {
           const aanvraagTransformed = transformZorgnedVoorziening(

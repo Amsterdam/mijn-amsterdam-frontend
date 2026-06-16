@@ -309,6 +309,7 @@ export const IN_BEHANDELING: ZorgnedStatusLineItemTransformerConfig = {
       return isActieBasedInBehandelingStepActive(aanvraag);
     }
     return (
+      aanvraag.isActueel &&
       !hasMeerInformatieNodigDocumentAttached(aanvraag) &&
       !hasDecision(aanvraag)
     );
@@ -326,11 +327,8 @@ export function getTransformerConfigBesluit(
     status: DECISION_STEP_STATUS,
     datePublished: (aanvraag) => {
       const NO_DATE = '';
-      if (isActiesBasedAanvraag(aanvraag)) {
-        const decisionDate = getDecisionDate(aanvraag) ?? NO_DATE;
-        return hasDecision(aanvraag) ? decisionDate : NO_DATE;
-      }
-      return getDecisionDate(aanvraag) ?? NO_DATE;
+      const decisionDate = getDecisionDate(aanvraag) ?? NO_DATE;
+      return hasDecision(aanvraag) ? decisionDate : NO_DATE;
     },
     isChecked: (aanvraag) => {
       if (isActiesBasedAanvraag(aanvraag)) {
@@ -369,7 +367,9 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
   datePublished: (aanvraag) =>
     (aanvraag.isActueel ? '' : aanvraag.datumEindeGeldigheid) || '',
   isVisible: (aanvraag) => {
-    return hasDecision(aanvraag) && aanvraag.resultaat !== 'afgewezen';
+    return hasDecision(aanvraag)
+      ? aanvraag.resultaat !== 'afgewezen'
+      : !!aanvraag.datumEindeGeldigheid;
   },
   isChecked: (aanvraag) => aanvraag.isActueel === false,
   isActive: (aanvraag) => aanvraag.isActueel === false,

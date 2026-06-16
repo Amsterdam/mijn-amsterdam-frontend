@@ -106,10 +106,7 @@ export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
   }
 
   // Override actueel indien de einde geldigheid is verlopen
-  if (
-    (isActueel && isEindeGeldigheid) ||
-    aanvraagTransformed.resultaat === 'afgewezen'
-  ) {
+  if (isEindeGeldigheid || aanvraagTransformed.resultaat === 'afgewezen') {
     isActueel = false;
   }
 
