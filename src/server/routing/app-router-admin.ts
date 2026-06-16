@@ -10,8 +10,6 @@ import {
   BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET,
   IS_ADMIN_ROUTER_ENABLED,
 } from '../services/admin/admin-service-config.ts';
-import { amsappNotificationsRouter } from '../services/amsapp/notifications/amsapp-notifications-router.ts';
-import { userFeedbackRouter } from '../services/user-feedback/user-feedback.router.ts';
 
 type CreateAdminRouterOptions = {
   isAdminRouterEnabled: boolean;
@@ -41,6 +39,10 @@ export async function createAdminRouter({
     await import('../services/admin/admin-route-handlers.ts');
   const { router: adminRouter } =
     await import('../services/admin/admin-router.ts');
+  const { userFeedbackRouter } =
+    await import('../services/user-feedback/user-feedback.router.ts');
+  const { amsappNotificationsRouter } =
+    await import('../services/amsapp/notifications/amsapp-notifications-router.ts');
 
   router.use(
     session({

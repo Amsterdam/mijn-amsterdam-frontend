@@ -116,20 +116,7 @@ describe('app-router-main', () => {
       'router-private-network': true,
       'router-admin': true,
     });
-  });
 
-  test('App Router admin', () => {
-    const router = createMainRouter({ isOT: true, isAP: false });
-    expectRouterPresence(router, {
-      'router-admin': true,
-    });
-  });
-
-  test('App Router protected', () => {
-    const router = createMainRouter({ isOT: true, isAP: false });
-    expectRouterPresence(router, {
-      'router-protected': true,
-    });
     expect(
       router.stack.some(
         (x: object) => 'name' in x && x.name === 'handleIsAuthenticated'

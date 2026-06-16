@@ -71,27 +71,11 @@ async function buildAdminRouter({
   });
 }
 
-describe('app-router-admin', { timeout: 10000 }, () => {
+describe('app-router-admin', () => {
   test('should have admin router disabled when the feature toggle is off', async () => {
     const router = await buildAdminRouter({ isEnabled: false });
     expect(router.stack.length).toBe(1);
     expect(router.stack[0].name).toBe('nextRouter');
-  });
-
-  test('should have admin router enabled when the feature toggle is on', async () => {
-    const router = await buildAdminRouter({ isEnabled: true });
-    expect(router.stack.length).toBeGreaterThan(1);
-    expect(router.stack[0].name).not.toBe('nextRouter');
-  });
-
-  test('should have admin authentication middleware', async () => {
-    const router = await buildAdminRouter({
-      isEnabled: true,
-      isAuthEnabled: true,
-    });
-    expect(
-      router.stack.some((layer) => layer.name === 'isAuthenticatedAdmin')
-    ).toBe(true);
   });
 
   test('should NOT have admin authentication middleware', async () => {
@@ -104,35 +88,53 @@ describe('app-router-admin', { timeout: 10000 }, () => {
     ).toBe(false);
   });
 
-  test('should mount admin middleware stack in expected order', async () => {
-    const router = await buildAdminRouter({
-      isEnabled: true,
-      isAuthEnabled: true,
-    });
-    const [
-      sessionMiddleware,
-      adminRouterPublic,
-      authenticationMiddleware,
-      adminRouterProtected,
-      userFeedbackAdmin,
-      amsappNotificationsAdmin,
-    ] = router.stack as ILayer[];
+  describe('when admin router and auth middleware are enabled', () => {
+    let router: Awaited<ReturnType<typeof buildAdminRouter>>;
 
-    expect(sessionMiddleware.handle.name).toBe('session');
-    expect(
-      'BFF_ID' in adminRouterPublic.handle && adminRouterPublic.handle.BFF_ID
-    ).toBe('ma-admin-router-public');
-    expect(authenticationMiddleware.handle.name).toBe('isAuthenticatedAdmin');
-    expect(
-      'BFF_ID' in adminRouterProtected.handle &&
-        adminRouterProtected.handle.BFF_ID
-    ).toBe('ma-admin-router-protected');
-    expect(
-      'BFF_ID' in userFeedbackAdmin.handle && userFeedbackAdmin.handle.BFF_ID
-    ).toBe('router-user-feedback-admin');
-    expect(
-      'BFF_ID' in amsappNotificationsAdmin.handle &&
-        amsappNotificationsAdmin.handle.BFF_ID
-    ).toBe('router-amsapp-notifications-admin');
+    beforeAll(async () => {
+      router = await buildAdminRouter({
+        isEnabled: true,
+        isAuthEnabled: true,
+      });
+    });
+
+    test('should have admin router enabled when the feature toggle is on', () => {
+      expect(router.stack.length).toBeGreaterThan(1);
+      expect(router.stack[0].name).not.toBe('nextRouter');
+    });
+
+    test('should have admin authentication middleware', () => {
+      expect(
+        router.stack.some((layer) => layer.name === 'isAuthenticatedAdmin')
+      ).toBe(true);
+    });
+
+    test('should mount admin middleware stack in expected order', () => {
+      const [
+        sessionMiddleware,
+        adminRouterPublic,
+        authenticationMiddleware,
+        adminRouterProtected,
+        userFeedbackAdmin,
+        amsappNotificationsAdmin,
+      ] = router.stack as ILayer[];
+
+      expect(sessionMiddleware.handle.name).toBe('session');
+      expect(
+        'BFF_ID' in adminRouterPublic.handle && adminRouterPublic.handle.BFF_ID
+      ).toBe('ma-admin-router-public');
+      expect(authenticationMiddleware.handle.name).toBe('isAuthenticatedAdmin');
+      expect(
+        'BFF_ID' in adminRouterProtected.handle &&
+          adminRouterProtected.handle.BFF_ID
+      ).toBe('ma-admin-router-protected');
+      expect(
+        'BFF_ID' in userFeedbackAdmin.handle && userFeedbackAdmin.handle.BFF_ID
+      ).toBe('router-user-feedback-admin');
+      expect(
+        'BFF_ID' in amsappNotificationsAdmin.handle &&
+          amsappNotificationsAdmin.handle.BFF_ID
+      ).toBe('router-amsapp-notifications-admin');
+    });
   });
 });
