@@ -153,7 +153,7 @@ describe('fetchLeerlingenvervoer', () => {
         title: 'Meer informatie',
         to: '/jeugd/voorziening/aangepast-groepsvervoer/1610585298',
       },
-      displayStatus: 'Besluit genomen',
+      displayStatus: 'Besluit',
       statusDate: '2025-04-07T09:44:48.697',
       statusDateFormatted: '07 april 2025',
       steps: [
@@ -182,7 +182,7 @@ describe('fetchLeerlingenvervoer', () => {
           isActive: true,
           isChecked: true,
           isVisible: true,
-          status: 'Besluit genomen',
+          status: 'Besluit',
         },
         {
           datePublished: '',

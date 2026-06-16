@@ -149,10 +149,6 @@ async function fetchJzd(
             today
           );
 
-          if (serviceName === 'LLV') {
-            console.log('steps', steps);
-          }
-
           if (steps) {
             return transformVoorzieningForFrontend(
               aanvraag,
@@ -199,7 +195,6 @@ export async function fetchLeerlingenvervoer(
     llvStatusLineItemsConfig,
     'LLV'
   );
-  console.log('fetchLeerlingenvervoer', x);
   return x;
 }
 

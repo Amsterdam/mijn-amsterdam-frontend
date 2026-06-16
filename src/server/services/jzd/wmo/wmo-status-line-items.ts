@@ -182,11 +182,11 @@ for (const config of wmoStatusLineItemsConfig) {
     ) {
       if (!PRODUCTS_WITH_DELIVERY[config.leveringsVorm]) {
         PRODUCTS_WITH_DELIVERY[config.leveringsVorm] = [
-          ...config.productsoortCodes,
+          ...config.productsoortCodes.filter((x) => x !== null),
         ];
       } else {
         PRODUCTS_WITH_DELIVERY[config.leveringsVorm].push(
-          ...config.productsoortCodes
+          ...config.productsoortCodes.filter((x) => x !== null)
         );
       }
     }

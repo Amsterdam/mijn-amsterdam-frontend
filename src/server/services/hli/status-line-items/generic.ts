@@ -43,7 +43,7 @@ export function getBesluitDescription(
 export const BESLUIT: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRelatedPersonsTransformed> =
   {
     status: 'Besluit',
-    datePublished: (regeling) => regeling.datumBesluit,
+    datePublished: (regeling) => regeling.datumBesluit ?? '',
     isChecked: () => true,
     isActive: (regeling) =>
       regeling.isActueel === true || regeling.resultaat === 'afgewezen',

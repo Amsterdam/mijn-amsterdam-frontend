@@ -110,9 +110,9 @@ function getUpcPcvDecisionDate(
     const baseRegeling = allAanvragen.find((compareAanvraag) =>
       isRegelingVanVerzilvering(aanvraag, compareAanvraag)
     );
-    return baseRegeling?.datumBesluit ?? aanvraag.datumBesluit;
+    return baseRegeling?.datumBesluit ?? aanvraag.datumBesluit ?? '';
   }
-  return aanvraag.datumBesluit;
+  return aanvraag.datumBesluit ?? '';
 }
 
 function filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd(
@@ -173,7 +173,9 @@ export function filterCombineUpcPcvData(
   const [aanvragenAfter2026, aanvragenBefore2026] = splitBy(
     aanvragen,
     (aanvraag) =>
-      isBefore(aanvraag.datumBesluit, DATE_PCTEGOED_2026_CODES_ACTIVE)
+      aanvraag.datumBesluit
+        ? isBefore(aanvraag.datumBesluit, DATE_PCTEGOED_2026_CODES_ACTIVE)
+        : false
   );
   const aanvragen_ =
     filterOutRedundantPcVergoedingsAanvragenWhenWorkShopNietGevolgd(
@@ -237,7 +239,7 @@ export function filterCombineUpcPcvData(
 export function translatePCProductIdentificatie(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ): ZorgnedAanvraagWithRelatedPersonsTransformed {
-  let productIdentificatie;
+  let productIdentificatie = null;
   if (
     aanvraag.productIdentificatie === AV_UPCTG ||
     aanvraag.productIdentificatie === AV_PCVTG
@@ -359,7 +361,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
       status: 'Workshop gevolgd',
       isVisible: (regeling) =>
         isVerzilvering(regeling) && regeling.resultaat === 'toegewezen',
-      datePublished: (regeling) => regeling.datumBesluit,
+      datePublished: (regeling) => regeling.datumBesluit ?? '',
       isChecked: () => true,
       isActive: () => true,
       description: descriptionDefinitief,

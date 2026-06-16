@@ -176,7 +176,7 @@ describe('zorgned-service', () => {
         productIdentificatie: 'WRA',
         productsoortCode: 'WRA',
         resultaat: 'toegewezen',
-        titel: 'ALLE DOCUMENTEN TEST: woonruimteaanpassing (in behandeling)',
+        titel: 'ALLE DOCUMENTEN TEST: woonruimteaanpassing',
         procesMeldingIdentificatie: null,
       });
     });
@@ -686,7 +686,7 @@ describe('fetchRelatedPersons', async () => {
         identificatie: undefined,
       },
       resultaat: 'toegewezen',
-      toegewezenProduct: null,
+      toegewezenProduct: {},
     } as BeschiktProduct;
 
     const aanvragenSource: ZorgnedAanvraagSource[] = [
@@ -810,7 +810,7 @@ describe('fetchRelatedPersons', async () => {
             identificatie: undefined,
           },
           resultaat: 'toegewezen',
-          toegewezenProduct: null,
+          toegewezenProduct: {},
         }
       );
 
@@ -861,7 +861,7 @@ describe('fetchRelatedPersons', async () => {
                   identificatie: undefined,
                 },
                 resultaat: 'toegewezen',
-                toegewezenProduct: null,
+                toegewezenProduct: {},
               },
             ],
           },
