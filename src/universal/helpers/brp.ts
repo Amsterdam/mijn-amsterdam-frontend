@@ -1,18 +1,21 @@
 import type { Persoon } from '../../server/services/brp/brp-types.ts';
 
 export function getFullName(
-  persoon: Pick<
-    Persoon,
-    'voornamen' | 'geslachtsnaam' | 'voorvoegselGeslachtsnaam'
-  >
+  persoon: Partial<Pick<Persoon, 'voornamen'>> &
+    Pick<Persoon, 'geslachtsnaam' | 'voorvoegselGeslachtsnaam'>
 ) {
-  return persoon
-    ? `${persoon.voornamen} ${
-        persoon.voorvoegselGeslachtsnaam
-          ? persoon.voorvoegselGeslachtsnaam + ' '
-          : ''
-      }${persoon.geslachtsnaam}`.trim()
-    : '';
+  if (!persoon) {
+    return '';
+  }
+
+  return [
+    persoon.voornamen,
+    persoon.voorvoegselGeslachtsnaam,
+    persoon.geslachtsnaam,
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .trim();
 }
 
 export function getFullAddress(
