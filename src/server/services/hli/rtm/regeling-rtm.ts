@@ -150,7 +150,7 @@ function getStatusDate(
     case lineItemConfigs.besluit.status:
     case lineItemConfigs.besluitAanvraagAfgewezen.status:
     case lineItemConfigs.besluitWijziging.status:
-      return aanvraag.datumBesluit;
+      return aanvraag.datumBesluit ?? '';
     case lineItemConfigs.eindeRecht.status:
       return aanvraag.datumEindeGeldigheid
         ? dateFormat(
@@ -466,7 +466,7 @@ function transformRTMRegelingenFrontend(
         .toReversed()
         .join()
     );
-    const title = mostRecentAanvraag.titel;
+    const title = mostRecentAanvraag.titel ?? 'Regeling RTM';
     const betrokkenen = getBetrokkenen(betrokkenenMapStr, aanvragen);
 
     const route = generatePath(themaConfig.detailPageRegeling.route.path, {
@@ -505,7 +505,11 @@ function transformRTMRegelingenFrontend(
     let displayStatus =
       steps.findLast((step) => step.isActive)?.status ?? 'Onbekend';
 
-    if (displayStatus === 'Besluit' && !hasToegewezenRTM2) {
+    if (
+      displayStatus === 'Besluit' &&
+      !hasToegewezenRTM2 &&
+      mostRecentAanvraag.resultaat
+    ) {
       displayStatus = capitalizeFirstLetter(mostRecentAanvraag.resultaat);
     }
 
@@ -576,7 +580,7 @@ function collectProcesAanvragen(
 
   for (const aanvraag of aanvragen) {
     const id = aanvraag.beschiktProductIdentificatie;
-    if (seenAanvragen.has(id)) {
+    if (id && seenAanvragen.has(id)) {
       const existingAanvraag = seenAanvragen.get(id)!;
       seenAanvragen.set(id, {
         ...existingAanvraag,
@@ -585,7 +589,7 @@ function collectProcesAanvragen(
           aanvraag,
         ],
       });
-    } else {
+    } else if (id) {
       seenAanvragen.set(id, aanvraag);
     }
   }
@@ -672,7 +676,7 @@ export async function fetchRTMSpecificaties(
         .map((doc) => {
           const specificatie: HLIRegelingSpecificatieFrontend = {
             ...doc,
-            category: aanvraag.titel,
+            category: aanvraag.titel ?? '',
             datePublishedFormatted: defaultDateFormat(doc.datePublished),
           };
           return specificatie;

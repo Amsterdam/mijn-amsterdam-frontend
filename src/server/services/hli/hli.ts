@@ -8,9 +8,9 @@ import type {
   ZorgnedHLIRegeling,
 } from './hli-regelingen-types.ts';
 import {
+  dataRequestConfigAV,
   featureToggle,
   routes,
-  ZORGNED_AV_API_CONFIG_KEY,
 } from './hli-service-config.ts';
 import { hliStatusLineItemsConfig } from './hli-status-line-items.ts';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service.ts';
@@ -107,7 +107,7 @@ function transformRegelingTitle(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ): string {
   switch (true) {
-    case aanvraag.titel.toLowerCase().includes('stadspas'): {
+    case aanvraag.titel?.toLowerCase().includes('stadspas'): {
       const startDate = aanvraag.datumIngangGeldigheid
         ? parseISO(aanvraag.datumIngangGeldigheid)
         : null;
@@ -120,7 +120,9 @@ function transformRegelingTitle(
       return `Stadspas${startDate ? ` ${startDate.getFullYear()}-${startDate.getFullYear() + 1}${fromIndication}` : ''}`;
     }
     default:
-      return capitalizeFirstLetter(aanvraag.titel);
+      return capitalizeFirstLetter(
+        aanvraag.titel ?? 'Regeling bij laag inkomen'
+      );
   }
 }
 
@@ -156,7 +158,7 @@ export function transformRegelingForFrontend(
     },
     steps: statusLineItems,
     dateRequest: aanvraag.datumAanvraag,
-    dateDecision: aanvraag.datumBesluit,
+    dateDecision: aanvraag.datumBesluit ?? '',
     dateStart: aanvraag.datumIngangGeldigheid,
     dateEnd: aanvraag.datumEindeGeldigheid,
     decision: aanvraag.resultaat,
@@ -236,10 +238,7 @@ async function fetchRegelingen(
 
   const [aanvragenResult, personResult] = await Promise.allSettled([
     fetchZorgnedAanvragenHLI(authProfileAndToken.profile.id),
-    fetchRelatedPersons(
-      [authProfileAndToken.profile.id],
-      ZORGNED_AV_API_CONFIG_KEY
-    ),
+    fetchRelatedPersons([authProfileAndToken.profile.id], dataRequestConfigAV),
   ]);
 
   const aanvragenResponse = getSettledResult(aanvragenResult);

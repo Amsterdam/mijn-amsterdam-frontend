@@ -120,7 +120,7 @@ function getActieBasedMeerInformatieStepDatum(
   );
 }
 
-function isActiesBasedAanvraag(aanvraag: ZorgnedAanvraagTransformed) {
+export function isActiesBasedAanvraag(aanvraag: ZorgnedAanvraagTransformed) {
   return !!getActieStepByOmschrijving(aanvraag, jzdStatusStepActies.AANVRAAG);
 }
 
@@ -439,7 +439,7 @@ export function isDeliveredStatusActive(
 export function isDecisionStatusActive(aanvraag: ZorgnedAanvraagTransformed) {
   if (isActiesBasedAanvraag(aanvraag)) {
     return hasActieBasedInBehandelingStep(aanvraag)
-      ? isActieBasedInBehandelingStepActive(aanvraag)
+      ? !isActieBasedInBehandelingStepActive(aanvraag)
       : false;
   }
   if (aanvraag.resultaat === 'toegewezen') {

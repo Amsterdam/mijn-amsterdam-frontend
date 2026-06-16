@@ -24,19 +24,15 @@ export function isStatusLineItemTransformerMatch<
       : PASS_MATCH_DEFAULT;
 
   const hasProductSoortCodeMatch =
-    typeof config.productsoortCodes !== 'undefined' &&
-    aanvraagTransformed.productsoortCode !== null
+    typeof config.productsoortCodes !== 'undefined'
       ? config.productsoortCodes.includes(aanvraagTransformed.productsoortCode)
       : PASS_MATCH_DEFAULT;
 
   const hasProductIdentificatieMatch =
     typeof config.productIdentificatie !== 'undefined'
-      ? typeof aanvraagTransformed.productIdentificatie !== 'undefined' &&
-        aanvraagTransformed.productIdentificatie !== null
-        ? config.productIdentificatie.includes(
-            aanvraagTransformed.productIdentificatie
-          )
-        : false
+      ? config.productIdentificatie.includes(
+          aanvraagTransformed.productIdentificatie
+        )
       : PASS_MATCH_DEFAULT;
 
   const isFilterMatch =

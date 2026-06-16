@@ -345,66 +345,7 @@
         "datumAanmelding": "2026-05-11",
         "datumAanvraag": "2026-05-11"
       },
-      {
-        "identificatie": "3695853",
-        "procesIdentificatie": "3695853",
-        "casusIdentificatie": "2115664",
-        "regeling": {
-          "identificatie": "LLV",
-          "omschrijving": "Leerlingenvervoer"
-        },
-        "hulpvraag": {
-          "datumRegistratie": "2026-05-19",
-          "aanmeldwijze": {
-            "omschrijving": "Digitaal/Online"
-          },
-          "verwijzer": {
-            "soort": {
-              "identificatie": "4",
-              "omschrijving": "Familielid"
-            },
-            "naam": "Klaasse",
-            "voorletters": "D.",
-            "email": "test@amsterdam.nl",
-            "telefoon": "0612345678"
-          }
-        },
-        "datumAanmelding": "2026-05-19",
-        "datumAanvraag": "2026-05-19",
-        "procesAanvraag": {
-          "identificatie": "3695853",
-          "omschrijving": "Leerlingenvervoer",
-          "datumStart": "2026-05-19",
-          "acties": [
-            {
-              "omschrijving": "Melding ontvangen",
-              "status": {
-                "identificatie": "4",
-                "omschrijving": "Klaar"
-              },
-              "datum": "2026-05-19"
-            },
-            {
-              "omschrijving": "In behandeling bij de gemeente",
-              "status": {
-                "identificatie": "2",
-                "omschrijving": "In behandeling"
-              },
-              "datum": "2026-05-19"
-            }
-          ]
-        },
-        "documenten": [
-          {
-            "documentidentificatie": "E1533139",
-            "procesIdentificatie": "3695853",
-            "casusIdentificatie": "2115664",
-            "omschrijving": "aanvraagformulier",
-            "omschrijvingclientportaal": "Aanvraagformulier",
-            "datumDefinitief": "2026-05-19T13:35:59.42"
-          }
-        ]
-      },
+
       {
         "identificatie": "3695757",
         "procesIdentificatie": "3695757",

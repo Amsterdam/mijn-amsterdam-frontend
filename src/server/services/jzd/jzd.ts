@@ -78,7 +78,7 @@ function transformVoorzieningForFrontend(
   const id = aanvraag.prettyID;
 
   const route = generatePath(frontendDetailPageRoute, {
-    voorziening: slug(aanvraag.titel ?? ''),
+    voorziening: slug(aanvraag.titel),
     id,
   });
 
@@ -94,11 +94,7 @@ function transformVoorzieningForFrontend(
 
   const voorzieningFrontend: JzdVoorzieningFrontend = {
     id,
-    title: aanvraag.titel
-      ? // Voorzieningen always have a title.
-        capitalizeFirstLetter(aanvraag.titel)
-      : // For aanvragen we use a generic title because we don't know the voorziengen requested in the aanvraag.
-        `Melding gedaan op ${defaultDateFormat(aanvraag.datumAanvraag)}`,
+    title: capitalizeFirstLetter(aanvraag.titel),
     supplier: aanvraag.leverancier,
     isActual: aanvraag.isActueel,
     link: {
@@ -114,7 +110,7 @@ function transformVoorzieningForFrontend(
         (step) => step.status === DECISION_STEP_STATUS && step.isActive
       ) && aanvraag.resultaat
         ? capitalizeFirstLetter(aanvraag.resultaat)
-        : '',
+        : null,
     dateDecision,
     dateDecisionFormatted: dateDecision ? defaultDateFormat(dateDecision) : '',
     displayStatus: getLatestStatus(steps),
@@ -152,6 +148,10 @@ async function fetchJzd(
             aanvragen,
             today
           );
+
+          if (serviceName === 'LLV') {
+            console.log('steps', steps);
+          }
 
           if (steps) {
             return transformVoorzieningForFrontend(
@@ -191,7 +191,7 @@ export async function fetchWmo(
 export async function fetchLeerlingenvervoer(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<JzdVoorzieningFrontend[]>> {
-  return fetchJzd(
+  const x = await fetchJzd(
     authProfileAndToken,
     'ZORGNED_LEERLINGENVERVOER',
     routes.protected.LLV_DOCUMENT_DOWNLOAD,
@@ -199,6 +199,8 @@ export async function fetchLeerlingenvervoer(
     llvStatusLineItemsConfig,
     'LLV'
   );
+  console.log('fetchLeerlingenvervoer', x);
+  return x;
 }
 
 export const forTesting = {

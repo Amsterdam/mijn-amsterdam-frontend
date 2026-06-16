@@ -46,7 +46,7 @@ export type JzdApiConfig<T extends object = ZorgnedAanvraagTransformed> = {
 export type JzdVoorzieningFrontend = ZaakAanvraagDetail & {
   dateDecision: string;
   dateDecisionFormatted: string;
-  decision: string;
+  decision: string | null;
   documents: GenericDocument[];
   isActual: boolean; // Indicates if this item is designated Current or Previous
   itemTypeCode: ProductSoortCode | null;

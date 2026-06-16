@@ -55,8 +55,8 @@ export interface ZorgnedStatusLineItemsConfig<
     transformers: ZorgnedStatusLineItemTransformerConfig<T>[];
   };
   productgroep: string;
-  productsoortCodes?: ProductSoortCode[];
-  productIdentificatie?: ProductIdentificatie[];
+  productsoortCodes?: (ProductSoortCode | null)[];
+  productIdentificatie?: (ProductIdentificatie | null)[];
   filter?: ZorgnedLineItemsFilter;
   isDisabled?: boolean;
   resultaat?: BeschikkingsResultaat;
@@ -150,7 +150,7 @@ export interface ZorgnedAanvraagSource {
   beschikking: Beschikking;
   datumAanvraag: string;
   // The following field seems to be always defined for RTM type aanvragen.
-  procesAanvraag?: ZorgnedProcesAanvraag;
+  procesAanvraag?: ZorgnedProcesAanvraagSource;
   procesMelding?: ZorgnedProcesMelding;
   documenten: ZorgnedDocument[];
   identificatie: string;
@@ -191,7 +191,7 @@ export type ZorgnedProcesAanvraagTransformed = {
   acties: ZorgnedProcesAanvraagActieTransformed[];
 };
 
-export interface ZorgnedAanvraagTransformed {
+export type ZorgnedAanvraagTransformed = {
   beschikkingNummer: number | null;
   beschiktProductIdentificatie: BeschiktProduct['identificatie'] | null;
   betrokkenen: string[];

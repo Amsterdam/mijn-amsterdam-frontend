@@ -147,7 +147,7 @@ function transformZorgnedAanvraag(
     procesAanvraag: transformZorgnedProcesAanvraag(aanvraag),
     datumAanvraag: aanvraag.datumAanvraag,
     documenten: transformDocumenten(aanvraag.documenten ?? []),
-    isActueel: false,
+    isActueel: true,
 
     // The following properties are not available when there is no beschikt product, so we set them to null or empty values.
     datumBeginLevering: null,
@@ -165,7 +165,7 @@ function transformZorgnedAanvraag(
     beschiktProductIdentificatie: null,
     beschikkingNummer: null,
     resultaat: null,
-    titel: null,
+    titel: `Melding gedaan op ${defaultDateFormat(aanvraag.datumAanvraag)}`,
     betrokkenen: [],
   };
 
@@ -193,7 +193,7 @@ function transformZorgnedVoorziening(
     productsoortCode = productsoortCode.toUpperCase();
   }
 
-  let productIdentificatie = beschiktProduct.product.identificatie;
+  let productIdentificatie = beschiktProduct.product.identificatie ?? null;
   if (productIdentificatie) {
     productIdentificatie = productIdentificatie.toUpperCase();
   }

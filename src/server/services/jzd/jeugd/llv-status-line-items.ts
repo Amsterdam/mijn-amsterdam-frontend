@@ -18,6 +18,7 @@ export const llvStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       'LLVEV',
       'LLVAV',
       'LLVAVG',
+      null, // For actie based aanvragen.
     ],
     statusLineItems: {
       transformers: [
