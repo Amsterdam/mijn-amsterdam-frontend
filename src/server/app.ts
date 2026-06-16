@@ -6,12 +6,7 @@
 
 // Keep the loading of environment variables at the top.
 import './helpers/load-env.ts';
-import {
-  IS_AP,
-  IS_DEVELOPMENT,
-  IS_OT,
-  IS_PRODUCTION,
-} from '../universal/config/env.ts';
+import { IS_DEVELOPMENT, IS_PRODUCTION } from '../universal/config/env.ts';
 
 // Note: Keep this line after loading in env files or LOG_LEVEL will be undefined.
 import { logger } from './logging.ts';
@@ -51,35 +46,12 @@ import {
   ONE_MINUTE_SECONDS,
   ONE_SECOND_MS,
 } from './config/app.ts';
-import {
-  BffEndpoints,
-  BFF_BASE_PATH,
-  BFF_BASE_PATH_PRIVATE,
-  BFF_BASE_PATH_ADMIN,
-} from './routing/bff-routes.ts';
-import {
-  handleIsAuthenticated,
-  nocache,
-  requestID,
-} from './routing/route-handlers.ts';
-import {
-  generateFullApiUrlBFF,
-  generateMaFrontendUrl,
-  send404,
-} from './routing/route-helpers.ts';
-import { authRouterDevelopment } from './routing/app-router-development.ts';
-import { oidcRouter } from './routing/app-router-oidc.ts';
-import { router as protectedRouter } from './routing/app-router-protected.ts';
-import {
-  legacyRouter,
-  router as publicRouter,
-} from './routing/app-router-public.ts';
-import { router as routerPublicExternalConsumer } from './routing/app-router-public-external-consumer.ts';
+import { requestID } from './routing/route-handlers.ts';
+import { generateMaFrontendUrl, send404 } from './routing/route-helpers.ts';
 import { captureException } from './services/monitoring.ts';
 import { getFromEnv } from './helpers/env.ts';
-import { router as privateNetworkRouter } from './routing/app-router-private.ts';
 import { getDirname } from './helpers/dir.ts';
-import { router as adminRouter } from './routing/app-router-admin.ts';
+import { router as appMainRouter } from './routing/app-router-main.ts';
 
 const app = express();
 
@@ -111,49 +83,7 @@ app.use(compression());
 // Generate request id
 app.use(requestID);
 
-// Some legacy routes that are not prefixed with /api/v1
-app.use(legacyRouter);
-
-////////////////////////////////////////////////////////////////////////
-///// The public router has routes that can be accessed by anyone without any authentication.
-////////////////////////////////////////////////////////////////////////
-
-app.use(BFF_BASE_PATH, publicRouter);
-
-///// [DEVELOPMENT - TEST]
-//// In development we use the authRouterDevelopment which has a mock login.
-if (IS_OT && !IS_AP) {
-  logger.info('Using AUTH Development Router');
-  app.use(BFF_BASE_PATH, authRouterDevelopment);
-}
-///// [PRODUCTION - ACCEPTANCE]
-//// In production we use the oidcRouter which has real OIDC login.
-if (IS_AP && !IS_OT) {
-  logger.info('Using AUTH OIDC Router');
-  app.use(BFF_BASE_PATH, oidcRouter);
-}
-
-app.use(BFF_BASE_PATH, nocache, routerPublicExternalConsumer);
-
-// Routes mounted at BFF_BASE_PATH_ADMIN are for the admin panel.
-// These routes require authentication but are separate from the other protected routes, and have their own authentication middleware defined in app-router-admin.ts
-app.use(BFF_BASE_PATH_ADMIN, nocache, adminRouter);
-
-// Routers mounted at BFF_BASE_PATH all need authentication.
-app.use(BFF_BASE_PATH, nocache, handleIsAuthenticated, protectedRouter);
-
-/////////////////////////////////////////////////////////////////////////
-///// These routes are not protected by TMA/OIDC system, but
-///// are protected by other means (e.g. IP whitelisting, API keys, etc).
-///// These routers are all prefixed with /private and not accessible
-///// from the public internet.
-////////////////////////////////////////////////////////////////////////
-app.use(BFF_BASE_PATH_PRIVATE, nocache, privateNetworkRouter);
-
-// Redirects to /api/v1
-app.get(BffEndpoints.ROOT, (_req, res) => {
-  return res.redirect(generateFullApiUrlBFF(BffEndpoints.ROOT));
-});
+app.use(appMainRouter);
 
 app.use((_req: Request, res: Response) => {
   if (!res.headersSent) {

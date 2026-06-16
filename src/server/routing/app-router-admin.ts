@@ -13,34 +13,53 @@ import {
 import { amsappNotificationsRouter } from '../services/amsapp/notifications/amsapp-notifications-router.ts';
 import { userFeedbackRouter } from '../services/user-feedback/user-feedback.router.ts';
 
-export const router = createBFFRouter({
-  id: 'router-admin',
-  isEnabled: IS_ADMIN_ROUTER_ENABLED,
-});
+type CreateAdminRouterOptions = {
+  isAdminRouterEnabled: boolean;
+  isAdminAuthenticationMiddlewareEnabled: boolean;
+  isProduction: boolean;
+  bffAdminAuthExpressSessionSecret: string;
+  bffAdminAuthSessionCookieName: string;
+};
 
-if (IS_ADMIN_ROUTER_ENABLED) {
+export async function createAdminRouter({
+  isAdminRouterEnabled,
+  isAdminAuthenticationMiddlewareEnabled,
+  isProduction,
+  bffAdminAuthExpressSessionSecret,
+  bffAdminAuthSessionCookieName,
+}: CreateAdminRouterOptions) {
+  const router = createBFFRouter({
+    id: 'router-admin',
+    isEnabled: isAdminRouterEnabled,
+  });
+
+  if (!isAdminRouterEnabled) {
+    return router;
+  }
+
   const { isAuthenticatedAdmin } =
     await import('../services/admin/admin-route-handlers.ts');
   const { router: adminRouter } =
     await import('../services/admin/admin-router.ts');
+
   router.use(
     session({
-      secret: BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET,
+      secret: bffAdminAuthExpressSessionSecret,
       resave: false,
       saveUninitialized: false,
-      name: BFF_ADMIN_AUTH_SESSION_COOKIE_NAME,
+      name: bffAdminAuthSessionCookieName,
       cookie: {
         httpOnly: true,
-        secure: IS_PRODUCTION,
+        secure: isProduction,
       },
     }),
     adminRouter.public,
     // The authentication middleware is only applied to the protected admin routes,
     // so the public routes defined in router-admin.ts can be accessed without authentication (e.g. for the login flow).
-    IS_ADMIN_AUTHENTICATION_MIDDLEWARE_ENABLED
+    isAdminAuthenticationMiddlewareEnabled
       ? isAuthenticatedAdmin
       : (_req, _res, next) => {
-          if (IS_PRODUCTION) {
+          if (isProduction) {
             throw new Error(
               'Admin authentication middleware MUST be enabled in production.'
             );
@@ -51,4 +70,15 @@ if (IS_ADMIN_ROUTER_ENABLED) {
     userFeedbackRouter.admin,
     amsappNotificationsRouter.admin
   );
+
+  return router;
 }
+
+export const router = await createAdminRouter({
+  isAdminRouterEnabled: IS_ADMIN_ROUTER_ENABLED,
+  isAdminAuthenticationMiddlewareEnabled:
+    IS_ADMIN_AUTHENTICATION_MIDDLEWARE_ENABLED,
+  isProduction: IS_PRODUCTION,
+  bffAdminAuthExpressSessionSecret: BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET,
+  bffAdminAuthSessionCookieName: BFF_ADMIN_AUTH_SESSION_COOKIE_NAME,
+});
