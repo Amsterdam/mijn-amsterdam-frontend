@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import path, { resolve } from 'node:path';
 
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { delay } from '../../../universal/helpers/utils.ts';
 
 const JOB_SUCCESS_CODE = 0;
@@ -42,6 +43,13 @@ export async function runMigrationsCommand() {
       module: 'database',
     },
   });
+
+  // TODO: Remove after testing
+  if (!IS_PRODUCTION) {
+    console.log(
+      `APPLICATIONINSIGHTS_CONNECTION_STRING: ${process.env.APPLICATIONINSIGHTS_CONNECTION_STRING?.slice(0, 10)}...`
+    );
+  }
 
   try {
     await checkDatabaseConnectivity();
