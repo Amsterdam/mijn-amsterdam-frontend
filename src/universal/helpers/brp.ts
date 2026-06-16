@@ -4,10 +4,6 @@ export function getFullName(
   persoon: Partial<Pick<Persoon, 'voornamen'>> &
     Pick<Persoon, 'geslachtsnaam' | 'voorvoegselGeslachtsnaam'>
 ) {
-  if (!persoon) {
-    return '';
-  }
-
   return [
     persoon.voornamen,
     persoon.voorvoegselGeslachtsnaam,
