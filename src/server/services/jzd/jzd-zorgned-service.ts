@@ -4,13 +4,13 @@ import {
   type ZorgnedApiConfigKey,
 } from './jzd-service-config.ts';
 import {
-  FAKE_DECISION_DOCUMENT_ID,
   getDecisionDocument,
   isAfterWCAGValidDocumentsDate,
   isCancelled,
   isDocumentDecisionDateActive,
   isEindeGeldigheidVerstreken,
 } from './wmo/status-line-items/wmo-generic.ts';
+import { FAKE_DECISION_DOCUMENT_ID } from './wmo/wmo-config.ts';
 import {
   DATE_END_NOT_OLDER_THAN,
   DOCUMENT_TITLE_BESLUIT_STARTS_WITH,
@@ -107,8 +107,8 @@ export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
 
   // Override actueel indien de einde geldigheid is verlopen
   if (
-    isActueel &&
-    (isEindeGeldigheid || aanvraagTransformed.resultaat === 'afgewezen')
+    (isActueel && isEindeGeldigheid) ||
+    aanvraagTransformed.resultaat === 'afgewezen'
   ) {
     isActueel = false;
   }

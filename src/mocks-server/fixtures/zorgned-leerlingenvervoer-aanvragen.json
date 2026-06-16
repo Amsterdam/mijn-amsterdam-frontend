@@ -21,7 +21,7 @@
               "product": {
                 "identificatie": "LLVAVG",
                 "productsoortCode": "LLV",
-                "omschrijving": "aangepast groepsvervoer"
+                "omschrijving": "aangepast groepsvervoer (zonder document, zonder acties)"
               },
               "productCategorie": {},
               "resultaat": "toegewezen",
@@ -87,7 +87,7 @@
               "product": {
                 "identificatie": "LLVAVG",
                 "productsoortCode": "LLV",
-                "omschrijving": "aangepast groepsvervoer"
+                "omschrijving": "aangepast groepsvervoer (met document, zonder acties)"
               },
               "productCategorie": {},
               "resultaat": "toegewezen",
@@ -235,7 +235,7 @@
               "product": {
                 "identificatie": "LLVOVA",
                 "productsoortCode": "LLV",
-                "omschrijving": "openbaar vervoer abonnement"
+                "omschrijving": "openbaar vervoer abonnement (geen document, geen acties, toegewezen)"
               },
               "productCategorie": {},
               "resultaat": "toegewezen",
@@ -298,7 +298,7 @@
               "product": {
                 "identificatie": "LLVAVG",
                 "productsoortCode": "LLV",
-                "omschrijving": "aangepast groepsvervoer"
+                "omschrijving": "aangepast groepsvervoer (met acties, zonder documenten)"
               },
               "productCategorie": {},
               "resultaat": "toegewezen",

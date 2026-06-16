@@ -4,14 +4,12 @@ import slug from 'slugme';
 import { routes, type ZorgnedApiConfigKey } from './jzd-service-config.ts';
 import { type JzdVoorzieningFrontend } from './jzd-types.ts';
 import { fetchZorgnedAanvragenJZD } from './jzd-zorgned-service.ts';
-import {
-  hasDecision,
-  isAfterWCAGValidDocumentsDate,
-} from './wmo/status-line-items/wmo-generic.ts';
+import { isAfterWCAGValidDocumentsDate } from './wmo/status-line-items/wmo-generic.ts';
 import {
   getHulpmiddelenDisclaimer,
   hulpmiddelenDisclaimerConfig as hulpmiddelenDisclaimerConfig,
 } from './wmo/status-line-items/wmo-hulpmiddelen.ts';
+import { DECISION_STEP_STATUS } from './wmo/wmo-config.ts';
 import { themaConfig as themaConfigJeugd } from '../../../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
 import { FeatureToggle } from '../../../universal/config/feature-toggles.ts';
 import {
@@ -33,7 +31,7 @@ import {
   type ZorgnedAanvraagTransformed,
   type ZorgnedStatusLineItemsConfig,
 } from '../zorgned/zorgned-types.ts';
-import { llvStatusLineItemsConfig } from './jeugd/status-line-items.ts';
+import { llvStatusLineItemsConfig } from './jeugd/llv-status-line-items.ts';
 import { wmoStatusLineItemsConfig } from './wmo/wmo-status-line-items.ts';
 import { themaConfig as themaConfigZorg } from '../../../client/pages/Thema/Zorg/Zorg-thema-config.ts';
 
@@ -69,8 +67,6 @@ function getDocuments(
   return [];
 }
 
-const DECISION_STEP_STATUS = 'Besluit genomen';
-
 function transformVoorzieningForFrontend(
   aanvraag: ZorgnedAanvraagTransformed,
   steps: StatusLineItem[],
@@ -96,38 +92,36 @@ function transformVoorzieningForFrontend(
     aanvragen
   );
 
-  const voorzieningFrontend: JzdVoorzieningFrontend & { procesAanvraag: any } =
-    {
-      id,
-      title: aanvraag.titel
-        ? // Voorzieningen always have a title.
-          capitalizeFirstLetter(aanvraag.titel)
-        : // For aanvragen we use a generic title because we don't know the voorziengen requested in the aanvraag.
-          `Melding gedaan op ${defaultDateFormat(aanvraag.datumAanvraag)}`,
-      supplier: aanvraag.leverancier,
-      isActual: aanvraag.isActueel,
-      link: {
-        title: 'Meer informatie',
-        to: route,
-      },
-      procesAanvraag: aanvraag.procesAanvraag,
-      documents: getDocuments(sessionID, aanvraag, documentDownloadRoute),
-      steps,
-      // NOTE: Keep! This field is added specifically for the Tips api.
-      itemTypeCode: aanvraag.productsoortCode,
-      decision:
-        hasDecision(aanvraag) && aanvraag.resultaat
-          ? capitalizeFirstLetter(aanvraag.resultaat)
-          : '',
-      dateDecision,
-      dateDecisionFormatted: dateDecision
-        ? defaultDateFormat(dateDecision)
+  const voorzieningFrontend: JzdVoorzieningFrontend = {
+    id,
+    title: aanvraag.titel
+      ? // Voorzieningen always have a title.
+        capitalizeFirstLetter(aanvraag.titel)
+      : // For aanvragen we use a generic title because we don't know the voorziengen requested in the aanvraag.
+        `Melding gedaan op ${defaultDateFormat(aanvraag.datumAanvraag)}`,
+    supplier: aanvraag.leverancier,
+    isActual: aanvraag.isActueel,
+    link: {
+      title: 'Meer informatie',
+      to: route,
+    },
+    documents: getDocuments(sessionID, aanvraag, documentDownloadRoute),
+    steps,
+    // NOTE: Keep! This field is added specifically for the Tips api.
+    itemTypeCode: aanvraag.productsoortCode,
+    decision:
+      steps.some(
+        (step) => step.status === DECISION_STEP_STATUS && step.isActive
+      ) && aanvraag.resultaat
+        ? capitalizeFirstLetter(aanvraag.resultaat)
         : '',
-      displayStatus: getLatestStatus(steps),
-      statusDate: getLatestStatusDate(steps),
-      statusDateFormatted: getLatestStatusDate(steps, true),
-      disclaimer,
-    };
+    dateDecision,
+    dateDecisionFormatted: dateDecision ? defaultDateFormat(dateDecision) : '',
+    displayStatus: getLatestStatus(steps),
+    statusDate: getLatestStatusDate(steps),
+    statusDateFormatted: getLatestStatusDate(steps, true),
+    disclaimer,
+  };
 
   return voorzieningFrontend;
 }

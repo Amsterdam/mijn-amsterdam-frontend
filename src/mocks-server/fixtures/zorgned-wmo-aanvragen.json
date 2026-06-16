@@ -115,7 +115,7 @@
                 "identificatie": "WRA",
                 "productCode": null,
                 "productsoortCode": "WRA",
-                "omschrijving": "ALLE DOCUMENTEN TEST: woonruimteaanpassing (in behandeling)"
+                "omschrijving": "ALLE DOCUMENTEN TEST: woonruimteaanpassing"
               },
               "productCategorie": {
                 "code": "13",
@@ -203,7 +203,7 @@
       },
       {
         "_links": null,
-        "identificatie": "912837198723",
+        "identificatie": "912837192221118723",
         "regeling": {
           "identificatie": "WMO",
           "omschrijving": "WMO"
@@ -216,12 +216,12 @@
         "datumAanmelding": "2023-04-25",
         "datumAanvraag": "2023-04-25",
         "beschikking": {
-          "beschikkingNummer": 300111429,
+          "beschikkingNummer": 300112312311429,
           "datumAfgifte": "2023-05-17",
           "toelichting": null,
           "beschikteProducten": [
             {
-              "identificatie": "116841",
+              "identificatie": "111231236841",
               "externe_identificatie": null,
               "product": {
                 "identificatie": "WRA",
@@ -4299,7 +4299,7 @@
                 "identificatie": "13W32",
                 "productCode": "13W32",
                 "productsoortCode": "WRA2",
-                "omschrijving": "reparatie-/verwijderopdracht toegang"
+                "omschrijving": "reparatie-/verwijderopdracht toegang (geen documenten)"
               },
               "productCategorie": {
                 "code": "13",
@@ -5831,11 +5831,11 @@
         "datumAanmelding": "2024-08-29",
         "datumAanvraag": "2024-08-29",
         "beschikking": {
-          "beschikkingNummer": 300989920,
+          "beschikkingNummer": 123123123123,
           "datumAfgifte": "2024-08-29",
           "beschikteProducten": [
             {
-              "identificatie": "1213392",
+              "identificatie": "1211231233392",
               "product": {
                 "identificatie": "07A09",
                 "productCode": "07A09",

@@ -116,8 +116,10 @@ export function getHulpmiddelenDisclaimer(
   aanvragen: ZorgnedAanvraagTransformed[]
 ): string | undefined {
   const config =
-    disclaimerConfig.find((cfg) =>
-      cfg.codes.includes(currentAanvraag.productsoortCode)
+    disclaimerConfig.find(
+      (cfg) =>
+        currentAanvraag.productsoortCode &&
+        cfg.codes.includes(currentAanvraag.productsoortCode)
     ) ?? disclaimerConfig.find((cfg) => !cfg.codes.length);
 
   if (!config) {
