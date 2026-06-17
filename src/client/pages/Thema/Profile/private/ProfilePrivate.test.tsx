@@ -12,7 +12,7 @@ import type { WonenDataFrontend } from '../../../../../server/services/wonen/won
 import { bffApiHost } from '../../../../../testing/setup.ts';
 import { bffApi } from '../../../../../testing/utils.ts';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
-import MockApp from '../../../MockApp.tsx';
+import { MockApp } from '../../../MockApp.tsx';
 import { themaConfig } from '../Profile-thema-config.ts';
 
 const testState = (
@@ -149,7 +149,7 @@ describe('<Profile />', () => {
     screen.getByText('Briefadres');
   });
 
-  test('Lives in Mokum and has no verbintenis: display all data', async () => {
+  test('Lives in Mokum and has no verbintenis: shows disclaimer and hides overlijdensdatum', async () => {
     render(
       <Component
         state={{
@@ -178,6 +178,13 @@ describe('<Profile />', () => {
     await userEvent.click(button2);
 
     screen.getByText('Dirkje');
+
+    expect(
+      screen.getAllByText(
+        /Wij mogen een overlijdensdatum van ouders of kinderen niet laten zien/
+      )
+    ).toHaveLength(2);
+    expect(screen.queryByText('Datum overlijden')).not.toBeInTheDocument();
   });
 
   test('Non-Mokum does not display certain panels', async () => {

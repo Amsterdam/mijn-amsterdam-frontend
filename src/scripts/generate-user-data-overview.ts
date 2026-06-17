@@ -6,18 +6,23 @@
  *
  * When debugging locally
  * ======================
- * To connect to our test environment fill BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL with
+ * To connect to our test environment fill
+ BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL with
  * `https://{azure_default_domain}/api/v1` where azure_default_domain is found -
  * on our test Appservice in Azure Portal.
- * Or keep the default that connects to our local server. Start up our local environment in that case.
+ * Or keep the default that connects to our local server. Start up our local
+ environment in that case.
  *
  * How to use
  * ==========
  * pnpx tsx src/scripts/generate-user-data-overview.ts
- * add --from-disk (-d) to save to disk and use cached data. To refresh the cache add the --refresh-cache flag.
- * add --out-file-path-digid-test-accounts=<filepath> (-f) to decide where to save the test account json overview -
+ * add --from-disk (-d) to save to disk and use cached data. To refresh the
+ cache add the --refresh-cache flag.
+ * add --out-file-path-digid-test-accounts=<filepath> (-f) to decide where to
+ save the test account json overview -
  * this will overwrite the local file by default.
- * add --update-test-accounts (-e) to automaticly update the test account file locally.
+ * add --update-test-accounts (-e) to automaticly update the test account file
+ locally.
  *
  * Tips
  * =========
@@ -30,65 +35,66 @@
 
 /* eslint-disable */
 import '../server/helpers/load-env.ts';
-import * as XLSX from 'xlsx';
-import fs from 'node:fs';
-import assert from 'node:assert';
-import { parseArgs } from 'node:util';
-import slug from 'slugme';
-import { defaultDateFormat } from '../universal/helpers/date.ts';
-import { getFullAddress, isMokum } from '../universal/helpers/brp.ts';
-import {
-  type TestUserAccount,
-  type TestUserData,
-  testAccountDataDigid as importedDigidTestAccounts,
-  type OptionalTestUserAccountProperties,
-  DIGID_TEST_ACCOUNTS_PATH,
-} from '../universal/config/auth.development.ts';
 
 import { differenceInYears, parseISO } from 'date-fns';
+import assert from 'node:assert';
+import fs from 'node:fs';
+import { parseArgs } from 'node:util';
+import slug from 'slugme';
+import * as XLSX from 'xlsx';
 
-import type { ServiceResults } from '../server/services/content-tips/tip-types.ts';
-import { IS_PRODUCTION } from '../universal/config/env.ts';
-import type { AppState, MyNotification } from '../universal/types/App.types.ts';
-import type {
-  Adres,
-  Kind,
-  Persoon,
-  BrpFrontend,
-} from '../server/services/brp/brp-types.ts';
-
-import { themaConfig as themaInkomen } from '../client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
-import { themaConfig as themaProfiles } from '../client/pages/Thema/Profile/Profile-thema-config.ts';
-import { themaConfig as themaZorg } from '../client/pages/Thema/Zorg/Zorg-thema-config.ts';
+import { themaConfig as themaAfis } from '../client/pages/Thema/Afis/Afis-thema-config.ts';
 import { themaConfig as themaAfval } from '../client/pages/Thema/Afval/Afval-thema-config.ts';
-import { themaConfig as themaVergunningen } from '../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
-import { themaConfig as themaErfpacht } from '../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
-import { themaConfig as themaBezwaren } from '../client/pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
-import { themaConfig as themaHoreca } from '../client/pages/Thema/Horeca/Horeca-thema-config.ts';
-import { themaConfig as themaToeristischeVerhuur } from '../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import { themaConfig as themaAVG } from '../client/pages/Thema/AVG/AVG-thema-config.ts';
+import { themaConfig as themaBelastingen } from '../client/pages/Thema/Belastingen/Belastingen-thema-config.ts';
+import { themaConfig as themaBezwaren } from '../client/pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
+import { themaConfig as themaBodem } from '../client/pages/Thema/Bodem/Bodem-thema-config.ts';
+import { themaConfig as themaErfpacht } from '../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
+import { themaConfig as themaHLI } from '../client/pages/Thema/HLI/HLI-thema-config.ts';
+import { themaConfig as themaHoreca } from '../client/pages/Thema/Horeca/Horeca-thema-config.ts';
+import { themaConfig as themaInkomen } from '../client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
+import { themaConfig as themaJeugd } from '../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
+import { themaConfig as themaKlachten } from '../client/pages/Thema/Klachten/Klachten-thema-config.ts';
+import { themaConfig as themaKrefia } from '../client/pages/Thema/Krefia/Krefia-thema-config.ts';
+import { themaConfig as themaMilieuzone } from '../client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
+import { themaConfig as themaOvertredingen } from '../client/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
+import { themaConfig as themaParkeren } from '../client/pages/Thema/Parkeren/Parkeren-thema-config.ts';
+import { themaConfig as themaProfiles } from '../client/pages/Thema/Profile/Profile-thema-config.ts';
+import { themaConfig as themaSubsidies } from '../client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
 import {
   themaId as themaIdSvwi,
   themaTitle as themaTitleSvwi,
 } from '../client/pages/Thema/Svwi/Svwi-thema-config.ts';
-import { themaConfig as themaKlachten } from '../client/pages/Thema/Klachten/Klachten-thema-config.ts';
-import { themaConfig as themaKrefia } from '../client/pages/Thema/Krefia/Krefia-thema-config.ts';
-import { themaConfig as themaAfis } from '../client/pages/Thema/Afis/Afis-thema-config.ts';
-import { themaConfig as themaOvertredingen } from '../client/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
+import { themaConfig as themaToeristischeVerhuur } from '../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import { themaConfig as themaVaren } from '../client/pages/Thema/Varen/Varen-thema-config.ts';
-import { themaConfig as themaBodem } from '../client/pages/Thema/Bodem/Bodem-thema-config.ts';
-import { themaConfig as themaHLI } from '../client/pages/Thema/HLI/HLI-thema-config.ts';
-import { themaConfig as themaJeugd } from '../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
-import { themaConfig as themaParkeren } from '../client/pages/Thema/Parkeren/Parkeren-thema-config.ts';
-import { themaConfig as themaBelastingen } from '../client/pages/Thema/Belastingen/Belastingen-thema-config.ts';
-import { themaConfig as themaMilieuzone } from '../client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
-import { themaConfig as themaSubsidies } from '../client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
+import { themaConfig as themaVergunningen } from '../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
+import { themaConfig as themaZorg } from '../client/pages/Thema/Zorg/Zorg-thema-config.ts';
+import {
+  DIGID_TEST_ACCOUNTS_PATH,
+  getTestAccountData,
+  type OptionalTestUserAccountProperties,
+  type TestUserAccount,
+  type TestUserData,
+} from '../server/auth/auth-development.ts';
+import type {
+  Adres,
+  BrpFrontend,
+  Kind,
+  Persoon,
+} from '../server/services/brp/brp-types.ts';
+import type { ServiceResults } from '../server/services/content-tips/tip-types.ts';
+import { IS_PRODUCTION } from '../universal/config/env.ts';
+import { getFullAddress, isMokum } from '../universal/helpers/brp.ts';
+import { defaultDateFormat } from '../universal/helpers/date.ts';
+import type { AppState, MyNotification } from '../universal/types/App.types.ts';
 
 function cleanTestUsername(username: string): string {
   return username.trim().replace('Provincie-', '');
 }
 
-/** Extra hardcoded additions are to display certain services as if they were their own thema.
+/**
+ * Extra hardcoded additions are to display certain services as if they were
+ * their own thema.
  */
 const themas = [
   { id: themaProfiles.BRP.id, title: themaProfiles.BRP.title },
@@ -125,16 +131,18 @@ if (IS_PRODUCTION) {
   throw Error('This script cannot be run inside of production.');
 }
 
+const digidTestAccounts = await getTestAccountData('MA_TEST_ACCOUNTS');
+
 function parseStdinOrFallback(): TestUserData | null {
   let input: string;
   try {
     input = fs.readFileSync(process.stdin.fd, 'utf-8');
   } catch {
-    return importedDigidTestAccounts;
+    return digidTestAccounts;
   }
 
   if (input.length <= 0) {
-    return importedDigidTestAccounts;
+    return digidTestAccounts;
   }
 
   const parsed: TestUserData = JSON.parse(input);
@@ -378,7 +386,9 @@ function sheetZaken(resultsByUser: ResultsByUser): SheetData {
   };
 }
 
-type WithIdentifier = { identifier: string };
+type WithIdentifier = {
+  identifier: string;
+};
 
 function unpackZaken(
   content: WithIdentifier[] | Record<string, WithIdentifier[] | unknown>
@@ -401,7 +411,9 @@ async function getServiceResults(): Promise<ResultsByUser> {
   const allResults: ResultsByUser = {};
 
   for (const [username, profileId] of testAccounts) {
-    const loginURL = `${BASE_URL}/auth/digid/login/${slug(cleanTestUsername(username))}?redirectUrl=noredirect`;
+    const loginURL = `${BASE_URL}/auth/digid/login/${slug(
+      cleanTestUsername(username)
+    )}?redirectUrl=noredirect`;
     try {
       const loginResponse = await fetch(loginURL);
       const cookie = loginResponse.headers.get('set-cookie');
@@ -567,7 +579,9 @@ function getBRPRows(
       } catch (err) {
         value = '';
         console.error(
-          `Error while getting data for label: ${label}, with error message: ${err}`
+          `Error while getting data for label: ${
+            label
+          }, with error message: ${err}`
         );
       }
       acc[label] = value;
@@ -669,7 +683,11 @@ const brpSheetLayout: BrpSheetLayout[] = [
       const { geboortedatum, geboortelandnaam } = persoon;
       return `${
         geboortedatum !== null ? defaultDateFormat(geboortedatum) : 'Onbekend'
-      } ${geboortelandnaam !== 'Nederland' ? `(${geboortelandnaam ?? 'Onbekend'})` : ''}`;
+      } ${
+        geboortelandnaam !== 'Nederland'
+          ? `(${geboortelandnaam ?? 'Onbekend'})`
+          : ''
+      }`;
     },
   },
   {
@@ -726,9 +744,9 @@ const brpSheetLayout: BrpSheetLayout[] = [
         return '';
       }
       return verbintenis.persoon
-        ? `${
-            verbintenis.soortVerbintenis ?? ''
-          } met ${relatedUser(verbintenis.persoon as Persoon)}`
+        ? `${verbintenis.soortVerbintenis ?? ''} met ${relatedUser(
+            verbintenis.persoon as Persoon
+          )}`
         : Object.keys(verbintenis).length
           ? JSON.stringify(verbintenis)
           : '';
@@ -876,7 +894,9 @@ function sheetServiceErrors(
         Object.entries(results).map(([appStateKey, response]) => {
           return [
             appStateKey,
-            `${response.status}${response.status === 'ERROR' ? ` - ${response.message}` : ''}`,
+            `${response.status}${
+              response.status === 'ERROR' ? ` - ${response.message}` : ''
+            }`,
           ];
         })
       );

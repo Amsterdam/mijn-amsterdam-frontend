@@ -1,10 +1,11 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
+import slug from 'slugme';
 
 import { themaConfig } from './Zorg-thema-config.ts';
 import { ZorgDetail } from './ZorgDetail.tsx';
 import type { AppState } from '../../../../universal/types/App.types.ts';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 
 const testState = {
   WMO: {
@@ -41,7 +42,7 @@ const testState = {
         documents: [],
         link: {
           title: 'Meer informatie',
-          to: '/zorg-en-ondersteuning/voorzieningen/102996420',
+          to: '/zorg-en-ondersteuning/voorzieningen/hulp-bij-het-huishouden-nog-niet-geleverd/102996420',
         },
         steps: [
           {
@@ -95,7 +96,7 @@ const testState = {
         documents: [],
         link: {
           title: 'Meer informatie',
-          to: '/zorg-en-ondersteuning/voorzieningen/3917854581',
+          to: '/zorg-en-ondersteuning/voorzieningen/hulp-bij-het-huishouden-geleverd/3917854581',
         },
         steps: [
           {
@@ -149,7 +150,7 @@ const testState = {
         documents: [],
         link: {
           title: 'Meer informatie',
-          to: '/zorg-en-ondersteuning/voorzieningen/879359140',
+          to: '/zorg-en-ondersteuning/voorzieningen/hulp-bij-het-huishouden-tijdelijk-gestopt/879359140',
         },
         steps: [
           {
@@ -203,7 +204,7 @@ const testState = {
         documents: [],
         link: {
           title: 'Meer informatie',
-          to: '/zorg-en-ondersteuning/voorzieningen/8927959',
+          to: '/zorg-en-ondersteuning/voorzieningen/hulp-bij-het-huishouden-gestopt/8927959',
         },
         steps: [
           {
@@ -253,6 +254,7 @@ const testState = {
 
 function testDetailPage(id: string, title: string) {
   const routeEntry = generatePath(themaConfig.detailPage.route.path, {
+    voorziening: slug(title),
     id,
   });
   const routePath = themaConfig.detailPage.route.path;

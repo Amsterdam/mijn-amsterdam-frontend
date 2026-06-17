@@ -1,9 +1,5 @@
-import type {
-  BAGQueryParams} from './bag.types.ts';
-import {
-  type BAGLocation,
-  type BAGSourceData,
-} from './bag.types.ts';
+import type { BAGQueryParams } from './bag.types.ts';
+import { type BAGLocation, type BAGSourceData } from './bag.types.ts';
 import {
   apiErrorResult,
   type ApiResponse,

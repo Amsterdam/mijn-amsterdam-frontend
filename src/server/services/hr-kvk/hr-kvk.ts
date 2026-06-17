@@ -17,7 +17,10 @@ import type {
   VestigingenResponseSource,
   KVKNummer,
 } from './hr-kvk.types.ts';
-import { IS_DEVELOPMENT, IS_PRODUCTION } from '../../../universal/config/env.ts';
+import {
+  IS_DEVELOPMENT,
+  IS_PRODUCTION,
+} from '../../../universal/config/env.ts';
 import {
   apiErrorResult,
   apiSuccessResult,

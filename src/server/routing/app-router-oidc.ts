@@ -4,7 +4,11 @@ import type { ConfigParams } from 'express-openid-connect';
 import expressOpenIdConnect from 'express-openid-connect';
 
 import { nocache, verifyAuthenticated } from './route-handlers.ts';
-import { generateFullApiUrlBFF, sendUnauthorized } from './route-helpers.ts';
+import {
+  generateFullApiUrlBFF,
+  generateMaFrontendUrl,
+  sendUnauthorized,
+} from './route-helpers.ts';
 import { createBFFRouter } from './route-helpers.ts';
 import { apiSuccessResult } from '../../universal/helpers/api.ts';
 import { getReturnToUrl } from '../auth/auth-after-redirect-returnto.ts';
@@ -29,7 +33,6 @@ import {
   authRoutes,
 } from '../auth/auth-routes.ts';
 import type { AuthenticatedRequest } from '../auth/auth-types.ts';
-import { getFromEnv } from '../helpers/env.ts';
 import { countLoggedInVisit } from '../services/admin/admin-visitors.ts';
 
 export const oidcRouter = createBFFRouter({ id: 'router-oidc' });
@@ -105,7 +108,7 @@ oidcRouter.get(
     if (auth?.profile.id) {
       countLoggedInVisit(auth.profile.id);
     }
-    return res.redirect(process.env.MA_FRONTEND_URL + '?authMethod=digid');
+    return res.redirect(generateMaFrontendUrl(`/?authMethod=digid`));
   }
 );
 
@@ -147,9 +150,7 @@ oidcRouter.get(
     if (auth?.profile.id) {
       countLoggedInVisit(auth.profile.id, 'eherkenning');
     }
-    return res.redirect(
-      process.env.MA_FRONTEND_URL + '?authMethod=eherkenning'
-    );
+    return res.redirect(generateMaFrontendUrl(`/?authMethod=eherkenning`));
   }
 );
 
@@ -190,7 +191,7 @@ oidcRouter.get(
 );
 
 async function authLogoutHandler(req: Request, res: Response) {
-  let redirectUrl = getFromEnv('MA_FRONTEND_URL', true) as string;
+  let redirectUrl = generateMaFrontendUrl('/');
   let authMethodRequested = req.query.authMethod;
 
   if (hasSessionCookie(req) && !authMethodRequested) {
@@ -214,22 +215,19 @@ oidcRouter.get(authRoutes.AUTH_LOGOUT, authLogoutHandler);
 
 oidcRouter.get(
   authRoutes.AUTH_LOGOUT_DIGID,
-  createLogoutHandler(getFromEnv('MA_FRONTEND_URL', true) as string)
+  createLogoutHandler(generateMaFrontendUrl('/'))
 );
 
 oidcRouter.get(
   authRoutes.AUTH_LOGOUT_EHERKENNING,
-  createLogoutHandler(getFromEnv('MA_FRONTEND_URL', true) as string)
+  createLogoutHandler(generateMaFrontendUrl('/'))
 );
 
 const DO_IDP_LOGOUT = false;
 // Only destroys the BFF Application session, no logout of TMA in our case.
 oidcRouter.get(
   authRoutes.AUTH_LOGOUT_EHERKENNING_LOCAL,
-  createLogoutHandler(
-    getFromEnv('MA_FRONTEND_URL', true) as string,
-    DO_IDP_LOGOUT
-  )
+  createLogoutHandler(generateMaFrontendUrl('/'), DO_IDP_LOGOUT)
 );
 
 export const forTesting = {

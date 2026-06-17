@@ -77,7 +77,7 @@ function FocusTrap({
         setIsReady(true);
       });
     }
-  }, []);
+  }, [giveUpOnReadyPollingAfterMs, isReady, pollingQuerySelector]);
 
   return isReady ? <FocusTrapInner /> : null;
 }

@@ -1,5 +1,6 @@
 import { render, within } from '@testing-library/react';
 import { generatePath } from 'react-router';
+import slug from 'slugme';
 
 import { themaConfig } from './Jeugd-thema-config.ts';
 import { JeugdDetail } from './JeugdDetail.tsx';
@@ -7,12 +8,13 @@ import type { AppState } from '../../../../universal/types/App.types.ts';
 import { componentCreator } from '../../MockApp.tsx';
 
 const id = '1610585298';
+const voorzieningTitle = 'Aangepast groepsvervoer';
 
 const besluitGenomenState: AppState['JEUGD'] = {
   content: [
     {
       id,
-      title: 'Aangepast groepsvervoer',
+      title: voorzieningTitle,
       isActual: true,
       link: {
         title: 'Meer informatie',
@@ -88,7 +90,7 @@ const basicAppState = {
 
 const createComponent = componentCreator({
   component: JeugdDetail,
-  routeEntry: generatePath(themaConfig.detailPage.route.path, { id }),
+  routeEntry: generatePath(themaConfig.detailPage.route.path, { voorziening: slug(voorzieningTitle), id }),
   routePath: themaConfig.detailPage.route.path,
 });
 

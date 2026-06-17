@@ -15,7 +15,7 @@ import type {
   AfisFacturenOverviewResponse,
 } from '../../../../server/services/afis/afis-types.ts';
 import { useWidescreen } from '../../../hooks/media.hook.ts';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 
 vi.mock('./AfisEmandateActionButtons.tsx', () => ({
   AfisEMandateActionButtons: () => <div>ActionButtons</div>,

@@ -9,6 +9,7 @@ import tseslint from 'typescript-eslint';
 // eslint-disable-next-line import/no-default-export
 export default [
   { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
+  { ignores: ['public/js/usabilla*.js', 'scripts/'] },
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
@@ -90,6 +91,24 @@ export default [
             order: 'asc',
             caseInsensitive: true,
           },
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/**/*.{js,mjs,cjs,ts,jsx,tsx}'],
+    ignores: ['src/**/*.integration.test.{js,mjs,cjs,ts,jsx,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['**/pg-test-utils.ts'],
+              message:
+                'pg-test-utils is test-only. Import setupPgTestDb is only allowed from *.integration.test files.',
+            },
+          ],
         },
       ],
     },

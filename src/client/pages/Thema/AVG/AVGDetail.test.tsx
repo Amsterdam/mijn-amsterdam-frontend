@@ -8,7 +8,7 @@ import type {
   AppState,
   StatusLineItem,
 } from '../../../../universal/types/App.types.ts';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 
 const steps: StatusLineItem[] = [
   {

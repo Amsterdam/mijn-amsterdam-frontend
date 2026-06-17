@@ -15,7 +15,7 @@ describe('jzd-voorzieningen-api-service', () => {
       };
 
       const actionConfig = {
-        match: {
+        include: {
           type: 'example',
           status: 'active',
         },
@@ -34,7 +34,7 @@ describe('jzd-voorzieningen-api-service', () => {
       };
 
       const actionConfig = {
-        match: {
+        include: {
           type: 'example',
           status: 'active',
         },
@@ -46,13 +46,149 @@ describe('jzd-voorzieningen-api-service', () => {
       ).toBe(false);
     });
 
+    it('should return true if there are no matchers', () => {
+      const voorziening = {
+        type: 'example',
+        status: 'active',
+      };
+
+      const actionConfig = {
+        include: {},
+        assign: {},
+      };
+
+      expect(
+        forTesting.isMaApiPropertyConfigMatch(voorziening, actionConfig)
+      ).toBe(true);
+    });
+
+    it('should return false if there are no exclude matchers', () => {
+      const voorziening = {
+        type: 'example',
+        status: 'active',
+      };
+
+      const actionConfig = {
+        include: {},
+        exclude: {},
+        assign: {},
+      };
+
+      expect(
+        forTesting.isMaApiPropertyConfigMatch(
+          voorziening,
+          actionConfig,
+          'exclude'
+        )
+      ).toBe(false);
+    });
+
+    it('should return false if there are no exclude matchers that match the voorziening', () => {
+      const voorziening = {
+        type: 'example',
+        status: 'active',
+      };
+
+      const actionConfig = {
+        include: {},
+        exclude: {
+          type: 'differentExample',
+          status: 'inactive',
+        },
+        assign: {},
+      };
+
+      expect(
+        forTesting.isMaApiPropertyConfigMatch(
+          voorziening,
+          actionConfig,
+          'exclude'
+        )
+      ).toBe(false);
+    });
+
+    it('should return true when all exclude matchers match the voorziening', () => {
+      const voorziening = {
+        type: 'example',
+        status: 'active',
+      };
+
+      const actionConfig = {
+        include: {},
+        exclude: {
+          type: 'example',
+          status: 'active',
+        },
+        assign: {},
+      };
+
+      expect(
+        forTesting.isMaApiPropertyConfigMatch(
+          voorziening,
+          actionConfig,
+          'exclude'
+        )
+      ).toBe(true);
+    });
+
+    it('should include 2 voorzieningen based on productsoortCode and exclude 1 based on productIdentificatie', () => {
+      const voorziening1 = {
+        productsoortCode: 'WRA',
+        productIdentificatie: 'not-excluded-id',
+      } as unknown as ZorgnedAanvraagTransformed;
+
+      const voorziening2 = {
+        productsoortCode: 'WRA',
+        productIdentificatie: 'excluded-id',
+      } as unknown as ZorgnedAanvraagTransformed;
+
+      const actionConfig = {
+        include: {
+          productsoortCode: 'WRA',
+        },
+        exclude: {
+          productIdentificatie: 'excluded-id',
+        },
+        assign: {},
+      };
+
+      expect(
+        forTesting.isMaApiPropertyConfigMatch(
+          voorziening1,
+          actionConfig,
+          'include'
+        )
+      ).toBe(true);
+      expect(
+        forTesting.isMaApiPropertyConfigMatch(
+          voorziening1,
+          actionConfig,
+          'exclude'
+        )
+      ).toBe(false);
+      expect(
+        forTesting.isMaApiPropertyConfigMatch(
+          voorziening2,
+          actionConfig,
+          'include'
+        )
+      ).toBe(true);
+      expect(
+        forTesting.isMaApiPropertyConfigMatch(
+          voorziening2,
+          actionConfig,
+          'exclude'
+        )
+      ).toBe(true);
+    });
+
     it('should match different configurations based on property values', () => {
       const withLeveringsVorm = {
         productsoortCode: 'ABC',
         leveringsVorm: 'ZIN',
       };
       const actionConfig1 = {
-        match: {
+        include: {
           productsoortCode: 'ABC',
           leveringsVorm: 'ZIN',
         },
@@ -64,7 +200,7 @@ describe('jzd-voorzieningen-api-service', () => {
         leveringsVorm: '',
       };
       const actionConfig2 = {
-        match: {
+        include: {
           productsoortCode: 'ABC',
           leveringsVorm: '',
         },
@@ -93,7 +229,7 @@ describe('jzd-voorzieningen-api-service', () => {
       };
 
       const actionConfig: JzdApiConfig<typeof voorziening> = {
-        match: {
+        include: {
           type: 'example',
           status: 'active',
           date: (voorziening) => voorziening.date < new Date('2024-01-01'),
@@ -115,7 +251,7 @@ describe('jzd-voorzieningen-api-service', () => {
       } as unknown as ZorgnedAanvraagTransformed;
 
       const apiPropsConfig = {
-        match: {
+        include: {
           type: 'example',
           status: 'active',
         },
@@ -137,6 +273,47 @@ describe('jzd-voorzieningen-api-service', () => {
       });
     });
 
+    it('should include / exclude voorzieningen based on multiple configs and their include and exclude matchers', () => {
+      const voorziening = {
+        type: 'example',
+        status: 'active',
+      } as unknown as ZorgnedAanvraagTransformed;
+      const voorziening2 = {
+        type: 'example',
+        status: 'active',
+        id: 'excluded-id',
+      } as unknown as ZorgnedAanvraagTransformed;
+
+      const apiPropsConfig = {
+        include: {
+          type: 'example',
+          status: 'active',
+        },
+        exclude: {
+          id: 'excluded-id',
+        },
+        assign: {
+          maActies: ['assign-foo-bar'],
+        },
+      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
+
+      const voorzieningTransformed1 = forTesting.addMaApiPropsToVoorziening(
+        [apiPropsConfig],
+        voorziening
+      );
+
+      expect(voorzieningTransformed1).toHaveProperty('maActies', [
+        'assign-foo-bar',
+      ]);
+
+      const voorzieningTransformed2 = forTesting.addMaApiPropsToVoorziening(
+        [apiPropsConfig],
+        voorziening2
+      );
+
+      expect(voorzieningTransformed2).not.toHaveProperty('maActies');
+    });
+
     it('should merge and deduplicate array properties if they already exist', () => {
       const voorziening = {
         type: 'example',
@@ -144,7 +321,7 @@ describe('jzd-voorzieningen-api-service', () => {
       } as unknown as ZorgnedAanvraagTransformed;
 
       const apiPropsConfig1 = {
-        match: {
+        include: {
           type: 'example',
           status: 'active',
         },
@@ -154,7 +331,7 @@ describe('jzd-voorzieningen-api-service', () => {
       } as JzdApiConfig<ZorgnedAanvraagTransformed>;
 
       const apiPropsConfig2 = {
-        match: {
+        include: {
           type: 'example',
           status: 'active',
         },
@@ -181,7 +358,7 @@ describe('jzd-voorzieningen-api-service', () => {
       } as unknown as ZorgnedAanvraagTransformed;
 
       const apiPropsConfig: JzdApiConfig<typeof voorziening> = {
-        match: {
+        include: {
           type: 'differentExample',
           status: 'inactive',
         },
@@ -205,7 +382,7 @@ describe('jzd-voorzieningen-api-service', () => {
       } as unknown as ZorgnedAanvraagTransformed;
 
       const apiPropsConfig: JzdApiConfig<typeof voorziening> = {
-        match: {
+        include: {
           type: 'example',
           status: 'active',
         },
@@ -231,7 +408,7 @@ describe('jzd-voorzieningen-api-service', () => {
       } as unknown as ZorgnedAanvraagTransformed;
 
       const apiPropsConfig1 = {
-        match: {
+        include: {
           type: 'example',
           status: 'active',
         },
@@ -241,7 +418,7 @@ describe('jzd-voorzieningen-api-service', () => {
       } as JzdApiConfig<ZorgnedAanvraagTransformed>;
 
       const apiPropsConfig2 = {
-        match: {
+        include: {
           type: 'example',
           status: 'active',
         },
@@ -341,7 +518,7 @@ describe('jzd-voorzieningen-api-service', () => {
 
         const response = await fetchMaApiVoorzieningen('123456789', undefined, [
           {
-            match: {
+            include: {
               isActueel: true,
               productIdentificatie: ['LLVAVG'],
             },
@@ -376,7 +553,7 @@ describe('jzd-voorzieningen-api-service', () => {
 
         const response = await fetchMaApiVoorzieningen('123456789', undefined, [
           {
-            match: {
+            include: {
               leveringsVorm: 'ZIN',
               isActueel: true,
               productsoortCode: ['WRA'],
@@ -411,7 +588,7 @@ describe('jzd-voorzieningen-api-service', () => {
           },
           [
             {
-              match: {
+              include: {
                 leveringsVorm: 'ZIN',
                 isActueel: true,
                 productsoortCode: ['WRA'],
@@ -448,7 +625,7 @@ describe('jzd-voorzieningen-api-service', () => {
           },
           [
             {
-              match: {
+              include: {
                 leveringsVorm: 'ZIN',
               },
               assign: {
@@ -488,7 +665,7 @@ describe('jzd-voorzieningen-api-service', () => {
         );
 
         expect(response.content).toMatchObject({
-          maActies: ['stopzetten'],
+          maActies: ['reparatieverzoek', 'stopzetten'],
           maProductgroep: 'WRA',
           leverancier: 'Gebr Koenen B.V.',
           leverancierIdentificatie: 'LA0994',

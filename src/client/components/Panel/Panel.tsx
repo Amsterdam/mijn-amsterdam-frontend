@@ -9,11 +9,7 @@ export interface PanelProps extends HTMLProps<HTMLDivElement> {
   children: ReactNode;
 }
 
-export default function Panel({
-  children,
-  className,
-  ...otherProps
-}: PanelProps) {
+export function Panel({ children, className, ...otherProps }: PanelProps) {
   return (
     <div {...otherProps} className={classnames(styles.Panel, className)}>
       {children}

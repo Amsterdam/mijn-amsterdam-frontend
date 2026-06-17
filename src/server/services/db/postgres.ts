@@ -91,11 +91,3 @@ process.on('beforeExit', () => {
   pool?.end();
   stopDbWatchdog();
 });
-
-export default {
-  id,
-  query,
-  queryGET,
-  queryALL,
-  getPool,
-};

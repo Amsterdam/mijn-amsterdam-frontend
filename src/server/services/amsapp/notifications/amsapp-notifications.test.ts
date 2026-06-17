@@ -1,5 +1,4 @@
 /* eslint-disable import/order */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   beforeEach,
   beforeAll,
@@ -11,27 +10,39 @@ import {
 } from 'vitest';
 
 import { DISCRETE_GENERIC_MESSAGE } from './amsapp-notifications-service-config.ts';
+import type { ServiceId } from './amsapp-notifications-types.ts';
+import type { NotificationsAndTipsResponse } from '../../tips-and-notifications.ts';
+
+type ServiceResponses = Partial<
+  Record<ServiceId, NotificationsAndTipsResponse>
+>;
 
 const mocks = vi.hoisted(() => {
   return {
     model: {
       listProfileIds: vi.fn(),
+      listConsumerIds: vi.fn(),
       upsertConsumer: vi.fn(),
+      deleteOrphanProfiles: vi.fn(),
       listProfiles: vi.fn(),
       truncate: vi.fn(),
-      deleteConsumer: vi.fn(),
+      deleteConsumers: vi.fn(),
       getProfileByConsumer: vi.fn(),
       storeNotifications: vi.fn(),
     },
     authHelpers: {
-      getFakeAuthProfileAndToken: vi.fn(),
+      getAuthProfileAndTokenWithoutSession: vi.fn(),
+    },
+    sourceApiRequest: {
+      requestData: vi.fn(),
     },
     tipsAndNotifications: {
       fetchNotificationsAndTipsFromServices: vi.fn(),
       notificationServices: {
         private: {
-          serviceA: vi.fn(),
-          serviceB: vi.fn(),
+          afis: vi.fn(),
+          avg: vi.fn(),
+          belasting: vi.fn(),
         },
       },
     },
@@ -40,19 +51,44 @@ const mocks = vi.hoisted(() => {
 
 vi.mock('./amsapp-notifications-model', () => mocks.model);
 vi.mock('./amsapp-notifications-helper', () => mocks.authHelpers);
+vi.mock('../../../helpers/source-api-request.ts', () => mocks.sourceApiRequest);
 vi.mock('../../tips-and-notifications', () => mocks.tipsAndNotifications);
 
 import {
+  batchFetchAndStoreNotifications,
+  unregisterExpiredConsumers,
   getConsumerProfile,
   storeNotificationsResponses,
-  unregisterConsumer,
 } from './amsapp-notifications.ts';
 
 describe('amsapp-notifications', () => {
   const systemTime = new Date('2000-01-01T12:00:00.000Z');
+
   beforeEach(() => {
     vi.clearAllMocks();
     vi.setSystemTime(systemTime);
+
+    mocks.model.listConsumerIds.mockResolvedValue([]);
+    mocks.model.listProfileIds.mockResolvedValue([]);
+    mocks.sourceApiRequest.requestData.mockResolvedValue({
+      status: 'OK',
+      content: null,
+    });
+    mocks.authHelpers.getAuthProfileAndTokenWithoutSession.mockImplementation(
+      (profileId: string) => ({
+        profile: {
+          id: profileId,
+          profileType: 'private',
+          authMethod: 'digid',
+          sid: 'sid',
+        },
+        token: 'token',
+        expiresAtMilliseconds: 1,
+      })
+    );
+    mocks.tipsAndNotifications.fetchNotificationsAndTipsFromServices.mockResolvedValue(
+      {}
+    );
   });
 
   afterAll(() => {
@@ -64,32 +100,21 @@ describe('amsapp-notifications', () => {
   });
 
   describe('Consumer', () => {
-    it('unregisterConsumer returns true when at least one row was deleted', async () => {
-      mocks.model.deleteConsumer.mockResolvedValue(1);
-
-      await expect(unregisterConsumer('consumer-1')).resolves.toBe(true);
-      expect(mocks.model.deleteConsumer).toHaveBeenCalledWith('consumer-1');
-    });
-
-    it('unregisterConsumer returns false when no rows were deleted', async () => {
-      mocks.model.deleteConsumer.mockResolvedValue(0);
-
-      await expect(unregisterConsumer('consumer-1')).resolves.toBe(false);
-    });
-
     it('getConsumerProfile returns profile data + isRegistered=true when found', async () => {
       mocks.model.getProfileByConsumer.mockResolvedValue({
-        profileId: '123456789',
         profileName: 'Jane Doe',
-        serviceIds: ['serviceA'],
-        dateUpdated: '2026-03-01T00:00:00.000Z',
+        serviceIds: ['afis'],
+        dateUpdated: new Date('2026-03-01T00:00:00.000Z'),
+        lastLoginDate: new Date('2026-04-01T00:00:00.000Z'),
+        loginExpiryDate: new Date('2026-06-01T00:00:00.000Z'),
       });
 
       await expect(getConsumerProfile('consumer-1')).resolves.toStrictEqual({
-        profileId: '123456789',
         profileName: 'Jane Doe',
-        serviceIds: ['serviceA'],
+        serviceIds: ['afis'],
         dateUpdated: '2026-03-01T00:00:00.000Z',
+        lastLoginDate: '2026-04-01T00:00:00.000Z',
+        loginExpiryDate: '2026-06-01T00:00:00.000Z',
         isRegistered: true,
       });
     });
@@ -103,18 +128,65 @@ describe('amsapp-notifications', () => {
     });
   });
 
+  describe('unregisterExpiredConsumers', () => {
+    it('removes consumers selected by expiry cutoff when cron cleanup runs', async () => {
+      mocks.model.listConsumerIds.mockResolvedValue(['expired-1']);
+      mocks.model.deleteConsumers.mockResolvedValue(['expired-1']);
+
+      await unregisterExpiredConsumers(systemTime);
+
+      expect(mocks.model.listConsumerIds).toHaveBeenCalledWith(systemTime);
+      expect(mocks.model.deleteConsumers).toHaveBeenCalledWith(['expired-1']);
+    });
+
+    it('is best effort and still removes consumers when webhook delivery fails', async () => {
+      mocks.model.listConsumerIds.mockResolvedValue(['expired-1']);
+      mocks.model.deleteConsumers.mockResolvedValue(['expired-1']);
+      mocks.sourceApiRequest.requestData.mockResolvedValue({
+        status: 'ERROR',
+        content: null,
+        message: 'timeout',
+      });
+
+      await expect(
+        unregisterExpiredConsumers(systemTime)
+      ).resolves.toBeUndefined();
+
+      expect(mocks.model.deleteConsumers).toHaveBeenCalledWith(['expired-1']);
+    });
+  });
+
+  describe('batchFetchAndStoreNotifications', () => {
+    it('fetches and stores notifications without running cron cleanup', async () => {
+      mocks.model.listProfileIds.mockResolvedValue([
+        {
+          profileId: '123456789',
+          serviceIds: ['afis'],
+        },
+      ]);
+
+      await batchFetchAndStoreNotifications();
+
+      expect(mocks.model.listConsumerIds).not.toHaveBeenCalled();
+      expect(
+        mocks.tipsAndNotifications.fetchNotificationsAndTipsFromServices
+      ).toHaveBeenCalledTimes(1);
+      expect(mocks.model.storeNotifications).toHaveBeenCalledTimes(1);
+    });
+  });
+
   it('storeNotificationsResponses transforms and stores notifications by service and ignores tips and notifications without datePublished', async () => {
     mocks.model.storeNotifications.mockResolvedValue(undefined);
 
-    const serviceResponses = {
-      serviceA: {
+    const serviceResponses: ServiceResponses = {
+      afis: {
         status: 'OK',
         content: {
           notifications: [
-            null,
             {
               id: 'n-tip',
               themaID: 'THEMA',
+              themaTitle: 'Thema',
               title: 'Tip',
               isTip: true,
               isAlert: false,
@@ -123,42 +195,42 @@ describe('amsapp-notifications', () => {
             {
               id: 'n-no-date',
               themaID: 'THEMA',
+              themaTitle: 'Thema',
               title: 'No date',
-              isTip: false,
               isAlert: false,
-              datePublished: undefined,
+              datePublished: '',
             },
             {
               id: 'n-1',
               themaID: 'THEMA',
+              themaTitle: 'Thema',
               title: 'Actual title (should be hidden)',
-              isTip: false,
               isAlert: true,
               datePublished: '2026-03-06T00:00:00.000Z',
             },
           ],
         },
       },
-      serviceB: {
+      avg: {
         status: 'ERROR',
         content: null,
         message: 'failed',
       },
-    } as any;
+    };
 
     await storeNotificationsResponses('123456789', serviceResponses);
 
     expect(mocks.model.storeNotifications).toHaveBeenCalledTimes(1);
 
-    const [profileIdArg, servicesArg, lastLoginDateArg] = mocks.model
-      .storeNotifications.mock.calls[0] as unknown as [string, any[], any];
+    const [profileIdArg, servicesArg, lastLoginDateArg] =
+      mocks.model.storeNotifications.mock.calls[0];
 
     expect(profileIdArg).toBe('123456789');
     expect(servicesArg).toHaveLength(1);
     expect(lastLoginDateArg).toBeNull();
 
     expect(servicesArg[0]).toStrictEqual({
-      serviceId: 'serviceA',
+      serviceId: 'afis',
       dateUpdated: systemTime.toISOString(),
       status: 'OK',
       content: [
@@ -174,13 +246,15 @@ describe('amsapp-notifications', () => {
   it('storeNotificationsResponses stores an empty array when all service responses are not OK', async () => {
     mocks.model.storeNotifications.mockResolvedValue(undefined);
 
-    await storeNotificationsResponses('123456789', {
-      serviceA: {
+    const serviceResponses: ServiceResponses = {
+      afis: {
         status: 'ERROR',
         content: null,
         message: 'nope',
       },
-    } as any);
+    };
+
+    await storeNotificationsResponses('123456789', serviceResponses);
 
     expect(mocks.model.storeNotifications).toHaveBeenCalledWith(
       '123456789',
@@ -195,18 +269,18 @@ describe('amsapp-notifications', () => {
     await storeNotificationsResponses(
       '123456789',
       {
-        serviceA: {
+        afis: {
           status: 'OK',
           content: { notifications: [] },
         },
-      } as any,
+      },
       { updateLastLoginDate: true }
     );
 
     expect(mocks.model.storeNotifications).toHaveBeenCalledWith(
       '123456789',
       expect.any(Array),
-      systemTime.toISOString()
+      systemTime
     );
   });
 
@@ -217,7 +291,7 @@ describe('amsapp-notifications', () => {
     await storeNotificationsResponses(
       '123456789',
       {
-        serviceA: {
+        afis: {
           status: 'OK',
           content: { notifications: [] },
         },
@@ -225,7 +299,7 @@ describe('amsapp-notifications', () => {
           status: 'OK',
           content: { notifications: [] },
         },
-      } as any,
+      },
       { updateLastLoginDate: true }
     );
 
@@ -233,13 +307,13 @@ describe('amsapp-notifications', () => {
       '123456789',
       [
         {
-          serviceId: 'serviceA',
+          serviceId: 'afis',
           dateUpdated: systemTime.toISOString(),
           status: 'OK',
           content: [],
         },
       ],
-      systemTime.toISOString()
+      systemTime
     );
   });
 });

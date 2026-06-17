@@ -5,7 +5,7 @@ import { AfisFactuur } from './AfisFactuur.tsx';
 import type { AfisThemaResponse } from '../../../../server/services/afis/afis-types.ts';
 import { bffApi } from '../../../../testing/utils.ts';
 import type { ApiResponse } from '../../../../universal/helpers/api.ts';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 
 const mockFactuur: AfisFactuurFrontend = {
   factuurNummer: '12345',

@@ -4,7 +4,7 @@
 ########################################################################################################################
 ########################################################################################################################
 
-FROM node:26.2.0 AS updated-local
+FROM node:26.3.0 AS updated-local
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
@@ -181,6 +181,7 @@ COPY --from=build-app-bff /build-space/build-bff /app/build-bff
 COPY --from=build-app-bff /build-space/node_modules /app/node_modules
 COPY --from=build-app-bff /build-space/package.json /app/package.json
 COPY --from=build-app-bff /build-space/vendor /app/vendor
+COPY db-migrations /app/db-migrations
 COPY src/server/views /app/build-bff/server/views
 
 # Run the app

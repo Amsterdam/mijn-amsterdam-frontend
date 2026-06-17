@@ -8,14 +8,10 @@ import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes.ts';
 import {
   createBFFRouter,
   generateFullApiUrlBFF,
+  generateMaFrontendUrl,
   sendBadRequest,
   sendUnauthorized,
 } from './route-helpers.ts';
-import type { TestUserData } from '../../universal/config/auth.development.ts';
-import {
-  testAccountDataDigid,
-  testAccountDataEherkenning,
-} from '../../universal/config/auth.development.ts';
 import { apiSuccessResult } from '../../universal/helpers/api.ts';
 import { getReturnToUrl } from '../auth/auth-after-redirect-returnto.ts';
 import {
@@ -23,6 +19,8 @@ import {
   OIDC_SESSION_MAX_AGE_SECONDS,
   TOKEN_ID_ATTRIBUTE,
 } from '../auth/auth-config.ts';
+import { getTestAccountData } from '../auth/auth-development.ts';
+import type { TestUserData } from '../auth/auth-development.ts';
 import {
   cleanTestUsername,
   signDevelopmentToken,
@@ -31,8 +29,7 @@ import { getAuth, hasSessionCookie } from '../auth/auth-helpers.ts';
 import { authRoutes } from '../auth/auth-routes.ts';
 import type { AuthProfile, MaSession } from '../auth/auth-types.ts';
 import { type AuthenticatedRequest } from '../auth/auth-types.ts';
-import { ONE_SECOND_MS } from '../config/app.ts';
-import { getFromEnv } from '../helpers/env.ts';
+import { MA_FRONTEND_URL, ONE_SECOND_MS } from '../config/app.ts';
 import { countLoggedInVisit } from '../services/admin/admin-visitors.ts';
 
 export const authRouterDevelopment = createBFFRouter({ id: 'router-dev' });
@@ -111,8 +108,8 @@ authRouterDevelopment.get(
     const authMethod = req.params.authMethod;
     const testAccountData =
       authMethod === 'digid'
-        ? testAccountDataDigid
-        : testAccountDataEherkenning;
+        ? await getTestAccountData('MA_TEST_ACCOUNTS')
+        : await getTestAccountData('MA_TEST_ACCOUNTS_EH');
 
     if (!testAccountData) {
       return sendBadRequest(
@@ -205,7 +202,7 @@ authRouterDevelopment.get(
         ? String(req.query.redirectUrl)
         : req.query.returnTo
           ? getReturnToUrl(req.query)
-          : `${process.env.MA_FRONTEND_URL}?authMethod=${req.params.authMethod}`;
+          : generateMaFrontendUrl(`/?authMethod=${req.params.authMethod}`);
 
     return res.redirect(redirectUrl);
   }
@@ -282,7 +279,7 @@ authRouterDevelopment.get(
     res.clearCookie(OIDC_SESSION_COOKIE_NAME, {
       path: '/',
     });
-    const returnTo = getReturnToUrl(req.query, getFromEnv('MA_FRONTEND_URL'));
+    const returnTo = getReturnToUrl(req.query, MA_FRONTEND_URL);
     return res.redirect(returnTo);
   }
 );

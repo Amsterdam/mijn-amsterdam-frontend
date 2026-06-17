@@ -15,6 +15,7 @@ import { WVOSContent } from './detail-page-content/WVOS.tsx';
 import { ZwaarVerkeer } from './detail-page-content/ZwaarVerkeer.tsx';
 import { useVergunningenDetailData } from './useVergunningenDetailData.hook.ts';
 import { useVergunningenThemaData } from './useVergunningenThemaData.hook.ts';
+import { getMissingDocumentsEmailForCaseType } from './Vergunningen-thema-config.ts';
 import type { DecosZaakFrontend } from '../../../../server/services/decos/decos-types.ts';
 import type { PowerBrowserZaakFrontend } from '../../../../server/services/powerbrowser/powerbrowser-types.ts';
 import type {
@@ -22,10 +23,9 @@ import type {
   PBVergunning,
   ZaakFrontendCombined,
 } from '../../../../server/services/vergunningen/config-and-types.ts';
-import { getMissingDocumentsEmailForCaseType } from '../../../../server/services/vergunningen/config-and-types.ts';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { ThemaDetailPagina } from '../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 interface DetailPageContentProps<V> {

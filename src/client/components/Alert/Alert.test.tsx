@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 
-import Alert from './Alert.tsx';
+import { ErrorAlert } from './Alert.tsx';
 
 it('Renders without crashing', () => {
-  render(<Alert>O nee!</Alert>);
+  render(<ErrorAlert>O nee!</ErrorAlert>);
   expect(screen.getByText('O nee!')).toBeInTheDocument();
 });

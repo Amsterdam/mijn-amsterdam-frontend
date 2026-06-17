@@ -14,10 +14,9 @@ import { fetchBrp } from '../brp/brp.ts';
 import { fetchDataset } from '../buurt/buurt.ts';
 import type {
   DatasetFeatureProperties,
-  MaPointFeature} from '../buurt/datasets.ts';
-import {
-  datasetEndpoints
+  MaPointFeature,
 } from '../buurt/datasets.ts';
+import { datasetEndpoints } from '../buurt/datasets.ts';
 import {
   filterDatasetFeatures,
   filterFeaturesinRadius,

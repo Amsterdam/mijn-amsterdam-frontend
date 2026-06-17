@@ -13,7 +13,7 @@ import { DocumentListV2 } from '../../../components/DocumentList/DocumentListV2.
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { Steps } from '../../../components/StatusSteps/StatusSteps.tsx';
 import { TextClamp } from '../../../components/TextClamp/TextClamp.tsx';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { ThemaDetailPagina } from '../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 type BezwaarDetailContentProps = {

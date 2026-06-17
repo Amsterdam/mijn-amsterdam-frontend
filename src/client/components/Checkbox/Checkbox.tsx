@@ -1,6 +1,4 @@
-import type {
-  ChangeEvent,
-  HTMLAttributes} from 'react';
+import type { ChangeEvent, HTMLAttributes } from 'react';
 import {
   forwardRef,
   useEffect,
@@ -23,7 +21,7 @@ type CheckboxProps = {
   className?: string;
 };
 
-const Checkbox = forwardRef<
+export const Checkbox = forwardRef<
   HTMLInputElement,
   CheckboxProps & HTMLAttributes<HTMLInputElement>
 >(
@@ -33,7 +31,6 @@ const Checkbox = forwardRef<
       className,
       onChange,
       disabled,
-      error,
       indeterminate,
       ...otherProps
     },
@@ -93,5 +90,3 @@ const Checkbox = forwardRef<
 );
 
 Checkbox.displayName = 'Checkbox';
-
-export default Checkbox;

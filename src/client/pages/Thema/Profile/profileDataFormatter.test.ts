@@ -1,10 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
-import type {
-  ProfileLabels} from './profileDataFormatter.ts';
-import {
-  formatProfileSectionData
-} from './profileDataFormatter.ts';
+import type { ProfileLabels } from './profileDataFormatter.ts';
+import { formatProfileSectionData } from './profileDataFormatter.ts';
 
 type TestData = {
   name: string;

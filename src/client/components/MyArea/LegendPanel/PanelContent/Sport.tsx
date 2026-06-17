@@ -1,5 +1,5 @@
-import GenericBase, { GenericContent } from './GenericBase.tsx';
-import Url from './Url.tsx';
+import { GenericBase, GenericContent } from './GenericBase.tsx';
+import { Url } from './Url.tsx';
 import { capitalizeFirstLetter } from '../../../../../universal/helpers/text.ts';
 import type { Unshaped } from '../../../../../universal/types/App.types.ts';
 import { parseHTML } from '../../../../helpers/html-react-parse.tsx';
@@ -10,7 +10,7 @@ interface MyArePanelContentSportProps {
   datasetId: string;
 }
 
-export default function MyArePanelContentSport({
+export function MyArePanelContentSport({
   datasetId,
   panelItem,
 }: MyArePanelContentSportProps) {

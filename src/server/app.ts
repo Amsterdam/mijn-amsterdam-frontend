@@ -45,7 +45,12 @@ import cors from 'cors';
 import type { NextFunction, Request, Response } from 'express';
 import express from 'express';
 
-import { BFF_PORT, ONE_MINUTE_SECONDS, ONE_SECOND_MS } from './config/app.ts';
+import {
+  BFF_PORT,
+  MA_FRONTEND_URL,
+  ONE_MINUTE_SECONDS,
+  ONE_SECOND_MS,
+} from './config/app.ts';
 import {
   BffEndpoints,
   BFF_BASE_PATH,
@@ -57,7 +62,11 @@ import {
   nocache,
   requestID,
 } from './routing/route-handlers.ts';
-import { generateFullApiUrlBFF, send404 } from './routing/route-helpers.ts';
+import {
+  generateFullApiUrlBFF,
+  generateMaFrontendUrl,
+  send404,
+} from './routing/route-helpers.ts';
 import { authRouterDevelopment } from './routing/app-router-development.ts';
 import { oidcRouter } from './routing/app-router-oidc.ts';
 import { router as protectedRouter } from './routing/app-router-protected.ts';
@@ -89,7 +98,7 @@ app.set('views', path.join(...viewDir, 'server', 'views'));
 
 app.use(
   cors({
-    origin: getFromEnv('MA_FRONTEND_URL'),
+    origin: MA_FRONTEND_URL,
     credentials: true,
   })
 );
@@ -166,7 +175,7 @@ app.use(function onError(
     },
   });
 
-  const redirectUrl = `${process.env.MA_FRONTEND_URL}/server-error-500`;
+  const redirectUrl = generateMaFrontendUrl('/server-error-500');
 
   if (!IS_PRODUCTION) {
     return res.redirect(

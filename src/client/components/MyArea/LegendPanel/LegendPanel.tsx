@@ -6,7 +6,7 @@ import { useLandScape, useWidescreen } from '../../../hooks/media.hook.ts';
 import { useFetchPanelFeature, useLoadingFeature } from '../MyArea.hooks.ts';
 import { DatasetCategoryPanel } from './DatasetCategoryPanel.tsx';
 import { PanelComponent } from './PanelComponent.tsx';
-import MyAreaDetailPanel from './PanelContent/MyAreaDetailPanel.tsx';
+import { MyAreaDetailPanel } from './PanelContent/MyAreaDetailPanel.tsx';
 import { PanelState, useLegendPanelCycle } from './panelCycle.ts';
 
 interface LegendPanelProps {
@@ -44,6 +44,8 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
       detailPanelCycle.reset();
       filterPanelCycle.reset();
     };
+    // Reason: detailPanelCycle and filterPanelCycle both get mutated and will cause recursion.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Set panel state without explicit panel interaction. Effect reacts to loading detailed features.

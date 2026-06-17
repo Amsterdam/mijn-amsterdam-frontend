@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { themaConfig } from './Parkeren-thema-config.ts';
 import { ParkerenList } from './ParkerenList.tsx';
 import type { AppState } from '../../../../universal/types/App.types.ts';
-import MockApp from '../../MockApp.tsx';
+import { MockApp } from '../../MockApp.tsx';
 import { listPageParamKind } from '../Vergunningen/Vergunningen-thema-config.ts';
 
 const testState = {

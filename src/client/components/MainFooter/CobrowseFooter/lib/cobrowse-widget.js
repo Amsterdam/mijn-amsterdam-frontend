@@ -7,6 +7,8 @@
  * A redactedViews constructor parameter is added to sync the redactedViews class used
  */
 
+/* eslint-disable no-console */
+
 const translations = {
   nl: {
     request_share: 'Verzoek om deze pagina te delen',

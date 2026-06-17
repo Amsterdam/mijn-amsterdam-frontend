@@ -5,9 +5,9 @@
 // Third step: node get-change-log.js --from=$first --to=$last
 // A file called changelog-$year.html is created
 
-const { exec } = require('child_process');
-const fs = require('fs');
-const { parseArgs } = require('node:util');
+import { exec } from 'child_process';
+import { writeFile } from 'fs';
+import { parseArgs } from 'node:util';
 
 const args = process.argv;
 const options = {
@@ -69,10 +69,10 @@ function parseGitLog(log) {
 
 exec(
   `git log --date=iso --pretty=format:"%h | %ad | %s" ${values.from}..${values.to} --reverse --date-order | cat; echo`,
-  (error, stdout, stderr) => {
+  (error, stdout, _stderr) => {
     const table = parseGitLog(stdout);
 
-    fs.writeFile(`changelog-${year}.html`, table, function (err) {
+    writeFile(`changelog-${year}.html`, table, function (err) {
       if (err) return console.log(err);
       console.log(`changelog-${year}.html created`);
     });
