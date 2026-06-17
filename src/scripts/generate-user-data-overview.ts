@@ -15,13 +15,16 @@
  *
  * How to use
  * ==========
- * pnpx tsx src/scripts/generate-user-data-overview.ts
- * add --from-disk (-d) to save to disk and use cached data. To refresh the
+ * pnpx tsx src/scripts/generate-user-data-overview.ts [options]
+ *
+ * Command options
+ * ---------------
+ * --from-disk (-d) to save to disk and use cached data. To refresh the
  cache add the --refresh-cache flag.
- * add --out-file-path-digid-test-accounts=<filepath> (-f) to decide where to
+ * --out-file-path-digid-test-accounts=<filepath> (-f) to decide where to
  save the test account json overview -
  * this will overwrite the local file by default.
- * add --update-test-accounts (-e) to automaticly update the test account file
+ * --update-test-accounts (-e) to automaticly update the test account file
  locally.
  *
  * Tips
