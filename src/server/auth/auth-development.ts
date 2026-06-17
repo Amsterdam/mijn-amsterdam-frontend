@@ -7,16 +7,13 @@ import { downloadBlob, getBlobStorage } from '../config/azure-storage.ts';
 
 const dirOfThisFile = dirname(fileURLToPath(import.meta.url));
 
-const DIGID_FILENAME = 'digid-test-accounts.json';
-const EHERKENNING_FILENAME = 'eherkenning-test-accounts.json';
-
 export const DIGID_TEST_ACCOUNTS_PATH = join(
   dirOfThisFile,
-  `./generated/${DIGID_FILENAME}`
+  './generated/digid-test-accounts.json'
 );
 export const EHERKENNING_TEST_ACCOUNTS_PATH = join(
   dirOfThisFile,
-  `./generated/${EHERKENNING_FILENAME}`
+  './generated/eherkenning-test-accounts.json'
 );
 
 export type TestUserData = {
@@ -60,7 +57,9 @@ export async function getTestAccountData(
   const containerClient = client.getContainerClient('test-accounts');
 
   const fileName =
-    envKey === 'MA_TEST_ACCOUNTS' ? DIGID_FILENAME : EHERKENNING_FILENAME;
+    envKey === 'MA_TEST_ACCOUNTS'
+      ? 'digid-test-accounts.json'
+      : 'eherkenning-test-accounts.json';
 
   return JSON.parse(await downloadBlob(containerClient, fileName));
 }
