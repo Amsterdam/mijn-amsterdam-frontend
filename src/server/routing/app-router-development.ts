@@ -30,6 +30,7 @@ import { authRoutes } from '../auth/auth-routes.ts';
 import type { AuthProfile, MaSession } from '../auth/auth-types.ts';
 import { type AuthenticatedRequest } from '../auth/auth-types.ts';
 import { MA_FRONTEND_URL, ONE_SECOND_MS } from '../config/app.ts';
+import { logger } from '../logging.ts';
 import { countLoggedInVisit } from '../services/admin/admin-visitors.ts';
 
 export const authRouterDevelopment = createBFFRouter({ id: 'router-dev' });
@@ -124,10 +125,19 @@ authRouterDevelopment.get(
       return { ...account, username };
     });
 
-    const user =
-      (req.params.user
-        ? testAccounts.find((user) => user.username === req.params.user)
-        : null) ?? testAccountData.accounts[0];
+    let user = testAccountData.accounts[0];
+    if (req.params.user) {
+      const foundUser = testAccounts.find(
+        (user) => user.username === req.params.user
+      );
+      if (foundUser) {
+        user = foundUser;
+      } else {
+        logger.error(
+          `user '${req.params.user}' not found, defaulting to user '${user.username}'`
+        );
+      }
+    }
 
     const authRoute = `${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}`;
 
