@@ -3,7 +3,7 @@ import type { ServiceResults } from '../server/services/content-tips/tip-types.t
 import { apiSuccessResult } from '../universal/helpers/api.ts';
 
 describe('getAvailableUserThemas', () => {
-  function wrap(results: Record<string, any>): ServiceResults {
+  function wrap(results: Record<string, unknown>): ServiceResults {
     const entries = Object.entries(results);
     const wrapped = entries.map(([k, v]) => [k, apiSuccessResult(v)]);
     return Object.fromEntries(wrapped);
