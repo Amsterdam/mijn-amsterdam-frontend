@@ -1,4 +1,4 @@
-import { Link } from '@amsterdam/design-system-react';
+import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import type {
   BrpFrontend,
@@ -15,7 +15,6 @@ import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
 import { LoadingContent } from '../../../../components/LoadingContent/LoadingContent.tsx';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
-import { PageContentCell } from '../../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
 import {
   BRP_LABEL_AANTAL_INGESCHREVEN_PERSONEN,
@@ -290,16 +289,14 @@ export function formatBrpProfileData(brpData: BrpFrontend): BrpProfileData {
 }
 
 const privacyNoticeForDeathDates = (
-  <PageContentCell>
-    <ParagaphSuppressed className="ams-mb-m">
-      Wij mogen een overlijdensdatum van ouders of kinderen niet laten zien. Dit
-      komt door{' '}
-      <Link href="https://www.amsterdam.nl/privacy/" rel="noopener noreferrer">
-        privacyregels
-      </Link>
-      .
-    </ParagaphSuppressed>
-  </PageContentCell>
+  <ParagaphSuppressed className="ams-mb-m">
+    Wij mogen een overlijdensdatum van ouders of kinderen niet laten zien. Dit
+    komt door{' '}
+    <Link href="https://www.amsterdam.nl/privacy/" rel="noopener noreferrer">
+      privacyregels
+    </Link>
+    .
+  </ParagaphSuppressed>
 );
 
 export const panelConfig: PanelConfig<
@@ -348,7 +345,7 @@ export const panelConfig: PanelConfig<
 
     const contentAfterTheTitle =
       isBewoner && isMokum(BRP.content) ? (
-        <>
+        <Paragraph className="ams-mb-m">
           <strong>Uw huis verduurzamen?</strong> De gemeente biedt subsidies of
           gratis hulp.
           <br /> Bekijk{' '}
@@ -359,7 +356,7 @@ export const panelConfig: PanelConfig<
             duurzaamwonen.amsterdam
           </Link>{' '}
           voor meer informatie.
-        </>
+        </Paragraph>
       ) : null;
 
     return {
