@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 import { IS_PRODUCTION } from '../../universal/config/env.ts';
 import { downloadBlob, getBlobStorage } from '../config/azure-storage.ts';
+import { logger } from '../logging.ts';
 
 const dirOfThisFile = dirname(fileURLToPath(import.meta.url));
 
@@ -41,11 +42,15 @@ export async function getTestAccountData(
   envKey: 'MA_TEST_ACCOUNTS' | 'MA_TEST_ACCOUNTS_EH'
 ): Promise<TestUserData | null> {
   if (IS_PRODUCTION) {
+    logger.warn(
+      'No accounts will be returned. Using test accounts in production is not allowed.'
+    );
     return null;
   }
 
   const client = getBlobStorage();
   if (!client) {
+    logger.info('No client found, returning test accounts from file');
     const testAccountPath =
       envKey === 'MA_TEST_ACCOUNTS'
         ? DIGID_TEST_ACCOUNTS_PATH
