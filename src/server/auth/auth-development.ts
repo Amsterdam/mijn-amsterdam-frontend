@@ -26,8 +26,7 @@ export type TestUserData = {
 
 type TableHeader = {
   displayName: string;
-  // Maps to a property of TestUserAccount, e.q. key: 'foo'; { ->  foo: 'data'
-  // }.
+  // Maps to a property of TestUserAccount, e.q. key: 'foo'; { ->  foo: 'data' }.
   key: string;
 };
 
