@@ -114,7 +114,7 @@ authRouterDevelopment.get(
     if (!testAccountData) {
       return sendBadRequest(
         res,
-        'Test account data not available. Check env settings.'
+        'Test account data not available. Check storage account or test-account files.'
       );
     }
 
