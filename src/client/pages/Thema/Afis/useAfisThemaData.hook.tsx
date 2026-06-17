@@ -15,10 +15,8 @@ import {
 import type { LinkProps } from '../../../../universal/types/App.types.ts';
 import type { ThemaRouteConfig } from '../../../config/thema-types.ts';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
-import {
-  useThemaBreadcrumbs,
-  useThemaMenuItemByThemaID,
-} from '../../../hooks/useThemaMenuItems.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
+import { useThemaMenuItemByThemaID } from '../../../hooks/useThemaMenuItems.ts';
 import { themaConfig as themaBelastingen } from '../Belastingen/Belastingen-thema-config.ts';
 
 export type AfisFacturenThemaContextParams = {

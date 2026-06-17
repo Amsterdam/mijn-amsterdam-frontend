@@ -35,7 +35,6 @@ function getState(content: {
 }
 
 const contactmomentenHeader = 'Contactmomenten';
-const noAppointmentsText = /U heeft geen afspraken/;
 
 test('Shows contactmomenten', async () => {
   const state = getState({
@@ -84,8 +83,6 @@ test('Shows contactmomenten', async () => {
   expectedKanalen.forEach((kanaal) => {
     expect(within(table).getByText(kanaal)).toBeInTheDocument();
   });
-
-  screen.getByText(noAppointmentsText);
 });
 
 test('Shows afspraken and empty contactmomenten', async () => {
@@ -131,7 +128,6 @@ test('Shows afspraken and empty contactmomenten', async () => {
   expect(
     screen.getByText('U heeft (nog) geen contactmomenten')
   ).toBeInTheDocument();
-  expect(screen.queryByText(noAppointmentsText)).not.toBeInTheDocument();
 
   expect(screen.getAllByText(afspraakTitle)).toHaveLength(
     MAX_TABLE_ROWS_ON_THEMA_PAGINA

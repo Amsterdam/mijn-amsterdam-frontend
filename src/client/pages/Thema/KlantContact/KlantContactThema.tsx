@@ -1,6 +1,6 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { Afspraken } from './Afspraken/AfsprakenList.tsx';
+import { Afspraken } from './Afspraken/Afspraken.tsx';
 import { CommunicatieVoorkeuren } from './Communicatievoorkeuren/CommunicatieVoorkeuren.tsx';
 import { ContactMomenten } from './Contactmomenten/ContactmomentenTable.tsx';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';

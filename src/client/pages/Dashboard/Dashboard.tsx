@@ -21,7 +21,7 @@ import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 import { useAppStateNotifications } from '../../hooks/useNotifications.ts';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
-import { Afspraken } from '../Thema/KlantContact/Afspraken/AfsprakenList.tsx';
+import { Afspraken } from '../Thema/KlantContact/Afspraken/Afspraken.tsx';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
 

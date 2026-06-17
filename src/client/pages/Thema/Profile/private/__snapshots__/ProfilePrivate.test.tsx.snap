@@ -340,7 +340,7 @@ exports[`<Profile /> > Lives in Mokum + verbintenis: displays all data 1`] = `
                 </li>
                 <li>
                   <a
-                    class="ams-link-list__link _ActionLink--reportIncorrectResidentCount_8ab1b1"
+                    class="ams-link-list__link"
                     href="https://www.amsterdam.nl/burgerzaken/verhuizen-inschrijving-briefadres/onjuiste-inschrijving-adres-melden/"
                     rel="noopener noreferrer"
                   >

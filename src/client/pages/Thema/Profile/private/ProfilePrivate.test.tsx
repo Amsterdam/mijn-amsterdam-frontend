@@ -20,7 +20,6 @@ const testState = (
 ) => ({
   BRP: { status: 'OK', content: responseBRP },
   KVK: { status: 'OK', content: null },
-  KLANT_CONTACT: { status: 'OK', content: responseSF },
   WONEN: { status: 'OK', content: responseZWD },
 });
 
@@ -316,7 +315,6 @@ describe('<Profile />', () => {
                   landnaam: 'Nederland',
                 },
               },
-              [],
               {
                 vve: { name: 'VvE Prachtige Straat 13' },
               } as unknown as WonenDataFrontend

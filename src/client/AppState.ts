@@ -117,6 +117,7 @@ export const PRISTINE_APPSTATE: AppState = {
     {
       contactmomenten: [],
       afspraken: [],
+      communicatievoorkeuren: null,
     },
     {
       profileTypes: ['private'],

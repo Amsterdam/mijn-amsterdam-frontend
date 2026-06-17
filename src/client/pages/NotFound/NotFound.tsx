@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
-import { Navigate, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 
-import { isPrivateRoute } from '../../App.routes.tsx';
 import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
 import { captureMessage } from '../../helpers/monitoring.ts';
@@ -41,17 +40,4 @@ export function NotFound() {
       </PageContentCell>
     </PageV2>
   );
-}
-
-export function RedirectPrivateRoutesToLanding() {
-  const location = useLocation();
-  const pathname = location.pathname;
-
-  if (isPrivateRoute(pathname)) {
-    // Private routes are redirected to Home
-    return <Navigate to={LandingRoute.route} />;
-  }
-
-  // All other routes are presented with a 404 page
-  return <NotFound />;
 }

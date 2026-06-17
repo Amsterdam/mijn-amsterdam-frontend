@@ -1,4 +1,4 @@
-import { Heading, Paragraph } from '@amsterdam/design-system-react';
+import { Heading } from '@amsterdam/design-system-react';
 
 import type { AfspraakFrontend } from '../../../../../server/services/klantcontact/klantcontact.types.ts';
 import { AfspraakCard } from '../../../../components/AfspraakCard/AfspraakCard.tsx';
@@ -24,27 +24,21 @@ export function Afspraken({
       <Heading level={2} className="ams-mb-m">
         Afspraken bij een stadsloket
       </Heading>
-      {afspraken.length ? (
-        <>
-          {afspraken
-            .slice(0, MAX_AMOUNT_AFSPRAKEN_DISPLAYED)
-            .map((afspraak, i, afspraken) => (
-              <AfspraakCard
-                compact={compact}
-                key={afspraak.caseReference}
-                afspraak={afspraak}
-                className={i < afspraken.length - 1 ? 'ams-mb-l' : ''}
-              />
-            ))}
-          <LinkToListPage
-            count={afspraken.length}
-            route={themaConfig.listPageAfspraken.route.path}
-            threshold={MAX_AMOUNT_AFSPRAKEN_DISPLAYED}
+      {afspraken
+        .slice(0, MAX_AMOUNT_AFSPRAKEN_DISPLAYED)
+        .map((afspraak, i, afspraken) => (
+          <AfspraakCard
+            compact={compact}
+            key={afspraak.caseReference}
+            afspraak={afspraak}
+            className={i < afspraken.length - 1 ? 'ams-mb-l' : ''}
           />
-        </>
-      ) : (
-        <Paragraph>U heeft geen afspraken.</Paragraph>
-      )}
+        ))}
+      <LinkToListPage
+        count={afspraken.length}
+        route={themaConfig.listPageAfspraken.route.path}
+        threshold={MAX_AMOUNT_AFSPRAKEN_DISPLAYED}
+      />
     </div>
   );
 }

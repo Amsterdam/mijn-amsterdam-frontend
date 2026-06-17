@@ -56,7 +56,6 @@ const routeComponents: ApplicationRouteConfig[] = [
   JeugdRoutes,
   KlachtenRoutes,
   KlantContactRoutes,
-  KlantContactRoutes,
   KrefiaRoutes,
   LandingRoutes,
   MyAreaRoutes,
