@@ -2,11 +2,8 @@
 /* eslint-disable no-console */
 import path, { resolve } from 'node:path';
 
-import { delay } from '../../../universal/helpers/utils.ts';
-
 const JOB_SUCCESS_CODE = 0;
 const JOB_FAILURE_CODE = 1;
-const ONE_MINUTE_MS = 60 * 1000;
 
 async function checkDatabaseConnectivity() {
   const { getPool } = await import('./postgres.ts');
@@ -89,13 +86,17 @@ export async function runMigrationsCommand() {
 const scriptName = path.parse(process.argv.at(1) ?? '').name;
 
 if (import.meta.main || scriptName === 'migrate') {
+  let exitCode = JOB_SUCCESS_CODE;
+
   try {
     await runMigrationsCommand();
-    await delay(ONE_MINUTE_MS);
-    process.exit(JOB_SUCCESS_CODE);
   } catch {
-    // Ensure any event is sent before the process exits
-    await delay(ONE_MINUTE_MS);
-    process.exit(JOB_FAILURE_CODE);
+    exitCode = JOB_FAILURE_CODE;
+  } finally {
+    const { flushTelemetry } = await import('../monitoring.ts');
+
+    // Flush telemetry before exiting so events and exceptions are sent.
+    await flushTelemetry();
+    process.exit(exitCode);
   }
 }
