@@ -9,9 +9,9 @@ import { sortAlpha } from '../../universal/helpers/utils.ts';
 import type { LinkProps } from '../../universal/types/App.types.ts';
 import { useThemasByProfileType } from '../config/menuItems.ts';
 import type { ThemaMenuItemTransformed } from '../config/thema-types.ts';
+import { myThemasMenuItems } from '../config/thema.ts';
 import { themaConfig as klantContactThemaConfig } from '../pages/Thema/KlantContact/KlantContact-thema-config.ts';
 import { themaConfig as profileThemaConfig } from '../pages/Thema/Profile/Profile-thema-config.ts';
-
 export interface ThemasState {
   items: ThemaMenuItemTransformed[];
   isLoading: boolean;
@@ -48,7 +48,9 @@ export function compareThemas<T extends withIDTitle>(a: T, b: T): 0 | 1 | -1 {
 export function useAllThemaMenuItems(): ThemasState {
   const profileType = useProfileTypeValue();
   const isAppStateReady = useAppStateReady();
-  const items = useThemasByProfileType(profileType).toSorted(compareThemas);
+  const items = useThemasByProfileType(myThemasMenuItems, profileType).toSorted(
+    compareThemas
+  );
 
   return {
     items,
