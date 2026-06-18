@@ -52,11 +52,7 @@ export function CommunicatieVoorkeuren({
         <UnorderedList className="ams-mb-m">
           {aangeslotenDiensten?.map((dienst) => (
             <UnorderedList.Item key={dienst.id}>
-              <Paragraph>
-                <strong>{dienst.beschrijving}</strong>
-                {/* <br />
-                {dienst.dienstBeschrijving} */}
-              </Paragraph>
+              <strong>{dienst.beschrijving}</strong>
             </UnorderedList.Item>
           ))}
         </UnorderedList>
@@ -84,11 +80,7 @@ export function CommunicatieVoorkeuren({
           </form>
         )}
         {hasValidatedEmail && isEmailPostAccepted && (
-          <Alert
-            // severity="info"
-            heading="Post per e-mail geaccepteerd"
-            headingLevel={3}
-          >
+          <Alert heading="Post per e-mail geaccepteerd" headingLevel={3}>
             <Paragraph>
               U ontvangt nu post van de gemeente Amsterdam per e-mail op{' '}
               <strong>{standaardContactgegevens?.Email.value}</strong>.
@@ -101,19 +93,6 @@ export function CommunicatieVoorkeuren({
           Mijn contactgegevens
         </Heading>
         <Datalist rows={rows} />
-        {/* <Alert
-        severity="warning"
-        heading="Let op!"
-        headingLevel={3}
-        className="ams-mb-m"
-      >
-        <Paragraph>
-          Wij sturen geen <Link href="#">links</Link> in e-mails of sms
-          berichten.
-          <br />
-          Vetrouwt u iets niet, neem dan contact op met de gemeente.
-        </Paragraph>
-      </Alert> */}
       </div>
     </>
   );
