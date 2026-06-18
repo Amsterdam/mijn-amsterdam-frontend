@@ -1,10 +1,16 @@
 import merge from 'lodash.merge';
+import { useParams } from 'react-router';
 
+import { ContactgegevenByTypeLabels } from './CommunicatieVoorkeuren-config.ts';
 import type {
   ContactgegevenType,
   ContactgegevenFrontend,
   VerifyVerificationRequestResponse,
 } from '../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
+import {
+  capitalizeFirstLetter,
+  lowercaseFirstLetter,
+} from '../../../../../universal/helpers/text.ts';
 import { BFFApiUrls } from '../../../../config/api.ts';
 import {
   sendFormPostRequest,
@@ -14,6 +20,10 @@ import {
   useAppStateStore,
   type AppStateStore,
 } from '../../../../hooks/useAppStateStore.ts';
+import {
+  type InstelAction,
+  themaConfig,
+} from '../KlantContact-thema-config.ts';
 
 type UpdateProps = {
   contactgegeven: Partial<Omit<ContactgegevenFrontend, 'type'>> & {
@@ -64,7 +74,7 @@ export function useSetCommunicatievoorkeur(
                 appState,
               });
             }
-            onCallback(response.content ?? null, true);
+            onCallback(response.content ?? null, response.status === 'OK');
             return response;
           }
         );
@@ -137,5 +147,22 @@ export function useCommunicatieVoorkeurVerwijderen(
       }
       return response;
     });
+  };
+}
+
+export function useCommunicatieVoorkeurInstellen() {
+  const params = useParams<{
+    contactgegeven: ContactgegevenType;
+    action: InstelAction;
+    id?: string;
+  }>();
+  // const aangeslotenDiensten = communicatievoorkeuren?.aangeslotenDiensten ?? [];
+  // const standaardContactgegevens =
+  //   communicatievoorkeuren?.standaardContactgegevens ?? null;
+
+  return {
+    title: `${params.action ? capitalizeFirstLetter(params.action) : 'Instellen'} ${params.contactgegeven ? lowercaseFirstLetter(ContactgegevenByTypeLabels[params.contactgegeven] ?? '') : 'contactgegeven'}`,
+    routeConfig: themaConfig.detailPageContactgegevenInstellen.route,
+    contactgegevenType: params.contactgegeven,
   };
 }
