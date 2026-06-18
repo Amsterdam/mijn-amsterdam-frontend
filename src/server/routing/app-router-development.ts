@@ -19,7 +19,10 @@ import {
   OIDC_SESSION_MAX_AGE_SECONDS,
   TOKEN_ID_ATTRIBUTE,
 } from '../auth/auth-config.ts';
-import { getTestAccountData } from '../auth/auth-development.ts';
+import {
+  getTestAccountData,
+  getTestAccounts,
+} from '../auth/auth-development.ts';
 import type { TestUserData } from '../auth/auth-development.ts';
 import {
   cleanTestUsername,
@@ -107,72 +110,33 @@ authRouterDevelopment.get(
     res: Response
   ) => {
     const authMethod = req.params.authMethod;
-    const testAccountData =
+
+    const testAccounts =
       authMethod === 'digid'
-        ? await getTestAccountData('MA_TEST_ACCOUNTS')
-        : await getTestAccountData('MA_TEST_ACCOUNTS_EH');
+        ? getTestAccounts('MA_TEST_ACCOUNTS')
+        : getTestAccounts('MA_TEST_ACCOUNTS_EH');
 
-    if (!testAccountData) {
-      return sendBadRequest(
-        res,
-        'Test account data not available. Check storage account or test-account files.'
+    if (!req.params.user) {
+      return sendRenderedTestAccountTable(req, res, authMethod);
+    }
+
+    let profileId = testAccounts['ma-dev-profile'];
+
+    const foundProfileId = testAccounts[req.params.user];
+    if (foundProfileId) {
+      profileId = foundProfileId;
+    } else {
+      logger.error(
+        `user '${req.params.user}' not found, defaulting to user with profileId: '${profileId}'`
       );
     }
 
-    let testAccounts = testAccountData.accounts.map((account) => {
-      let username = cleanTestUsername(account.username);
-      username = slug(username);
-      return { ...account, username };
-    });
-
-    let user = testAccountData.accounts[0];
-    if (req.params.user) {
-      const foundUser = testAccounts.find(
-        (user) => user.username === req.params.user
-      );
-      if (foundUser) {
-        user = foundUser;
-      } else {
-        logger.error(
-          `user '${req.params.user}' not found, defaulting to user '${user.username}'`
-        );
-      }
-    }
-
-    const authRoute = `${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}`;
-
-    testAccounts = testAccounts.map((account) => {
-      const authLoginRoute = generateFullApiUrlBFF(
-        `${authRoute}/${account.username}`,
-        [req.query as Record<string, string>]
-      );
-      const href = `<a href="${authLoginRoute}">
-                      <div class="test-account-name">${account.username}</div>
-                    </a>`;
-      return { ...account, username: href };
-    });
-
-    const [tableHeaders, tableRows] = formatForTable({
-      ...testAccountData,
-      accounts: testAccounts,
-    } as TestUserData);
-
-    if (!req.params.user && testAccountData.accounts.length > 1) {
-      const renderProps = {
-        title: `Selecteer ${authMethod} test account.`,
-        tableHeaders,
-        tableRows,
-      };
-
-      return res.render('select-test-account', renderProps);
-    }
-
-    countLoggedInVisit(user.profileId, authMethod);
+    countLoggedInVisit(profileId, authMethod);
 
     const SESSION_ID_BYTE_LENGTH = 18;
     const sessionID = UID.sync(SESSION_ID_BYTE_LENGTH);
     const authProfile: AuthProfile = {
-      id: user.profileId,
+      id: profileId,
       authMethod,
       profileType: authMethod === 'digid' ? 'private' : 'commercial',
       sid: sessionID,
@@ -217,6 +181,54 @@ authRouterDevelopment.get(
     return res.redirect(redirectUrl);
   }
 );
+
+async function sendRenderedTestAccountTable(
+  req: Request,
+  res: Response,
+  authMethod: AuthMethod
+) {
+  const testAccountData =
+    authMethod === 'digid'
+      ? await getTestAccountData('MA_TEST_ACCOUNTS')
+      : await getTestAccountData('MA_TEST_ACCOUNTS_EH');
+
+  if (!testAccountData) {
+    return sendBadRequest(
+      res,
+      'Test account data not available. Check storage account or test-account files.'
+    );
+  }
+
+  let testAccounts = testAccountData.accounts.map((account) => {
+    let username = cleanTestUsername(account.username);
+    username = slug(username);
+    return { ...account, username };
+  });
+  const authRoute = `${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}`;
+
+  testAccounts = testAccounts.map((account) => {
+    const authLoginRoute = generateFullApiUrlBFF(
+      `${authRoute}/${account.username}`,
+      [req.query as Record<string, string>]
+    );
+    const href = `<a href="${authLoginRoute}">
+                      <div class="test-account-name">${account.username}</div>
+                    </a>`;
+    return { ...account, username: href };
+  });
+
+  const [tableHeaders, tableRows] = formatForTable({
+    ...testAccountData,
+    accounts: testAccounts,
+  } as TestUserData);
+  const renderProps = {
+    title: `Selecteer ${authMethod} test account.`,
+    tableHeaders,
+    tableRows,
+  };
+
+  return res.render('select-test-account', renderProps);
+}
 
 type TableHeaders = string[];
 type TableRows = string[][];

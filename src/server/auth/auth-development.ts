@@ -2,8 +2,12 @@ import { readFileSync } from 'fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import slug from 'slugme';
+
+import type { AuthProfile } from './auth-types.ts';
 import { IS_PRODUCTION } from '../../universal/config/env.ts';
 import { downloadBlob, getBlobStorage } from '../config/azure-storage.ts';
+import { getFromEnv } from '../helpers/env.ts';
 import { logger } from '../logging.ts';
 
 const dirOfThisFile = dirname(fileURLToPath(import.meta.url));
@@ -37,6 +41,24 @@ export type OptionalTestUserAccountProperties = Record<
   string,
   string | boolean
 >;
+
+type LowercaseName = string;
+type TestUsers = Record<LowercaseName, AuthProfile['id']>;
+
+export function getTestAccounts(
+  envKey: 'MA_TEST_ACCOUNTS' | 'MA_TEST_ACCOUNTS_EH'
+): TestUsers {
+  const accounts = getFromEnv(envKey, true, true)!;
+
+  const users: TestUsers = {};
+
+  accounts.split(',').forEach((account) => {
+    const [username, profileId] = account.split(':');
+    users[slug(username)] = profileId;
+  });
+
+  return users;
+}
 
 export async function getTestAccountData(
   envKey: 'MA_TEST_ACCOUNTS' | 'MA_TEST_ACCOUNTS_EH'
