@@ -28,10 +28,15 @@ vi.mock('../services/admin/admin-route-handlers.ts', () => {
 });
 
 vi.mock('../services/admin/admin-router.ts', () => {
+  const protectedRouter = createMockBffRouter('ma-admin-router-protected');
+  protectedRouter.get('/admin', (_req: Request, res: Response) => {
+    res.status(200).send('ok');
+  });
+
   return {
     router: {
       public: createMockBffRouter('ma-admin-router-public'),
-      protected: createMockBffRouter('ma-admin-router-protected'),
+      protected: protectedRouter,
     },
   };
 });
@@ -56,36 +61,118 @@ vi.mock(
 );
 
 async function buildAdminRouter({
-  isEnabled = true,
-  isAuthEnabled = true,
+  isAdminRouterEnabled,
+  isAdminAuthenticationMiddlewareEnabled,
+  isProduction,
 }: {
-  isEnabled?: boolean;
-  isAuthEnabled?: boolean;
-} = {}) {
+  isAdminRouterEnabled: boolean;
+  isAdminAuthenticationMiddlewareEnabled: boolean;
+  isProduction: boolean;
+}) {
   return createAdminRouter({
-    isAdminRouterEnabled: isEnabled,
-    isAdminAuthenticationMiddlewareEnabled: isAuthEnabled,
-    isProduction: false,
+    isAdminRouterEnabled,
+    isAdminAuthenticationMiddlewareEnabled,
+    isProduction,
     bffAdminAuthExpressSessionSecret: 'test-secret',
     bffAdminAuthSessionCookieName: 'test-cookie',
   });
 }
 
+async function requestPathFromRouter({
+  router,
+  path,
+}: {
+  router: express.Router;
+  path: string;
+}) {
+  const app = express();
+  app.use(router);
+  app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+    res.status(500).send(err instanceof Error ? err.message : 'Unknown error');
+  });
+
+  const server = app.listen(0);
+
+  try {
+    const address = server.address();
+    if (!address || typeof address === 'string') {
+      throw new Error('Failed to bind test server to a port');
+    }
+
+    const response = await fetch(`http://127.0.0.1:${address.port}${path}`);
+    const text = await response.text();
+
+    return {
+      status: response.status,
+      text,
+    };
+  } finally {
+    await new Promise<void>((resolve, reject) => {
+      server.close((error) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+        resolve();
+      });
+    });
+  }
+}
+
 describe('app-router-admin', () => {
-  test('should have admin router disabled when the feature toggle is off', async () => {
-    const router = await buildAdminRouter({ isEnabled: false });
+  it('should have admin router disabled when the feature toggle is off', async () => {
+    const router = await buildAdminRouter({
+      isAdminRouterEnabled: false,
+      isAdminAuthenticationMiddlewareEnabled: true,
+      isProduction: true,
+    });
     expect(router.stack.length).toBe(1);
     expect(router.stack[0].name).toBe('nextRouter');
   });
 
-  test('should NOT have admin authentication middleware', async () => {
+  it('should NOT have admin authentication middleware', async () => {
     const router = await buildAdminRouter({
-      isEnabled: true,
-      isAuthEnabled: false,
+      isAdminRouterEnabled: true,
+      isAdminAuthenticationMiddlewareEnabled: false,
+      isProduction: false,
     });
     expect(
       router.stack.some((layer) => layer.name === 'isAuthenticatedAdmin')
     ).toBe(false);
+  });
+
+  it('should return 200 when auth middleware is enabled in production', async () => {
+    const router = await buildAdminRouter({
+      isAdminRouterEnabled: true,
+      isAdminAuthenticationMiddlewareEnabled: true,
+      isProduction: true,
+    });
+
+    const response = await requestPathFromRouter({
+      router,
+      path: '/admin',
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.text).toBe('ok');
+  });
+
+  it('should return 500 when auth middleware is disabled in production', async () => {
+    const router = await buildAdminRouter({
+      isAdminRouterEnabled: true,
+      isAdminAuthenticationMiddlewareEnabled: false,
+      isProduction: true,
+    });
+
+    const response = await requestPathFromRouter({
+      router,
+      path: '/admin',
+    });
+
+    expect(response.status).toBe(500);
+    expect(response.text).toContain(
+      'Admin authentication middleware MUST be enabled in production.'
+    );
   });
 
   describe('when admin router and auth middleware are enabled', () => {
@@ -93,23 +180,24 @@ describe('app-router-admin', () => {
 
     beforeAll(async () => {
       router = await buildAdminRouter({
-        isEnabled: true,
-        isAuthEnabled: true,
+        isAdminRouterEnabled: true,
+        isAdminAuthenticationMiddlewareEnabled: true,
+        isProduction: false,
       });
     });
 
-    test('should have admin router enabled when the feature toggle is on', () => {
+    it('should have admin router enabled when the feature toggle is on', () => {
       expect(router.stack.length).toBeGreaterThan(1);
       expect(router.stack[0].name).not.toBe('nextRouter');
     });
 
-    test('should have admin authentication middleware', () => {
+    it('should have admin authentication middleware', () => {
       expect(
         router.stack.some((layer) => layer.name === 'isAuthenticatedAdmin')
       ).toBe(true);
     });
 
-    test('should mount admin middleware stack in expected order', () => {
+    it('should mount admin middleware stack in expected order', () => {
       const [
         sessionMiddleware,
         adminRouterPublic,
