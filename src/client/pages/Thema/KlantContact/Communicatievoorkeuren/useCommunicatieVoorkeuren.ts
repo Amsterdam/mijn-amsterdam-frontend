@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import merge from 'lodash.merge';
 import { useParams } from 'react-router';
 
@@ -164,5 +166,16 @@ export function useCommunicatieVoorkeurInstellen() {
     title: `${params.action ? capitalizeFirstLetter(params.action) : 'Instellen'} ${params.contactgegeven ? lowercaseFirstLetter(ContactgegevenByTypeLabels[params.contactgegeven] ?? '') : 'contactgegeven'}`,
     routeConfig: themaConfig.detailPageContactgegevenInstellen.route,
     contactgegevenType: params.contactgegeven,
+  };
+}
+
+export function useCommunicatieVoorkeurBevestigen() {
+  const confirmSetting = useCallback(function confirmSetting(
+    isChecked: boolean
+  ) {
+    console.info('Confirm setting:', isChecked);
+  }, []);
+  return {
+    confirmSetting,
   };
 }

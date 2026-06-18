@@ -95,10 +95,6 @@ export async function createContactgegeven(
     type: contactgegevenType,
     waarde: contactgegevenWaarde,
     isDefault: true,
-    // scope: {
-    //   dienstverlenerNaam: 'string',
-    //   dienstNaam: 'string',
-    // },
   };
 
   const apiConfig = getCustomApiConfig(profieldienstRequestConfig, {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   Heading,
@@ -10,6 +10,7 @@ import {
 
 import { ContactgegevenByTypeLabels } from './CommunicatieVoorkeuren-config.ts';
 import { ContactgegevenValue } from './ContactgegevenValue.tsx';
+import { useCommunicatieVoorkeurBevestigen } from './useCommunicatieVoorkeuren.ts';
 import type {
   ContactgegevenPerTypeFrontend,
   DienstSource,
@@ -25,6 +26,8 @@ export function CommunicatieVoorkeuren({
   aangeslotenDiensten,
   standaardContactgegevens,
 }: CommunicatieVoorkeurenProps) {
+  const { confirmSetting } = useCommunicatieVoorkeurBevestigen();
+
   const rows = Object.values(standaardContactgegevens ?? {})
     .filter((contactgegeven) => !contactgegeven.disabled)
     .map((contactgegeven) => ({
@@ -39,6 +42,10 @@ export function CommunicatieVoorkeuren({
   );
 
   const [isEmailPostAccepted, setIsEmailPostAccepted] = useState(false);
+
+  useEffect(() => {
+    confirmSetting(isEmailPostAccepted);
+  }, [isEmailPostAccepted, confirmSetting]);
 
   return (
     <>
@@ -73,7 +80,9 @@ export function CommunicatieVoorkeuren({
             <Checkbox
               id="accept-email-checkbox"
               checked={isEmailPostAccepted}
-              onChange={(e) => setIsEmailPostAccepted(e.target.checked)}
+              onChange={(e) => {
+                setIsEmailPostAccepted(e.target.checked);
+              }}
             >
               Ja, ik wil post per e-mail ontvangen van de gemeente Amsterdam.
             </Checkbox>
