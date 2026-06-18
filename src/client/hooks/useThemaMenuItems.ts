@@ -1,7 +1,6 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { useLocation } from 'react-router';
-import { create } from 'zustand';
 
 import { useAppStateReady } from './useAppStateStore.ts';
 import { useProfileTypeValue } from './useProfileType.ts';
@@ -116,33 +115,4 @@ export function useThemaBreadcrumbs<ID extends string = string>(
         }
       : null,
   ].filter((link) => link !== null);
-}
-
-type PageTypeSetting = 'listpage' | 'none';
-
-type PageTypeStore = {
-  pageType: PageTypeSetting;
-  setPageType: (pageType: PageTypeSetting) => void;
-};
-
-export const useMainMenuOpen = create<PageTypeStore>((set) => ({
-  pageType: 'none',
-  setPageType: (pageType: PageTypeSetting) => set({ pageType }),
-}));
-
-export function usePageTypeSetting(pageTypeRequested: PageTypeSetting) {
-  const { pageType, setPageType } = useMainMenuOpen();
-
-  useEffect(() => {
-    setPageType(pageTypeRequested);
-    return () => {
-      setPageType('none');
-    };
-  }, [pageTypeRequested]);
-
-  return pageType;
-}
-
-export function usePageTypeSettingValue() {
-  return useMainMenuOpen().pageType;
 }

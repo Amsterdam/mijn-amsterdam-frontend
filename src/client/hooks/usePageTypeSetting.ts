@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+
 import { create } from 'zustand';
 
 type PageTypeSetting = 'listpage' | 'none';
@@ -7,13 +8,13 @@ type PageTypeStore = {
   setPageType: (pageType: PageTypeSetting) => void;
 };
 
-export const useMainMenuOpen = create<PageTypeStore>((set) => ({
+const usePagetypeSettingStore = create<PageTypeStore>((set) => ({
   pageType: 'none',
   setPageType: (pageType: PageTypeSetting) => set({ pageType }),
 }));
 
 export function usePageTypeSetting(pageTypeRequested: PageTypeSetting) {
-  const { pageType, setPageType } = useMainMenuOpen();
+  const { pageType, setPageType } = usePagetypeSettingStore();
 
   useEffect(() => {
     setPageType(pageTypeRequested);
@@ -26,5 +27,5 @@ export function usePageTypeSetting(pageTypeRequested: PageTypeSetting) {
 }
 
 export function usePageTypeSettingValue() {
-  return useMainMenuOpen().pageType;
+  return usePagetypeSettingStore().pageType;
 }
