@@ -1,5 +1,6 @@
 import { forTesting } from './generate-user-data-overview.ts';
 import type { ServiceResults } from '../server/services/content-tips/tip-types.ts';
+import { bffApi } from '../testing/utils.ts';
 import { apiSuccessResult } from '../universal/helpers/api.ts';
 
 describe('getAvailableUserThemas', () => {
@@ -8,6 +9,10 @@ describe('getAvailableUserThemas', () => {
     const wrapped = entries.map(([k, v]) => [k, apiSuccessResult(v)]);
     return Object.fromEntries(wrapped);
   }
+
+  beforeEach(() => {
+    bffApi.get('/test-accounts/digid').reply(200, 'test-accounts:999999999');
+  });
 
   test('Available themas', () => {
     const mockServiceResults: ServiceResults = wrap({
