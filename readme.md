@@ -58,7 +58,7 @@ BFF_SSH_PASSWD=root:admin docker compose --profile dev up
 ## Verifying the build can be done with the following command:
 
 ```bash
-pnpm bff-api:build && BFF_SKIP_APPCONFIG=1 && pnpm bff-api:serve-build
+pnpm bff-api:build && BFF_SKIP_APPCONFIG=true && pnpm bff-api:serve-build
 ```
 
 ## Accessibility + Targeted browsers
