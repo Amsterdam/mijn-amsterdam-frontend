@@ -181,6 +181,7 @@ COPY --from=build-app-bff /build-space/build-bff /app/build-bff
 COPY --from=build-app-bff /build-space/node_modules /app/node_modules
 COPY --from=build-app-bff /build-space/package.json /app/package.json
 COPY --from=build-app-bff /build-space/vendor /app/vendor
+COPY db-migrations /app/db-migrations
 COPY src/server/views /app/build-bff/server/views
 
 # Run the app

@@ -37,7 +37,7 @@ import * as XLSX from 'xlsx';
 import * as fs from 'node:fs';
 import { defaultDateFormat } from '../universal/helpers/date.ts';
 import { getFullAddress } from '../universal/helpers/brp.ts';
-import { testAccountDataDigid } from '../universal/config/auth.development.ts';
+import { getTestAccountData } from '../server/auth/auth-development.ts';
 
 import { differenceInYears, parseISO } from 'date-fns';
 
@@ -124,6 +124,7 @@ if (IS_PRODUCTION) {
   throw Error('This script cannot be run inside of production.');
 }
 
+const testAccountDataDigid = await getTestAccountData('MA_TEST_ACCOUNTS');
 if (!testAccountDataDigid) {
   throw new Error(
     'testAccountDataDigid is empty. Check if MA_TEST_ACCOUNTS has data.'

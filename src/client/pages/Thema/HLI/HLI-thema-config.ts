@@ -74,7 +74,8 @@ export const themaConfig = {
   regelingenDetailPage: {
     route: {
       path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
-      trackingUrl: '/regelingen-bij-laag-inkomen/regeling',
+      trackingUrl: (params) =>
+        `/regelingen-bij-laag-inkomen/regeling/${params?.regeling ?? ''}`,
       documentTitle: `Regeling | ${THEMA_TITLE}`,
     },
   },

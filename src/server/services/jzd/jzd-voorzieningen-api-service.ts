@@ -27,20 +27,32 @@ import type {
 
 function isMaApiPropertyConfigMatch<T extends object>(
   voorziening: T,
-  actionConfig: JzdApiConfig<T>
+  actionConfig: JzdApiConfig<T>,
+  matchType: 'include' | 'exclude' = 'include'
 ): boolean {
-  const matchers = entries(actionConfig.match);
+const IS_DEFAULT_MATCH = matchType !== 'exclude'; // If there are no matchers, we don't want to exclude any items, but we do want to include all items.
+  const matchConfig = actionConfig[matchType];
 
-  return matchers.every(([key, value]) => {
-    if (typeof value === 'function') {
-      return value(voorziening);
+  if (!matchConfig) {
+    return IS_DEFAULT_MATCH;
+  }
+
+  const matchers = entries(matchConfig);
+
+  if (!matchers.length) {
+    return IS_DEFAULT_MATCH;
+  }
+
+  return matchers.every(([voorzieningKey, valueMatch]) => {
+    if (typeof valueMatch === 'function') {
+      return valueMatch(voorziening);
     }
 
-    if (Array.isArray(value)) {
-      return value.includes(voorziening[key]);
+    if (Array.isArray(valueMatch)) {
+      return valueMatch.includes(voorziening[voorzieningKey]);
     }
 
-    return voorziening[key] === value;
+    return voorziening[voorzieningKey] === valueMatch;
   });
 }
 
@@ -51,7 +63,10 @@ function addMaApiPropsToVoorziening<T extends ZorgnedAanvraagTransformed>(
   const applyAssignments: Partial<WithMaApiProps> = {};
 
   apiPropsConfig.forEach((actionConfig) => {
-    if (isMaApiPropertyConfigMatch(voorziening, actionConfig)) {
+    if (
+      isMaApiPropertyConfigMatch(voorziening, actionConfig, 'include') &&
+      !isMaApiPropertyConfigMatch(voorziening, actionConfig, 'exclude')
+    ) {
       type _Entries = Entries<
         WithMaApiPropsAssignments<ZorgnedAanvraagTransformed>
       >;

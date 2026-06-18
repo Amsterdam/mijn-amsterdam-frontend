@@ -56,7 +56,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300111429-116841",
+        "to": "/zorg-en-ondersteuning/voorziening/alle-documenten-test-woonruimteaanpassing-in-behandeling/300111429-116841",
       },
       "statusDate": "2026-02-05T17:22:33.737",
       "statusDateFormatted": "05 februari 2026",
@@ -154,7 +154,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA3",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/301152179123-1531660123",
+        "to": "/zorg-en-ondersteuning/voorziening/niet-standaard-opdracht-natte-cel-en-toilet/301152179123-1531660123",
       },
       "statusDate": "2025-10-23T16:29:51.547",
       "statusDateFormatted": "23 oktober 2025",
@@ -224,7 +224,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA3",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/301152181-329941",
+        "to": "/zorg-en-ondersteuning/voorziening/douchezitje-aan-de-wand-opklapbaar/301152181-329941",
       },
       "statusDate": "2025-09-24T15:12:19.673",
       "statusDateFormatted": "24 september 2025",
@@ -275,7 +275,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA1",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300992070-1215588",
+        "to": "/zorg-en-ondersteuning/voorziening/reparatie-verwijderopdracht-trapliften/300992070-1215588",
       },
       "statusDate": "2024-09-30",
       "statusDateFormatted": "30 september 2024",
@@ -353,7 +353,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300989920-1213392",
+        "to": "/zorg-en-ondersteuning/voorziening/pgb-dagbestedingaccumulatievergoeding-meewerken-toegewezen/300989920-1213392",
       },
       "statusDate": "2024-08-29T16:48:11.997",
       "statusDateFormatted": "29 augustus 2024",
@@ -421,7 +421,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300989920-1213392",
+        "to": "/zorg-en-ondersteuning/voorziening/pgb-dagbesteding-samenwerken/300989920-1213392",
       },
       "statusDate": "2024-08-29T16:48:11.997",
       "statusDateFormatted": "29 augustus 2024",
@@ -489,7 +489,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300989920-1213392",
+        "to": "/zorg-en-ondersteuning/voorziening/pgb-dagbesteding-samenwerken/300989920-1213392",
       },
       "statusDate": "2024-08-29T16:48:11.997",
       "statusDateFormatted": "29 augustus 2024",
@@ -557,7 +557,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "MAO",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300989534-1213004",
+        "to": "/zorg-en-ondersteuning/voorziening/begeleid-thuis-individueel/300989534-1213004",
       },
       "statusDate": "2024-08-26T11:40:46.087",
       "statusDateFormatted": "26 augustus 2024",
@@ -657,7 +657,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300981134-1200567",
+        "to": "/zorg-en-ondersteuning/voorziening/hulp-bij-het-huishouden-bijzondere-schoonmaak/300981134-1200567",
       },
       "statusDate": "2024-07-09T16:43:58.217",
       "statusDateFormatted": "09 juli 2024",
@@ -745,7 +745,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AWBG",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300986567-1209256",
+        "to": "/zorg-en-ondersteuning/voorziening/aanvullende-individuele-ondersteuning/300986567-1209256",
       },
       "statusDate": "2024-07-08T16:07:42.397",
       "statusDateFormatted": "08 juli 2024",
@@ -813,7 +813,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300986566-297916",
+        "to": "/zorg-en-ondersteuning/voorziening/dagbesteding-meewerken/300986566-297916",
       },
       "statusDate": "2024-07-08T16:03:07.623",
       "statusDateFormatted": "08 juli 2024",
@@ -871,7 +871,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "FIE",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300981960-1201423",
+        "to": "/zorg-en-ondersteuning/voorziening/rolstoelfiets/300981960-1201423",
       },
       "statusDate": "2024-04-30T17:00:09.63",
       "statusDateFormatted": "30 april 2024",
@@ -959,7 +959,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AAN",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300981959-1201422",
+        "to": "/zorg-en-ondersteuning/voorziening/aanpassing-aan-een-eigen-bromfiets/300981959-1201422",
       },
       "statusDate": "2024-04-30T14:56:51.363",
       "statusDateFormatted": "30 april 2024",
@@ -1027,7 +1027,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "SCO",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300981307-1200749",
+        "to": "/zorg-en-ondersteuning/voorziening/scootmobiel-voor-buitengebruik/300981307-1200749",
       },
       "statusDate": "2024-04-22T13:55:05.28",
       "statusDateFormatted": "22 april 2024",
@@ -1121,7 +1121,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300979694-1199083",
+        "to": "/zorg-en-ondersteuning/voorziening/hulp-bij-het-huishouden-kind/300979694-1199083",
       },
       "statusDate": "2024-03-27T14:59:54.633",
       "statusDateFormatted": "27 maart 2024",
@@ -1215,7 +1215,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300979694-1199082",
+        "to": "/zorg-en-ondersteuning/voorziening/hulp-bij-het-huishouden/300979694-1199082",
       },
       "statusDate": "2024-03-27T14:59:54.633",
       "statusDateFormatted": "27 maart 2024",
@@ -1303,7 +1303,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "LGO",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300979687-1199069",
+        "to": "/zorg-en-ondersteuning/voorziening/logeeropvang-mantelzorg/300979687-1199069",
       },
       "statusDate": "2024-03-26T14:38:54.703",
       "statusDateFormatted": "26 maart 2024",
@@ -1391,7 +1391,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300975189-1194396",
+        "to": "/zorg-en-ondersteuning/voorziening/dagbesteding-meedoen/300975189-1194396",
       },
       "statusDate": "2024-01-25T17:08:09.837",
       "statusDateFormatted": "25 januari 2024",
@@ -1472,7 +1472,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA2",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300870430-1115322",
+        "to": "/zorg-en-ondersteuning/voorziening/reparatie-verwijderopdracht-toegang/300870430-1115322",
       },
       "statusDate": "2023-06-14",
       "statusDateFormatted": "14 juni 2023",
@@ -1550,7 +1550,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AWBG",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300975399-1194614",
+        "to": "/zorg-en-ondersteuning/voorziening/aanvullende-individuele-ondersteuning/300975399-1194614",
       },
       "statusDate": "2023-05-31",
       "statusDateFormatted": "31 mei 2023",
@@ -1638,7 +1638,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300111429-116841",
+        "to": "/zorg-en-ondersteuning/voorziening/woonruimteaanpassing-meer-info/300111429-116841",
       },
       "statusDate": "2023-05-17T00:00:00",
       "statusDateFormatted": "17 mei 2023",
@@ -1706,7 +1706,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "ROL",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300842369-951567",
+        "to": "/zorg-en-ondersteuning/voorziening/elektrische-rolstoel-voor-binnen-en-buiten/300842369-951567",
       },
       "statusDate": "2023-05-15",
       "statusDateFormatted": "15 mei 2023",
@@ -1794,7 +1794,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300846628-1001511",
+        "to": "/zorg-en-ondersteuning/voorziening/hulp-bij-het-huishouden/300846628-1001511",
       },
       "statusDate": "2023-03-12",
       "statusDateFormatted": "12 maart 2023",
@@ -1882,7 +1882,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300758214-821929",
+        "to": "/zorg-en-ondersteuning/voorziening/hulp-bij-het-huishouden/300758214-821929",
       },
       "statusDate": "2023-03-11",
       "statusDateFormatted": "11 maart 2023",
@@ -1970,7 +1970,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300758213-821928",
+        "to": "/zorg-en-ondersteuning/voorziening/dagbesteding/300758213-821928",
       },
       "statusDate": "2023-03-11",
       "statusDateFormatted": "11 maart 2023",
@@ -2051,7 +2051,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA5",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300824650-952191",
+        "to": "/zorg-en-ondersteuning/voorziening/adviesconsult/300824650-952191",
       },
       "statusDate": "2023-01-06",
       "statusDateFormatted": "06 januari 2023",
@@ -2122,7 +2122,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "OVE",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300194454-208517",
+        "to": "/zorg-en-ondersteuning/voorziening/elektrische-hulpaandrijving-voor-rolstoel-voor-01-01-2022/300194454-208517",
       },
       "statusDate": "2022-12-20",
       "statusDateFormatted": "20 december 2022",
@@ -2210,7 +2210,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AOV",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300808379-932112",
+        "to": "/zorg-en-ondersteuning/voorziening/kamer-tot-kamer-vervoer-ook-iets/300808379-932112",
       },
       "statusDate": "2022-10-19T14:27:42.643",
       "statusDateFormatted": "19 oktober 2022",
@@ -2296,7 +2296,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AOV",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/357-883696",
+        "to": "/zorg-en-ondersteuning/voorziening/kamer-tot-kamer-vervoer/357-883696",
       },
       "statusDate": "2022-10-18",
       "statusDateFormatted": "18 oktober 2022",
@@ -2347,7 +2347,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AOV",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/357-883696",
+        "to": "/zorg-en-ondersteuning/voorziening/kamer-tot-kamer-vervoer-iets/357-883696",
       },
       "statusDate": "2022-10-18",
       "statusDateFormatted": "18 oktober 2022",
@@ -2405,7 +2405,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "FIE",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300793173-261013",
+        "to": "/zorg-en-ondersteuning/voorziening/rolstoelfiets/300793173-261013",
       },
       "statusDate": "2022-08-16T09:30:39.58",
       "statusDateFormatted": "16 augustus 2022",
@@ -2463,7 +2463,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AOV",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300792674-894199",
+        "to": "/zorg-en-ondersteuning/voorziening/deur-tot-deur-samenreizend-vervoer/300792674-894199",
       },
       "statusDate": "2022-08-12T10:26:54.133",
       "statusDateFormatted": "12 augustus 2022",
@@ -2531,7 +2531,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA3",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300766704-824482",
+        "to": "/zorg-en-ondersteuning/voorziening/niet-standaard-opdracht-natte-cel-en-toilet/300766704-824482",
       },
       "statusDate": "2022-06-07",
       "statusDateFormatted": "07 juni 2022",
@@ -2612,7 +2612,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300682874-712914",
+        "to": "/zorg-en-ondersteuning/voorziening/hulp-bij-het-huishouden-voor-01-01-2022/300682874-712914",
       },
       "statusDate": "2022-03-10",
       "statusDateFormatted": "10 maart 2022",
@@ -2693,7 +2693,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AWBG",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300682873-712913",
+        "to": "/zorg-en-ondersteuning/voorziening/aanvullende-individuele-ondersteuning-voor-01-01-2022/300682873-712913",
       },
       "statusDate": "2022-03-10",
       "statusDateFormatted": "10 maart 2022",
@@ -2774,7 +2774,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300682872-712912",
+        "to": "/zorg-en-ondersteuning/voorziening/dagbesteding-voor-01-01-2022/300682872-712912",
       },
       "statusDate": "2022-03-10",
       "statusDateFormatted": "10 maart 2022",
@@ -2855,7 +2855,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA2",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300736233-768886",
+        "to": "/zorg-en-ondersteuning/voorziening/reparatie-verwijderopdracht-toegang-voor-01-01-2022/300736233-768886",
       },
       "statusDate": "2022-02-06",
       "statusDateFormatted": "06 februari 2022",
@@ -2936,7 +2936,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA2",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300736746-774497",
+        "to": "/zorg-en-ondersteuning/voorziening/handzenders-voor-deurautomaat-voor-01-01-2022/300736746-774497",
       },
       "statusDate": "2021-12-20",
       "statusDateFormatted": "20 december 2021",
@@ -3017,7 +3017,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA2",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300736746-769419",
+        "to": "/zorg-en-ondersteuning/voorziening/reparatie-verwijderopdracht-toegang/300736746-769419",
       },
       "statusDate": "2021-12-08T10:54:18",
       "statusDateFormatted": "08 december 2021",
@@ -3098,7 +3098,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "ROL",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300715248-746512",
+        "to": "/zorg-en-ondersteuning/voorziening/handbewogen-kinderrolstoel/300715248-746512",
       },
       "statusDate": "2021-11-19",
       "statusDateFormatted": "19 november 2021",
@@ -3179,7 +3179,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA3",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300727364-757369",
+        "to": "/zorg-en-ondersteuning/voorziening/niet-standaard-opdracht-natte-cel-en-toilet-voor-01-01-2022/300727364-757369",
       },
       "statusDate": "2021-10-13",
       "statusDateFormatted": "13 oktober 2021",
@@ -3260,7 +3260,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "FIE",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300208745-237149",
+        "to": "/zorg-en-ondersteuning/voorziening/driewielfiets-5-9-jr/300208745-237149",
       },
       "statusDate": "2021-08-23",
       "statusDateFormatted": "23 augustus 2021",
@@ -3341,7 +3341,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "OVE",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300110054-106795",
+        "to": "/zorg-en-ondersteuning/voorziening/buggy/300110054-106795",
       },
       "statusDate": "2021-08-23",
       "statusDateFormatted": "23 augustus 2021",
@@ -3422,7 +3422,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300644179-673050",
+        "to": "/zorg-en-ondersteuning/voorziening/dagbesteding-voor-01-01-2022/300644179-673050",
       },
       "statusDate": "2021-03-09",
       "statusDateFormatted": "09 maart 2021",
@@ -3503,7 +3503,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300644178-673049",
+        "to": "/zorg-en-ondersteuning/voorziening/hulp-bij-het-huishouden-voor-01-01-2022/300644178-673049",
       },
       "statusDate": "2021-03-09",
       "statusDateFormatted": "09 maart 2021",
@@ -3584,7 +3584,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AWBG",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300644177-673048",
+        "to": "/zorg-en-ondersteuning/voorziening/aanvullende-individuele-ondersteuning-voor-01-01-2022/300644177-673048",
       },
       "statusDate": "2021-03-09",
       "statusDateFormatted": "09 maart 2021",
@@ -3665,7 +3665,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA3",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300635655-662702",
+        "to": "/zorg-en-ondersteuning/voorziening/antislipvloerbehandeling-badkamer-voor-01-01-2022/300635655-662702",
       },
       "statusDate": "2021-01-13",
       "statusDateFormatted": "13 januari 2021",
@@ -3746,7 +3746,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300601337-628226",
+        "to": "/zorg-en-ondersteuning/voorziening/dagbesteding-voor-01-01-2022/300601337-628226",
       },
       "statusDate": "2020-12-31",
       "statusDateFormatted": "31 december 2020",
@@ -3827,7 +3827,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300584007-610430",
+        "to": "/zorg-en-ondersteuning/voorziening/hulp-bij-het-huishouden-voor-01-01-2022/300584007-610430",
       },
       "statusDate": "2020-12-31",
       "statusDateFormatted": "31 december 2020",
@@ -3908,7 +3908,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AWBG",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300584006-610429",
+        "to": "/zorg-en-ondersteuning/voorziening/aanvullende-individuele-ondersteuning-voor-01-01-2022/300584006-610429",
       },
       "statusDate": "2020-12-31",
       "statusDateFormatted": "31 december 2020",
@@ -3989,7 +3989,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "RWD",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300601970-627689",
+        "to": "/zorg-en-ondersteuning/voorziening/douche-toiletstoel-zelfrijder-voor-01-01-2022/300601970-627689",
       },
       "statusDate": "2020-09-10",
       "statusDateFormatted": "10 september 2020",
@@ -4070,7 +4070,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA3",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300599486-626188",
+        "to": "/zorg-en-ondersteuning/voorziening/reparatie-verwijderopdracht-natte-cel-en-toile-voor-01-01-2022/300599486-626188",
       },
       "statusDate": "2020-08-05",
       "statusDateFormatted": "05 augustus 2020",
@@ -4141,7 +4141,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300584005-610428",
+        "to": "/zorg-en-ondersteuning/voorziening/dagbesteding-voor-01-01-2022/300584005-610428",
       },
       "statusDate": "2020-06-14",
       "statusDateFormatted": "14 juni 2020",
@@ -4222,7 +4222,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "RWD",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300258703-287866",
+        "to": "/zorg-en-ondersteuning/voorziening/douche-toiletstoel-verrijdbkantelbind-aangep-voor-01-01-2022/300258703-287866",
       },
       "statusDate": "2020-06-09",
       "statusDateFormatted": "09 juni 2020",
@@ -4303,7 +4303,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300516616-564848",
+        "to": "/zorg-en-ondersteuning/voorziening/hulp-bij-het-huishouden-voor-01-01-2022/300516616-564848",
       },
       "statusDate": "2020-03-08",
       "statusDateFormatted": "08 maart 2020",
@@ -4384,7 +4384,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AWBG",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300508975-529541",
+        "to": "/zorg-en-ondersteuning/voorziening/aanvullende-individuele-ondersteuning-voor-01-01-2022/300508975-529541",
       },
       "statusDate": "2020-03-08",
       "statusDateFormatted": "08 maart 2020",
@@ -4465,7 +4465,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300508974-542597",
+        "to": "/zorg-en-ondersteuning/voorziening/dagbesteding-voor-01-01-2022/300508974-542597",
       },
       "statusDate": "2020-03-08",
       "statusDateFormatted": "08 maart 2020",
@@ -4546,7 +4546,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA3",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300549949-574524",
+        "to": "/zorg-en-ondersteuning/voorziening/reparatie-verwijderopdracht-natte-cel-en-toilet-voor-01-01-2022/300549949-574524",
       },
       "statusDate": "2019-12-09",
       "statusDateFormatted": "09 december 2019",
@@ -4627,7 +4627,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300442603-498814",
+        "to": "/zorg-en-ondersteuning/voorziening/hulp-bij-het-huishouden-voor-01-01-2022/300442603-498814",
       },
       "statusDate": "2019-04-13",
       "statusDateFormatted": "13 april 2019",
@@ -4708,7 +4708,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300479232-485822",
+        "to": "/zorg-en-ondersteuning/voorziening/woonruimteaanpassing-met-doc-4-voor-01-01-2022/300479232-485822",
       },
       "statusDate": "2019-03-25",
       "statusDateFormatted": "25 maart 2019",
@@ -4789,7 +4789,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AWBG",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300486041-495961",
+        "to": "/zorg-en-ondersteuning/voorziening/aanvullende-individuele-ondersteuning-voor-01-01-2022/300486041-495961",
       },
       "statusDate": "2019-03-08",
       "statusDateFormatted": "08 maart 2019",
@@ -4870,7 +4870,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300441529-465296",
+        "to": "/zorg-en-ondersteuning/voorziening/dagbesteding-voor-01-01-2022/300441529-465296",
       },
       "statusDate": "2019-03-08",
       "statusDateFormatted": "08 maart 2019",
@@ -4951,7 +4951,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AWBG",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300413803-448395",
+        "to": "/zorg-en-ondersteuning/voorziening/aanvullende-individuele-ondersteuning-voor-01-01-2022/300413803-448395",
       },
       "statusDate": "2018-11-23",
       "statusDateFormatted": "23 november 2018",
@@ -5032,7 +5032,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300438597-474212",
+        "to": "/zorg-en-ondersteuning/voorziening/woonruimteaanpassing/300438597-474212",
       },
       "statusDate": "2018-05-09",
       "statusDateFormatted": "09 mei 2018",
@@ -5113,7 +5113,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300379514-411133",
+        "to": "/zorg-en-ondersteuning/voorziening/hulp-bij-het-huishouden-voor-01-01-2022/300379514-411133",
       },
       "statusDate": "2018-04-13",
       "statusDateFormatted": "13 april 2018",
@@ -5194,7 +5194,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300366854-389456",
+        "to": "/zorg-en-ondersteuning/voorziening/dagbesteding-voor-01-01-2022/300366854-389456",
       },
       "statusDate": "2018-03-08",
       "statusDateFormatted": "08 maart 2018",
@@ -5275,7 +5275,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "OVE",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300092619-98734",
+        "to": "/zorg-en-ondersteuning/voorziening/autozitje/300092619-98734",
       },
       "statusDate": "2017-06-01",
       "statusDateFormatted": "01 juni 2017",
@@ -5356,7 +5356,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300194453-208518",
+        "to": "/zorg-en-ondersteuning/voorziening/woonruimteaanpassing-3-voor-01-01-2022/300194453-208518",
       },
       "statusDate": "2014-11-07",
       "statusDateFormatted": "07 november 2014",
@@ -5437,7 +5437,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300172074-183109",
+        "to": "/zorg-en-ondersteuning/voorziening/woonruimteaanpassing-met-doc-2-voor-01-01-2022/300172074-183109",
       },
       "statusDate": "2013-12-09",
       "statusDateFormatted": "09 december 2013",
@@ -5501,7 +5501,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300111429-116841",
+        "to": "/zorg-en-ondersteuning/voorziening/woonruimteaanpassing-met-doc-2-meer-info/300111429-116841",
       },
       "statusDate": "2013-06-17",
       "statusDateFormatted": "17 juni 2013",
@@ -5592,7 +5592,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AOV",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/300136650-176682",
+        "to": "/zorg-en-ondersteuning/voorziening/kamer-tot-kamer-vervoer-nog-iets-voor-01-01-2022/300136650-176682",
       },
       "statusDate": "2012-08-07",
       "statusDateFormatted": "07 augustus 2012",

@@ -1,5 +1,9 @@
-import { IS_PRODUCTION } from './env.ts';
+import {
+  downloadBlob,
+  getBlobStorage,
+} from '../../server/config/azure-storage.ts';
 import { getFromEnv } from '../../server/helpers/env.ts';
+import { IS_PRODUCTION } from '../../universal/config/env.ts';
 
 export const DEV_USER_ID_DEFAULT =
   getFromEnv('MA_PROFILE_DEV_ID', false) || 'I.M Mokum';
@@ -38,11 +42,6 @@ const FALLBACK_TEST_USER_DATA: TestUserData = {
   accounts: [FALLBACK_DEV_ACCOUNT],
 };
 
-export const testAccountDataDigid = getTestAccountData('MA_TEST_ACCOUNTS');
-export const testAccountDataEherkenning = getTestAccountData(
-  'MA_TEST_ACCOUNTS_EH'
-);
-
 export type TestUserData = {
   tableHeaders: TableHeader[];
   accounts: TestUserAccount[];
@@ -63,12 +62,28 @@ export type TestUserAccount = {
   profileId: string;
 } & Record<string, string | boolean>;
 
-function getTestAccountData(envKey: string): TestUserData | null {
+export async function getTestAccountData(
+  envKey: 'MA_TEST_ACCOUNTS' | 'MA_TEST_ACCOUNTS_EH'
+): Promise<TestUserData | null> {
   if (IS_PRODUCTION) {
     return null;
   }
-  const accounts =
-    getFromEnv(envKey, false) || JSON.stringify(FALLBACK_TEST_USER_DATA);
-  const testUserData: TestUserData = JSON.parse(accounts);
-  return testUserData;
+
+  const client = getBlobStorage();
+  if (!client) {
+    const testData = getFromEnv(envKey);
+    if (!testData) {
+      return FALLBACK_TEST_USER_DATA;
+    }
+    return JSON.parse(testData);
+  }
+
+  const containerClient = client.getContainerClient('test-accounts');
+
+  const fileName =
+    envKey === 'MA_TEST_ACCOUNTS'
+      ? 'digid-test-accounts.json'
+      : 'eherkenning-test-accounts.json';
+
+  return JSON.parse(await downloadBlob(containerClient, fileName));
 }
