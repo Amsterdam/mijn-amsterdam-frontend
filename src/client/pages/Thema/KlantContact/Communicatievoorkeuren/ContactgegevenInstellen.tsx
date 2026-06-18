@@ -81,10 +81,6 @@ export function ContactgegevenInstellen() {
                 type={contactgegevenType}
                 onVerified={({ otp, value, type }) => {
                   setValueLocal('');
-                  // update({
-                  //   type,
-                  //   value,
-                  // });
                   navigate(themaConfig.route.path);
                 }}
               />
