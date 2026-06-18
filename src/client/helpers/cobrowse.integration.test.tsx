@@ -2,8 +2,9 @@ import type { ComponentType } from '@react-spring/web';
 import { act, render, screen } from '@testing-library/react';
 import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
-import { describe, it } from 'vitest';
+import { describe } from 'vitest';
 
+import type { Kanaal } from '../../server/services/klantcontact/klantcontact.types.ts';
 import type { AppState } from '../../universal/types/App.types.ts';
 import { DashboardRoute } from '../pages/Dashboard/Dashboard-routes.ts';
 import { Dashboard } from '../pages/Dashboard/Dashboard.tsx';
@@ -14,24 +15,27 @@ import { themaConfig as themaBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-t
 import { BezwarenDetail } from '../pages/Thema/Bezwaren/BezwarenDetail.tsx';
 import { BezwarenList } from '../pages/Thema/Bezwaren/BezwarenList.tsx';
 import { BezwarenThema } from '../pages/Thema/Bezwaren/BezwarenThema.tsx';
-import { mapperContactmomentToMenuItem } from '../pages/Thema/KlantContact/Contactmomenten/useTransformContactmomenten.tsx';
+import { ContactmomentenListPage } from '../pages/Thema/KlantContact/Contactmomenten/ContactmomentenListPage.tsx';
+import { KlantContactThema } from '../pages/Thema/KlantContact/KlantContactThema.tsx';
 import { MijnGegevensThema } from '../pages/Thema/Profile/private/ProfilePrivate.tsx';
 import { themaConfig as themaVergunningen } from '../pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 
 const testState = {
   KLANT_CONTACT: {
     status: 'OK',
-    content: [
-      {
-        subject: Object.entries(mapperContactmomentToMenuItem).find(
-          ([_, themaId]) => themaId === themaAfis.id
-        )?.[0],
-        themaKanaal: themaAfis.title, // We misuse this to keep things together
-      },
-      {
-        subject: themaVergunningen.id,
-      },
-    ],
+    content: {
+      contactmomenten: [
+        {
+          subject: 'Financiën',
+          kanaal: themaAfis.title as Kanaal, // We misuse this to keep things together
+        },
+        {
+          subject: themaVergunningen.id,
+          kanaal: 'Chat',
+        },
+      ],
+      afspraken: [],
+    },
   },
   BRP: {
     status: 'OK',
@@ -143,7 +147,7 @@ describe('Cobrowse redacted components', () => {
 
   describe('Cobrowse redacted components', () => {
     describe('Dashboard', () => {
-      it('<MyThemasPanel />', async () => {
+      test('<MyThemasPanel />', async () => {
         await act(() => render(<Component component={Dashboard} />));
         expect(screen.getByTestId(themaBezwaren.title)).toHaveClass('redacted');
         expect(screen.getByTestId(themaVergunningen.title)).not.toHaveClass(
@@ -151,7 +155,7 @@ describe('Cobrowse redacted components', () => {
         );
       });
 
-      it('Notifications', async () => {
+      test('Notifications redacted on Dashboard', async () => {
         await act(() => render(<Component component={Dashboard} />));
         const listItems = screen.getAllByRole('listitem');
         const redactedNotification = listItems.find((li) =>
@@ -165,7 +169,7 @@ describe('Cobrowse redacted components', () => {
       });
     });
 
-    it('Notifications', async () => {
+    test('Notifications redacted on MyNotificationsPage', async () => {
       await act(() => render(<Component component={MyNotificationsPage} />));
       const listItems = screen.getAllByRole('listitem');
       const redactedNotification = listItems.find((li) =>
@@ -203,13 +207,52 @@ describe('Cobrowse redacted components', () => {
     });
 
     describe('Mijn gegevens', () => {
-      it('BSN', async () => {
+      test('BSN redacted', async () => {
         await act(() => render(<Component component={MijnGegevensThema} />));
         const bsnField = screen.getByText(
           testState.BRP.content?.persoon.bsn ?? ''
         );
         expect(bsnField).toHaveClass('redacted');
       });
+    });
+
+    describe('Mijn contact', () => {
+      test('Contactmomenten redacted', () => {
+        render(<Component component={KlantContactThema} />);
+
+        const contactmomentAfis = screen
+          .getByRole('link', {
+            name:
+              testState.KLANT_CONTACT.content?.contactmomenten[0].kanaal ?? '',
+          })
+          .closest('tr');
+        expect(contactmomentAfis).toHaveClass('redacted');
+
+        const contactmomentVergunning = screen
+          .getByText(
+            testState.KLANT_CONTACT.content?.contactmomenten[1].subject ?? ''
+          )
+          .closest('tr');
+        expect(contactmomentVergunning).not.toHaveClass('redacted');
+      });
+    });
+
+    test('ContactmomentenList redacted', () => {
+      render(<Component component={ContactmomentenListPage} />);
+      const contactmomentAfis = screen
+        .getByRole('link', {
+          name:
+            testState.KLANT_CONTACT.content?.contactmomenten[0].kanaal ?? '',
+        })
+        .closest('tr');
+      expect(contactmomentAfis).toHaveClass('redacted');
+
+      const contactmomentVergunning = screen
+        .getByText(
+          testState.KLANT_CONTACT.content?.contactmomenten[1].subject ?? ''
+        )
+        .closest('tr');
+      expect(contactmomentVergunning).not.toHaveClass('redacted');
     });
   });
 });
