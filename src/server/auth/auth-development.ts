@@ -1,11 +1,11 @@
-import { readFileSync } from 'fs';
+import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import slug from 'slugme';
 
 import type { AuthProfile } from './auth-types.ts';
-import { IS_PRODUCTION } from '../../universal/config/env.ts';
+import { IS_DEVELOPMENT, IS_PRODUCTION } from '../../universal/config/env.ts';
 import { downloadBlob, getBlobStorage } from '../config/azure-storage.ts';
 import { getFromEnv } from '../helpers/env.ts';
 import { logger } from '../logging.ts';
@@ -67,8 +67,10 @@ export function createNameProfileIdMapping(accounts: string): TestUsers {
   return users;
 }
 
+type TestAccountEnvKey = 'MA_TEST_ACCOUNTS' | 'MA_TEST_ACCOUNTS_EH';
+
 export async function getTestAccountData(
-  envKey: 'MA_TEST_ACCOUNTS' | 'MA_TEST_ACCOUNTS_EH'
+  envKey: TestAccountEnvKey
 ): Promise<TestUserData | null> {
   if (IS_PRODUCTION) {
     logger.warn(
@@ -79,13 +81,15 @@ export async function getTestAccountData(
 
   const client = getBlobStorage();
   if (!client) {
-    logger.info('No client found, returning test accounts from file');
-    const testAccountPath =
-      envKey === 'MA_TEST_ACCOUNTS'
-        ? DIGID_TEST_ACCOUNTS_PATH
-        : EHERKENNING_TEST_ACCOUNTS_PATH;
-    const jsonString = readFileSync(testAccountPath).toString();
-    return JSON.parse(jsonString);
+    if (IS_DEVELOPMENT) {
+      const testAccountPath =
+        envKey === 'MA_TEST_ACCOUNTS'
+          ? DIGID_TEST_ACCOUNTS_PATH
+          : EHERKENNING_TEST_ACCOUNTS_PATH;
+      const jsonString = readFileSync(testAccountPath).toString();
+      return JSON.parse(jsonString);
+    }
+    return getBackupTestaccounts(envKey);
   }
 
   const containerClient = client.getContainerClient('test-accounts');
@@ -96,4 +100,27 @@ export async function getTestAccountData(
       : 'eherkenning-test-accounts.json';
 
   return JSON.parse(await downloadBlob(containerClient, fileName));
+}
+
+export function getBackupTestaccounts(envKey: TestAccountEnvKey): TestUserData {
+  const accounts = getFromEnv(envKey, true, true)!
+    .split(',')
+    .filter(Boolean)
+    .map((a) => a.split(':'))
+    .map(([username, profileId]) => {
+      return {
+        username,
+        profileId,
+      };
+    });
+  return {
+    tableHeaders: [
+      { displayName: 'Gebruikersnaam', key: 'username' },
+      {
+        displayName: envKey === 'MA_TEST_ACCOUNTS' ? 'BSN' : 'KVK',
+        key: 'profileId',
+      },
+    ],
+    accounts,
+  };
 }

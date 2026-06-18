@@ -20,6 +20,7 @@ import {
   TOKEN_ID_ATTRIBUTE,
 } from '../auth/auth-config.ts';
 import {
+  getBackupTestaccounts,
   getTestAccountData,
   getTestAccounts,
 } from '../auth/auth-development.ts';
@@ -206,10 +207,9 @@ async function sendRenderedTestAccountTable(
   res: Response,
   authMethod: AuthMethod
 ) {
-  const testAccountData =
-    authMethod === 'digid'
-      ? await getTestAccountData('MA_TEST_ACCOUNTS')
-      : await getTestAccountData('MA_TEST_ACCOUNTS_EH');
+  const envKey =
+    authMethod === 'digid' ? 'MA_TEST_ACCOUNTS' : 'MA_TEST_ACCOUNTS_EH';
+  const testAccountData = await getTestAccountData(envKey);
 
   if (!testAccountData) {
     return sendBadRequest(
@@ -218,6 +218,37 @@ async function sendRenderedTestAccountTable(
     );
   }
 
+  let tableHeaders;
+  let tableRows;
+  try {
+    const testAccounts = transformUsernames(req, testAccountData, authMethod);
+    [tableHeaders, tableRows] = formatForTable({
+      ...testAccountData,
+      accounts: testAccounts,
+    } as TestUserData);
+  } catch (err) {
+    logger.error(err);
+    const backupAccounts = getBackupTestaccounts(envKey);
+    const testAccounts = transformUsernames(req, backupAccounts, authMethod);
+    [tableHeaders, tableRows] = formatForTable({
+      ...backupAccounts,
+      accounts: testAccounts,
+    } as TestUserData);
+  }
+  const renderProps = {
+    title: `Selecteer ${authMethod} test account.`,
+    tableHeaders,
+    tableRows,
+  };
+
+  return res.render('select-test-account', renderProps);
+}
+
+function transformUsernames(
+  req: Request,
+  testAccountData: TestUserData,
+  authMethod: AuthProfile['authMethod']
+) {
   let testAccounts = testAccountData.accounts.map((account) => {
     let username = cleanTestUsername(account.username);
     username = slug(username);
@@ -236,17 +267,7 @@ async function sendRenderedTestAccountTable(
     return { ...account, username: href };
   });
 
-  const [tableHeaders, tableRows] = formatForTable({
-    ...testAccountData,
-    accounts: testAccounts,
-  } as TestUserData);
-  const renderProps = {
-    title: `Selecteer ${authMethod} test account.`,
-    tableHeaders,
-    tableRows,
-  };
-
-  return res.render('select-test-account', renderProps);
+  return testAccounts;
 }
 
 type TableHeaders = string[];
