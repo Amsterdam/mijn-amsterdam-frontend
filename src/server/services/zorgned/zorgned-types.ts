@@ -202,7 +202,7 @@ export type ZorgnedPersoonSource = {
   geboortenaam: string;
   roepnaam: string | null;
   voorletters: string;
-  voornamen: string;
+  voornamen?: string | null;
   voorvoegsel: string | null;
   geboortedatum: string | null;
   partnernaam?: string | null;
