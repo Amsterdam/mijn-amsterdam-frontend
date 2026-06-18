@@ -141,7 +141,7 @@ describe('app-router-admin', () => {
     ).toBe(false);
   });
 
-  it('should return 200 when auth middleware is enabled in production', async () => {
+  it('should serve protected admin routes when auth middleware is enabled in production', async () => {
     const router = await buildAdminRouter({
       isAdminRouterEnabled: true,
       isAdminAuthenticationMiddlewareEnabled: true,
@@ -157,7 +157,7 @@ describe('app-router-admin', () => {
     expect(response.text).toBe('ok');
   });
 
-  it('should return 500 when auth middleware is disabled in production', async () => {
+  it('should error on protected admin routes when auth middleware is disabled in production', async () => {
     const router = await buildAdminRouter({
       isAdminRouterEnabled: true,
       isAdminAuthenticationMiddlewareEnabled: false,
