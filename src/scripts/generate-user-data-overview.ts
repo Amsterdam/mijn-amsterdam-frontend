@@ -92,10 +92,6 @@ import { getFullAddress, isMokum } from '../universal/helpers/brp.ts';
 import { defaultDateFormat } from '../universal/helpers/date.ts';
 import type { AppState, MyNotification } from '../universal/types/App.types.ts';
 
-function cleanTestUsername(username: string): string {
-  return username.trim().replace('Provincie-', '');
-}
-
 /**
  * Extra hardcoded additions are to display certain services as if they were
  * their own thema.
@@ -131,42 +127,6 @@ const themas = [
   { id: themaSubsidies.id, title: themaSubsidies.title },
 ];
 
-if (IS_PRODUCTION) {
-  throw Error('This script cannot be run inside of production.');
-}
-
-const BASE_URL = process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL;
-if (!BASE_URL) {
-  throw new Error(`BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL = ${BASE_URL}`);
-}
-
-async function parseStdinOrFallback(): Promise<TestUsers | null> {
-  let input: string;
-  try {
-    input = fs.readFileSync(process.stdin.fd, 'utf-8');
-  } catch {
-    const commaSeperatedTestAccounts = await fetch(
-      `${BASE_URL}/test-accounts/digid`,
-      {
-        method: 'GET',
-      }
-    );
-    input = await commaSeperatedTestAccounts.text();
-  }
-
-  assert(input.length > 0, 'stdin may not be an empty string');
-
-  return createNameProfileIdMapping(input);
-}
-
-const testAccountDataDigid = await parseStdinOrFallback();
-
-if (!testAccountDataDigid) {
-  throw new Error(
-    'testAccountDataDigid is empty. Check if MA_TEST_ACCOUNTS has data or pipe a json string into this script.'
-  );
-}
-
 const themaIDtoTitle: Record<string, string> = themas.reduce(
   (acc, { id, title }) => {
     acc[id] = title;
@@ -175,670 +135,939 @@ const themaIDtoTitle: Record<string, string> = themas.reduce(
   {} as Record<string, string>
 );
 
-const themaIDs = themas.map((menuItem) => menuItem.id);
-const testAccounts = Object.entries(testAccountDataDigid);
+async function main() {
+  function cleanTestUsername(username: string): string {
+    return username.trim().replace('Provincie-', '');
+  }
 
-XLSX.set_fs(fs);
+  if (IS_PRODUCTION) {
+    throw Error('This script cannot be run inside of production.');
+  }
 
-const { values: args } = parseArgs({
-  options: {
-    'from-disk': {
-      type: 'boolean',
-      short: 'd',
-      default: false,
+  const BASE_URL = process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL;
+  if (!BASE_URL) {
+    throw new Error(`BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL = ${BASE_URL}`);
+  }
+
+  async function parseStdinOrFallback(): Promise<TestUsers | null> {
+    let input: string;
+    try {
+      input = fs.readFileSync(process.stdin.fd, 'utf-8');
+    } catch {
+      const commaSeperatedTestAccounts = await fetch(
+        `${BASE_URL}/test-accounts/digid`,
+        {
+          method: 'GET',
+        }
+      );
+      input = await commaSeperatedTestAccounts.text();
+    }
+
+    assert(input.length > 0, 'stdin may not be an empty string');
+
+    return createNameProfileIdMapping(input);
+  }
+
+  const testAccountDataDigid = await parseStdinOrFallback();
+
+  if (!testAccountDataDigid) {
+    throw new Error(
+      'testAccountDataDigid is empty. Check if MA_TEST_ACCOUNTS has data or pipe a json string into this script.'
+    );
+  }
+
+  const themaIDs = themas.map((menuItem) => menuItem.id);
+  const testAccounts = Object.entries(testAccountDataDigid);
+
+  XLSX.set_fs(fs);
+
+  const { values: args } = parseArgs({
+    options: {
+      'from-disk': {
+        type: 'boolean',
+        short: 'd',
+        default: false,
+      },
+      'out-file-path-digid-test-accounts': {
+        type: 'string',
+        short: 'f',
+        default: DIGID_TEST_ACCOUNTS_PATH,
+      },
+      'refresh-cache': {
+        type: 'boolean',
+        short: 'r',
+        default: false,
+      },
+      'update-test-accounts': {
+        type: 'boolean',
+        short: 'u',
+        default: false,
+      },
     },
-    'out-file-path-digid-test-accounts': {
-      type: 'string',
-      short: 'f',
-      default: DIGID_TEST_ACCOUNTS_PATH,
-    },
-    'refresh-cache': {
-      type: 'boolean',
-      short: 'r',
-      default: false,
-    },
-    'update-test-accounts': {
-      type: 'boolean',
-      short: 'u',
-      default: false,
-    },
-  },
-});
+  });
 
-// If true then get data extracted out of services from disk.
-// This greatly speeds up this script and is therefore nice for debugging.
-const FROM_DISK: boolean = args['from-disk'];
+  // If true then get data extracted out of services from disk.
+  // This greatly speeds up this script and is therefore nice for debugging.
+  const FROM_DISK: boolean = args['from-disk'];
 
-// Describes where we should save the transformed data from our services.
-const TARGET_DIRECTORY: string = '.';
-if (!TARGET_DIRECTORY) {
-  throw new Error(
-    `(TARGET_DIRECTORY = '${TARGET_DIRECTORY}') may not be empty`
-  );
-}
+  // Describes where we should save the transformed data from our services.
+  const TARGET_DIRECTORY: string = '.';
+  if (!TARGET_DIRECTORY) {
+    throw new Error(
+      `(TARGET_DIRECTORY = '${TARGET_DIRECTORY}') may not be empty`
+    );
+  }
 
-const CACHE_PATH = `${TARGET_DIRECTORY}/user-data.json`;
+  const CACHE_PATH = `${TARGET_DIRECTORY}/user-data.json`;
 
-// Configuration for row/columns.
-const HPX_DEFAULT = 22;
-const WCH_DEFAULT = 25;
+  // Configuration for row/columns.
+  const HPX_DEFAULT = 22;
+  const WCH_DEFAULT = 25;
 
-generateOverview();
+  generateOverview();
 
-async function generateOverview() {
-  return getServiceResults().then((resultsByUser) => {
-    const fileExists = fs.existsSync(CACHE_PATH);
-    if (fileExists) {
-      if (args['refresh-cache']) {
+  async function generateOverview() {
+    return getServiceResults().then((resultsByUser) => {
+      const fileExists = fs.existsSync(CACHE_PATH);
+      if (fileExists) {
+        if (args['refresh-cache']) {
+          fs.writeFileSync(CACHE_PATH, JSON.stringify(resultsByUser));
+        }
+      } else if (FROM_DISK) {
         fs.writeFileSync(CACHE_PATH, JSON.stringify(resultsByUser));
       }
-    } else if (FROM_DISK) {
-      fs.writeFileSync(CACHE_PATH, JSON.stringify(resultsByUser));
-    }
 
-    const now = new Date();
-    const [day, month, year] = [
-      now.getDate(),
-      now.getMonth() + 1,
-      now.getFullYear(),
-    ].map((d) => d.toString());
-    const fileName = `${TARGET_DIRECTORY}/userdata-overview_${day}-${month}-${year}.xlsx`;
-    const workbook = XLSX.utils.book_new();
+      const now = new Date();
+      const [day, month, year] = [
+        now.getDate(),
+        now.getMonth() + 1,
+        now.getFullYear(),
+      ].map((d) => d.toString());
+      const fileName = `${TARGET_DIRECTORY}/userdata-overview_${day}-${month}-${year}.xlsx`;
+      const workbook = XLSX.utils.book_new();
 
-    const serviceNames = getAllServiceNames(resultsByUser);
-    const serviceKeys = Object.keys(serviceNames);
+      const serviceNames = getAllServiceNames(resultsByUser);
+      const serviceKeys = Object.keys(serviceNames);
 
-    addSheets(workbook, [
-      sheetBrpBase(resultsByUser),
-      sheetServiceErrors(resultsByUser, serviceKeys),
-      sheetThemas(resultsByUser),
-      sheetNotifications(resultsByUser),
-      sheetThemaContent(resultsByUser),
-      sheetZaken(resultsByUser),
-    ]);
+      addSheets(workbook, [
+        sheetBrpBase(resultsByUser),
+        sheetServiceErrors(resultsByUser, serviceKeys),
+        sheetThemas(resultsByUser),
+        sheetNotifications(resultsByUser),
+        sheetThemaContent(resultsByUser),
+        sheetZaken(resultsByUser),
+      ]);
 
-    const testUserLoginTable = createDigidTestUserTable(resultsByUser);
-    const isNotDefault =
-      args['out-file-path-digid-test-accounts'] !== DIGID_TEST_ACCOUNTS_PATH;
+      const testUserLoginTable = createDigidTestUserTable(resultsByUser);
+      const isNotDefault =
+        args['out-file-path-digid-test-accounts'] !== DIGID_TEST_ACCOUNTS_PATH;
 
-    if (isNotDefault || args['update-test-accounts']) {
-      fs.writeFileSync(
-        args['out-file-path-digid-test-accounts'],
-        JSON.stringify(testUserLoginTable, null, 2) + '\n'
-      );
-    }
+      if (isNotDefault || args['update-test-accounts']) {
+        fs.writeFileSync(
+          args['out-file-path-digid-test-accounts'],
+          JSON.stringify(testUserLoginTable, null, 2) + '\n'
+        );
+      }
 
-    XLSX.writeFile(workbook, fileName, { compression: true });
+      XLSX.writeFile(workbook, fileName, { compression: true });
 
-    return fileName;
-  });
-}
+      return fileName;
+    });
+  }
 
-function createDigidTestUserTable(resultsByUser: ResultsByUser): TestUserData {
-  const digidTestAccountsRaw = fs
-    .readFileSync(DIGID_TEST_ACCOUNTS_PATH, {
-      encoding: 'utf8',
-      flag: 'r',
-    })
-    .toString();
+  function createDigidTestUserTable(
+    resultsByUser: ResultsByUser
+  ): TestUserData {
+    const digidTestAccountsRaw = fs
+      .readFileSync(DIGID_TEST_ACCOUNTS_PATH, {
+        encoding: 'utf8',
+        flag: 'r',
+      })
+      .toString();
 
-  const digidTestAccounts = JSON.parse(digidTestAccountsRaw) as TestUserData;
+    const digidTestAccounts = JSON.parse(digidTestAccountsRaw) as TestUserData;
 
-  assert(digidTestAccounts?.tableHeaders, 'tableHeaders are required');
-  const tableHeaders = digidTestAccounts.tableHeaders;
+    assert(digidTestAccounts?.tableHeaders, 'tableHeaders are required');
+    const tableHeaders = digidTestAccounts.tableHeaders;
 
-  const accounts: TestUserAccount[] = Object.entries(resultsByUser).map(
-    ([username, serviceResults]) => {
-      const brpBasedProperties = getBRPBasedProperties(
-        username,
-        serviceResults
-      );
+    const accounts: TestUserAccount[] = Object.entries(resultsByUser).map(
+      ([username, serviceResults]) => {
+        const brpBasedProperties = getBRPBasedProperties(
+          username,
+          serviceResults
+        );
+        return {
+          username,
+          ...brpBasedProperties,
+          heeftStadspas:
+            (serviceResults.HLI?.content?.stadspas?.stadspassen?.length ?? 0) >
+            0,
+          availableThemas: Object.values(getAvailableUserThemas(serviceResults))
+            .filter(Boolean)
+            .join(', '),
+        };
+      }
+    );
+
+    return { tableHeaders, accounts };
+  }
+
+  function getBRPBasedProperties(
+    username: string,
+    serviceResults: ServiceResults
+  ): {
+    profileId: TestUserAccount['profileId'];
+  } & OptionalTestUserAccountProperties {
+    const brpContent = serviceResults.BRP
+      ?.content as AppState['BRP']['content'];
+
+    if (!brpContent) {
+      const [, backupProfileId] = testAccounts.find(
+        ([backupUsername]) => backupUsername === username
+      ) ?? [, null];
+      assert(backupProfileId, `Testaccount named '${username}' is not found.`);
       return {
-        username,
-        ...brpBasedProperties,
-        heeftStadspas:
-          (serviceResults.HLI?.content?.stadspas?.stadspassen?.length ?? 0) > 0,
-        availableThemas: Object.values(getAvailableUserThemas(serviceResults))
-          .filter(Boolean)
-          .join(', '),
+        profileId: backupProfileId,
       };
     }
-  );
 
-  return { tableHeaders, accounts };
-}
+    const profileId = brpContent.persoon?.bsn ?? '';
+    const geboortedatum = brpContent.persoon?.geboortedatum;
 
-function getBRPBasedProperties(
-  username: string,
-  serviceResults: ServiceResults
-): {
-  profileId: TestUserAccount['profileId'];
-} & OptionalTestUserAccountProperties {
-  const brpContent = serviceResults.BRP?.content as AppState['BRP']['content'];
-
-  if (!brpContent) {
-    const [, backupProfileId] = testAccounts.find(
-      ([backupUsername]) => backupUsername === username
-    ) ?? [, null];
-    assert(backupProfileId, `Testaccount named '${username}' is not found.`);
     return {
-      profileId: backupProfileId,
+      profileId,
+      mokum: isMokum(brpContent),
+      hasChildren: brpContent.kinderen.length > 0,
+      partnerName: brpContent.verbintenis?.persoon.voornamen ?? '',
+      isOlderThan18: geboortedatum
+        ? differenceInYears(new Date(), geboortedatum) >= 18
+        : 'onbekend',
+      hasParents: brpContent.ouders.length > 0,
+      hasVertrokkenOnbekendWaarheen:
+        brpContent.persoon?.vertrokkenOnbekendWaarheen ?? false,
+      isAdresInOnderzoek: !!brpContent.persoon?.adresInOnderzoek,
     };
   }
 
-  const profileId = brpContent.persoon?.bsn ?? '';
-  const geboortedatum = brpContent.persoon?.geboortedatum;
+  type ResultsByUser = Record<string, ServiceResults>;
 
-  return {
-    profileId,
-    mokum: isMokum(brpContent),
-    hasChildren: brpContent.kinderen.length > 0,
-    partnerName: brpContent.verbintenis?.persoon.voornamen ?? '',
-    isOlderThan18: geboortedatum
-      ? differenceInYears(new Date(), geboortedatum) >= 18
-      : 'onbekend',
-    hasParents: brpContent.ouders.length > 0,
-    hasVertrokkenOnbekendWaarheen:
-      brpContent.persoon?.vertrokkenOnbekendWaarheen ?? false,
-    isAdresInOnderzoek: !!brpContent.persoon?.adresInOnderzoek,
-  };
-}
+  interface SheetData {
+    title: string;
+    rows: any[];
+    columnHeaders?: string[];
+    colInfo?: XLSX.ColInfo[];
+    rowInfo?: XLSX.RowInfo[];
+  }
 
-type ResultsByUser = Record<string, ServiceResults>;
+  function sheetZaken(resultsByUser: ResultsByUser): SheetData {
+    const results = Object.entries(resultsByUser);
 
-interface SheetData {
-  title: string;
-  rows: any[];
-  columnHeaders?: string[];
-  colInfo?: XLSX.ColInfo[];
-  rowInfo?: XLSX.RowInfo[];
-}
+    const decosZaakServices = [
+      'VERGUNNINGEN',
+      'HORECA',
+      'TOERISTISCHE_VERHUUR',
+      'PARKEREN',
+    ];
 
-function sheetZaken(resultsByUser: ResultsByUser): SheetData {
-  const results = Object.entries(resultsByUser);
-
-  const decosZaakServices = [
-    'VERGUNNINGEN',
-    'HORECA',
-    'TOERISTISCHE_VERHUUR',
-    'PARKEREN',
-  ];
-
-  const rows = results.map(([username, data]) => {
-    let zaken: any = [];
-    for (const serviceName of decosZaakServices) {
-      const cont = data[serviceName]?.content || {};
-      const unpacked = unpackZaken(cont);
-      for (const zaak of unpacked) {
-        zaken.push({ ...zaak, serviceName });
+    const rows = results.map(([username, data]) => {
+      let zaken: any = [];
+      for (const serviceName of decosZaakServices) {
+        const cont = data[serviceName]?.content || {};
+        const unpacked = unpackZaken(cont);
+        for (const zaak of unpacked) {
+          zaken.push({ ...zaak, serviceName });
+        }
       }
-    }
-    return zaken.map((zaak: any) => ({
-      Zaaknummer: zaak.identifier,
-      Thema: themaIDtoTitle[zaak.serviceName],
-      Username: username,
-    }));
-  });
+      return zaken.map((zaak: any) => ({
+        Zaaknummer: zaak.identifier,
+        Thema: themaIDtoTitle[zaak.serviceName],
+        Username: username,
+      }));
+    });
 
-  const firstRow = rows[0];
+    const firstRow = rows[0];
 
-  return {
-    title: 'Zaken',
-    rows: rows.flat(),
-    colInfo:
-      firstRow &&
-      Object.values(firstRow).map(() => ({
-        wch: 30,
-      })),
-    rowInfo: rows.map(() => ({ hpx: HPX_DEFAULT })),
+    return {
+      title: 'Zaken',
+      rows: rows.flat(),
+      colInfo:
+        firstRow &&
+        Object.values(firstRow).map(() => ({
+          wch: 30,
+        })),
+      rowInfo: rows.map(() => ({ hpx: HPX_DEFAULT })),
+    };
+  }
+
+  type WithIdentifier = {
+    identifier: string;
   };
-}
 
-type WithIdentifier = {
-  identifier: string;
-};
-
-function unpackZaken(
-  content: WithIdentifier[] | Record<string, WithIdentifier[] | unknown>
-): WithIdentifier[] {
-  if (Array.isArray(content) && content.some((v) => !!v.identifier)) {
-    return content;
-  }
-  return Object.values(content)
-    .filter((v) => Array.isArray(v))
-    .map((v) => unpackZaken(v))
-    .flat();
-}
-
-async function getServiceResults(): Promise<ResultsByUser> {
-  if (!args['refresh-cache'] && fs.existsSync(CACHE_PATH) && FROM_DISK) {
-    const data = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8').toString());
-    return data;
+  function unpackZaken(
+    content: WithIdentifier[] | Record<string, WithIdentifier[] | unknown>
+  ): WithIdentifier[] {
+    if (Array.isArray(content) && content.some((v) => !!v.identifier)) {
+      return content;
+    }
+    return Object.values(content)
+      .filter((v) => Array.isArray(v))
+      .map((v) => unpackZaken(v))
+      .flat();
   }
 
-  const allResults: ResultsByUser = {};
-
-  for (const [username] of testAccounts) {
-    const loginURL = `${BASE_URL}/auth/digid/login/${slug(
-      cleanTestUsername(username)
-    )}?redirectUrl=noredirect`;
-    try {
-      const loginResponse = await fetch(loginURL);
-      const cookie = loginResponse.headers.get('set-cookie');
-      if (!cookie) {
-        throw Error(`No Set-Cookie header found for request to ${loginURL}`);
-      }
-      console.time(`Fetched data for ${username}`);
-      const servicesAllResponse = await fetch(`${BASE_URL}/services/all`, {
-        headers: {
-          cookie,
-        },
-      });
-      console.timeEnd(`Fetched data for ${username}`);
-      allResults[username] = await servicesAllResponse.json();
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  return allResults;
-}
-
-function naam(persoon: Persoon) {
-  const voornamen = persoon.voornamen
-    ?.split(' ')
-    .map((naam, index) => {
-      return index === 0 ? naam : naam.charAt(0) + '.';
-    })
-    .join(' ');
-  const adellijkeTitel = persoon.omschrijvingAdellijkeTitel
-    ? ` (${persoon.omschrijvingAdellijkeTitel})`
-    : '';
-  const voorvoegsel = persoon.voorvoegselGeslachtsnaam
-    ? `${persoon.voorvoegselGeslachtsnaam} `
-    : '';
-  return `${voornamen} ${voorvoegsel}${persoon.geslachtsnaam}${adellijkeTitel}`;
-}
-
-function oudersOfKinderen(
-  oudersOfKinderen: Array<Persoon | Kind> | null,
-  _serviceResults: ServiceResults
-) {
-  return oudersOfKinderen?.length
-    ? oudersOfKinderen
-        .map((persoon) => relatedUser(persoon as Persoon))
-        .join(', ')
-    : '';
-}
-
-function relatedUser(persoon: Persoon) {
-  const relatedUsername = testAccounts.find(
-    ([, bsn]) => bsn === persoon.bsn
-  )?.[0];
-  const age = `${
-    persoon.overlijdensdatum
-      ? 'overleden'
-      : persoon.geboortedatum
-        ? differenceInYears(new Date(), parseISO(persoon.geboortedatum))
-        : '??'
-  }`;
-  const nom = naam(persoon);
-  const user = persoon?.bsn
-    ? `[${persoon?.bsn}${relatedUsername ? '/' + relatedUsername : ''}]`
-    : '';
-
-  return `${nom} (${age}) ${user}`;
-}
-
-function woonplaatsNaamBuitenAmsterdam(adres: Adres) {
-  const woonplaatsNaam = adres?.woonplaatsNaam;
-  return woonplaatsNaam === 'Amsterdam' || !woonplaatsNaam
-    ? ''
-    : `(${woonplaatsNaam})`;
-}
-
-function getAllServiceNames(resultsByUser: ResultsByUser) {
-  const entries = Object.entries(resultsByUser);
-  const serviceNames = entries
-    .map(([_, serviceResults]) => serviceResults)
-    .reduce(addAvailableThemas, {});
-  return serviceNames;
-}
-
-function addAvailableThemas(
-  serviceLabelAcc: Record<string, string>,
-  serviceResults: ServiceResults
-): object {
-  Object.keys(serviceResults).forEach((serviceName) => {
-    serviceLabelAcc[serviceName] = serviceName;
-  });
-  return serviceLabelAcc;
-}
-
-function addSheets(workbook: XLSX.WorkBook, sheets: SheetData[]) {
-  for (const sheet of sheets) {
-    const { colInfo, rowInfo, rows, columnHeaders, title } = sheet;
-    const worksheet = XLSX.utils.json_to_sheet(rows);
-
-    if (colInfo) {
-      worksheet['!cols'] = colInfo;
+  async function getServiceResults(): Promise<ResultsByUser> {
+    if (!args['refresh-cache'] && fs.existsSync(CACHE_PATH) && FROM_DISK) {
+      const data = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8').toString());
+      return data;
     }
 
-    if (rowInfo) {
-      worksheet['!rows'] = rowInfo;
-    }
+    const allResults: ResultsByUser = {};
 
-    XLSX.utils.book_append_sheet(workbook, worksheet, title);
-
-    if (columnHeaders?.length) {
-      XLSX.utils.sheet_add_aoa(worksheet, [columnHeaders], {
-        origin: 'A1',
-      });
-    }
-  }
-}
-
-function createInfoArray(elementAmount: number, info: object): object[] {
-  const items: object[] = [];
-  for (let i = 0; i < elementAmount; i++) {
-    items.push(info);
-  }
-  return items;
-}
-
-function sheetBrpBase(resultsByUser: ResultsByUser): SheetData {
-  const rows = Object.entries(resultsByUser).map(
-    ([Username, serviceResults]) => {
-      return {
-        Username,
-        ...getBRPRows(serviceResults, brpSheetLayout),
-      };
-    }
-  );
-  const rowInfo = createInfoArray(testAccounts.length, {
-    hpx: HPX_DEFAULT,
-  });
-  const colInfo = [
-    { wch: WCH_DEFAULT }, // Username
-    ...brpSheetLayout.map((pathObj) => ({ wch: pathObj.wch ?? WCH_DEFAULT })),
-  ];
-  const brpBaseSheet = {
-    title: 'BRP gegevens (beknopt)',
-    rows,
-    colInfo,
-    rowInfo,
-  };
-  return brpBaseSheet;
-}
-
-function getBRPRows(
-  serviceResults: ServiceResults,
-  paths: any[]
-): Record<string, string | number> {
-  const user = paths.reduce(
-    (acc, { label, transform }) => {
-      if (!serviceResults.BRP.content) {
-        acc[label] = 'No content';
-        return acc;
-      }
-      let value: string;
+    for (const [username] of testAccounts) {
+      const loginURL = `${BASE_URL}/auth/digid/login/${slug(
+        cleanTestUsername(username)
+      )}?redirectUrl=noredirect`;
       try {
-        value = transform(serviceResults.BRP.content, serviceResults) ?? '';
-      } catch (err) {
-        value = '';
-        console.error(
-          `Error while getting data for label: ${
-            label
-          }, with error message: ${err}`
+        const loginResponse = await fetch(loginURL);
+        const cookie = loginResponse.headers.get('set-cookie');
+        if (!cookie) {
+          throw Error(`No Set-Cookie header found for request to ${loginURL}`);
+        }
+        console.time(`Fetched data for ${username}`);
+        const servicesAllResponse = await fetch(`${BASE_URL}/services/all`, {
+          headers: {
+            cookie,
+          },
+        });
+        console.timeEnd(`Fetched data for ${username}`);
+        allResults[username] = await servicesAllResponse.json();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    return allResults;
+  }
+
+  function naam(persoon: Persoon) {
+    const voornamen = persoon.voornamen
+      ?.split(' ')
+      .map((naam, index) => {
+        return index === 0 ? naam : naam.charAt(0) + '.';
+      })
+      .join(' ');
+    const adellijkeTitel = persoon.omschrijvingAdellijkeTitel
+      ? ` (${persoon.omschrijvingAdellijkeTitel})`
+      : '';
+    const voorvoegsel = persoon.voorvoegselGeslachtsnaam
+      ? `${persoon.voorvoegselGeslachtsnaam} `
+      : '';
+    return `${voornamen} ${voorvoegsel}${persoon.geslachtsnaam}${adellijkeTitel}`;
+  }
+
+  function oudersOfKinderen(
+    oudersOfKinderen: Array<Persoon | Kind> | null,
+    _serviceResults: ServiceResults
+  ) {
+    return oudersOfKinderen?.length
+      ? oudersOfKinderen
+          .map((persoon) => relatedUser(persoon as Persoon))
+          .join(', ')
+      : '';
+  }
+
+  function relatedUser(persoon: Persoon) {
+    const relatedUsername = testAccounts.find(
+      ([, bsn]) => bsn === persoon.bsn
+    )?.[0];
+    const age = `${
+      persoon.overlijdensdatum
+        ? 'overleden'
+        : persoon.geboortedatum
+          ? differenceInYears(new Date(), parseISO(persoon.geboortedatum))
+          : '??'
+    }`;
+    const nom = naam(persoon);
+    const user = persoon?.bsn
+      ? `[${persoon?.bsn}${relatedUsername ? '/' + relatedUsername : ''}]`
+      : '';
+
+    return `${nom} (${age}) ${user}`;
+  }
+
+  function woonplaatsNaamBuitenAmsterdam(adres: Adres) {
+    const woonplaatsNaam = adres?.woonplaatsNaam;
+    return woonplaatsNaam === 'Amsterdam' || !woonplaatsNaam
+      ? ''
+      : `(${woonplaatsNaam})`;
+  }
+
+  function getAllServiceNames(resultsByUser: ResultsByUser) {
+    const entries = Object.entries(resultsByUser);
+    const serviceNames = entries
+      .map(([_, serviceResults]) => serviceResults)
+      .reduce(addAvailableThemas, {});
+    return serviceNames;
+  }
+
+  function addAvailableThemas(
+    serviceLabelAcc: Record<string, string>,
+    serviceResults: ServiceResults
+  ): object {
+    Object.keys(serviceResults).forEach((serviceName) => {
+      serviceLabelAcc[serviceName] = serviceName;
+    });
+    return serviceLabelAcc;
+  }
+
+  function addSheets(workbook: XLSX.WorkBook, sheets: SheetData[]) {
+    for (const sheet of sheets) {
+      const { colInfo, rowInfo, rows, columnHeaders, title } = sheet;
+      const worksheet = XLSX.utils.json_to_sheet(rows);
+
+      if (colInfo) {
+        worksheet['!cols'] = colInfo;
+      }
+
+      if (rowInfo) {
+        worksheet['!rows'] = rowInfo;
+      }
+
+      XLSX.utils.book_append_sheet(workbook, worksheet, title);
+
+      if (columnHeaders?.length) {
+        XLSX.utils.sheet_add_aoa(worksheet, [columnHeaders], {
+          origin: 'A1',
+        });
+      }
+    }
+  }
+
+  function createInfoArray(elementAmount: number, info: object): object[] {
+    const items: object[] = [];
+    for (let i = 0; i < elementAmount; i++) {
+      items.push(info);
+    }
+    return items;
+  }
+
+  function sheetBrpBase(resultsByUser: ResultsByUser): SheetData {
+    const rows = Object.entries(resultsByUser).map(
+      ([Username, serviceResults]) => {
+        return {
+          Username,
+          ...getBRPRows(serviceResults, brpSheetLayout),
+        };
+      }
+    );
+    const rowInfo = createInfoArray(testAccounts.length, {
+      hpx: HPX_DEFAULT,
+    });
+    const colInfo = [
+      { wch: WCH_DEFAULT }, // Username
+      ...brpSheetLayout.map((pathObj) => ({ wch: pathObj.wch ?? WCH_DEFAULT })),
+    ];
+    const brpBaseSheet = {
+      title: 'BRP gegevens (beknopt)',
+      rows,
+      colInfo,
+      rowInfo,
+    };
+    return brpBaseSheet;
+  }
+
+  function getBRPRows(
+    serviceResults: ServiceResults,
+    paths: any[]
+  ): Record<string, string | number> {
+    const user = paths.reduce(
+      (acc, { label, transform }) => {
+        if (!serviceResults.BRP.content) {
+          acc[label] = 'No content';
+          return acc;
+        }
+        let value: string;
+        try {
+          value = transform(serviceResults.BRP.content, serviceResults) ?? '';
+        } catch (err) {
+          value = '';
+          console.error(
+            `Error while getting data for label: ${
+              label
+            }, with error message: ${err}`
+          );
+        }
+        acc[label] = value;
+        return acc;
+      },
+      {} as Record<string, string | number>
+    );
+
+    return user;
+  }
+
+  type BrpSheetLayout = {
+    label: string;
+    transform: (
+      brpContent: BrpFrontend,
+      serviceResults: ServiceResults
+    ) => string | undefined | null;
+    wch?: number;
+    hpx?: number;
+  };
+
+  const brpSheetLayout: BrpSheetLayout[] = [
+    {
+      label: 'BSN',
+      wch: WCH_DEFAULT / 2,
+      transform: (brpContent: BrpFrontend) => brpContent?.persoon.bsn,
+    },
+    {
+      label: 'Adres',
+      wch: WCH_DEFAULT,
+      transform: (brpContent: BrpFrontend) => {
+        return getFullAddress(brpContent?.adres);
+      },
+    },
+    {
+      label: 'In onderzoek',
+      wch: WCH_DEFAULT / 2,
+      transform: (brpContent: BrpFrontend) => {
+        return brpContent?.persoon.adresInOnderzoek ? 'In onderzoek' : '';
+      },
+    },
+    {
+      label: 'VOW',
+      wch: WCH_DEFAULT / 3,
+      transform: (brpContent: BrpFrontend) => {
+        return brpContent?.persoon?.vertrokkenOnbekendWaarheen ? 'VOW' : '';
+      },
+    },
+    {
+      label: 'Geheim',
+      wch: WCH_DEFAULT / 2,
+      transform: (brpContent: BrpFrontend) => {
+        const indicatieGeheim = brpContent?.persoon.indicatieGeheim;
+        return indicatieGeheim ? 'Geheim' : '';
+      },
+    },
+    {
+      label: 'Voornamen',
+      transform: (brpContent: BrpFrontend) => brpContent.persoon.voornamen,
+      wch: 40,
+    },
+    {
+      label: 'Achternaam (Titel)',
+      transform: (brpContent: BrpFrontend) => {
+        const persoon = brpContent.persoon;
+        if (!persoon) {
+          return 'onbekend';
+        }
+        return (
+          `${
+            persoon?.voorvoegselGeslachtsnaam
+              ? persoon.voorvoegselGeslachtsnaam + ' '
+              : ''
+          }${persoon?.geslachtsnaam}` +
+          (persoon?.omschrijvingAdellijkeTitel
+            ? ` (${persoon.omschrijvingAdellijkeTitel})`
+            : '')
+        );
+      },
+      wch: 40,
+    },
+    {
+      label: 'Woonplaats',
+      transform: (brpContent: BrpFrontend) => {
+        const woonplaatsnaam = brpContent.adres?.woonplaatsNaam;
+        if (!woonplaatsnaam) {
+          return 'Onbekend';
+        }
+        return woonplaatsnaam;
+      },
+    },
+    {
+      label: 'Geboortedatum (Geboorteland)',
+      transform: (brpContent: BrpFrontend) => {
+        const persoon = brpContent.persoon;
+        if (!persoon) {
+          return 'Onbekend';
+        }
+        const { geboortedatum, geboortelandnaam } = persoon;
+        return `${
+          geboortedatum !== null ? defaultDateFormat(geboortedatum) : 'Onbekend'
+        } ${
+          geboortelandnaam !== 'Nederland'
+            ? `(${geboortelandnaam ?? 'Onbekend'})`
+            : ''
+        }`;
+      },
+    },
+    {
+      label: 'Leeftijd',
+      transform: (brpContent: BrpFrontend) => {
+        const geboortedatum = brpContent.persoon.geboortedatum;
+        const age =
+          geboortedatum !== null
+            ? differenceInYears(new Date(), parseISO(geboortedatum)) + ''
+            : 'onbekend';
+        return age;
+      },
+    },
+    {
+      label: 'Geslacht',
+      transform: (brpContent: BrpFrontend) => {
+        const persoon = brpContent.persoon;
+        if (!persoon.omschrijvingGeslachtsaanduiding) {
+          return 'Onbekend';
+        }
+        return persoon.omschrijvingGeslachtsaanduiding;
+      },
+    },
+    {
+      label: 'Nationaliteit',
+      transform: (brpContent: BrpFrontend) => {
+        const persoon = brpContent.persoon;
+        if (!persoon.nationaliteiten) {
+          return 'Onbekend';
+        }
+        const nationaleiten = persoon.nationaliteiten
+          ?.map(({ omschrijving }) => omschrijving)
+          .join(', ');
+        return nationaleiten !== 'Nederlandse' && nationaleiten
+          ? `${nationaleiten}`
+          : '';
+      },
+    },
+    {
+      label: 'Postcode (Woonplaats)',
+      transform: (brpContent: BrpFrontend, serviceResults: ServiceResults) => {
+        const postcode = brpContent.adres?.postcode;
+        return `${postcode ? postcode : ''} ${woonplaatsNaamBuitenAmsterdam(
+          serviceResults.BRP.content?.adres
+        )}`;
+      },
+    },
+    {
+      label: 'Verbintenis (Partner)',
+      wch: 50,
+      transform: (brpContent: BrpFrontend) => {
+        const verbintenis = brpContent.verbintenis;
+        if (!verbintenis) {
+          return '';
+        }
+        return verbintenis.persoon
+          ? `${verbintenis.soortVerbintenis ?? ''} met ${relatedUser(
+              verbintenis.persoon as Persoon
+            )}`
+          : Object.keys(verbintenis).length
+            ? JSON.stringify(verbintenis)
+            : '';
+      },
+      hpx: 30,
+    },
+    {
+      label: 'Kinderen',
+      transform: (brpContent: BrpFrontend, serviceResults: ServiceResults) =>
+        oudersOfKinderen(brpContent.kinderen, serviceResults),
+      wch: 60,
+    },
+    {
+      label: 'Ouders',
+      transform: (brpContent: BrpFrontend, serviceResults: ServiceResults) =>
+        oudersOfKinderen(brpContent.ouders, serviceResults),
+      wch: 60,
+    },
+    {
+      label: 'Voormalige adressen',
+      transform: (brpContent: BrpFrontend) => {
+        const adressen = brpContent.adresHistorisch;
+        return adressen
+          ?.map((adres) => {
+            return `${getFullAddress(adres)} ${woonplaatsNaamBuitenAmsterdam(
+              adres
+            )}`;
+          })
+          .join(', ');
+      },
+      wch: 80,
+    },
+  ].map((p) => {
+    if (!p.hpx) {
+      p.hpx = HPX_DEFAULT;
+    }
+    return p;
+  });
+
+  function sheetThemas(resultsByUser: ResultsByUser): SheetData {
+    const rowInfo = createInfoArray(testAccounts.length, {
+      hpx: HPX_DEFAULT,
+    });
+
+    // A undefined field equals means an unavailable thema.
+    const availableThemaMaps: Record<string, string | undefined>[] =
+      Object.entries(resultsByUser)
+        .map(([_username, serviceResults]) => {
+          const userThemas = getAvailableUserThemas(serviceResults);
+          return userThemas;
+        })
+        .filter((userThemas) => !!Object.keys(userThemas).length);
+
+    const rowsMap: any = {};
+
+    for (const themaID of themaIDs) {
+      rowsMap[themaID] = {};
+      rowsMap[themaID]['0'] = themaIDtoTitle[themaID];
+    }
+
+    availableThemaMaps.forEach((availableThemaMap, index) => {
+      for (const [label, value] of Object.entries(availableThemaMap)) {
+        if (rowsMap[label]) {
+          rowsMap[label][index + 1] = value;
+        } else {
+          // console.warn(`[WARN]: No rowsMap with label: ${label}`);
+        }
+      }
+    });
+
+    const columnHeaders = [
+      'Themas',
+      ...testAccounts.map(([username]) => username),
+    ];
+    return {
+      title: 'Themas',
+      rows: Object.values(rowsMap),
+      columnHeaders,
+      colInfo: [
+        { wch: WCH_DEFAULT },
+        ...createInfoArray(columnHeaders.length, { wch: WCH_DEFAULT }),
+      ],
+      rowInfo,
+    };
+  }
+
+  function sheetServiceErrors(
+    resultsByUser: ResultsByUser,
+    serviceKeys: string[]
+  ): SheetData {
+    const rowInfo = createInfoArray(testAccounts.length, {
+      hpx: HPX_DEFAULT,
+    });
+
+    const serviceStatusResults = Object.entries(resultsByUser).map(
+      ([_user, results]) => {
+        return Object.fromEntries(
+          Object.entries(results).map(([appStateKey, response]) => {
+            return [
+              appStateKey,
+              `${response.status}${
+                response.status === 'ERROR' ? ` - ${response.message}` : ''
+              }`,
+            ];
+          })
         );
       }
-      acc[label] = value;
-      return acc;
-    },
-    {} as Record<string, string | number>
-  );
+    );
 
-  return user;
-}
+    const rowsMap: any = {};
 
-type BrpSheetLayout = {
-  label: string;
-  transform: (
-    brpContent: BrpFrontend,
-    serviceResults: ServiceResults
-  ) => string | undefined | null;
-  wch?: number;
-  hpx?: number;
-};
-
-const brpSheetLayout: BrpSheetLayout[] = [
-  {
-    label: 'BSN',
-    wch: WCH_DEFAULT / 2,
-    transform: (brpContent: BrpFrontend) => brpContent?.persoon.bsn,
-  },
-  {
-    label: 'Adres',
-    wch: WCH_DEFAULT,
-    transform: (brpContent: BrpFrontend) => {
-      return getFullAddress(brpContent?.adres);
-    },
-  },
-  {
-    label: 'In onderzoek',
-    wch: WCH_DEFAULT / 2,
-    transform: (brpContent: BrpFrontend) => {
-      return brpContent?.persoon.adresInOnderzoek ? 'In onderzoek' : '';
-    },
-  },
-  {
-    label: 'VOW',
-    wch: WCH_DEFAULT / 3,
-    transform: (brpContent: BrpFrontend) => {
-      return brpContent?.persoon?.vertrokkenOnbekendWaarheen ? 'VOW' : '';
-    },
-  },
-  {
-    label: 'Geheim',
-    wch: WCH_DEFAULT / 2,
-    transform: (brpContent: BrpFrontend) => {
-      const indicatieGeheim = brpContent?.persoon.indicatieGeheim;
-      return indicatieGeheim ? 'Geheim' : '';
-    },
-  },
-  {
-    label: 'Voornamen',
-    transform: (brpContent: BrpFrontend) => brpContent.persoon.voornamen,
-    wch: 40,
-  },
-  {
-    label: 'Achternaam (Titel)',
-    transform: (brpContent: BrpFrontend) => {
-      const persoon = brpContent.persoon;
-      if (!persoon) {
-        return 'onbekend';
-      }
-      return (
-        `${
-          persoon?.voorvoegselGeslachtsnaam
-            ? persoon.voorvoegselGeslachtsnaam + ' '
-            : ''
-        }${persoon?.geslachtsnaam}` +
-        (persoon?.omschrijvingAdellijkeTitel
-          ? ` (${persoon.omschrijvingAdellijkeTitel})`
-          : '')
-      );
-    },
-    wch: 40,
-  },
-  {
-    label: 'Woonplaats',
-    transform: (brpContent: BrpFrontend) => {
-      const woonplaatsnaam = brpContent.adres?.woonplaatsNaam;
-      if (!woonplaatsnaam) {
-        return 'Onbekend';
-      }
-      return woonplaatsnaam;
-    },
-  },
-  {
-    label: 'Geboortedatum (Geboorteland)',
-    transform: (brpContent: BrpFrontend) => {
-      const persoon = brpContent.persoon;
-      if (!persoon) {
-        return 'Onbekend';
-      }
-      const { geboortedatum, geboortelandnaam } = persoon;
-      return `${
-        geboortedatum !== null ? defaultDateFormat(geboortedatum) : 'Onbekend'
-      } ${
-        geboortelandnaam !== 'Nederland'
-          ? `(${geboortelandnaam ?? 'Onbekend'})`
-          : ''
-      }`;
-    },
-  },
-  {
-    label: 'Leeftijd',
-    transform: (brpContent: BrpFrontend) => {
-      const geboortedatum = brpContent.persoon.geboortedatum;
-      const age =
-        geboortedatum !== null
-          ? differenceInYears(new Date(), parseISO(geboortedatum)) + ''
-          : 'onbekend';
-      return age;
-    },
-  },
-  {
-    label: 'Geslacht',
-    transform: (brpContent: BrpFrontend) => {
-      const persoon = brpContent.persoon;
-      if (!persoon.omschrijvingGeslachtsaanduiding) {
-        return 'Onbekend';
-      }
-      return persoon.omschrijvingGeslachtsaanduiding;
-    },
-  },
-  {
-    label: 'Nationaliteit',
-    transform: (brpContent: BrpFrontend) => {
-      const persoon = brpContent.persoon;
-      if (!persoon.nationaliteiten) {
-        return 'Onbekend';
-      }
-      const nationaleiten = persoon.nationaliteiten
-        ?.map(({ omschrijving }) => omschrijving)
-        .join(', ');
-      return nationaleiten !== 'Nederlandse' && nationaleiten
-        ? `${nationaleiten}`
-        : '';
-    },
-  },
-  {
-    label: 'Postcode (Woonplaats)',
-    transform: (brpContent: BrpFrontend, serviceResults: ServiceResults) => {
-      const postcode = brpContent.adres?.postcode;
-      return `${postcode ? postcode : ''} ${woonplaatsNaamBuitenAmsterdam(
-        serviceResults.BRP.content?.adres
-      )}`;
-    },
-  },
-  {
-    label: 'Verbintenis (Partner)',
-    wch: 50,
-    transform: (brpContent: BrpFrontend) => {
-      const verbintenis = brpContent.verbintenis;
-      if (!verbintenis) {
-        return '';
-      }
-      return verbintenis.persoon
-        ? `${verbintenis.soortVerbintenis ?? ''} met ${relatedUser(
-            verbintenis.persoon as Persoon
-          )}`
-        : Object.keys(verbintenis).length
-          ? JSON.stringify(verbintenis)
-          : '';
-    },
-    hpx: 30,
-  },
-  {
-    label: 'Kinderen',
-    transform: (brpContent: BrpFrontend, serviceResults: ServiceResults) =>
-      oudersOfKinderen(brpContent.kinderen, serviceResults),
-    wch: 60,
-  },
-  {
-    label: 'Ouders',
-    transform: (brpContent: BrpFrontend, serviceResults: ServiceResults) =>
-      oudersOfKinderen(brpContent.ouders, serviceResults),
-    wch: 60,
-  },
-  {
-    label: 'Voormalige adressen',
-    transform: (brpContent: BrpFrontend) => {
-      const adressen = brpContent.adresHistorisch;
-      return adressen
-        ?.map((adres) => {
-          return `${getFullAddress(adres)} ${woonplaatsNaamBuitenAmsterdam(
-            adres
-          )}`;
-        })
-        .join(', ');
-    },
-    wch: 80,
-  },
-].map((p) => {
-  if (!p.hpx) {
-    p.hpx = HPX_DEFAULT;
-  }
-  return p;
-});
-
-function sheetThemas(resultsByUser: ResultsByUser): SheetData {
-  const rowInfo = createInfoArray(testAccounts.length, {
-    hpx: HPX_DEFAULT,
-  });
-
-  // A undefined field equals means an unavailable thema.
-  const availableThemaMaps: Record<string, string | undefined>[] =
-    Object.entries(resultsByUser)
-      .map(([_username, serviceResults]) => {
-        const userThemas = getAvailableUserThemas(serviceResults);
-        return userThemas;
-      })
-      .filter((userThemas) => !!Object.keys(userThemas).length);
-
-  const rowsMap: any = {};
-
-  for (const themaID of themaIDs) {
-    rowsMap[themaID] = {};
-    rowsMap[themaID]['0'] = themaIDtoTitle[themaID];
-  }
-
-  availableThemaMaps.forEach((availableThemaMap, index) => {
-    for (const [label, value] of Object.entries(availableThemaMap)) {
-      if (rowsMap[label]) {
-        rowsMap[label][index + 1] = value;
-      } else {
-        // console.warn(`[WARN]: No rowsMap with label: ${label}`);
-      }
+    for (const label of serviceKeys) {
+      rowsMap[label] = {};
+      rowsMap[label]['0'] = label;
     }
-  });
 
-  const columnHeaders = [
-    'Themas',
-    ...testAccounts.map(([username]) => username),
-  ];
-  return {
-    title: 'Themas',
-    rows: Object.values(rowsMap),
-    columnHeaders,
-    colInfo: [
-      { wch: WCH_DEFAULT },
-      ...createInfoArray(columnHeaders.length, { wch: WCH_DEFAULT }),
-    ],
-    rowInfo,
-  };
+    serviceStatusResults.forEach((res, index) => {
+      for (const [label, value] of Object.entries(res)) {
+        if (!rowsMap[label]) {
+          // console.warn(`[WARN]: No rowsMap with label: ${label}`);
+        } else {
+          rowsMap[label][index + 1] = value;
+        }
+      }
+    });
+
+    return {
+      title: 'Service Errors',
+      rows: Object.values(rowsMap),
+      columnHeaders: ['', ...testAccounts.map(([username]) => username)],
+      colInfo: [
+        { wch: WCH_DEFAULT },
+        ...createInfoArray(testAccounts.length, { wch: WCH_DEFAULT }),
+      ],
+      rowInfo,
+    };
+  }
+
+  function sheetNotifications(resultsByUser: ResultsByUser): SheetData {
+    const rowShape = {
+      Username: (data: any) => data.username,
+      Thema: (data: any) => themaIDtoTitle[data.themaID],
+      Titel: (data: any) => data.title,
+      Datum: (data: any) => defaultDateFormat(data.datePublished),
+      Description: (data: any) => data.description,
+    };
+
+    const rows = Object.entries(resultsByUser).flatMap(
+      ([Username, serviceResults]) => {
+        return serviceResults.NOTIFICATIONS.content.map(
+          (notification: MyNotification) => {
+            const data = { ...notification, username: Username };
+            const row: Record<string, string> = {};
+            for (const [k, fn] of Object.entries(rowShape)) {
+              row[k] = fn(data);
+            }
+            return row;
+          }
+        );
+      }
+    );
+
+    const rowInfo = rows.map(() => ({ hpx: HPX_DEFAULT }));
+    const columnWidths = [
+      WCH_DEFAULT,
+      WCH_DEFAULT,
+      WCH_DEFAULT * 3,
+      WCH_DEFAULT,
+      WCH_DEFAULT,
+    ];
+    if (columnWidths.length !== Object.keys(rowShape).length) {
+      throw new Error(
+        'Should have the same size, align columnWidths appropriately'
+      );
+    }
+
+    return {
+      title: 'Actueel',
+      rows,
+      colInfo: rows[0]
+        ? Object.keys(rows[0]).map((_x, index) => ({
+            wch: columnWidths[index],
+          }))
+        : undefined,
+      rowInfo,
+    };
+  }
+
+  function sheetThemaContent(resultsByUser: ResultsByUser): SheetData {
+    function count(themaId: string) {
+      return (serviceResults: ServiceResults) =>
+        serviceResults[themaId]?.content?.length || '';
+    }
+
+    const themaContentGetters: Record<
+      string,
+      (serviceResults: ServiceResults) => string | number
+    > = {
+      Burgerzaken: (serviceResults: ServiceResults) => {
+        return serviceResults.BRP.content?.identiteitsbewijzen?.length || '';
+      },
+      Bezwaren: count('BEZWAREN'),
+      Bijstandaanvragen: count('WPI_AANVRAGEN'),
+      Jaaropgaves: (serviceResults: ServiceResults) => {
+        return (
+          serviceResults.WPI_SPECIFICATIES.content?.jaaropgaven?.length || ''
+        );
+      },
+      Uitkeringsspecificaties: (serviceResults: ServiceResults) => {
+        return (
+          serviceResults.WPI_SPECIFICATIES.content?.uitkeringsspecificaties
+            .length || ''
+        );
+      },
+      Tozo: count('WPI_TOZO'),
+      Tonk: count('WPI_TONK'),
+      BBZ: count('WPI_BBZ'),
+      'Stadspassen (Gpass)': (serviceResults: ServiceResults) => {
+        if (!serviceResults.HLI.content?.stadspas?.length) {
+          return '';
+        }
+        return serviceResults.HLI.content.stadspas?.length;
+      },
+      Stadspasregelingen: (serviceResults: ServiceResults) => {
+        if (!serviceResults.HLI.content?.regelingen?.length) {
+          return '';
+        }
+        return serviceResults.HLI.content.regelingen?.length;
+      },
+      'Zorg en ondersteuning': count('WMO'),
+      KVK: (serviceResults: ServiceResults) => {
+        return serviceResults.KVK?.content ? 'Ja' : '';
+      },
+      'ToerVerh LLV Registraties': (serviceResults: ServiceResults) => {
+        return (
+          serviceResults.TOERISTISCHE_VERHUUR.content?.lvvRegistraties
+            ?.length || ''
+        );
+      },
+      'ToerVerh Vakantie Vergunningen': (serviceResults: ServiceResults) => {
+        return (
+          serviceResults.TOERISTISCHE_VERHUUR.content
+            ?.vakantieverhuurVergunningen?.length || ''
+        );
+      },
+      'ToerVerh Bed and Breakfast Vergunningen': (
+        serviceResults: ServiceResults
+      ) => {
+        return (
+          serviceResults.TOERISTISCHE_VERHUUR.content?.bbVergunningen.length ||
+          ''
+        );
+      },
+      KREFIA: (serviceResults: ServiceResults) => {
+        return serviceResults.KREFIA?.content?.deepLinks?.length || '';
+      },
+      Klachten: (serviceResults: ServiceResults) => {
+        return serviceResults.KLACHTEN.content?.aantal || '';
+      },
+      Horeca: count('HORECA'),
+      AVG: (serviceResults: ServiceResults) => {
+        return serviceResults.AVG.content?.verzoeken?.length || '';
+      },
+      'Bodem (Loodmeting)': (serviceResults: ServiceResults) => {
+        return serviceResults.BODEM.content?.metingen?.length || '';
+      },
+      // The different types of vergunningen are added dynamicaly later.
+      Vergunningen: count('VERGUNNINGEN'),
+    };
+
+    const results = Object.entries(resultsByUser).map(
+      ([Username, serviceResults]) => {
+        const base: Record<string, string | number> = {
+          Username,
+        };
+
+        const resVal = Object.keys(themaContentGetters).reduce((acc, thema) => {
+          acc[thema] = themaContentGetters[thema](serviceResults);
+          return acc;
+        }, base);
+
+        if (Array.isArray(serviceResults.VERGUNNINGEN?.content)) {
+          // Add the count of all the different kinds of vergunningen.
+          for (const vergunning of serviceResults.VERGUNNINGEN.content) {
+            const id = vergunning.caseType;
+            if (!resVal[id]) {
+              resVal[id] = 1;
+            } else {
+              (resVal[id] as number)++;
+            }
+          }
+        }
+
+        return resVal;
+      }
+    );
+
+    const rowInfo = results.map(() => ({ hpx: HPX_DEFAULT }));
+    return {
+      title: 'Content',
+      rows: results,
+      // Do it for 50 columns assuming this will be way more then we even need.
+      colInfo: Array(50).fill({
+        wch: 15,
+      }),
+      rowInfo,
+    };
+  }
 }
 
 function getAvailableUserThemas(
@@ -888,224 +1117,8 @@ function getAvailableUserThemas(
   return aThemas;
 }
 
-function sheetServiceErrors(
-  resultsByUser: ResultsByUser,
-  serviceKeys: string[]
-): SheetData {
-  const rowInfo = createInfoArray(testAccounts.length, {
-    hpx: HPX_DEFAULT,
-  });
-
-  const serviceStatusResults = Object.entries(resultsByUser).map(
-    ([_user, results]) => {
-      return Object.fromEntries(
-        Object.entries(results).map(([appStateKey, response]) => {
-          return [
-            appStateKey,
-            `${response.status}${
-              response.status === 'ERROR' ? ` - ${response.message}` : ''
-            }`,
-          ];
-        })
-      );
-    }
-  );
-
-  const rowsMap: any = {};
-
-  for (const label of serviceKeys) {
-    rowsMap[label] = {};
-    rowsMap[label]['0'] = label;
-  }
-
-  serviceStatusResults.forEach((res, index) => {
-    for (const [label, value] of Object.entries(res)) {
-      if (!rowsMap[label]) {
-        // console.warn(`[WARN]: No rowsMap with label: ${label}`);
-      } else {
-        rowsMap[label][index + 1] = value;
-      }
-    }
-  });
-
-  return {
-    title: 'Service Errors',
-    rows: Object.values(rowsMap),
-    columnHeaders: ['', ...testAccounts.map(([username]) => username)],
-    colInfo: [
-      { wch: WCH_DEFAULT },
-      ...createInfoArray(testAccounts.length, { wch: WCH_DEFAULT }),
-    ],
-    rowInfo,
-  };
-}
-
-function sheetNotifications(resultsByUser: ResultsByUser): SheetData {
-  const rowShape = {
-    Username: (data: any) => data.username,
-    Thema: (data: any) => themaIDtoTitle[data.themaID],
-    Titel: (data: any) => data.title,
-    Datum: (data: any) => defaultDateFormat(data.datePublished),
-    Description: (data: any) => data.description,
-  };
-
-  const rows = Object.entries(resultsByUser).flatMap(
-    ([Username, serviceResults]) => {
-      return serviceResults.NOTIFICATIONS.content.map(
-        (notification: MyNotification) => {
-          const data = { ...notification, username: Username };
-          const row: Record<string, string> = {};
-          for (const [k, fn] of Object.entries(rowShape)) {
-            row[k] = fn(data);
-          }
-          return row;
-        }
-      );
-    }
-  );
-
-  const rowInfo = rows.map(() => ({ hpx: HPX_DEFAULT }));
-  const columnWidths = [
-    WCH_DEFAULT,
-    WCH_DEFAULT,
-    WCH_DEFAULT * 3,
-    WCH_DEFAULT,
-    WCH_DEFAULT,
-  ];
-  if (columnWidths.length !== Object.keys(rowShape).length) {
-    throw new Error(
-      'Should have the same size, align columnWidths appropriately'
-    );
-  }
-
-  return {
-    title: 'Actueel',
-    rows,
-    colInfo: rows[0]
-      ? Object.keys(rows[0]).map((_x, index) => ({ wch: columnWidths[index] }))
-      : undefined,
-    rowInfo,
-  };
-}
-
-function sheetThemaContent(resultsByUser: ResultsByUser): SheetData {
-  function count(themaId: string) {
-    return (serviceResults: ServiceResults) =>
-      serviceResults[themaId]?.content?.length || '';
-  }
-
-  const themaContentGetters: Record<
-    string,
-    (serviceResults: ServiceResults) => string | number
-  > = {
-    Burgerzaken: (serviceResults: ServiceResults) => {
-      return serviceResults.BRP.content?.identiteitsbewijzen?.length || '';
-    },
-    Bezwaren: count('BEZWAREN'),
-    Bijstandaanvragen: count('WPI_AANVRAGEN'),
-    Jaaropgaves: (serviceResults: ServiceResults) => {
-      return (
-        serviceResults.WPI_SPECIFICATIES.content?.jaaropgaven?.length || ''
-      );
-    },
-    Uitkeringsspecificaties: (serviceResults: ServiceResults) => {
-      return (
-        serviceResults.WPI_SPECIFICATIES.content?.uitkeringsspecificaties
-          .length || ''
-      );
-    },
-    Tozo: count('WPI_TOZO'),
-    Tonk: count('WPI_TONK'),
-    BBZ: count('WPI_BBZ'),
-    'Stadspassen (Gpass)': (serviceResults: ServiceResults) => {
-      if (!serviceResults.HLI.content?.stadspas?.length) {
-        return '';
-      }
-      return serviceResults.HLI.content.stadspas?.length;
-    },
-    Stadspasregelingen: (serviceResults: ServiceResults) => {
-      if (!serviceResults.HLI.content?.regelingen?.length) {
-        return '';
-      }
-      return serviceResults.HLI.content.regelingen?.length;
-    },
-    'Zorg en ondersteuning': count('WMO'),
-    KVK: (serviceResults: ServiceResults) => {
-      return serviceResults.KVK?.content ? 'Ja' : '';
-    },
-    'ToerVerh LLV Registraties': (serviceResults: ServiceResults) => {
-      return (
-        serviceResults.TOERISTISCHE_VERHUUR.content?.lvvRegistraties?.length ||
-        ''
-      );
-    },
-    'ToerVerh Vakantie Vergunningen': (serviceResults: ServiceResults) => {
-      return (
-        serviceResults.TOERISTISCHE_VERHUUR.content?.vakantieverhuurVergunningen
-          ?.length || ''
-      );
-    },
-    'ToerVerh Bed and Breakfast Vergunningen': (
-      serviceResults: ServiceResults
-    ) => {
-      return (
-        serviceResults.TOERISTISCHE_VERHUUR.content?.bbVergunningen.length || ''
-      );
-    },
-    KREFIA: (serviceResults: ServiceResults) => {
-      return serviceResults.KREFIA?.content?.deepLinks?.length || '';
-    },
-    Klachten: (serviceResults: ServiceResults) => {
-      return serviceResults.KLACHTEN.content?.aantal || '';
-    },
-    Horeca: count('HORECA'),
-    AVG: (serviceResults: ServiceResults) => {
-      return serviceResults.AVG.content?.verzoeken?.length || '';
-    },
-    'Bodem (Loodmeting)': (serviceResults: ServiceResults) => {
-      return serviceResults.BODEM.content?.metingen?.length || '';
-    },
-    // The different types of vergunningen are added dynamicaly later.
-    Vergunningen: count('VERGUNNINGEN'),
-  };
-
-  const results = Object.entries(resultsByUser).map(
-    ([Username, serviceResults]) => {
-      const base: Record<string, string | number> = {
-        Username,
-      };
-
-      const resVal = Object.keys(themaContentGetters).reduce((acc, thema) => {
-        acc[thema] = themaContentGetters[thema](serviceResults);
-        return acc;
-      }, base);
-
-      if (Array.isArray(serviceResults.VERGUNNINGEN?.content)) {
-        // Add the count of all the different kinds of vergunningen.
-        for (const vergunning of serviceResults.VERGUNNINGEN.content) {
-          const id = vergunning.caseType;
-          if (!resVal[id]) {
-            resVal[id] = 1;
-          } else {
-            (resVal[id] as number)++;
-          }
-        }
-      }
-
-      return resVal;
-    }
-  );
-
-  const rowInfo = results.map(() => ({ hpx: HPX_DEFAULT }));
-  return {
-    title: 'Content',
-    rows: results,
-    // Do it for 50 columns assuming this will be way more then we even need.
-    colInfo: Array(50).fill({
-      wch: 15,
-    }),
-    rowInfo,
-  };
+if (import.meta.main) {
+  await main();
 }
 
 export const forTesting = {
