@@ -145,7 +145,6 @@ async function parseStdinOrFallback(): Promise<TestUsers | null> {
   try {
     input = fs.readFileSync(process.stdin.fd, 'utf-8');
   } catch {
-    // TODO(rp): Url
     const commaSeperatedTestAccounts = await fetch(
       `${BASE_URL}/test-accounts/digid`,
       {
@@ -277,7 +276,7 @@ async function generateOverview() {
 
 function createDigidTestUserTable(resultsByUser: ResultsByUser): TestUserData {
   const digidTestAccountsRaw = fs
-    .readFileSync(args['out-file-path-digid-test-accounts'], {
+    .readFileSync(DIGID_TEST_ACCOUNTS_PATH, {
       encoding: 'utf8',
       flag: 'r',
     })
