@@ -2,7 +2,6 @@ import { themaConfig } from './Krefia-thema-config.ts';
 import { default as KrefiaIcon } from './KrefiaIcon.svg?react';
 import { KrefiaThema } from './KrefiaThema.tsx';
 import { isLoading } from '../../../../universal/helpers/api.ts';
-import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
@@ -22,11 +21,11 @@ export const menuItem: ThemaMenuItem = {
   to: themaConfig.route.path,
   profileTypes: themaConfig.profileTypes,
   redactedScope: themaConfig.redactedScope,
-  isActive(appState: AppState) {
+  isActive(appState) {
     return (
       themaConfig.featureToggle.active &&
       !isLoading(appState.KREFIA) &&
-      !!appState.KREFIA.content?.deepLinks.length
+      !!appState.KREFIA?.content?.deepLinks.length
     );
   },
   IconSVG: KrefiaIcon,

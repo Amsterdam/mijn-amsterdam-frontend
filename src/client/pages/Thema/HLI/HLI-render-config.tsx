@@ -56,7 +56,7 @@ export const menuItem: ThemaMenuItem<typeof themaConfig.id> = {
   to: themaConfig.route.path,
   profileTypes: themaConfig.profileTypes,
   redactedScope: themaConfig.redactedScope,
-  isActive(appState: AppState) {
+  isActive(appState) {
     const hasStadspas =
       !!appState.HLI?.content?.stadspas?.stadspassen?.length &&
       themaConfig.featureToggle.stadspas.active;

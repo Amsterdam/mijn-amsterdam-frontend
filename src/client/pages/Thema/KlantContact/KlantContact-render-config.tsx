@@ -6,7 +6,6 @@ import { ContactmomentenListPage } from './Contactmomenten/ContactmomentenListPa
 import { themaConfig } from './KlantContact-thema-config.ts';
 import { KlantContactThema } from './KlantContactThema.tsx';
 import { isLoading } from '../../../../universal/helpers/api.ts';
-import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
@@ -41,9 +40,9 @@ export const menuItem: ThemaMenuItem = {
   to: themaConfig.route.path,
   profileTypes: themaConfig.profileTypes,
   redactedScope: themaConfig.redactedScope,
-  isActive(appState: AppState) {
+  isActive(appState) {
     const klantContactState = appState.KLANT_CONTACT;
-    const klantContactContent = klantContactState.content;
+    const klantContactContent = klantContactState?.content;
     return !!(
       themaConfig.featureToggle.active &&
       !isLoading(klantContactState) &&

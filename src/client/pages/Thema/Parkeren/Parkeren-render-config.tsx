@@ -40,7 +40,7 @@ export const menuItem: ThemaMenuItem = {
   },
   profileTypes: themaConfig.profileTypes,
   redactedScope: themaConfig.redactedScope,
-  isActive(appState: AppState) {
+  isActive(appState) {
     const hasDecosParkeerVergunningen =
       !!appState.PARKEREN?.content?.vergunningen?.length;
     return (

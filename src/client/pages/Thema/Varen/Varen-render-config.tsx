@@ -40,7 +40,7 @@ export const menuItem: ThemaMenuItem = {
   to: themaConfig.route.path,
   profileTypes: themaConfig.profileTypes,
   redactedScope: themaConfig.redactedScope,
-  isActive(appState: AppState) {
+  isActive(appState) {
     return (
       !isLoading(appState.VAREN) &&
       (!!appState.VAREN?.content?.reder ||

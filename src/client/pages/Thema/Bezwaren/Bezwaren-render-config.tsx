@@ -4,7 +4,6 @@ import { default as BezwarenIcon } from './BezwarenIcon.svg?react';
 import { BezwarenList } from './BezwarenList.tsx';
 import { BezwarenThema } from './BezwarenThema.tsx';
 import { isLoading } from '../../../../universal/helpers/api.ts';
-import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
@@ -34,11 +33,11 @@ export const menuItem: ThemaMenuItem = {
   to: themaConfig.route.path,
   redactedScope: themaConfig.redactedScope,
   profileTypes: themaConfig.profileTypes,
-  isActive(appState: AppState) {
+  isActive(appState) {
     return (
       themaConfig.featureToggle.active &&
       !isLoading(appState.BEZWAREN) &&
-      !!appState.BEZWAREN.content?.length
+      !!appState.BEZWAREN?.content?.length
     );
   },
   IconSVG: BezwarenIcon,

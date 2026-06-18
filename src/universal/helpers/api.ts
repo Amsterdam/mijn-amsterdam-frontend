@@ -50,10 +50,10 @@ export type ApiResponse<T> =
 
 export type ApiResponsePromise<T> = Promise<ApiResponse<T>>;
 
-export function isLoading(apiResponseData: ApiResponse_DEPRECATED<unknown>) {
+export function isLoading(apiResponseData?: ApiResponse_DEPRECATED<unknown>) {
   // If no responseData was found, assumes it's still loading
   return !!(
-    (!apiResponseData && !isError(apiResponseData)) ||
+    (apiResponseData && !apiResponseData && !isError(apiResponseData)) ||
     !!(apiResponseData?.status === 'PRISTINE' && apiResponseData.isActive)
   );
 }
