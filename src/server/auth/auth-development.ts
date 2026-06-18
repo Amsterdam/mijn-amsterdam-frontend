@@ -43,19 +43,26 @@ export type OptionalTestUserAccountProperties = Record<
 >;
 
 type LowercaseName = string;
-type TestUsers = Record<LowercaseName, AuthProfile['id']>;
+export type TestUsers = Record<LowercaseName, AuthProfile['id']>;
 
 export function getTestAccounts(
   envKey: 'MA_TEST_ACCOUNTS' | 'MA_TEST_ACCOUNTS_EH'
 ): TestUsers {
   const accounts = getFromEnv(envKey, true, true)!;
+  return createNameProfileIdMapping(accounts);
+}
 
+/** Formats to `TestsUsers` from comma seperated <username>:<profileId> pairs */
+export function createNameProfileIdMapping(accounts: string): TestUsers {
   const users: TestUsers = {};
 
-  accounts.split(',').forEach((account) => {
-    const [username, profileId] = account.split(':');
-    users[slug(username)] = profileId;
-  });
+  accounts
+    .split(',')
+    .filter(Boolean)
+    .forEach((account) => {
+      const [username, profileId] = account.split(':');
+      users[slug(username)] = profileId;
+    });
 
   return users;
 }

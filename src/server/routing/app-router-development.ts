@@ -33,6 +33,7 @@ import { authRoutes } from '../auth/auth-routes.ts';
 import type { AuthProfile, MaSession } from '../auth/auth-types.ts';
 import { type AuthenticatedRequest } from '../auth/auth-types.ts';
 import { MA_FRONTEND_URL, ONE_SECOND_MS } from '../config/app.ts';
+import { getFromEnv } from '../helpers/env.ts';
 import { logger } from '../logging.ts';
 import { countLoggedInVisit } from '../services/admin/admin-visitors.ts';
 
@@ -102,6 +103,24 @@ authRouterDevelopment.use(async (req, res, next) => {
   }
   next();
 });
+
+authRouterDevelopment.get(
+  DevelopmentRoutes.TEST_ACCOUNTS,
+  async (
+    req: Request<{ authMethod: AuthProfile['authMethod'] }>,
+    res: Response
+  ) => {
+    const authMethod = req.params.authMethod;
+
+    let envKey = 'MA_TEST_ACCOUNTS';
+    if (authMethod === 'eherkenning') {
+      envKey = 'MA_TEST_ACCOUNTS_EH';
+    }
+
+    const accounts = getFromEnv(envKey, true, true)!;
+    res.send(accounts);
+  }
+);
 
 authRouterDevelopment.get(
   DevelopmentRoutes.DEV_LOGIN,

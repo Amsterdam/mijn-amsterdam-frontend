@@ -73,11 +73,12 @@ import { themaConfig as themaVaren } from '../client/pages/Thema/Varen/Varen-the
 import { themaConfig as themaVergunningen } from '../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 import { themaConfig as themaZorg } from '../client/pages/Thema/Zorg/Zorg-thema-config.ts';
 import {
+  createNameProfileIdMapping,
   DIGID_TEST_ACCOUNTS_PATH,
-  getTestAccountData,
   type OptionalTestUserAccountProperties,
   type TestUserAccount,
   type TestUserData,
+  type TestUsers,
 } from '../server/auth/auth-development.ts';
 import type {
   Adres,
@@ -134,28 +135,32 @@ if (IS_PRODUCTION) {
   throw Error('This script cannot be run inside of production.');
 }
 
-const digidTestAccounts = await getTestAccountData('MA_TEST_ACCOUNTS');
+const BASE_URL = process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL;
+if (!BASE_URL) {
+  throw new Error(`BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL = ${BASE_URL}`);
+}
 
-function parseStdinOrFallback(): TestUserData | null {
+async function parseStdinOrFallback(): Promise<TestUsers | null> {
   let input: string;
   try {
     input = fs.readFileSync(process.stdin.fd, 'utf-8');
   } catch {
-    return digidTestAccounts;
+    // TODO(rp): Url
+    const commaSeperatedTestAccounts = await fetch(
+      `${BASE_URL}/test-accounts/digid`,
+      {
+        method: 'GET',
+      }
+    );
+    input = await commaSeperatedTestAccounts.text();
   }
 
-  if (input.length <= 0) {
-    return digidTestAccounts;
-  }
+  assert(input.length > 0, 'stdin may not be an empty string');
 
-  const parsed: TestUserData = JSON.parse(input);
-  if (!parsed?.accounts || !parsed?.tableHeaders) {
-    throw new Error('Invalid JSON schema! Expected { accounts, tableHeaders }');
-  }
-  return parsed;
+  return createNameProfileIdMapping(input);
 }
 
-const testAccountDataDigid = parseStdinOrFallback();
+const testAccountDataDigid = await parseStdinOrFallback();
 
 if (!testAccountDataDigid) {
   throw new Error(
@@ -172,9 +177,7 @@ const themaIDtoTitle: Record<string, string> = themas.reduce(
 );
 
 const themaIDs = themas.map((menuItem) => menuItem.id);
-const testAccounts = testAccountDataDigid.accounts.map(
-  ({ username, profileId }) => [username, profileId]
-);
+const testAccounts = Object.entries(testAccountDataDigid);
 
 XLSX.set_fs(fs);
 
@@ -216,10 +219,6 @@ if (!TARGET_DIRECTORY) {
 }
 
 const CACHE_PATH = `${TARGET_DIRECTORY}/user-data.json`;
-const BASE_URL = process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL;
-if (!BASE_URL) {
-  throw new Error(`BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL = ${BASE_URL}`);
-}
 
 // Configuration for row/columns.
 const HPX_DEFAULT = 22;
@@ -277,9 +276,17 @@ async function generateOverview() {
 }
 
 function createDigidTestUserTable(resultsByUser: ResultsByUser): TestUserData {
-  assert(testAccountDataDigid?.tableHeaders, 'tableHeaders are required');
-  const tableHeaders: TestUserData['tableHeaders'] =
-    testAccountDataDigid.tableHeaders;
+  const digidTestAccountsRaw = fs
+    .readFileSync(args['out-file-path-digid-test-accounts'], {
+      encoding: 'utf8',
+      flag: 'r',
+    })
+    .toString();
+
+  const digidTestAccounts = JSON.parse(digidTestAccountsRaw) as TestUserData;
+
+  assert(digidTestAccounts?.tableHeaders, 'tableHeaders are required');
+  const tableHeaders = digidTestAccounts.tableHeaders;
 
   const accounts: TestUserAccount[] = Object.entries(resultsByUser).map(
     ([username, serviceResults]) => {
@@ -311,13 +318,12 @@ function getBRPBasedProperties(
   const brpContent = serviceResults.BRP?.content as AppState['BRP']['content'];
 
   if (!brpContent) {
-    const backup = testAccountDataDigid?.accounts.find(
-      (account) => account.username === username
-    );
-    // This assert should not fail since we know to have the account.
-    assert(backup, `Testaccount named '${username}' is not found.`);
+    const [, backupProfileId] = testAccounts.find(
+      ([backupUsername]) => backupUsername === username
+    ) ?? [, null];
+    assert(backupProfileId, `Testaccount named '${username}' is not found.`);
     return {
-      profileId: backup.profileId,
+      profileId: backupProfileId,
     };
   }
 
