@@ -489,7 +489,7 @@ function transformZorgnedPersonResponse(
       name:
         zorgnedResponseData?.persoon?.voornamen ??
         getFullName({
-          voornamen: zorgnedResponseData?.persoon?.voornamen,
+          voornamen: zorgnedResponseData?.persoon?.voornamen ?? null,
           geslachtsnaam: zorgnedResponseData?.persoon?.geboortenaam,
           voorvoegselGeslachtsnaam: zorgnedResponseData?.persoon?.voorvoegsel,
         }),

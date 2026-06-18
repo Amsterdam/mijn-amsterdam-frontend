@@ -1,8 +1,10 @@
 import type { Persoon } from '../../server/services/brp/brp-types.ts';
 
 export function getFullName(
-  persoon: Partial<Pick<Persoon, 'voornamen'>> &
-    Pick<Persoon, 'geslachtsnaam' | 'voorvoegselGeslachtsnaam'>
+  persoon: Pick<
+    Persoon,
+    'voornamen' | 'geslachtsnaam' | 'voorvoegselGeslachtsnaam'
+  >
 ) {
   return [
     persoon.voornamen,
