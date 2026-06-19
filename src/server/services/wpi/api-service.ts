@@ -1,3 +1,4 @@
+import { themaConfig } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
 import type {
   ApiResponse,
   ApiResponse_DEPRECATED,
@@ -89,6 +90,10 @@ export async function fetchRequestProcess(
   ) => WpiRequestProcessLabels | null,
   fetchConfig: FetchConfig
 ): Promise<ApiResponse_DEPRECATED<WpiRequestProcess[] | null>> {
+  if (!themaConfig.featureToggle.active) {
+    return apiErrorResult('Feature toggle is inactive', null);
+  }
+
   const apiConfig = getApiConfig(fetchConfig.apiConfigName, {
     data: createBsnPostBody(authProfileAndToken.profile.id),
     cacheKey_UNSAFE: fetchConfig.requestCacheKey,
@@ -118,6 +123,9 @@ export async function fetchRequestProcess(
 export async function fetchBijstandsuitkering(
   authProfileAndToken: AuthProfileAndToken
 ) {
+  if (!themaConfig.featureToggle.active) {
+    return apiErrorResult('Feature toggle is inactive', null);
+  }
   const filterResponse: FilterResponse = (response) => {
     return (
       response.content
@@ -149,6 +157,9 @@ export async function fetchEAanvragen(
   authProfileAndToken: AuthProfileAndToken,
   about?: string[]
 ) {
+  if (!themaConfig.featureToggle.active) {
+    return apiErrorResult('Feature toggle is inactive', null);
+  }
   const filterResponse: FilterResponse = (response) => {
     return (
       response.content
@@ -208,6 +219,9 @@ export function transformIncomSpecificationResponse(
   sessionID: SessionID,
   response: ApiResponse<WpiIncomeSpecificationResponseData>
 ) {
+  if (!themaConfig.featureToggle.active) {
+    return apiErrorResult('Feature toggle is inactive', null);
+  }
   return {
     jaaropgaven:
       response.content?.jaaropgaven
@@ -311,6 +325,9 @@ export async function fetchWpiDocument(
   documentId: string,
   queryParams?: Record<string, string>
 ) {
+  if (!themaConfig.featureToggle.documentsDownloadActive) {
+    return apiErrorResult('Feature toggle is inactive', null);
+  }
   const url = `${process.env.BFF_WPI_API_BASE_URL}/wpi/document`;
 
   return requestData<DocumentDownloadData>(
