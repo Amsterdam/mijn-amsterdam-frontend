@@ -1,4 +1,4 @@
-import { Paragraph } from '@amsterdam/design-system-react';
+import { Alert, Paragraph } from '@amsterdam/design-system-react';
 
 import { tableConfigSpecificaties } from './Inkomen-thema-config.ts';
 import { useInkomenThemaData } from './useInkomenThemaData.hook.ts';
@@ -10,6 +10,26 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>
+    <Alert
+      severity="warning"
+      heading="Technische storing / onderhoud"
+      headingLevel={3}
+      className="ams-mb-m"
+    >
+      <Paragraph className="ams-mb-s">
+        Momenteel is er sprake van een storing met het downloaden van
+        documenten. We werken hard aan een oplossing. Op dit moment is nog niet
+        bekend wanneer de storing verholpen zal zijn. Zodra er meer informatie
+        beschikbaar is, informeren wij u hierover.
+      </Paragraph>
+
+      <strong>Betaling van uw uitkering</strong>
+      <Paragraph>
+        De betaling van uw uitkering verloopt gewoon volgens planning en wordt
+        op 23 juni uitbetaald. Op 25 juni ontvangt u ook de papieren
+        uitkeringsspecificatie per post.
+      </Paragraph>
+    </Alert>
     <Paragraph>
       Op deze pagina vindt u informatie over uw uitkering en de ondersteuning
       die u krijgt omdat u weinig geld hebt.

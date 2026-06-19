@@ -77,6 +77,59 @@ exports[`<Inkomen /> > with items from AANVRAGEN, BBZ, TONK, TOZO and SPECIFICAT
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
+          <section
+            aria-labelledby="ams-alert-heading"
+            class="ams-alert ams-alert--warning ams-mb-m"
+          >
+            <div
+              class="ams-alert__severity-indicator"
+            >
+              <span
+                class="ams-icon ams-icon--inverse ams-icon--heading-3"
+                hidden=""
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    clip-rule="evenodd"
+                    d="M12.283 3 22.75 21H1.25zm-.555 12.283-.604-5.12h2.284l-.603 5.12zm-.444 1.848c0-.483.351-.98.987-.98.624 0 .986.494.986.98 0 .497-.364.98-.986.98a.97.97 0 0 1-.987-.98"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </span>
+            </div>
+            <div
+              class="ams-alert__content"
+            >
+              <div
+                class="ams-row ams-row--align-between ams-row--align-vertical-start"
+              >
+                <h3
+                  class="ams-heading ams-heading--3"
+                  id="ams-alert-heading"
+                >
+                  Technische storing / onderhoud
+                </h3>
+              </div>
+              <p
+                class="ams-paragraph ams-mb-s"
+              >
+                Momenteel is er sprake van een storing met het downloaden van documenten. We werken hard aan een oplossing. Op dit moment is nog niet bekend wanneer de storing verholpen zal zijn. Zodra er meer informatie beschikbaar is, informeren wij u hierover.
+              </p>
+              <strong>
+                Betaling van uw uitkering
+              </strong>
+              <p
+                class="ams-paragraph"
+              >
+                De betaling van uw uitkering verloopt gewoon volgens planning en wordt op 23 juni uitbetaald. Op 25 juni ontvangt u ook de papieren uitkeringsspecificatie per post.
+              </p>
+            </div>
+          </section>
           <p
             class="ams-paragraph"
           >

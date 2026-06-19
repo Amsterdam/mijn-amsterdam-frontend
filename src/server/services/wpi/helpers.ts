@@ -67,10 +67,13 @@ export function addApiBasePathToDocumentUrls(
         ? document.url
         : `http://example.com${document.url}` // Create FAKE url so URL can parse correctly.
     );
+
+    // MIJN-13216 This is a temporary placeholder that will download an invalid pdf
     const idEncrypted = encryptSessionIdWithRouteIdParam(
       sessionID,
-      sourceUrl.searchParams.get('id') ?? ''
+      'disabled-document-download'
     );
+
     const url = new URL(
       generateFullApiUrlBFF(BffEndpoints.WPI_DOCUMENT_DOWNLOAD, [
         {
