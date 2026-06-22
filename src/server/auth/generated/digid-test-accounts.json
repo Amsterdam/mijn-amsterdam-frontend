@@ -175,6 +175,10 @@
       "isAdresInOnderzoek": false,
       "heeftStadspas": true,
       "availableThemas": "Facturen en betalen, Afval, AVG persoonsgegevens, Belastingen, Bezwaren, Bodem, Mijn gegevens, Erfpacht, Stadspas en regelingen bij laag inkomen, Horeca, Klachten, Kredietbank & FIBU, Milieuzone, Overtredingen voertuigen, Parkeren, Contactmomenten, Subsidies, Toeristische verhuur, Vergunningen en ontheffingen, Zorg en ondersteuning, Inkomen, Onderwijs en Jeugd"
+    },
+    {
+      "username": "dummy-account-for-displaying-unknown-fields",
+      "profileId": "123456789"
     }
   ]
 }
