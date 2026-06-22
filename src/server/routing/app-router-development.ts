@@ -276,7 +276,7 @@ type TableRows = string[][];
 function formatForTable(accountData: TestUserData): [TableHeaders, TableRows] {
   const tableHeaders = accountData.tableHeaders.map((h) => h.displayName);
 
-  accountData = validateKeys(accountData);
+  accountData = checkUpdateKeys(accountData);
 
   if (accountData.accounts.length <= 0) {
     return [tableHeaders, []];
@@ -303,7 +303,7 @@ function formatForTable(accountData: TestUserData): [TableHeaders, TableRows] {
   return [tableHeaders, tableRows];
 }
 
-function validateKeys(accountData: TestUserData): TestUserData {
+function checkUpdateKeys(accountData: TestUserData): TestUserData {
   accountData.accounts.forEach((account) => {
     if (!account.profileId) {
       throw new Error(`No id found for test account ${account.username}`);
