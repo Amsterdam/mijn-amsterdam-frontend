@@ -140,6 +140,7 @@ export function trackEvent(name: string, properties: Record<string, unknown>) {
   });
 }
 
+/** Flush telemetry to immediately send events and exceptions */
 export async function flushTelemetry(options?: { timeoutMs?: number }) {
   if (!logToApplicationInsights || !client) {
     return;
