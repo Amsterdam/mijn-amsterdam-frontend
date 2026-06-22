@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 
-import merge from 'lodash.merge';
 import { useParams } from 'react-router';
 
 import { ContactgegevenByTypeLabels } from './CommunicatieVoorkeuren-config.ts';
@@ -38,22 +37,15 @@ function updateCommunicatievoorkeurState({
   contactgegeven,
   appState,
 }: UpdateProps) {
-  appState.setAppState(
-    merge(
-      { KLANT_CONTACT: appState.KLANT_CONTACT },
-      {
-        KLANT_CONTACT: {
-          content: {
-            communicatievoorkeuren: {
-              standaardContactgegevens: {
-                [contactgegeven.type]: contactgegeven,
-              },
-            },
-          },
+  appState.mergeAppState('KLANT_CONTACT', {
+    content: {
+      communicatievoorkeuren: {
+        standaardContactgegevens: {
+          [contactgegeven.type]: contactgegeven,
         },
-      }
-    )
-  );
+      },
+    },
+  });
 }
 
 export function useSetCommunicatievoorkeur(

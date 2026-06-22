@@ -1,3 +1,5 @@
+import merge from 'lodash.merge';
+import type { PartialDeep } from 'type-fest';
 import { create, type StateCreator } from 'zustand';
 
 import type { AppState } from '../../universal/types/App.types.ts';
@@ -5,6 +7,10 @@ import { PRISTINE_APPSTATE } from '../AppState.ts';
 
 export type AppStateStore = AppState & {
   setAppState: (appState: Partial<AppState>, isReady?: boolean) => void;
+  mergeAppState: <K extends keyof AppState>(
+    appStateKey: K,
+    appStatePartial: PartialDeep<AppState[K]>
+  ) => void;
   isReady: boolean;
   setIsAppStateReady: (isReady: boolean) => void;
 };
@@ -24,6 +30,17 @@ export const appStateStoreCreator: StateCreator<AppStateStore> = (set) => ({
     });
   },
   setIsAppStateReady: (isReady) => set({ isReady }),
+  mergeAppState: (appStateKey, appStatePartial) => {
+    set((state) => ({
+      ...merge(
+        {},
+        { [appStateKey]: state[appStateKey] },
+        {
+          [appStateKey]: appStatePartial,
+        }
+      ),
+    }));
+  },
 });
 
 export function createAppStateStoreHook() {
