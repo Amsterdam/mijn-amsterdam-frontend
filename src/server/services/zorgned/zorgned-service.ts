@@ -536,8 +536,7 @@ export async function fetchRelatedPersons(
 
 export async function fetchPersoonsgegevensNAW(
   bsn: BSN,
-  zorgnedApiConfigKey: ZorgnedApiConfigKey,
-  useCache: boolean = true
+  zorgnedApiConfigKey: ZorgnedApiConfigKey
 ): Promise<ApiResponse<ZorgnedPersoonsgegevensNAWResponse | null>> {
   return fetchZorgnedByBSN<
     ZorgnedPersoonsgegevensNAWResponse,
@@ -545,7 +544,6 @@ export async function fetchPersoonsgegevensNAW(
   >(bsn, {
     zorgnedApiConfigKey,
     path: '/persoonsgegevensNAW',
-    useCache,
     validateStatus: (statusCode) =>
       // 404 means there is no record available in the ZORGNED api for the requested BSN
       isSuccessStatus(statusCode) || statusCode === HttpStatusCode.NotFound,
