@@ -310,10 +310,7 @@ function validateKeys(accountData: TestUserData): TestUserData {
     }
     accountData.tableHeaders.forEach(({ key }) => {
       if (!Object.keys(account).includes(key)) {
-        account[key] = 'Error: Missing key';
-        logger.error(
-          `Missing key: tableHeader with key '${key}' not found in test account with profileId '${account.profileId}'`
-        );
+        account[key] = 'Unknown';
       }
     });
   });
