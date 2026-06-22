@@ -130,7 +130,6 @@ export function captureMessage(message: string, properties?: Properties) {
 }
 
 export function trackEvent(name: string, properties: Record<string, unknown>) {
-  console.log('trackEvent is enabled', logToApplicationInsights);
   if (!logToApplicationInsights) {
     logger.debug({ name, properties }, 'Track event');
     return;
