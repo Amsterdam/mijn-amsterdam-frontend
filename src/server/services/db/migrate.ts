@@ -1,16 +1,13 @@
+// Logger is not emitting when called from the migrate pipeline so console.log is used instead
 /* eslint-disable no-console */
 import path, { resolve } from 'node:path';
 
+const JOB_SUCCESS_CODE = 0;
+const JOB_FAILURE_CODE = 1;
+
 async function checkDatabaseConnectivity() {
   const { getPool } = await import('./postgres.ts');
-
-  try {
-    await getPool().query('SELECT 1;');
-    console.log('Database connectivity pre-check succeeded.');
-  } catch (error) {
-    console.error('Database connectivity pre-check failed.');
-    throw error;
-  }
+  return getPool().query('SELECT 1;');
 }
 
 export async function runMigrations() {
@@ -19,8 +16,6 @@ export async function runMigrations() {
     import('drizzle-orm/node-postgres/migrator'),
     import('./postgres.ts'),
   ]);
-
-  await checkDatabaseConnectivity();
 
   const db = drizzle(getPool());
 
@@ -32,21 +27,54 @@ export async function runMigrations() {
 export async function runMigrationsCommand() {
   await import('../../helpers/load-env.ts');
 
-  const [{ captureException }, { endPool }] = await Promise.all([
+  const [{ captureException, trackEvent }, { endPool }] = await Promise.all([
     import('../monitoring.ts'),
     import('./postgres.ts'),
   ]);
 
+  console.log('Database migration started.');
+  trackEvent('Database migration started', {
+    properties: {
+      message: 'Database migration started.',
+      module: 'database',
+    },
+  });
+
   try {
-    await runMigrations();
-    // Logger is not emitting when called from the migrate pipeline sow we use console.log
-    console.log('Drizzle migrations completed successfully.');
+    await checkDatabaseConnectivity();
+    console.log('Database migration connectivity pre-check succeeded.');
+    trackEvent('Database migration connectivity pre-check succeeded.', {
+      properties: {
+        message: 'Database migration connectivity pre-check succeeded.',
+        module: 'database',
+      },
+    });
   } catch (error) {
-    // Logger is not emitting when called from the migrate pipeline sow we use console.log
-    console.log('Drizzle migrations Error.');
+    console.log('Database migration connectivity pre-check failed.');
     captureException(error, {
       properties: {
-        message: 'Drizzle migrations failed.',
+        message: 'Database migration connectivity pre-check failed.',
+        module: 'database',
+      },
+    });
+    await endPool();
+    throw error;
+  }
+  try {
+    await runMigrations();
+    console.log('Database migration completed successfully.');
+    trackEvent('Database migration completed successfully.', {
+      properties: {
+        message: 'Database migration completed successfully.',
+        module: 'database',
+      },
+    });
+  } catch (error) {
+    console.log('Database migration failed.');
+    captureException(error, {
+      properties: {
+        message: 'Database migration failed.',
+        module: 'database',
       },
     });
     throw error;
@@ -58,9 +86,17 @@ export async function runMigrationsCommand() {
 const scriptName = path.parse(process.argv.at(1) ?? '').name;
 
 if (import.meta.main || scriptName === 'migrate') {
+  let exitCode = JOB_SUCCESS_CODE;
+
   try {
     await runMigrationsCommand();
   } catch {
-    process.exit(1);
+    exitCode = JOB_FAILURE_CODE;
+  } finally {
+    const { flushTelemetry } = await import('../monitoring.ts');
+
+    // Flush telemetry before exiting so events and exceptions are sent.
+    await flushTelemetry();
+    process.exit(exitCode);
   }
 }
