@@ -66,7 +66,7 @@ export function ContactgegevenVerify({
         setIsInvalid(true);
       }
     },
-    [otp, value, type]
+    [value, type, fetch]
   );
 
   return (
