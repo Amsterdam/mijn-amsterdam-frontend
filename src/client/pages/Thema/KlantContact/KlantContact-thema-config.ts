@@ -65,7 +65,7 @@ export const themaConfig = {
   detailPageContactgegevenInstellen: {
     route: {
       get path(): string {
-        return `/${themaConfig.route.path}/contactgegeven-instellen/:contactgegeven/:step`;
+        return `${themaConfig.route.path}/contactgegeven-instellen/:contactgegeven/:step`;
       },
       documentTitle: `Contactgegeven instellen | ${THEMA_TITLE}`,
       trackingUrl: null,
