@@ -4,7 +4,6 @@ import { default as AvgIcon } from './AvgIcon.svg?react';
 import { AVGList } from './AVGList.tsx';
 import { AVGThema } from './AVGThema.tsx';
 import { isLoading } from '../../../../universal/helpers/api.ts';
-import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,

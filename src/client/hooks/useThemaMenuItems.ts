@@ -1,11 +1,8 @@
 import { useMemo } from 'react';
 
-import { useLocation } from 'react-router';
-
 import { useAppStateReady } from './useAppStateStore.ts';
 import { useProfileTypeValue } from './useProfileType.ts';
 import { sortAlpha } from '../../universal/helpers/utils.ts';
-import type { LinkProps } from '../../universal/types/App.types.ts';
 import { useThemasByProfileType } from '../config/menuItems.ts';
 import type { ThemaMenuItemTransformed } from '../config/thema-types.ts';
 import { myThemasMenuItems } from '../config/thema.ts';
@@ -91,28 +88,4 @@ export function useThemaMenuItemByThemaID<ID extends string = string>(
   return itemsById[themaID]
     ? (itemsById[themaID] as ThemaMenuItemTransformed<ID>)
     : null;
-}
-
-export function useThemaBreadcrumbs<ID extends string = string>(
-  themaID: ID
-): LinkProps[] {
-  const themaPaginaBreadcrumb = useThemaMenuItemByThemaID(themaID);
-  const location = useLocation();
-  const from = location?.state?.from;
-  const fromPageType = location?.state?.pageType;
-
-  return [
-    themaPaginaBreadcrumb
-      ? {
-          to: themaPaginaBreadcrumb?.to,
-          title: themaPaginaBreadcrumb?.title,
-        }
-      : null,
-    themaPaginaBreadcrumb && fromPageType === 'listpage'
-      ? {
-          to: from,
-          title: 'Lijst',
-        }
-      : null,
-  ].filter((link) => link !== null);
 }

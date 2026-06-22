@@ -5,7 +5,6 @@ import { default as VarenIcon } from './VarenIcon.svg?react';
 import { VarenList } from './VarenList.tsx';
 import { VarenThema } from './VarenThema.tsx';
 import { isLoading } from '../../../../universal/helpers/api.ts';
-import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,

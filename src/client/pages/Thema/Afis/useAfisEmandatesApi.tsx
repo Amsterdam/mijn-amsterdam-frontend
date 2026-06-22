@@ -19,7 +19,7 @@ import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { useBffApi } from '../../../hooks/api/useBffApi.ts';
 import { useSmallScreen } from '../../../hooks/media.hook.ts';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
 
 function mergePayloadIntoEmandateById(
   id: AfisEMandateFrontend['id'],
