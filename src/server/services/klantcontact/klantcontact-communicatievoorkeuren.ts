@@ -6,6 +6,7 @@ import {
 } from './klantcontact-profieldienst.ts';
 import { featureToggle } from './klantcontact-service-config.ts';
 import {
+  apiErrorResult,
   apiPostponeResult,
   type ApiResponse,
   apiSuccessResult,
@@ -36,6 +37,17 @@ export async function fetchCommunicatievoorkeuren(
       fetchDienstverlener(authProfileAndToken),
     ]);
 
+  if (
+    locationsResponse.status !== 'OK' &&
+    profiel.status !== 'OK' &&
+    dienstverlenerResponse.status !== 'OK'
+  ) {
+    return apiErrorResult(
+      'Ophalen van alle communicatievoorkeuren mislukt',
+      null
+    );
+  }
+
   const email = getMostRecentByContactgegevenType(
     profiel,
     ContactgegevenType.Email
@@ -49,35 +61,39 @@ export async function fetchCommunicatievoorkeuren(
     ContactgegevenType.ApplicatieId
   );
 
-  return apiSuccessResult({
-    aangeslotenDiensten: (
-      dienstverlenerResponse.content?.diensten ?? []
-    ).filter((dienst) => dienst.beschrijving !== 'Alles'),
-    standaardContactgegevens: {
-      [ContactgegevenType.Email]: email,
-      [ContactgegevenType.Telefoonnummer]: {
-        ...phone,
-        disabled: true,
-      },
-      [ContactgegevenType.ApplicatieId]: app,
-      [ContactgegevenType.Postadres]: {
-        id: null,
-        type: ContactgegevenType.Postadres,
-        dateModified: null,
-        value: locationsResponse.content?.[0]?.address
-          ? getFullAddress(locationsResponse.content?.[0]?.address)
-          : null,
-        dateModifiedFormatted: null,
-      },
-      // Berichtenbox wordt nog niet ondersteund in de profieldienst.
-      [ContactgegevenType.Berichtenbox]: {
-        id: null,
-        type: ContactgegevenType.Berichtenbox,
-        value: null,
-        dateModified: null,
-        dateModifiedFormatted: null,
-        disabled: true,
-      },
+  const standaardContactgegevens = {
+    [ContactgegevenType.Email]: email,
+    [ContactgegevenType.Telefoonnummer]: {
+      ...phone,
+      disabled: true,
     },
+    [ContactgegevenType.ApplicatieId]: app,
+    [ContactgegevenType.Postadres]: {
+      id: null,
+      type: ContactgegevenType.Postadres,
+      dateModified: null,
+      value: locationsResponse.content?.[0]?.address
+        ? getFullAddress(locationsResponse.content?.[0]?.address)
+        : null,
+      dateModifiedFormatted: null,
+    },
+    // Berichtenbox wordt nog niet ondersteund in de profieldienst.
+    [ContactgegevenType.Berichtenbox]: {
+      id: null,
+      type: ContactgegevenType.Berichtenbox,
+      value: null,
+      dateModified: null,
+      dateModifiedFormatted: null,
+      disabled: true,
+    },
+  };
+
+  const aangeslotenDiensten = (
+    dienstverlenerResponse.content?.diensten ?? []
+  ).filter((dienst) => dienst.beschrijving !== 'Alles');
+
+  return apiSuccessResult({
+    aangeslotenDiensten,
+    standaardContactgegevens,
   });
 }
