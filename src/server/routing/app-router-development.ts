@@ -276,46 +276,17 @@ type TableRows = string[][];
 function formatForTable(accountData: TestUserData): [TableHeaders, TableRows] {
   const tableHeaders = accountData.tableHeaders.map((h) => h.displayName);
 
-  accountData.accounts.forEach((account) => {
-    if (!account.profileId) {
-      throw new Error(`No id found for test account ${account.username}`);
-    }
-    accountData.tableHeaders.forEach(({ key }) => {
-      if (!Object.keys(account).includes(key)) {
-        throw new Error(
-          `tableHeader with key '${key}' not found in test account with profileId '${account.profileId}'`
-        );
-      }
-    });
-  });
-
-  const missingKeys: string[] = [];
+  accountData = validateKeys(accountData);
 
   if (accountData.accounts.length <= 0) {
     return [tableHeaders, []];
   }
-  Object.keys(accountData.accounts[0]).forEach((key) => {
-    if (
-      !accountData.tableHeaders.some((th) => {
-        return th.key === key;
-      })
-    ) {
-      missingKeys.push(key);
-    }
-  });
 
-  const accounts = accountData.accounts.map((account) => {
-    const entries = Object.entries(account);
-    const withoutMissingKeys = entries.filter(([key]) => {
-      return !missingKeys.includes(key);
-    });
-    return Object.fromEntries(withoutMissingKeys);
-  });
-
+  // This is gonna be a table, so all keys need to be in the same order.
   const keyOrder: Record<string, number> = {};
   accountData.tableHeaders.forEach((th, i) => (keyOrder[th.key] = i));
 
-  const tableRows = accounts.map((account) => {
+  const tableRows = accountData.accounts.map((account) => {
     const sortedEntries = Object.entries(account).toSorted(([keyA], [keyB]) => {
       return keyOrder[keyA] < keyOrder[keyB] ? -1 : 1;
     });
@@ -330,6 +301,23 @@ function formatForTable(accountData: TestUserData): [TableHeaders, TableRows] {
   });
 
   return [tableHeaders, tableRows];
+}
+
+function validateKeys(accountData: TestUserData): TestUserData {
+  accountData.accounts.forEach((account) => {
+    if (!account.profileId) {
+      throw new Error(`No id found for test account ${account.username}`);
+    }
+    accountData.tableHeaders.forEach(({ key }) => {
+      if (!Object.keys(account).includes(key)) {
+        account[key] = 'Error: Missing key';
+        logger.error(
+          `Missing key: tableHeader with key '${key}' not found in test account with profileId '${account.profileId}'`
+        );
+      }
+    });
+  });
+  return accountData;
 }
 
 authRouterDevelopment.get(
