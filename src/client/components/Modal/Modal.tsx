@@ -203,11 +203,10 @@ export function ModalAndButton({
           disabled={action.disabled}
           onClick={async () => {
             const success = await action.onClick?.();
-            if (
-              action.doCloseModalOnClick && typeof success === 'boolean'
-                ? success
-                : true
-            ) {
+            const shouldClose =
+              action.doCloseModalOnClick !== false &&
+              (typeof success === 'boolean' ? success : true);
+            if (shouldClose) {
               setLocationModalOpen(false);
             }
           }}
