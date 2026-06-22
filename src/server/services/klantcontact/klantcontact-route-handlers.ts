@@ -30,7 +30,7 @@ export async function handleVerifyContactgegeven(
 
   const { value, code, type } = req.body;
 
-  if (!value || !code || !(type in ContactgegevenType)) {
+  if (!value || !code || type !== ContactgegevenType.Email) {
     return sendBadRequest(res, 'value, type and code are required');
   }
 
