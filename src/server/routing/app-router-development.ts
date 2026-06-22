@@ -275,8 +275,6 @@ type TableRows = string[][];
 
 function formatForTable(accountData: TestUserData): [TableHeaders, TableRows] {
   const tableHeaders = accountData.tableHeaders.map((h) => h.displayName);
-  const keyOrder: Record<string, number> = {};
-  accountData.tableHeaders.forEach((th, i) => (keyOrder[th.key] = i));
 
   accountData.accounts.forEach((account) => {
     if (!account.profileId) {
@@ -313,6 +311,9 @@ function formatForTable(accountData: TestUserData): [TableHeaders, TableRows] {
     });
     return Object.fromEntries(withoutMissingKeys);
   });
+
+  const keyOrder: Record<string, number> = {};
+  accountData.tableHeaders.forEach((th, i) => (keyOrder[th.key] = i));
 
   const tableRows = accounts.map((account) => {
     const sortedEntries = Object.entries(account).toSorted(([keyA], [keyB]) => {
