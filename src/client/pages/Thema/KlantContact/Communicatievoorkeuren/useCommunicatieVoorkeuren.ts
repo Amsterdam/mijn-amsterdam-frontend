@@ -165,7 +165,9 @@ export function useCommunicatieVoorkeurBevestigen() {
   const confirmSetting = useCallback(function confirmSetting(
     isChecked: boolean
   ) {
-    console.info('Confirm setting:', isChecked);
+    throw new Error(
+      `Not implemented yet: ${isChecked ? 'checked' : 'unchecked'}`
+    );
   }, []);
   return {
     confirmSetting,
