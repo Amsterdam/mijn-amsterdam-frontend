@@ -47,6 +47,7 @@ export const BffEndpoints = {
 
 export const DevelopmentRoutes = {
   DEV_LOGIN: '/auth/:authMethod/login{/:user}',
+  TEST_ACCOUNTS: '/test-accounts/:authMethod',
 } as const;
 
 export const PREDEFINED_REDIRECT_URLS = [

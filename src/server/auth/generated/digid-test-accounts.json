@@ -1,0 +1,184 @@
+{
+  "tableHeaders": [
+    {
+      "displayName": "Gebruikersnaam",
+      "key": "username"
+    },
+    {
+      "displayName": "BSN",
+      "key": "profileId"
+    },
+    {
+      "displayName": "Mokum",
+      "key": "mokum"
+    },
+    {
+      "displayName": "Heeft kinderen",
+      "key": "hasChildren"
+    },
+    {
+      "displayName": "Partner",
+      "key": "partnerName"
+    },
+    {
+      "displayName": "Ouder dan 18",
+      "key": "isOlderThan18"
+    },
+    {
+      "displayName": "Heeft ouders",
+      "key": "hasParents"
+    },
+    {
+      "displayName": "Heeft VOW",
+      "key": "hasVertrokkenOnbekendWaarheen"
+    },
+    {
+      "displayName": "is AIO",
+      "key": "isAdresInOnderzoek"
+    },
+    {
+      "displayName": "Heeft Stadspas",
+      "key": "heeftStadspas"
+    },
+    {
+      "displayName": "Themas",
+      "key": "availableThemas"
+    }
+  ],
+  "accounts": [
+    {
+      "username": "ma-dev-profile",
+      "profileId": "999999999",
+      "mokum": true,
+      "hasChildren": false,
+      "partnerName": "Helène",
+      "isOlderThan18": true,
+      "hasParents": true,
+      "hasVertrokkenOnbekendWaarheen": false,
+      "isAdresInOnderzoek": false,
+      "heeftStadspas": true,
+      "availableThemas": "Facturen en betalen, Afval, AVG persoonsgegevens, Belastingen, Bezwaren, Bodem, Mijn gegevens, Erfpacht, Stadspas en regelingen bij laag inkomen, Horeca, Klachten, Kredietbank & FIBU, Milieuzone, Overtredingen voertuigen, Parkeren, Contactmomenten, Subsidies, Toeristische verhuur, Vergunningen en ontheffingen, Zorg en ondersteuning, Inkomen, Onderwijs en Jeugd"
+    },
+    {
+      "username": "ma-dev-translated",
+      "profileId": "999999999",
+      "mokum": true,
+      "hasChildren": false,
+      "partnerName": "Helène",
+      "isOlderThan18": true,
+      "hasParents": true,
+      "hasVertrokkenOnbekendWaarheen": false,
+      "isAdresInOnderzoek": false,
+      "heeftStadspas": true,
+      "availableThemas": "Facturen en betalen, Afval, AVG persoonsgegevens, Belastingen, Bezwaren, Bodem, Mijn gegevens, Erfpacht, Stadspas en regelingen bij laag inkomen, Horeca, Klachten, Kredietbank & FIBU, Milieuzone, Overtredingen voertuigen, Parkeren, Contactmomenten, Subsidies, Toeristische verhuur, Vergunningen en ontheffingen, Zorg en ondersteuning, Inkomen, Onderwijs en Jeugd"
+    },
+    {
+      "username": "Rowan-Helpmore",
+      "profileId": "999991863",
+      "mokum": true,
+      "hasChildren": false,
+      "partnerName": "Willemijn",
+      "isOlderThan18": true,
+      "hasParents": true,
+      "hasVertrokkenOnbekendWaarheen": false,
+      "isAdresInOnderzoek": false,
+      "heeftStadspas": true,
+      "availableThemas": "Facturen en betalen, Afval, AVG persoonsgegevens, Belastingen, Bezwaren, Bodem, Mijn gegevens, Erfpacht, Stadspas en regelingen bij laag inkomen, Horeca, Klachten, Kredietbank & FIBU, Milieuzone, Overtredingen voertuigen, Parkeren, Contactmomenten, Subsidies, Toeristische verhuur, Vergunningen en ontheffingen, Zorg en ondersteuning, Inkomen, Onderwijs en Jeugd"
+    },
+    {
+      "username": "Hendrika-Isabella-Gerarda-Johanna-de-Roos",
+      "profileId": "999990810",
+      "mokum": true,
+      "hasChildren": false,
+      "partnerName": "Helène",
+      "isOlderThan18": true,
+      "hasParents": true,
+      "hasVertrokkenOnbekendWaarheen": false,
+      "isAdresInOnderzoek": false,
+      "heeftStadspas": true,
+      "availableThemas": "Facturen en betalen, Afval, AVG persoonsgegevens, Belastingen, Bezwaren, Bodem, Mijn gegevens, Erfpacht, Stadspas en regelingen bij laag inkomen, Horeca, Klachten, Kredietbank & FIBU, Milieuzone, Overtredingen voertuigen, Parkeren, Contactmomenten, Subsidies, Toeristische verhuur, Vergunningen en ontheffingen, Zorg en ondersteuning, Inkomen, Onderwijs en Jeugd"
+    },
+    {
+      "username": "Ronald-Franciscus-Maria-Moes",
+      "profileId": "999990779",
+      "mokum": true,
+      "hasChildren": false,
+      "partnerName": "",
+      "isOlderThan18": true,
+      "hasParents": true,
+      "hasVertrokkenOnbekendWaarheen": false,
+      "isAdresInOnderzoek": false,
+      "heeftStadspas": true,
+      "availableThemas": "Facturen en betalen, AVG persoonsgegevens, Belastingen, Bezwaren, Bodem, Mijn gegevens, Erfpacht, Stadspas en regelingen bij laag inkomen, Horeca, Klachten, Kredietbank & FIBU, Milieuzone, Overtredingen voertuigen, Parkeren, Contactmomenten, Subsidies, Toeristische verhuur, Vergunningen en ontheffingen, Zorg en ondersteuning, Inkomen, Onderwijs en Jeugd"
+    },
+    {
+      "username": "Zahra-Sohrabi",
+      "profileId": "999990809",
+      "mokum": true,
+      "hasChildren": true,
+      "partnerName": "Valiallah",
+      "isOlderThan18": true,
+      "hasParents": true,
+      "hasVertrokkenOnbekendWaarheen": false,
+      "isAdresInOnderzoek": false,
+      "heeftStadspas": true,
+      "availableThemas": "Facturen en betalen, Afval, AVG persoonsgegevens, Belastingen, Bezwaren, Bodem, Mijn gegevens, Erfpacht, Stadspas en regelingen bij laag inkomen, Horeca, Klachten, Kredietbank & FIBU, Milieuzone, Overtredingen voertuigen, Parkeren, Contactmomenten, Subsidies, Toeristische verhuur, Vergunningen en ontheffingen, Zorg en ondersteuning, Inkomen, Onderwijs en Jeugd"
+    },
+    {
+      "username": "Fatima-Saïda-Al-Ksar-el-Kebir",
+      "profileId": "999993008",
+      "mokum": true,
+      "hasChildren": false,
+      "partnerName": "Youssef Saïd",
+      "isOlderThan18": true,
+      "hasParents": true,
+      "hasVertrokkenOnbekendWaarheen": false,
+      "isAdresInOnderzoek": false,
+      "heeftStadspas": true,
+      "availableThemas": "Facturen en betalen, Afval, AVG persoonsgegevens, Belastingen, Bezwaren, Bodem, Mijn gegevens, Erfpacht, Stadspas en regelingen bij laag inkomen, Horeca, Klachten, Kredietbank & FIBU, Milieuzone, Overtredingen voertuigen, Parkeren, Contactmomenten, Subsidies, Toeristische verhuur, Vergunningen en ontheffingen, Zorg en ondersteuning, Inkomen, Onderwijs en Jeugd"
+    },
+    {
+      "username": "Pietje-Streeveld",
+      "profileId": "999992727",
+      "mokum": true,
+      "hasChildren": false,
+      "partnerName": "",
+      "isOlderThan18": true,
+      "hasParents": true,
+      "hasVertrokkenOnbekendWaarheen": false,
+      "isAdresInOnderzoek": false,
+      "heeftStadspas": true,
+      "availableThemas": "Facturen en betalen, Afval, AVG persoonsgegevens, Belastingen, Bezwaren, Bodem, Mijn gegevens, Erfpacht, Stadspas en regelingen bij laag inkomen, Horeca, Klachten, Kredietbank & FIBU, Milieuzone, Overtredingen voertuigen, Parkeren, Contactmomenten, Subsidies, Toeristische verhuur, Vergunningen en ontheffingen, Zorg en ondersteuning, Inkomen, Onderwijs en Jeugd"
+    },
+    {
+      "username": "Briefadres",
+      "profileId": "000009908",
+      "mokum": true,
+      "hasChildren": true,
+      "partnerName": "",
+      "isOlderThan18": true,
+      "hasParents": true,
+      "hasVertrokkenOnbekendWaarheen": false,
+      "isAdresInOnderzoek": false,
+      "heeftStadspas": true,
+      "availableThemas": "Facturen en betalen, Afval, AVG persoonsgegevens, Belastingen, Bezwaren, Bodem, Mijn gegevens, Erfpacht, Stadspas en regelingen bij laag inkomen, Horeca, Klachten, Kredietbank & FIBU, Milieuzone, Overtredingen voertuigen, Parkeren, Contactmomenten, Subsidies, Toeristische verhuur, Vergunningen en ontheffingen, Zorg en ondersteuning, Inkomen, Onderwijs en Jeugd"
+    },
+    {
+      "username": "Woonadres",
+      "profileId": "999991863",
+      "mokum": true,
+      "hasChildren": false,
+      "partnerName": "Willemijn",
+      "isOlderThan18": true,
+      "hasParents": true,
+      "hasVertrokkenOnbekendWaarheen": false,
+      "isAdresInOnderzoek": false,
+      "heeftStadspas": true,
+      "availableThemas": "Facturen en betalen, Afval, AVG persoonsgegevens, Belastingen, Bezwaren, Bodem, Mijn gegevens, Erfpacht, Stadspas en regelingen bij laag inkomen, Horeca, Klachten, Kredietbank & FIBU, Milieuzone, Overtredingen voertuigen, Parkeren, Contactmomenten, Subsidies, Toeristische verhuur, Vergunningen en ontheffingen, Zorg en ondersteuning, Inkomen, Onderwijs en Jeugd"
+    },
+    {
+      "username": "dummy-account-for-displaying-unknown-fields",
+      "profileId": "123456789"
+    }
+  ]
+}

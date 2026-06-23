@@ -1,0 +1,28 @@
+{
+  "tableHeaders": [
+    {
+      "displayName": "Bedrijfsnaam",
+      "key": "username"
+    },
+    {
+      "displayName": "KVK",
+      "key": "profileId"
+    },
+    {
+      "displayName": "PBH",
+      "key": "plaatsBezoekadresHoofdvestiging"
+    },
+    {
+      "displayName": "Beschrijving",
+      "key": "description"
+    }
+  ],
+  "accounts": [
+    {
+      "username": "ma-dev-profile",
+      "profileId": "999999999",
+      "plaatsBezoekadresHoofdvestiging": "",
+      "description": ""
+    }
+  ]
+}
