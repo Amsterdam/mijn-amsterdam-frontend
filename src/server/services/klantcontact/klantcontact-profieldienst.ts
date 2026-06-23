@@ -35,7 +35,6 @@ export async function fetchProfiel(
       identificatieType,
       identificatieNummer: authProfileAndToken.profile.id,
       dienstverlener: DEFAULT_DIENSTVERLENER,
-      // dienstNaam: 'zorgned-jzd',
     },
     headers: {
       Accept: 'application/json',
@@ -44,7 +43,6 @@ export async function fetchProfiel(
     formatUrl({ url }) {
       return `${url}/partij`;
     },
-    enableCache: false, // For testing
   });
 
   const response = await requestData<ContactProfieldienstResponseSource>(
