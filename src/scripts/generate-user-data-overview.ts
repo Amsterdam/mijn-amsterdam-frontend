@@ -140,6 +140,21 @@ const themaIDtoTitle: Record<string, string> = themas.reduce(
   {} as Record<string, string>
 );
 
+const BASE_URL = process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL;
+if (!BASE_URL) {
+  throw new Error(`BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL = ${BASE_URL}`);
+}
+
+async function fetchTestAccounts(): Promise<string> {
+  const commaSeperatedTestAccounts = await fetch(
+    `${BASE_URL}/test-accounts/digid`,
+    {
+      method: 'GET',
+    }
+  );
+  return commaSeperatedTestAccounts.text();
+}
+
 async function main() {
   function cleanTestUsername(username: string): string {
     return username.trim().replace('Provincie-', '');
@@ -149,27 +164,22 @@ async function main() {
     throw Error('This script cannot be run inside of production.');
   }
 
-  const BASE_URL = process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL;
-  if (!BASE_URL) {
-    throw new Error(`BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL = ${BASE_URL}`);
-  }
-
   async function parseStdinOrFallback(): Promise<TestUsers | null> {
     let input: string;
     try {
       input = fs.readFileSync(process.stdin.fd, 'utf-8');
     } catch {
-      const commaSeperatedTestAccounts = await fetch(
-        `${BASE_URL}/test-accounts/digid`,
-        {
-          method: 'GET',
-        }
-      );
-      input = await commaSeperatedTestAccounts.text();
+      input = await fetchTestAccounts();
     }
 
-    assert(input.length > 0, 'stdin may not be an empty string');
+    const bsnLength = 8; // Minimally, let's not be overly exact on this check.
+    const nameAndColonLength = 2;
+    const inputCheckOk = () => input.length >= nameAndColonLength + bsnLength;
 
+    if (!inputCheckOk()) {
+      input = await fetchTestAccounts();
+    }
+    assert(inputCheckOk(), `Expected '${input}' to have a more characters`);
     return createNameProfileIdMapping(input);
   }
 
