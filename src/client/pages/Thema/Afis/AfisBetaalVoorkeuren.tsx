@@ -164,9 +164,9 @@ export function AfisBetaalVoorkeuren() {
   const pageContentTop = (
     <PageContentCell spanWide={8}>
       <Paragraph className="ams-mb-m">
-        Hieronder kunt u uw facturatiegegevens bekijken en een automatische
-        incasso instellen per afdeling van de gemeente. Wil u uw
-        facturatiegegevens wijzigen, stuur dan een email naar{' '}
+        Hieronder kunt u uw gegevens bekijken en een automatische incasso
+        instellen per afdeling van de gemeente. Voor bijvoorbeeld een
+        adreswijziging stuur dan een e-mail naar:
         <Link
           href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Facturatiegegevens wijzigen&body=${encodeURIComponent(mailBody)}`}
         >
