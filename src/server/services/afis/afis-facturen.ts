@@ -768,7 +768,7 @@ export async function fetchAfisFacturenOverview(
 
     openFacturenContent = openFacturenContentSorted;
 
-    if (facturen.length) {
+    if (facturen.filter((factuur) => !!factuur.eMandateId).length) {
       const eMandatesResponse = await fetchEMandates(
         { businessPartnerId: params.businessPartnerID },
         sessionID
