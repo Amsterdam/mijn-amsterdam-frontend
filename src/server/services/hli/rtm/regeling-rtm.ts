@@ -280,7 +280,7 @@ export function splitAanvragenByBetrokkenenAtDatumGeldigheid(
 function getSteps(
   sessionID: AuthProfile['sid'],
   aanvragen: ZorgnedRTMAanvraag[]
-) {
+): StatusLineItem[] {
   const steps = aanvragen
     .flatMap((aanvraag, index, aanvragen) => {
       // Searches for items that came before the current aanvraag and checks if it's RTM FASE 2.
@@ -364,8 +364,8 @@ function getSteps(
     .toSorted(
       // sorting by datePublished asc, and by id asc to ensure consistent order for same-date steps
       thenBy
-        .firstBy(dateSort('datePublished', 'asc'))
-        .thenBy(sortAlpha('id', 'asc'))
+        .firstBy(dateSort<StatusLineItem>('datePublished', 'asc'))
+        .thenBy(sortAlpha<StatusLineItem>('id', 'asc'))
     );
 
   const mostRecentToegewezenRTM = aanvragen.findLast(

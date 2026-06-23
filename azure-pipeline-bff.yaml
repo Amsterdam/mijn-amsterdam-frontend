@@ -13,7 +13,7 @@ trigger:
       - src/bffserver.ts
       - Dockerfile
       - package.json
-      - package-lock.json
+      - pnpm-lock.yaml
 
 pr:
   autoCancel: true
@@ -24,7 +24,7 @@ pr:
       - src/bffserver.ts
       - Dockerfile
       - package.json
-      - package-lock.json
+      - pnpm-lock.yaml
   branches:
     include:
       - main
