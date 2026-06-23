@@ -48,8 +48,10 @@ export function getMostRecentByContactgegevenType(
   }
 
   const contactgegeven = profiel.content.contactgegevens
-    .sort((a, b) => String(b.lastUpdated).localeCompare(String(a.lastUpdated)))
-    .sort((a, b) => Number(b.isGeverifieerd) - Number(a.isGeverifieerd))
+    .toSorted((a, b) =>
+      String(b.lastUpdated).localeCompare(String(a.lastUpdated))
+    )
+    .toSorted((a, b) => Number(b.isGeverifieerd) - Number(a.isGeverifieerd))
     .find((contact) => contact.type === contactgegevenType);
 
   return contactgegeven
