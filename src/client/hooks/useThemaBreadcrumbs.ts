@@ -1,6 +1,7 @@
-import { type LinkProps, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 
 import { useThemaMenuItemByThemaID } from './useThemaMenuItems.ts';
+import type { LinkProps } from '../../universal/types/App.types.ts';
 
 export function useThemaBreadcrumbs<ID extends string = string>(
   themaID: ID
