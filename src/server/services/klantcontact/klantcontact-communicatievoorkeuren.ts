@@ -23,6 +23,10 @@ export const ContactgegevenType = {
   Postadres: 'Postadres',
 } as const;
 
+export const ContactgegevenTypeValues = Object.values(
+  ContactgegevenType
+) as readonly (typeof ContactgegevenType)[keyof typeof ContactgegevenType][];
+
 export async function fetchCommunicatievoorkeuren(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<CommunicatievoorkeurenResponseFrontend>> {

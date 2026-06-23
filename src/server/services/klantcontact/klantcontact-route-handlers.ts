@@ -3,6 +3,7 @@ import type { Request } from 'express';
 
 import {
   ContactgegevenType,
+  ContactgegevenTypeValues,
   fetchCommunicatievoorkeuren,
 } from './klantcontact-communicatievoorkeuren.ts';
 import {
@@ -60,7 +61,7 @@ export async function handleCreateContactgegeven(
 ) {
   const { value, type } = req.body;
 
-  if (!(type in ContactgegevenType) || !value) {
+  if (!ContactgegevenTypeValues.includes(type) || !value) {
     return sendBadRequestInvalidInput(
       res,
       `payloadType ${type} is not supported`
