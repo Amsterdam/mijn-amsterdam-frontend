@@ -3,6 +3,7 @@ import type {
   FailedDependencies,
 } from '../../universal/helpers/api.ts';
 import type { ApiError, AppState } from '../../universal/types/App.types.ts';
+import { STATE_STORE_UTILITY_KEYS } from '../hooks/useAppStateStore.ts';
 import { regelingenTitle } from '../pages/Thema/HLI/HLI-thema-config.ts';
 
 export const BFF_API_BASE_URL = import.meta.env.REACT_APP_BFF_API_URL;
@@ -144,7 +145,7 @@ export function getApiErrors(appState: AppState): ApiError[] {
     const filteredResponses = Object.entries(appState).filter(
       ([k, apiResponseData]: [string, unknown]) => {
         return (
-          !['setAppState', 'isReady', 'setIsAppStateReady'].includes(k) &&
+          !STATE_STORE_UTILITY_KEYS.includes(k) &&
           (typeof apiResponseData !== 'object' ||
             apiResponseData == null ||
             ('status' in apiResponseData &&
