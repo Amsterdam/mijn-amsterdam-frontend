@@ -775,8 +775,7 @@ export async function fetchAfisFacturenOverview(
       );
       if (
         eMandatesResponse.status === 'OK' &&
-        Array.isArray(eMandatesResponse.content) &&
-        facturen.some((factuur) => !!factuur.eMandateId)
+        Array.isArray(eMandatesResponse.content)
       ) {
         const facturenWithMandateInfo = facturen.map((factuur) => {
           if (factuur.eMandateId) {
