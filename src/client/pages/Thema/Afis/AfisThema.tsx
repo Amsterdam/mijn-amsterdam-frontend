@@ -47,7 +47,7 @@ export function AfisDisclaimer() {
     <Alert severity="warning" heading="Belangrijk om te weten" headingLevel={4}>
       <UnorderedList markers={false}>
         <UnorderedList.Item>
-          Het verwerken van uw betaling kan tot 4 werkdagen duren.
+          Het verwerken van uw betaling kan tot 5 werkdagen duren.
         </UnorderedList.Item>
         <UnorderedList.Item>
           Enkel het openstaande bedrag wordt getoond.
