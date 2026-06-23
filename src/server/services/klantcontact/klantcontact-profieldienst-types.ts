@@ -68,7 +68,7 @@ export type ContactgegevenFrontend = {
   disabled?: boolean;
 };
 
-type ContactGegegevenScopeSource = {
+type ContactGegevenScopeSource = {
   dienstverlenerNaam: string;
   dienstNaam: string;
 };
@@ -78,7 +78,7 @@ export type ContactgegevenPayloadSource = {
   identificatieNummer: string; // BSN of KVK nummer
   type: ContactgegevenSource['type'];
   waarde: string;
-  scope?: ContactGegegevenScopeSource;
+  scope?: ContactGegevenScopeSource;
   isDefault: boolean;
 };
 
