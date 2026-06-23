@@ -25,7 +25,7 @@ export const menuItem: ThemaMenuItem = {
     return (
       themaConfig.featureToggle.active &&
       !isLoading(appState.KREFIA) &&
-      !!appState.KREFIA?.content?.deepLinks.length
+      !!appState.KREFIA?.content?.deepLinks?.length
     );
   },
   IconSVG: KrefiaIcon,
