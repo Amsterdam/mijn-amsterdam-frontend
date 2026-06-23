@@ -17,7 +17,15 @@ import { entries, omit } from '../../../../universal/helpers/utils.ts';
 import { DocumentLink } from '../../../components/DocumentList/DocumentLink.tsx';
 import { MaLink, MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../helpers/api.ts';
+import { parseHTML } from '../../../helpers/html-react-parse.tsx';
 import { useBffApi } from '../../../hooks/api/useBffApi.ts';
+
+function parseIfHtmlEncountered(text: string): ReactNode {
+  if (/<[a-z][\s\S]*>/i.test(text)) {
+    return parseHTML(text);
+  }
+  return text;
+}
 
 function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
   switch (true) {
@@ -30,12 +38,12 @@ function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
             target="_blank"
             href={factuur.paylink}
           >
-            {factuur.statusDescription}
+            {parseIfHtmlEncountered(factuur.statusDescription)}
           </MaLink>
         </>
       );
     default:
-      return factuur.statusDescription;
+      return parseIfHtmlEncountered(factuur.statusDescription);
   }
 }
 

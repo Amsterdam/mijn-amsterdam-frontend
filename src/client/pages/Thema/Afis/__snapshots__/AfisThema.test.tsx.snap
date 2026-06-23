@@ -232,7 +232,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                 <li
                   class="ams-unordered-list__item"
                 >
-                  Het verwerken van uw betaling kan tot 4 werkdagen duren.
+                  Het verwerken van uw betaling kan tot 5 werkdagen duren.
                 </li>
                 <li
                   class="ams-unordered-list__item"

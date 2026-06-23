@@ -43,6 +43,8 @@ attachDocumentDownloadRoute(
   fetchAfisDocument
 );
 
+const PAYLOAD_QUERY_PARAM_NAME = 'id';
+
 {
   /**
    * Fetches the business partner details for a given business partner ID.
@@ -55,7 +57,11 @@ attachDocumentDownloadRoute(
     handleAfisRequestWithEncryptedPayloadQueryParam<
       QueryPayload,
       ServiceReturnType
-    >((authProfile) => fetchAfisBusinessPartnerDetails(authProfile), 'id')
+    >(
+      (businessPartnerIdPayload) =>
+        fetchAfisBusinessPartnerDetails(businessPartnerIdPayload),
+      PAYLOAD_QUERY_PARAM_NAME
+    )
   );
 }
 
@@ -72,7 +78,7 @@ attachDocumentDownloadRoute(
       QueryPayload,
       ServiceReturnType,
       AfisFacturenRouteParams
-    >(handleFetchAfisFacturen, 'id')
+    >(handleFetchAfisFacturen, PAYLOAD_QUERY_PARAM_NAME)
   );
 }
 
@@ -88,7 +94,7 @@ attachDocumentDownloadRoute(
     handleAfisRequestWithEncryptedPayloadQueryParam<
       QueryPayload,
       ServiceReturnType
-    >(fetchEMandates, 'id')
+    >(fetchEMandates, PAYLOAD_QUERY_PARAM_NAME)
   );
 }
 

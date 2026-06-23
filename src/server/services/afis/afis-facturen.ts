@@ -47,6 +47,7 @@ import {
 } from '../../helpers/source-api-request.ts';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 import { captureMessage, trackEvent } from '../monitoring.ts';
+import { fetchEMandates } from './afis-e-mandates.ts';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
 const AFIS_MAX_FACTUREN_TOP = 2000;
@@ -521,7 +522,7 @@ function determineFactuurStatus(
     case !!sourceInvoice.NetDueDate &&
       sourceInvoice.IsCleared === false &&
       isDateInPast(sourceInvoice.NetDueDate, new Date()) &&
-      (sourceInvoice.DunningLevel == 1 || sourceInvoice.DunningLevel == 2):
+      (sourceInvoice.DunningLevel === 1 || sourceInvoice.DunningLevel === 2):
       return 'herinnering';
 
     // Facturen from 2024 don't seem to have a SepaMandate coupled.
@@ -742,27 +743,60 @@ export async function fetchAfisFacturenOverview(
 
   if (openstaandeFacturenResult.status === 'OK') {
     const facturenOpen = openFacturenContent?.facturen ?? [];
+    const facturen = facturenOpen.sort(
+      thenby
+        .firstBy(function (factuur: AfisFactuur) {
+          return factuur.status === 'herinnering' ? -1 : 1;
+        })
+        .thenBy(function (factuur: AfisFactuur) {
+          return [
+            'gedeeltelijke-betaling',
+            'handmatig-betalen',
+            'openstaand',
+          ].includes(factuur.status)
+            ? -1
+            : 1;
+        })
+        .thenBy(dateSort('paymentDueDate', 'asc'))
+    );
+
     const openFacturenContentSorted: AfisFacturenResponse = {
       count: openFacturenContent?.count ?? 0,
       state: 'open',
-      facturen: facturenOpen.sort(
-        thenby
-          .firstBy(function (factuur: AfisFactuur) {
-            return factuur.status === 'herinnering' ? -1 : 1;
-          })
-          .thenBy(function (factuur: AfisFactuur) {
-            return [
-              'gedeeltelijke-betaling',
-              'handmatig-betalen',
-              'openstaand',
-            ].includes(factuur.status)
-              ? -1
-              : 1;
-          })
-          .thenBy(dateSort('paymentDueDate', 'asc'))
-      ),
+      facturen,
     };
+
     openFacturenContent = openFacturenContentSorted;
+
+    if (facturen.length) {
+      const eMandatesResponse = await fetchEMandates(
+        { businessPartnerId: params.businessPartnerID },
+        sessionID
+      );
+      if (
+        eMandatesResponse.status === 'OK' &&
+        Array.isArray(eMandatesResponse.content) &&
+        facturen.some((factuur) => !!factuur.eMandateId)
+      ) {
+        const facturenWithMandateInfo = facturen.map((factuur) => {
+          if (factuur.eMandateId) {
+            const hasActiveEmandate = eMandatesResponse.content!.some(
+              (mandate) =>
+                mandate.eMandateIdSource !== null &&
+                mandate.eMandateIdSource === factuur.eMandateId
+            );
+            if (!hasActiveEmandate) {
+              return {
+                ...factuur,
+                statusDescription: `${factuur.statusDescription} <br><strong>Let op! deze incassomachtiging is gestopt.</strong>`,
+              };
+            }
+          }
+          return factuur;
+        });
+        openFacturenContent.facturen = facturenWithMandateInfo;
+      }
+    }
   }
 
   const facturenOverview: AfisFacturenOverviewResponse = {

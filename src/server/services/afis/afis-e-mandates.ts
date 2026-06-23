@@ -65,7 +65,6 @@ import {
 } from '../../../universal/helpers/date.ts';
 import { toDateFormatted } from '../../../universal/helpers/date.ts';
 import { omit, sortByNumber } from '../../../universal/helpers/utils.ts';
-import type { AuthProfile } from '../../auth/auth-types.ts';
 import { MA_FRONTEND_URL } from '../../config/app.ts';
 import {
   encrypt,
@@ -535,7 +534,7 @@ export async function fetchEmandateIdsByCreditorRefId(
 
 export async function fetchEMandates(
   payload: BusinessPartnerIdPayload,
-  authProfile: AuthProfile
+  sessionID: SessionID
 ): Promise<ApiResponse<AfisEMandateFrontend[] | null>> {
   const config = await getAfisApiConfig({
     formatUrl: ({ url }) => {
@@ -544,7 +543,7 @@ export async function fetchEMandates(
     transformResponse: (responseData) =>
       transformEMandatesResponse(
         responseData,
-        authProfile.sid,
+        sessionID,
         payload.businessPartnerId
       ),
     validateStatus(status) {
