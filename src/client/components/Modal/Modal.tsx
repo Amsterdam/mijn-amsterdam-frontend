@@ -168,7 +168,7 @@ type ModalAction = {
   label: ReactNode;
   disabled?: boolean;
   buttonVariant?: 'primary' | 'secondary' | 'tertiary';
-  onClick?: () => Promise<boolean | void>;
+  onClick?: () => boolean | void | Promise<boolean | void>;
   doCloseModalOnClick?: boolean;
 };
 
