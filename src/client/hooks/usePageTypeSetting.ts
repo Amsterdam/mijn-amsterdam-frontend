@@ -21,7 +21,7 @@ export function usePageTypeSetting(pageTypeRequested: PageTypeSetting) {
     return () => {
       setPageType('none');
     };
-  }, [pageTypeRequested]);
+  }, [pageTypeRequested, setPageType]);
 
   return pageType;
 }
