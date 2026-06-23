@@ -8,7 +8,7 @@ import type { ErfpachtDossiersResponse } from '../../../../server/services/erfpa
 import { isError, isLoading } from '../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
 
 export function useErfpachtThemaData() {
   const { ERFPACHT } = useAppStateGetter();

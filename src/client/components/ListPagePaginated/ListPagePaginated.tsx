@@ -8,7 +8,7 @@ import type {
   LinkProps,
   ZaakAanvraagDetail,
 } from '../../../universal/types/App.types.ts';
-import { usePageTypeSetting } from '../../hooks/useThemaMenuItems.ts';
+import { usePageTypeSetting } from '../../hooks/usePageTypeSetting.ts';
 import { ErrorAlert } from '../Alert/Alert.tsx';
 import { LoadingContent } from '../LoadingContent/LoadingContent.tsx';
 import { PageContentCell, PageV2 } from '../Page/Page.tsx';

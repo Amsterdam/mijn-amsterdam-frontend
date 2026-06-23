@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router';
 
 import styles from './MaLink.module.scss';
-import { usePageTypeSettingValue } from '../../hooks/useThemaMenuItems.ts';
+import { usePageTypeSettingValue } from '../../hooks/usePageTypeSetting.ts';
 
 type MaClassNameVariant =
   | 'fatNoUnderline'

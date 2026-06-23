@@ -41,11 +41,6 @@ export function KlachtenThema() {
       />
     );
   });
-  // if (!featureToggle.statustreinAndAfgehandeldeMeldingenActive) {
-  //   tables = tables.filter((table) => {
-  //     return table.key !== 'Afgehandelde klachten';
-  //   });
-  // }
 
   return (
     <ThemaPagina
