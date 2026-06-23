@@ -190,7 +190,7 @@ describe('route-helpers', () => {
 
     test('Without ZOD error', () => {
       const responseData1 = apiErrorResult(
-        'Bad request: Invalid input',
+        'Bad request: No can do!',
         null,
         400
       );
