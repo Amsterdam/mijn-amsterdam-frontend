@@ -1089,10 +1089,6 @@ function getAvailableUserThemas(
       }
       const entries = Object.entries(sResult.content);
       for (const [, val] of entries) {
-        // Stadspas has a very distinct format.
-        if ((val as any)?.stadspas?.stadspassen?.length > 0) {
-          return true;
-        }
         if (
           val &&
           ((Array.isArray(val) && val.length > 0) || Object.keys(val).length)
