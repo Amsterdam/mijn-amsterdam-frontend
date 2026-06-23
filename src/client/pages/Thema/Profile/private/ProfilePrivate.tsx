@@ -102,6 +102,8 @@ export function MijnGegevensThema() {
       {isErrorBrp && <>- Uw persoonlijke gegevens</>}
     </>
   );
+  const isThemaPaginaError = isErrorBrp;
+  const isThemaPaginaLoading = isLoadingBrp;
   const nonMokum = !isLoadingBrp && !isMokum(brpContent);
   const hasOtherNationality = hasDutchAndOtherNationalities(brpContent);
 
@@ -134,10 +136,11 @@ export function MijnGegevensThema() {
     <ThemaPagina
       id={id}
       title={title}
-      isError={isErrorBrp}
+      isError={isThemaPaginaError}
+      isPartialError={isErrorBrp}
       errorAlertContent={pageContentErrorAlert}
+      isLoading={!isThemaPaginaError && isThemaPaginaLoading}
       pageLinks={pageLinks}
-      isLoading={isLoadingBrp}
       pageContentTop={pageContentTop}
       maintenanceNotificationsPageSlug="brp"
       pageContentMain={

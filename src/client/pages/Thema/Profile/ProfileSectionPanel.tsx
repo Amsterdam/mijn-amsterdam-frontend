@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { LinkList, Grid, Paragraph } from '@amsterdam/design-system-react';
+import { LinkList, Grid } from '@amsterdam/design-system-react';
 
 import { themaConfig } from './Profile-thema-config.ts';
 import styles from './ProfileSectionPanel.module.scss';
@@ -87,9 +87,7 @@ export function ProfileSectionPanel({
   return (
     <PageContentCell>
       <CollapsiblePanel title={title ?? ''} startCollapsed={startCollapsed}>
-        {contentAfterTheTitle && (
-          <Paragraph className="ams-mb-m">{contentAfterTheTitle}</Paragraph>
-        )}
+        {contentAfterTheTitle}
         <Grid className={styles.ProfileSectionPanelGrid}>
           <Grid.Cell start={1} span={{ narrow: 4, medium: 5, wide: 7 }}>
             {sections.map((sectionData, index) => (

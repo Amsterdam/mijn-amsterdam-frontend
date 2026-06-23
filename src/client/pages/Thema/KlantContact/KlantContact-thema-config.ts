@@ -6,21 +6,25 @@ import type { ContactmomentFrontend } from '../../../../server/services/klantcon
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { isEnabled } from '../../../config/feature-toggles.ts';
 import type {
+  InfoSection,
   ThemaConfigBase,
   WithPageConfig,
 } from '../../../config/thema-types.ts';
 
-export type ContactmomentProps = ContactmomentFrontend & {
+export type InstelAction = 'instellen' | 'wijzigen' | 'valideren';
+
+export type ContactmomentFrontendFinal = ContactmomentFrontend & {
   kanaalEl: ReactNode;
   subjectLink: ReactNode;
   className: string;
 };
 
-const THEMA_ID = 'CONTACT';
+const THEMA_ID = 'KLANT_CONTACT';
 const THEMA_TITLE = 'Contact met de gemeente';
 
 type ContactThema = ThemaConfigBase &
   WithPageConfig<'listPageContactmomenten'> &
+  WithPageConfig<'detailPageContactgegevenInstellen'> &
   WithPageConfig<'listPageAfspraken'>;
 
 const BASE_PATH = '/mijn-contact';
@@ -29,9 +33,12 @@ export const themaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
   featureToggle: {
-    active: true,
+    active: isEnabled('KLANT_CONTACT.thema'),
     afspraken: {
       active: isEnabled('KLANT_CONTACT.afspraken'),
+    },
+    communicatievoorkeuren: {
+      active: isEnabled('KLANT_CONTACT.communicatievoorkeuren'),
     },
   },
   profileTypes: ['private'],
@@ -55,6 +62,15 @@ export const themaConfig = {
       trackingUrl: null,
     },
   },
+  detailPageContactgegevenInstellen: {
+    route: {
+      get path(): string {
+        return `${themaConfig.route.path}/contactgegeven-instellen/:contactgegeven/:step`;
+      },
+      documentTitle: `Contactgegeven instellen | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
   pageLinks: [
     {
       to: 'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/contactformulier.aspx/',
@@ -65,15 +81,23 @@ export const themaConfig = {
       title: 'Bel 14 020',
     },
   ],
-  uitlegPageSections: [
-    {
-      title: THEMA_TITLE,
-      listItems: ['Contactmomenten', 'Afspraken'],
-    },
-  ],
+  get uitlegPageSections(): InfoSection[] {
+    return [
+      {
+        title: THEMA_TITLE,
+        listItems: [
+          'Contactmomenten',
+          themaConfig.featureToggle.afspraken.active ? 'Afspraken' : '',
+          themaConfig.featureToggle.communicatievoorkeuren.active
+            ? 'Communicatievoorkeuren'
+            : '',
+        ].filter(Boolean),
+      },
+    ];
+  },
 } as const satisfies ContactThema;
 
-const contactmomentenDisplayProps: DisplayProps<ContactmomentProps> = {
+const contactmomentenDisplayProps: DisplayProps<ContactmomentFrontendFinal> = {
   props: {
     kanaalEl: 'Contactvorm',
     subjectLink: 'Onderwerp',
@@ -81,7 +105,7 @@ const contactmomentenDisplayProps: DisplayProps<ContactmomentProps> = {
     referenceNumber: 'Referentienummer',
   },
   colWidths: {
-    large: ['25%', '40%', '20%', '15%'],
+    large: ['25%', '30%', '25%', '20%'],
     small: ['30%', '50%', '20%', '0'],
   },
 };
@@ -93,4 +117,4 @@ export const tableConfigs = {
     listPageRoute: generatePath(themaConfig.listPageContactmomenten.route.path),
     maxItems: 5,
   },
-};
+} as const;
