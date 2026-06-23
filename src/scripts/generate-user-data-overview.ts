@@ -19,13 +19,16 @@
  *
  * Command options
  * ---------------
- * --from-disk (-d) to save to disk and use cached data. To refresh the
- cache add the --refresh-cache flag.
- * --out-file-path-digid-test-accounts=<filepath> (-f) to decide where to
- save the test account json overview -
- * this will overwrite the local file by default.
- * --update-test-accounts (-e) to automaticly update the test account file
- locally.
+ * --from-disk (-d) to save to disk and use cached data. To refresh the -
+ * cache add the --refresh-cache flag.
+ *
+ * --service-cache-path (-s) Path to save the service stream cache. This will save -
+ * the file even without the --from-disk flag.
+ *
+ * --out-file-path-digid-test-accounts=<filepath> (-f) to decide where to -
+ * save the test account json overview this will overwrite the local file by default.
+ *
+ * --update-test-accounts (-e) to automaticly update the test account file locally.
  *
  * Tips
  * =========
@@ -188,6 +191,11 @@ async function main() {
         short: 'd',
         default: false,
       },
+      'service-cache-path': {
+        type: 'string',
+        short: 's',
+        default: '',
+      },
       'out-file-path-digid-test-accounts': {
         type: 'string',
         short: 'f',
@@ -218,7 +226,8 @@ async function main() {
     );
   }
 
-  const CACHE_PATH = `${TARGET_DIRECTORY}/user-data.json`;
+  const cachePath =
+    args['service-cache-path'] || `${TARGET_DIRECTORY}/user-data.json`;
 
   // Configuration for row/columns.
   const HPX_DEFAULT = 22;
@@ -228,13 +237,13 @@ async function main() {
 
   async function generateOverview() {
     return getServiceResults().then((resultsByUser) => {
-      const fileExists = fs.existsSync(CACHE_PATH);
-      if (fileExists) {
-        if (args['refresh-cache']) {
-          fs.writeFileSync(CACHE_PATH, JSON.stringify(resultsByUser));
-        }
+      const fileExists = fs.existsSync(cachePath);
+      if (fileExists && args['refresh-cache']) {
+        fs.writeFileSync(cachePath, JSON.stringify(resultsByUser));
       } else if (FROM_DISK) {
-        fs.writeFileSync(CACHE_PATH, JSON.stringify(resultsByUser));
+        fs.writeFileSync(cachePath, JSON.stringify(resultsByUser));
+      } else if (args['service-cache-path']) {
+        fs.writeFileSync(cachePath, JSON.stringify(resultsByUser));
       }
 
       const now = new Date();
@@ -416,8 +425,8 @@ async function main() {
   }
 
   async function getServiceResults(): Promise<ResultsByUser> {
-    if (!args['refresh-cache'] && fs.existsSync(CACHE_PATH) && FROM_DISK) {
-      const data = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8').toString());
+    if (!args['refresh-cache'] && fs.existsSync(cachePath) && FROM_DISK) {
+      const data = JSON.parse(fs.readFileSync(cachePath, 'utf8').toString());
       return data;
     }
 
