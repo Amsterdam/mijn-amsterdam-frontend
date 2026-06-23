@@ -34,7 +34,6 @@ import {
   isoDateTimeFormatCompact,
   isoDateFormat,
 } from '../../../universal/helpers/date.ts';
-import type { AuthProfile } from '../../auth/auth-types.ts';
 import {
   type RequestWithRouteAndQueryParams,
   sendBadRequestInvalidInput,
@@ -251,7 +250,7 @@ export async function handleAfisEMandateSignRequestStatusNotification(
 
 export async function handleEmandateLifetimeUpdate(
   eMandateStatusChangePayload: EMandateUpdatePayload,
-  _authProfile: AuthProfile,
+  _sessionID: SessionID,
   req: Request
 ) {
   const eMandateUploadPayload = z.object({
