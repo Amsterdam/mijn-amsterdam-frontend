@@ -181,17 +181,17 @@ function EMandate({ eMandate }: EMandateProps) {
       <div className="ams-mb-xl">
         {signRequestStatusCheckApi.isRequestingStatusCheck ? (
           <Paragraph>
-            <Spinner /> Mijn Amsterdam controleert de status van het
-            E-Mandaat...
+            <Spinner /> Mijn Amsterdam controleert de status van de
+            incassomachtiging...
           </Paragraph>
         ) : signRequestStatusCheckApi.isPendingActivation ? (
           <Alert headingLevel={4} heading="Status">
             <Paragraph>
-              Wachten op bevestiging van het E-Mandaat voor{' '}
+              Wachten op bevestiging van de incassomachtiging voor{' '}
               {eMandate.creditorName}. Dit kan enkele minuten duren.
             </Paragraph>
             <Paragraph>
-              Zodra de bevestiging is ontvangen, zal het E-Mandaat actief
+              Zodra de bevestiging is ontvangen, zal de incassomachtiging actief
               worden.{' '}
             </Paragraph>
             {signRequestStatusCheckApi.isTakingLong && (

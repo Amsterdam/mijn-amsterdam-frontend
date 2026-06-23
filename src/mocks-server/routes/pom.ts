@@ -73,7 +73,7 @@ export const routes: MockRouteDefinition[] = [
         }
 
         const htmlResponse = `
-                  <h1>POM E-mandaat scherm</h1>
+                  <h1>POM Incassomachtiging scherm</h1>
                    <a href="${returnUrl || process.env.MA_FRONTEND_URL}">
                     terug naar Mijn Amsterdam
                   </a>`;

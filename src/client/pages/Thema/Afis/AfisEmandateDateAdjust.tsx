@@ -32,7 +32,7 @@ function DateAdjustModal({
   const dateValidTo = getEMandateValidityDate(eMandate);
   return (
     <Modal
-      title="E-Mandaat einddatum aanpassen"
+      title="Incassomachtiging einddatum aanpassen"
       isOpen={isDateAdjustModalActive}
       showCloseButton
       closeOnEscape
@@ -61,7 +61,7 @@ function DateAdjustModal({
     >
       <>
         <Paragraph className="ams-mb-s">
-          Nieuwe einddatum E-mandaat {eMandate.creditorName}
+          Nieuwe einddatum incassomachtiging {eMandate.creditorName}
         </Paragraph>
         <form id="date-adjust-form" onSubmit={onSubmit}>
           <DateInput

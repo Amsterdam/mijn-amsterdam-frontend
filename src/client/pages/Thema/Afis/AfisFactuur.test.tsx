@@ -96,9 +96,9 @@ describe('<AfisFactuur />', () => {
     expect(screen.getByText(mockFactuur.afzender)).toBeInTheDocument();
     expect(screen.getByText('Status')).toBeInTheDocument();
     expect(screen.getByText(mockFactuur.statusDescription)).toBeInTheDocument();
-    expect(screen.getByText('E-Mandaat kenmerk')).toBeInTheDocument();
+    expect(screen.getByText('Incassomachtiging kenmerk')).toBeInTheDocument();
     expect(screen.getByText(eMandate.eMandateIdSource!)).toBeInTheDocument();
-    expect(screen.getByText('E-Mandaat status')).toBeInTheDocument();
+    expect(screen.getByText('Incassomachtiging status')).toBeInTheDocument();
     expect(
       await screen.findByText('Actief sinds 22 april 2023.')
     ).toBeInTheDocument();
@@ -111,10 +111,10 @@ describe('<AfisFactuur />', () => {
       <Component entry={`/afis/factuur/${mockFactuur.factuurNummer}/open`} />
     );
 
-    expect(screen.getByText('E-Mandaat kenmerk')).toBeInTheDocument();
+    expect(screen.getByText('Incassomachtiging kenmerk')).toBeInTheDocument();
     expect(screen.getByText(eMandate.eMandateIdSource!)).toBeInTheDocument();
-    expect(screen.getByText('E-Mandaat status')).toBeInTheDocument();
-    expect(await screen.findByText('Niet actief')).toBeInTheDocument();
+    expect(screen.getByText('Incassomachtiging status')).toBeInTheDocument();
+    expect(await screen.findByText('Niet meer actief')).toBeInTheDocument();
   });
 
   test('shows warning when factuur is not found', async () => {

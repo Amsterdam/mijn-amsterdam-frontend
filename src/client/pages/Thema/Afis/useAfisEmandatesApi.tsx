@@ -43,7 +43,8 @@ function mergePayloadIntoEmandateById(
 export function useAfisEMandatesApi() {
   const isSmallScreen = useSmallScreen();
 
-  const { businessPartnerIdEncrypted, themaId } = useAfisThemaData();
+  const { businessPartnerIdEncrypted, themaId, isThemaPaginaLoading } =
+    useAfisThemaData();
 
   const {
     isError,
@@ -102,7 +103,7 @@ export function useAfisEMandatesApi() {
     eMandates,
     eMandateTableConfig,
     hasEMandatesError: isError,
-    isLoadingEMandates: !isDirty && isLoading, // Show loading only on first load.
+    isLoadingEMandates: isThemaPaginaLoading || (!isDirty && isLoading), // Show loading only on first load.
     optimisticUpdateContent: (
       eMandateId: string,
       payload: Partial<AfisEMandateFrontend>

@@ -1,5 +1,3 @@
-import { addYears } from 'date-fns';
-
 import { EMANDATE_ENDDATE_INDICATOR } from './Afis-thema-config.ts';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types.ts';
 import type { BFFApiUrls } from '../../../config/api.ts';
@@ -25,7 +23,7 @@ export function getEMandateValidityDate(eMandate: AfisEMandateFrontend) {
     eMandate.dateValidTo?.includes(EMANDATE_ENDDATE_INDICATOR) ||
     !eMandate.dateValidTo
   ) {
-    dateValidTo = addYears(new Date(), 1).toISOString().split('T')[0];
+    dateValidTo = `${new Date().getFullYear()}-12-31`;
   } else {
     dateValidTo = eMandate.dateValidTo;
   }
