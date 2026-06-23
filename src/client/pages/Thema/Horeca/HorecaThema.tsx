@@ -4,7 +4,7 @@ import { useHorecaThemaData } from './useHorecaThemaData.hook.ts';
 import type { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaZaken } from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 const pageContentTop = (
@@ -31,7 +31,7 @@ export function HorecaThema() {
   const tables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, filter, listPageRoute, maxItems }]) => {
       return (
-        <ThemaPaginaTable<HorecaVergunningFrontend>
+        <ThemaPaginaZaken<HorecaVergunningFrontend>
           key={kind}
           title={title}
           listPageRoute={listPageRoute}

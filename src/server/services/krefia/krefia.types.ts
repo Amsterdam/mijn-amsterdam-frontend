@@ -7,7 +7,7 @@ export interface NotificationTrigger {
 }
 
 export interface KrefiaDeepLink {
-  displayStatus: string;
+  title: string;
   link: LinkProps;
   type: 'budgetbeheer' | 'lening' | 'schuldhulp';
 }

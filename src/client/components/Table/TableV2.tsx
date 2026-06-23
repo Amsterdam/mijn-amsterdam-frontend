@@ -3,18 +3,15 @@ import type { ReactNode } from 'react';
 import { Heading, Link, Table } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
-import { getDisplayProps, getDisplayPropsColWidths } from './helpers.ts';
 import styles from './TableV2.module.scss';
 import type {
   ObjectWithOptionalLinkAttr,
   TableV2Props,
   WithDetailLinkComponent,
 } from './TableV2.types.ts';
-import { type ScreenSize, type TableV2ColWidths } from './TableV2.types.ts';
+import { useDisplayPropsEntries } from './useDisplayPropEntries.hook.ts';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
-import { entries } from '../../../universal/helpers/utils.ts';
 import type { ZaakAanvraagDetail } from '../../../universal/types/App.types.ts';
-import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { MaRouterLink } from '../MaLink/MaLink.tsx';
 
 /**
@@ -65,14 +62,6 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
   });
 }
 
-function getColWidth(
-  colWidths: TableV2ColWidths,
-  size: ScreenSize,
-  index: number
-) {
-  return colWidths[size]?.filter((value) => parseInt(value, 10) !== 0)[index];
-}
-
 export function TableV2<T extends object = ZaakAanvraagDetail>({
   caption,
   contentAfterTheCaption,
@@ -81,16 +70,7 @@ export function TableV2<T extends object = ZaakAanvraagDetail>({
   className,
   showTHead = true,
 }: TableV2Props<T>) {
-  const isSmallScreen = useSmallScreen();
-  const colWidths = getDisplayPropsColWidths(displayProps);
-  const colWidthsForScreenSize = colWidths?.[isSmallScreen ? 'small' : 'large'];
-  let displayPropEntries = entries(getDisplayProps(displayProps));
-  // Filter out display properties that are not defined for the current screen size
-  displayPropEntries = Array.isArray(colWidthsForScreenSize)
-    ? displayPropEntries.filter(
-        (_entry, index) => parseInt(colWidthsForScreenSize[index], 10) !== 0
-      )
-    : displayPropEntries;
+  const displayPropEntries = useDisplayPropsEntries(displayProps);
 
   return (
     <>
@@ -104,21 +84,11 @@ export function TableV2<T extends object = ZaakAanvraagDetail>({
         {showTHead && (
           <Table.Header>
             <Table.Row>
-              {displayPropEntries.map(([key, label], index) => {
+              {displayPropEntries.map(([key, { label, width }]) => {
                 if (label) {
+                  const st = width ? { width } : undefined;
                   return (
-                    <Table.HeaderCell
-                      key={`th-${key}`}
-                      style={{
-                        width: colWidths
-                          ? getColWidth(
-                              colWidths,
-                              isSmallScreen ? 'small' : 'large',
-                              index
-                            )
-                          : undefined,
-                      }}
-                    >
+                    <Table.HeaderCell key={`th-${key}`} style={st}>
                       {label}
                     </Table.HeaderCell>
                   );

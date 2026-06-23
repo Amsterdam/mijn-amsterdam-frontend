@@ -1,17 +1,17 @@
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
 
-import type { ContactmomentProps } from './KlantContact-thema-config.ts';
+import type { ContactmomentFrontend_ } from './KlantContact-thema-config.ts';
 import { useContactmomentenListData } from './useContactmomentenListData.hook.tsx';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import { AfspraakCard } from '../../../components/AfspraakCard/AfspraakCard.tsx';
 import { LinkToListPage } from '../../../components/LinkToListPage/LinkToListPage.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
-import { isEnabled } from '../../../config/feature-toggles.ts';
+import { ThemaPaginaZaken } from '../../../components/Thema/ThemaPaginaZaken.tsx';
+import { MAX_ZAKEN_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import { getRedactedClass } from '../../../helpers/cobrowse.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { isEnabled } from '../../../config/feature-toggles.ts';
 
 export function KlantContactThema() {
   const {
@@ -79,7 +79,7 @@ type AfsprakenProps = {
 
 export function Afspraken({ compact = false }: AfsprakenProps) {
   const { afspraken, themaConfig, isLoading } = useKlantcontactData();
-  const MAX_AMOUNT_AFSPRAKEN_DISPLAYED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
+  const MAX_AMOUNT_AFSPRAKEN_DISPLAYED = MAX_ZAKEN_ON_THEMA_PAGINA;
 
   if (compact && (!afspraken.length || isLoading)) {
     return null;
@@ -120,7 +120,7 @@ function ContactMomenten() {
     useContactmomentenListData();
 
   return (
-    <ThemaPaginaTable<ContactmomentProps>
+    <ThemaPaginaZaken<ContactmomentFrontend_>
       contentAfterTheTitle={
         <>
           <Paragraph className="ams-mb-m">

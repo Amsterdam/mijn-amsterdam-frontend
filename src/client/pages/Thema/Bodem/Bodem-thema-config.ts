@@ -4,8 +4,8 @@ import type { LoodMetingFrontend } from '../../../../server/services/bodem/types
 import { dateSort } from '../../../../universal/helpers/date.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import {
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
+  MAX_ZAKEN_ON_THEMA_PAGINA,
+  MAX_ZAKEN_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app.ts';
 import type {
   ThemaConfigBase,
@@ -81,9 +81,9 @@ const displayPropsLopend: DisplayProps<LoodMetingFrontend> = {
     datumAanvraagFormatted: 'Aangevraagd op',
     displayStatus: 'Status',
   },
-  colWidths: {
+  config: {
     large: ['25%', '25%', '50%'],
-    small: ['100%', '0', '0'],
+    small: [true, true, false],
   },
 };
 
@@ -93,7 +93,7 @@ const displayPropsEerder: DisplayProps<LoodMetingFrontend> = {
     datumAfgehandeldFormatted: 'Afgehandeld op',
     decision: 'Resultaat',
   },
-  colWidths: {
+  config: {
     large: ['25%', '25%', '50%'],
     small: ['100%', '0', '0'],
   },
@@ -109,7 +109,7 @@ export const tableConfig = {
       page: null,
     }),
     displayProps: displayPropsLopend,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
+    maxItems: MAX_ZAKEN_ON_THEMA_PAGINA_LOPEND,
   },
   [listPageKind.completed]: {
     title: 'Afgehandelde aanvragen',
@@ -120,6 +120,6 @@ export const tableConfig = {
       page: null,
     }),
     displayProps: displayPropsEerder,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    maxItems: MAX_ZAKEN_ON_THEMA_PAGINA,
   },
 } as const;

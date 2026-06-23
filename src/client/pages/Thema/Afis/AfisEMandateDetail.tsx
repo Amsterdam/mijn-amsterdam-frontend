@@ -22,7 +22,7 @@ import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { Spinner } from '../../../components/Spinner/Spinner.tsx';
 import { ThemaDetailPagina } from '../../../components/Thema/ThemaDetailPagina.tsx';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaZaken } from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useWidescreen } from '../../../hooks/media.hook.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
@@ -215,7 +215,7 @@ function EMandate({ eMandate }: EMandateProps) {
       </div>
       {!!eMandate.history.length &&
         (isWideScreen ? (
-          <ThemaPaginaTable
+          <ThemaPaginaZaken
             zaken={eMandate.history}
             title="Eerdere E-Mandaten"
             displayProps={eMandateHistoryDisplayProps}

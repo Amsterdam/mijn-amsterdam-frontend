@@ -12,7 +12,7 @@ import type {
   EmandateStatusCode,
 } from '../../../../server/services/afis/afis-types.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
+import { MAX_ZAKEN_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import {
   isEnabled,
   propagateFeatureToggles,
@@ -101,33 +101,34 @@ export const titleEMandaatPage = 'E-Mandaat';
 
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN = 5;
-const MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED =
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA;
-const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED = MAX_ZAKEN_ON_THEMA_PAGINA;
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_ZAKEN_ON_THEMA_PAGINA;
 
 const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
   props: {
+    factuurNummer: 'Factuurnummer',
     factuurNummerEl: 'Factuurnummer',
     afzender: 'Afzender',
     paymentDueDateFormatted: 'Vervaldatum',
     statusDescription: 'Status',
   },
-  colWidths: {
-    large: ['15%', '25%', '25%', '35%'],
-    small: ['25%', '0', '0', '75%'],
+  config: {
+    large: [false, '15%', '25%', '25%', '35%'],
+    small: [true, false, true, true, false],
   },
 };
 
 const displayPropsFacturenAfgehandeldOfOvergedragen: DisplayProps<AfisFactuurFrontend> =
   {
     props: {
+      factuurNummer: 'Factuurnummer',
       factuurNummerEl: 'Factuurnummer',
       afzender: 'Afzender',
       statusDescription: 'Status',
     },
-    colWidths: {
-      large: ['25%', '25%', '50%'],
-      small: ['100%', '0', '0'],
+    config: {
+      large: [false, '25%', '25%', '50%'],
+      small: [true, false, true, false],
     },
   };
 
@@ -139,9 +140,9 @@ export const displayPropsTermijnenTable: DisplayProps<AfisFactuurTermijn> = {
     paymentStatus: 'Status',
     statusDescription: 'Termijn',
   },
-  colWidths: {
-    large: ['10%', '25%', '20%', '45%', '0'],
-    small: ['0', '0', '0', '0', '100%'],
+  config: {
+    large: ['10%', '25%', '20%', '45%', false],
+    small: [false, false, false, false, '100%'],
   },
 };
 
@@ -279,7 +280,7 @@ export const eMandateHistoryDisplayProps: DisplayProps<
     senderName: 'Naam rekeninghouder',
     senderIBAN: 'Rekeningnummer',
   },
-  colWidths: {
+  config: {
     large: ['15%', '15%', '15%', '25%', '30%'],
     small: ['50%', '0', '50%'],
   },

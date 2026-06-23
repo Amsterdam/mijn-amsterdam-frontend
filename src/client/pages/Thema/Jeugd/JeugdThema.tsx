@@ -5,7 +5,7 @@ import type { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/se
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaZaken } from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import {
   WMO_HELPDESK_HREF_TEL_LINK,
@@ -53,7 +53,7 @@ export function JeugdThemaPagina() {
 
   const tables = Object.entries(tableConfig).map(([kind, config]) => {
     return (
-      <ThemaPaginaTable<LeerlingenvervoerVoorzieningFrontend>
+      <ThemaPaginaZaken<LeerlingenvervoerVoorzieningFrontend>
         key={kind}
         title={config.title}
         zaken={voorzieningen.filter(config.filter)}

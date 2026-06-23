@@ -158,7 +158,7 @@ export const tableConfig: {
         dateRequestFormatted: 'Datum aanvraag',
         displayStatus: 'Status',
       },
-      colWidths: {
+      config: {
         large: ['25%', '35%', '20%', '20%'],
         small: ['50%', '50%', '0', '0'],
       },
@@ -183,7 +183,7 @@ export const tableConfig: {
         title: 'Omschrijving',
         vergunningKenmerk: 'Vergunningkenmerk',
       },
-      colWidths: {
+      config: {
         large: ['25%', '35%', '40%', '0'],
         small: ['50%', '50%', '0', '0'],
       },
@@ -211,7 +211,7 @@ export const tableConfig: {
         dateDecisionFormatted: 'Datum besluit',
         displayStatus: 'Resultaat',
       },
-      colWidths: {
+      config: {
         large: ['25%', '35%', '20%', '20%'],
         small: ['50%', '50%', '0', '0'],
       },

@@ -12,7 +12,7 @@ import type { AfspraakFrontend } from '../../../server/services/klantcontact/kla
 import { remoteApiHost } from '../../../testing/setup.ts';
 import { bffApi } from '../../../testing/utils.ts';
 import { toDateFormatted } from '../../../universal/helpers/date.ts';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app.ts';
+import { MAX_ZAKEN_ON_THEMA_PAGINA } from '../../config/app.ts';
 
 const DATE_NOW = '2021-09-22T09:00:00';
 
@@ -160,7 +160,7 @@ describe('<Dashboard />', () => {
           status: 'OK',
           content: {
             contactmomenten: [],
-            afspraken: new Array(MAX_TABLE_ROWS_ON_THEMA_PAGINA + 1)
+            afspraken: new Array(MAX_ZAKEN_ON_THEMA_PAGINA + 1)
               .fill(afspraak)
               // caseReference is used as key in react, so it must be unique from other items.
               .map((a, i) => ({ ...a, caseReference: i })),
@@ -172,7 +172,7 @@ describe('<Dashboard />', () => {
 
       expect(
         screen.getAllByRole('heading', { name: 'Varen Afspraak' })
-      ).toHaveLength(MAX_TABLE_ROWS_ON_THEMA_PAGINA);
+      ).toHaveLength(MAX_ZAKEN_ON_THEMA_PAGINA);
       screen.getByRole('link', { name: 'Toon meer' });
     });
   });

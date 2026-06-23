@@ -3,10 +3,11 @@ import type { ReactNode } from 'react';
 import { generatePath } from 'react-router';
 
 import type { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types.ts';
+import type { StadspasFrontend } from '../../../../server/services/hli/stadspas-types.ts';
 import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { dateSort } from '../../../../universal/helpers/date.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
+import { MAX_ZAKEN_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import { propagateFeatureToggles } from '../../../config/feature-toggles.ts';
 import type {
   PageConfig,
@@ -120,43 +121,21 @@ export const kindTegoedPageLinkItem = {
   to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
 } as const;
 
-const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_ZAKEN_ON_THEMA_PAGINA;
 
 const displayPropsHuidigeRegelingen: DisplayProps<HLIRegelingFrontend> = {
   props: {
+    title: 'Regeling',
     detailLinkComponent: 'Regeling',
     betrokkenen: 'Ontvangers',
   },
-  colWidths: {
-    large: ['80%', '20%'],
-    small: ['100%', '0'],
+  config: {
+    large: [false, '70%', '30%'],
+    small: [true, false, true],
   },
 };
 
-const displayPropsEerdereRegelingen: DisplayProps<HLIRegelingFrontend> = {
-  props: {
-    detailLinkComponent: 'Regeling',
-    displayStatus: 'Status',
-    betrokkenen: 'Ontvangers',
-  },
-  colWidths: {
-    large: ['80%', '20%'],
-    small: ['100%', '0'],
-  },
-};
-
-type SpecificatieDisplayProps = {
-  datePublishedFormatted: ReactNode;
-  // We don't use category just yet, since we only have one type of category at the moment.
-  // This is shown in the title of the specificatie table.
-  category: ReactNode;
-  documentUrl: ReactNode;
-};
-
-const specificatieDisplayProps: DisplayProps<SpecificatieDisplayProps> = {
-  datePublishedFormatted: 'Datum',
-  documentUrl: 'Document',
-};
+const displayPropsEerdereRegelingen = displayPropsHuidigeRegelingen;
 
 export const listPageParamKind = {
   lopend: 'lopende-aanvragen',
@@ -180,7 +159,7 @@ export const tableConfig = {
       regeling.displayStatus.startsWith('In behandeling'),
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    maxItems: MAX_ZAKEN_ON_THEMA_PAGINA,
     listPageRoute: generatePath(themaConfig.regelingenListPage.route.path, {
       kind: listPageParamKind.lopend,
       page: null,
@@ -192,7 +171,7 @@ export const tableConfig = {
       regeling.isActual && !regeling.displayStatus.startsWith('In behandeling'),
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    maxItems: MAX_ZAKEN_ON_THEMA_PAGINA,
     listPageRoute: generatePath(themaConfig.regelingenListPage.route.path, {
       kind: listPageParamKind.actual,
       page: null,
@@ -211,6 +190,25 @@ export const tableConfig = {
   },
 } as const;
 
+type SpecificatieDisplayProps = {
+  datePublishedFormatted: string;
+  // We don't use category just yet, since we only have one type of category at the moment.
+  // This is shown in the title of the specificatie table.
+  category: string;
+  documentUrl: ReactNode;
+};
+
+const specificatieDisplayProps: DisplayProps<SpecificatieDisplayProps> = {
+  props: {
+    datePublishedFormatted: 'Datum',
+    documentUrl: 'Document',
+  },
+  config: {
+    large: ['70%', '30%'],
+    small: [true, true],
+  },
+};
+
 export const specificatieTableConfig = {
   title: 'Specificaties regeling tegemoetkoming meerkosten',
   sort: dateSort('datePublished', 'desc'),
@@ -219,4 +217,23 @@ export const specificatieTableConfig = {
   listPageRoute: generatePath(themaConfig.specificatieListPage.route.path, {
     page: null,
   }),
+};
+
+export type StadspasFrontend_ = Omit<StadspasFrontend, 'owner' | 'actief'> & {
+  owner: string;
+  ownerEl: React.ReactNode;
+  actief: string;
+};
+
+export const stadspasDisplayProps: DisplayProps<StadspasFrontend_> = {
+  props: {
+    owner: 'Naam',
+    ownerEl: '',
+    balanceFormatted: 'Saldo',
+    actief: 'Status',
+  },
+  config: {
+    large: [false, '70%', '15%', '15%'],
+    small: [true, false, true, true],
+  },
 };

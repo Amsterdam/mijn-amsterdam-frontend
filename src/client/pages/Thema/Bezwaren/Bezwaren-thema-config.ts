@@ -3,8 +3,8 @@ import { generatePath } from 'react-router';
 import type { BezwaarFrontend } from '../../../../server/services/bezwaren/types.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import {
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
+  MAX_ZAKEN_ON_THEMA_PAGINA,
+  MAX_ZAKEN_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app.ts';
 import type {
   ThemaConfigBase,
@@ -71,9 +71,9 @@ const displayPropsBezwaren: DisplayProps<BezwaarFrontend> = {
     ontvangstdatumFormatted: 'Ontvangen op',
     omschrijving: 'Onderwerp',
   },
-  colWidths: {
-    large: ['25%', '25%', '50%'],
-    small: ['50%', '0', '0'],
+  config: {
+    large: ['40%', '30%', '30%'],
+    small: ['100%', '100%', '0'],
   },
 };
 
@@ -91,7 +91,7 @@ export const tableConfig = {
     filter: (bezwaar: BezwaarFrontend) =>
       bezwaar.displayStatus !== 'Afgehandeld',
     displayProps: displayPropsBezwaren,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
+    maxItems: MAX_ZAKEN_ON_THEMA_PAGINA_LOPEND,
     textNoContent:
       'U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet is geregistreerd.',
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
@@ -104,7 +104,7 @@ export const tableConfig = {
     filter: (bezwaar: BezwaarFrontend) =>
       bezwaar.displayStatus === 'Afgehandeld',
     displayProps: displayPropsBezwaren,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    maxItems: MAX_ZAKEN_ON_THEMA_PAGINA,
     textNoContent: 'U heeft nog geen afgehandelde bezwaren.',
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.afgehandeld,

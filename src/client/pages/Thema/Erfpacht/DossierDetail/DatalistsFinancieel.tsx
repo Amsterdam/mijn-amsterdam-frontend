@@ -13,7 +13,7 @@ import type {
 import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
 import type { Row } from '../../../../components/Datalist/Datalist.tsx';
 import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../../config/app.ts';
+import { MAX_ZAKEN_ON_THEMA_PAGINA } from '../../../../config/app.ts';
 import { LINKS } from '../Erfpacht-thema-config.ts';
 import styles from '../ErfpachtDetail.module.scss';
 
@@ -117,7 +117,7 @@ function DatalistHuidigePeriode({ dossier }: ErfpachtDatalistProps) {
 
 function DatalistToekomstigePeriodes({ dossier }: ErfpachtDatalistProps) {
   return dossier.financieel?.toekomstigePeriodeList
-    ?.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)
+    ?.slice(0, MAX_ZAKEN_ON_THEMA_PAGINA)
     .map((periode) => (
       <DatalistFinancieelPeriode
         key={periode.titelFinancieelToekomstigeAlgemeneBepaling}

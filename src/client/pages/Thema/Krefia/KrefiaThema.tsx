@@ -5,7 +5,7 @@ import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.t
 import { entries } from '../../../../universal/helpers/utils.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaZaken } from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function KrefiaThema() {
@@ -50,7 +50,7 @@ export function KrefiaThema() {
   const krefiaTables = entries(tableConfig).map(
     ([kind, { title, displayProps, filter }]) => {
       return (
-        <ThemaPaginaTable<KrefiaDeepLink>
+        <ThemaPaginaZaken<KrefiaDeepLink>
           key={kind}
           title={title}
           zaken={deepLinks.filter(filter)}

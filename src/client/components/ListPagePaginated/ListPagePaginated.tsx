@@ -14,7 +14,7 @@ import { LoadingContent } from '../LoadingContent/LoadingContent.tsx';
 import { PageContentCell, PageV2 } from '../Page/Page.tsx';
 import { PaginationV2 } from '../Pagination/PaginationV2.tsx';
 import type { DisplayProps } from '../Table/TableV2.tsx';
-import { TableV2 } from '../Table/TableV2.tsx';
+import { ZakenList } from '../ZakenList/ZakenList.tsx';
 
 const DEFAULT_PAGE_SIZE = 20;
 
@@ -36,7 +36,9 @@ interface ListPagePaginatedProps<T> {
   totalCount?: number;
 }
 
-export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
+export function ListPagePaginated<
+  T extends { link?: LinkProps; title: string } = ZaakAanvraagDetail,
+>({
   appRoute,
   breadcrumbs,
   pageContentTop,
@@ -112,8 +114,8 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
               />
             )}
             {!isLoading && !!itemsPaginated.length && (
-              <TableV2<T>
-                items={itemsPaginated}
+              <ZakenList<T>
+                zaken={itemsPaginated}
                 displayProps={displayProps}
                 className={tableClassName}
               />

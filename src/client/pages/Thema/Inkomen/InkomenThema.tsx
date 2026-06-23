@@ -4,7 +4,7 @@ import { tableConfigSpecificaties } from './Inkomen-thema-config.ts';
 import { useInkomenThemaData } from './useInkomenThemaData.hook.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaZaken } from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { getFeedbackDetailsByTableConfig } from '../../../components/UserFeedback/UserFeedback.helpers.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
@@ -37,7 +37,7 @@ export function InkomenThema() {
   const tables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, filter, listPageRoute, maxItems }]) => {
       return (
-        <ThemaPaginaTable
+        <ThemaPaginaZaken
           key={kind}
           title={title}
           listPageRoute={listPageRoute}
@@ -52,7 +52,7 @@ export function InkomenThema() {
   const tablesSpecificaties = Object.entries(tableConfigSpecificaties).map(
     ([kind, { title, displayProps, listPageRoute, maxItems }]) => {
       return (
-        <ThemaPaginaTable
+        <ThemaPaginaZaken
           key={kind}
           title={title}
           listPageRoute={listPageRoute}

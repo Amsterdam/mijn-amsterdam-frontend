@@ -65,7 +65,12 @@ export function AfisDisclaimer() {
 
 export function AfisDisclaimerOvergedragenFacturen() {
   return (
-    <Alert heading="Belangrijk om te weten" severity="warning" headingLevel={4}>
+    <Alert
+      heading="Belangrijk om te weten"
+      severity="warning"
+      headingLevel={4}
+      className="ams-mb-m"
+    >
       <Paragraph>
         Als u niet betaalt, wordt uw factuur door Financiën overgedragen naar de
         afdeling Incasso & Invordering van directie Belastingen. Deze afdeling

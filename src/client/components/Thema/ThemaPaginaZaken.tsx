@@ -1,20 +1,25 @@
 import type { ReactNode } from 'react';
 
-import { Paragraph } from '@amsterdam/design-system-react';
+import { Heading, Paragraph } from '@amsterdam/design-system-react';
 
-import type { ZaakAanvraagDetail } from '../../../universal/types/App.types.ts';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app.ts';
+import type {
+  LinkProps,
+  ZaakAanvraagDetail,
+} from '../../../universal/types/App.types.ts';
+import { MAX_ZAKEN_ON_THEMA_PAGINA } from '../../config/app.ts';
+import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { LinkToListPage } from '../LinkToListPage/LinkToListPage.tsx';
 import { PageContentCell } from '../Page/Page.tsx';
 import type { DisplayProps } from '../Table/TableV2.tsx';
 import { TableV2 } from '../Table/TableV2.tsx';
+import { ZakenList } from '../ZakenList/ZakenList.tsx';
 
 const DISPLAY_PROPS_DEFAULT: DisplayProps<{ title: string }> = {
   title: 'Titel',
 };
 const TEXT_NO_CONTENT_DEFAULT = 'Er zijn (nog) geen zaken gevonden.';
 
-interface ThemaPaginaTableProps<T> {
+interface ThemaPaginaZakenProps<T> {
   className?: string;
   displayProps?: DisplayProps<T>;
   listPageRoute?: string;
@@ -22,43 +27,66 @@ interface ThemaPaginaTableProps<T> {
   totalItems?: number;
   textNoContent?: string;
   contentAfterTheTitle?: ReactNode;
+  contentAfterTheZaken?: ReactNode;
   title?: string;
   listPageLinkLabel?: string;
   listPageLinkTitle?: string;
   zaken: T[];
+  variant?: 'table' | 'list';
 }
 
-export function ThemaPaginaTable<T extends object = ZaakAanvraagDetail>({
+export function ThemaPaginaZaken<
+  T extends { title: string; link?: LinkProps } = ZaakAanvraagDetail,
+>({
   title = '',
   contentAfterTheTitle = '',
+  contentAfterTheZaken = '',
   zaken,
   className,
   textNoContent,
   displayProps = DISPLAY_PROPS_DEFAULT,
   listPageRoute,
-  maxItems = MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+  maxItems = MAX_ZAKEN_ON_THEMA_PAGINA,
   totalItems,
   listPageLinkLabel = 'Toon meer',
   listPageLinkTitle,
-}: ThemaPaginaTableProps<T>) {
+  variant,
+}: ThemaPaginaZakenProps<T>) {
   const textNoContentDefault = title
     ? `U heeft (nog) geen ${title.toLowerCase()}`
     : TEXT_NO_CONTENT_DEFAULT;
 
   const hasListPage = !!listPageRoute && maxItems !== -1;
+  const zaken_ = hasListPage ? zaken.slice(0, maxItems) : zaken;
+  const isSmallScreen = useSmallScreen();
 
-  return (
-    <PageContentCell>
+  const zakenList =
+    (isSmallScreen && variant !== 'table') || variant === 'list' ? (
+      <>
+        <Heading level={2} size="level-2" className="ams-mb-s">
+          {title}
+        </Heading>
+        {contentAfterTheTitle}
+        {zaken_.length > 0 && (
+          <ZakenList<T> zaken={zaken_} displayProps={displayProps} />
+        )}
+      </>
+    ) : (
       <TableV2
         showTHead={!!zaken.length}
         caption={title}
         contentAfterTheCaption={contentAfterTheTitle}
-        items={hasListPage ? zaken.slice(0, maxItems) : zaken}
+        items={zaken_}
         displayProps={displayProps}
         className={className}
       />
+    );
 
-      {!zaken.length && (
+  return (
+    <PageContentCell>
+      {zakenList}
+      {contentAfterTheZaken}
+      {!zaken_.length && (
         <Paragraph>{textNoContent ?? textNoContentDefault}</Paragraph>
       )}
 

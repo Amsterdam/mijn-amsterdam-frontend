@@ -18,7 +18,8 @@ export function useErfpachtThemaData() {
 
   const dossiers = addLinkElementToProperty(
     dossiersBase?.dossiers ?? [],
-    'voorkeursadres'
+    'voorkeursadres',
+    true
   );
 
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);

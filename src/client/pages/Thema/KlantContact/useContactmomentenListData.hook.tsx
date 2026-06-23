@@ -6,7 +6,7 @@ import {
   PersonAtDeskIcon,
 } from '@amsterdam/design-system-react-icons';
 
-import type { ContactmomentProps } from './KlantContact-thema-config.ts';
+import type { ContactmomentFrontend_ } from './KlantContact-thema-config.ts';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import type { Kanaal } from '../../../../server/services/klantcontact/klantcontact.types.ts';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
@@ -50,16 +50,7 @@ function getMenuItem(
   );
 }
 
-function getLinkToThemaPage(
-  onderwerp: string,
-  myThemasMenuItems: ThemaMenuItemTransformed[]
-) {
-  const menuItem = getMenuItem(onderwerp, myThemasMenuItems);
-
-  if (!menuItem) {
-    return onderwerp;
-  }
-
+function getLinkToThemaPage(menuItem: ThemaMenuItemTransformed) {
   // menuItem only exists in myThemasMenuItems if that thema is active through the toggle and this person has products in that thema.
   const LinkComponent = menuItem.to.startsWith('http') ? Link : MaRouterLink;
 
@@ -99,20 +90,27 @@ export function useContactmomentenListData() {
   } = useKlantcontactData();
   const { items: myThemasMenuItems } = useActiveThemaMenuItems();
 
-  const contactmomenten_: ContactmomentProps[] = contactmomenten.map(
+  const contactmomenten_: ContactmomentFrontend_[] = contactmomenten.map(
     (contactmoment) => {
       const menuItemId = // getMenuItem can not be used because it is dependend on the user having the thema at the current moment
         mapperContactmomentToMenuItem[
           contactmoment.subject as keyof typeof mapperContactmomentToMenuItem
         ] || contactmoment.subject;
+
+      const menuItem = getMenuItem(contactmoment.subject, myThemasMenuItems);
       return {
-        ...contactmoment,
+        titleLink: menuItem
+          ? getLinkToThemaPage(menuItem)
+          : contactmoment.subject,
+        title: contactmoment.subject,
         className: getRedactedClass(menuItemId),
         kanaalEl: addIcon(contactmoment.kanaal),
-        subjectLink: getLinkToThemaPage(
-          contactmoment.subject,
-          myThemasMenuItems
-        ),
+        link: menuItem
+          ? {
+              to: menuItem.to,
+            }
+          : undefined,
+        ...contactmoment,
       };
     }
   );

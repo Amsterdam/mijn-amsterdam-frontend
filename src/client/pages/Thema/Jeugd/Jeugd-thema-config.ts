@@ -70,7 +70,7 @@ const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
     displayStatus: 'Status',
     statusDateFormatted: 'Datum',
   },
-  colWidths: {
+  config: {
     large: ['50%', '25%', '25%'],
     small: ['100%', '0', '0'],
   },

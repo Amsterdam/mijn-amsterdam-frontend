@@ -10,7 +10,7 @@ import { entries } from '../../../../universal/helpers/utils.ts';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaZaken } from '../../../components/Thema/ThemaPaginaZaken.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import * as afis from '../Afis/Afis-thema-config.ts';
 import { AfisFacturenTables } from '../Afis/AfisFacturenTables.tsx';
@@ -33,7 +33,7 @@ export function ErfpachtThema() {
     ? entries(tableConfig).map(
         ([kind, { title, displayProps, listPageRoute, maxItems }]) => {
           return (
-            <ThemaPaginaTable<ErfpachtDossierFrontend>
+            <ThemaPaginaZaken<ErfpachtDossierFrontend>
               key={kind}
               title={title}
               zaken={dossiers}

@@ -1,8 +1,6 @@
-import type { ReactNode } from 'react';
-
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { listPageParamKind } from './HLI-thema-config.ts';
+import { listPageParamKind, stadspasDisplayProps } from './HLI-thema-config.ts';
 import styles from './HLIThema.module.scss';
 import { useHliThemaData } from './useHliThemaData.ts';
 import type {
@@ -14,9 +12,9 @@ import { entries } from '../../../../universal/helpers/utils.ts';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
-import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaZaken } from '../../../components/Thema/ThemaPaginaZaken.tsx';
+import { useSmallScreen } from '../../../hooks/media.hook.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function HistoricItemsMention() {
@@ -28,56 +26,44 @@ export function HistoricItemsMention() {
   );
 }
 
-type StadspasDisplayProps = {
-  owner: ReactNode;
-  actief: ReactNode;
-};
-
-const stadspasDisplayProps: DisplayProps<StadspasDisplayProps> = {
-  owner: '',
-  actief: 'Status',
-};
-
 function Stadspassen({
   stadspassen,
   dateExpiryFormatted,
 }: StadspasResponseFrontend) {
+  const isSmallScreen = useSmallScreen();
+
   const passen = stadspassen.map((pas) => {
     return {
-      owner: (
+      ...pas,
+      ownerEl: (
         <MaRouterLink maVariant="fatNoUnderline" href={pas.link?.to}>
           <span
             className={styles.Stadspas_owner}
           >{`Stadspas van ${pas.owner.firstname}`}</span>
-          {!!pas.balance && (
-            <span className={styles.Stadspas_balance}>
-              Saldo {pas.balanceFormatted}
-            </span>
-          )}
         </MaRouterLink>
       ),
-      actief: (
-        <span className={styles.StatusValue}>
-          {pas.actief ? 'Actief' : 'Geblokkeerd'}
-        </span>
-      ),
+      owner: `Stadspas van ${pas.owner.firstname}`,
+      actief: pas.actief ? 'Actief' : 'Inactief',
     };
   });
 
   return (
-    <PageContentCell>
-      <ThemaPaginaTable<StadspasDisplayProps>
+    <>
+      <ThemaPaginaZaken
         displayProps={stadspasDisplayProps}
         zaken={passen}
+        title={isSmallScreen ? 'Stadspassen' : undefined}
         className={styles.Stadspassen}
+        contentAfterTheZaken={
+          !!stadspassen?.length &&
+          dateExpiryFormatted && (
+            <Paragraph size="small">
+              Het huidige stadspasjaar eindigt op {dateExpiryFormatted}.
+            </Paragraph>
+          )
+        }
       />
-
-      {!!stadspassen?.length && dateExpiryFormatted && (
-        <Paragraph size="small">
-          Het huidige stadspasjaar eindigt op {dateExpiryFormatted}.
-        </Paragraph>
-      )}
-    </PageContentCell>
+    </>
   );
 }
 
@@ -122,7 +108,7 @@ export function HLIThema() {
             { title, displayProps, filter, sort, maxItems, listPageRoute },
           ]) => {
             return (
-              <ThemaPaginaTable<HLIRegelingFrontend>
+              <ThemaPaginaZaken<HLIRegelingFrontend>
                 key={kind}
                 title={title}
                 zaken={regelingen.filter(filter).sort(sort)}
@@ -152,7 +138,7 @@ export function HLIThema() {
               />
             )}
             {!!specificaties.length && (
-              <ThemaPaginaTable<HLIRegelingSpecificatieFrontend>
+              <ThemaPaginaZaken<HLIRegelingSpecificatieFrontend>
                 title={specificatieTableConfig.title}
                 displayProps={specificatieTableConfig.displayProps}
                 zaken={specificaties.sort(specificatieTableConfig.sort)}
