@@ -1,4 +1,4 @@
-import type { RemoteDependencyData } from '@microsoft/applicationinsights-web';
+import type { IDependencyTelemetry } from '@microsoft/applicationinsights-web';
 import type {
   ExceptionData,
   RequestData,
@@ -19,14 +19,14 @@ const excludedOutoingDependencies: Array<{
   statusCode: string;
 }> = JSON.parse(process.env.BFF_EXCLUDE_OUTGOING_DEPENDENCIES || '[]');
 
-export function shouldSendRemoteDependencyData(data: RemoteDependencyData) {
-  const [method, route] = data.name.split(' ');
+export function shouldSendRemoteDependencyData(data: IDependencyTelemetry) {
+  const [method, route] = data.name?.split(' ') ?? [];
 
   for (const excludeReqParts of excludedOutoingDependencies) {
     if (
       route.includes(excludeReqParts.routeSegment) &&
       method === excludeReqParts.method &&
-      data.resultCode === excludeReqParts.statusCode
+      data.responseCode.toString() === excludeReqParts.statusCode
     ) {
       return false;
     }
