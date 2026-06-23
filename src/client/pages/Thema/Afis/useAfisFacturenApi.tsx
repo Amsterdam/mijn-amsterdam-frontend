@@ -20,7 +20,9 @@ import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../helpers/api
 import { parseHTML } from '../../../helpers/html-react-parse.tsx';
 import { useBffApi } from '../../../hooks/api/useBffApi.ts';
 
-function parseIfHtmlEncountered(text: string): ReactNode {
+// A very basic helper that performs a simple check to see if the text contains HTML tags.
+// Some of the status descriptions may contain HTML tags that need to be rendered as React components.
+function parseStatusDescriptionIfHtmlEncountered(text: string): ReactNode {
   if (/<[a-z][\s\S]*>/i.test(text)) {
     return parseHTML(text);
   }
@@ -38,12 +40,12 @@ function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
             target="_blank"
             href={factuur.paylink}
           >
-            {parseIfHtmlEncountered(factuur.statusDescription)}
+            {parseStatusDescriptionIfHtmlEncountered(factuur.statusDescription)}
           </MaLink>
         </>
       );
     default:
-      return parseIfHtmlEncountered(factuur.statusDescription);
+      return parseStatusDescriptionIfHtmlEncountered(factuur.statusDescription);
   }
 }
 
