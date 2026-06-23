@@ -28,6 +28,8 @@
  * --out-file-path-digid-test-accounts=<filepath> (-f) to decide where to -
  * save the test account json overview this will overwrite the local file by default.
  *
+ * --out-excel-dir (-e) Decide in which directory the excel will be placed for e.q 'artifact'.
+ *
  * --update-test-accounts (-e) to automaticly update the test account file locally.
  *
  * Tips
@@ -201,6 +203,11 @@ async function main() {
         short: 'f',
         default: DIGID_TEST_ACCOUNTS_PATH,
       },
+      'out-excel-dir': {
+        type: 'string',
+        short: 'e',
+        default: '.',
+      },
       'refresh-cache': {
         type: 'boolean',
         short: 'r',
@@ -252,7 +259,7 @@ async function main() {
         now.getMonth() + 1,
         now.getFullYear(),
       ].map((d) => d.toString());
-      const fileName = `${TARGET_DIRECTORY}/userdata-overview_${day}-${month}-${year}.xlsx`;
+      const fileName = `${args['out-excel-dir']}/userdata-overview_${day}-${month}-${year}.xlsx`;
       const workbook = XLSX.utils.book_new();
 
       const serviceNames = getAllServiceNames(resultsByUser);
