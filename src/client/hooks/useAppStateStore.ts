@@ -43,7 +43,7 @@ export const appStateStoreCreator: StateCreator<AppStateStore> = (set) => ({
   },
 });
 
-export const STATE_STORE_UTILITY_KEYS: string[] = [
+export const STATE_STORE_UTILITY_KEYS = [
   'setAppState',
   'mergeAppState',
   'setIsAppStateReady',

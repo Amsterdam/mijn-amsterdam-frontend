@@ -145,7 +145,7 @@ export function getApiErrors(appState: AppState): ApiError[] {
     const filteredResponses = Object.entries(appState).filter(
       ([k, apiResponseData]: [string, unknown]) => {
         return (
-          !STATE_STORE_UTILITY_KEYS.includes(k) &&
+          !(STATE_STORE_UTILITY_KEYS as readonly string[]).includes(k) &&
           (typeof apiResponseData !== 'object' ||
             apiResponseData == null ||
             ('status' in apiResponseData &&
