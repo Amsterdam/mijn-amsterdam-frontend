@@ -17,7 +17,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
   },
   redactedScope: 'full',
   profileTypes: ['private', 'commercial'],
-  isActive(appState: AppState) {
+  isActive(appState) {
     return (
       featureToggle.svwiActive &&
       !isLoading(appState.SVWI) &&

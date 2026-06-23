@@ -4,7 +4,6 @@ import { default as HorecaIcon } from './HorecaIcon.svg?react';
 import { HorecaList } from './HorecaList.tsx';
 import { HorecaThema } from './HorecaThema.tsx';
 import { isLoading } from '../../../../universal/helpers/api.ts';
-import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
@@ -34,11 +33,11 @@ export const menuItem: ThemaMenuItem = {
   to: themaConfig.route.path,
   profileTypes: themaConfig.profileTypes,
   redactedScope: themaConfig.redactedScope,
-  isActive(appState: AppState) {
+  isActive(appState) {
     return (
       themaConfig.featureToggle.active &&
       !isLoading(appState.HORECA) &&
-      !!appState.HORECA.content?.length
+      !!appState.HORECA?.content?.length
     );
   },
   IconSVG: HorecaIcon,

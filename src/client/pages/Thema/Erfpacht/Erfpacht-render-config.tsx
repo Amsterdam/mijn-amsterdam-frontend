@@ -72,12 +72,12 @@ export const menuItem: ThemaMenuItem = {
   to: themaConfig.route.path,
   profileTypes: themaConfig.profileTypes,
   redactedScope: themaConfig.redactedScope,
-  isActive(appState: AppState) {
+  isActive(appState) {
     const content = appState.ERFPACHT?.content;
     return (
       themaConfig.featureToggle.active &&
       !isLoading(appState.ERFPACHT) &&
-      content !== null &&
+      !!content &&
       (('dossiers' in content && !!content.dossiers.dossiers?.length) ||
         !!content?.isKnown)
     );

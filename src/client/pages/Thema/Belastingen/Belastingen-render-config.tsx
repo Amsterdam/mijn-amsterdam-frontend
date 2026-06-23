@@ -16,12 +16,12 @@ export const menuItem: ThemaMenuItem = {
   },
   profileTypes: themaConfig.profileTypes,
   redactedScope: themaConfig.redactedScope,
-  isActive(appState: AppState, profileType) {
+  isActive(appState, profileType) {
     return (
       themaConfig.featureToggle.active &&
       (profileType === 'commercial' ||
         (!isLoading(appState.BELASTINGEN) &&
-          !!appState.BELASTINGEN.content?.isKnown))
+          !!appState.BELASTINGEN?.content?.isKnown))
     );
   },
   IconSVG: BelastingenIcon,
