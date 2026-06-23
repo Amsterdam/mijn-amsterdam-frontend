@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AfisEMandateDetail > shows E-Mandaat history when history items present > Small screen display 1`] = `
+exports[`AfisEMandateDetail > shows incassomachtiging history when history items present > Small screen display 1`] = `
 <article
   class="ams-mb-xl"
 >
@@ -53,7 +53,7 @@ exports[`AfisEMandateDetail > shows E-Mandaat history when history items present
 </article>
 `;
 
-exports[`AfisEMandateDetail > shows E-Mandaat history when history items present > Wide screen display 1`] = `
+exports[`AfisEMandateDetail > shows incassomachtiging history when history items present > Wide screen display 1`] = `
 <div
   class="ams-table"
 >

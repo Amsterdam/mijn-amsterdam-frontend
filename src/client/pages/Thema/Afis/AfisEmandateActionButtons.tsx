@@ -202,7 +202,7 @@ function ApiDeactivateButton({
     );
 
     return {
-      title: 'Stopzetten E-Mandaat',
+      title: 'Stopzetten incassomachtiging',
       confirmationText: (
         <>
           {!!facturenByEmandateId.length && (
@@ -213,9 +213,9 @@ function ApiDeactivateButton({
               className="ams-mb-m"
             >
               <Paragraph className="ams-mb-s">
-                U heeft nog openstaande facturen die gekoppeld zijn aan dit
-                E-mandaat. Deze facturen worden niet meer automatisch
-                geïncasseerd als u het E-mandaat stopzet.
+                U heeft nog openstaande facturen die gekoppeld zijn aan deze
+                incassomachtiging. Deze facturen worden niet meer automatisch
+                geïncasseerd als u de machtiging stopzet.
                 <br />
               </Paragraph>
               <Table className={styles.FacturenAlertTable}>
@@ -245,14 +245,14 @@ function ApiDeactivateButton({
             </Alert>
           )}
           <Paragraph className="ams-mb-s">
-            Weet je zeker dat je dit E-mandaat wilt stopzetten?
+            Weet je zeker dat je deze incassomachtiging wilt stopzetten?
           </Paragraph>
           <Paragraph className="ams-mb-s">
-            Het E-mandaat wordt dan niet meer gebruikt voor automatische
-            incasso.
+            De incassomachtiging wordt dan niet meer gebruikt.
           </Paragraph>
           <Paragraph className="ams-mb-s">
-            Je kunt het E-mandaat later opnieuw activeren voor nieuwe facturen.
+            Je kunt de incassomachtiging later opnieuw activeren voor nieuwe
+            facturen.
           </Paragraph>
         </>
       ),

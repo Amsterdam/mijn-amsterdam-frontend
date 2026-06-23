@@ -83,7 +83,7 @@ describe('AfisEMandateDetail', () => {
 
     expect(
       screen.getByText(
-        /Mijn Amsterdam controleert de status van het E-Mandaat/i
+        /Mijn Amsterdam controleert de status van de incassomachtiging/i
       )
     ).toBeInTheDocument();
   });
@@ -109,7 +109,7 @@ describe('AfisEMandateDetail', () => {
     render(<Detail />);
 
     expect(
-      screen.getByText(/Wachten op bevestiging van het E-Mandaat/i)
+      screen.getByText(/Wachten op bevestiging van de incassomachtiging/i)
     ).toBeInTheDocument();
 
     const retryButton = screen.getByRole('button', {
@@ -143,7 +143,7 @@ describe('AfisEMandateDetail', () => {
     expect(screen.getByText('ActionButtons')).toBeInTheDocument();
   });
 
-  describe('shows E-Mandaat history when history items present', () => {
+  describe('shows incassomachtiging history when history items present', () => {
     const historyItem: AfisEMandateFrontend['history'][number] = {
       // id: '1',
       eMandateIdSource: '00001',
@@ -174,7 +174,7 @@ describe('AfisEMandateDetail', () => {
     });
 
     (useAfisEMandatesApi as Mock).mockReturnValue({
-      title: 'E-Mandaat Stad',
+      title: 'Incassomachtiging Stad',
       themaId: 'AFIS',
       eMandates: [],
       eMandateTableConfig,
@@ -197,7 +197,7 @@ describe('AfisEMandateDetail', () => {
         dateValidToFormatted: '31 januari 2025',
         link: {
           to: '/thema/afis/emandate/em1',
-          title: 'Bekijk E-Mandaat',
+          title: 'Bekijk incassomachtiging',
         },
       },
       breadcrumbs: [],
