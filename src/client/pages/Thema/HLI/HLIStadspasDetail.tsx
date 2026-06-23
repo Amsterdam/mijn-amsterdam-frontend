@@ -35,7 +35,7 @@ import { useBffApi } from '../../../hooks/api/useBffApi.ts';
 import { useSmallScreen } from '../../../hooks/media.hook.ts';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
 
 const loadingContentBarConfigDetails: BarConfig = [
   ['10rem', '2rem', '.5rem'],
