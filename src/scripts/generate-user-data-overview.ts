@@ -351,7 +351,12 @@ async function main() {
       const [, backupProfileId] = testAccounts.find(
         ([backupUsername]) => backupUsername === username
       ) ?? [, null];
-      assert(backupProfileId, `Testaccount named '${username}' is not found.`);
+      if (!backupProfileId) {
+        console.error(`Testaccount named '${username}' is not found.`);
+        return {
+          profileId: 'Unknown',
+        };
+      }
       return {
         profileId: backupProfileId,
       };
