@@ -292,7 +292,7 @@ function Beveiligingscode({
   const isSmallScreen = useSmallScreen();
 
   return (
-    <PageContentCell className="ams-mb-m">
+    <PageContentCell className="ams-mb-l">
       <Heading size="level-2" level={2} className="ams-mb-m">
         Beveiligingscode
       </Heading>
@@ -325,7 +325,26 @@ function Beveiligingscode({
 
 function BlockActionsStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
   if (stadspas.actief && stadspas.blockPassURL) {
-    return <BlockStadspas stadspas={stadspas} />;
+    return (
+      <>
+        <Heading size="level-2" level={2} className="ams-mb-m">
+          Is je pas gestolen of kwijt?
+        </Heading>
+        <Paragraph className="ams-mb-m">
+          Blokkeer de pas om misbruik te voorkomen.
+        </Paragraph>
+        <BlockStadspas className="ams-mb-m" stadspas={stadspas} />
+        <Paragraph>
+          Pas teruggevonden?
+          <br />
+          Bel naar{' '}
+          <Link href={`tel:${PHONENUMBERS.WerkEnInkomen}`}>
+            {PHONENUMBERS.WerkEnInkomen}
+          </Link>
+          . Daarna kun je de pas meteen weer gebruiken.
+        </Paragraph>
+      </>
+    );
   }
   if (stadspas.unblockPassURL) {
     return (
@@ -338,7 +357,13 @@ function BlockActionsStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
   return <PassBlockedAlert />;
 }
 
-function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
+function BlockStadspas({
+  stadspas,
+  className,
+}: {
+  stadspas: StadspasFrontend;
+  className: string;
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showError, setShowError] = useState(false);
   const { isError, isLoading, fetch } = useBlockStadspas(stadspas.passNumber);
@@ -374,6 +399,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
         </Alert>
       ) : (
         <Button
+          className={className}
           variant="secondary"
           onClick={() => {
             setIsModalOpen(true);
