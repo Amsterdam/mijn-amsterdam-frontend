@@ -1,5 +1,8 @@
 import { getMostRecentByContactgegevenType } from './klantcontact-helpers.ts';
-import type { CommunicatievoorkeurenResponseFrontend } from './klantcontact-profieldienst-types.ts';
+import type {
+  CommunicatievoorkeurenResponseFrontend,
+  ContactgegevenType,
+} from './klantcontact-profieldienst-types.ts';
 import {
   fetchDienstverlener,
   fetchProfiel,
@@ -15,17 +18,17 @@ import { getFullAddress } from '../../../universal/helpers/brp.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { fetchMyLocations } from '../bag/my-locations.ts';
 
-export const ContactgegevenType = {
+export const ContactgegevenTypes = {
   Email: 'Email',
   Telefoonnummer: 'Telefoonnummer',
   ApplicatieId: 'ApplicatieId',
   Berichtenbox: 'Berichtenbox',
   Postadres: 'Postadres',
-} as const;
+} as const satisfies Record<ContactgegevenType, ContactgegevenType>;
 
 export const ContactgegevenTypeValues = Object.values(
-  ContactgegevenType
-) as readonly (typeof ContactgegevenType)[keyof typeof ContactgegevenType][];
+  ContactgegevenTypes
+) as readonly (typeof ContactgegevenTypes)[keyof typeof ContactgegevenTypes][];
 
 export async function fetchCommunicatievoorkeuren(
   authProfileAndToken: AuthProfileAndToken
@@ -54,27 +57,27 @@ export async function fetchCommunicatievoorkeuren(
 
   const email = getMostRecentByContactgegevenType(
     profiel,
-    ContactgegevenType.Email
+    ContactgegevenTypes.Email
   );
   const phone = getMostRecentByContactgegevenType(
     profiel,
-    ContactgegevenType.Telefoonnummer
+    ContactgegevenTypes.Telefoonnummer
   );
   const app = getMostRecentByContactgegevenType(
     profiel,
-    ContactgegevenType.ApplicatieId
+    ContactgegevenTypes.ApplicatieId
   );
 
   const standaardContactgegevens = {
-    [ContactgegevenType.Email]: email,
-    [ContactgegevenType.Telefoonnummer]: {
+    [ContactgegevenTypes.Email]: email,
+    [ContactgegevenTypes.Telefoonnummer]: {
       ...phone,
       disabled: true,
     },
-    [ContactgegevenType.ApplicatieId]: app,
-    [ContactgegevenType.Postadres]: {
+    [ContactgegevenTypes.ApplicatieId]: app,
+    [ContactgegevenTypes.Postadres]: {
       id: null,
-      type: ContactgegevenType.Postadres,
+      type: ContactgegevenTypes.Postadres,
       dateModified: null,
       value: locationsResponse.content?.[0]?.address
         ? getFullAddress(locationsResponse.content?.[0]?.address)
@@ -82,9 +85,9 @@ export async function fetchCommunicatievoorkeuren(
       dateModifiedFormatted: null,
     },
     // Berichtenbox wordt nog niet ondersteund in de profieldienst.
-    [ContactgegevenType.Berichtenbox]: {
+    [ContactgegevenTypes.Berichtenbox]: {
       id: null,
-      type: ContactgegevenType.Berichtenbox,
+      type: ContactgegevenTypes.Berichtenbox,
       value: null,
       dateModified: null,
       dateModifiedFormatted: null,

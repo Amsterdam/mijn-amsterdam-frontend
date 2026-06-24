@@ -2,7 +2,7 @@ import createDebugger from 'debug';
 import type { Request } from 'express';
 
 import {
-  ContactgegevenType,
+  ContactgegevenTypes,
   ContactgegevenTypeValues,
   fetchCommunicatievoorkeuren,
 } from './klantcontact-communicatievoorkeuren.ts';
@@ -31,7 +31,7 @@ export async function handleVerifyContactgegeven(
 
   const { value, code, type } = req.body;
 
-  if (!value || !code || type !== ContactgegevenType.Email) {
+  if (!value || !code || type !== ContactgegevenTypes.Email) {
     return sendBadRequest(res, 'value, type and code are required');
   }
 

@@ -15,7 +15,7 @@ const identificatieTypeByProfileType: Record<ProfileType, IdentificatieType> = {
 };
 
 export function getIdentificatieType(
-  profileType: 'private' | 'commercial' | 'private-attributes'
+  profileType: ProfileType
 ): IdentificatieType {
   return identificatieTypeByProfileType[profileType];
 }
