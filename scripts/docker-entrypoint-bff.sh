@@ -25,4 +25,4 @@ else
   echo "Successfully merged contents of '$SOURCE_FOLDER' into '$DESTINATION_FOLDER'."
 fi
 
-pnpm  bff-api:serve-build
+pnpm bff-api:serve-build
