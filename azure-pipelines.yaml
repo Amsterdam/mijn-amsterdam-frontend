@@ -1,5 +1,44 @@
-trigger: none
-pr: none
+name: $(Build.DefinitionName)-$(Build.SourceBranchName)-$(Build.BuildId)
+
+trigger:
+  batch: true
+  branches:
+    # Automatically trigger builds for these branches
+    include:
+      - testen
+      - az-acceptance
+      - main
+  paths:
+    include:
+      - src
+      - public
+      - Dockerfile
+      - package.json
+      - pnpm-lock.yaml
+      - vite.config.ts
+      - drizzle.config.ts
+      - tsconfig.json
+      - tsconfig.build-bff.json
+      - tsconfig.build-fe.json
+
+pr:
+  autoCancel: true
+  paths:
+    include:
+      - src
+      - public
+      - Dockerfile
+      - package.json
+      - pnpm-lock.yaml
+      - vite.config.ts
+      - drizzle.config.ts
+      - tsconfig.json
+      - tsconfig.build-bff.json
+      - tsconfig.build-fe.json
+  branches:
+    include:
+      - main
+  drafts: false
 
 resources:
   repositories:
@@ -10,21 +49,27 @@ resources:
 
 parameters:
   - name: btdBuild
+    displayName: BUILD -Select if you want the app to be built.
     type: boolean
     default: true
   - name: btdTest
-    type: boolean
-    default: true
-  - name: btdDeploy
-    type: boolean
-    default: true
-  - name: dtapName
+    displayName: TEST - Select if you want to run tests. If auto is selected, tests will be skipped for branches testen and az-acceptance.
     type: string
-    default: t
+    default: auto
     values:
+      - auto
+      - 'yes'
+      - 'no'
+  - name: dtapName
+    displayName: DTAP - Select the DTAP environment to deploy to. If auto is selected, the environment will be [T] by default or [A] for branches main and az-acceptance.
+    type: string
+    default: auto
+    values:
+      - auto
       - t
       - a
   - name: btdAppBFF
+    displayName: BFF - Select if you want to include the BFF.
     type: boolean
     default: true
   - name: bffImageTag
@@ -32,6 +77,7 @@ parameters:
     type: string
     default: bff-$(Build.BuildId)
   - name: btdAppUI
+    displayName: UI - Select if you want to include the UI.
     type: boolean
     default: true
   - name: uiImageTag
@@ -40,19 +86,56 @@ parameters:
     default: ui-$(Build.BuildId)
 
 variables:
+  - name: system.debug
+    value: true
+  - name: btdBuild
+    value: ${{ parameters.btdBuild }}
+  - name: btdTest
+    value: ${{ parameters.btdTest }}
+  - name: dtapName
+    value: ${{ parameters.dtapName }}
+  - name: btdDeploy
+    value: true
+
+  # Overrides if the branch is testen, az-acceptance or main
+  - ${{ if eq(parameters.dtapName, 'auto') }}:
+      - name: dtapName
+        value: t
+
+  - ${{ if and(eq(parameters.btdTest, 'auto'), or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.SourceBranchName'], 'az-acceptance'))) }}:
+      - name: btdTest
+        value: 'no'
+
+  - ${{ if and(eq(parameters.dtapName, 'auto'), or(eq(variables['Build.SourceBranchName'], 'az-acceptance'), eq(variables['Build.SourceBranchName'], 'main'))) }}:
+      - name: dtapName
+        value: a
+
+  - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+      - name: btdDeploy
+        value: false
+
+  - ${{ if or(eq(variables['btdTest'], 'auto'), eq(variables['btdTest'], 'yes')) }}:
+      - name: btdTest
+        value: true
+  - ${{ if eq(variables['btdTest'], 'no') }}:
+      - name: btdTest
+        value: false
+
   - template: pipelines/pool.yaml@MamsInfra
     parameters:
-      dtapName: ${{ parameters.dtapName }}
+      dtapName: ${{ variables.dtapName }}
 
 jobs:
   - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
     parameters:
       pool: ${{ variables.pool }}
-      dtapName: ${{ parameters.dtapName }}
-      btdBuild: ${{ parameters.btdBuild }}
-      btdTest: ${{ parameters.btdTest }}
-      btdDeploy: ${{ parameters.btdDeploy }}
-      bffImageTag: ${{ parameters.bffImageTag }}
-      uiImageTag: ${{ parameters.uiImageTag }}
+      dtapName: ${{ variables.dtapName }}
+      btdBuild: ${{ variables.btdBuild }}
+      btdTest: ${{ variables.btdTest }}
+      btdDeploy: ${{ variables.btdDeploy }}
+      # For selecting which app to build and deploy
       btdAppBFF: ${{ parameters.btdAppBFF }}
       btdAppUI: ${{ parameters.btdAppUI }}
+      # For custom image tags
+      bffImageTag: ${{ parameters.bffImageTag }}
+      uiImageTag: ${{ parameters.uiImageTag }}

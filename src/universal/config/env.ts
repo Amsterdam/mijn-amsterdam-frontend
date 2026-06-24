@@ -26,7 +26,7 @@ export const APP_MODE = getAppMode();
 if (APP_MODE !== 'unittest') {
   // eslint-disable-next-line no-console
   console.info(
-    `App running in ${APP_MODE} mode on the ${OTAP_ENV} environment.`
+    `App configured in ${APP_MODE} mode on the ${OTAP_ENV} environment.`
   );
 }
 
