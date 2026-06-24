@@ -12,7 +12,10 @@ import { useParams } from 'react-router';
 
 import { themaConfig } from './HLI-thema-config.ts';
 import styles from './HLIStadspasDetail.module.scss';
-import { useBlockStadspas, useStadspassen } from './useStadspassen.hook.tsx';
+import {
+  useBlockStadspas,
+  useStadspas,
+} from './useStadspassen.hook.tsx';
 import type {
   StadspasBudget,
   StadspasBudgetTransaction,
@@ -84,11 +87,7 @@ export function HLIStadspasDetail() {
 
   const { HLI } = appState;
   const { passNumber } = useParams<{ passNumber: string }>();
-  const stadspassen = useStadspassen();
-
-  const stadspas = stadspassen.find(
-    (pass) => pass.passNumber.toString() === passNumber
-  );
+  const stadspas = useStadspas(passNumber);
 
   const isErrorStadspas = isError(HLI);
   const isLoadingStadspas = isLoading(HLI);
