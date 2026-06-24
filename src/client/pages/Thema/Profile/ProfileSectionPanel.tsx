@@ -72,7 +72,7 @@ type ProfilePanelProps = {
   sectionData: ProfileSectionData | ProfileSectionData[];
   startCollapsed?: boolean;
   title?: string;
-  contentAfterTheTitle?: string;
+  contentAfterTheTitle?: ReactNode;
 };
 
 export function ProfileSectionPanel({
