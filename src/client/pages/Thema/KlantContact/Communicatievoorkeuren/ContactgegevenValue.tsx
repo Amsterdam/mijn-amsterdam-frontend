@@ -6,7 +6,7 @@ import { generatePath } from 'react-router';
 
 import {
   ContactgegevenTypeEnum,
-  MAXIMUM_AGE_BEFORE_VALIDATION,
+  MAXIMUM_AGE_BEFORE_VALIDATION_MONTHS,
 } from './CommunicatieVoorkeuren-config.ts';
 import { useCommunicatieVoorkeurVerwijderen } from './useCommunicatieVoorkeuren.ts';
 import type { ContactgegevenFrontend } from '../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
@@ -119,7 +119,7 @@ export function ContactgegevenValue({
       const isOld =
         !!(contactgegeven.dateModified && contactgegeven.isVerified) &&
         differenceInCalendarMonths(new Date(), contactgegeven.dateModified) >=
-          MAXIMUM_AGE_BEFORE_VALIDATION;
+          MAXIMUM_AGE_BEFORE_VALIDATION_MONTHS;
       const needsValidation =
         !!contactgegeven.value && (!contactgegeven.isVerified || isOld);
       return (

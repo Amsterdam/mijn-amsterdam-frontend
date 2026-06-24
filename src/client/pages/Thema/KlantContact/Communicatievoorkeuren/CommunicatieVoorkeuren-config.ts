@@ -22,4 +22,4 @@ export const ContactgegevenTypeEnum = {
   Postadres: 'Postadres',
 } as const satisfies Record<ContactgegevenType_, ContactgegevenType_>;
 
-export const MAXIMUM_AGE_BEFORE_VALIDATION = 6; // in months
+export const MAXIMUM_AGE_BEFORE_VALIDATION_MONTHS = 6;
