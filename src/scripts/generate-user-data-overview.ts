@@ -835,7 +835,7 @@ async function main() {
       hpx: HPX_DEFAULT,
     });
 
-    // A undefined field equals means an unavailable thema.
+    // A undefined field means an unavailable thema.
     const availableThemaMaps: Record<string, string | undefined>[] =
       Object.entries(resultsByUser)
         .map(([_username, serviceResults]) => {
