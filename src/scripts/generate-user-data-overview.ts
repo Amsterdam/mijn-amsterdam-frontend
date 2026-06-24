@@ -1119,6 +1119,9 @@ function getAvailableUserThemas(
           val &&
           ((Array.isArray(val) && val.length > 0) || Object.keys(val).length)
         ) {
+          if ((val as any)?.stadspassen?.length === 0) {
+            return false;
+          }
           return true;
         }
       }
