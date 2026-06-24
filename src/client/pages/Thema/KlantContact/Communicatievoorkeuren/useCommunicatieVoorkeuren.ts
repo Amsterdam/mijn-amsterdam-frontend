@@ -151,10 +151,6 @@ export function useCommunicatieVoorkeurInstellen() {
     action: InstelAction;
     id?: string;
   }>();
-  // const aangeslotenDiensten = communicatievoorkeuren?.aangeslotenDiensten ?? [];
-  // const standaardContactgegevens =
-  //   communicatievoorkeuren?.standaardContactgegevens ?? null;
-
   return {
     title: `${params.action ? capitalizeFirstLetter(params.action) : 'Instellen'} ${params.contactgegeven ? lowercaseFirstLetter(ContactgegevenByTypeLabels[params.contactgegeven] ?? '') : 'contactgegeven'}`,
     routeConfig: themaConfig.detailPageContactgegevenInstellen.route,
