@@ -14,7 +14,8 @@ RUN npm i -g corepack --force
 # PNPM Setup
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+RUN corepack enable pnpm
+RUN corepack use pnpm@latest
 
 ########################################################################################################################
 ########################################################################################################################
@@ -125,7 +126,7 @@ COPY src/client/public/robots.txt /usr/share/nginx/html/robots.txt
 
 CMD nginx -g 'daemon off;'
 
-FROM node-with-pnpm-installed AS node-deploy-image
+FROM app-code-bff AS node-deploy-image
 
 # Change source to https as http calls were blocked by Azure firewall
 RUN sed -i 's|http:|https:|' /etc/apt/sources.list.d/*.sources
@@ -145,8 +146,6 @@ RUN apt-get update \
 ########################################################################################################################
 ########################################################################################################################
 FROM node-deploy-image AS deploy-bff-az
-
-WORKDIR /app
 
 ARG MA_OTAP_ENV=production
 ENV MA_OTAP_ENV=$MA_OTAP_ENV
@@ -178,10 +177,6 @@ RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
 COPY scripts/webjobs/triggered /app/jobs/triggered
 
 # Copy the built application files to the current image
-COPY --from=app-code-bff /build-space/build-bff /app/build-bff
-COPY --from=app-code-bff /build-space/node_modules /app/node_modules
-COPY --from=app-code-bff /build-space/package.json /app/package.json
-COPY --from=app-code-bff /build-space/vendor /app/vendor
 COPY db-migrations /app/db-migrations
 COPY src/server/views /app/build-bff/server/views
 
