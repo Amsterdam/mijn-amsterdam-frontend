@@ -25,10 +25,12 @@ export function isWaitingForPaymentConfirmation(
   zaakTypeTransformer: DecosZaakTransformer<DecosZaakBase>
 ) {
   const isWaitingForPaymentConfirmation =
-    decosZaakSource.fields.text11?.toLowerCase() ==
+    decosZaakSource.fields.text11?.toLowerCase() ===
       DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11 &&
-    decosZaakSource.fields.text12?.toLowerCase() ==
-      DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12;
+    !!decosZaakSource.fields.text12 &&
+    DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12.includes(
+      decosZaakSource.fields.text12.toLowerCase()
+    );
 
   const isWaitingForPaymentConfirmation2 =
     !!decosZaakSource.fields.subject1 &&
