@@ -58,8 +58,8 @@ parameters:
     default: auto
     values:
       - auto
-      - true
-      - false
+      - 'yes'
+      - 'no'
   - name: dtapName
     displayName: DTAP - Select the DTAP environment to deploy to. If auto is selected, the environment will be [T] by default or [A] for branches main and az-acceptance.
     type: string
@@ -104,7 +104,7 @@ variables:
 
   - ${{ if and(eq(parameters.btdTest, 'auto'), or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.SourceBranchName'], 'az-acceptance'))) }}:
       - name: btdTest
-        value: false
+        value: 'no'
 
   - ${{ if and(eq(parameters.dtapName, 'auto'), or(eq(variables['Build.SourceBranchName'], 'az-acceptance'), eq(variables['Build.SourceBranchName'], 'main'))) }}:
       - name: dtapName
@@ -114,10 +114,10 @@ variables:
       - name: btdDeploy
         value: false
 
-  - ${{ if or(eq(variables['btdTest'], 'auto'), eq(variables['btdTest'], 'true')) }}:
+  - ${{ if or(eq(variables['btdTest'], 'auto'), eq(variables['btdTest'], 'yes')) }}:
       - name: btdTest
         value: true
-    ${{ else }}:
+  - ${{ if eq(variables['btdTest'], 'no') }}:
       - name: btdTest
         value: false
 
