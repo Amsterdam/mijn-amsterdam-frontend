@@ -154,13 +154,7 @@ export function HLIStadspasDetail() {
                 securityCode={stadspas.securityCode}
               />
             )}
-            {!stadspas.actief && <PassBlockedAlert />}
-            {stadspas.blockPassURL && stadspas.actief && (
-              <BlockStadspas stadspas={stadspas} />
-            )}
-            {stadspas.unblockPassURL && !stadspas.actief && (
-              <UnblockStadspas stadspas={stadspas} />
-            )}
+            <BlockActionsStadspas stadspas={stadspas} />
           </PageContentCell>
         </>
       ) : (
@@ -327,6 +321,21 @@ function Beveiligingscode({
       </ModalAndButton>
     </PageContentCell>
   );
+}
+
+function BlockActionsStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
+  if (stadspas.actief && stadspas.blockPassURL) {
+    return <BlockStadspas stadspas={stadspas} />;
+  }
+  if (stadspas.unblockPassURL) {
+    return (
+      <>
+        <PassBlockedAlert />
+        <UnblockStadspas stadspas={stadspas} />
+      </>
+    );
+  }
+  return <PassBlockedAlert />;
 }
 
 function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
