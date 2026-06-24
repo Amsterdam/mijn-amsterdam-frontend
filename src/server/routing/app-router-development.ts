@@ -236,7 +236,7 @@ async function sendRenderedTestAccountTable(
     } as TestUserData);
   }
   const renderProps = {
-    title: `Selecteer ${authMethod} test account.`,
+    title: 'Selecteer een testaccount',
     tableHeaders,
     tableRows,
   };
