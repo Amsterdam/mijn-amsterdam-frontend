@@ -20,9 +20,9 @@ import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import type { WithKentekens } from '../vergunningen/config-and-types.ts';
 
 // Checks to see if a payment was not processed correctly/completely yet.
-export function isWaitingForPaymentConfirmation(
+export function isWaitingForPaymentConfirmation<T extends DecosZaakBase>(
   decosZaakSource: DecosZaakSource,
-  zaakTypeTransformer: DecosZaakTransformer<DecosZaakBase>
+  zaakTypeTransformer: DecosZaakTransformer<T>
 ) {
   const isWaitingForPaymentConfirmation =
     decosZaakSource.fields.text11?.toLowerCase() ===
@@ -60,9 +60,9 @@ export function isScheduledForRemoval(decosZaakSource: DecosZaakSource) {
     .includes(DECOS_PENDING_REMOVAL_DFUNCTION);
 }
 
-export function isExcludedFromTransformation(
+export function isExcludedFromTransformation<T extends DecosZaakBase>(
   zaakSource: DecosZaakSource,
-  zaakTypeTransformer: DecosZaakTransformer<DecosZaakBase>
+  zaakTypeTransformer: DecosZaakTransformer<T>
 ) {
   return (
     isScheduledForRemoval(zaakSource) ||
