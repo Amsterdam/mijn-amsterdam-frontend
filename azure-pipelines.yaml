@@ -52,12 +52,17 @@ parameters:
     type: boolean
     default: 'true'
   - name: btdTest
-    type: boolean
-    default: 'true'
+    type: string
+    default: auto
+    values:
+      - auto
+      - 'true'
+      - 'false'
   - name: dtapName
     type: string
-    default: ''
+    default: auto
     values:
+      - auto
       - t
       - a
   - name: btdAppBFF
@@ -88,15 +93,15 @@ variables:
     value: 'true'
 
   # Overrides if the branch is testen, az-acceptance or main
-  - ${{ if eq(parameters.dtapName, '') }}:
+  - ${{ if eq(parameters.dtapName, 'auto') }}:
       - name: dtapName
         value: t
 
-  - ${{ if or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.SourceBranchName'], 'az-acceptance')) }}:
+  - ${{ if and(eq(parameters.btdTest, 'auto'), or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.SourceBranchName'], 'az-acceptance'))) }}:
       - name: btdTest
         value: 'false'
 
-  - ${{ if and(eq(parameters.dtapName, ''), or(eq(variables['Build.SourceBranchName'], 'az-acceptance'), eq(variables['Build.SourceBranchName'], 'main'))) }}:
+  - ${{ if and(eq(parameters.dtapName, 'auto'), or(eq(variables['Build.SourceBranchName'], 'az-acceptance'), eq(variables['Build.SourceBranchName'], 'main'))) }}:
       - name: dtapName
         value: a
 
