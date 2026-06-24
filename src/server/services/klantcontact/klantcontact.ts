@@ -1,6 +1,7 @@
 import { isAfter } from 'date-fns';
 
 import { fetchAfspraken } from './klantcontact-afspraken.ts';
+import { fetchCommunicatievoorkeuren } from './klantcontact-communicatievoorkeuren.ts';
 import { fetchContactmomenten } from './klantcontact-contactmomenten.ts';
 import type {
   ContactmomentFrontend as ContactmomentFrontend,
@@ -19,13 +20,21 @@ import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 export async function fetchKlantcontact(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiSuccessResponse<KlantcontactResponseData>> {
-  const [afsprakenResponse, klantcontactenResponse] = await Promise.allSettled([
+  const [
+    afsprakenResponse,
+    klantcontactenResponse,
+    communicatievoorkeurenResponse,
+  ] = await Promise.allSettled([
     fetchAfspraken(authProfileAndToken),
     fetchContactmomenten(authProfileAndToken),
+    fetchCommunicatievoorkeuren(authProfileAndToken),
   ]);
 
   const afsprakenSettled = getSettledResult(afsprakenResponse);
   const contactmomentenSettled = getSettledResult(klantcontactenResponse);
+  const communicatievoorkeurenSettled = getSettledResult(
+    communicatievoorkeurenResponse
+  );
 
   const afspraken = (afsprakenSettled.content ?? []).toSorted(
     dateSort('dateStart', 'asc')
@@ -39,10 +48,12 @@ export async function fetchKlantcontact(
     {
       afspraken: afspraken.filter((a) => isUpcomingAndActive(a)),
       contactmomenten,
+      communicatievoorkeuren: communicatievoorkeurenSettled.content,
     },
     getFailedDependencies({
       afspraken: afsprakenSettled,
       contactmomenten: contactmomentenSettled,
+      communicatievoorkeuren: communicatievoorkeurenSettled,
     })
   );
 }
