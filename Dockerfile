@@ -15,7 +15,7 @@ RUN npm i -g corepack --force
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable pnpm
-RUN corepack use pnpm@latest
+RUN corepack use pnpm
 
 ########################################################################################################################
 ########################################################################################################################
