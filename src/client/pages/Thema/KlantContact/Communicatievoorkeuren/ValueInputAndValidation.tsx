@@ -78,7 +78,7 @@ export function ContactgegevenVerify({
       name="contactgegeven-value-form"
     >
       <Field invalid={isInvalid} className="ams-mb-m">
-        <Label htmlFor="input3">Vul de code in</Label>
+        <Label htmlFor="otpcode">Vul de code in</Label>
         <Paragraph id="description2" size="small">
           Wij hebben een code met {VERIFICATION_CODE_LENGTH} cijfers gestuurd
           naar <strong>{value}</strong>. Vul deze code hieronder in.
