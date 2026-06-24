@@ -135,6 +135,7 @@ export function useCommunicatieVoorkeurVerwijderen(
             id: null,
             dateModified: null,
             dateModifiedFormatted: null,
+            isVerified: false,
           },
           appState,
         });
