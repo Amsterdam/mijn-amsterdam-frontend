@@ -1,23 +1,62 @@
-trigger: none
-pr: none
+name: $(Build.DefinitionName)-$(Build.SourceBranchName)-$(Build.BuildId)
+
+trigger:
+  batch: 'true'
+  branches:
+    # Automatically trigger builds for these branches
+    include:
+      - testen
+      - az-acceptance
+      - main
+  paths:
+    include:
+      - src
+      - public
+      - Dockerfile
+      - package.json
+      - pnpm-lock.yaml
+      - vite.config.ts
+      - drizzle.config.ts
+      - tsconfig.json
+      - tsconfig.build-bff.json
+      - tsconfig.build-fe.json
+
+pr:
+  autoCancel: 'true'
+  paths:
+    include:
+      - src
+      - public
+      - Dockerfile
+      - package.json
+      - pnpm-lock.yaml
+      - vite.config.ts
+      - drizzle.config.ts
+      - tsconfig.json
+      - tsconfig.build-bff.json
+      - tsconfig.build-fe.json
+  branches:
+    include:
+      - main
+  drafts: 'false'
 
 resources:
   repositories:
     - repository: MamsInfra
       type: git
       name: MijnAmsterdam/mijn-amsterdam-infra
-      ref: refs/heads/main
+      ref: refs/heads/speedup-ci-cd
 
 parameters:
   - name: btdBuild
     type: boolean
-    default: true
+    default: 'true'
   - name: btdTest
     type: boolean
-    default: true
+    default: 'true'
   - name: btdDeploy
     type: boolean
-    default: true
+    default: 'true'
   - name: dtapName
     type: string
     default: t
@@ -26,33 +65,56 @@ parameters:
       - a
   - name: btdAppBFF
     type: boolean
-    default: true
+    default: 'true'
   - name: bffImageTag
     displayName: BFF image tag - used if btdBuild is false. Examples bff-$(Build.BuildId) bff-latest
     type: string
     default: bff-$(Build.BuildId)
   - name: btdAppUI
     type: boolean
-    default: true
+    default: 'true'
   - name: uiImageTag
     displayName: UI image tag - used if btdBuild is false. Examples ui-$(Build.BuildId) ui-latest
     type: string
     default: ui-$(Build.BuildId)
 
 variables:
+  - name: system.debug
+    value: 'true'
+  - name: btdBuild
+    value: ${{ parameters.btdBuild }}
+  - name: btdDeploy
+    value: ${{ parameters.btdDeploy }}
+  - name: btdTest
+    value: ${{ parameters.btdTest }}
+  - name: dtapName
+    value: ${{ parameters.dtapName }}
+
+  # Overrides if the branch is testen, az-acceptance or main
+  - ${{ if eq(variables['Build.SourceBranchName'], 'testen') }}:
+      - name: btdTest
+        value: 'false'
+  - ${{ if or(eq(variables['Build.SourceBranchName'], 'az-acceptance'), eq(variables['Build.SourceBranchName'], 'main')) }}:
+      - name: dtapName
+        value: a
+  - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+      - name: btdDeploy
+        value: 'false'
   - template: pipelines/pool.yaml@MamsInfra
     parameters:
-      dtapName: ${{ parameters.dtapName }}
+      dtapName: ${{ variables.dtapName }}
 
 jobs:
   - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
     parameters:
       pool: ${{ variables.pool }}
-      dtapName: ${{ parameters.dtapName }}
-      btdBuild: ${{ parameters.btdBuild }}
-      btdTest: ${{ parameters.btdTest }}
-      btdDeploy: ${{ parameters.btdDeploy }}
-      bffImageTag: ${{ parameters.bffImageTag }}
-      uiImageTag: ${{ parameters.uiImageTag }}
+      dtapName: ${{ variables.dtapName }}
+      btdBuild: ${{ variables.btdBuild }}
+      btdTest: ${{ variables.btdTest }}
+      btdDeploy: ${{ variables.btdDeploy }}
+      # For selecting which app to build and deploy
       btdAppBFF: ${{ parameters.btdAppBFF }}
       btdAppUI: ${{ parameters.btdAppUI }}
+      # For custom image tags
+      bffImageTag: ${{ parameters.bffImageTag }}
+      uiImageTag: ${{ parameters.uiImageTag }}
