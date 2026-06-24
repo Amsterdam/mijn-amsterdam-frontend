@@ -164,38 +164,6 @@ async function main() {
     throw Error('This script cannot be run inside of production.');
   }
 
-  async function parseStdinOrFallback(): Promise<TestUsers | null> {
-    let input: string;
-    try {
-      input = fs.readFileSync(process.stdin.fd, 'utf-8');
-    } catch {
-      input = await fetchTestAccounts();
-    }
-
-    const bsnLength = 8; // Minimally, let's not be overly exact on this check.
-    const nameAndColonLength = 2;
-    const inputCheckOk = () => input.length >= nameAndColonLength + bsnLength;
-
-    if (!inputCheckOk()) {
-      input = await fetchTestAccounts();
-    }
-    assert(inputCheckOk(), `Expected '${input}' to have a more characters`);
-    return createNameProfileIdMapping(input);
-  }
-
-  const testAccountDataDigid = await parseStdinOrFallback();
-
-  if (!testAccountDataDigid) {
-    throw new Error(
-      'testAccountDataDigid is empty. Check if MA_TEST_ACCOUNTS has data or pipe a json string into this script.'
-    );
-  }
-
-  const themaIDs = themas.map((menuItem) => menuItem.id);
-  const testAccounts = Object.entries(testAccountDataDigid);
-
-  XLSX.set_fs(fs);
-
   const { values: args } = parseArgs({
     options: {
       'from-disk': {
@@ -234,6 +202,42 @@ async function main() {
   // If true then get data extracted out of services from disk.
   // This greatly speeds up this script and is therefore nice for debugging.
   const FROM_DISK: boolean = args['from-disk'];
+
+  async function parseStdinOrFallback(): Promise<TestUsers | null> {
+    if (FROM_DISK) {
+      console.warn(`WARN: Using the cache, so make sure the input test accounts line up with the cache
+or there might be issues in the output.`);
+    }
+    let input: string;
+    try {
+      input = fs.readFileSync(process.stdin.fd, 'utf-8');
+    } catch {
+      input = await fetchTestAccounts();
+    }
+
+    const bsnLength = 8; // Minimally, let's not be overly exact on this check.
+    const nameAndColonLength = 2;
+    const inputCheckOk = () => input.length >= nameAndColonLength + bsnLength;
+
+    if (!inputCheckOk()) {
+      input = await fetchTestAccounts();
+    }
+    assert(inputCheckOk(), `Expected '${input}' to have a more characters`);
+    return createNameProfileIdMapping(input);
+  }
+
+  const testAccountDataDigid = await parseStdinOrFallback();
+
+  if (!testAccountDataDigid) {
+    throw new Error(
+      'testAccountDataDigid is empty. Check if MA_TEST_ACCOUNTS has data or pipe a json string into this script.'
+    );
+  }
+
+  const themaIDs = themas.map((menuItem) => menuItem.id);
+  const testAccounts = Object.entries(testAccountDataDigid);
+
+  XLSX.set_fs(fs);
 
   // Describes where we should save the transformed data from our services.
   const TARGET_DIRECTORY: string = '.';
