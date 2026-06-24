@@ -1,7 +1,7 @@
 name: $(Build.DefinitionName)-$(Build.SourceBranchName)-$(Build.BuildId)
 
 trigger:
-  batch: 'true'
+  batch: true
   branches:
     # Automatically trigger builds for these branches
     include:
@@ -22,7 +22,7 @@ trigger:
       - tsconfig.build-fe.json
 
 pr:
-  autoCancel: 'true'
+  autoCancel: true
   paths:
     include:
       - src
@@ -38,7 +38,7 @@ pr:
   branches:
     include:
       - main
-  drafts: 'false'
+  drafts: false
 
 resources:
   repositories:
