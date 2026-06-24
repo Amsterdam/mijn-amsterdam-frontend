@@ -24,31 +24,31 @@ RUN corepack use pnpm@latest
 ########################################################################################################################
 FROM node-with-pnpm-installed AS build-deps
 
-WORKDIR /build-space
+WORKDIR /app
 
 # Copy packages + Install
-COPY pnpm-lock.yaml /build-space/
-COPY pnpm-workspace.yaml /build-space/
-COPY package.json /build-space/
-COPY vendor /build-space/vendor
+COPY pnpm-lock.yaml /app/
+COPY pnpm-workspace.yaml /app/
+COPY package.json /app/
+COPY vendor /app/vendor
 
 # Install the dependencies
 RUN pnpm install --frozen-lockfile --prefer-offline --reporter=append-only
 
 # Test + dev related files
-COPY src/mocks-server/fixtures /build-space/src/mocks-server/fixtures
-COPY vite.config.ts /build-space/
-COPY .env.local.template /build-space/
-COPY __mocks__ /build-space/__mocks__
+COPY src/mocks-server/fixtures /app/src/mocks-server/fixtures
+COPY vite.config.ts /app/
+COPY .env.local.template /app/
+COPY __mocks__ /app/__mocks__
 
 # Typescript configs
-COPY tsconfig.json /build-space/
-COPY tsconfig.build-fe.json /build-space/
-COPY tsconfig.build-bff.json /build-space/
+COPY tsconfig.json /app/
+COPY tsconfig.build-fe.json /app/
+COPY tsconfig.build-bff.json /app/
 
 # Copy source files
-COPY src /build-space/src
-COPY index.html /build-space/
+COPY src /app/src
+COPY index.html /app/
 
 ########################################################################################################################
 ########################################################################################################################
@@ -86,7 +86,7 @@ ENV REACT_APP_MONITORING_CONNECTION_STRING=$REACT_APP_MONITORING_CONNECTION_STRI
 ARG REACT_APP_COBROWSE_LICENSE_KEY=
 ENV REACT_APP_COBROWSE_LICENSE_KEY=$REACT_APP_COBROWSE_LICENSE_KEY
 
-COPY public /build-space/public
+COPY public /app/public
 
 # Build FE
 RUN pnpm build
@@ -121,7 +121,7 @@ RUN envsubst '${MA_FRONTEND_HOST}' < /tmp/nginx-server-default.template.conf > /
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 # Copy the built application files to the current image
-COPY --from=app-code-fe /build-space/build /usr/share/nginx/html
+COPY --from=app-code-fe /app/build /usr/share/nginx/html
 COPY src/client/public/robots.txt /usr/share/nginx/html/robots.txt
 
 CMD nginx -g 'daemon off;'
