@@ -49,11 +49,11 @@ resources:
 
 parameters:
   - name: btdBuild
-    displayName: Build -Select if you want the app to be built.
+    displayName: BUILD -Select if you want the app to be built.
     type: boolean
     default: 'true'
   - name: btdTest
-    displayName: Select if you want to run tests. If auto is selected, tests will be skipped for branches testen and az-acceptance.
+    displayName: TEST - Select if you want to run tests. If auto is selected, tests will be skipped for branches testen and az-acceptance.
     type: string
     default: auto
     values:
