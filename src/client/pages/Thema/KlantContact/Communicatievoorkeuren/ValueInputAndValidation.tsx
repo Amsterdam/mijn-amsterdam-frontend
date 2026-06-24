@@ -218,7 +218,7 @@ export function ContactgegevenForm({
       setValueToVerify(valueToVerify);
       fetch({ payload: { type, value: valueToVerify } });
     },
-    [valueToVerify, type]
+    [valueToVerify, type, fetch]
   );
 
   return (
