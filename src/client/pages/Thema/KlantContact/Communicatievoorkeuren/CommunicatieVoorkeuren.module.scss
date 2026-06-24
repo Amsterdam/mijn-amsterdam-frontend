@@ -1,0 +1,22 @@
+.SwitchContainer {
+  display: flex;
+  width: 130px;
+  > * {
+    flex: 1;
+  }
+}
+
+.SwitchLabel {
+  color: var(--ams-color-interactive-disabled);
+  transform: translateY(-3px);
+  &--Active {
+    font-weight: bold;
+    color: var(--ams-color-primary);
+  }
+}
+
+.Voorkeur {
+  border: 1px solid var(--ams-color-neutral-300);
+  border-radius: 4px;
+  padding: var(--ams-spacing-m);
+}

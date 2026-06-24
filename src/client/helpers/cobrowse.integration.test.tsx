@@ -1,25 +1,21 @@
 import type { ComponentType } from '@react-spring/web';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
-import { describe, it } from 'vitest';
+import { describe } from 'vitest';
 
-import type {
-  KlantcontactResponseData,
-  Kanaal,
-  ContactmomentFrontend,
-} from '../../server/services/klantcontact/klantcontact.types.ts';
+import type { Kanaal } from '../../server/services/klantcontact/klantcontact.types.ts';
 import type { AppState } from '../../universal/types/App.types.ts';
 import { DashboardRoute } from '../pages/Dashboard/Dashboard-routes.ts';
 import { Dashboard } from '../pages/Dashboard/Dashboard.tsx';
 import { MockApp } from '../pages/MockApp.tsx';
 import { MyNotificationsPage } from '../pages/MyNotifications/MyNotifications.tsx';
-import { themaConfig as themaConfigAfis } from '../pages/Thema/Afis/Afis-thema-config.ts';
-import { themaConfig as themaConfigBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
+import { themaConfig as themaAfis } from '../pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig as themaBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
 import { BezwarenDetail } from '../pages/Thema/Bezwaren/BezwarenDetail.tsx';
 import { BezwarenList } from '../pages/Thema/Bezwaren/BezwarenList.tsx';
 import { BezwarenThema } from '../pages/Thema/Bezwaren/BezwarenThema.tsx';
-import { ContactmomentenListPage } from '../pages/Thema/KlantContact/ContactmomentenListPage.tsx';
+import { ContactmomentenListPage } from '../pages/Thema/KlantContact/Contactmomenten/ContactmomentenListPage.tsx';
 import { KlantContactThema } from '../pages/Thema/KlantContact/KlantContactThema.tsx';
 import { MijnGegevensThema } from '../pages/Thema/Profile/private/ProfilePrivate.tsx';
 import { themaConfig as themaVergunningen } from '../pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
@@ -31,15 +27,15 @@ const testState = {
       contactmomenten: [
         {
           subject: 'Financiën',
-          kanaal: themaConfigAfis.title as Kanaal, // We misuse this to keep things together
+          kanaal: themaAfis.title as Kanaal, // We misuse this to keep things together
         },
         {
           subject: themaVergunningen.id,
           kanaal: 'Chat',
         },
-      ] as ContactmomentFrontend[],
+      ],
       afspraken: [],
-    } satisfies KlantcontactResponseData,
+    },
   },
   BRP: {
     status: 'OK',
@@ -61,11 +57,11 @@ const testState = {
     content: [
       {
         id: 'Not1',
-        title: `Notification ${themaConfigBezwaren.title}`,
+        title: `Notification ${themaBezwaren.title}`,
         description: 'Notificatie1',
         datePublished: '2020-07-24',
-        themaID: themaConfigBezwaren.id,
-        themaTitle: themaConfigBezwaren.title,
+        themaID: themaBezwaren.id,
+        themaTitle: themaBezwaren.title,
         link: {
           to: '/item-1',
           title: 'Linkje!',
@@ -151,21 +147,19 @@ describe('Cobrowse redacted components', () => {
 
   describe('Cobrowse redacted components', () => {
     describe('Dashboard', () => {
-      it('<MyThemasPanel />', () => {
-        render(<Component component={Dashboard} />);
-        expect(screen.getByTestId(themaConfigBezwaren.title)).toHaveClass(
-          'redacted'
-        );
+      test('<MyThemasPanel />', async () => {
+        await act(() => render(<Component component={Dashboard} />));
+        expect(screen.getByTestId(themaBezwaren.title)).toHaveClass('redacted');
         expect(screen.getByTestId(themaVergunningen.title)).not.toHaveClass(
           'redacted'
         );
       });
 
-      it('Notifications', () => {
-        render(<Component component={Dashboard} />);
+      test('Notifications redacted on Dashboard', async () => {
+        await act(() => render(<Component component={Dashboard} />));
         const listItems = screen.getAllByRole('listitem');
         const redactedNotification = listItems.find((li) =>
-          li.textContent?.includes(themaConfigBezwaren.title)
+          li.textContent?.includes(themaBezwaren.title)
         );
         expect(redactedNotification).toHaveClass('redacted');
         const nonRedactedNotification = listItems.find((li) =>
@@ -175,11 +169,11 @@ describe('Cobrowse redacted components', () => {
       });
     });
 
-    it('Notifications', () => {
-      render(<Component component={MyNotificationsPage} />);
+    test('Notifications redacted on MyNotificationsPage', async () => {
+      await act(() => render(<Component component={MyNotificationsPage} />));
       const listItems = screen.getAllByRole('listitem');
       const redactedNotification = listItems.find((li) =>
-        li.textContent?.includes(themaConfigBezwaren.title)
+        li.textContent?.includes(themaBezwaren.title)
       );
       expect(redactedNotification).toHaveClass('redacted');
       const nonRedactedNotification = listItems.find((li) =>
@@ -192,8 +186,8 @@ describe('Cobrowse redacted components', () => {
       ['Thema', BezwarenThema],
       ['ThemaDetail', BezwarenDetail],
       ['ThemaList', BezwarenList],
-    ])('%s', (_, component) => {
-      render(<Component component={component} />);
+    ])('%s', async (_, component) => {
+      await act(() => render(<Component component={component} />));
       const cobrowseElem = document.querySelector(
         '.mams-content-wrapper.redacted'
       ) as HTMLElement;
@@ -201,7 +195,7 @@ describe('Cobrowse redacted components', () => {
 
       // Make sure the redacted is on the correct element and redacts the page content
       const cobrowseElemText = cobrowseElem?.innerText;
-      const textOnlyInElem = themaConfigBezwaren.title;
+      const textOnlyInElem = themaBezwaren.title;
       expect(cobrowseElemText).toContain(textOnlyInElem);
 
       const fullDocumentText = document.body.innerText;
@@ -213,15 +207,17 @@ describe('Cobrowse redacted components', () => {
     });
 
     describe('Mijn gegevens', () => {
-      it('BSN', () => {
-        render(<Component component={MijnGegevensThema} />);
+      test('BSN redacted', async () => {
+        await act(() => render(<Component component={MijnGegevensThema} />));
         const bsnField = screen.getByText(
           testState.BRP.content?.persoon.bsn ?? ''
         );
         expect(bsnField).toHaveClass('redacted');
       });
+    });
 
-      it('Contactmomenten', () => {
+    describe('Mijn contact', () => {
+      test('Contactmomenten redacted', () => {
         render(<Component component={KlantContactThema} />);
 
         const contactmomentAfis = screen
@@ -241,7 +237,7 @@ describe('Cobrowse redacted components', () => {
       });
     });
 
-    it('ContactmomentenList', () => {
+    test('ContactmomentenList redacted', () => {
       render(<Component component={ContactmomentenListPage} />);
       const contactmomentAfis = screen
         .getByRole('link', {

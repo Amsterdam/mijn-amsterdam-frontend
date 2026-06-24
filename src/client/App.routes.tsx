@@ -21,7 +21,7 @@ import { HorecaRoutes } from './pages/Thema/Horeca/Horeca-render-config.tsx';
 import { InkomenRoutes } from './pages/Thema/Inkomen/Inkomen-render-config.tsx';
 import { JeugdRoutes } from './pages/Thema/Jeugd/Jeugd-render-config.tsx';
 import { KlachtenRoutes } from './pages/Thema/Klachten/Klachten-render-config.tsx';
-import { ContactRoutes } from './pages/Thema/KlantContact/KlantContact-render-config.ts';
+import { KlantContactRoutes } from './pages/Thema/KlantContact/KlantContact-render-config.tsx';
 import { KrefiaRoutes } from './pages/Thema/Krefia/Krefia-render-config.tsx';
 import { ParkerenRoutes } from './pages/Thema/Parkeren/Parkeren-render-config.tsx';
 import { ProfileRoutes } from './pages/Thema/Profile/Profile-render-config.tsx';
@@ -45,7 +45,6 @@ const routeComponents: ApplicationRouteConfig[] = [
   AvgRoutes,
   BezwarenRoutes,
   BffErrorRoutes,
-  ContactRoutes,
   BodemRoutes,
   BurgerzakenRoutes,
   DashboardRoutes,
@@ -56,6 +55,7 @@ const routeComponents: ApplicationRouteConfig[] = [
   InkomenRoutes,
   JeugdRoutes,
   KlachtenRoutes,
+  KlantContactRoutes,
   KrefiaRoutes,
   LandingRoutes,
   MyAreaRoutes,
