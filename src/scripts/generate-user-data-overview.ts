@@ -19,13 +19,18 @@
  *
  * Command options
  * ---------------
- * --from-disk (-d) to save to disk and use cached data. To refresh the
- cache add the --refresh-cache flag.
- * --out-file-path-digid-test-accounts=<filepath> (-f) to decide where to
- save the test account json overview -
- * this will overwrite the local file by default.
- * --update-test-accounts (-e) to automaticly update the test account file
- locally.
+ * --from-disk (-d) to save to disk and use cached data. To refresh the -
+ * cache add the --refresh-cache flag.
+ *
+ * --service-cache-path (-s) Path to save the service stream cache. This will save -
+ * the file even without the --from-disk flag.
+ *
+ * --out-file-path-digid-test-accounts=<filepath> (-f) to decide where to -
+ * save the test account json overview this will overwrite the local file by default.
+ *
+ * --out-excel-dir (-e) Decide in which directory the excel will be placed for e.q 'artifact'.
+ *
+ * --update-test-accounts (-e) to automaticly update the test account file locally.
  *
  * Tips
  * =========
@@ -135,6 +140,21 @@ const themaIDtoTitle: Record<string, string> = themas.reduce(
   {} as Record<string, string>
 );
 
+const BASE_URL = process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL;
+if (!BASE_URL) {
+  throw new Error(`BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL = ${BASE_URL}`);
+}
+
+async function fetchTestAccounts(): Promise<string> {
+  const commaSeperatedTestAccounts = await fetch(
+    `${BASE_URL}/test-accounts/digid`,
+    {
+      method: 'GET',
+    }
+  );
+  return commaSeperatedTestAccounts.text();
+}
+
 async function main() {
   function cleanTestUsername(username: string): string {
     return username.trim().replace('Provincie-', '');
@@ -144,43 +164,6 @@ async function main() {
     throw Error('This script cannot be run inside of production.');
   }
 
-  const BASE_URL = process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL;
-  if (!BASE_URL) {
-    throw new Error(`BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL = ${BASE_URL}`);
-  }
-
-  async function parseStdinOrFallback(): Promise<TestUsers | null> {
-    let input: string;
-    try {
-      input = fs.readFileSync(process.stdin.fd, 'utf-8');
-    } catch {
-      const commaSeperatedTestAccounts = await fetch(
-        `${BASE_URL}/test-accounts/digid`,
-        {
-          method: 'GET',
-        }
-      );
-      input = await commaSeperatedTestAccounts.text();
-    }
-
-    assert(input.length > 0, 'stdin may not be an empty string');
-
-    return createNameProfileIdMapping(input);
-  }
-
-  const testAccountDataDigid = await parseStdinOrFallback();
-
-  if (!testAccountDataDigid) {
-    throw new Error(
-      'testAccountDataDigid is empty. Check if MA_TEST_ACCOUNTS has data or pipe a json string into this script.'
-    );
-  }
-
-  const themaIDs = themas.map((menuItem) => menuItem.id);
-  const testAccounts = Object.entries(testAccountDataDigid);
-
-  XLSX.set_fs(fs);
-
   const { values: args } = parseArgs({
     options: {
       'from-disk': {
@@ -188,10 +171,20 @@ async function main() {
         short: 'd',
         default: false,
       },
+      'service-cache-path': {
+        type: 'string',
+        short: 's',
+        default: '',
+      },
       'out-file-path-digid-test-accounts': {
         type: 'string',
         short: 'f',
         default: DIGID_TEST_ACCOUNTS_PATH,
+      },
+      'out-excel-dir': {
+        type: 'string',
+        short: 'e',
+        default: '.',
       },
       'refresh-cache': {
         type: 'boolean',
@@ -210,6 +203,42 @@ async function main() {
   // This greatly speeds up this script and is therefore nice for debugging.
   const FROM_DISK: boolean = args['from-disk'];
 
+  async function parseStdinOrFallback(): Promise<TestUsers | null> {
+    if (FROM_DISK) {
+      console.warn(`WARN: Using the cache, so make sure the input test accounts line up with the cache
+or there might be issues in the output.`);
+    }
+    let input: string;
+    try {
+      input = fs.readFileSync(process.stdin.fd, 'utf-8');
+    } catch {
+      input = await fetchTestAccounts();
+    }
+
+    const bsnLength = 8; // Minimally, let's not be overly exact on this check.
+    const nameAndColonLength = 2;
+    const inputCheckOk = () => input.length >= nameAndColonLength + bsnLength;
+
+    if (!inputCheckOk()) {
+      input = await fetchTestAccounts();
+    }
+    assert(inputCheckOk(), `Expected '${input}' to have a more characters`);
+    return createNameProfileIdMapping(input);
+  }
+
+  const testAccountDataDigid = await parseStdinOrFallback();
+
+  if (!testAccountDataDigid) {
+    throw new Error(
+      'testAccountDataDigid is empty. Check if MA_TEST_ACCOUNTS has data or pipe a json string into this script.'
+    );
+  }
+
+  const themaIDs = themas.map((menuItem) => menuItem.id);
+  const testAccounts = Object.entries(testAccountDataDigid);
+
+  XLSX.set_fs(fs);
+
   // Describes where we should save the transformed data from our services.
   const TARGET_DIRECTORY: string = '.';
   if (!TARGET_DIRECTORY) {
@@ -218,7 +247,8 @@ async function main() {
     );
   }
 
-  const CACHE_PATH = `${TARGET_DIRECTORY}/user-data.json`;
+  const cachePath =
+    args['service-cache-path'] || `${TARGET_DIRECTORY}/user-data.json`;
 
   // Configuration for row/columns.
   const HPX_DEFAULT = 22;
@@ -228,13 +258,13 @@ async function main() {
 
   async function generateOverview() {
     return getServiceResults().then((resultsByUser) => {
-      const fileExists = fs.existsSync(CACHE_PATH);
-      if (fileExists) {
-        if (args['refresh-cache']) {
-          fs.writeFileSync(CACHE_PATH, JSON.stringify(resultsByUser));
-        }
+      const fileExists = fs.existsSync(cachePath);
+      if (fileExists && args['refresh-cache']) {
+        fs.writeFileSync(cachePath, JSON.stringify(resultsByUser));
       } else if (FROM_DISK) {
-        fs.writeFileSync(CACHE_PATH, JSON.stringify(resultsByUser));
+        fs.writeFileSync(cachePath, JSON.stringify(resultsByUser));
+      } else if (args['service-cache-path']) {
+        fs.writeFileSync(cachePath, JSON.stringify(resultsByUser));
       }
 
       const now = new Date();
@@ -243,7 +273,7 @@ async function main() {
         now.getMonth() + 1,
         now.getFullYear(),
       ].map((d) => d.toString());
-      const fileName = `${TARGET_DIRECTORY}/userdata-overview_${day}-${month}-${year}.xlsx`;
+      const fileName = `${args['out-excel-dir']}/userdata-overview_${day}-${month}-${year}.xlsx`;
       const workbook = XLSX.utils.book_new();
 
       const serviceNames = getAllServiceNames(resultsByUser);
@@ -325,7 +355,12 @@ async function main() {
       const [, backupProfileId] = testAccounts.find(
         ([backupUsername]) => backupUsername === username
       ) ?? [, null];
-      assert(backupProfileId, `Testaccount named '${username}' is not found.`);
+      if (!backupProfileId) {
+        console.error(`Testaccount named '${username}' is not found.`);
+        return {
+          profileId: 'Unknown',
+        };
+      }
       return {
         profileId: backupProfileId,
       };
@@ -416,8 +451,8 @@ async function main() {
   }
 
   async function getServiceResults(): Promise<ResultsByUser> {
-    if (!args['refresh-cache'] && fs.existsSync(CACHE_PATH) && FROM_DISK) {
-      const data = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8').toString());
+    if (!args['refresh-cache'] && fs.existsSync(cachePath) && FROM_DISK) {
+      const data = JSON.parse(fs.readFileSync(cachePath, 'utf8').toString());
       return data;
     }
 
@@ -804,7 +839,7 @@ async function main() {
       hpx: HPX_DEFAULT,
     });
 
-    // A undefined field equals means an unavailable thema.
+    // A undefined field means an unavailable thema.
     const availableThemaMaps: Record<string, string | undefined>[] =
       Object.entries(resultsByUser)
         .map(([_username, serviceResults]) => {
@@ -1093,6 +1128,9 @@ function getAvailableUserThemas(
           val &&
           ((Array.isArray(val) && val.length > 0) || Object.keys(val).length)
         ) {
+          if ((val as any)?.stadspassen?.length === 0) {
+            return false;
+          }
           return true;
         }
       }
