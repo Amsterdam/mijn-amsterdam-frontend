@@ -12,3 +12,5 @@ minimumReleaseAgeExclude:
   - '@amsterdam/piwik-tracker@3.0.0' # We deployed this package ourselves and want to be the first that test it
 packages:
   - .
+overrides:
+  '@azure/app-configuration': '^1.12.1'
