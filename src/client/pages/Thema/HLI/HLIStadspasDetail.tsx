@@ -27,10 +27,11 @@ import {
   type BarConfig,
 } from '../../../components/LoadingContent/LoadingContent.tsx';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
-import { Modal } from '../../../components/Modal/Modal.tsx';
+import { Modal, ModalAndButton } from '../../../components/Modal/Modal.tsx';
 import { PageContentCell, PageV2 } from '../../../components/Page/Page.tsx';
 import { Spinner } from '../../../components/Spinner/Spinner.tsx';
 import { TableV2 } from '../../../components/Table/TableV2.tsx';
+import { isEnabled } from '../../../config/feature-toggles.ts';
 import { useBffApi } from '../../../hooks/api/useBffApi.ts';
 import { useSmallScreen } from '../../../hooks/media.hook.ts';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
@@ -147,6 +148,12 @@ export function HLIStadspasDetail() {
             </Paragraph>
             <Datalist rows={[NUMBER]} />
             {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
+            {isEnabled('HLI.securityCode') && stadspas.securityCode && (
+              <Beveiligingscode
+                name={stadspas.owner.firstname}
+                securityCode={stadspas.securityCode}
+              />
+            )}
             {!stadspas.actief && <PassBlockedAlert />}
             {stadspas.blockPassURL && stadspas.actief && (
               <BlockStadspas stadspas={stadspas} />
@@ -279,6 +286,47 @@ function determineUwUitgavenDescription(
     );
   }
   return expenseInfoTextBase;
+}
+
+function Beveiligingscode({
+  name,
+  securityCode,
+}: {
+  name: string;
+  securityCode: string;
+}) {
+  const isSmallScreen = useSmallScreen();
+
+  return (
+    <PageContentCell className="ams-mb-m">
+      <Heading size="level-2" level={2} className="ams-mb-m">
+        Beveiligingscode
+      </Heading>
+      <Paragraph className="ams-mb-m">
+        Deze code wordt soms gevraagd bij het online kopen van tickets,
+        toegangsbewijzen en producten.
+      </Paragraph>
+      <ModalAndButton
+        buttonVariant="secondary"
+        modal={{
+          title: isSmallScreen
+            ? 'Beveiligingscode'
+            : `Beveiligingscode voor de Stadspas van ${name}`,
+        }}
+        buttonLabel="Toon Beveiligingscode"
+      >
+        <PageContentCell className="ams-mb-m">
+          <Heading size="level-2" level={1} className="ams-mb-m">
+            {securityCode}
+          </Heading>
+          <Paragraph>
+            Deze code wordt soms gevraagd bij het online kopen van tickets,
+            toegangsbewijzen en producten.
+          </Paragraph>
+        </PageContentCell>
+      </ModalAndButton>
+    </PageContentCell>
+  );
 }
 
 function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {

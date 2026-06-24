@@ -12,6 +12,7 @@ export const featureToggle = {
   ['WONEN.vve.monumentstatus']: !IS_PRODUCTION,
   ['VERGUNNINGEN.VTHOnPowerbrowserActive']: !IS_PRODUCTION,
   ['KLANT_CONTACT.afspraken']: !IS_PRODUCTION,
+  ['HLI.securityCode']: !IS_PRODUCTION,
 };
 // globalThis is used to make sure featureToggles imported from frontend *-thema-configs have access.
 globalThis.MA_FEATURETOGGLES = featureToggle;
