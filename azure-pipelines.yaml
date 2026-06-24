@@ -54,13 +54,11 @@ parameters:
   - name: btdTest
     type: boolean
     default: 'true'
-  - name: btdDeploy
-    type: boolean
-    default: 'true'
   - name: dtapName
     type: string
-    default: t
+    default: ''
     values:
+      - ''
       - t
       - a
   - name: btdAppBFF
@@ -83,23 +81,30 @@ variables:
     value: 'true'
   - name: btdBuild
     value: ${{ parameters.btdBuild }}
-  - name: btdDeploy
-    value: ${{ parameters.btdDeploy }}
   - name: btdTest
     value: ${{ parameters.btdTest }}
   - name: dtapName
     value: ${{ parameters.dtapName }}
+  - name: btdDeploy
+    value: 'true'
 
   # Overrides if the branch is testen, az-acceptance or main
-  - ${{ if eq(variables['Build.SourceBranchName'], 'testen') }}:
+  - ${{ if eq(parameters.dtapName, '') }}:
+      - name: dtapName
+        value: t
+
+  - ${{ if or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.SourceBranchName'], 'az-acceptance')) }}:
       - name: btdTest
         value: 'false'
-  - ${{ if or(eq(variables['Build.SourceBranchName'], 'az-acceptance'), eq(variables['Build.SourceBranchName'], 'main')) }}:
+
+  - ${{ if and(eq(parameters.dtapName, ''), or(eq(variables['Build.SourceBranchName'], 'az-acceptance'), eq(variables['Build.SourceBranchName'], 'main'))) }}:
       - name: dtapName
         value: a
+
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
       - name: btdDeploy
         value: 'false'
+
   - template: pipelines/pool.yaml@MamsInfra
     parameters:
       dtapName: ${{ variables.dtapName }}
