@@ -51,15 +51,15 @@ parameters:
   - name: btdBuild
     displayName: BUILD -Select if you want the app to be built.
     type: boolean
-    default: 'true'
+    default: true
   - name: btdTest
     displayName: TEST - Select if you want to run tests. If auto is selected, tests will be skipped for branches testen and az-acceptance.
     type: string
     default: auto
     values:
       - auto
-      - 'true'
-      - 'false'
+      - true
+      - false
   - name: dtapName
     displayName: DTAP - Select the DTAP environment to deploy to. If auto is selected, the environment will be [T] by default or [A] for branches main and az-acceptance.
     type: string
@@ -71,7 +71,7 @@ parameters:
   - name: btdAppBFF
     displayName: BFF - Select if you want to include the BFF.
     type: boolean
-    default: 'true'
+    default: true
   - name: bffImageTag
     displayName: BFF image tag - used if btdBuild is false. Examples bff-$(Build.BuildId) bff-latest
     type: string
@@ -79,7 +79,7 @@ parameters:
   - name: btdAppUI
     displayName: UI - Select if you want to include the UI.
     type: boolean
-    default: 'true'
+    default: true
   - name: uiImageTag
     displayName: UI image tag - used if btdBuild is false. Examples ui-$(Build.BuildId) ui-latest
     type: string
@@ -87,7 +87,7 @@ parameters:
 
 variables:
   - name: system.debug
-    value: 'true'
+    value: true
   - name: btdBuild
     value: ${{ parameters.btdBuild }}
   - name: btdTest
@@ -95,7 +95,7 @@ variables:
   - name: dtapName
     value: ${{ parameters.dtapName }}
   - name: btdDeploy
-    value: 'true'
+    value: true
 
   # Overrides if the branch is testen, az-acceptance or main
   - ${{ if eq(parameters.dtapName, 'auto') }}:
@@ -104,7 +104,7 @@ variables:
 
   - ${{ if and(eq(parameters.btdTest, 'auto'), or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.SourceBranchName'], 'az-acceptance'))) }}:
       - name: btdTest
-        value: 'false'
+        value: false
 
   - ${{ if and(eq(parameters.dtapName, 'auto'), or(eq(variables['Build.SourceBranchName'], 'az-acceptance'), eq(variables['Build.SourceBranchName'], 'main'))) }}:
       - name: dtapName
@@ -112,7 +112,7 @@ variables:
 
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
       - name: btdDeploy
-        value: 'false'
+        value: false
 
   - template: pipelines/pool.yaml@MamsInfra
     parameters:
