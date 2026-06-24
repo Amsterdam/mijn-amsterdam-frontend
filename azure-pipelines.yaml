@@ -114,6 +114,13 @@ variables:
       - name: btdDeploy
         value: false
 
+  - ${{ if or(eq(variables['btdTest'], 'auto'), eq(variables['btdTest'], 'true')) }}:
+      - name: btdTest
+        value: true
+    ${{ else }}:
+      - name: btdTest
+        value: false
+
   - template: pipelines/pool.yaml@MamsInfra
     parameters:
       dtapName: ${{ variables.dtapName }}
