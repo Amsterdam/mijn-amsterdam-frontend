@@ -49,9 +49,11 @@ resources:
 
 parameters:
   - name: btdBuild
+    displayName: Select if you want the app to be built.
     type: boolean
     default: 'true'
   - name: btdTest
+    displayName: Select if you want to run tests. If auto is selected, tests will be skipped for branches testen and az-acceptance.
     type: string
     default: auto
     values:
@@ -59,6 +61,7 @@ parameters:
       - 'true'
       - 'false'
   - name: dtapName
+    displayName: Select the DTAP environment to deploy to. If auto is selected, the environment will be T by default or A for main and az-acceptance.
     type: string
     default: auto
     values:
@@ -66,6 +69,7 @@ parameters:
       - t
       - a
   - name: btdAppBFF
+    displayName: Select if you want to include the BFF.
     type: boolean
     default: 'true'
   - name: bffImageTag
@@ -73,6 +77,7 @@ parameters:
     type: string
     default: bff-$(Build.BuildId)
   - name: btdAppUI
+    displayName: Select if you want to include the UI.
     type: boolean
     default: 'true'
   - name: uiImageTag
