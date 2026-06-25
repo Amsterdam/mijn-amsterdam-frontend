@@ -11,7 +11,7 @@ import { wmoStatusLineItemsConfig } from './wmo-status-line-items.ts';
 import { forTesting } from '../../zorgned/zorgned-status-line-items.ts';
 import type {
   BeschikkingsResultaat,
-  LeveringsVorm,
+  LeveringsVormTransformed,
   ProductSoortCode,
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
@@ -20,7 +20,7 @@ import type {
 type TransformerVariantCase = {
   name: string;
   resultaat: BeschikkingsResultaat;
-  leveringsVorm: LeveringsVorm;
+  leveringsVorm: LeveringsVormTransformed;
   productsoortCode: ProductSoortCode;
   expectedTransformers: ZorgnedStatusLineItemTransformerConfig[];
 };

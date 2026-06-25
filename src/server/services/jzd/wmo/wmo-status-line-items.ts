@@ -6,7 +6,7 @@ import { PGB } from './status-line-items/wmo-pgb.ts';
 import { vergoeding } from './status-line-items/wmo-vergoeding.ts';
 import { WRA } from './status-line-items/wmo-wra.ts';
 import type {
-  LeveringsVorm,
+  LeveringsVormTransformed,
   ProductSoortCode,
   ZorgnedStatusLineItemsConfig,
 } from '../../zorgned/zorgned-types.ts';
@@ -168,7 +168,7 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
 ];
 
 export const PRODUCTS_WITH_DELIVERY = {} as Record<
-  LeveringsVorm,
+  LeveringsVormTransformed,
   ProductSoortCode[]
 >;
 

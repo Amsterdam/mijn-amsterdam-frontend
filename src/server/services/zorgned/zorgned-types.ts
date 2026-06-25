@@ -15,7 +15,10 @@ export type TextPartContents<T> =
   | TextPartContent
   | TextPartContentTransformer<T>;
 
-export type LeveringsVormConfig = Record<LeveringsVorm, ProductSoortCode[]>;
+export type LeveringsVormConfig = Record<
+  LeveringsVormTransformed,
+  ProductSoortCode[]
+>;
 
 export type ZorgnedStatusLineItemTransformerConfig<
   T extends ZorgnedAanvraagTransformed = ZorgnedAanvraagTransformed,
@@ -46,7 +49,7 @@ type ZorgnedLineItemsFilter = (
 export interface ZorgnedStatusLineItemsConfig<
   T extends ZorgnedAanvraagTransformed = ZorgnedAanvraagTransformed,
 > {
-  leveringsVorm?: LeveringsVorm;
+  leveringsVorm?: LeveringsVormTransformed;
   statusLineItems: {
     transformers: ZorgnedStatusLineItemTransformerConfig<T>[];
   };
