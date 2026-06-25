@@ -11,6 +11,7 @@ import {
   productGroep,
   wmoStatusLineItemsConfig,
 } from './wmo/wmo-status-line-items.ts';
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { entries } from '../../../universal/helpers/utils.ts';
 import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 
@@ -54,7 +55,7 @@ function maActieUrlsReparatieverzoek(
   zorgnedAanvraag: ZorgnedAanvraagTransformed
 ) {
   return {
-    reparatieverzoek: `https://formulieren.acc.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/reparatieverzoeken.aspx?GUID=ID:${zorgnedAanvraag.id}`,
+    reparatieverzoek: `https://formulieren${!IS_PRODUCTION ? '.acc' : ''}.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/reparatieverzoeken.aspx?GUID=ID:${zorgnedAanvraag.id}`,
   };
 }
 
