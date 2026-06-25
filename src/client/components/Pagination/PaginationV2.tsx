@@ -30,7 +30,7 @@ export function PaginationV2({
   className,
 }: PaginationProps) {
   if (/:[a-zA-Z]*/.test(path)) {
-    throw Error(`Cannot handle lingering query params see input '${path}'`);
+    throw Error(`Unparsed router path encountered: '${path}'`);
   }
   const { totalPages } = useMemo(
     () => paginate(totalCount, currentPage, pageSize, maxPages),
