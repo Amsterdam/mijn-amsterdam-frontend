@@ -325,7 +325,7 @@ describe('<Zorg />', () => {
           state={testState as unknown as AppState}
         />
       );
-      expect(getByText('Reparatie verzoek indienen')).toBeInTheDocument();
+      expect(getByText('Reparatieverzoek indienen')).toBeInTheDocument();
     });
 
     test('Shows reparatieverzoek text for WRA product that is a PGB product', async () => {
@@ -347,7 +347,7 @@ describe('<Zorg />', () => {
           state={testState2 as unknown as AppState}
         />
       );
-      expect(queryByText('Reparatie verzoek indienen')).not.toBeInTheDocument();
+      expect(queryByText('Reparatieverzoek indienen')).not.toBeInTheDocument();
 
       expect(
         queryByText(/Heeft u de woningaanpassing met een pgb aangeschaft/)

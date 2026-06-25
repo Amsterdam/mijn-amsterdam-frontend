@@ -69,7 +69,7 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
                 href={voorziening?.maActieUrls?.reparatieverzoek}
                 rel="noopener noreferrer"
               >
-                Reparatie verzoek indienen
+                Reparatieverzoek indienen
               </MaButtonLink>
             </>
           )}
