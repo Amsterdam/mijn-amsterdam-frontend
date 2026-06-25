@@ -317,18 +317,14 @@ describe('<Zorg />', () => {
       });
       const routePath = themaConfig.detailPage.route.path;
 
-      function Component() {
-        return (
-          <MockApp
-            routeEntry={routeEntry}
-            routePath={routePath}
-            component={ZorgDetail}
-            state={testState as unknown as AppState}
-          />
-        );
-      }
-
-      const { getByText } = render(<Component />);
+      const { getByText } = render(
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={ZorgDetail}
+          state={testState as unknown as AppState}
+        />
+      );
       expect(getByText('Reparatie verzoek indienen')).toBeInTheDocument();
     });
 
@@ -342,18 +338,15 @@ describe('<Zorg />', () => {
       testState2.WMO.content.find(
         (item) => item.id === 'wra-product-1'
       )!.maActies = ['pgb-reparatieverzoek'];
-      function Component() {
-        return (
-          <MockApp
-            routeEntry={routeEntry}
-            routePath={routePath}
-            component={ZorgDetail}
-            state={testState2 as unknown as AppState}
-          />
-        );
-      }
 
-      const { queryByText } = render(<Component />);
+      const { queryByText } = render(
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={ZorgDetail}
+          state={testState2 as unknown as AppState}
+        />
+      );
       expect(queryByText('Reparatie verzoek indienen')).not.toBeInTheDocument();
 
       expect(
