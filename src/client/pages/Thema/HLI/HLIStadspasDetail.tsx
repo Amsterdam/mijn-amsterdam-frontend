@@ -8,14 +8,12 @@ import {
   Link,
   Paragraph,
 } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
 import { useParams } from 'react-router';
 
 import { themaConfig } from './HLI-thema-config.ts';
 import styles from './HLIStadspasDetail.module.scss';
-import {
-  useBlockStadspas,
-  useStadspas,
-} from './useStadspassen.hook.tsx';
+import { useBlockStadspas, useStadspas } from './useStadspassen.hook.tsx';
 import type {
   StadspasBudget,
   StadspasBudgetTransaction,
@@ -36,7 +34,7 @@ import { Spinner } from '../../../components/Spinner/Spinner.tsx';
 import { TableV2 } from '../../../components/Table/TableV2.tsx';
 import { isEnabled } from '../../../config/feature-toggles.ts';
 import { useBffApi } from '../../../hooks/api/useBffApi.ts';
-import { useSmallScreen } from '../../../hooks/media.hook.ts';
+import { useMediumScreen, useSmallScreen } from '../../../hooks/media.hook.ts';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
@@ -288,7 +286,7 @@ function Beveiligingscode({
   name: string;
   securityCode: string;
 }) {
-  const isSmallScreen = useSmallScreen();
+  const isMediumScreen = useMediumScreen();
 
   return (
     <PageContentCell className="ams-mb-l">
@@ -302,14 +300,21 @@ function Beveiligingscode({
       <ModalAndButton
         buttonVariant="secondary"
         modal={{
-          title: isSmallScreen
-            ? 'Beveiligingscode'
-            : `Beveiligingscode voor de Stadspas van ${name}`,
+          title: isMediumScreen
+            ? `Beveiligingscode voor de Stadspas van ${name}`
+            : name,
         }}
         buttonLabel="Toon Beveiligingscode"
       >
-        <PageContentCell className="ams-mb-m">
-          <Heading size="level-2" level={1} className="ams-mb-m">
+        <PageContentCell
+          className={classNames('ams-mb-m', styles.Beveiligingscode)}
+        >
+          {isMediumScreen || (
+            <Heading size="level-2" level={2} className="ams-mb-m">
+              Beveiligingscode
+            </Heading>
+          )}
+          <Heading size="level-3" level={3} className="ams-mb-m">
             {securityCode}
           </Heading>
           <Paragraph>
