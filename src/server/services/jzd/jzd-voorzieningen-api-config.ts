@@ -54,8 +54,11 @@ const PRODUCT_IDS_EXCLUDED_FROM_REPARATIEVERZOEK_ACTION = [
 function maActieUrlsReparatieverzoek(
   zorgnedAanvraag: ZorgnedAanvraagTransformed
 ) {
+  const baseUrl = IS_PRODUCTION
+    ? 'https://formulieren.amsterdam.nl'
+    : 'https://formulieren.acc.amsterdam.nl';
   return {
-    reparatieverzoek: `https://formulieren${!IS_PRODUCTION ? '.acc' : ''}.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/reparatieverzoeken.aspx?GUID=ID:${zorgnedAanvraag.id}`,
+    reparatieverzoek: `${baseUrl}/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/reparatieverzoeken.aspx?GUID=ID:${zorgnedAanvraag.id}`,
   };
 }
 
