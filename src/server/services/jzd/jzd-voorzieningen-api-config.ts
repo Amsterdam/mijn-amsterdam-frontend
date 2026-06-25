@@ -57,8 +57,9 @@ function maActieUrlsReparatieverzoek(
   const baseUrl = IS_PRODUCTION
     ? 'https://formulieren.amsterdam.nl'
     : 'https://formulieren.acc.amsterdam.nl';
+  const guid = encodeURIComponent(`ID:${zorgnedAanvraag.id}`);
   return {
-    reparatieverzoek: `${baseUrl}/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/reparatieverzoeken.aspx?GUID=ID:${zorgnedAanvraag.id}`,
+    reparatieverzoek: `${baseUrl}/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/reparatieverzoeken.aspx?GUID=${guid}`,
   };
 }
 
