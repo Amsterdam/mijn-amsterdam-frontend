@@ -277,7 +277,7 @@
       },
       {
         "_links": null,
-        "identificatie": "1269156",
+        "identificatie": "12699889156",
         "regeling": {
           "identificatie": "WMO",
           "omschrijving": "WMO"
@@ -295,7 +295,7 @@
           "toelichting": null,
           "beschikteProducten": [
             {
-              "identificatie": "116841",
+              "identificatie": "11612841",
               "externe_identificatie": null,
               "product": {
                 "identificatie": "WRA",
@@ -6120,10 +6120,10 @@
             {
               "identificatie": "1215588",
               "product": {
-                "identificatie": "13W15",
+                "identificatie": "13XW15",
                 "productCode": "13W15",
                 "productsoortCode": "WRA1",
-                "omschrijving": "reparatie-/verwijderopdracht   trapliften"
+                "omschrijving": "PGB! reparatie-/verwijderopdracht   trapliften"
               },
               "productCategorie": {
                 "code": "13",
@@ -6132,8 +6132,8 @@
               "resultaat": "toegewezen",
               "toegewezenProduct": {
                 "datumIngangGeldigheid": "2024-09-30",
-                "datumEindeGeldigheid": "2024-10-01",
-                "actueel": false,
+                "datumEindeGeldigheid": null,
+                "actueel": true,
                 "omvang": {
                   "volume": 1,
                   "eenheid": {
@@ -6146,7 +6146,7 @@
                   },
                   "omschrijving": "1 stuks (output) per  beschikking"
                 },
-                "leveringsvorm": "zin",
+                "leveringsvorm": "pgb",
                 "leverancier": {
                   "identificatie": "LA0997",
                   "agbcode": "11122266",
@@ -6184,7 +6184,18 @@
               }
             }
           ]
-        }
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B3422713",
+            "procesIdentificatie": "3184009",
+            "casusIdentificatie": "1750893",
+            "omschrijving": "Opstellen afwijzing WRA",
+            "omschrijvingclientportaal": "Besluit: afwijzing woonruimteaanpassing",
+            "datumDefinitief": "2025-09-24T15:12:19.673",
+            "bestandsnaam": "BR3422713.pdf"
+          }
+        ]
       },
       {
         "identificatie": "3184009",
