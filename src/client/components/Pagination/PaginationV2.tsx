@@ -29,7 +29,7 @@ export function PaginationV2({
   currentPage = 1,
   className,
 }: PaginationProps) {
-  if (/:[a-zA-Z]*/.test(path)) {
+  if (/\/:[a-zA-Z]*/.test(path)) {
     throw Error(`Unparsed router path encountered: '${path}'`);
   }
   const { totalPages } = useMemo(
