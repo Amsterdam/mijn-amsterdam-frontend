@@ -89,6 +89,7 @@ const REPARATIEVERZOEK_ACTIE_CONFIG_PGB: JzdApiConfig = {
   include: {
     productsoortCode: REPARATIEVERZOEK_ACTIE_CONFIG.include.productsoortCode,
     leveringsVorm: ['PGB'],
+    isActueel: true,
   },
   assign: {
     maActies: ['pgb-reparatieverzoek'],
