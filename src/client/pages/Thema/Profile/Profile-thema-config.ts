@@ -4,11 +4,9 @@ import type {
   ThemaConfigBase,
 } from '../../../config/thema-types.ts';
 
-type WithListPageContactmomenten = PageConfig<'listPageContactmomenten'>;
 type WithDetailPageVvE = PageConfig<'detailPageVvE'>;
 
 type ProfileBRPThemaConfig = ThemaConfigBase<typeof THEMA_ID_BRP> &
-  WithListPageContactmomenten &
   WithDetailPageVvE;
 
 type ProfileKVKThemaConfig = ThemaConfigBase<typeof THEMA_ID_KVK>;
@@ -39,23 +37,13 @@ export const themaConfig = {
     uitlegPageSections: [
       {
         title: THEMA_TITLE_BRP,
-        listItems: [
-          'Uw inschrijving bij de gemeente',
-          'Uw contactmomenten met de gemeente',
-        ],
+        listItems: ['Uw inschrijving bij de gemeente'],
       },
     ],
     route: {
       path: '/persoonlijke-gegevens',
       documentTitle: `${THEMA_TITLE_BRP} | Mijn Amsterdam`,
       trackingUrl: null,
-    },
-    listPageContactmomenten: {
-      route: {
-        path: '/contactmomenten/:page?',
-        documentTitle: `Alle contactmomenten | ${THEMA_TITLE_BRP}`,
-        trackingUrl: null,
-      },
     },
     detailPageVvE: {
       route: {

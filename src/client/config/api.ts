@@ -26,6 +26,10 @@ export const BFFApiUrls = {
   AFIS_FACTUREN: `${BFF_API_BASE_URL}/services/afis/facturen/:state`,
   // KTO
   USER_FEEDBACK_SUBMIT: `${BFF_API_BASE_URL}/user-feedback/collect`,
+  // Contactgegevens en voorkeuren
+  KLANTCONTACT_CONTACTGEGEVEN_CREATE: `${BFF_API_BASE_URL}/services/klantcontact/contactgegeven/create`,
+  KLANTCONTACT_CONTACTGEGEVEN_VERIFY: `${BFF_API_BASE_URL}/services/klantcontact/contactgegeven/verify`,
+  KLANTCONTACT_CONTACTGEGEVEN_DELETE: `${BFF_API_BASE_URL}/services/klantcontact/contactgegeven/delete`,
 } as const;
 
 // Urls directly used from front-end
@@ -77,6 +81,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   HORECA: 'Horeca vergunningen',
   KLACHTEN: 'Ingediende klachten',
   KLANT_CONTACT: 'Contactmomenten',
+  KLANT_CONTACT_contactmomenten: 'Contactmomenten',
   KREFIA: 'Kredietbank & FIBU',
 
   MILIEUZONE: 'Milieuzone',

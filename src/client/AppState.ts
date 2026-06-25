@@ -3,7 +3,7 @@ import { createContext } from 'react';
 import { apiPristineResult } from '../universal/helpers/api.ts';
 import type { AppState } from '../universal/types/App.types.ts';
 
-export const PRISTINE_APPSTATE: AppState = {
+export const PRISTINE_APPSTATE = {
   // Generated
   NOTIFICATIONS: apiPristineResult([]),
 
@@ -117,6 +117,7 @@ export const PRISTINE_APPSTATE: AppState = {
     {
       contactmomenten: [],
       afspraken: [],
+      communicatievoorkeuren: null,
     },
     {
       profileTypes: ['private'],
@@ -144,7 +145,7 @@ export const PRISTINE_APPSTATE: AppState = {
   BODEM: apiPristineResult(null),
 
   KTO: apiPristineResult(null),
-};
+} as const satisfies AppState;
 
 export const ALL_ERROR_STATE_KEY = 'ALL';
 

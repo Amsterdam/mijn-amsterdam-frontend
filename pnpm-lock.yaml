@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@azure/app-configuration': ^1.12.1
+
 importers:
 
   .:
@@ -500,8 +503,8 @@ packages:
   '@azure/app-configuration-provider@2.4.2':
     resolution: {integrity: sha512-ErXvn0I9OUP7EjJo3UogVSJqQJFA6Om7tYn01hpI8Vy8Zsk2xTmy/yy4QjKF4DyFgM5HAchUd0gy+mz3QHXBIA==}
 
-  '@azure/app-configuration@1.12.0':
-    resolution: {integrity: sha512-qTJb9bG9j4eQosmyFmeDv9/83rnTlGsCixTM4U7wvUc9gQ2cxI7rHQrur7pLBsfun1Nm1wZ/rhCUJyuKBT70Ow==}
+  '@azure/app-configuration@1.12.1':
+    resolution: {integrity: sha512-skUcJ8ca5X7RQU92svaGtpefp3ncI/LqFbc+IiQR0KCT//+TlwJN52nsloGsqwr8+b4fo+refWJp53iqqHEqbA==}
     engines: {node: '>=20.0.0'}
 
   '@azure/core-auth@1.10.1':
@@ -5467,7 +5470,7 @@ snapshots:
 
   '@azure/app-configuration-provider@2.4.2':
     dependencies:
-      '@azure/app-configuration': 1.12.0
+      '@azure/app-configuration': 1.12.1
       '@azure/core-rest-pipeline': 1.24.0
       '@azure/identity': 4.13.1
       '@azure/keyvault-secrets': 4.11.2
@@ -5475,7 +5478,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@azure/app-configuration@1.12.0':
+  '@azure/app-configuration@1.12.1':
     dependencies:
       '@azure-rest/core-client': 2.6.1
       '@azure/abort-controller': 2.1.2
@@ -5551,7 +5554,7 @@ snapshots:
   '@azure/core-rest-pipeline@1.16.3':
     dependencies:
       '@azure/abort-controller': 2.1.2
-      '@azure/core-auth': 1.7.2
+      '@azure/core-auth': 1.10.1
       '@azure/core-tracing': 1.3.1
       '@azure/core-util': 1.13.1
       '@azure/logger': 1.3.0

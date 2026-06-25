@@ -49,4 +49,17 @@ describe('getAvailableUserThemas', () => {
       forTesting.getAvailableUserThemas(mockServiceResults);
     expect(availableUserThemas).toStrictEqual({});
   });
+
+  test('HLI, exceptional case', () => {
+    const mockServiceResults: ServiceResults = wrap({
+      HLI: {
+        regelingen: [],
+        stadspas: { stadspassen: [], dateExpiryFormatted: '31 juli 2026' },
+        specificaties: [],
+      },
+    });
+    const availableUserThemas =
+      forTesting.getAvailableUserThemas(mockServiceResults);
+    expect(availableUserThemas).toStrictEqual({});
+  });
 });

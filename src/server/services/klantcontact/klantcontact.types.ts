@@ -1,3 +1,4 @@
+import type { CommunicatievoorkeurenResponseFrontend } from './klantcontact-profieldienst-types.ts';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
 
 export type SalesforceResponseType = {
@@ -72,4 +73,5 @@ export type AfspraakFrontend = Omit<
 export type KlantcontactResponseData = {
   contactmomenten: ContactmomentFrontend[];
   afspraken: AfspraakFrontend[];
+  communicatievoorkeuren: CommunicatievoorkeurenResponseFrontend | null;
 };

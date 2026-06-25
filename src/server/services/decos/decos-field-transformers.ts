@@ -62,9 +62,11 @@ export const DECOS_EXCLUDE_CASES_WITH_PENDING_PAYMENT_CONFIRMATION_SUBJECT1 = [
 export const DECOS_PENDING_REMOVAL_DFUNCTION = '*verwijder';
 // Cases with this text11 value will not be included in the cases shown to the user. Payment is not yet processed or failed.
 export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11 = 'nogniet';
-// Cases with this text12 value will not be included in the cases shown to the user. Payment is not yet processed or failed.
-export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12 =
-  'wacht op online betaling';
+// Cases with one of these text12 values will not be included in the cases shown to the user. Payment is not yet processed or failed.
+export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12 = [
+  'wacht op online betaling',
+  'ideal',
+];
 
 // 1 or multiple kenteken(s)
 export const kentekens = {

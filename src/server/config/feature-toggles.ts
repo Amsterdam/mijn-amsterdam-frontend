@@ -13,6 +13,8 @@ export const featureToggle = {
   ['VERGUNNINGEN.VTHOnPowerbrowserActive']: !IS_PRODUCTION,
   ['KLANT_CONTACT.afspraken']: !IS_PRODUCTION,
   ['HLI.securityCode']: !IS_PRODUCTION,
+  ['KLANT_CONTACT.communicatievoorkeuren']: !IS_PRODUCTION,
+  ['KLANT_CONTACT.thema']: !IS_PRODUCTION,
 };
 // globalThis is used to make sure featureToggles imported from frontend *-thema-configs have access.
 globalThis.MA_FEATURETOGGLES = featureToggle;

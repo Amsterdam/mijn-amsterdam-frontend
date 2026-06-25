@@ -21,7 +21,7 @@ export function ContactmomentenListPage() {
       items={contactmomenten}
       themaId={id}
       title={`Alle ${tableConfig.title.toLowerCase()}`}
-      appRoute={routeConfig.path}
+      appRoute={tableConfig.listPageRoute}
       breadcrumbs={breadcrumbs}
       displayProps={tableConfig.displayProps}
       isLoading={isLoading}
