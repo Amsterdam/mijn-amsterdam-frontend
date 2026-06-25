@@ -128,10 +128,10 @@ describe('CommunicatieVoorkeuren integration', () => {
     await user.click(screen.getByRole('button', { name: 'Ja, verwijderen' }));
 
     await waitFor(() => {
-      return expect(deleteScope.isDone()).toBe(true);
+      expect(deleteScope.isDone()).toBe(true);
+      expect(screen.getByText('Verwijderen mislukt')).toBeInTheDocument();
     });
 
-    expect(screen.getByText('Verwijderen mislukt')).toBeInTheDocument();
     expect(
       screen.getByText(
         'Er is iets misgegaan bij het verwijderen van dit e-mailadres. Probeer het later opnieuw.'
