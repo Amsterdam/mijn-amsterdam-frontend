@@ -340,7 +340,7 @@ export function isGeleverdVisible(
     hasDecision(aanvraag) &&
     aanvraag.resultaat !== 'afgewezen' &&
     (isOpdrachtGegeven(aanvraag, today) ||
-      // Not yet given and not ended yet.
+      // Not yet delivered and not ended yet.
       (!isOpdrachtGegeven(aanvraag, today) &&
         !isEindeGeldigheidVerstreken(aanvraag.datumEindeGeldigheid, today)))
   );

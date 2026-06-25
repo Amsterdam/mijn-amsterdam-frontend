@@ -167,8 +167,10 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   },
 ];
 
-export const PRODUCTS_WITH_DELIVERY: Record<LeveringsVorm, ProductSoortCode[]> =
-  {};
+export const PRODUCTS_WITH_DELIVERY = {} as Record<
+  LeveringsVorm,
+  ProductSoortCode[]
+>;
 
 for (const config of wmoStatusLineItemsConfig) {
   if (
