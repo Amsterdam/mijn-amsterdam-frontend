@@ -29,6 +29,9 @@ export function PaginationV2({
   currentPage = 1,
   className,
 }: PaginationProps) {
+  if (/:[a-zA-Z]*/.test(path)) {
+    throw Error(`Cannot handle lingering query params see input '${path}'`);
+  }
   const { totalPages } = useMemo(
     () => paginate(totalCount, currentPage, pageSize, maxPages),
     [currentPage, pageSize, totalCount, maxPages]
