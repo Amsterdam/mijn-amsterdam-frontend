@@ -5,8 +5,11 @@ export function isVoorzieningActieAvailable(
   actie: string,
   withUrlCheck = true
 ): boolean {
-  return !!(
-    voorziening?.maActies?.includes(actie) &&
-    (!withUrlCheck || voorziening?.maActieUrls?.[actie])
-  );
+  if (voorziening?.maActies?.includes(actie)) {
+    if (withUrlCheck) {
+      return !!voorziening?.maActieUrls?.[actie];
+    }
+    return true;
+  }
+  return false;
 }
