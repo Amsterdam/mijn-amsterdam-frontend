@@ -76,7 +76,6 @@
     "@types/memoizee": "^0.4.12",
     "@types/memory-cache": "^0.2.6",
     "@types/node": "^22.20.0",
-    "@types/node-jose": "^1.1.13",
     "@types/pg": "^8.20.0",
     "@types/qs": "^6.15.1",
     "@types/react": "^18.3.31",
