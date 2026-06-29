@@ -44,16 +44,7 @@ describe('simple-connect/cleopatra', () => {
 
   test('missing certificate', async () => {
     mocks.IS_DEVELOPMENT = false;
-
-    const responseContent = await fetchMilieuzone(authProfileAndToken);
-
-    expect(responseContent).toMatchInlineSnapshot(`
-      {
-        "content": null,
-        "message": "Postdata could not be encrypted",
-        "status": "ERROR",
-      }
-    `);
+    await expect(fetchMilieuzone(authProfileAndToken)).rejects.toThrow();
   });
 
   test('mock certificate', async () => {

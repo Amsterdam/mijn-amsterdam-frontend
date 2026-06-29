@@ -14,7 +14,6 @@ import * as MILIEUZONE from '../../../client/pages/Thema/Milieuzone/Milieuzone-t
 import * as OVERTREDINGEN from '../../../client/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
 import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
 import {
-  apiErrorResult,
   apiSuccessResult,
   type ApiResponse,
 } from '../../../universal/helpers/api.ts';
@@ -46,7 +45,7 @@ function getPublicKey(): Promise<KeyLike | Uint8Array<ArrayBufferLike> | null> {
   const certContent = getCert('BFF_CLEOPATRA_PUBLIC_KEY_CERT');
 
   if (!certContent) {
-    return Promise.resolve(null);
+    throw new Error('BFF_CLEOPATRA_PUBLIC_KEY_CERT could not be read');
   }
 
   return importX509(certContent, alg);
@@ -172,10 +171,6 @@ async function fetchCleopatra(authProfileAndToken: AuthProfileAndToken) {
   const postData = await encryptPayload(
     getJSONRequestPayload(authProfileAndToken.profile)
   );
-
-  if (!postData) {
-    return apiErrorResult('Postdata could not be encrypted', null);
-  }
 
   const requestConfig = getApiConfig('CLEOPATRA', {
     transformResponse: transformCleopatraResponse,
