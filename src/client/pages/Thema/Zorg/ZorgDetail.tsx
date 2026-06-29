@@ -1,9 +1,13 @@
+import { Paragraph } from '@amsterdam/design-system-react';
+
 import { useZorgDetailData } from './useZorgDetailData.hook.ts';
+import { isVoorzieningActieAvailable } from './Zorg-helpers.ts';
 import { themaConfig } from './Zorg-thema-config.ts';
 import type { WMOVoorzieningFrontend } from '../../../../server/services/jzd/wmo/wmo-types.ts';
 import { ErrorAlert } from '../../../components/Alert/Alert.tsx';
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import { DocumentListV2 } from '../../../components/DocumentList/DocumentListV2.tsx';
+import { MaButtonLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaDetailPagina } from '../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
@@ -21,25 +25,64 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
     rows.push({ content: voorziening?.supplier, label: 'Aanbieder' });
   }
 
+  const isReparatieverzoekAvailable = isVoorzieningActieAvailable(
+    voorziening,
+    'reparatieverzoek'
+  );
+  const isPGBReparatieverzoek = isVoorzieningActieAvailable(
+    voorziening,
+    'pgb-reparatieverzoek',
+    false
+  );
+
   return (
-    <PageContentCell>
-      {voorziening?.disclaimer && (
-        <ErrorAlert
-          className="ams-mb-m"
-          severity="warning"
-          title="Belangrijk om te weten"
-        >
-          {voorziening.disclaimer}
-        </ErrorAlert>
+    <>
+      <PageContentCell>
+        {voorziening?.disclaimer && (
+          <ErrorAlert
+            className="ams-mb-m"
+            severity="warning"
+            title="Belangrijk om te weten"
+          >
+            {voorziening.disclaimer}
+          </ErrorAlert>
+        )}
+        <Datalist rows={rows} />
+        {voorziening?.documents.length > 0 && (
+          <DocumentListV2
+            documents={voorziening.documents}
+            columns={['Bestanden', 'Verzenddatum']}
+          />
+        )}
+      </PageContentCell>
+      {(isReparatieverzoekAvailable || isPGBReparatieverzoek) && (
+        <PageContentCell spanWide={7}>
+          {isReparatieverzoekAvailable && (
+            <>
+              <Paragraph className="ams-mb-m">
+                Is uw woonruimteaanpassing kapot? U kunt een reparatieverzoek
+                voor deze voorziening aanvragen. Klik op de knop hieronder om
+                het reparatieverzoek in te dienen. U wordt dan doorgestuurd naar
+                een formulier van de gemeente Amsterdam.
+              </Paragraph>
+              <MaButtonLink
+                href={voorziening?.maActieUrls?.reparatieverzoek}
+                rel="noopener noreferrer"
+              >
+                Reparatieverzoek indienen
+              </MaButtonLink>
+            </>
+          )}
+          {isPGBReparatieverzoek && (
+            <Paragraph>
+              Heeft u de woningaanpassing met een pgb aangeschaft? Dan moet u
+              zelf de kosten voor reparatie en onderhoud betalen met uw pgb. Bij
+              uw pgb is hiervoor een bedrag inbegrepen.
+            </Paragraph>
+          )}
+        </PageContentCell>
       )}
-      <Datalist rows={rows} />
-      {voorziening?.documents.length > 0 && (
-        <DocumentListV2
-          documents={voorziening.documents}
-          columns={['Bestanden', 'Verzenddatum']}
-        />
-      )}
-    </PageContentCell>
+    </>
   );
 }
 

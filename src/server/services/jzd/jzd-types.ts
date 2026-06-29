@@ -19,6 +19,10 @@ export type MaApiPropMatchFN<T> = (voorziening: T) => boolean;
 export type VoorzieningKey<T> = Exclude<keyof T, 'link' | 'documenten'>;
 export type VoorzieningValue<T> = T[VoorzieningKey<T>];
 
+/**
+ * The MatchConfig MUST return true for all defined keys.
+ * There is no "OR" logic between keys, only "AND" logic. If you want to have "OR" logic, you can use a function for the value of a key, and implement your own logic there.
+ */
 type MatchConfig<T> = Partial<
   Record<
     VoorzieningKey<T>,

@@ -3,7 +3,7 @@ import thenBy from 'thenby';
 
 import type {
   BeschiktProduct,
-  LeveringsVorm,
+  LeveringsVormTransformed,
   ZorgnedAanvraagTransformed,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedAanvragenServiceOptions,
@@ -125,7 +125,8 @@ function transformZorgnedAanvraag(
   const levering = leveringen.at(-1);
 
   const leveringsVorm =
-    (toegewezenProduct?.leveringsvorm?.toUpperCase() as LeveringsVorm) ?? '';
+    (toegewezenProduct?.leveringsvorm?.toUpperCase() as LeveringsVormTransformed) ??
+    '';
 
   let productsoortCode = beschiktProduct.product.productsoortCode;
   if (productsoortCode) {
