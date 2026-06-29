@@ -1,7 +1,7 @@
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
-import { routes } from '../jzd-service-config.ts';
+import { featureToggle, routes } from '../jzd-service-config.ts';
 import {
   hasDecision,
   isAfterWCAGValidDocumentsDate,
@@ -34,6 +34,7 @@ import {
 import { generateFullApiUrlBFF } from '../../../routing/route-helpers.ts';
 import { getStatusLineItems } from '../../zorgned/zorgned-status-line-items.ts';
 import { type ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
+import type { ZorgnedAanvraagTransformedWithMaApiProps } from '../jzd-types.ts';
 import { transformVoorzieningForFrontendWithMaApiProps } from '../jzd-voorzieningen-api-service.ts';
 
 export function getDocuments(
@@ -138,48 +139,53 @@ export async function fetchWmo(
   }
 
   const today = new Date();
-  const voorzieningenWithMaApiProps =
-    transformVoorzieningForFrontendWithMaApiProps(
-      voorzieningenResponse.content,
-      undefined,
-      undefined
-    );
+  let voorzieningen: ZorgnedAanvraagTransformedWithMaApiProps[] =
+    voorzieningenResponse.content;
 
-  const voorzieningenFrontend: WMOVoorzieningFrontend[] =
-    voorzieningenWithMaApiProps
-      .map((aanvraag, _index, aanvragen) => {
-        const steps = getStatusLineItems(
-          'WMO',
-          wmoStatusLineItemsConfig,
+  if (featureToggle.service.fetchWmo.addMaVoorzieningenApiProps) {
+    const voorzieningenWithMaApiProps =
+      transformVoorzieningForFrontendWithMaApiProps(
+        voorzieningenResponse.content,
+        undefined,
+        undefined
+      );
+    voorzieningen = voorzieningenWithMaApiProps;
+  }
+
+  const voorzieningenFrontend: WMOVoorzieningFrontend[] = voorzieningen
+    .map((aanvraag, _index, aanvragen) => {
+      const steps = getStatusLineItems(
+        'WMO',
+        wmoStatusLineItemsConfig,
+        aanvraag,
+        aanvragen,
+        today
+      );
+
+      if (steps) {
+        const voorzieningTransformedBase = transformVoorzieningForFrontend(
           aanvraag,
-          aanvragen,
-          today
+          steps,
+          authProfileAndToken.profile.sid,
+          aanvragen
         );
 
-        if (steps) {
-          const voorzieningTransformedBase = transformVoorzieningForFrontend(
-            aanvraag,
-            steps,
-            authProfileAndToken.profile.sid,
-            aanvragen
-          );
-
-          if (aanvraag.maActies) {
-            return Object.assign(voorzieningTransformedBase, {
-              maActies: aanvraag.maActies,
-              ...(aanvraag.maActieUrls
-                ? { maActieUrls: aanvraag.maActieUrls }
-                : {}),
-            });
-          }
-
-          return voorzieningTransformedBase;
+        if (aanvraag.maActies) {
+          return Object.assign(voorzieningTransformedBase, {
+            maActies: aanvraag.maActies,
+            ...(aanvraag.maActieUrls
+              ? { maActieUrls: aanvraag.maActieUrls }
+              : {}),
+          });
         }
 
-        return null;
-      })
-      .filter((voorziening) => voorziening !== null)
-      .toSorted(dateSort('statusDate', 'desc'));
+        return voorzieningTransformedBase;
+      }
+
+      return null;
+    })
+    .filter((voorziening) => voorziening !== null)
+    .toSorted(dateSort('statusDate', 'desc'));
 
   return apiSuccessResult(voorzieningenFrontend);
 }
