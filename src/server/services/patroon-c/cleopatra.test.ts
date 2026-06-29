@@ -11,7 +11,7 @@ import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 
 const mocks = vi.hoisted(() => {
   return {
-    IS_TAP: false,
+    IS_DEVELOPMENT: false,
     getCert: vi.fn(),
   };
 });
@@ -20,8 +20,8 @@ vi.mock('../../../universal/config/env', async (importOriginal) => {
   const mod: object = await importOriginal();
   return {
     ...mod,
-    get IS_TAP() {
-      return mocks.IS_TAP;
+    get IS_DEVELOPMENT() {
+      return mocks.IS_DEVELOPMENT;
     },
   };
 });
@@ -38,12 +38,12 @@ const authProfileAndToken = getAuthProfileAndToken();
 
 describe('simple-connect/cleopatra', () => {
   beforeEach(() => {
-    mocks.IS_TAP = false;
+    mocks.IS_DEVELOPMENT = true;
     process.env.BFF_CLEOPATRA_PUBLIC_KEY_CERT = '';
   });
 
   test('missing certificate', async () => {
-    mocks.IS_TAP = true;
+    mocks.IS_DEVELOPMENT = false;
 
     const responseContent = await fetchMilieuzone(authProfileAndToken);
 
@@ -81,7 +81,7 @@ N/LGpYv3Lx6B91U2osmuHpNUfZ392tSp4FJItJz8X2X0pLI+GPIwlQDpZG/IEQ9d
 -----END CERTIFICATE-----
 `
     );
-    mocks.IS_TAP = true;
+    mocks.IS_DEVELOPMENT = false;
 
     const responseContent = await fetchMilieuzone(authProfileAndToken);
 

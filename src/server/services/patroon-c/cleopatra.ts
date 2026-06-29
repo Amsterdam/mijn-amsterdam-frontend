@@ -12,7 +12,7 @@ import type { ApiPatternResponseA } from './api-service.ts';
 import { fetchService } from './api-service.ts';
 import * as MILIEUZONE from '../../../client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
 import * as OVERTREDINGEN from '../../../client/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
-import { IS_TAP } from '../../../universal/config/env.ts';
+import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -40,22 +40,22 @@ const DEV_KEY: JWK = {
 };
 
 function getPublicKey(): Promise<KeyLike | Uint8Array<ArrayBufferLike> | null> {
-  if (IS_TAP) {
-    let certContent;
-    try {
-      certContent = getCert('BFF_CLEOPATRA_PUBLIC_KEY_CERT');
-    } catch (error) {
-      logger.error(error, 'Error getting public key');
-    }
-
-    if (certContent) {
-      return importX509(certContent, alg);
-    }
-
-    return Promise.resolve(null);
+  if (IS_DEVELOPMENT) {
+    return importJWK(DEV_KEY, alg);
   }
 
-  return importJWK(DEV_KEY, alg);
+  let certContent;
+  try {
+    certContent = getCert('BFF_CLEOPATRA_PUBLIC_KEY_CERT');
+  } catch (error) {
+    logger.error(error, 'Error getting public key');
+  }
+
+  if (certContent) {
+    return importX509(certContent, alg);
+  }
+
+  return Promise.resolve(null);
 }
 
 export function getJSONRequestPayload(
