@@ -26,7 +26,6 @@ import {
   createSessionBasedCacheKey,
   getApiConfig,
 } from '../../helpers/source-api-helpers.ts';
-import { logger } from '../../logging.ts';
 
 const alg = 'RSA-OAEP-256';
 
@@ -44,18 +43,13 @@ function getPublicKey(): Promise<KeyLike | Uint8Array<ArrayBufferLike> | null> {
     return importJWK(DEV_KEY, alg);
   }
 
-  let certContent;
-  try {
-    certContent = getCert('BFF_CLEOPATRA_PUBLIC_KEY_CERT');
-  } catch (error) {
-    logger.error(error, 'Error getting public key');
+  const certContent = getCert('BFF_CLEOPATRA_PUBLIC_KEY_CERT');
+
+  if (!certContent) {
+    return Promise.resolve(null);
   }
 
-  if (certContent) {
-    return importX509(certContent, alg);
-  }
-
-  return Promise.resolve(null);
+  return importX509(certContent, alg);
 }
 
 export function getJSONRequestPayload(
