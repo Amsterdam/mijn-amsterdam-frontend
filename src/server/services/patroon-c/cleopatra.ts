@@ -71,7 +71,7 @@ export async function encryptPayload(payload: CleopatraRequestPayloadString) {
     return null;
   }
   const jwt = new EncryptJWT({ payload })
-    .setProtectedHeader({ alg, enc: 'A256CBC-HS512', typ: 'JWE', kid: 'xxx' })
+    .setProtectedHeader({ alg, enc: 'A256CBC-HS512', typ: 'JWE' })
     .encrypt(key);
   return jwt;
 }
