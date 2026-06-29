@@ -17,6 +17,7 @@ export async function runMigrations() {
     import('./postgres.ts'),
   ]);
 
+  throw new Error('Some error here');
   const db = drizzle(getPool());
 
   await migrate(db, {
