@@ -246,7 +246,7 @@ describe('Transform api items', () => {
         expect.arrayContaining(['reparatieverzoek', 'stopzetten'])
       );
       expect(voorziening.maActieUrls?.reparatieverzoek).toContain(
-        'GUID=ID:357-883696'
+        'GUID=ID%3A357-883696'
       );
       expect(voorziening.documents[0]?.url).toContain('id=123-123-123-123');
     });
