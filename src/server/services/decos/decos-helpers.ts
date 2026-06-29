@@ -20,15 +20,17 @@ import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import type { WithKentekens } from '../vergunningen/config-and-types.ts';
 
 // Checks to see if a payment was not processed correctly/completely yet.
-export function isWaitingForPaymentConfirmation(
+export function isWaitingForPaymentConfirmation<T extends DecosZaakBase>(
   decosZaakSource: DecosZaakSource,
-  zaakTypeTransformer: DecosZaakTransformer<DecosZaakBase>
+  zaakTypeTransformer: DecosZaakTransformer<T>
 ) {
   const isWaitingForPaymentConfirmation =
-    decosZaakSource.fields.text11?.toLowerCase() ==
+    decosZaakSource.fields.text11?.toLowerCase() ===
       DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11 &&
-    decosZaakSource.fields.text12?.toLowerCase() ==
-      DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12;
+    !!decosZaakSource.fields.text12 &&
+    DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12.includes(
+      decosZaakSource.fields.text12.toLowerCase()
+    );
 
   const isWaitingForPaymentConfirmation2 =
     !!decosZaakSource.fields.subject1 &&
@@ -58,9 +60,9 @@ export function isScheduledForRemoval(decosZaakSource: DecosZaakSource) {
     .includes(DECOS_PENDING_REMOVAL_DFUNCTION);
 }
 
-export function isExcludedFromTransformation(
+export function isExcludedFromTransformation<T extends DecosZaakBase>(
   zaakSource: DecosZaakSource,
-  zaakTypeTransformer: DecosZaakTransformer<DecosZaakBase>
+  zaakTypeTransformer: DecosZaakTransformer<T>
 ) {
   return (
     isScheduledForRemoval(zaakSource) ||
