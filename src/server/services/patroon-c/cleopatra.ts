@@ -1,11 +1,11 @@
-import type { KeyLike } from 'jose';
 import {
   importX509,
   importJWK,
-  EncryptJWT,
+  FlattenedEncrypt,
   type JWK,
   calculateJwkThumbprint,
   exportJWK,
+  type KeyLike,
 } from 'jose';
 
 import type { ApiPatternResponseA } from './api-service.ts';
@@ -78,7 +78,7 @@ export async function encryptPayload(payload: CleopatraRequestPayloadString) {
     return null;
   }
   const jwk = await exportJWK(key);
-  const jwt = new EncryptJWT({ payload })
+  const jwe = new FlattenedEncrypt(new TextEncoder().encode(payload))
     .setProtectedHeader({
       alg,
       enc: 'A256CBC-HS512',
@@ -86,7 +86,7 @@ export async function encryptPayload(payload: CleopatraRequestPayloadString) {
       kid: await calculateJwkThumbprint(jwk, 'sha256'),
     })
     .encrypt(key);
-  return jwt;
+  return jwe;
 }
 
 interface CleopatraMessage {
