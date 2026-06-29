@@ -145,12 +145,13 @@ export function HLIStadspasDetail() {
             </Paragraph>
             <Datalist rows={[NUMBER]} />
             {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
-            {isEnabled('HLI.securityCode') && stadspas.securityCode && (
-              <Beveiligingscode
-                name={stadspas.owner.firstname}
-                securityCode={stadspas.securityCode}
-              />
-            )}
+            {isEnabled('HLI.stadspas.securityCode') &&
+              stadspas.securityCode && (
+                <Beveiligingscode
+                  name={stadspas.owner.firstname}
+                  securityCode={stadspas.securityCode}
+                />
+              )}
             <BlockActionsStadspas stadspas={stadspas} />
           </PageContentCell>
         </>
