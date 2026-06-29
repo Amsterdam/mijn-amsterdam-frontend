@@ -37,17 +37,18 @@ function transformAfsprakenResponse(
   data: AfsprakenResponseSource
 ): AfspraakFrontend[] {
   const results = data.results.map((result) => {
-    const [startDate, startTime] = result.startDate.split(' ');
-    const [endDate, endTime] = result.endDate.split(' ');
-    const dateStart = `${startDate}T${startTime}Z`;
-    const dateEnd = `${endDate}T${endTime}Z`;
+    const dateStart = new Date(result.startDate);
+    const dateEnd = new Date(result.endDate);
 
     const startTime_ = dateFormat(dateStart, 'HH:mm');
     const endTime_ = dateFormat(dateEnd, 'HH:mm');
 
+    const dateStartISO = dateStart.toISOString();
+    const dateEndISO = dateEnd.toISOString();
+
     const icsLink = createICSDataUri({
-      start: dateStart,
-      end: dateEnd,
+      start: dateStartISO,
+      end: dateEndISO,
       uid: `afspraak-stadsloket-${result.caseReference}`,
       summary: `Afspraak voor ${result.subject}`,
       description: `Referentienummer: ${result.caseReference}`,
@@ -55,11 +56,11 @@ function transformAfsprakenResponse(
     });
 
     return {
-      dateStart,
-      dateStartFormatted: defaultDateFormat(startDate),
-      dateEnd,
-      dateEndFormatted: defaultDateFormat(endDate),
-      displayDateTime: `${defaultDateFormatWithDayName(startDate)} van ${startTime_} tot ${endTime_} uur`,
+      dateStart: dateStartISO,
+      dateStartFormatted: defaultDateFormat(dateStart),
+      dateEnd: dateEndISO,
+      dateEndFormatted: defaultDateFormat(dateEnd),
+      displayDateTime: `${defaultDateFormatWithDayName(dateStart)} van ${startTime_} tot ${endTime_} uur`,
       subject: result.subject,
       status: result.status,
       qrCode: result.qrCode,
