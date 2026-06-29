@@ -291,13 +291,7 @@ function Beveiligingscode({
 
   return (
     <PageContentCell className="ams-mb-l">
-      <Heading size="level-2" level={2} className="ams-mb-m">
-        Beveiligingscode
-      </Heading>
-      <Paragraph className="ams-mb-m">
-        Deze code wordt soms gevraagd bij het online kopen van tickets,
-        toegangsbewijzen en producten.
-      </Paragraph>
+      <DescriptionBeveiligingscode headingText="Beveiligingscode" />
       <ModalAndButton
         buttonVariant="secondary"
         modal={{
@@ -315,16 +309,24 @@ function Beveiligingscode({
               Beveiligingscode
             </Heading>
           )}
-          <Heading size="level-3" level={3} className="ams-mb-m">
-            {securityCode}
-          </Heading>
-          <Paragraph>
-            Deze code wordt soms gevraagd bij het online kopen van tickets,
-            toegangsbewijzen en producten.
-          </Paragraph>
+          <DescriptionBeveiligingscode headingText={securityCode} />
         </PageContentCell>
       </ModalAndButton>
     </PageContentCell>
+  );
+}
+
+function DescriptionBeveiligingscode({ headingText }: { headingText: string }) {
+  return (
+    <>
+      <Heading size="level-3" level={3} className="ams-mb-m">
+        {headingText}
+      </Heading>
+      <Paragraph className="ams-mb-m">
+        Deze code wordt soms gevraagd bij het online kopen van tickets,
+        toegangsbewijzen en producten.
+      </Paragraph>
+    </>
   );
 }
 
@@ -332,7 +334,7 @@ function BlockActionsStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
   if (stadspas.actief && stadspas.blockPassURL) {
     return (
       <>
-        <Heading size="level-2" level={2} className="ams-mb-m">
+        <Heading size="level-3" level={3} className="ams-mb-m">
           Is je pas gestolen of kwijt?
         </Heading>
         <Paragraph className="ams-mb-m">
