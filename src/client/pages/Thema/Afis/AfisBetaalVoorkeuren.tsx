@@ -140,7 +140,7 @@ export function AfisBetaalVoorkeuren() {
           className="ams-mb-m"
         >
           <Paragraph className="ams-mb-s">
-            Een automatische incasso instellen voor de directie Belastingen gaat
+            Een incassomachtiging instellen voor de directie Belastingen gaat
             via
             <br />
             <Link href={belastingenLinkListItem.to}>
@@ -164,9 +164,9 @@ export function AfisBetaalVoorkeuren() {
   const pageContentTop = (
     <PageContentCell spanWide={8}>
       <Paragraph className="ams-mb-m">
-        Hieronder kunt u uw gegevens bekijken en een automatische incasso
-        instellen per afdeling van de gemeente. Voor bijvoorbeeld een
-        adreswijziging stuur dan een e-mail naar:
+        Hieronder kunt u uw gegevens bekijken en een incassomachtiging instellen
+        per afdeling van de gemeente. Voor bijvoorbeeld een adreswijziging stuur
+        dan een e-mail naar:
         <Link
           href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Facturatiegegevens wijzigen&body=${encodeURIComponent(mailBody)}`}
         >
@@ -176,7 +176,7 @@ export function AfisBetaalVoorkeuren() {
       </Paragraph>
       {!themaConfig.featureToggle.emandates.active && (
         <>
-          <Heading level={4}>Via automatische incasso betalen</Heading>
+          <Heading level={4}>Via incassomachtiging betalen</Heading>
           <Paragraph className="ams-mb-m">
             Download{' '}
             <Link
@@ -229,7 +229,7 @@ export function AfisBetaalVoorkeuren() {
         </>
       )}
       {hasEMandatesError && (
-        <>Wij kunnen nu geen automatische incasso&apos;s laten zien.</>
+        <>Wij kunnen nu geen incassomachtigingen laten zien.</>
       )}
     </>
   );

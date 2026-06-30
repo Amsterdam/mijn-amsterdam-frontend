@@ -241,7 +241,7 @@ const displayPropsEMandates: DisplayProps<
 };
 
 export const eMandateTableConfig = {
-  title: `Automatische incasso's`,
+  title: `Incassomachtigingen`,
   displayProps: displayPropsEMandates,
 } as const;
 

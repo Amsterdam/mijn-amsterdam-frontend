@@ -664,7 +664,7 @@
     {
       "url": "/facturen-en-betalen",
       "displayTitle": "Facturen en betalen",
-      "description": "Overzicht van uw facturen, betalingen en automatische incasso's.",
+      "description": "Overzicht van uw facturen, betalingen en incassomachtigingen.",
       "keywords": [
         "factuur",
         "incasso",
@@ -677,21 +677,23 @@
         "betaalde facturen",
         "facturen belastingen",
         "gesloten facturen",
-        "andere facturen"
+        "andere facturen",
+        "incassomachtiging"
       ],
       "profileTypes": ["private", "commercial"]
     },
     {
       "url": "/facturen-en-betalen/betaalvoorkeuren",
       "displayTitle": "Betaalvoorkeuren",
-      "description": "Facturatiegegevens bekijken en een automatische incasso instellen.",
+      "description": "Facturatiegegevens bekijken en een incassomachtiging instellen.",
       "keywords": [
         "incasso",
         "sepa",
         "ideal",
         "automatische incasso",
         "debiteurnummer",
-        "debiteur"
+        "debiteur",
+        "incassomachtiging"
       ],
       "profileTypes": ["private", "commercial"]
     },

@@ -62,13 +62,13 @@ describe('simple-connect/belasting', () => {
             nummer: 5,
             prioriteit: 10,
             datum: '2022-05-30T09:00:34Z',
-            titel: 'Automatische incasso',
+            titel: 'Incassomachtiging',
             omschrijving:
-              'Betaal gemakkelijk de gecombineerde belastingaanslag. Regel vandaag nog uw automatische incasso, dan heeft u er straks geen omkijken meer naar.',
+              'Betaal gemakkelijk de gecombineerde belastingaanslag. Regel vandaag nog uw incassomachtiging, dan heeft u er straks geen omkijken meer naar.',
             url: 'https://belastingbalie-acc.amsterdam.nl/subject.gegevens.php',
             url_naam: 'Vraag direct aan',
             informatie:
-              'U krijgt deze tip omdat u nog niet via automatische incasso betaalt',
+              'U krijgt deze tip omdat u nog niet via incassomachtiging betaalt',
           },
         ],
       });
@@ -106,7 +106,7 @@ describe('simple-connect/belasting', () => {
           {
             datePublished: '2022-05-30T09:00:34Z',
             description:
-              'Betaal gemakkelijk de gecombineerde belastingaanslag. Regel vandaag nog uw automatische incasso, dan heeft u er straks geen omkijken meer naar.',
+              'Betaal gemakkelijk de gecombineerde belastingaanslag. Regel vandaag nog uw incassomachtiging, dan heeft u er straks geen omkijken meer naar.',
             id: 'belasting-5',
             isTip: true,
             link: {
@@ -116,8 +116,8 @@ describe('simple-connect/belasting', () => {
             themaID: 'BELASTINGEN',
             themaTitle: 'Belastingen',
             tipReason:
-              'U krijgt deze tip omdat u nog niet via automatische incasso betaalt',
-            title: 'Automatische incasso',
+              'U krijgt deze tip omdat u nog niet via incassomachtiging betaalt',
+            title: 'Incassomachtiging',
           },
         ],
       },

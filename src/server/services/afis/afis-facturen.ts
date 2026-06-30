@@ -423,7 +423,7 @@ function combineTermijnFacturen(facturen: AfisFactuur[]): AfisFactuur[] {
         // We do this because the final payment due date should be the last one.
         ...lastTermijn,
         termijnen,
-        statusDescription: `Factuur in ${termijnen.length} termijnen${lastTermijn.eMandateId ? ' per automatische incasso' : ''}.`,
+        statusDescription: `Factuur in ${termijnen.length} termijnen${lastTermijn.eMandateId ? ' per incassomachtiging' : ''}.`,
       });
     } else {
       // These are not termijnen facturen, so we just add them as they are.

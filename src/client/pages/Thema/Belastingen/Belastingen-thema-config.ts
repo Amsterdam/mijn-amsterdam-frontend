@@ -18,7 +18,7 @@ export const themaConfig: ThemaConfigBase = {
       title: THEMA_TITLE,
       listItems: [
         'Belastingaanslagen betalen',
-        'Automatische incasso regelen',
+        'Incassomachtiging regelen',
         'Bezwaar indienen',
         'Kwijtschelding aanvragen',
         'Betalingsregeling aanvragen',

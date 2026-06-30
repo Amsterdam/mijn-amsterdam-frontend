@@ -36,7 +36,7 @@ function getTermijnenTable(factuur: AfisFactuurFrontend) {
       showTHead
       contentAfterTheCaption={
         <Paragraph className="ams-mb-m">
-          De factuur wordt in termijnen per automatische incasso voldaan.
+          De factuur wordt in termijnen per incassomachtiging voldaan.
         </Paragraph>
       }
       items={factuur.termijnen}

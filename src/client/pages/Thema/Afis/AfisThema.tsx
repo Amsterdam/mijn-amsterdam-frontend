@@ -112,9 +112,9 @@ export function AfisThema() {
   const pageContentSecondary = (
     <>
       <PageContentCell>
-        <Heading level={2}>Automatische incasso</Heading>
+        <Heading level={2}>Incassomachtiging</Heading>
         <Paragraph className="ams-mb-s">
-          Facturatiegegevens bekijken en een automatische incasso instellen.
+          Facturatiegegevens bekijken en een incassomachtiging instellen.
         </Paragraph>
         <MaButtonRouterLink
           className="ams-mb-m"

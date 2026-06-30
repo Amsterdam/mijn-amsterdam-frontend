@@ -555,7 +555,7 @@ describe('afis-e-mandates service (with nock)', () => {
         batch_name: 'mijnamsterdam-emandates-batch-2025-07-10',
         cid: null,
         company_name: 'Gemeente Amsterdam',
-        concerning: 'Automatische incasso Test',
+        concerning: 'Incassomachtiging Test',
         debtor_number: '123',
         due_date: '2025-07-11',
         last_name: 'Doe',
@@ -569,7 +569,7 @@ describe('afis-e-mandates service (with nock)', () => {
           {
             invoice_amount: 1,
             invoice_date: '2025-07-10',
-            invoice_description: 'Automatische incasso Test',
+            invoice_description: 'Incassomachtiging Test',
             invoice_due_date: '2025-07-11',
             invoice_number: 'EMandaat-ref-2025-07-10',
           },

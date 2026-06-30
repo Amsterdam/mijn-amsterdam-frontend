@@ -596,7 +596,7 @@ function createEMandateSignRequestPayload(
     .toISOString()
     .split('T')[0];
 
-  const concerning = `Automatische incasso ${creditor.name}`;
+  const concerning = `Incassomachtiging ${creditor.name}`;
 
   return {
     last_name:
