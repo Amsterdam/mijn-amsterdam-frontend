@@ -1,12 +1,19 @@
-import jose from 'node-jose';
+import {
+  importX509,
+  importJWK,
+  FlattenedEncrypt,
+  type JWK,
+  calculateJwkThumbprint,
+  exportJWK,
+  type KeyLike,
+} from 'jose';
 
 import type { ApiPatternResponseA } from './api-service.ts';
 import { fetchService } from './api-service.ts';
 import * as MILIEUZONE from '../../../client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
 import * as OVERTREDINGEN from '../../../client/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
-import { IS_TAP } from '../../../universal/config/env.ts';
+import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
 import {
-  apiErrorResult,
   apiSuccessResult,
   type ApiResponse,
 } from '../../../universal/helpers/api.ts';
@@ -18,35 +25,30 @@ import {
   createSessionBasedCacheKey,
   getApiConfig,
 } from '../../helpers/source-api-helpers.ts';
-import { logger } from '../../logging.ts';
 
-const DEV_KEY = {
+const alg = 'RSA-OAEP-256';
+
+const DEV_KEY: JWK = {
   kty: 'RSA',
   kid: 'xxx',
   x5t: '8zMcftkkR9RYIvhvu4UrfAo0IaM',
   n: 'uTBrbjUH8Ry0A-dt9v0NJon3HPfo-b1ZKrW1eLUUChOUVop1qhlRck_IMx1o3zVETqe_nOmwHp4yC6NQNUfYWnHQfu858Zr-zfDpI1h1cjlgv5pdorJDxTDydNMwvYQIbbeblKWavGWaz7Pq3SK_AwACxIlcoJ09wNPKi2E3zSQBI0RpVQcYs38mtCa4iOT5DEbn7gibBVbtXxOC3NeWvhMXEJVeqAXWA0M2Df1qHGLo1gLund1hDR4rTQf4h62PSpVp8G3Hoo1zGpZlJJJo1RB2JNKqCIZkjs3f80ZhEP9_IIC0CgZdsyqpltf4ygsG_TycxgEuiAy1bVrDSy82xaZleV1hvjHrnlIAHNTfnNebmCMPzahrcExDjSMQbXWHWd00r5cs2E1YAv9iYox-MFflaUN0tto76GhsASnDC_V40mWLaRFEymIfanIgLZFtViW2kCBQJOEUtWrC3weLx_iTQQtvbSPhx-ayQQCpfKU_vShfkxUeqAcf5yoZDae3uqGoo-biCZMFDFo5i74biwvz-AQ5lRtsMRgQCpGDaHjQJ6P7pJeQlhrQhMwxvePGaUW0XcJ0l3C4YuNtLLHFtbxw3DieQRMbAkmpSzideOg9tIesCbAca8EvNipB3PowQ4TpZXPkK9HxsWL681_YRcu-QxCT79hhQJ9FDPbqbes',
   e: 'AQAB',
+  alg,
 };
 
-function getPublicKey() {
-  const keystore = jose.JWK.createKeyStore();
-  let certContent;
-
-  try {
-    if (IS_TAP) {
-      certContent = getCert('BFF_CLEOPATRA_PUBLIC_KEY_CERT');
-    }
-  } catch (error) {
-    logger.error(error, 'Error getting public key');
+function getPublicKey(): Promise<KeyLike | Uint8Array<ArrayBufferLike> | null> {
+  if (IS_DEVELOPMENT) {
+    return importJWK(DEV_KEY, alg);
   }
 
-  const pemPubKey = !IS_TAP
-    ? keystore.add(DEV_KEY, 'json')
-    : certContent
-      ? keystore.add(certContent, 'pem')
-      : Promise.resolve(undefined);
+  const certContent = getCert('BFF_CLEOPATRA_PUBLIC_KEY_CERT');
 
-  return pemPubKey;
+  if (!certContent) {
+    throw new Error('BFF_CLEOPATRA_PUBLIC_KEY_CERT could not be read');
+  }
+
+  return importX509(certContent, alg);
 }
 
 export function getJSONRequestPayload(
@@ -65,25 +67,19 @@ export function getJSONRequestPayload(
 
 export async function encryptPayload(payload: CleopatraRequestPayloadString) {
   const key = await getPublicKey();
-
-  if (key) {
-    return jose.JWE.createEncrypt(
-      {
-        format: 'flattened',
-        fields: {
-          alg: 'RSA-OAEP-256',
-          enc: 'A256CBC-HS512',
-          typ: 'JWE',
-          kid: key.kid,
-        },
-      },
-      key
-    )
-      .update(payload)
-      .final();
+  if (!key) {
+    return null;
   }
-
-  return null;
+  const jwk = await exportJWK(key);
+  const jwe = new FlattenedEncrypt(new TextEncoder().encode(payload))
+    .setProtectedHeader({
+      alg,
+      enc: 'A256CBC-HS512',
+      typ: 'JWE',
+      kid: await calculateJwkThumbprint(jwk, 'sha256'),
+    })
+    .encrypt(key);
+  return jwe;
 }
 
 interface CleopatraMessage {
@@ -175,10 +171,6 @@ async function fetchCleopatra(authProfileAndToken: AuthProfileAndToken) {
   const postData = await encryptPayload(
     getJSONRequestPayload(authProfileAndToken.profile)
   );
-
-  if (!postData) {
-    return apiErrorResult('Postdata could not be encrypted', null);
-  }
 
   const requestConfig = getApiConfig('CLEOPATRA', {
     transformResponse: transformCleopatraResponse,

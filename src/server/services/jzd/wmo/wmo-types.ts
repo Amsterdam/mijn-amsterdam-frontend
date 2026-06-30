@@ -3,6 +3,7 @@ import type {
   ZaakAanvraagDetail,
 } from '../../../../universal/types/App.types.ts';
 import type { ProductSoortCode } from '../../zorgned/zorgned-types.ts';
+import type { WithMaApiProps } from '../jzd-types.ts';
 
 export type WMOVoorzieningFrontend = ZaakAanvraagDetail & {
   dateDecision: string;
@@ -15,4 +16,8 @@ export type WMOVoorzieningFrontend = ZaakAanvraagDetail & {
   statusDateFormatted: string;
   supplier: string | null; // Leverancier
   disclaimer?: string;
+  // Which actions are available for this item, based on the JZD API configuration.
+  maActies?: WithMaApiProps['maActies'];
+  // Which URLs do these actions point to
+  maActieUrls?: WithMaApiProps['maActieUrls'];
 };

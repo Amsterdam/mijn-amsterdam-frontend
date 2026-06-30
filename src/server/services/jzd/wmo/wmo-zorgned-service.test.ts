@@ -95,7 +95,7 @@ describe('wmo-zorgned-service', () => {
 
     const aanvraag4 = {
       productsoortCode: 'BLA',
-      leveringsVorm: 'BLO',
+      leveringsVorm: 'ZIN',
     } as ZorgnedAanvraagTransformed;
 
     expect(forTesting.isActueel(aanvraag4)).toBe(false);

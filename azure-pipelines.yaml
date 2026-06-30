@@ -49,7 +49,7 @@ resources:
 
 parameters:
   - name: btdBuild
-    displayName: BUILD -Select if you want the app to be built.
+    displayName: BUILD - Select if you want the app to be built.
     type: boolean
     default: true
   - name: btdTest
@@ -60,6 +60,10 @@ parameters:
       - auto
       - 'yes'
       - 'no'
+  - name: btdMigrate
+    displayName: MIGRATE - Select if you want to run the BFF migrations (BFF needs to be selected too).
+    type: boolean
+    default: true
   - name: dtapName
     displayName: DTAP - Select the DTAP environment to deploy to. If auto is selected, the environment will be [T] by default or [A] for branches main and az-acceptance.
     type: string
@@ -102,21 +106,28 @@ variables:
       - name: dtapName
         value: t
 
-  - ${{ if and(eq(parameters.btdTest, 'auto'), or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.SourceBranchName'], 'az-acceptance'))) }}:
-      - name: btdTest
-        value: 'no'
-
   - ${{ if and(eq(parameters.dtapName, 'auto'), or(eq(variables['Build.SourceBranchName'], 'az-acceptance'), eq(variables['Build.SourceBranchName'], 'main'))) }}:
       - name: dtapName
         value: a
 
+  - ${{ if and(eq(parameters.btdTest, 'auto'), or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.SourceBranchName'], 'az-acceptance'))) }}:
+      # We assume code is tested locally before merging to these auto-deploy branches, so we skip tests for these branches.
+      - name: btdTest
+        value: 'no'
+      # When testing code including migrations, run them from the infra pipeline and enable the migrate step manually.
+      - name: btdMigrate
+        value: false
+
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+      - name: btdMigrate
+        value: false
       - name: btdDeploy
         value: false
 
   - ${{ if or(eq(variables['btdTest'], 'auto'), eq(variables['btdTest'], 'yes')) }}:
       - name: btdTest
         value: true
+
   - ${{ if eq(variables['btdTest'], 'no') }}:
       - name: btdTest
         value: false

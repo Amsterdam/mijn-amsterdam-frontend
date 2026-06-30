@@ -1,7 +1,7 @@
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
-import { routes } from '../jzd-service-config.ts';
+import { featureToggle, routes } from '../jzd-service-config.ts';
 import {
   hasDecision,
   isAfterWCAGValidDocumentsDate,
@@ -15,7 +15,10 @@ import { type WMOVoorzieningFrontend } from './wmo-types.ts';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service.ts';
 import { themaConfig } from '../../../../client/pages/Thema/Zorg/Zorg-thema-config.ts';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles.ts';
-import { apiSuccessResult } from '../../../../universal/helpers/api.ts';
+import {
+  apiSuccessResult,
+  type ApiResponse,
+} from '../../../../universal/helpers/api.ts';
 import {
   dateSort,
   defaultDateFormat,
@@ -31,6 +34,8 @@ import {
 import { generateFullApiUrlBFF } from '../../../routing/route-helpers.ts';
 import { getStatusLineItems } from '../../zorgned/zorgned-status-line-items.ts';
 import { type ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
+import type { ZorgnedAanvraagTransformedWithMaApiProps } from '../jzd-types.ts';
+import { transformVoorzieningForFrontendWithMaApiProps } from '../jzd-voorzieningen-api-service.ts';
 
 export function getDocuments(
   sessionID: SessionID,
@@ -69,7 +74,7 @@ function transformVoorzieningForFrontend(
   steps: StatusLineItem[],
   sessionID: SessionID,
   aanvragen: ZorgnedAanvraagTransformed[]
-): WMOVoorzieningFrontend | null {
+): WMOVoorzieningFrontend {
   const id = aanvraag.prettyID;
 
   const route = generatePath(themaConfig.detailPage.route.path, {
@@ -113,49 +118,76 @@ function transformVoorzieningForFrontend(
     displayStatus: getLatestStatus(steps),
     statusDate: getLatestStatusDate(steps),
     statusDateFormatted: getLatestStatusDate(steps, true),
-    disclaimer,
   };
+
+  if (disclaimer) {
+    voorzieningFrontend.disclaimer = disclaimer;
+  }
 
   return voorzieningFrontend;
 }
 
-export async function fetchWmo(authProfileAndToken: AuthProfileAndToken) {
+export async function fetchWmo(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<ApiResponse<WMOVoorzieningFrontend[]>> {
   const voorzieningenResponse = await fetchZorgnedAanvragenWMO(
     authProfileAndToken.profile.id
   );
 
-  if (voorzieningenResponse.status === 'OK') {
-    const today = new Date();
-
-    const voorzieningenFrontend: WMOVoorzieningFrontend[] =
-      voorzieningenResponse.content
-        .map((aanvraag, _index, aanvragen) => {
-          const steps = getStatusLineItems(
-            'WMO',
-            wmoStatusLineItemsConfig,
-            aanvraag,
-            aanvragen,
-            today
-          );
-
-          if (steps) {
-            return transformVoorzieningForFrontend(
-              aanvraag,
-              steps,
-              authProfileAndToken.profile.sid,
-              aanvragen
-            );
-          }
-
-          return null;
-        })
-        .filter((voorziening) => voorziening !== null)
-        .toSorted(dateSort('statusDate', 'desc'));
-
-    return apiSuccessResult(voorzieningenFrontend);
+  if (voorzieningenResponse.status !== 'OK') {
+    return voorzieningenResponse;
   }
 
-  return voorzieningenResponse;
+  const today = new Date();
+  let voorzieningen: ZorgnedAanvraagTransformedWithMaApiProps[] =
+    voorzieningenResponse.content;
+
+  if (featureToggle.service.fetchWmo.addMaVoorzieningenApiProps) {
+    const voorzieningenWithMaApiProps =
+      transformVoorzieningForFrontendWithMaApiProps(
+        voorzieningenResponse.content,
+        undefined,
+        undefined
+      );
+    voorzieningen = voorzieningenWithMaApiProps;
+  }
+
+  const voorzieningenFrontend: WMOVoorzieningFrontend[] = voorzieningen
+    .map((aanvraag, _index, aanvragen) => {
+      const steps = getStatusLineItems(
+        'WMO',
+        wmoStatusLineItemsConfig,
+        aanvraag,
+        aanvragen,
+        today
+      );
+
+      if (steps) {
+        const voorzieningTransformedBase = transformVoorzieningForFrontend(
+          aanvraag,
+          steps,
+          authProfileAndToken.profile.sid,
+          aanvragen
+        );
+
+        if (aanvraag.maActies) {
+          return Object.assign(voorzieningTransformedBase, {
+            maActies: aanvraag.maActies,
+            ...(aanvraag.maActieUrls
+              ? { maActieUrls: aanvraag.maActieUrls }
+              : {}),
+          });
+        }
+
+        return voorzieningTransformedBase;
+      }
+
+      return null;
+    })
+    .filter((voorziening) => voorziening !== null)
+    .toSorted(dateSort('statusDate', 'desc'));
+
+  return apiSuccessResult(voorzieningenFrontend);
 }
 
 export const forTesting = {

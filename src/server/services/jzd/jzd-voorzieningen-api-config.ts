@@ -1,5 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports -- VSCODE insists on adding the type keywordt before import here, and it causes no issues.
-import z from 'zod';
+import { parseISO } from 'date-fns/parseISO';
+import type z from 'zod';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { voorzieningenRequestInput } from './jzd-service-config.ts';
@@ -11,7 +11,9 @@ import {
   productGroep,
   wmoStatusLineItemsConfig,
 } from './wmo/wmo-status-line-items.ts';
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { entries } from '../../../universal/helpers/utils.ts';
+import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 
 export type FetchWmoVoorzieningenApiOptions = Omit<
   z.infer<typeof voorzieningenRequestInput>,
@@ -21,6 +23,7 @@ export type FetchWmoVoorzieningenApiOptions = Omit<
 // This list should be kept in sync with the list of productIdentificaties given to us by JZD - Zorgned FB
 const PRODUCT_IDS_EXCLUDED_FROM_REPARATIEVERZOEK_ACTION = [
   '13W13',
+  '13XW15',
   '13W15',
   '13W37',
   '13W32',
@@ -48,23 +51,59 @@ const PRODUCT_IDS_EXCLUDED_FROM_REPARATIEVERZOEK_ACTION = [
   '13W83',
 ];
 
-export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
+function maActieUrlsReparatieverzoek(
+  zorgnedAanvraag: ZorgnedAanvraagTransformed
+) {
+  const baseUrl = IS_PRODUCTION
+    ? 'https://formulieren.amsterdam.nl'
+    : 'https://formulieren.acc.amsterdam.nl';
+  const guid = encodeURIComponent(`ID:${zorgnedAanvraag.id}`);
+  return {
+    reparatieverzoek: `${baseUrl}/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/reparatieverzoeken.aspx?GUID=${guid}`,
+  };
+}
+
+const REPARATIEVERZOEK_ACTIE_CONFIG: JzdApiConfig = {
+  include: {
+    isActueel: true,
+    productsoortCode: ['WRA', 'WRA1', 'WRA2', 'WRA3', 'WRA4', 'WRA5'],
+    datumBeginLevering: (voorziening) => {
+      // Only show the reparatieverzoek action for WRA products that have a datumBeginLevering in the past (i.e. the product has been delivered).
+      return (
+        voorziening.datumBeginLevering !== null &&
+        parseISO(voorziening.datumBeginLevering) <= new Date()
+      );
+    },
+  },
+  exclude: {
+    productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_REPARATIEVERZOEK_ACTION,
+    leveringsVorm: ['PGB'], // Exclude PGB products from the reparatieverzoek action, as these are not handled by the Gemeente.
+  },
+  assign: {
+    maActies: ['reparatieverzoek'],
+    maActieUrls: maActieUrlsReparatieverzoek,
+    maProductgroep: productGroep.WRA,
+  },
+};
+
+const REPARATIEVERZOEK_ACTIE_CONFIG_PGB: JzdApiConfig = {
+  include: {
+    productsoortCode: REPARATIEVERZOEK_ACTIE_CONFIG.include.productsoortCode,
+    leveringsVorm: ['PGB'],
+    isActueel: true,
+  },
+  assign: {
+    maActies: ['pgb-reparatieverzoek'],
+    maProductgroep: productGroep.vergoeding,
+  },
+};
+
+export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
   // // // // // // // // // // // // // // // // // //
   // Reparatieverzoek action for WRA products  // // //
   // // // // // // // // // // // // // // // // // //
-  {
-    include: {
-      isActueel: true,
-      productsoortCode: ['WRA', 'WRA1', 'WRA2', 'WRA3', 'WRA4', 'WRA5'],
-    },
-    exclude: {
-      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_REPARATIEVERZOEK_ACTION,
-    },
-    assign: {
-      maActies: ['reparatieverzoek'],
-      maProductgroep: productGroep.WRA,
-    },
-  },
+  REPARATIEVERZOEK_ACTIE_CONFIG,
+  REPARATIEVERZOEK_ACTIE_CONFIG_PGB,
   // // // // // // // // // //
   // Stopzetten actions // // //
   // // // // // // // // // //
@@ -96,13 +135,6 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
     assign: {
       maCategorie: ['B-WMO'],
       maActies: ['stopzetten-niet-via-formulier'],
-      maActieUrls: () => {
-        // TODO: possibly return different URLs based on the specific productgroep or other properties of the voorziening.
-        return {
-          'stopzetten-niet-via-formulier':
-            'https://www.amsterdam.nl/zorg-en-ondersteuning/contact/wmo-helpdesk/',
-        };
-      },
     },
     include: {
       leveringsVorm: (voorziening) => voorziening.leveringsVorm !== 'PGB',
@@ -290,13 +322,6 @@ export const wmoVoorzieningenApiConfig: JzdApiConfig[] = [
     assign: {
       maCategorie: ['D-07'],
       maActies: ['stopzetten-niet-via-formulier'],
-      maActieUrls: () => {
-        // TODO: possibly return different URLs based on the specific productgroep or other properties of the voorziening.
-        return {
-          'stopzetten-niet-via-formulier':
-            'https://www.amsterdam.nl/zorg-en-ondersteuning/contact/wmo-helpdesk/',
-        };
-      },
     },
     include: {
       isActueel: true,

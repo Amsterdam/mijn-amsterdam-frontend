@@ -47,7 +47,7 @@ export function isRecord(obj: unknown): obj is Record<string, unknown> {
 }
 
 export function jsonCopy<T>(data: T): T {
-  return JSON.parse(JSON.stringify(data));
+  return JSON.parse(JSON.stringify(data)) as T;
 }
 
 export function sortAlpha<T>(
