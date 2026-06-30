@@ -10,6 +10,19 @@ function getPasBlockedStateKey(passNumber: StadspasFrontend['passNumber']) {
   return `pass-blocked-state-${passNumber}`;
 }
 
+export function useStadspas(
+  passNumber: string | undefined
+): StadspasFrontend | undefined {
+  const stadspassen = useStadspassen();
+  if (!passNumber) {
+    return undefined;
+  }
+  const stadspas = stadspassen.find(
+    (pass) => pass.passNumber.toString() === passNumber
+  );
+  return stadspas;
+}
+
 export function useStadspassen() {
   const { HLI } = useAppStateGetter();
   const store = useBffApiStateStore();
