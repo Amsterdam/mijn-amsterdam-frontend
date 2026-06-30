@@ -18,12 +18,6 @@ import {
   OIDC_SESSION_MAX_AGE_SECONDS,
   TOKEN_ID_ATTRIBUTE,
 } from '../auth/auth-config.ts';
-import type { TestUserData } from '../auth/auth-helpers-development.ts';
-import {
-  fetchTestAccountOverviewFile,
-  getTestAccountsBaseFromEnv,
-  mergeWithDynamicTableHeaders,
-} from '../auth/auth-helpers-development.ts';
 import { signDevelopmentToken } from '../auth/auth-helpers-development.ts';
 import { getAuth, hasSessionCookie } from '../auth/auth-helpers.ts';
 import { authRoutes } from '../auth/auth-routes.ts';
@@ -31,6 +25,12 @@ import type { AuthProfile, MaSession } from '../auth/auth-types.ts';
 import { type AuthenticatedRequest } from '../auth/auth-types.ts';
 import { MA_FRONTEND_URL, ONE_SECOND_MS } from '../config/app.ts';
 import { getFromEnv, getValueFromEnvByKey } from '../helpers/env.ts';
+import {
+  type TestUserData,
+  fetchTestAccountOverviewFile,
+  getTestAccountsBaseFromEnv,
+  mergeWithDynamicTableHeaders,
+} from '../helpers/test-accounts.ts';
 import { countLoggedInVisit } from '../services/admin/admin-visitors.ts';
 
 export const authRouterDevelopment = createBFFRouter({ id: 'router-dev' });

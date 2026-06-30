@@ -10,11 +10,11 @@ import {
 import type { DecosZaakBase } from './decos-types.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import {
   getTestAccountsBaseFromEnv,
   type TestUserData,
-} from '../../auth/auth-helpers-development.ts';
-import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+} from '../../helpers/test-accounts.ts';
 import type { RequestWithQueryParams } from '../../routing/route-helpers.ts';
 import {
   sendBadRequest,

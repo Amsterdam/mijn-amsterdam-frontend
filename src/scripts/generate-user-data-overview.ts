@@ -72,7 +72,7 @@ import {
   getTestAccountsBaseFromEnvMap,
   type OptionalTestUserAccountProperties,
   mergeWithDynamicTableHeaders,
-} from '../server/auth/auth-helpers-development.ts';
+} from '../server/helpers/test-accounts.ts';
 import type {
   Adres,
   BrpFrontend,
@@ -161,6 +161,12 @@ const { values: args } = parseArgs({
     },
   },
 });
+
+if (!args['base-url']) {
+  throw new Error(
+    'base-url is required. Please set BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL in your environment or pass it as an argument.'
+  );
+}
 
 const themaIDs = themas.map((menuItem) => menuItem.id);
 
