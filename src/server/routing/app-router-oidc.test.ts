@@ -12,11 +12,7 @@ import {
   RequestMock,
   ResponseMock,
 } from '../../testing/utils.ts';
-import {
-  OIDC_SESSION_COOKIE_NAME,
-  oidcConfigDigid,
-  oidcConfigEherkenning,
-} from '../auth/auth-config.ts';
+import { oidcConfigDigid, oidcConfigEherkenning } from '../auth/auth-config.ts';
 import { authRoutes } from '../auth/auth-routes.ts';
 
 const mocks = vi.hoisted(() => {
@@ -178,10 +174,6 @@ describe('router-oidc', () => {
       const authProfileAndToken = getAuthProfileAndToken();
       const reqMock = await getReqMockWithOidc(authProfileAndToken.profile);
 
-      (reqMock as unknown as RequestMock).setCookies({
-        [OIDC_SESSION_COOKIE_NAME]: 'foo-bar',
-      });
-
       const resMock = ResponseMock.new();
 
       forTesting.authLogoutHandler(reqMock, resMock);
@@ -203,10 +195,6 @@ describe('router-oidc', () => {
     test('Eherkenning based on session data and cookie', async () => {
       const authProfileAndToken = getAuthProfileAndToken('commercial');
       const reqMock = await getReqMockWithOidc(authProfileAndToken.profile);
-
-      (reqMock as unknown as RequestMock).setCookies({
-        [OIDC_SESSION_COOKIE_NAME]: 'foo-bar',
-      });
 
       const resMock = ResponseMock.new();
 
