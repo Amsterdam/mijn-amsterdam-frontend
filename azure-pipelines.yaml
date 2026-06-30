@@ -111,13 +111,17 @@ variables:
         value: a
 
   - ${{ if and(eq(parameters.btdTest, 'auto'), or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.SourceBranchName'], 'az-acceptance'))) }}:
+      # We assume code is tested locally before merging to these auto-deploy branches, so we skip tests for these branches.
       - name: btdTest
         value: 'no'
+      # When testing code including migrations, run them from the infra pipeline and enable the migrate step manually.
+      - name: btdMigrate
+        value: false
 
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-      - name: btdDeploy
-        value: false
       - name: btdMigrate
+        value: false
+      - name: btdDeploy
         value: false
 
   - ${{ if or(eq(variables['btdTest'], 'auto'), eq(variables['btdTest'], 'yes')) }}:
