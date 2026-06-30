@@ -49,7 +49,7 @@ resources:
 
 parameters:
   - name: btdBuild
-    displayName: BUILD -Select if you want the app to be built.
+    displayName: BUILD - Select if you want the app to be built.
     type: boolean
     default: true
   - name: btdTest
@@ -61,7 +61,7 @@ parameters:
       - 'yes'
       - 'no'
   - name: btdMigrate
-    displayName: BFF - Select if you want to run the BFF migrations.
+    displayName: MIGRATE - Select if you want to run the BFF migrations.
     type: boolean
     default: true
   - name: dtapName
