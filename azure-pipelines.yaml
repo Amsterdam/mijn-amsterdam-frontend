@@ -60,6 +60,10 @@ parameters:
       - auto
       - 'yes'
       - 'no'
+  - name: btdMigrate
+    displayName: BFF - Select if you want to run the BFF migrations.
+    type: boolean
+    default: true
   - name: dtapName
     displayName: DTAP - Select the DTAP environment to deploy to. If auto is selected, the environment will be [T] by default or [A] for branches main and az-acceptance.
     type: string
@@ -97,26 +101,29 @@ variables:
   - name: btdDeploy
     value: true
 
-  # Overrides if the branch is testen, az-acceptance or main
+  # Overrides for if the branch is testen, az-acceptance or main
   - ${{ if eq(parameters.dtapName, 'auto') }}:
       - name: dtapName
         value: t
-
-  - ${{ if and(eq(parameters.btdTest, 'auto'), or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.SourceBranchName'], 'az-acceptance'))) }}:
-      - name: btdTest
-        value: 'no'
 
   - ${{ if and(eq(parameters.dtapName, 'auto'), or(eq(variables['Build.SourceBranchName'], 'az-acceptance'), eq(variables['Build.SourceBranchName'], 'main'))) }}:
       - name: dtapName
         value: a
 
+  - ${{ if and(eq(parameters.btdTest, 'auto'), or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.SourceBranchName'], 'az-acceptance'))) }}:
+      - name: btdTest
+        value: 'no'
+
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
       - name: btdDeploy
+        value: false
+      - name: btdMigrate
         value: false
 
   - ${{ if or(eq(variables['btdTest'], 'auto'), eq(variables['btdTest'], 'yes')) }}:
       - name: btdTest
         value: true
+
   - ${{ if eq(variables['btdTest'], 'no') }}:
       - name: btdTest
         value: false
