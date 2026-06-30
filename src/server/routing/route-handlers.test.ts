@@ -101,7 +101,7 @@ describe('routing.route-handlers', () => {
     vi.resetAllMocks();
   });
 
-  describe('OAuthVerificationHandler', async () => {
+  describe('OAuthVerificationHandler', () => {
     const defaultTokenOptions = {
       algorithm: 'RS256',
       keyid: DEFAULT_KEY_ID,
