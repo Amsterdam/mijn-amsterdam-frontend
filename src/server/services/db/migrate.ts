@@ -17,9 +17,6 @@ export async function runMigrations() {
     import('./postgres.ts'),
   ]);
 
-  // TODO: Remove this line before merge!
-  throw new Error('Some error here');
-
   const db = drizzle(getPool());
 
   await migrate(db, {
