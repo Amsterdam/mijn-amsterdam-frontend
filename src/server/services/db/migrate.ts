@@ -33,18 +33,14 @@ export async function runMigrationsCommand() {
   ]);
 
   console.log('Database migration started.');
-  trackEvent('Database migration started', {
-    name: 'database-migration-started',
-    message: 'Database migration started.',
+  trackEvent('database-migration-started', {
     module: 'database',
   });
 
   try {
     await checkDatabaseConnectivity();
     console.log('Database migration connectivity pre-check succeeded.');
-    trackEvent('Database migration connectivity pre-check succeeded.', {
-      name: 'database-migration-connectivity-pre-check-succeeded',
-      message: 'Database migration connectivity pre-check succeeded.',
+    trackEvent('database-migration-connectivity-pre-check-succeeded', {
       module: 'database',
     });
   } catch (error) {
@@ -62,9 +58,7 @@ export async function runMigrationsCommand() {
   try {
     await runMigrations();
     console.log('Database migration completed successfully.');
-    trackEvent('Database migration completed successfully.', {
-      name: 'database-migration-completed',
-      message: 'Database migration completed successfully.',
+    trackEvent('database-migration-completed', {
       module: 'database',
     });
   } catch (error) {
