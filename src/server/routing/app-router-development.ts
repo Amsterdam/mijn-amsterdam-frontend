@@ -26,6 +26,7 @@ import { type AuthenticatedRequest } from '../auth/auth-types.ts';
 import { MA_FRONTEND_URL, ONE_SECOND_MS } from '../config/app.ts';
 import { getFromEnv, getValueFromEnvByKey } from '../helpers/env.ts';
 import {
+  type TestUserAccount,
   type TestUserData,
   fetchTestAccountOverviewFile,
   getTestAccountsBaseFromEnv,
@@ -217,15 +218,38 @@ async function sendRenderedTestAccountTable(
     );
   }
 
+  const testAccountOverviewByUsername =
+    testAccountsOverview?.accounts.reduce(
+      (acc, account) => {
+        acc[account.username] = account;
+        return acc;
+      },
+      {} as Record<string, TestUserAccount>
+    ) ?? {};
+
+  const testAccountsBaseByUsername = testAccountsBase.accounts.reduce(
+    (acc, account) => {
+      acc[account.username] = account;
+      return acc;
+    },
+    {} as Record<string, TestUserAccount>
+  );
+
   const accounts_ = [
-    ...testAccountsBase.accounts,
+    // First enrich the base accounts with the overview data.
+    ...testAccountsBase.accounts.map((account) => {
+      const overviewAccount = testAccountOverviewByUsername[account.username];
+      return {
+        ...overviewAccount,
+        ...account,
+      };
+    }),
+    // Then add any additional accounts from the overview that are not in the base.
     ...(testAccountsOverview?.accounts || []).filter(
-      (account) =>
-        !testAccountsBase.accounts.some(
-          (baseAccount) => baseAccount.username === account.username
-        )
+      (account) => !(account.username in testAccountsBaseByUsername)
     ),
   ];
+  console.log(accounts_, testAccountOverviewByUsername);
   const tableHeaders_ = [
     ...testAccountsBase.tableHeaders,
     ...(testAccountsOverview?.tableHeaders || []).filter(
@@ -247,14 +271,11 @@ async function sendRenderedTestAccountTable(
     testAccountsData,
     authMethod
   );
-  const [tableHeaders, tableRows] = formatForTable({
-    ...testAccountsData,
-    accounts: accountsWithLoginLink,
-  });
+
   const renderProps = {
     title: 'Selecteer een testaccount',
-    tableHeaders,
-    tableRows,
+    tableHeaders: testAccountsData.tableHeaders,
+    tableRows: accountsWithLoginLink,
   };
 
   return res.render('select-test-account', renderProps);
@@ -279,50 +300,6 @@ function addLoginLinkToUsernameProp(
 
 type TableHeaders = string[];
 type TableRows = string[][];
-
-function formatForTable(accountData: TestUserData): [TableHeaders, TableRows] {
-  const tableHeaders = accountData.tableHeaders.map((h) => h.displayName);
-
-  accountData = checkUpdateKeys(accountData);
-
-  if (accountData.accounts.length <= 0) {
-    return [tableHeaders, []];
-  }
-
-  // This is gonna be a table, so all keys need to be in the same order.
-  const keyOrder: Record<string, number> = {};
-  accountData.tableHeaders.forEach((th, i) => (keyOrder[th.key] = i));
-
-  const tableRows = accountData.accounts.map((account) => {
-    const sortedEntries = Object.entries(account).toSorted(([keyA], [keyB]) => {
-      return keyOrder[keyA] < keyOrder[keyB] ? -1 : 1;
-    });
-
-    const fields = sortedEntries.map(([_, v]) => {
-      if (typeof v === 'boolean') {
-        return v ? 'Ja' : 'Nee';
-      }
-      return v;
-    });
-    return fields;
-  });
-
-  return [tableHeaders, tableRows];
-}
-
-function checkUpdateKeys(accountData: TestUserData): TestUserData {
-  accountData.accounts.forEach((account) => {
-    if (!account.profileId) {
-      throw new Error(`No id found for test account ${account.username}`);
-    }
-    accountData.tableHeaders.forEach(({ key }) => {
-      if (!Object.keys(account).includes(key)) {
-        account[key] = 'Unknown';
-      }
-    });
-  });
-  return accountData;
-}
 
 authRouterDevelopment.get(
   [

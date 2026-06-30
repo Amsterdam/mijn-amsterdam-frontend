@@ -27,16 +27,22 @@ style.
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    width: 300px;
+    width: 200px;
+    display: block;
   }
 
 table
   thead
     tr
       each header in tableHeaders
-        th #{header}
+        th #{header.displayName}
   tbody
     each row in tableRows
       tr
-        each field in row
-          td !{field}
+        each header in tableHeaders
+          if header.key == 'username'
+            td.test-account-name !{row[header.key]}
+          else if row[header.key]
+            td !{row[header.key]}
+          else
+            td -
