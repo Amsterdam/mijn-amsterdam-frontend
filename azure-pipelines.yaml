@@ -101,7 +101,7 @@ variables:
   - name: btdDeploy
     value: true
 
-  # Overrides for if the branch is testen, az-acceptance or main
+  # Overrides if the branch is testen, az-acceptance or main
   - ${{ if eq(parameters.dtapName, 'auto') }}:
       - name: dtapName
         value: t
