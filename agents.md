@@ -9,7 +9,10 @@ Tell the agent the target path + expected behavior.
 
 ## Running tests without watch mode (Vitest)
 
-For any `pnpm run` script that executes `vitest`, append `-- --run --reporter=verbose`.
+For any `pnpm run` script that executes `vitest`, prepend `CI=1` and append `-- --run --reporter=verbose`.
+
+For example to run all tests in the routing directory `pnpm run bff-api:test:dirs src/server/routing` becomes 
+`CI=1 pnpm run bff-api:test:dirs src/server/routing -- --run --reporter=verbose`
 
 ## Test env conventions
 

@@ -1,4 +1,6 @@
-import jwt from 'jsonwebtoken';
+import { createPrivateKey } from 'node:crypto';
+
+import { SignJWT } from 'jose';
 import nock from 'nock';
 
 import {
@@ -62,6 +64,36 @@ const oauthKeysResponse = {
   ],
 };
 
+function tamperJwtSignature(token: string): string {
+  const [header, payload, signature] = token.split('.');
+  const replacementChar = signature.endsWith('a') ? 'b' : 'a';
+  return `${header}.${payload}.${signature.slice(0, -1)}${replacementChar}`;
+}
+
+const privateKey = createPrivateKey(dummyPrivateKey);
+
+type SignTokenOptions = {
+  issuer?: string;
+  audience?: string;
+  algorithm?: string;
+  keyid?: string;
+};
+
+async function signToken(
+  payload: Record<string, unknown>,
+  options: SignTokenOptions
+): Promise<string> {
+  const signer = new SignJWT(payload)
+    .setProtectedHeader({
+      alg: options.algorithm ?? 'RS256',
+      kid: options.keyid,
+    })
+    .setIssuer(options.issuer ?? 'https://sts.windows.net/test_tenant/')
+    .setAudience(options.audience ?? 'test_audience');
+
+  return signer.sign(privateKey);
+}
+
 describe('routing.route-handlers', () => {
   const resMock = ResponseMock.new();
 
@@ -69,32 +101,41 @@ describe('routing.route-handlers', () => {
     vi.resetAllMocks();
   });
 
-  describe('OAuthVerificationHandler', async () => {
-    const defaultToken = {
+  describe('OAuthVerificationHandler', () => {
+    const defaultTokenOptions = {
       algorithm: 'RS256',
       keyid: DEFAULT_KEY_ID,
       issuer: 'https://sts.windows.net/test_tenant/',
       audience: 'test_audience',
     } as const;
     const defaultRole = 'User';
-    const defaultTokenSigned = jwt.sign(
-      { roles: [defaultRole] },
-      dummyPrivateKey,
-      defaultToken
-    );
-    beforeAll(() => {
+    let defaultTokenSigned: string;
+    beforeAll(async () => {
       vi.stubEnv('BFF_OAUTH_TENANT', 'test_tenant');
-      vi.stubEnv('BFF_OAUTH_MIJNADAM_CLIENT_ID', defaultToken.audience);
+      vi.stubEnv('BFF_OAUTH_MIJNADAM_CLIENT_ID', defaultTokenOptions.audience);
+
+      defaultTokenSigned = await signToken(
+        { roles: [defaultRole] },
+        {
+          algorithm: defaultTokenOptions.algorithm,
+          keyid: defaultTokenOptions.keyid,
+          issuer: defaultTokenOptions.issuer,
+          audience: defaultTokenOptions.audience,
+        }
+      );
     });
+
     beforeEach(() => {
       nock('https://sts.windows.net')
         .get('/test_tenant/discovery/keys')
         .times(1)
         .reply(200, oauthKeysResponse);
     });
+
     afterAll(() => {
       vi.unstubAllEnvs();
     });
+
     test('Correct token', async () => {
       const nextMock = vi.fn();
       const resMock = ResponseMock.new();
@@ -108,6 +149,7 @@ describe('routing.route-handlers', () => {
       await OAuthVerificationHandler(defaultRole)(reqMock, resMock, nextMock);
       expect(nextMock).toHaveBeenCalled();
     });
+
     test.each([
       ['audience', 'invalid'],
       ['issuer', 'invalid'],
@@ -119,10 +161,11 @@ describe('routing.route-handlers', () => {
         const resMock = ResponseMock.new();
         const reqMock = RequestMock.new().get();
 
-        const token = jwt.sign({ roles: [defaultRole] }, dummyPrivateKey, {
-          ...defaultToken,
+        const signOptions = {
+          ...defaultTokenOptions,
           [propKey]: propVal,
-        });
+        } as SignTokenOptions;
+        const token = await signToken({ roles: [defaultRole] }, signOptions);
 
         reqMock.headers = {
           ...reqMock.headers,
@@ -138,6 +181,7 @@ describe('routing.route-handlers', () => {
         });
       }
     );
+
     test('Non matching role returns unauthorized', async () => {
       const nextMock = vi.fn();
       const resMock = ResponseMock.new();
@@ -186,7 +230,99 @@ describe('routing.route-handlers', () => {
         status: 'ERROR',
       });
     });
-    test('Missing envs returns service unavailable', async () => {
+
+    test('Unknown signing key id returns unauthorized', async () => {
+      const nextMock = vi.fn();
+      const resMock = ResponseMock.new();
+      const reqMock = RequestMock.new().get();
+
+      const tokenWithUnknownKid = await signToken(
+        { roles: [defaultRole] },
+        {
+          ...defaultTokenOptions,
+          keyid: 'unknown-key-id',
+        }
+      );
+
+      reqMock.headers = {
+        ...reqMock.headers,
+        authorization: `Bearer ${tokenWithUnknownKid}`,
+      };
+
+      await OAuthVerificationHandler(defaultRole)(reqMock, resMock, nextMock);
+      expect(resMock.send).toHaveBeenCalledWith({
+        code: HttpStatusCode.Unauthorized,
+        content: null,
+        message: expect.stringContaining('Unauthorized'),
+        status: 'ERROR',
+      });
+      expect(nextMock).not.toHaveBeenCalled();
+    });
+
+    test('Token with invalid signature returns unauthorized', async () => {
+      const nextMock = vi.fn();
+      const resMock = ResponseMock.new();
+      const reqMock = RequestMock.new().get();
+
+      const validToken = await signToken(
+        { roles: [defaultRole] },
+        defaultTokenOptions
+      );
+      const tamperedToken = tamperJwtSignature(validToken);
+
+      reqMock.headers = {
+        ...reqMock.headers,
+        authorization: `Bearer ${tamperedToken}`,
+      };
+
+      await OAuthVerificationHandler(defaultRole)(reqMock, resMock, nextMock);
+      expect(resMock.send).toHaveBeenCalledWith({
+        code: HttpStatusCode.Unauthorized,
+        content: null,
+        message: expect.stringContaining('Unauthorized'),
+        status: 'ERROR',
+      });
+      expect(nextMock).not.toHaveBeenCalled();
+    });
+
+    test('No role required accepts token without roles claim', async () => {
+      const nextMock = vi.fn();
+      const resMock = ResponseMock.new();
+      const reqMock = RequestMock.new().get();
+
+      const tokenWithoutRoles = await signToken({}, defaultTokenOptions);
+
+      reqMock.headers = {
+        ...reqMock.headers,
+        authorization: `Bearer ${tokenWithoutRoles}`,
+      };
+
+      await OAuthVerificationHandler()(reqMock, resMock, nextMock);
+      expect(nextMock).toHaveBeenCalled();
+    });
+
+    test('Missing audience env returns service unavailable', async () => {
+      vi.stubEnv('BFF_OAUTH_MIJNADAM_CLIENT_ID', undefined);
+      const nextMock = vi.fn();
+      const resMock = ResponseMock.new();
+      const reqMock = RequestMock.new().get();
+      reqMock.headers = {
+        ...reqMock.headers,
+        authorization: `Bearer ${defaultTokenSigned}`,
+      };
+
+      await OAuthVerificationHandler(defaultRole)(reqMock, resMock, nextMock);
+
+      expect(resMock.send).toHaveBeenCalledWith({
+        code: 503,
+        content: null,
+        message: expect.stringContaining('Service Unavailable'),
+        status: 'ERROR',
+      });
+      vi.stubEnv('BFF_OAUTH_MIJNADAM_CLIENT_ID', defaultTokenOptions.audience);
+    });
+
+    test('Missing BFF_OAUTH_TENANT env returns service unavailable', async () => {
       vi.stubEnv('BFF_OAUTH_TENANT', undefined);
       const nextMock = vi.fn();
       const resMock = ResponseMock.new();
@@ -202,6 +338,7 @@ describe('routing.route-handlers', () => {
         message: expect.stringContaining('Service Unavailable'),
         status: 'ERROR',
       });
+      vi.stubEnv('BFF_OAUTH_TENANT', 'test_tenant');
     });
   });
 
@@ -211,9 +348,6 @@ describe('routing.route-handlers', () => {
       const reqMock = await getReqMockWithOidc(
         getAuthProfileAndToken().profile
       );
-      (reqMock as any).setCookies({
-        [OIDC_SESSION_COOKIE_NAME]: 'test',
-      });
 
       await handleIsAuthenticated(reqMock, resMock, nextMock);
 

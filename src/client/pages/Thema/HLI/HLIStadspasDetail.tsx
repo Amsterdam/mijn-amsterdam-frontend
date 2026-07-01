@@ -8,11 +8,12 @@ import {
   Link,
   Paragraph,
 } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
 import { useParams } from 'react-router';
 
 import { themaConfig } from './HLI-thema-config.ts';
 import styles from './HLIStadspasDetail.module.scss';
-import { useBlockStadspas, useStadspassen } from './useStadspassen.hook.tsx';
+import { useBlockStadspas, useStadspas } from './useStadspassen.hook.tsx';
 import type {
   StadspasBudget,
   StadspasBudgetTransaction,
@@ -27,12 +28,13 @@ import {
   type BarConfig,
 } from '../../../components/LoadingContent/LoadingContent.tsx';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
-import { Modal } from '../../../components/Modal/Modal.tsx';
+import { Modal, ModalAndButton } from '../../../components/Modal/Modal.tsx';
 import { PageContentCell, PageV2 } from '../../../components/Page/Page.tsx';
 import { Spinner } from '../../../components/Spinner/Spinner.tsx';
 import { TableV2 } from '../../../components/Table/TableV2.tsx';
+import { isEnabled } from '../../../config/feature-toggles.ts';
 import { useBffApi } from '../../../hooks/api/useBffApi.ts';
-import { useSmallScreen } from '../../../hooks/media.hook.ts';
+import { useMediumScreen, useSmallScreen } from '../../../hooks/media.hook.ts';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
@@ -83,11 +85,7 @@ export function HLIStadspasDetail() {
 
   const { HLI } = appState;
   const { passNumber } = useParams<{ passNumber: string }>();
-  const stadspassen = useStadspassen();
-
-  const stadspas = stadspassen.find(
-    (pass) => pass.passNumber.toString() === passNumber
-  );
+  const stadspas = useStadspas(passNumber);
 
   const isErrorStadspas = isError(HLI);
   const isLoadingStadspas = isLoading(HLI);
@@ -147,13 +145,14 @@ export function HLIStadspasDetail() {
             </Paragraph>
             <Datalist rows={[NUMBER]} />
             {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
-            {!stadspas.actief && <PassBlockedAlert />}
-            {stadspas.blockPassURL && stadspas.actief && (
-              <BlockStadspas stadspas={stadspas} />
-            )}
-            {stadspas.unblockPassURL && !stadspas.actief && (
-              <UnblockStadspas stadspas={stadspas} />
-            )}
+            {isEnabled('HLI.stadspas.securityCode') &&
+              stadspas.securityCode && (
+                <Beveiligingscode
+                  name={stadspas.owner.firstname}
+                  securityCode={stadspas.securityCode}
+                />
+              )}
+            <BlockActionsStadspas stadspas={stadspas} />
           </PageContentCell>
         </>
       ) : (
@@ -281,7 +280,97 @@ function determineUwUitgavenDescription(
   return expenseInfoTextBase;
 }
 
-function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
+function Beveiligingscode({
+  name,
+  securityCode,
+}: {
+  name: string;
+  securityCode: string;
+}) {
+  const isMediumScreen = useMediumScreen();
+
+  return (
+    <PageContentCell className="ams-mb-l">
+      <DescriptionBeveiligingscode headingText="Beveiligingscode" />
+      <ModalAndButton
+        buttonVariant="secondary"
+        modal={{
+          title: isMediumScreen
+            ? `Beveiligingscode voor de Stadspas van ${name}`
+            : name,
+        }}
+        buttonLabel="Toon Beveiligingscode"
+      >
+        <PageContentCell
+          className={classNames('ams-mb-m', styles.Beveiligingscode)}
+        >
+          {isMediumScreen || (
+            <Heading size="level-2" level={2} className="ams-mb-m">
+              Beveiligingscode
+            </Heading>
+          )}
+          <DescriptionBeveiligingscode headingText={securityCode} />
+        </PageContentCell>
+      </ModalAndButton>
+    </PageContentCell>
+  );
+}
+
+function DescriptionBeveiligingscode({ headingText }: { headingText: string }) {
+  return (
+    <>
+      <Heading size="level-3" level={3} className="ams-mb-m">
+        {headingText}
+      </Heading>
+      <Paragraph className="ams-mb-m">
+        Deze code wordt soms gevraagd bij het online kopen van tickets,
+        toegangsbewijzen en producten.
+      </Paragraph>
+    </>
+  );
+}
+
+function BlockActionsStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
+  if (stadspas.actief && stadspas.blockPassURL) {
+    return (
+      <>
+        <Heading size="level-3" level={3} className="ams-mb-m">
+          Is je pas gestolen of kwijt?
+        </Heading>
+        <Paragraph className="ams-mb-m">
+          Blokkeer de pas om misbruik te voorkomen.
+        </Paragraph>
+        <BlockStadspas className="ams-mb-m" stadspas={stadspas} />
+        <Paragraph>
+          Pas teruggevonden?
+          <br />
+          Bel naar{' '}
+          <Link href={`tel:${PHONENUMBERS.WerkEnInkomen}`}>
+            {PHONENUMBERS.WerkEnInkomen}
+          </Link>
+          . Daarna kun je de pas meteen weer gebruiken.
+        </Paragraph>
+      </>
+    );
+  }
+  if (stadspas.unblockPassURL) {
+    return (
+      <>
+        <PassBlockedAlert />
+        <UnblockStadspas stadspas={stadspas} />
+      </>
+    );
+  }
+  return <PassBlockedAlert />;
+}
+
+function BlockStadspas({
+  stadspas,
+  className,
+}: {
+  stadspas: StadspasFrontend;
+  className: string;
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showError, setShowError] = useState(false);
   const { isError, isLoading, fetch } = useBlockStadspas(stadspas.passNumber);
@@ -317,6 +406,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
         </Alert>
       ) : (
         <Button
+          className={className}
           variant="secondary"
           onClick={() => {
             setIsModalOpen(true);

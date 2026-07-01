@@ -28,3 +28,13 @@
 .BlokkeerDialog {
   --ams-dialog-max-inline-size: 40em;
 }
+
+.Beveiligingscode {
+  padding-bottom: var(--ams-space-l);
+
+  @media screen and (max-width: $ams-breakpoint-medium) {
+    padding-top: var(--ams-space-xl);
+    padding-bottom: var(--ams-space-xl);
+    text-align: center;
+  }
+}

@@ -33,26 +33,21 @@ export async function runMigrationsCommand() {
   ]);
 
   console.log('Database migration started.');
-  trackEvent('Database migration started', {
-    properties: {
-      message: 'Database migration started.',
-      module: 'database',
-    },
+  trackEvent('database-migration-started', {
+    module: 'database',
   });
 
   try {
     await checkDatabaseConnectivity();
     console.log('Database migration connectivity pre-check succeeded.');
-    trackEvent('Database migration connectivity pre-check succeeded.', {
-      properties: {
-        message: 'Database migration connectivity pre-check succeeded.',
-        module: 'database',
-      },
+    trackEvent('database-migration-connectivity-pre-check-succeeded', {
+      module: 'database',
     });
   } catch (error) {
     console.log('Database migration connectivity pre-check failed.');
     captureException(error, {
       properties: {
+        name: 'database-migration-connectivity-pre-check-failed',
         message: 'Database migration connectivity pre-check failed.',
         module: 'database',
       },
@@ -63,16 +58,14 @@ export async function runMigrationsCommand() {
   try {
     await runMigrations();
     console.log('Database migration completed successfully.');
-    trackEvent('Database migration completed successfully.', {
-      properties: {
-        message: 'Database migration completed successfully.',
-        module: 'database',
-      },
+    trackEvent('database-migration-completed', {
+      module: 'database',
     });
   } catch (error) {
     console.log('Database migration failed.');
     captureException(error, {
       properties: {
+        name: 'database-migration-failed',
         message: 'Database migration failed.',
         module: 'database',
       },

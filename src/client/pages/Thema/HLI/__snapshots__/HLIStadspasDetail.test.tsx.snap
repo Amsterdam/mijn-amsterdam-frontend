@@ -122,12 +122,56 @@ exports[`With basic request where data returned does not matter > Matches snapsh
               volledig.123123123
             </dd>
           </dl>
+          <div
+            class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide ams-mb-l"
+          >
+            <h3
+              class="ams-heading ams-heading--3 ams-mb-m"
+            >
+              Beveiligingscode
+            </h3>
+            <p
+              class="ams-paragraph ams-mb-m"
+            >
+              Deze code wordt soms gevraagd bij het online kopen van tickets, toegangsbewijzen en producten.
+            </p>
+            <button
+              class="ams-button ams-button--secondary"
+              type="button"
+            >
+              Toon Beveiligingscode
+            </button>
+          </div>
+          <h3
+            class="ams-heading ams-heading--3 ams-mb-m"
+          >
+            Is je pas gestolen of kwijt?
+          </h3>
+          <p
+            class="ams-paragraph ams-mb-m"
+          >
+            Blokkeer de pas om misbruik te voorkomen.
+          </p>
           <button
-            class="ams-button ams-button--secondary"
+            class="ams-button ams-button--secondary ams-mb-m"
             type="button"
           >
             Blokkeer deze Stadspas
           </button>
+          <p
+            class="ams-paragraph"
+          >
+            Pas teruggevonden?
+            <br />
+            Bel naar 
+            <a
+              class="ams-link"
+              href="tel:020 252 6000"
+            >
+              020 252 6000
+            </a>
+            . Daarna kun je de pas meteen weer gebruiken.
+          </p>
         </div>
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
