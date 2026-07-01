@@ -70,7 +70,7 @@ export function getTestAccountsBaseFromEnvMap(
     return {
       username,
       profileId,
-    };
+    } as TestUserAccount;
   });
 
   return {

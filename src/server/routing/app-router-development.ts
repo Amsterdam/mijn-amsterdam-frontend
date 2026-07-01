@@ -203,9 +203,6 @@ function transformAccount(account: TestUserAccount): TestUserAccount {
     account.brpBsn = '';
   }
 
-  // Replace sorting identifiers (a_, b_, c_ etc.) in usernames with a more user-friendly display.
-  account.username = account.username.replace(/^[a-zA-Z]_/, '');
-
   return account;
 }
 
@@ -305,7 +302,7 @@ function addLoginLinkToUsernameProp(
     ]);
     return {
       ...account,
-      username: `<a href="${authLoginRoute}" class="test-account-name">${account.username}</a>`,
+      username: `<a href="${authLoginRoute}" class="test-account-name">${account.username.replace(/^[a-zA-Z]_/, '')}</a>`,
     };
   });
 }
