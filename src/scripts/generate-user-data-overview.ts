@@ -141,22 +141,18 @@ const { values: args } = parseArgs({
   options: {
     'out-file-name-digid-test-accounts-json': {
       type: 'string',
-      short: 'f',
       default: `digid-test-accounts-overview_${day}-${month}-${year}.json`,
     },
     'out-file-name-user-data-excel': {
       type: 'string',
-      short: 'f',
       default: `userdata-overview_${day}-${month}-${year}.xlsx`,
     },
     'out-artifact-dir': {
       type: 'string',
-      short: 'e',
       default: '.',
     },
     'base-url': {
       type: 'string',
-      short: 'b',
       default: process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL ?? '',
     },
   },
