@@ -1,13 +1,12 @@
 import z from 'zod';
 
-import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import { ZodValidators } from '../../helpers/validation.ts';
 
 export const featureToggle = {
   router: {
     private: {
-      isEnabled: !IS_PRODUCTION,
+      isEnabled: true,
     },
   },
   service: {
