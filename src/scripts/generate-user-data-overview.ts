@@ -288,16 +288,19 @@ function getBRPBasedProperties(
 
   return {
     brpBsn: profileId,
-    mokum: isMokum(brpContent),
-    hasChildren: brpContent.kinderen.length > 0,
+    mokum: !isMokum(brpContent) ? 'Nee' : '',
+    hasChildren: brpContent.kinderen.length > 0 ? 'Ja' : '',
     partnerName: brpContent.verbintenis?.persoon.voornamen ?? '',
-    isOlderThan18: geboortedatum
-      ? differenceInYears(new Date(), geboortedatum) >= 18
-      : 'onbekend',
-    hasParents: brpContent.ouders.length > 0,
-    hasVertrokkenOnbekendWaarheen:
-      brpContent.persoon?.vertrokkenOnbekendWaarheen ?? false,
-    isAdresInOnderzoek: !!brpContent.persoon?.adresInOnderzoek,
+    isOlderThan18:
+      geboortedatum && differenceInYears(new Date(), geboortedatum) >= 18
+        ? ''
+        : 'Nee',
+    hasParents: brpContent.ouders.length > 0 ? '' : 'Nee',
+    hasVertrokkenOnbekendWaarheen: brpContent.persoon
+      ?.vertrokkenOnbekendWaarheen
+      ? 'Ja'
+      : '',
+    isAdresInOnderzoek: brpContent.persoon?.adresInOnderzoek ? 'Ja' : '',
   };
 }
 

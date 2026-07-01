@@ -198,6 +198,17 @@ authRouterDevelopment.get(
   }
 );
 
+function transformAccount(account: TestUserAccount): TestUserAccount {
+  if (account.brpBsn === account.profileId) {
+    account.brpBsn = '';
+  }
+
+  // Replace sorting identifiers (a_, b_, c_ etc.) in usernames with a more user-friendly display.
+  account.username = account.username.replace(/^[a-zA-Z]_/, '');
+
+  return account;
+}
+
 async function sendRenderedTestAccountTable(
   res: Response,
   authMethod: AuthMethod
@@ -248,8 +259,8 @@ async function sendRenderedTestAccountTable(
     ...(testAccountsOverview?.accounts || []).filter(
       (account) => !(account.username in testAccountsBaseByUsername)
     ),
-  ];
-  console.log(accounts_, testAccountOverviewByUsername);
+  ].map((account) => transformAccount(account));
+
   const tableHeaders_ = [
     ...testAccountsBase.tableHeaders,
     ...(testAccountsOverview?.tableHeaders || []).filter(
@@ -259,6 +270,7 @@ async function sendRenderedTestAccountTable(
         )
     ),
   ];
+
   const testAccountsData: TestUserData = {
     tableHeaders: mergeWithDynamicTableHeaders({
       tableHeaders: tableHeaders_,

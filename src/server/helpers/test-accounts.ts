@@ -16,6 +16,14 @@ type TableHeader = {
 export type TestUserAccount = {
   username: string;
   profileId: string;
+  brpBsn: string;
+  mokum: string;
+  hasChildren: string;
+  partnerName: string;
+  isOlderThan18: string;
+  hasParents: string;
+  hasVertrokkenOnbekendWaarheen: string;
+  isAdresInOnderzoek: string;
 } & OptionalTestUserAccountProperties;
 
 export type OptionalTestUserAccountProperties = Record<
