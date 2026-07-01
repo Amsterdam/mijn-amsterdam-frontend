@@ -246,7 +246,8 @@ async function sendRenderedTestAccountTable(
   const accounts_ = [
     // First enrich the base accounts with the overview data.
     ...testAccountsBase.accounts.map((account) => {
-      const overviewAccount = testAccountOverviewByUsername[account.username];
+      const overviewAccount =
+        testAccountOverviewByUsername[account.username] ?? {};
       return {
         ...overviewAccount,
         ...account,
@@ -306,9 +307,6 @@ function addLoginLinkToUsernameProp(
     };
   });
 }
-
-type TableHeaders = string[];
-type TableRows = string[][];
 
 authRouterDevelopment.get(
   [
