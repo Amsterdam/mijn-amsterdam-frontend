@@ -1,5 +1,7 @@
+import { createPublicKey } from 'node:crypto';
+
 import type { NextFunction, Request, Response } from 'express';
-import jwt, { type GetPublicKeyOrSecret } from 'jsonwebtoken';
+import { decodeProtectedHeader, jwtVerify } from 'jose';
 import jwksClient from 'jwks-rsa';
 import uid from 'uid-safe';
 
@@ -116,56 +118,54 @@ export function OAuthVerificationHandler(role?: string) {
       jwksUri: `${issuer}/discovery/keys`,
     });
 
-    const getKey: GetPublicKeyOrSecret = (
-      header: { kid?: string },
-      callback: (err: Error | null, key?: string) => void
-    ) => {
-      if (!header.kid) {
-        return callback(new Error('No kid found in token header'));
-      }
-      client.getSigningKey(header.kid, (err, key) => {
-        if (err || !key) {
-          return callback(err || new Error('Signing key not found'));
-        }
-        const signingKey = key.getPublicKey();
-        callback(null, signingKey);
+    const getSigningKey = async (kid: string): Promise<string> => {
+      return new Promise((resolve, reject) => {
+        client.getSigningKey(kid, (err, key) => {
+          if (err || !key) {
+            return reject(err || new Error('Signing key not found'));
+          }
+          resolve(key.getPublicKey());
+        });
       });
     };
 
-    return new Promise((resolve) => {
-      jwt.verify(
+    try {
+      const { kid } = decodeProtectedHeader(token);
+      if (!kid) {
+        throw new Error('No kid found in token header');
+      }
+
+      const signingKey = await getSigningKey(kid);
+      const publicKey = createPublicKey(signingKey);
+
+      const { payload } = await jwtVerify<{ roles?: string[] }>(
         token,
-        getKey,
+        publicKey,
         {
           audience,
           issuer: `${issuer}/`,
           algorithms: ['RS256'],
-        },
-        (error, decoded) => {
-          if (error) {
-            captureException(error);
-            return resolve(
-              sendUnauthorized(
-                res,
-                `Unauthorized`,
-                `OAuth token verification error: ${error.message}`
-              )
-            );
-          }
-          const payload = decoded as { roles?: string[] };
-          if (role && !payload.roles?.includes?.(role)) {
-            return resolve(
-              sendUnauthorized(
-                res,
-                `Unauthorized`,
-                `Required role '${role}' not present in token`
-              )
-            );
-          }
-          resolve(next());
         }
       );
-    });
+
+      if (role && !payload.roles?.includes?.(role)) {
+        return sendUnauthorized(
+          res,
+          `Unauthorized`,
+          `Required role '${role}' not present in token`
+        );
+      }
+
+      return next();
+    } catch (err) {
+      const error = err instanceof Error ? err : new Error(String(err));
+      captureException(error);
+      return sendUnauthorized(
+        res,
+        `Unauthorized`,
+        `OAuth token verification error: ${error.message}`
+      );
+    }
   };
 }
 
