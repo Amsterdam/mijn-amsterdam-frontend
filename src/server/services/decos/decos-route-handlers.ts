@@ -110,11 +110,11 @@ export async function fetchZakenByUserIDs(
   const userIDsFromEnv =
     req.query.profileType === 'private'
       ? getUserIds(
-          await getTestAccountsBaseFromEnv('MA_TEST_ACCOUNTS'),
+          getTestAccountsBaseFromEnv('MA_TEST_ACCOUNTS'),
           req.query.username
         )
       : getUserIds(
-          await getTestAccountsBaseFromEnv('MA_TEST_ACCOUNTS_EH'),
+          getTestAccountsBaseFromEnv('MA_TEST_ACCOUNTS_EH'),
           req.query.username
         );
 
