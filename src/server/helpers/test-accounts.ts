@@ -49,7 +49,15 @@ export async function fetchTestAccountOverviewFile(
     throw new Error(`${envKey} is not a valid URL: ${url}. Error: ${error}`);
   }
 
-  return fetch(url).then((res) => res.json());
+  const res = await fetch(url);
+
+  if (!res.ok) {
+    throw new Error(
+      `Failed to fetch ${envKey} (${res.status} ${res.statusText}) from ${url}`
+    );
+  }
+
+  return (await res.json()) as TestUserData;
 }
 
 export function getTestAccountsBaseFromEnv(
