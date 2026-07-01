@@ -1,10 +1,13 @@
 import styles from './WelcomeHeading.module.scss';
+import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
 
 const NOON = 12;
 const EVENING = 18;
 const NIGHT = 5;
 
 export function WelcomeHeading() {
+  const { BRP } = useAppStateGetter();
+  const aanschrijfwijze = BRP.content?.persoon?.aanschrijfwijze;
   const hours = new Date().getHours();
   const isMorning = hours < NOON && hours >= NIGHT;
   const isEvening = hours >= EVENING;
@@ -15,7 +18,7 @@ export function WelcomeHeading() {
 
   switch (true) {
     case isMorning:
-      greetingMsg = 'Goedemorgen';
+      greetingMsg = `Goedemorgen`;
       break;
     case isAfternoon:
       greetingMsg = 'Goedemiddag';
@@ -27,6 +30,8 @@ export function WelcomeHeading() {
       greetingMsg = 'Goedenacht';
       break;
   }
-
+  if (aanschrijfwijze) {
+    greetingMsg += ` ${aanschrijfwijze}`;
+  }
   return <span className={styles.WelcomeHeading}>{greetingMsg}</span>;
 }
