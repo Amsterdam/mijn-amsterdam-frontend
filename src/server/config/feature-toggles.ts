@@ -16,7 +16,6 @@ export const featureToggle = {
   ['KLANT_CONTACT.thema']: !IS_PRODUCTION,
   ['HLI.stadspas.securityCode']: !IS_PRODUCTION,
   ['WMO.fetchWmo.addMaVoorzieningenApiProps']: !IS_PRODUCTION,
-  ['JZD.router.private']: !IS_PRODUCTION,
 };
 // globalThis is used to make sure featureToggles imported from frontend *-thema-configs have access.
 globalThis.MA_FEATURETOGGLES = featureToggle;

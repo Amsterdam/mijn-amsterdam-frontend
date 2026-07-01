@@ -6,7 +6,7 @@ import { ZodValidators } from '../../helpers/validation.ts';
 export const featureToggle = {
   router: {
     private: {
-      isEnabled: isEnabled('JZD.router.private'),
+      isEnabled: true,
     },
   },
   service: {
