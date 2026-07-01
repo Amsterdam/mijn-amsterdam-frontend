@@ -41,15 +41,15 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "@amsterdam/design-system-assets": "^2.3.0",
-    "@amsterdam/design-system-css": "^4.1.0",
-    "@amsterdam/design-system-react": "^4.1.0",
-    "@amsterdam/design-system-react-icons": "^2.0.0",
-    "@amsterdam/design-system-tokens": "^4.0.1",
+    "@amsterdam/design-system-assets": "^2.4.0",
+    "@amsterdam/design-system-css": "^4.2.0",
+    "@amsterdam/design-system-react": "^4.2.0",
+    "@amsterdam/design-system-react-icons": "^2.1.0",
+    "@amsterdam/design-system-tokens": "^4.1.0",
     "@amsterdam/piwik-tracker-react": "3.0.0",
     "@amsterdam/react-maps": "^1.1.1",
     "@azure/app-configuration-provider": "^2.4.2",
-    "@azure/msal-node": "^5.2.5",
+    "@azure/msal-node": "^5.3.0",
     "@azure/storage-blob": "^12.32.0",
     "@microsoft/applicationinsights-react-js": "^17.3.6",
     "@microsoft/applicationinsights-web": "^3.4.2",
@@ -86,7 +86,7 @@
     "@types/uid-safe": "^2.1.5",
     "@vitejs/plugin-react": "^4.7.0",
     "applicationinsights": "2.9.8",
-    "axios": "^1.18.0",
+    "axios": "^1.18.1",
     "classnames": "^2.5.1",
     "compression": "^1.8.1",
     "concurrently": "^9.2.3",
@@ -165,7 +165,7 @@
     "zustand": "^5.0.14"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.61.1"
+    "@rollup/rollup-linux-x64-gnu": "4.62.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
