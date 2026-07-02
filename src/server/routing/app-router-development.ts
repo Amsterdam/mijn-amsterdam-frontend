@@ -1,7 +1,6 @@
 import { differenceInSeconds } from 'date-fns';
 import type { CookieOptions, Request, Response } from 'express';
 import type { AccessToken } from 'express-openid-connect';
-import slug from 'slugme';
 import UID from 'uid-safe';
 
 import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes.ts';
@@ -9,8 +8,8 @@ import {
   createBFFRouter,
   generateFullApiUrlBFF,
   generateMaFrontendUrl,
-  sendBadRequest,
   sendUnauthorized,
+  type RequestWithRouteAndQueryParams,
 } from './route-helpers.ts';
 import { apiSuccessResult } from '../../universal/helpers/api.ts';
 import { getReturnToUrl } from '../auth/auth-after-redirect-returnto.ts';
@@ -19,23 +18,20 @@ import {
   OIDC_SESSION_MAX_AGE_SECONDS,
   TOKEN_ID_ATTRIBUTE,
 } from '../auth/auth-config.ts';
-import {
-  getBackupTestaccounts,
-  getTestAccountData,
-  getTestAccounts,
-} from '../auth/auth-development.ts';
-import type { TestUserData } from '../auth/auth-development.ts';
-import {
-  cleanTestUsername,
-  signDevelopmentToken,
-} from '../auth/auth-helpers-development.ts';
+import { signDevelopmentToken } from '../auth/auth-helpers-development.ts';
 import { getAuth, hasSessionCookie } from '../auth/auth-helpers.ts';
 import { authRoutes } from '../auth/auth-routes.ts';
 import type { AuthProfile, MaSession } from '../auth/auth-types.ts';
 import { type AuthenticatedRequest } from '../auth/auth-types.ts';
 import { MA_FRONTEND_URL, ONE_SECOND_MS } from '../config/app.ts';
-import { getFromEnv } from '../helpers/env.ts';
-import { logger } from '../logging.ts';
+import { getFromEnv, getValueFromEnvByKey } from '../helpers/env.ts';
+import {
+  type TestUserAccount,
+  type TestUserData,
+  fetchTestAccountOverviewFile,
+  getTestAccountsBaseFromEnv,
+  mergeWithDynamicTableHeaders,
+} from '../helpers/test-accounts.ts';
 import { countLoggedInVisit } from '../services/admin/admin-visitors.ts';
 
 export const authRouterDevelopment = createBFFRouter({ id: 'router-dev' });
@@ -112,13 +108,10 @@ authRouterDevelopment.get(
     res: Response
   ) => {
     const authMethod = req.params.authMethod;
-
-    let envKey = 'MA_TEST_ACCOUNTS';
-    if (authMethod === 'eherkenning') {
-      envKey = 'MA_TEST_ACCOUNTS_EH';
-    }
-
+    const envKey =
+      authMethod === 'digid' ? 'MA_TEST_ACCOUNTS' : 'MA_TEST_ACCOUNTS_EH';
     const accounts = getFromEnv(envKey, true, true)!;
+
     res.send(accounts);
   }
 );
@@ -126,29 +119,30 @@ authRouterDevelopment.get(
 authRouterDevelopment.get(
   DevelopmentRoutes.DEV_LOGIN,
   async (
-    req: Request<{ authMethod: AuthMethod; user: string }>,
+    req: RequestWithRouteAndQueryParams<
+      { authMethod: AuthProfile['authMethod'] },
+      {
+        username: string;
+        redirectUrl?: string;
+        returnTo?: string;
+      }
+    >,
     res: Response
   ) => {
     const authMethod = req.params.authMethod;
+    const envKey =
+      authMethod === 'digid' ? 'MA_TEST_ACCOUNTS' : 'MA_TEST_ACCOUNTS_EH';
 
-    const testAccounts =
-      authMethod === 'digid'
-        ? getTestAccounts('MA_TEST_ACCOUNTS')
-        : getTestAccounts('MA_TEST_ACCOUNTS_EH');
-
-    if (!req.params.user) {
-      return sendRenderedTestAccountTable(req, res, authMethod);
+    if (!req.query.username) {
+      return sendRenderedTestAccountTable(res, authMethod);
     }
 
-    let profileId = testAccounts['ma-dev-profile'];
+    const profileId = getValueFromEnvByKey(envKey, req.query.username);
 
-    const foundProfileId = testAccounts[req.params.user];
-    if (foundProfileId) {
-      profileId = foundProfileId;
-    } else {
-      logger.error(
-        `user '${req.params.user}' not found, defaulting to user with profileId: '${profileId}'`
-      );
+    if (!profileId) {
+      return res
+        .status(404)
+        .send(`No test account found for username: ${req.query.username}`);
     }
 
     countLoggedInVisit(profileId, authMethod);
@@ -161,7 +155,8 @@ authRouterDevelopment.get(
       profileType: authMethod === 'digid' ? 'private' : 'commercial',
       sid: sessionID,
     };
-    createOIDCStub(req, authProfile);
+
+    await createOIDCStub(req, authProfile);
 
     const appSessionCookieValue = Buffer.from(
       JSON.stringify(authProfile)
@@ -187,6 +182,7 @@ authRouterDevelopment.get(
       String(req.query.redirectUrl) as (typeof PREDEFINED_REDIRECT_URLS)[number]
     );
 
+    // This used for applications that use the dev router for obtaining a session cookie, but don't want to be redirected to the frontend.
     if (isValidRedirectOption && req.query.redirectUrl === 'noredirect') {
       return res.send('ok');
     }
@@ -202,119 +198,114 @@ authRouterDevelopment.get(
   }
 );
 
+function transformAccount(account: TestUserAccount): TestUserAccount {
+  if (account.brpBsn === account.profileId) {
+    account.brpBsn = '';
+  }
+
+  return account;
+}
+
 async function sendRenderedTestAccountTable(
-  req: Request,
   res: Response,
   authMethod: AuthMethod
 ) {
   const envKey =
     authMethod === 'digid' ? 'MA_TEST_ACCOUNTS' : 'MA_TEST_ACCOUNTS_EH';
-  const testAccountData = await getTestAccountData(envKey);
 
-  if (!testAccountData) {
-    return sendBadRequest(
-      res,
-      'Test account data not available. Check storage account or test-account files.'
+  const testAccountsBase = getTestAccountsBaseFromEnv(envKey);
+  let testAccountsOverview: TestUserData | null = null;
+  try {
+    testAccountsOverview = await fetchTestAccountOverviewFile(
+      `${envKey}_OVERVIEW_URL`
+    );
+  } catch (error) {
+    console.error(
+      'Error fetching test account overview file:',
+      (error as Error).toString()
     );
   }
 
-  let tableHeaders;
-  let tableRows;
-  try {
-    const testAccounts = transformUsernames(req, testAccountData, authMethod);
-    [tableHeaders, tableRows] = formatForTable({
-      ...testAccountData,
-      accounts: testAccounts,
-    } as TestUserData);
-  } catch (err) {
-    logger.error(err);
-    const backupAccounts = getBackupTestaccounts(envKey);
-    const testAccounts = transformUsernames(req, backupAccounts, authMethod);
-    [tableHeaders, tableRows] = formatForTable({
-      ...backupAccounts,
-      accounts: testAccounts,
-    } as TestUserData);
-  }
+  const testAccountOverviewByUsername =
+    testAccountsOverview?.accounts.reduce(
+      (acc, account) => {
+        acc[account.username] = account;
+        return acc;
+      },
+      {} as Record<string, TestUserAccount>
+    ) ?? {};
+
+  const testAccountsBaseByUsername = testAccountsBase.accounts.reduce(
+    (acc, account) => {
+      acc[account.username] = account;
+      return acc;
+    },
+    {} as Record<string, TestUserAccount>
+  );
+
+  const accounts_ = [
+    // First enrich the base accounts with the overview data.
+    ...testAccountsBase.accounts.map((account) => {
+      const overviewAccount =
+        testAccountOverviewByUsername[account.username] ?? {};
+      return {
+        ...overviewAccount,
+        ...account,
+      };
+    }),
+    // Then add any additional accounts from the overview that are not in the base.
+    ...(testAccountsOverview?.accounts || []).filter(
+      (account) => !(account.username in testAccountsBaseByUsername)
+    ),
+  ].map((account) => transformAccount(account));
+
+  const tableHeaders_ = [
+    ...testAccountsBase.tableHeaders,
+    ...(testAccountsOverview?.tableHeaders || []).filter(
+      (header) =>
+        !testAccountsBase.tableHeaders.some(
+          (baseHeader) => baseHeader.key === header.key
+        )
+    ),
+  ];
+
+  const testAccountsData: TestUserData = {
+    tableHeaders: mergeWithDynamicTableHeaders({
+      tableHeaders: tableHeaders_,
+      accounts: accounts_,
+    }),
+    accounts: accounts_,
+  };
+
+  const accountsWithLoginLink = addLoginLinkToUsernameProp(
+    testAccountsData,
+    authMethod
+  );
+
   const renderProps = {
     title: 'Selecteer een testaccount',
-    tableHeaders,
-    tableRows,
+    tableHeaders: testAccountsData.tableHeaders,
+    tableRows: accountsWithLoginLink,
   };
 
   return res.render('select-test-account', renderProps);
 }
 
-function transformUsernames(
-  req: Request,
+function addLoginLinkToUsernameProp(
   testAccountData: TestUserData,
   authMethod: AuthProfile['authMethod']
 ) {
-  let testAccounts = testAccountData.accounts.map((account) => {
-    let username = cleanTestUsername(account.username);
-    username = slug(username);
-    return { ...account, username };
-  });
   const authRoute = `${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}`;
 
-  testAccounts = testAccounts.map((account) => {
-    const authLoginRoute = generateFullApiUrlBFF(
-      `${authRoute}/${account.username}`,
-      [req.query as Record<string, string>]
-    );
-    const href = `<a href="${authLoginRoute}">
-                      <div class="test-account-name">${account.username}</div>
-                    </a>`;
-    return { ...account, username: href };
+  return testAccountData.accounts.map((account) => {
+    const authLoginRoute = generateFullApiUrlBFF(authRoute, [
+      { username: account.username },
+    ]);
+    return {
+      ...account,
+      username: `<a href="${authLoginRoute}" class="test-account-name">${account.username.replace(/^[a-zA-Z]_/, '')}</a>`,
+    };
   });
-
-  return testAccounts;
-}
-
-type TableHeaders = string[];
-type TableRows = string[][];
-
-function formatForTable(accountData: TestUserData): [TableHeaders, TableRows] {
-  const tableHeaders = accountData.tableHeaders.map((h) => h.displayName);
-
-  accountData = checkUpdateKeys(accountData);
-
-  if (accountData.accounts.length <= 0) {
-    return [tableHeaders, []];
-  }
-
-  // This is gonna be a table, so all keys need to be in the same order.
-  const keyOrder: Record<string, number> = {};
-  accountData.tableHeaders.forEach((th, i) => (keyOrder[th.key] = i));
-
-  const tableRows = accountData.accounts.map((account) => {
-    const sortedEntries = Object.entries(account).toSorted(([keyA], [keyB]) => {
-      return keyOrder[keyA] < keyOrder[keyB] ? -1 : 1;
-    });
-
-    const fields = sortedEntries.map(([_, v]) => {
-      if (typeof v === 'boolean') {
-        return v ? 'Ja' : 'Nee';
-      }
-      return v;
-    });
-    return fields;
-  });
-
-  return [tableHeaders, tableRows];
-}
-
-function checkUpdateKeys(accountData: TestUserData): TestUserData {
-  accountData.accounts.forEach((account) => {
-    if (!account.profileId) {
-      throw new Error(`No id found for test account ${account.username}`);
-    }
-    accountData.tableHeaders.forEach(({ key }) => {
-      if (!Object.keys(account).includes(key)) {
-        account[key] = 'Unknown';
-      }
-    });
-  });
-  return accountData;
 }
 
 authRouterDevelopment.get(

@@ -1,6 +1,10 @@
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 
-import { forTesting } from './env.ts';
+import {
+  forTesting,
+  getValueMapFromEnv,
+  translateValueFromEnv,
+} from './env.ts';
 import { logger } from '../logging.ts';
 import * as monitoring from '../services/monitoring.ts';
 
@@ -36,5 +40,47 @@ describe('getFromEnv', () => {
     expect(() => forTesting.getFromEnv_('MISSING_KEY', true, true)).toThrow(
       /ENV undefined key: MISSING_KEY/
     );
+  });
+
+  it('Gets the value map from env when present', async () => {
+    process.env.TEST_KEY = 'foo=bar,baz=qux';
+    const valueMap = getValueMapFromEnv('TEST_KEY');
+    expect(valueMap.get('foo')).toBe('bar');
+    expect(valueMap.get('baz')).toBe('qux');
+  });
+
+  it('Returns an empty map when the env variable is not present', async () => {
+    const valueMap = getValueMapFromEnv('MISSING_KEY');
+    expect(valueMap.size).toBe(0);
+  });
+
+  it('Returns an empty map when the env variable is empty', async () => {
+    process.env.TEST_KEY = '';
+    const valueMap = getValueMapFromEnv('TEST_KEY');
+    expect(valueMap.size).toBe(0);
+  });
+
+  it('Returns an empty map when the env variable is malformed', async () => {
+    process.env.TEST_KEY = 'foo=bar,baz';
+    const valueMap = getValueMapFromEnv('TEST_KEY');
+    expect(valueMap.size).toBe(1);
+    expect(valueMap.get('foo')).toBe('bar');
+  });
+
+  it('translateValueFromEnv returns the correct value when present', async () => {
+    process.env.TEST_KEY = 'foo=bar,baz=qux';
+    const result = translateValueFromEnv('TEST_KEY', 'foo');
+    expect(result).toBe('bar');
+  });
+
+  it('translateValueFromEnv returns the key when not present', async () => {
+    process.env.TEST_KEY = 'foo=bar,baz=qux';
+    const result = translateValueFromEnv('TEST_KEY', 'nonexistent');
+    expect(result).toBe('nonexistent');
+  });
+
+  it('translateValueFromEnv returns the key when env variable is not present', async () => {
+    const result = translateValueFromEnv('MISSING_KEY', 'nonexistent');
+    expect(result).toBe('nonexistent');
   });
 });

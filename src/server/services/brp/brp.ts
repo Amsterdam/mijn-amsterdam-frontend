@@ -42,7 +42,7 @@ import type {
 } from '../../auth/auth-types.ts';
 import { ONE_HOUR_MS } from '../../config/app.ts';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
-import { getFromEnv } from '../../helpers/env.ts';
+import { getFromEnv, translateValueFromEnv } from '../../helpers/env.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import {
   isSuccessStatus,
@@ -298,19 +298,7 @@ function transformBenkBrpResponse(
 }
 
 function translateBSN(bsn: BSN): BSN {
-  const translations = getFromEnv('BFF_BENK_BSN_TRANSLATIONS', false);
-  // IS_PRODUCTION is explicitly set to exclude this code from being used in this environment.
-  if (!translations || IS_PRODUCTION) {
-    return bsn;
-  }
-
-  const translationsMap = new Map(
-    translations.split(',').map((pair) => pair.split('=')) as Iterable<
-      [string, string]
-    >
-  );
-
-  return translationsMap.get(bsn) ?? bsn;
+  return translateValueFromEnv('BFF_BENK_BSN_TRANSLATIONS', bsn);
 }
 
 export async function fetchBrpByBsn(

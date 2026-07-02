@@ -107,6 +107,8 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   WPI_SPECIFICATIES: 'Uitkeringsspecificaties en jaaropgaven',
   WPI_TONK: 'Aanvraag TONK',
   WPI_TOZO: 'Aanvraag Tozo',
+
+  WONEN_vve: 'Vereniging van Eigenaren (VvE)',
 };
 
 export function createErrorDisplayData(

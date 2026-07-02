@@ -50,7 +50,6 @@
     "@amsterdam/react-maps": "^1.1.1",
     "@azure/app-configuration-provider": "^2.4.2",
     "@azure/msal-node": "^5.3.0",
-    "@azure/storage-blob": "^12.32.0",
     "@microsoft/applicationinsights-react-js": "^17.3.6",
     "@microsoft/applicationinsights-web": "^3.4.2",
     "@microsoft/feature-management": "^2.3.1",
