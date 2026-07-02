@@ -85,6 +85,13 @@ export async function createOIDCStub(
   };
 }
 
+function getPredefinedRedirectUrl<
+  T extends (typeof PREDEFINED_REDIRECT_URLS)[number],
+>(req: Request): T | null {
+  const redirectUrl = String(req.query.redirectUrl) as T;
+  return PREDEFINED_REDIRECT_URLS.includes(redirectUrl) ? redirectUrl : null;
+}
+
 authRouterDevelopment.use(async (req, res, next) => {
   if (hasSessionCookie(req)) {
     const cookieValue = req.cookies[OIDC_SESSION_COOKIE_NAME];
@@ -178,23 +185,24 @@ authRouterDevelopment.get(
       appSessionCookieOptions
     );
 
-    const isValidRedirectOption = PREDEFINED_REDIRECT_URLS.includes(
-      String(req.query.redirectUrl) as (typeof PREDEFINED_REDIRECT_URLS)[number]
-    );
+    const redirectUrl = getPredefinedRedirectUrl(req);
 
     // This used for applications that use the dev router for obtaining a session cookie, but don't want to be redirected to the frontend.
-    if (isValidRedirectOption && req.query.redirectUrl === 'noredirect') {
+    if (redirectUrl === 'noredirect') {
       return res.send('ok');
     }
 
-    const redirectUrl =
-      req.query.redirectUrl && isValidRedirectOption
-        ? String(req.query.redirectUrl)
-        : req.query.returnTo
-          ? getReturnToUrl(req.query)
-          : generateMaFrontendUrl(`/?authMethod=${req.params.authMethod}`);
+    if (redirectUrl) {
+      return res.redirect(redirectUrl);
+    }
 
-    return res.redirect(redirectUrl);
+    if (req.query.returnTo) {
+      return res.redirect(getReturnToUrl(req.query));
+    }
+
+    return res.redirect(
+      generateMaFrontendUrl(`/?authMethod=${req.params.authMethod}`)
+    );
   }
 );
 
