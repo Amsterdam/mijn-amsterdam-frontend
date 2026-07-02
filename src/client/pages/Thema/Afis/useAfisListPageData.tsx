@@ -5,7 +5,7 @@ import {
   type AfisFacturenThemaContextParams,
 } from './useAfisThemaData.hook.tsx';
 import type { AfisFactuurStateFrontend } from '../../../../server/services/afis/afis-types.ts';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
 
 export function useAfisListPageData(
   state: AfisFactuurStateFrontend,

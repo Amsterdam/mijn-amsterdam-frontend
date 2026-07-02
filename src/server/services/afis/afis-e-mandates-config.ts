@@ -48,15 +48,7 @@ export const EMandateCreditorsGemeenteAmsterdam: AfisEMandateCreditor[] = [
     refId: 'MARKTZAKEN',
   },
   {
-    name: 'Overig',
-    iban: 'NL78RABO0110011880',
-    subId: '7',
-    refId: 'OVERIG',
-    description:
-      'Dit is een algemene rekening voor overige betalingen aan de gemeente Amsterdam.',
-  },
-  {
-    name: 'Parkeren',
+    name: 'Parkeergarages',
     iban: 'NL56RABO0110066111',
     subId: '8',
     refId: 'PARKEREN',

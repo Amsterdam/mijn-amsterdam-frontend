@@ -34,7 +34,6 @@ import {
   isoDateTimeFormatCompact,
   isoDateFormat,
 } from '../../../universal/helpers/date.ts';
-import type { AuthProfile } from '../../auth/auth-types.ts';
 import {
   type RequestWithRouteAndQueryParams,
   sendBadRequestInvalidInput,
@@ -77,7 +76,7 @@ export interface AfisFacturenRouteParams extends ParamsDictionary {
  */
 export async function handleFetchAfisFacturen(
   payload: BusinessPartnerIdPayload,
-  authProfile: AuthProfile,
+  sessionID: SessionID,
   req: RequestWithEncryptedPayloadQueryParam<
     AfisFacturenRouteParams,
     QueryParamsWithEncryptedPayload<{ top?: string }>
@@ -89,7 +88,7 @@ export async function handleFetchAfisFacturen(
     top = undefined;
   }
 
-  return fetchAfisFacturenByState(authProfile.sid, {
+  return fetchAfisFacturenByState(sessionID, {
     state: req.params.state,
     businessPartnerID: payload.businessPartnerId,
     top,
@@ -103,7 +102,7 @@ export function handleAfisRequestWithEncryptedPayloadQueryParam<
 >(
   serviceMethod: (
     payload: QueryPayload,
-    authProfile: AuthProfile,
+    sessionID: SessionID,
     request: RequestWithEncryptedPayloadQueryParam<RouteParams>
   ) => ServiceResponse,
   payloadParamName: string = 'payload'
@@ -129,7 +128,7 @@ export function handleAfisRequestWithEncryptedPayloadQueryParam<
     // Call the service method with the decrypted payload.
     const serviceMethodResponse = await serviceMethod(
       payloadDecrypted,
-      res.locals.authProfileAndToken.profile,
+      res.locals.authProfileAndToken.profile.sid,
       req
     );
 
@@ -251,7 +250,7 @@ export async function handleAfisEMandateSignRequestStatusNotification(
 
 export async function handleEmandateLifetimeUpdate(
   eMandateStatusChangePayload: EMandateUpdatePayload,
-  _authProfile: AuthProfile,
+  _sessionID: SessionID,
   req: Request
 ) {
   const eMandateUploadPayload = z.object({

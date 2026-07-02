@@ -1,7 +1,10 @@
 import Mockdate from 'mockdate';
 
 import { forTesting } from './app-router-oidc.ts';
-import { generateFullApiUrlBFF } from './route-helpers.ts';
+import {
+  generateFullApiUrlBFF,
+  generateMaFrontendUrl,
+} from './route-helpers.ts';
 import { bffApiHost } from '../../testing/setup.ts';
 import {
   getAuthProfileAndToken,
@@ -9,13 +12,8 @@ import {
   RequestMock,
   ResponseMock,
 } from '../../testing/utils.ts';
-import {
-  OIDC_SESSION_COOKIE_NAME,
-  oidcConfigDigid,
-  oidcConfigEherkenning,
-} from '../auth/auth-config.ts';
+import { oidcConfigDigid, oidcConfigEherkenning } from '../auth/auth-config.ts';
 import { authRoutes } from '../auth/auth-routes.ts';
-import { getFromEnv } from '../helpers/env.ts';
 
 const mocks = vi.hoisted(() => {
   const openIdAuthHandlerEH = vi.fn();
@@ -176,10 +174,6 @@ describe('router-oidc', () => {
       const authProfileAndToken = getAuthProfileAndToken();
       const reqMock = await getReqMockWithOidc(authProfileAndToken.profile);
 
-      (reqMock as unknown as RequestMock).setCookies({
-        [OIDC_SESSION_COOKIE_NAME]: 'foo-bar',
-      });
-
       const resMock = ResponseMock.new();
 
       forTesting.authLogoutHandler(reqMock, resMock);
@@ -195,18 +189,12 @@ describe('router-oidc', () => {
 
       forTesting.authLogoutHandler(reqMock, resMock);
 
-      expect(resMock.redirect).toHaveBeenCalledWith(
-        getFromEnv('MA_FRONTEND_URL', true)
-      );
+      expect(resMock.redirect).toHaveBeenCalledWith(generateMaFrontendUrl('/'));
     });
 
     test('Eherkenning based on session data and cookie', async () => {
       const authProfileAndToken = getAuthProfileAndToken('commercial');
       const reqMock = await getReqMockWithOidc(authProfileAndToken.profile);
-
-      (reqMock as unknown as RequestMock).setCookies({
-        [OIDC_SESSION_COOKIE_NAME]: 'foo-bar',
-      });
 
       const resMock = ResponseMock.new();
 
@@ -248,9 +236,7 @@ describe('router-oidc', () => {
 
       forTesting.authLogoutHandler(reqMock, resMock);
 
-      expect(resMock.redirect).toHaveBeenCalledWith(
-        getFromEnv('MA_FRONTEND_URL', true)
-      );
+      expect(resMock.redirect).toHaveBeenCalledWith(generateMaFrontendUrl('/'));
     });
   });
 

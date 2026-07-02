@@ -3,6 +3,7 @@ import type {
   FailedDependencies,
 } from '../../universal/helpers/api.ts';
 import type { ApiError, AppState } from '../../universal/types/App.types.ts';
+import { STATE_STORE_UTILITY_KEYS } from '../hooks/useAppStateStore.ts';
 import { regelingenTitle } from '../pages/Thema/HLI/HLI-thema-config.ts';
 
 export const BFF_API_BASE_URL = import.meta.env.REACT_APP_BFF_API_URL;
@@ -25,6 +26,10 @@ export const BFFApiUrls = {
   AFIS_FACTUREN: `${BFF_API_BASE_URL}/services/afis/facturen/:state`,
   // KTO
   USER_FEEDBACK_SUBMIT: `${BFF_API_BASE_URL}/user-feedback/collect`,
+  // Contactgegevens en voorkeuren
+  KLANTCONTACT_CONTACTGEGEVEN_CREATE: `${BFF_API_BASE_URL}/services/klantcontact/contactgegeven/create`,
+  KLANTCONTACT_CONTACTGEGEVEN_VERIFY: `${BFF_API_BASE_URL}/services/klantcontact/contactgegeven/verify`,
+  KLANTCONTACT_CONTACTGEGEVEN_DELETE: `${BFF_API_BASE_URL}/services/klantcontact/contactgegeven/delete`,
 } as const;
 
 // Urls directly used from front-end
@@ -76,6 +81,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   HORECA: 'Horeca vergunningen',
   KLACHTEN: 'Ingediende klachten',
   KLANT_CONTACT: 'Contactmomenten',
+  KLANT_CONTACT_contactmomenten: 'Contactmomenten',
   KREFIA: 'Kredietbank & FIBU',
 
   MILIEUZONE: 'Milieuzone',
@@ -144,7 +150,7 @@ export function getApiErrors(appState: AppState): ApiError[] {
     const filteredResponses = Object.entries(appState).filter(
       ([k, apiResponseData]: [string, unknown]) => {
         return (
-          !['setAppState', 'isReady', 'setIsAppStateReady'].includes(k) &&
+          !(STATE_STORE_UTILITY_KEYS as readonly string[]).includes(k) &&
           (typeof apiResponseData !== 'object' ||
             apiResponseData == null ||
             ('status' in apiResponseData &&

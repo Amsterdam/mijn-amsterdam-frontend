@@ -11,7 +11,12 @@ import {
   apiErrorResult,
 } from '../../universal/helpers/api.ts';
 import type { AuthProfileAndToken } from '../auth/auth-types.ts';
-import { BFF_API_ADMIN_BASE_URL, BFF_API_BASE_URL } from '../config/app.ts';
+import {
+  BFF_API_ADMIN_BASE_URL,
+  BFF_API_BASE_URL,
+  MA_FRONTEND_URL,
+  MIJN_AMSTERDAM_URL_PRODUCTION,
+} from '../config/app.ts';
 
 function nextRouter(_req: Request, _res: Response, next: NextFunction) {
   next('router');
@@ -65,6 +70,35 @@ export function queryParams<T extends Record<string, any>>(req: Request) {
   return req.query as T;
 }
 
+function sanitizePath(path: string) {
+  return path.trim().replace(/\/{2,}/g, '/');
+}
+
+export function generateMaFrontendUrl(routePath: string): string {
+  // Sanitize the routePath to prevent potential SSRF vulnerabilities by ensuring it cannot manipulate the URL structure.
+  // Constructing a URL object with a path beginning with multiple slashes (e.g. //malicious.com) would result in the URL's origin being set to the malicious domain, even if we use the MA_FRONTEND_URL as the base.
+  const routePath_ = sanitizePath(routePath);
+
+  const EXPECTED_FRONTEND_ORIGIN = new URL(
+    IS_PRODUCTION ? MIJN_AMSTERDAM_URL_PRODUCTION : MA_FRONTEND_URL
+  ).origin;
+
+  // This check should be enough to prevent SSRF.
+  // We do not allow anything other than a path (starting with a slash) to be passed in.
+  if (!routePath_.startsWith('/')) {
+    return EXPECTED_FRONTEND_ORIGIN;
+  }
+
+  const urlWithRoute = new URL(routePath_, MA_FRONTEND_URL);
+
+  // Redundant check to ensure the generated URL is always within the MA_FRONTEND_URL origin.
+  if (urlWithRoute.origin !== EXPECTED_FRONTEND_ORIGIN) {
+    return EXPECTED_FRONTEND_ORIGIN;
+  }
+
+  return urlWithRoute.href;
+}
+
 /** Helper for prepending a route with a baseUrl and optionally interpolating route parameters.
  *
  * # Params
@@ -81,12 +115,29 @@ export function generateFullApiUrlBFF(
   params?: PathParams | QueryAndOrPathParams,
   baseUrl: string = BFF_API_BASE_URL
 ) {
+  const path_ = sanitizePath(path);
+
   // QueryParams are only provided when pathParams is a tuple.
   const [queryParams, pathParams] = Array.isArray(params)
     ? params
     : [undefined, params];
   const query = queryParams ? `?${new URLSearchParams(queryParams)}` : '';
-  return `${baseUrl}${generatePath(path, pathParams)}${query}`;
+
+  const urlGenerated = new URL(
+    `${baseUrl}${generatePath(path_, pathParams)}${query}`
+  );
+  const baseUrl_ = new URL(baseUrl);
+
+  // In production, base urls must always match the expected production origin to prevent SSRF vulnerabilities.
+  const expectedOrigin = IS_PRODUCTION
+    ? MIJN_AMSTERDAM_URL_PRODUCTION
+    : baseUrl_.origin;
+
+  if (urlGenerated.origin !== expectedOrigin) {
+    return expectedOrigin;
+  }
+
+  return urlGenerated.href;
 }
 
 export function generateFullApiAdminUrlBFF(
@@ -153,6 +204,10 @@ export function sendBadRequestInvalidInput(res: Response, error: unknown) {
           `for property '${e.path.join('.') || '.'}' with error '${e.message}'`
       )
       .join(' - ');
+  } else if (error instanceof Error) {
+    inputValidationError = error.message;
+  } else if (typeof error === 'string') {
+    inputValidationError = error;
   }
 
   return sendBadRequest(res, inputValidationError);

@@ -12,7 +12,7 @@ export const menuItem: ThemaMenuItem = {
   },
   profileTypes: themaConfig.profileTypes,
   redactedScope: themaConfig.redactedScope,
-  isActive(appState: AppState) {
+  isActive(appState) {
     return (
       themaConfig.featureToggle.active &&
       !isLoading(appState.MILIEUZONE) &&

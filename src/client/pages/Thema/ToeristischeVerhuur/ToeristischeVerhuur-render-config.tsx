@@ -4,7 +4,6 @@ import { default as ToeristischeVerhuurIcon } from './ToeristischeVerhuurIcon.sv
 import { ToeristischeVerhuurList } from './ToeristischeVerhuurList.tsx';
 import { ToeristischeVerhuurThema } from './ToeristischeVerhuurThema.tsx';
 import { isLoading } from '../../../../universal/helpers/api.ts';
-import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
@@ -34,7 +33,7 @@ export const menuItem: ThemaMenuItem = {
   to: themaConfig.route.path,
   profileTypes: themaConfig.profileTypes,
   redactedScope: themaConfig.redactedScope,
-  isActive(appState: AppState) {
+  isActive(appState) {
     const { lvvRegistraties, vakantieverhuurVergunningen, bbVergunningen } =
       appState.TOERISTISCHE_VERHUUR?.content ?? {};
     const hasRegistraties = !!lvvRegistraties?.length;

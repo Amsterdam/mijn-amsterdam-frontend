@@ -122,15 +122,15 @@ test('should transform the data correctly', async () => {
       {
         "cancellationLink": "http://remote-api-host/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
         "caseReference": "00157784",
-        "dateEnd": "2025-01-01T09:30:00Z",
+        "dateEnd": "2025-01-01T08:30:00.000Z",
         "dateEndFormatted": "01 januari 2025",
-        "dateStart": "2025-01-01T09:00:00Z",
+        "dateStart": "2025-01-01T08:00:00.000Z",
         "dateStartFormatted": "01 januari 2025",
-        "displayDateTime": "woensdag 01 januari 2025 van 10:00 tot 10:30 uur",
+        "displayDateTime": "woensdag 01 januari 2025 van 09:00 tot 09:30 uur",
         "icsLink": {
           "download": "afspraak-00157784.ics",
           "title": "Voeg toe aan uw privé-agenda",
-          "to": "data:text/calendar;charset=utf-8;base64,QkVHSU4lM0FWQ0FMRU5EQVIlMEQlMEFWRVJTSU9OJTNBMi4wJTBEJTBBUFJPRElEJTNBLSUyRiUyRkFtc3RlcmRhbSUyRiUyRk5PTlNHTUwlMjB2MS4wJTJGJTJGRU4lMEQlMEFCRUdJTiUzQVZFVkVOVCUwRCUwQVVJRCUzQWFmc3ByYWFrLXN0YWRzbG9rZXQtMDAxNTc3ODQlMEQlMEFEVFNUQU1QJTNBMjAyNTAxMDFUMDAwMDAwWiUwRCUwQURUU1RBUlQlM0EyMDI1MDEwMVQwOTAwMDBaJTBEJTBBRFRFTkQlM0EyMDI1MDEwMVQwOTMwMDBaJTBEJTBBU1VNTUFSWSUzQUFmc3ByYWFrJTIwdm9vciUyMFZhYXJ2aWduZXQlMEQlMEFERVNDUklQVElPTiUzQVJlZmVyZW50aWVudW1tZXIlM0ElMjAwMDE1Nzc4NCUwRCUwQUxPQ0FUSU9OJTNBU3RhZHNsb2tldCUyMFp1aWRvb3N0JTVDJTJDJTIwb25iZWtlbmQlNUMlMkMlMjBudWxsJTIwbnVsbCU1QyUyQyUyME5lZGVybGFuZCUwRCUwQUVORCUzQVZFVkVOVCUwRCUwQUVORCUzQVZDQUxFTkRBUg==",
+          "to": "data:text/calendar;charset=utf-8;base64,QkVHSU4lM0FWQ0FMRU5EQVIlMEQlMEFWRVJTSU9OJTNBMi4wJTBEJTBBUFJPRElEJTNBLSUyRiUyRkFtc3RlcmRhbSUyRiUyRk5PTlNHTUwlMjB2MS4wJTJGJTJGRU4lMEQlMEFCRUdJTiUzQVZFVkVOVCUwRCUwQVVJRCUzQWFmc3ByYWFrLXN0YWRzbG9rZXQtMDAxNTc3ODQlMEQlMEFEVFNUQU1QJTNBMjAyNTAxMDFUMDAwMDAwWiUwRCUwQURUU1RBUlQlM0EyMDI1MDEwMVQwODAwMDBaJTBEJTBBRFRFTkQlM0EyMDI1MDEwMVQwODMwMDBaJTBEJTBBU1VNTUFSWSUzQUFmc3ByYWFrJTIwdm9vciUyMFZhYXJ2aWduZXQlMEQlMEFERVNDUklQVElPTiUzQVJlZmVyZW50aWVudW1tZXIlM0ElMjAwMDE1Nzc4NCUwRCUwQUxPQ0FUSU9OJTNBU3RhZHNsb2tldCUyMFp1aWRvb3N0JTVDJTJDJTIwb25iZWtlbmQlNUMlMkMlMjBudWxsJTIwbnVsbCU1QyUyQyUyME5lZGVybGFuZCUwRCUwQUVORCUzQVZFVkVOVCUwRCUwQUVORCUzQVZDQUxFTkRBUg==",
         },
         "link": {
           "title": "Bekijk afspraak",
@@ -183,14 +183,14 @@ test('Tranfers historical appointments to contactmomenten', async () => {
   expect(result.content.contactmomenten).toMatchInlineSnapshot(`
     [
       {
-        "datePublished": "2024-12-01T09:00:00Z",
+        "datePublished": "2024-12-01T08:00:00.000Z",
         "datePublishedFormatted": "01 december 2024",
         "kanaal": "Stadsloket",
         "referenceNumber": "1",
         "subject": "Gemiste afspraak",
       },
       {
-        "datePublished": "2024-12-01T09:00:00Z",
+        "datePublished": "2024-12-01T08:00:00.000Z",
         "datePublishedFormatted": "01 december 2024",
         "kanaal": "Stadsloket",
         "referenceNumber": "2",

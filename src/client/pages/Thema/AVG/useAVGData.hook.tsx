@@ -2,7 +2,7 @@ import { tableConfig, themaConfig } from './AVG-thema-config.ts';
 import { isError, isLoading } from '../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
 
 export function useAVGData() {
   const { AVG } = useAppStateGetter();

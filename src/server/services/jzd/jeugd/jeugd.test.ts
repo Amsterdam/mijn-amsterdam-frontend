@@ -151,7 +151,7 @@ describe('fetchLeerlingenvervoer', () => {
       itemTypeCode: 'LLV',
       link: {
         title: 'Meer informatie',
-        to: '/jeugd/voorziening/1610585298',
+        to: '/jeugd/voorziening/aangepast-groepsvervoer/1610585298',
       },
       displayStatus: 'Besluit genomen',
       statusDate: '2025-04-07T09:44:48.697',

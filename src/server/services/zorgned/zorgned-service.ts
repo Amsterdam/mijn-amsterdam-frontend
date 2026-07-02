@@ -3,7 +3,7 @@ import thenBy from 'thenby';
 
 import type {
   BeschiktProduct,
-  LeveringsVorm,
+  LeveringsVormTransformed,
   ZorgnedAanvraagTransformed,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedAanvragenServiceOptions,
@@ -125,7 +125,8 @@ function transformZorgnedAanvraag(
   const levering = leveringen.at(-1);
 
   const leveringsVorm =
-    (toegewezenProduct?.leveringsvorm?.toUpperCase() as LeveringsVorm) ?? '';
+    (toegewezenProduct?.leveringsvorm?.toUpperCase() as LeveringsVormTransformed) ??
+    '';
 
   let productsoortCode = beschiktProduct.product.productsoortCode;
   if (productsoortCode) {
@@ -489,7 +490,7 @@ function transformZorgnedPersonResponse(
       name:
         zorgnedResponseData?.persoon?.voornamen ??
         getFullName({
-          voornamen: zorgnedResponseData?.persoon?.voornamen,
+          voornamen: zorgnedResponseData?.persoon?.voornamen ?? null,
           geslachtsnaam: zorgnedResponseData?.persoon?.geboortenaam,
           voorvoegselGeslachtsnaam: zorgnedResponseData?.persoon?.voorvoegsel,
         }),

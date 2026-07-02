@@ -17,6 +17,8 @@ const logToApplicationInsights =
   process.env.APPLICATIONINSIGHTS_CONNECTION_STRING &&
   process.env.NODE_ENV !== 'test';
 
+const ONE_MINUTE = 60 * 1000;
+
 if (logToApplicationInsights) {
   appInsights
     .setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)
@@ -136,4 +138,31 @@ export function trackEvent(name: string, properties: Record<string, unknown>) {
     name,
     properties,
   });
+}
+
+/** Flush telemetry to immediately send events and exceptions */
+export async function flushTelemetry(options?: { timeoutMs?: number }) {
+  if (!logToApplicationInsights || !client) {
+    return;
+  }
+
+  const timeoutMs = options?.timeoutMs ?? ONE_MINUTE;
+
+  await Promise.race([
+    new Promise<void>((resolve) => {
+      client.flush({
+        isAppCrashing: false, // Setting isAppCrashing to true will store the telemetry to disk
+        callback: () => resolve(),
+      });
+    }),
+    new Promise<void>((resolve) => {
+      setTimeout(() => {
+        logger.warn(
+          { timeoutMs },
+          'Telemetry flush timed out before process exit.'
+        );
+        resolve();
+      }, timeoutMs);
+    }),
+  ]);
 }

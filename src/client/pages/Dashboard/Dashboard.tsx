@@ -14,13 +14,14 @@ import { MyAreaDashboard } from '../../components/MyArea/MyAreaDashboard.tsx';
 import { MyNotification } from '../../components/MyNotification/MyNotification.tsx';
 import { MyThemasPanel } from '../../components/MyThemasPanel/MyThemasPanel.tsx';
 import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
+import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 import { useAppStateNotifications } from '../../hooks/useNotifications.ts';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
-import { Afspraken } from '../Thema/KlantContact/KlantContactThema.tsx';
+import { Afspraken } from '../Thema/KlantContact/Afspraken/Afspraken.tsx';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
 
@@ -41,6 +42,7 @@ export function Dashboard() {
 
   const { items: myThemaItems, isLoading: isMyThemasLoading } =
     useActiveThemaMenuItems();
+  const afspraken = appState.KLANT_CONTACT.content?.afspraken ?? [];
 
   // We only want to run this on mount.
   useEffect(() => {
@@ -62,8 +64,17 @@ export function Dashboard() {
           pageTitle: 'Dashboard',
         }}
       >
-        <PageContentCell spanWide={7}>
-          <Afspraken compact={true} />
+        <PageContentCell
+          spanWide={7}
+          className={getRedactedClass(null, 'full')}
+        >
+          {!!afspraken.length && (
+            <Afspraken
+              className="ams-mb-l"
+              afspraken={afspraken}
+              compact={true}
+            />
+          )}
           <Heading level={2} className="ams-mb-m">
             Recente berichten{' '}
             {total > notifications.length && (

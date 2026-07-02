@@ -9,6 +9,7 @@ import type {
   AfisEMandateCreditor,
   AfisEMandateFrontend,
   AfisEMandateSource,
+  AfisEMandatesResponseDataSource,
 } from './afis-types.ts';
 import { remoteApi } from '../../../testing/utils.ts';
 import type {
@@ -57,6 +58,8 @@ const validEMandateFrontend: AfisEMandateFrontend = {
     title: 'Mock Link',
   },
   eMandateIdSource: null,
+  businessPartnerId: '',
+  history: [],
 };
 
 // Update test data for AfisEMandateCreditor
@@ -365,7 +368,7 @@ describe('afis-e-mandates service (with nock)', () => {
 
       const result = await emandates.fetchEMandates(
         { businessPartnerId: '123' },
-        authProfile
+        authProfile.sid
       );
       expect(result.status).toBe('OK');
       expect(result.content?.length).toBe(
@@ -405,7 +408,7 @@ describe('afis-e-mandates service (with nock)', () => {
 
       const result = await emandates.fetchEMandates(
         { businessPartnerId: '123' },
-        authProfile
+        authProfile.sid
       );
       expect(result.status).toBe('OK');
       expect(result.content?.length).toBe(
@@ -420,7 +423,7 @@ describe('afis-e-mandates service (with nock)', () => {
 
       const result = await emandates.fetchEMandates(
         { businessPartnerId: '123' },
-        authProfile
+        authProfile.sid
       );
       expect(result.status).toBe('OK');
       expect(result.content?.length).toBe(
@@ -729,7 +732,7 @@ describe('afis-e-mandates service (with nock)', () => {
             },
           ],
         },
-      } as unknown as any;
+      } as unknown as AfisEMandatesResponseDataSource;
 
       const result = emandates.forTesting.transformEMandatesResponse(
         responseData,

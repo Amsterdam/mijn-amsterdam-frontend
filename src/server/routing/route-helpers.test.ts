@@ -4,6 +4,7 @@ import z from 'zod';
 import {
   createBFFRouter,
   generateFullApiUrlBFF,
+  generateMaFrontendUrl,
   queryParams,
   send404,
   sendBadRequest,
@@ -18,6 +19,22 @@ import { RequestMock, ResponseMock } from '../../testing/utils.ts';
 import type { ApiResponse_DEPRECATED } from '../../universal/helpers/api.ts';
 import { apiErrorResult } from '../../universal/helpers/api.ts';
 import { oidcConfigDigid, oidcConfigEherkenning } from '../auth/auth-config.ts';
+import { MA_FRONTEND_URL } from '../config/app.ts';
+
+const mocks = vi.hoisted(() => {
+  return {
+    IS_PRODUCTION: false,
+  };
+});
+
+vi.mock('../../universal/config/env.ts', async (importActual) => {
+  return {
+    ...(await importActual()),
+    get IS_PRODUCTION() {
+      return mocks.IS_PRODUCTION;
+    },
+  };
+});
 
 describe('route-helpers', () => {
   const digidClientId = oidcConfigDigid.clientID;
@@ -35,7 +52,6 @@ describe('route-helpers', () => {
   afterAll(() => {
     oidcConfigEherkenning.clientID = digidClientId;
     oidcConfigDigid.clientID = eherkenningClientId;
-
     Mockdate.reset();
   });
 
@@ -174,7 +190,7 @@ describe('route-helpers', () => {
 
     test('Without ZOD error', () => {
       const responseData1 = apiErrorResult(
-        'Bad request: Invalid input',
+        'Bad request: No can do!',
         null,
         400
       );
@@ -225,10 +241,79 @@ describe('route-helpers', () => {
       const value = generateFullApiUrlBFF('/services/test', [{ foo: 'bar' }]);
       expect(value).toBe(`${bffApiHost}/api/v1/services/test?foo=bar`);
     });
-    test('generateFullApiUrlBFF with only query params', () => {
+    test('generateFullApiUrlBFF with only query params throws error if path params are missing', () => {
       expect(() =>
         generateFullApiUrlBFF('/services/test/:id', [{ foo: 'bar' }])
       ).toThrow();
+    });
+    test('generateFullApiUrlBFF with invalid path params', () => {
+      expect(() =>
+        generateFullApiUrlBFF('/services/test/:id', { wrongKey: '123' })
+      ).toThrow();
+    });
+    test('generateFullApiUrlBFF allows base URL that does not match mijn amsterdam production urls in Non production env', () => {
+      const value = generateFullApiUrlBFF(
+        '/services/test/:id',
+        { id: '123' },
+        'http://some.mijn.amsterdam.nl'
+      );
+      expect(value).toBe('http://some.mijn.amsterdam.nl/services/test/123');
+    });
+    test('generateFullApiUrlBFF does not allow non production base url in production', () => {
+      mocks.IS_PRODUCTION = true;
+
+      const value = generateFullApiUrlBFF(
+        '/services/test/:id',
+        { id: '123' },
+        'https://mijn.amsterdam.nl.malicious'
+      );
+      expect(value).toBe('https://mijn.amsterdam.nl');
+
+      mocks.IS_PRODUCTION = false;
+    });
+  });
+
+  describe('generateMaFrontendUrl', () => {
+    test('generateMaFrontendUrl with valid routePath', () => {
+      const value = generateMaFrontendUrl('/some-route');
+      expect(value).toBe(`${MA_FRONTEND_URL}/some-route`);
+    });
+
+    test('generateMaFrontendUrl with valid routePath in production returns production URL if the MA_FRONTEND_URL does not match the production URL', () => {
+      mocks.IS_PRODUCTION = true;
+      const value = generateMaFrontendUrl('/some-route');
+      expect(value).toBe(`https://mijn.amsterdam.nl`);
+      mocks.IS_PRODUCTION = false;
+    });
+
+    test('generateMaFrontendUrl with invalid routePath', () => {
+      const value = generateMaFrontendUrl('invalid-route');
+      expect(value).toBe(MA_FRONTEND_URL);
+    });
+
+    test('generateMaFrontendUrl with routePath that tries to break out of origin', () => {
+      const value = generateMaFrontendUrl('.evil.example/phish'); // Thanks!
+      expect(value).toBe(MA_FRONTEND_URL);
+
+      const value2 = generateMaFrontendUrl('@evil.example/');
+      expect(value2).toBe(MA_FRONTEND_URL);
+    });
+
+    test('generateMaFrontendUrl with routePath that has multiple slashes', () => {
+      const value = generateMaFrontendUrl('///some//route///');
+      expect(value).toBe(`${MA_FRONTEND_URL}/some/route/`);
+    });
+
+    test('generateMaFrontendUrl with routePath that has spaces and special characters', () => {
+      const value = generateMaFrontendUrl('/some route/with special chars?');
+      expect(value).toBe(
+        `${MA_FRONTEND_URL}/some%20route/with%20special%20chars?`
+      );
+    });
+
+    test('generateMaFrontendUrl with routePath that starts with query params returns MA_FRONTEND_URL', () => {
+      const value = generateMaFrontendUrl('?some=query');
+      expect(value).toBe(MA_FRONTEND_URL);
     });
   });
 });

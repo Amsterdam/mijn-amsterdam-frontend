@@ -21,8 +21,8 @@ import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis
 import { Datalist } from '../../../components/Datalist/Datalist.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { Spinner } from '../../../components/Spinner/Spinner.tsx';
+import { TableV2 } from '../../../components/Table/TableV2.tsx';
 import { ThemaDetailPagina } from '../../../components/Thema/ThemaDetailPagina.tsx';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { useWidescreen } from '../../../hooks/media.hook.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
@@ -181,17 +181,17 @@ function EMandate({ eMandate }: EMandateProps) {
       <div className="ams-mb-xl">
         {signRequestStatusCheckApi.isRequestingStatusCheck ? (
           <Paragraph>
-            <Spinner /> Mijn Amsterdam controleert de status van het
-            E-Mandaat...
+            <Spinner /> Mijn Amsterdam controleert de status van de
+            incassomachtiging...
           </Paragraph>
         ) : signRequestStatusCheckApi.isPendingActivation ? (
           <Alert headingLevel={4} heading="Status">
             <Paragraph>
-              Wachten op bevestiging van het E-Mandaat voor{' '}
+              Wachten op bevestiging van de incassomachtiging voor{' '}
               {eMandate.creditorName}. Dit kan enkele minuten duren.
             </Paragraph>
             <Paragraph>
-              Zodra de bevestiging is ontvangen, zal het E-Mandaat actief
+              Zodra de bevestiging is ontvangen, zal de incassomachtiging actief
               worden.{' '}
             </Paragraph>
             {signRequestStatusCheckApi.isTakingLong && (
@@ -215,9 +215,9 @@ function EMandate({ eMandate }: EMandateProps) {
       </div>
       {!!eMandate.history.length &&
         (isWideScreen ? (
-          <ThemaPaginaTable
-            zaken={eMandate.history}
-            title="Eerdere E-Mandaten"
+          <TableV2
+            items={eMandate.history}
+            caption="Eerdere E-Mandaten"
             displayProps={eMandateHistoryDisplayProps}
           />
         ) : (

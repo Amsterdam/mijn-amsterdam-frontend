@@ -147,98 +147,94 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
           <div
-            class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+            class="ams-table"
           >
-            <div
-              class="ams-table"
+            <table
+              class="ams-table__table _TableV2_1fc147 _Stadspassen_b80084"
             >
-              <table
-                class="ams-table__table _TableV2_1fc147 _Stadspassen_b80084"
+              <thead
+                class="ams-table__header"
               >
-                <thead
-                  class="ams-table__header"
+                <tr
+                  class="ams-table__row"
                 >
-                  <tr
-                    class="ams-table__row"
+                  <td
+                    class="ams-table__cell"
+                  />
+                  <th
+                    class="ams-table__header-cell"
                   >
-                    <td
-                      class="ams-table__cell"
-                    />
-                    <th
-                      class="ams-table__header-cell"
-                    >
-                      Status
-                    </th>
-                  </tr>
-                </thead>
-                <tbody
-                  class="ams-table__body"
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                class="ams-table__body"
+              >
+                <tr
+                  class="ams-table__row"
                 >
-                  <tr
-                    class="ams-table__row"
+                  <td
+                    class="ams-table__cell"
                   >
-                    <td
-                      class="ams-table__cell"
-                    >
-                      <a
-                        class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
-                      >
-                        <span
-                          class="_Stadspas_owner_b80084"
-                        >
-                          Stadspas van Kerub
-                        </span>
-                        <span
-                          class="_Stadspas_balance_b80084"
-                        >
-                          Saldo €5,00
-                        </span>
-                      </a>
-                    </td>
-                    <td
-                      class="ams-table__cell"
+                    <a
+                      class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
                     >
                       <span
-                        class="_StatusValue_b80084"
+                        class="_Stadspas_owner_b80084"
                       >
-                        Actief
+                        Stadspas van Kerub
                       </span>
-                    </td>
-                  </tr>
-                  <tr
-                    class="ams-table__row"
-                  >
-                    <td
-                      class="ams-table__cell"
-                    >
-                      <a
-                        class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
+                      <span
+                        class="_Stadspas_balance_b80084"
                       >
-                        <span
-                          class="_Stadspas_owner_b80084"
-                        >
-                          Stadspas van Lou
-                        </span>
-                        <span
-                          class="_Stadspas_balance_b80084"
-                        >
-                          Saldo €4,00
-                        </span>
-                      </a>
-                    </td>
-                    <td
-                      class="ams-table__cell"
+                        Saldo €5,00
+                      </span>
+                    </a>
+                  </td>
+                  <td
+                    class="ams-table__cell"
+                  >
+                    <span
+                      class="_StatusValue_b80084"
+                    >
+                      Actief
+                    </span>
+                  </td>
+                </tr>
+                <tr
+                  class="ams-table__row"
+                >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    <a
+                      class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
                     >
                       <span
-                        class="_StatusValue_b80084"
+                        class="_Stadspas_owner_b80084"
                       >
-                        Geblokkeerd
+                        Stadspas van Lou
                       </span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                      <span
+                        class="_Stadspas_balance_b80084"
+                      >
+                        Saldo €4,00
+                      </span>
+                    </a>
+                  </td>
+                  <td
+                    class="ams-table__cell"
+                  >
+                    <span
+                      class="_StatusValue_b80084"
+                    >
+                      Geblokkeerd
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <p
             class="ams-paragraph ams-paragraph--small"
@@ -317,10 +313,10 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>

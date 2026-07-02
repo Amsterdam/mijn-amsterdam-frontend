@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { Button, Dialog } from '@amsterdam/design-system-react';
+import { ActionGroup, Button, Dialog } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import styles from './Modal.module.scss';
@@ -164,13 +164,24 @@ export function Modal({
   );
 }
 
+type ModalAction = {
+  label: ReactNode;
+  disabled?: boolean;
+  buttonVariant?: 'primary' | 'secondary' | 'tertiary';
+  onClick?: () => boolean | void | Promise<boolean | void>;
+  doCloseModalOnClick?: boolean;
+};
+
 type ModalAndButtonProps = {
   buttonVariant?: 'primary' | 'secondary' | 'tertiary' | 'ma-link-like';
-  modal: Prettify<Omit<ModalProps, 'isOpen' | 'children' | 'onClose'>>;
+  modal: Prettify<
+    Omit<ModalProps, 'isOpen' | 'children' | 'onClose' | 'actions'>
+  >;
   children: ReactNode;
   buttonClassName?: string;
   buttonLabel: string;
   startOpen?: boolean;
+  actions?: ModalAction[];
 };
 
 export function ModalAndButton({
@@ -180,9 +191,31 @@ export function ModalAndButton({
   buttonVariant = 'secondary',
   buttonLabel = 'Open modal',
   startOpen = false,
+  actions = [],
 }: ModalAndButtonProps) {
   const [isLocationModalOpen, setLocationModalOpen] = useState(startOpen);
-
+  const modalActionButtons = actions.length ? (
+    <ActionGroup>
+      {actions.map((action, index) => (
+        <Button
+          key={index}
+          variant={action.buttonVariant ?? 'primary'}
+          disabled={action.disabled}
+          onClick={async () => {
+            const success = await action.onClick?.();
+            const shouldClose =
+              action.doCloseModalOnClick !== false &&
+              (typeof success === 'boolean' ? success : true);
+            if (shouldClose) {
+              setLocationModalOpen(false);
+            }
+          }}
+        >
+          {action.label}
+        </Button>
+      ))}
+    </ActionGroup>
+  ) : undefined;
   return (
     <>
       {buttonVariant === 'ma-link-like' ? (
@@ -203,6 +236,7 @@ export function ModalAndButton({
       )}
       <Modal
         {...modal}
+        actions={modalActionButtons}
         isOpen={isLocationModalOpen}
         onClose={() => {
           setLocationModalOpen(false);

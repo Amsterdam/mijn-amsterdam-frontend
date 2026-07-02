@@ -1,13 +1,33 @@
-import { BFF_BASE_PATH, BFF_BASE_PATH_ADMIN } from '../routing/bff-routes.ts';
+import { IS_PRODUCTION } from '../../universal/config/env.ts';
+import { getFromEnv } from '../helpers/env.ts';
 
 export const BFF_REQUEST_CACHE_ENABLED =
   typeof process.env.BFF_REQUEST_CACHE_ENABLED !== 'undefined'
     ? String(process.env.BFF_REQUEST_CACHE_ENABLED).toLowerCase() === 'true'
     : true;
 
-export const BFF_API_BASE_URL = process.env.BFF_API_BASE_URL ?? BFF_BASE_PATH;
-export const BFF_API_ADMIN_BASE_URL =
-  process.env.BFF_API_BASE_URL_ADMIN ?? BFF_BASE_PATH_ADMIN;
+export const MIJN_AMSTERDAM_URL_PRODUCTION = 'https://mijn.amsterdam.nl';
+export const BFF_API_BASE_URL = getFromEnv('BFF_API_BASE_URL', true, true)!;
+export const BFF_API_ADMIN_BASE_URL = getFromEnv(
+  'BFF_API_BASE_URL_ADMIN',
+  true,
+  true
+)!;
+export const MA_FRONTEND_URL = getFromEnv('MA_FRONTEND_URL', true, true)!;
+
+// In production, enforce that predefined base URL origins equal the expected production origin to prevent misconfiguration.
+if (
+  IS_PRODUCTION &&
+  !(
+    new URL(MA_FRONTEND_URL).origin === MIJN_AMSTERDAM_URL_PRODUCTION &&
+    new URL(BFF_API_BASE_URL).origin === MIJN_AMSTERDAM_URL_PRODUCTION &&
+    new URL(BFF_API_ADMIN_BASE_URL).origin === MIJN_AMSTERDAM_URL_PRODUCTION
+  )
+) {
+  throw new Error(
+    `In production, all predefined base URL origins must equal ${MIJN_AMSTERDAM_URL_PRODUCTION}. Current values: MA_FRONTEND_URL=${MA_FRONTEND_URL}, BFF_API_BASE_URL=${BFF_API_BASE_URL}, BFF_API_ADMIN_BASE_URL=${BFF_API_ADMIN_BASE_URL}`
+  );
+}
 
 export const RELEASE_VERSION = `mijnamsterdam-bff@${process.env.MA_RELEASE_VERSION_TAG ?? 'notset'}`;
 

@@ -6,13 +6,14 @@ export function getFullName(
     'voornamen' | 'geslachtsnaam' | 'voorvoegselGeslachtsnaam'
   >
 ) {
-  return persoon
-    ? `${persoon.voornamen} ${
-        persoon.voorvoegselGeslachtsnaam
-          ? persoon.voorvoegselGeslachtsnaam + ' '
-          : ''
-      }${persoon.geslachtsnaam}`.trim()
-    : '';
+  return [
+    persoon.voornamen,
+    persoon.voorvoegselGeslachtsnaam,
+    persoon.geslachtsnaam,
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .trim();
 }
 
 export function getFullAddress(

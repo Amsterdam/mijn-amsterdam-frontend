@@ -1,17 +1,13 @@
-import { useEffect, useMemo } from 'react';
-
-import { useLocation } from 'react-router';
-import { create } from 'zustand';
+import { useMemo } from 'react';
 
 import { useAppStateReady } from './useAppStateStore.ts';
 import { useProfileTypeValue } from './useProfileType.ts';
 import { sortAlpha } from '../../universal/helpers/utils.ts';
-import type { LinkProps } from '../../universal/types/App.types.ts';
 import { useThemasByProfileType } from '../config/menuItems.ts';
 import type { ThemaMenuItemTransformed } from '../config/thema-types.ts';
-import { themaConfig as mijnContactThemaConfig } from '../pages/Thema/KlantContact/KlantContact-thema-config.ts';
+import { myThemasMenuItems } from '../config/thema.ts';
+import { themaConfig as klantContactThemaConfig } from '../pages/Thema/KlantContact/KlantContact-thema-config.ts';
 import { themaConfig as profileThemaConfig } from '../pages/Thema/Profile/Profile-thema-config.ts';
-
 export interface ThemasState {
   items: ThemaMenuItemTransformed[];
   isLoading: boolean;
@@ -25,7 +21,7 @@ export function compareThemas<T extends withIDTitle>(a: T, b: T): 0 | 1 | -1 {
   const themaIDsOnTop = [
     profileThemaConfig.BRP.id,
     profileThemaConfig.KVK.id,
-    mijnContactThemaConfig.id,
+    klantContactThemaConfig.id,
   ] as string[];
 
   const aHasPrecedence = themaIDsOnTop.includes(a.id);
@@ -48,7 +44,9 @@ export function compareThemas<T extends withIDTitle>(a: T, b: T): 0 | 1 | -1 {
 export function useAllThemaMenuItems(): ThemasState {
   const profileType = useProfileTypeValue();
   const isAppStateReady = useAppStateReady();
-  const items = useThemasByProfileType(profileType).toSorted(compareThemas);
+  const items = useThemasByProfileType(myThemasMenuItems, profileType).toSorted(
+    compareThemas
+  );
 
   return {
     items,
@@ -90,57 +88,4 @@ export function useThemaMenuItemByThemaID<ID extends string = string>(
   return itemsById[themaID]
     ? (itemsById[themaID] as ThemaMenuItemTransformed<ID>)
     : null;
-}
-
-export function useThemaBreadcrumbs<ID extends string = string>(
-  themaID: ID
-): LinkProps[] {
-  const themaPaginaBreadcrumb = useThemaMenuItemByThemaID(themaID);
-  const location = useLocation();
-  const from = location?.state?.from;
-  const fromPageType = location?.state?.pageType;
-
-  return [
-    themaPaginaBreadcrumb
-      ? {
-          to: themaPaginaBreadcrumb?.to,
-          title: themaPaginaBreadcrumb?.title,
-        }
-      : null,
-    themaPaginaBreadcrumb && fromPageType === 'listpage'
-      ? {
-          to: from,
-          title: 'Lijst',
-        }
-      : null,
-  ].filter((link) => link !== null);
-}
-
-type PageTypeSetting = 'listpage' | 'none';
-
-type PageTypeStore = {
-  pageType: PageTypeSetting;
-  setPageType: (pageType: PageTypeSetting) => void;
-};
-
-export const useMainMenuOpen = create<PageTypeStore>((set) => ({
-  pageType: 'none',
-  setPageType: (pageType: PageTypeSetting) => set({ pageType }),
-}));
-
-export function usePageTypeSetting(pageTypeRequested: PageTypeSetting) {
-  const { pageType, setPageType } = useMainMenuOpen();
-
-  useEffect(() => {
-    setPageType(pageTypeRequested);
-    return () => {
-      setPageType('none');
-    };
-  }, [pageTypeRequested]);
-
-  return pageType;
-}
-
-export function usePageTypeSettingValue() {
-  return useMainMenuOpen().pageType;
 }

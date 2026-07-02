@@ -88,6 +88,7 @@ process.env.LOG_LEVEL = '';
 process.env.BFF_DB_FILE = ':memory:';
 process.env.REACT_APP_BFF_API_URL = bffApiHost;
 process.env.BFF_API_BASE_URL = `${bffApiHost}/api/v1`;
+process.env.BFF_API_BASE_URL_ADMIN = `${process.env.BFF_API_BASE_URL}/admin`;
 process.env.BFF_DATA_AMSTERDAM_API_KEY = '';
 
 process.env.BFF_DISABLE_MOCK_ADAPTER = 'true';
@@ -162,6 +163,8 @@ process.env.BFF_BELASTINGEN_ENDPOINT = `${remoteApiHost}/belastingen`;
 
 process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT = `${remoteApiHost}/amsapp/session/credentials`;
 process.env.BFF_AMSAPP_NONCE = '123456789123456789123456';
+process.env.BFF_AMSAPP_URL = `${remoteApiHost}/amsapp`;
+process.env.BFF_AMSAPP_API_KEY = 'xxxAMSAPPxxx';
 process.env.DEBUG_RESPONSE_DATA = '';
 process.env.DEBUG_REQUEST_DATA = '';
 
@@ -184,4 +187,4 @@ process.env.REACT_APP_COBROWSE_LICENSE_KEY = 'test';
 process.env.BFF_AMSAPP_SURVEY_API_BASE_URL = `${remoteApiHost}/survey/api/v1/surveys`;
 process.env.BFF_ZWD_API_BASE_URL = remoteApiHost;
 
-process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL = bffApiHost;
+process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL = `${bffApiHost}/api/v1`;

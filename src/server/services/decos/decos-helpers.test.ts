@@ -17,12 +17,28 @@ import { decosCaseToZaakTransformers } from '../vergunningen/decos-zaken.ts';
 
 describe('decos/helpers', () => {
   describe('isWaitingForPaymentConfirmation', () => {
-    test('Is waiting', () => {
+    test(`Is waiting for payment: 'nogniet' and 'wacht op online betaling'`, () => {
       const zaak = {
         fields: {
           text45: 'Werk en vervoer op straat',
           text11: 'nogniet',
           text12: 'wacht op online betaling',
+        },
+      } as DecosZaakSource;
+
+      expect(
+        isWaitingForPaymentConfirmation(
+          zaak,
+          decosCaseToZaakTransformers['Werk en vervoer op straat']
+        )
+      ).toBe(true);
+    });
+    test(`Is waiting for payment: 'nogniet' and 'ideal'`, () => {
+      const zaak = {
+        fields: {
+          text45: 'Werk en vervoer op straat',
+          text11: 'nogniet',
+          text12: 'ideal',
         },
       } as DecosZaakSource;
 

@@ -4,66 +4,58 @@
 ########################################################################################################################
 ########################################################################################################################
 
-FROM node:26.3.0 AS updated-local
+FROM node:26.4.0 AS node-with-pnpm-installed
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
-
-# Change source to https as http calls were blocked by Azure firewall
-RUN sed -i 's|http:|https:|' /etc/apt/sources.list.d/*.sources
-
-RUN apt-get update \
-  && apt-get dist-upgrade -y \
-  && apt-get autoremove -y \
-  && apt-get install -y --no-install-recommends \
-  nano \
-  rsync \
-  openssh-server
-
-########################################################################################################################
-########################################################################################################################
-# Start with a node image for build dependencies
-########################################################################################################################
-########################################################################################################################
-FROM updated-local AS build-deps
 
 RUN npm i -g corepack --force
 
 # PNPM Setup
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+RUN corepack enable pnpm
+RUN corepack prepare pnpm@10.11.0 --activate
 
-WORKDIR /build-space
+########################################################################################################################
+########################################################################################################################
+# Start with a node image for build dependencies
+########################################################################################################################
+########################################################################################################################
+FROM node-with-pnpm-installed AS build-deps
+
+WORKDIR /app
 
 # Copy packages + Install
-COPY pnpm-lock.yaml /build-space/
-COPY pnpm-workspace.yaml /build-space/
-COPY package.json /build-space/
-COPY vite.config.ts /build-space/
-COPY .env.local.template /build-space/
-COPY vendor /build-space/vendor
-COPY src/mocks-server/fixtures /build-space/src/mocks-server/fixtures
-COPY __mocks__ /build-space/__mocks__
+COPY pnpm-lock.yaml /app/
+COPY pnpm-workspace.yaml /app/
+COPY package.json /app/
+COPY vendor /app/vendor
 
 # Install the dependencies
 RUN pnpm install --frozen-lockfile --prefer-offline --reporter=append-only
 
+# Test + dev related files
+COPY src/mocks-server/fixtures /app/src/mocks-server/fixtures
+COPY vite.config.ts /app/
+COPY .env.local.template /app/
+COPY __mocks__ /app/__mocks__
+
 # Typescript configs
-COPY tsconfig.json /build-space/
-COPY tsconfig.build-fe.json /build-space/
-COPY tsconfig.build-bff.json /build-space/
+COPY tsconfig.json /app/
+COPY tsconfig.build-fe.json /app/
+COPY tsconfig.build-bff.json /app/
 
 # Copy source files
-COPY src /build-space/src
-COPY index.html /build-space/
+COPY src /app/src
+COPY index.html /app/
 
 ########################################################################################################################
 ########################################################################################################################
 # Actually building the application
 ########################################################################################################################
 ########################################################################################################################
-FROM build-deps AS build-app-fe
+FROM build-deps AS app-code-fe
 
 # Universal env variables (defined in vite.config.ts)
 ARG MA_OTAP_ENV=production
@@ -77,9 +69,6 @@ ENV MA_RELEASE_VERSION_TAG=$MA_RELEASE_VERSION_TAG
 
 ARG MA_GIT_SHA=-1
 ENV MA_GIT_SHA=$MA_GIT_SHA
-
-ARG MA_IS_AZ=unknown
-ENV MA_IS_AZ=$MA_IS_AZ
 
 ARG MA_TEST_ACCOUNTS=
 ENV MA_TEST_ACCOUNTS=$MA_TEST_ACCOUNTS
@@ -97,13 +86,13 @@ ENV REACT_APP_MONITORING_CONNECTION_STRING=$REACT_APP_MONITORING_CONNECTION_STRI
 ARG REACT_APP_COBROWSE_LICENSE_KEY=
 ENV REACT_APP_COBROWSE_LICENSE_KEY=$REACT_APP_COBROWSE_LICENSE_KEY
 
-COPY public /build-space/public
+COPY public /app/public
 
 # Build FE
 RUN pnpm build
 
 # Build BFF
-FROM build-deps AS build-app-bff
+FROM build-deps AS app-code-bff
 
 RUN pnpm bff-api:build
 
@@ -132,20 +121,28 @@ RUN envsubst '${MA_FRONTEND_HOST}' < /tmp/nginx-server-default.template.conf > /
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 # Copy the built application files to the current image
-COPY --from=build-app-fe /build-space/build /usr/share/nginx/html
+COPY --from=app-code-fe /app/build /usr/share/nginx/html
 COPY src/client/public/robots.txt /usr/share/nginx/html/robots.txt
 
 CMD nginx -g 'daemon off;'
-
 
 ########################################################################################################################
 ########################################################################################################################
 # Bff Web server image
 ########################################################################################################################
 ########################################################################################################################
-FROM updated-local AS deploy-bff
+FROM app-code-bff AS deploy-bff-az
 
-WORKDIR /app
+# Change source to https as http calls were blocked by Azure firewall
+RUN sed -i 's|http:|https:|' /etc/apt/sources.list.d/*.sources
+
+RUN apt-get update \
+  && apt-get dist-upgrade -y \
+  && apt-get autoremove -y \
+  && apt-get install -y --no-install-recommends \
+  nano \
+  rsync \
+  openssh-server
 
 ARG MA_OTAP_ENV=production
 ENV MA_OTAP_ENV=$MA_OTAP_ENV
@@ -177,19 +174,14 @@ RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
 COPY scripts/webjobs/triggered /app/jobs/triggered
 
 # Copy the built application files to the current image
-COPY --from=build-app-bff /build-space/build-bff /app/build-bff
-COPY --from=build-app-bff /build-space/node_modules /app/node_modules
-COPY --from=build-app-bff /build-space/package.json /app/package.json
-COPY --from=build-app-bff /build-space/vendor /app/vendor
+COPY db-migrations /app/db-migrations
 COPY src/server/views /app/build-bff/server/views
-
-# Run the app
-CMD /usr/local/bin/docker-entrypoint-bff.sh
-
-FROM deploy-bff AS deploy-bff-az
 
 # ssh (see also: https://github.com/Azure-Samples/docker-django-webapp-linux)
 RUN --mount=type=secret,id=SSH_PASSWD export SSH_PASSWD=$(cat /run/secrets/SSH_PASSWD) && echo "$SSH_PASSWD" | chpasswd
 
 # SSH config
 COPY conf/sshd_config /etc/ssh/
+
+# Run the app
+CMD /usr/local/bin/docker-entrypoint-bff.sh

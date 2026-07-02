@@ -1,5 +1,4 @@
-import { generatePath, useParams } from 'react-router';
-
+import { useTransformContactmomenten } from './Contactmomenten/useTransformContactmomenten.tsx';
 import { tableConfigs, themaConfig } from './KlantContact-thema-config.ts';
 import {
   isLoading,
@@ -7,35 +6,31 @@ import {
   hasFailedDependency,
 } from '../../../../universal/helpers/api.ts';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems.ts';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
 
 export function useKlantcontactData() {
   const { KLANT_CONTACT } = useAppStateGetter();
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
-  const routeParams = useParams();
-
+  const contactmomenten = useTransformContactmomenten(
+    KLANT_CONTACT.content?.contactmomenten ?? []
+  );
   return {
     themaConfig,
-    id: themaConfig.id,
-    title: themaConfig.title,
-    contactmomenten: KLANT_CONTACT.content?.contactmomenten ?? [],
+    contactmomenten,
     afspraken: KLANT_CONTACT.content?.afspraken ?? [],
-    pageLinks: themaConfig.pageLinks,
+    communicatievoorkeuren:
+      KLANT_CONTACT.content?.communicatievoorkeuren ?? null,
     isError: isError(KLANT_CONTACT),
     isLoading: isLoading(KLANT_CONTACT),
     dependencyErrors: {
       contactmomenten: hasFailedDependency(KLANT_CONTACT, 'contactmomenten'),
       afspraken: hasFailedDependency(KLANT_CONTACT, 'afspraken'),
+      communicatievoorkeuren: hasFailedDependency(
+        KLANT_CONTACT,
+        'communicatievoorkeuren'
+      ),
     },
-    routeConfig: themaConfig.route,
     breadcrumbs,
-    routeParams,
     tableConfigs,
-    listPageRoute: generatePath(
-      themaConfig.listPageContactmomenten.route.path,
-      {
-        page: null,
-      }
-    ),
   };
 }

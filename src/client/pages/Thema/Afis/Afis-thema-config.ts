@@ -87,7 +87,7 @@ export const themaConfig = {
   detailPageEMandate: {
     route: {
       path: '/facturen-en-betalen/betaalvoorkeuren/emandate/:id',
-      documentTitle: `E-Mandaat | ${THEMA_TITLE}`,
+      documentTitle: `Incassomachtiging | ${THEMA_TITLE}`,
       trackingUrl: null,
     },
   },
@@ -97,7 +97,7 @@ export const themaConfig = {
 export const EMANDATE_ENDDATE_INDICATOR = '9999';
 
 export const titleBetaalvoorkeurenPage = 'Betaalvoorkeuren';
-export const titleEMandaatPage = 'E-Mandaat';
+export const titleEMandaatPage = 'Incassomachtiging';
 
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN = 5;

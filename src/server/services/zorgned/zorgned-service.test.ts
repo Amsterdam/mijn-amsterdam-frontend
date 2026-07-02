@@ -380,6 +380,17 @@ describe('zorgned-service', () => {
     } as unknown as ZorgnedPersoonsgegevensNAWResponse);
 
     expect(naam3).toBe(null);
+
+    const naamZonderVoornamen = forTesting.transformZorgnedPersonResponse({
+      persoon: {
+        voorvoegsel: 'de',
+        geboortenaam: 'Jarvis',
+        geboortedatum: '2016-07-09',
+        bsn: 'x123z',
+      },
+    } as ZorgnedPersoonsgegevensNAWResponse);
+
+    expect(naamZonderVoornamen?.name).toBe('de Jarvis');
   });
 
   describe('fetchAndMergeRelatedPersons', () => {

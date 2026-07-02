@@ -7,7 +7,6 @@ import type {
   Adres,
   BrpFrontend,
 } from '../../../../../server/services/brp/brp-types.ts';
-import type { ContactmomentFrontend } from '../../../../../server/services/klantcontact/klantcontact.types.ts';
 import type { WonenDataFrontend } from '../../../../../server/services/wonen/wonen.types.ts';
 import { bffApiHost } from '../../../../../testing/setup.ts';
 import { bffApi } from '../../../../../testing/utils.ts';
@@ -17,12 +16,10 @@ import { themaConfig } from '../Profile-thema-config.ts';
 
 const testState = (
   responseBRP: BrpFrontend | object = {},
-  responseSF: ContactmomentFrontend[] = [],
   responseZWD?: WonenDataFrontend
 ) => ({
   BRP: { status: 'OK', content: responseBRP },
   KVK: { status: 'OK', content: null },
-  KLANT_CONTACT: { status: 'OK', content: responseSF },
   WONEN: { status: 'OK', content: responseZWD },
 });
 
@@ -318,7 +315,6 @@ describe('<Profile />', () => {
                   landnaam: 'Nederland',
                 },
               },
-              [],
               {
                 vve: { name: 'VvE Prachtige Straat 13' },
               } as unknown as WonenDataFrontend

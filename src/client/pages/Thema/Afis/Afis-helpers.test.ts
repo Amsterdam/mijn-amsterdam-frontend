@@ -44,7 +44,7 @@ describe('Afis-helpers', () => {
 
       const result = getEMandateValidityDate(eMandate);
 
-      const expectedDate = '2025-06-15';
+      const expectedDate = '2024-12-31';
       expect(result).toBe(expectedDate);
     });
 
@@ -55,7 +55,7 @@ describe('Afis-helpers', () => {
 
       const result = getEMandateValidityDate(eMandate);
 
-      const expectedDate = '2025-06-15';
+      const expectedDate = '2024-12-31';
       expect(result).toBe(expectedDate);
     });
 

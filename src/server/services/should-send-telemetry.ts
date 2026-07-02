@@ -1,7 +1,7 @@
-import type { RemoteDependencyData } from '@microsoft/applicationinsights-web';
 import type {
   ExceptionData,
   RequestData,
+  DependencyTelemetry,
 } from 'applicationinsights/out/Declarations/Contracts/index.js';
 
 // Example: ["GET /api/users", ...]. This is how a 'name' is represented in telemetry data
@@ -19,14 +19,14 @@ const excludedOutoingDependencies: Array<{
   statusCode: string;
 }> = JSON.parse(process.env.BFF_EXCLUDE_OUTGOING_DEPENDENCIES || '[]');
 
-export function shouldSendRemoteDependencyData(data: RemoteDependencyData) {
-  const [method, route] = data.name.split(' ');
+export function shouldSendRemoteDependencyData(data: DependencyTelemetry) {
+  const [method, route] = data.name?.split(' ') ?? [];
 
   for (const excludeReqParts of excludedOutoingDependencies) {
     if (
       route.includes(excludeReqParts.routeSegment) &&
       method === excludeReqParts.method &&
-      data.resultCode === excludeReqParts.statusCode
+      data.resultCode?.toString() === excludeReqParts.statusCode
     ) {
       return false;
     }

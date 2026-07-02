@@ -4,7 +4,6 @@ import { default as ZorgIcon } from './ZorgIcon.svg?react';
 import { ZorgList } from './ZorgList.tsx';
 import { ZorgThema } from './ZorgThema.tsx';
 import { isLoading } from '../../../../universal/helpers/api.ts';
-import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
@@ -34,11 +33,11 @@ export const menuItem: ThemaMenuItem = {
   to: themaConfig.route.path,
   profileTypes: themaConfig.profileTypes,
   redactedScope: themaConfig.redactedScope,
-  isActive(appState: AppState) {
+  isActive(appState) {
     return (
       themaConfig.featureToggle.active &&
       !isLoading(appState.WMO) &&
-      !!appState.WMO.content?.length
+      !!appState.WMO?.content?.length
     );
   },
   IconSVG: ZorgIcon,

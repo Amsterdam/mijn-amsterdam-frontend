@@ -6,7 +6,6 @@ import { VvEDetail } from './private/VvEDetail.tsx';
 import { themaConfig } from './Profile-thema-config.ts';
 import { default as ProfilePrivateIcon } from './ProfilePrivateIcon.svg?react';
 import { isLoading } from '../../../../universal/helpers/api.ts';
-import type { AppState } from '../../../../universal/types/App.types.ts';
 import type { ThemaMenuItem } from '../../../config/thema-types.ts';
 
 export const ProfileRoutes = [
@@ -29,11 +28,11 @@ export const menuItems: ThemaMenuItem[] = [
     to: themaConfig.BRP.route.path,
     profileTypes: themaConfig.BRP.profileTypes,
     redactedScope: themaConfig.BRP.redactedScope,
-    isActive(appState: AppState) {
+    isActive(appState) {
       return (
-        (!isLoading(appState.BRP) && !!appState.BRP.content?.persoon) ||
+        (!isLoading(appState.BRP) && !!appState.BRP?.content?.persoon) ||
         (!isLoading(appState.KLANT_CONTACT) &&
-          !!appState.KLANT_CONTACT.content?.contactmomenten?.length)
+          !!appState.KLANT_CONTACT?.content?.contactmomenten?.length)
       );
     },
     IconSVG: ProfilePrivateIcon,
@@ -44,12 +43,12 @@ export const menuItems: ThemaMenuItem[] = [
     to: themaConfig.KVK.route.path,
     redactedScope: themaConfig.KVK.redactedScope,
     profileTypes: themaConfig.KVK.profileTypes,
-    isActive(appState: AppState) {
+    isActive(appState) {
       return (
         !isLoading(appState.KVK) &&
         !!(
-          appState.KVK.content?.onderneming ||
-          appState.KVK.content?.vestigingen?.length
+          appState.KVK?.content?.onderneming ||
+          appState.KVK?.content?.vestigingen?.length
         )
       );
     },

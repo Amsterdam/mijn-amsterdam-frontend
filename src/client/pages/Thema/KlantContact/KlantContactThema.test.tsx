@@ -1,14 +1,10 @@
-import { render, within } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import { themaConfig } from './KlantContact-thema-config.ts';
 import { KlantContactThema } from './KlantContactThema.tsx';
-import type {
-  Kanaal,
-  ContactmomentFrontend,
-  AfspraakFrontend,
-} from '../../../../server/services/klantcontact/klantcontact.types.ts';
+import type { AfspraakFrontend } from '../../../../server/services/klantcontact/klantcontact.types.ts';
+import { bffApi } from '../../../../testing/utils.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import { componentCreator } from '../../MockApp.tsx';
 
 const createMijnContactThemaComponent = componentCreator({
@@ -19,7 +15,12 @@ const createMijnContactThemaComponent = componentCreator({
 
 function getState(content: {
   afspraken?: AfspraakFrontend[];
-  contactmomenten?: ContactmomentFrontend[];
+  contactmomenten?: Array<Record<string, unknown>>;
+  communicatievoorkeuren?: Record<string, unknown> | null;
+  failedDependencies?: Record<
+    string,
+    { status: 'ERROR'; message: string; content: null }
+  >;
 }): AppState {
   if (!content.afspraken) {
     content.afspraken = [];
@@ -29,112 +30,136 @@ function getState(content: {
   }
   return {
     KLANT_CONTACT: {
-      content,
+      status: 'OK',
+      content: {
+        afspraken: content.afspraken,
+        contactmomenten: content.contactmomenten,
+        communicatievoorkeuren: content.communicatievoorkeuren ?? null,
+      },
+      failedDependencies: content.failedDependencies,
     },
   } as unknown as AppState;
 }
 
-const contactmomentenHeader = 'Contactmomenten';
-const noAppointmentsText = /U heeft geen afspraken/;
-
-test('Shows contactmomenten', async () => {
-  const state = getState({
-    contactmomenten: [
-      {
-        datePublished: '2024-05-29 08:02:38',
-        datePublishedFormatted: '2024-05-29 08:02:38',
-        subject: 'Meldingen',
-        referenceNumber: '00002032',
-        kanaal: 'Stadsloket',
-      },
-      {
-        datePublished: '2024-05-29 08:02:38',
-        datePublishedFormatted: '2024-05-29 08:02:38',
-        subject: 'Meldingen',
-        referenceNumber: '00002032',
-        kanaal: 'Telefoon',
-      },
-      {
-        datePublished: '2024-05-29 08:02:38',
-        datePublishedFormatted: '2024-05-29 08:02:38',
-        subject: 'Meldingen',
-        referenceNumber: '00002032',
-        kanaal: 'Chat',
-      },
-      {
-        datePublished: '2024-05-29 08:02:38',
-        datePublishedFormatted: '2024-05-29 08:02:38',
-        subject: 'Meldingen',
-        referenceNumber: '00002032',
-        kanaal: 'Contactformulier',
-      },
-    ],
-  });
-  const KlantContactThema = createMijnContactThemaComponent(state);
-  const screen = render(<KlantContactThema />);
-  expect(screen.getByText(contactmomentenHeader)).toBeInTheDocument();
-
-  const table = screen.getByRole('table');
-  const expectedKanalen: Kanaal[] = [
-    'Stadsloket',
-    'Telefoon',
-    'Chat',
-    'Contactformulier',
-  ];
-  expectedKanalen.forEach((kanaal) => {
-    expect(within(table).getByText(kanaal)).toBeInTheDocument();
+describe('KlantContactThema', () => {
+  beforeEach(() => {
+    // Keep request mocking in place for this suite; component itself is state-driven.
+    bffApi.post(/\/user-feedback\/collect.*/).reply(200, {
+      status: 'OK',
+      content: null,
+    });
   });
 
-  screen.getByText(noAppointmentsText);
-});
+  test('shows afspraken section when afspraken exist', async () => {
+    const afspraakTitle = 'Vaarvignet';
+    const afspraak: AfspraakFrontend = {
+      cancellationLink:
+        'http://remote-api-host/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+      caseReference: '00157784',
+      dateStartFormatted: '26 februari 2026',
+      dateEndFormatted: '26 februari 2026',
+      dateStart: '2026-02-26T09:00:00Z',
+      dateEnd: '2026-02-26T09:20:00Z',
+      displayDateTime: '26 februari 2026 van 10:00 tot 11:20 uur',
+      location: {
+        city: null,
+        countryCode: 'NL',
+        name: 'Zuidoost',
+        postalCode: null,
+        street: null,
+      },
+      qrCode: 'xxxxxxxxxxxxxxxxxxxx',
+      status: 'New',
+      subject: afspraakTitle,
+      link: {
+        to: '/afspraak/00157784',
+        title: 'Bekijk afspraak',
+      },
+      icsLink: {
+        to: 'data:text/calendar;base64,abc123',
+        title: 'Voeg toe aan agenda',
+        download: `afspraak-00157784.ics`,
+      },
+    };
+    const state = getState({
+      afspraken: [afspraak],
+    });
+    const KlantContactThema = createMijnContactThemaComponent(state);
+    const screen = render(<KlantContactThema />);
 
-test('Shows afspraken and empty contactmomenten', async () => {
-  const afspraakTitle = 'Vaarvignet';
-  const afspraak: AfspraakFrontend = {
-    cancellationLink:
-      'http://remote-api-host/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-    caseReference: '00157784',
-    dateStartFormatted: '26 februari 2026',
-    dateEndFormatted: '26 februari 2026',
-    dateStart: '2026-02-26T09:00:00Z',
-    dateEnd: '2026-02-26T09:20:00Z',
-    displayDateTime: '26 februari 2026 van 10:00 tot 11:20 uur',
-    location: {
-      city: null,
-      countryCode: 'NL',
-      name: 'Zuidoost',
-      postalCode: null,
-      street: null,
-    },
-    qrCode: 'xxxxxxxxxxxxxxxxxxxx',
-    status: 'New',
-    subject: afspraakTitle,
-    link: {
-      to: '/afspraak/00157784',
-      title: 'Bekijk afspraak',
-    },
-    icsLink: {
-      to: 'data:text/calendar;base64,abc123',
-      title: 'Voeg toe aan agenda',
-      download: `afspraak-00157784.ics`,
-    },
-  };
-  const state = getState({
-    afspraken: new Array(MAX_TABLE_ROWS_ON_THEMA_PAGINA + 1)
-      .fill(afspraak)
-      .map((a, i) => ({ ...a, caseReference: i })),
+    expect(
+      screen.getByRole('heading', { name: 'Afspraken bij een stadsloket' })
+    ).toBeInTheDocument();
+    expect(screen.getByText(afspraakTitle)).toBeInTheDocument();
   });
-  const KlantContactThema = createMijnContactThemaComponent(state);
-  const screen = render(<KlantContactThema />);
 
-  expect(screen.getByText(contactmomentenHeader)).toBeInTheDocument();
-  expect(
-    screen.getByText('U heeft (nog) geen contactmomenten')
-  ).toBeInTheDocument();
-  expect(screen.queryByText(noAppointmentsText)).not.toBeInTheDocument();
+  test('shows communicatievoorkeuren section when communicatievoorkeuren exist', async () => {
+    const state = getState({
+      communicatievoorkeuren: {
+        standaardContactgegevens: {
+          Email: {
+            id: 'email-1',
+            type: 'Email',
+            value: 'test@example.com',
+            isVerified: true,
+            dateModified: '2026-06-01T12:00:00.000Z',
+            dateModifiedFormatted: '1 juni 2026',
+          },
+        },
+        aangeslotenDiensten: [
+          {
+            id: 'dienst-1',
+            beschrijving: 'Belastingen',
+          },
+        ],
+      },
+    });
 
-  expect(screen.getAllByText(afspraakTitle)).toHaveLength(
-    MAX_TABLE_ROWS_ON_THEMA_PAGINA
-  );
-  screen.getByRole('link', { name: 'Toon meer' });
+    const KlantContactThema = createMijnContactThemaComponent(state);
+    const screen = render(<KlantContactThema />);
+
+    expect(
+      screen.getByRole('heading', { name: 'Post per e-mail' })
+    ).toBeInTheDocument();
+    expect(screen.getByText('Belastingen')).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'Mijn contactgegevens' })
+    ).toBeInTheDocument();
+  });
+
+  test('shows partial error for failed dependencies', async () => {
+    const state = getState({
+      afspraken: [],
+      contactmomenten: [],
+      communicatievoorkeuren: null,
+      failedDependencies: {
+        afspraken: {
+          status: 'ERROR',
+          message: 'Afspraken dependency failed',
+          content: null,
+        },
+        communicatievoorkeuren: {
+          status: 'ERROR',
+          message: 'Communicatievoorkeuren dependency failed',
+          content: null,
+        },
+      },
+    });
+
+    const KlantContactThema = createMijnContactThemaComponent(state);
+    const screen = render(<KlantContactThema />);
+
+    const errorSection = screen
+      .getByRole('heading', { name: 'Foutmelding' })
+      .closest('section');
+
+    expect(errorSection).not.toBeNull();
+    expect(errorSection).toHaveTextContent(
+      'Wij kunnen de volgende gegevens nu niet tonen:'
+    );
+    expect(errorSection).toHaveTextContent('- Uw overzicht van afspraken');
+    expect(errorSection).toHaveTextContent(
+      '- Uw overzicht van communicatievoorkeuren'
+    );
+  });
 });

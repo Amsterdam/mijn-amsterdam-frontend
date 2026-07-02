@@ -1,8 +1,10 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
+import slug from 'slugme';
 
 import { themaConfig } from './Zorg-thema-config.ts';
 import { ZorgDetail } from './ZorgDetail.tsx';
+import { jsonCopy } from '../../../../universal/helpers/utils.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
 import { MockApp } from '../../MockApp.tsx';
 
@@ -41,7 +43,7 @@ const testState = {
         documents: [],
         link: {
           title: 'Meer informatie',
-          to: '/zorg-en-ondersteuning/voorzieningen/102996420',
+          to: '/zorg-en-ondersteuning/voorzieningen/hulp-bij-het-huishouden-nog-niet-geleverd/102996420',
         },
         steps: [
           {
@@ -95,7 +97,7 @@ const testState = {
         documents: [],
         link: {
           title: 'Meer informatie',
-          to: '/zorg-en-ondersteuning/voorzieningen/3917854581',
+          to: '/zorg-en-ondersteuning/voorzieningen/hulp-bij-het-huishouden-geleverd/3917854581',
         },
         steps: [
           {
@@ -149,7 +151,7 @@ const testState = {
         documents: [],
         link: {
           title: 'Meer informatie',
-          to: '/zorg-en-ondersteuning/voorzieningen/879359140',
+          to: '/zorg-en-ondersteuning/voorzieningen/hulp-bij-het-huishouden-tijdelijk-gestopt/879359140',
         },
         steps: [
           {
@@ -203,7 +205,7 @@ const testState = {
         documents: [],
         link: {
           title: 'Meer informatie',
-          to: '/zorg-en-ondersteuning/voorzieningen/8927959',
+          to: '/zorg-en-ondersteuning/voorzieningen/hulp-bij-het-huishouden-gestopt/8927959',
         },
         steps: [
           {
@@ -247,12 +249,29 @@ const testState = {
         ],
         voorzieningsoortcode: 'WMH',
       },
+      {
+        id: 'wra-product-1',
+        title: 'WRA product',
+        supplier: 'Mantelzorg B.V',
+        isActual: true,
+        documents: [],
+        link: {
+          to: 'http://example.org/ding',
+          title: 'Linkje!! naar wra product',
+        },
+        maActieUrls: {
+          reparatieverzoek: 'https://www.amsterdam.nl/zorg/reparatieverzoek',
+        },
+        maActies: ['reparatieverzoek'],
+        steps: [],
+      },
     ],
   },
 };
 
 function testDetailPage(id: string, title: string) {
   const routeEntry = generatePath(themaConfig.detailPage.route.path, {
+    voorziening: slug(title),
     id,
   });
   const routePath = themaConfig.detailPage.route.path;
@@ -289,4 +308,50 @@ describe('<Zorg />', () => {
 
   const item5 = testState.WMO.content[4];
   testDetailPage(item5.id, item5.title);
+
+  describe('Acties', () => {
+    test('Shows reparatieverzoek action for WRA product that is not a PGB product', () => {
+      const routeEntry = generatePath(themaConfig.detailPage.route.path, {
+        voorziening: slug('WRA product'),
+        id: 'wra-product-1',
+      });
+      const routePath = themaConfig.detailPage.route.path;
+
+      const { getByText } = render(
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={ZorgDetail}
+          state={testState as unknown as AppState}
+        />
+      );
+      expect(getByText('Reparatieverzoek indienen')).toBeInTheDocument();
+    });
+
+    test('Shows reparatieverzoek text for WRA product that is a PGB product', async () => {
+      const routeEntry = generatePath(themaConfig.detailPage.route.path, {
+        voorziening: slug('WRA product'),
+        id: 'wra-product-1',
+      });
+      const routePath = themaConfig.detailPage.route.path;
+      const testState2 = jsonCopy(testState);
+      testState2.WMO.content.find(
+        (item) => item.id === 'wra-product-1'
+      )!.maActies = ['pgb-reparatieverzoek'];
+
+      const { queryByText } = render(
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={ZorgDetail}
+          state={testState2 as unknown as AppState}
+        />
+      );
+      expect(queryByText('Reparatieverzoek indienen')).not.toBeInTheDocument();
+
+      expect(
+        queryByText(/Heeft u de woningaanpassing met een pgb aangeschaft/)
+      ).toBeInTheDocument();
+    });
+  });
 });

@@ -1,10 +1,10 @@
 .WelcomeHeading {
-  font-size: 48px;
+  font-size: 32px;
   line-height: 1.2;
-  margin-bottom: 60px;
+  margin-bottom: 32px;
   display: block;
 
   @media screen and (min-width: $ams-breakpoint-medium) {
-    font-size: 58px;
+    font-size: 40px;
   }
 }

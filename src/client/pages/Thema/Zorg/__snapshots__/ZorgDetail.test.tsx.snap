@@ -51,7 +51,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             >
               <a
                 class="ams-breadcrumb__link"
-                href="/zorg-en-ondersteuning/voorziening/3917854581"
+                href="/zorg-en-ondersteuning/voorziening/hulp-bij-het-huishouden-geleverd/3917854581"
                 tabindex="-1"
               >
                 <span
@@ -415,7 +415,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             >
               <a
                 class="ams-breadcrumb__link"
-                href="/zorg-en-ondersteuning/voorziening/8927959"
+                href="/zorg-en-ondersteuning/voorziening/hulp-bij-het-huishouden-gestopt/8927959"
                 tabindex="-1"
               >
                 <span
@@ -787,7 +787,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             >
               <a
                 class="ams-breadcrumb__link"
-                href="/zorg-en-ondersteuning/voorziening/102996420"
+                href="/zorg-en-ondersteuning/voorziening/hulp-bij-het-huishouden-nog-niet-geleverd/102996420"
                 tabindex="-1"
               >
                 <span
@@ -1146,7 +1146,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             >
               <a
                 class="ams-breadcrumb__link"
-                href="/zorg-en-ondersteuning/voorziening/879359140"
+                href="/zorg-en-ondersteuning/voorziening/hulp-bij-het-huishouden-tijdelijk-gestopt/879359140"
                 tabindex="-1"
               >
                 <span
@@ -1515,7 +1515,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
             >
               <a
                 class="ams-breadcrumb__link"
-                href="/zorg-en-ondersteuning/voorziening/wmo-item-1"
+                href="/zorg-en-ondersteuning/voorziening/wmo-item-1/wmo-item-1"
                 tabindex="-1"
               >
                 <span

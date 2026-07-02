@@ -86,6 +86,9 @@ const ROUTES = {
       uri,
       `IsCleared eq false and InvoiceReference ne '' and`
     ),
+  eMandates: (uri: string) => {
+    return decodeURI(uri).includes('ZGW_FI_MANDATE_SRV_01/Mandate_readSet');
+  },
 };
 
 describe('afis-facturen', async () => {
@@ -360,6 +363,7 @@ describe('afis-facturen', async () => {
       ProfitCenterName: '',
       SEPAMandate: '',
       PaymentMethod: null,
+      PaymentTerms: '',
     };
 
     const result = forTesting.replaceXmlNulls(sourceInvoice);
@@ -376,6 +380,7 @@ describe('afis-facturen', async () => {
         "NetDueDate": "",
         "Paylink": null,
         "PaymentMethod": null,
+        "PaymentTerms": "",
         "PostingDate": null,
         "ProfitCenterName": "",
         "SEPAMandate": "",
@@ -402,6 +407,7 @@ describe('afis-facturen', async () => {
       ProfitCenterName: 'Profit Center 1',
       ReverseDocument: '',
       SEPAMandate: '',
+      PaymentTerms: '',
     };
 
     const sourceInvoices: Record<
@@ -904,10 +910,16 @@ describe('afis-facturen', async () => {
       expect(rs.content?.facturen.length).toBe(0);
     });
 
-    test('fetchAfisFacturenOverview', async () => {
+    describe('fetchAfisFacturenOverview', async () => {
       remoteApi.get(ROUTES.openstaandeFacturen).reply(200, {
         feed: {
-          entry: [factuur()],
+          entry: [factuur({ SEPAMandate: '123123123' })],
+        },
+      });
+
+      remoteApi.get(ROUTES.eMandates).reply(200, {
+        feed: {
+          entry: [],
         },
       });
 
@@ -932,17 +944,26 @@ describe('afis-facturen', async () => {
       const response = await fetchAfisFacturenOverview(SESSION_ID, {
         businessPartnerID: GENERIC_ID,
       });
+
       const byStateValues =
         response.content !== null ? Object.values(response.content) : [];
 
-      expect(byStateValues.length).toBe(3);
-      expect(
-        byStateValues.every((responseData) => {
-          return (
-            responseData?.count === 1 && responseData?.facturen.length === 1
-          );
-        })
-      ).toBe(true);
+      test('open facturen with an inactive E-Mandate reference should have a status description that includes a warning about the mandate being stopped', () => {
+        expect(response.content?.open?.facturen?.[0]?.statusDescription).toBe(
+          '€ 10,00 wordt automatisch van uw rekening afgeschreven. <br><strong>Let op! deze incassomachtiging is gestopt.</strong>'
+        );
+      });
+
+      test('fetchAfisFacturenOverview returns correct number of states and each state has 1 factuur', () => {
+        expect(byStateValues.length).toBe(3);
+        expect(
+          byStateValues.every((responseData) => {
+            return (
+              responseData?.count === 1 && responseData?.facturen.length === 1
+            );
+          })
+        ).toBe(true);
+      });
     });
 
     test('fetchAfisFacturenByState', async () => {

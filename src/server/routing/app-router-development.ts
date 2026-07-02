@@ -8,14 +8,10 @@ import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes.ts';
 import {
   createBFFRouter,
   generateFullApiUrlBFF,
+  generateMaFrontendUrl,
   sendBadRequest,
   sendUnauthorized,
 } from './route-helpers.ts';
-import type { TestUserData } from '../../universal/config/auth.development.ts';
-import {
-  testAccountDataDigid,
-  testAccountDataEherkenning,
-} from '../../universal/config/auth.development.ts';
 import { apiSuccessResult } from '../../universal/helpers/api.ts';
 import { getReturnToUrl } from '../auth/auth-after-redirect-returnto.ts';
 import {
@@ -24,6 +20,12 @@ import {
   TOKEN_ID_ATTRIBUTE,
 } from '../auth/auth-config.ts';
 import {
+  getBackupTestaccounts,
+  getTestAccountData,
+  getTestAccounts,
+} from '../auth/auth-development.ts';
+import type { TestUserData } from '../auth/auth-development.ts';
+import {
   cleanTestUsername,
   signDevelopmentToken,
 } from '../auth/auth-helpers-development.ts';
@@ -31,8 +33,9 @@ import { getAuth, hasSessionCookie } from '../auth/auth-helpers.ts';
 import { authRoutes } from '../auth/auth-routes.ts';
 import type { AuthProfile, MaSession } from '../auth/auth-types.ts';
 import { type AuthenticatedRequest } from '../auth/auth-types.ts';
-import { ONE_SECOND_MS } from '../config/app.ts';
+import { MA_FRONTEND_URL, ONE_SECOND_MS } from '../config/app.ts';
 import { getFromEnv } from '../helpers/env.ts';
+import { logger } from '../logging.ts';
 import { countLoggedInVisit } from '../services/admin/admin-visitors.ts';
 
 export const authRouterDevelopment = createBFFRouter({ id: 'router-dev' });
@@ -103,69 +106,57 @@ authRouterDevelopment.use(async (req, res, next) => {
 });
 
 authRouterDevelopment.get(
+  DevelopmentRoutes.TEST_ACCOUNTS,
+  async (
+    req: Request<{ authMethod: AuthProfile['authMethod'] }>,
+    res: Response
+  ) => {
+    const authMethod = req.params.authMethod;
+
+    let envKey = 'MA_TEST_ACCOUNTS';
+    if (authMethod === 'eherkenning') {
+      envKey = 'MA_TEST_ACCOUNTS_EH';
+    }
+
+    const accounts = getFromEnv(envKey, true, true)!;
+    res.send(accounts);
+  }
+);
+
+authRouterDevelopment.get(
   DevelopmentRoutes.DEV_LOGIN,
   async (
     req: Request<{ authMethod: AuthMethod; user: string }>,
     res: Response
   ) => {
     const authMethod = req.params.authMethod;
-    const testAccountData =
+
+    const testAccounts =
       authMethod === 'digid'
-        ? testAccountDataDigid
-        : testAccountDataEherkenning;
+        ? getTestAccounts('MA_TEST_ACCOUNTS')
+        : getTestAccounts('MA_TEST_ACCOUNTS_EH');
 
-    if (!testAccountData) {
-      return sendBadRequest(
-        res,
-        'Test account data not available. Check env settings.'
+    if (!req.params.user) {
+      return sendRenderedTestAccountTable(req, res, authMethod);
+    }
+
+    let profileId = testAccounts['ma-dev-profile'];
+
+    const foundProfileId = testAccounts[req.params.user];
+    if (foundProfileId) {
+      profileId = foundProfileId;
+    } else {
+      logger.error(
+        `user '${req.params.user}' not found, defaulting to user with profileId: '${profileId}'`
       );
     }
 
-    let testAccounts = testAccountData.accounts.map((account) => {
-      let username = cleanTestUsername(account.username);
-      username = slug(username);
-      return { ...account, username };
-    });
-
-    const user =
-      (req.params.user
-        ? testAccounts.find((user) => user.username === req.params.user)
-        : null) ?? testAccountData.accounts[0];
-
-    const authRoute = `${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}`;
-
-    testAccounts = testAccounts.map((account) => {
-      const authLoginRoute = generateFullApiUrlBFF(
-        `${authRoute}/${account.username}`,
-        [req.query as Record<string, string>]
-      );
-      const href = `<a href="${authLoginRoute}">
-                      <div class="test-account-name">${account.username}</div>
-                    </a>`;
-      return { ...account, username: href };
-    });
-
-    const [tableHeaders, tableRows] = formatForTable({
-      ...testAccountData,
-      accounts: testAccounts,
-    } as TestUserData);
-
-    if (!req.params.user && testAccountData.accounts.length > 1) {
-      const renderProps = {
-        title: `Selecteer ${authMethod} test account.`,
-        tableHeaders,
-        tableRows,
-      };
-
-      return res.render('select-test-account', renderProps);
-    }
-
-    countLoggedInVisit(user.profileId, authMethod);
+    countLoggedInVisit(profileId, authMethod);
 
     const SESSION_ID_BYTE_LENGTH = 18;
     const sessionID = UID.sync(SESSION_ID_BYTE_LENGTH);
     const authProfile: AuthProfile = {
-      id: user.profileId,
+      id: profileId,
       authMethod,
       profileType: authMethod === 'digid' ? 'private' : 'commercial',
       sid: sessionID,
@@ -205,53 +196,97 @@ authRouterDevelopment.get(
         ? String(req.query.redirectUrl)
         : req.query.returnTo
           ? getReturnToUrl(req.query)
-          : `${process.env.MA_FRONTEND_URL}?authMethod=${req.params.authMethod}`;
+          : generateMaFrontendUrl(`/?authMethod=${req.params.authMethod}`);
 
     return res.redirect(redirectUrl);
   }
 );
+
+async function sendRenderedTestAccountTable(
+  req: Request,
+  res: Response,
+  authMethod: AuthMethod
+) {
+  const envKey =
+    authMethod === 'digid' ? 'MA_TEST_ACCOUNTS' : 'MA_TEST_ACCOUNTS_EH';
+  const testAccountData = await getTestAccountData(envKey);
+
+  if (!testAccountData) {
+    return sendBadRequest(
+      res,
+      'Test account data not available. Check storage account or test-account files.'
+    );
+  }
+
+  let tableHeaders;
+  let tableRows;
+  try {
+    const testAccounts = transformUsernames(req, testAccountData, authMethod);
+    [tableHeaders, tableRows] = formatForTable({
+      ...testAccountData,
+      accounts: testAccounts,
+    } as TestUserData);
+  } catch (err) {
+    logger.error(err);
+    const backupAccounts = getBackupTestaccounts(envKey);
+    const testAccounts = transformUsernames(req, backupAccounts, authMethod);
+    [tableHeaders, tableRows] = formatForTable({
+      ...backupAccounts,
+      accounts: testAccounts,
+    } as TestUserData);
+  }
+  const renderProps = {
+    title: 'Selecteer een testaccount',
+    tableHeaders,
+    tableRows,
+  };
+
+  return res.render('select-test-account', renderProps);
+}
+
+function transformUsernames(
+  req: Request,
+  testAccountData: TestUserData,
+  authMethod: AuthProfile['authMethod']
+) {
+  let testAccounts = testAccountData.accounts.map((account) => {
+    let username = cleanTestUsername(account.username);
+    username = slug(username);
+    return { ...account, username };
+  });
+  const authRoute = `${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}`;
+
+  testAccounts = testAccounts.map((account) => {
+    const authLoginRoute = generateFullApiUrlBFF(
+      `${authRoute}/${account.username}`,
+      [req.query as Record<string, string>]
+    );
+    const href = `<a href="${authLoginRoute}">
+                      <div class="test-account-name">${account.username}</div>
+                    </a>`;
+    return { ...account, username: href };
+  });
+
+  return testAccounts;
+}
 
 type TableHeaders = string[];
 type TableRows = string[][];
 
 function formatForTable(accountData: TestUserData): [TableHeaders, TableRows] {
   const tableHeaders = accountData.tableHeaders.map((h) => h.displayName);
+
+  accountData = checkUpdateKeys(accountData);
+
+  if (accountData.accounts.length <= 0) {
+    return [tableHeaders, []];
+  }
+
+  // This is gonna be a table, so all keys need to be in the same order.
   const keyOrder: Record<string, number> = {};
   accountData.tableHeaders.forEach((th, i) => (keyOrder[th.key] = i));
 
-  accountData.accounts.forEach((account) => {
-    if (!account.profileId) {
-      throw new Error(`No id found for test account ${account.username}`);
-    }
-    accountData.tableHeaders.forEach(({ key }) => {
-      if (!Object.keys(account).includes(key)) {
-        throw new Error(
-          `tableHeader with key '${key}' not found in test account with profileId '${account.profileId}'`
-        );
-      }
-    });
-  });
-
-  const missingKeys: string[] = [];
-  Object.keys(accountData.accounts[0]).forEach((key) => {
-    if (
-      !accountData.tableHeaders.some((th) => {
-        return th.key === key;
-      })
-    ) {
-      missingKeys.push(key);
-    }
-  });
-
-  const accounts = accountData.accounts.map((account) => {
-    const entries = Object.entries(account);
-    const withoutMissingKeys = entries.filter(([key]) => {
-      return !missingKeys.includes(key);
-    });
-    return Object.fromEntries(withoutMissingKeys);
-  });
-
-  const tableRows = accounts.map((account) => {
+  const tableRows = accountData.accounts.map((account) => {
     const sortedEntries = Object.entries(account).toSorted(([keyA], [keyB]) => {
       return keyOrder[keyA] < keyOrder[keyB] ? -1 : 1;
     });
@@ -268,6 +303,20 @@ function formatForTable(accountData: TestUserData): [TableHeaders, TableRows] {
   return [tableHeaders, tableRows];
 }
 
+function checkUpdateKeys(accountData: TestUserData): TestUserData {
+  accountData.accounts.forEach((account) => {
+    if (!account.profileId) {
+      throw new Error(`No id found for test account ${account.username}`);
+    }
+    accountData.tableHeaders.forEach(({ key }) => {
+      if (!Object.keys(account).includes(key)) {
+        account[key] = 'Unknown';
+      }
+    });
+  });
+  return accountData;
+}
+
 authRouterDevelopment.get(
   [
     authRoutes.AUTH_LOGOUT,
@@ -278,7 +327,7 @@ authRouterDevelopment.get(
     res.clearCookie(OIDC_SESSION_COOKIE_NAME, {
       path: '/',
     });
-    const returnTo = getReturnToUrl(req.query, getFromEnv('MA_FRONTEND_URL'));
+    const returnTo = getReturnToUrl(req.query, MA_FRONTEND_URL);
     return res.redirect(returnTo);
   }
 );

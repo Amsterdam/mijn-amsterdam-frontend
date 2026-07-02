@@ -363,6 +363,15 @@ const ApiConfig_ = {
     method: 'POST',
     postponeFetch: !themaConfigBodem.featureToggle.active,
   },
+  AMSAPP: {
+    url: `${getFromEnv('BFF_AMSAPP_URL')}`,
+    method: 'POST',
+    headers: {
+      'X-Session-Credentials-Key': `${getFromEnv('BFF_AMSAPP_API_KEY')}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  },
   IAM_MS_OAUTH: {
     url: `${getFromEnv('BFF_MS_OAUTH_ENDPOINT')}:tenant/oauth2/v2.0/token`,
     method: 'POST',

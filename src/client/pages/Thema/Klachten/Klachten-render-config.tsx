@@ -4,7 +4,6 @@ import { default as KlachtenIcon } from './KlachtenIcon.svg?react';
 import { KlachtenList } from './KlachtenList.tsx';
 import { KlachtenThema } from './KlachtenThema.tsx';
 import { isLoading } from '../../../../universal/helpers/api.ts';
-import { type AppState } from '../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
@@ -34,11 +33,11 @@ export const menuItem: ThemaMenuItem = {
   to: themaConfig.route.path,
   profileTypes: themaConfig.profileTypes,
   redactedScope: themaConfig.redactedScope,
-  isActive(appState: AppState) {
+  isActive(appState) {
     return (
       themaConfig.featureToggle.active &&
       !isLoading(appState.KLACHTEN) &&
-      !!appState.KLACHTEN.content?.length
+      !!appState.KLACHTEN?.content?.length
     );
   },
   IconSVG: KlachtenIcon,

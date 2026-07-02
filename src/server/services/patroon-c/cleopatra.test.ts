@@ -11,7 +11,8 @@ import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 
 const mocks = vi.hoisted(() => {
   return {
-    IS_TAP: false,
+    IS_DEVELOPMENT: false,
+    getCert: vi.fn(),
   };
 });
 
@@ -19,9 +20,17 @@ vi.mock('../../../universal/config/env', async (importOriginal) => {
   const mod: object = await importOriginal();
   return {
     ...mod,
-    get IS_TAP() {
-      return mocks.IS_TAP;
+    get IS_DEVELOPMENT() {
+      return mocks.IS_DEVELOPMENT;
     },
+  };
+});
+
+vi.mock('../../helpers/cert.ts', async (importOriginal) => {
+  const mod: object = await importOriginal();
+  return {
+    ...mod,
+    getCert: mocks.getCert,
   };
 });
 
@@ -29,21 +38,45 @@ const authProfileAndToken = getAuthProfileAndToken();
 
 describe('simple-connect/cleopatra', () => {
   beforeEach(() => {
-    mocks.IS_TAP = false;
+    mocks.IS_DEVELOPMENT = true;
+    process.env.BFF_CLEOPATRA_PUBLIC_KEY_CERT = '';
   });
 
   test('missing certificate', async () => {
-    mocks.IS_TAP = true;
+    mocks.IS_DEVELOPMENT = false;
+    await expect(fetchMilieuzone(authProfileAndToken)).rejects.toThrow();
+  });
+
+  test('mock certificate', async () => {
+    remoteApi.post('/cleopatra').reply(200);
+    mocks.getCert.mockImplementationOnce(
+      () =>
+        `-----BEGIN CERTIFICATE-----
+MIIDKTCCAhGgAwIBAgIUH3T+M+qH2we45D1tDf2o0DAiS88wDQYJKoZIhvcNAQEL
+BQAwJDEiMCAGA1UEAwwZVGVzdCBDbGVvcGF0cmEgUHVibGljIEtleTAeFw0yNjA2
+MjYwODUxMTFaFw0yNzA2MjYwODUxMTFaMCQxIjAgBgNVBAMMGVRlc3QgQ2xlb3Bh
+dHJhIFB1YmxpYyBLZXkwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCf
+NhV8ri+RdqxrihX1Xl1eK8Ube4IeWZUSDKJSBefiTIrDjj1vqnQjZAhighQt3nLj
+u3Gd6xi6URK+NSTkfDImftmpayKi+Z+Q8vrur98weSVjLr8Ym+xd0IAU359GhKgW
+vKly8RuyGUEq7xjrrUM61aTo8jZgK0JUDhgLuqCm8byylm/uO712+h3b9qVgFwjB
+2PscdnPgvMyu+e0hcBDDzxI8jFXAZxD0cjlW9rdWRVvGNj6C5w+bc+N2B0iupiv+
+GOauU74+gBSL7dO1rbrPhBp9Hj9GKUCUt3igZ5ZeMOczUHKNgzd1wQ8xETJbDMbu
+z+8H+fOdtUY76NbcTK/fAgMBAAGjUzBRMB0GA1UdDgQWBBQKaimNXHQdgAa1Yi1P
+Tt9jpDKJOjAfBgNVHSMEGDAWgBQKaimNXHQdgAa1Yi1PTt9jpDKJOjAPBgNVHRMB
+Af8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQAfPr/7KgybxsdO1iZ6Y+a/9ifM
+7YOH7Keh2Kk2+Z2NVKGTkVt7prnqSIQyZIVvF1hzXdQfd7Qi7lQMDCHU2g8rCEXB
+nn3nJ3bo6aH6PtrvRhAg5Gt4SDBxkt2Pqn/FV1PVqjr65ANfDWe5sjGeYtpbwMKl
+lc5I/L4gatti01Wqm47VCYwn64zzpAIMUBXcfzmp4Zz+d2g85AEO6GZ4DQeTyBJQ
+N/LGpYv3Lx6B91U2osmuHpNUfZ392tSp4FJItJz8X2X0pLI+GPIwlQDpZG/IEQ9d
+5mIjHI8tk0u6JOGCf2TdyFWSOUA2e1WzTAJ9cNmnKpM/6Q+vvo1SB4Ll8vZg
+-----END CERTIFICATE-----
+`
+    );
+    mocks.IS_DEVELOPMENT = false;
 
     const responseContent = await fetchMilieuzone(authProfileAndToken);
 
-    expect(responseContent).toMatchInlineSnapshot(`
-      {
-        "content": null,
-        "message": "Postdata could not be encrypted",
-        "status": "ERROR",
-      }
-    `);
+    expect(responseContent.status).toBe('OK');
   });
 
   test('getJSONRequestPayload', () => {

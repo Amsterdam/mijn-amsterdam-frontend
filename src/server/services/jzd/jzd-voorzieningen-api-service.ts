@@ -10,7 +10,7 @@ import type {
 import { type FetchWmoVoorzieningenApiOptions } from './jzd-voorzieningen-api-config.ts';
 import {
   PICK_VOORZIENING_KEYS,
-  wmoVoorzieningenApiConfig,
+  jzdVoorzieningenApiConfig,
 } from './jzd-voorzieningen-api-config.ts';
 import { fetchZorgnedAanvragenWMO } from './wmo/wmo-zorgned-service.ts';
 import {
@@ -25,22 +25,34 @@ import type {
   ZorgnedAanvraagTransformed,
 } from '../zorgned/zorgned-types.ts';
 
-function isMaApiPropertyConfigMatch<T extends object>(
+function isMaApiPropertyConfigMatch<T extends ZorgnedAanvraagTransformed>(
   voorziening: T,
-  actionConfig: JzdApiConfig<T>
+  actionConfig: JzdApiConfig<T>,
+  matchType: 'include' | 'exclude' = 'include'
 ): boolean {
-  const matchers = entries(actionConfig.match);
+  const IS_DEFAULT_MATCH = matchType !== 'exclude'; // If there are no matchers, we don't want to exclude any items, but we do want to include all items.
+  const matchConfig = actionConfig[matchType];
 
-  return matchers.every(([key, value]) => {
-    if (typeof value === 'function') {
-      return value(voorziening);
+  if (!matchConfig) {
+    return IS_DEFAULT_MATCH;
+  }
+
+  const matchers = entries(matchConfig);
+
+  if (!matchers.length) {
+    return IS_DEFAULT_MATCH;
+  }
+
+  return matchers.every(([voorzieningKey, valueMatch]) => {
+    if (typeof valueMatch === 'function') {
+      return valueMatch(voorziening);
     }
 
-    if (Array.isArray(value)) {
-      return value.includes(voorziening[key]);
+    if (Array.isArray(valueMatch)) {
+      return valueMatch.includes(voorziening[voorzieningKey]);
     }
 
-    return voorziening[key] === value;
+    return voorziening[voorzieningKey] === valueMatch;
   });
 }
 
@@ -51,7 +63,10 @@ function addMaApiPropsToVoorziening<T extends ZorgnedAanvraagTransformed>(
   const applyAssignments: Partial<WithMaApiProps> = {};
 
   apiPropsConfig.forEach((actionConfig) => {
-    if (isMaApiPropertyConfigMatch(voorziening, actionConfig)) {
+    if (
+      isMaApiPropertyConfigMatch(voorziening, actionConfig, 'include') &&
+      !isMaApiPropertyConfigMatch(voorziening, actionConfig, 'exclude')
+    ) {
       type _Entries = Entries<
         WithMaApiPropsAssignments<ZorgnedAanvraagTransformed>
       >;
@@ -94,30 +109,12 @@ function serviceErrorResult(
   );
 }
 
-export async function fetchMaApiVoorzieningen(
-  bsn: BSN,
+export function transformVoorzieningForFrontendWithMaApiProps(
+  voorzieningen: ZorgnedAanvraagTransformed[],
   options?: FetchWmoVoorzieningenApiOptions,
-  maVoorzieningenApiConfig: JzdApiConfig[] = wmoVoorzieningenApiConfig
-): Promise<ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps[]>> {
-  const wmoVoorzieningenResponse = await fetchZorgnedAanvragenWMO(bsn);
-  const jeugdVoorzieningenResponse = await fetchZorgnedAanvragenJeugd(bsn);
-
-  if (
-    wmoVoorzieningenResponse.status !== 'OK' ||
-    jeugdVoorzieningenResponse.status !== 'OK'
-  ) {
-    return serviceErrorResult(
-      wmoVoorzieningenResponse,
-      jeugdVoorzieningenResponse
-    );
-  }
-
-  const responseContentCombined = [
-    ...(wmoVoorzieningenResponse.content ?? []),
-    ...(jeugdVoorzieningenResponse.content ?? []),
-  ];
-
-  const voorzieningen = responseContentCombined
+  maVoorzieningenApiConfig: JzdApiConfig[] = jzdVoorzieningenApiConfig
+): ZorgnedAanvraagTransformedWithMaApiProps[] {
+  const voorzieningen_ = voorzieningen
     .map((voorziening) => {
       return addMaApiPropsToVoorziening(maVoorzieningenApiConfig, voorziening);
     })
@@ -145,6 +142,38 @@ export async function fetchMaApiVoorzieningen(
     })
     .toSorted(dateSort('datumBesluit', 'desc'));
 
+  return voorzieningen_;
+}
+
+export async function fetchMaApiVoorzieningen(
+  bsn: BSN,
+  options?: FetchWmoVoorzieningenApiOptions,
+  maVoorzieningenApiConfig: JzdApiConfig[] = jzdVoorzieningenApiConfig
+): Promise<ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps[]>> {
+  const wmoVoorzieningenResponse = await fetchZorgnedAanvragenWMO(bsn);
+  const jeugdVoorzieningenResponse = await fetchZorgnedAanvragenJeugd(bsn);
+
+  if (
+    wmoVoorzieningenResponse.status !== 'OK' ||
+    jeugdVoorzieningenResponse.status !== 'OK'
+  ) {
+    return serviceErrorResult(
+      wmoVoorzieningenResponse,
+      jeugdVoorzieningenResponse
+    );
+  }
+
+  const responseContentCombined = [
+    ...(wmoVoorzieningenResponse.content ?? []),
+    ...(jeugdVoorzieningenResponse.content ?? []),
+  ];
+
+  const voorzieningen = transformVoorzieningForFrontendWithMaApiProps(
+    responseContentCombined,
+    options,
+    maVoorzieningenApiConfig
+  );
+
   return apiSuccessResult(
     voorzieningen.map((voorziening) => {
       return pick(voorziening, PICK_VOORZIENING_KEYS);
@@ -155,7 +184,7 @@ export async function fetchMaApiVoorzieningen(
 export async function fetchMaApiVoorzieningById(
   bsn: BSN,
   id: ZorgnedAanvraagTransformedWithMaApiProps['id'],
-  maVoorzieningenApiConfig: JzdApiConfig[] = wmoVoorzieningenApiConfig
+  maVoorzieningenApiConfig: JzdApiConfig[] = jzdVoorzieningenApiConfig
 ): Promise<ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps>> {
   const wmoVoorzieningenResponse = await fetchZorgnedAanvragenWMO(bsn);
   const jeugdVoorzieningenResponse = await fetchZorgnedAanvragenJeugd(bsn);

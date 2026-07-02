@@ -12,7 +12,7 @@ export type WithPageConfig<K extends string, T extends object = object> = {
 };
 
 export type IsThemaVisibleFN = (
-  appState: AppState,
+  appState: Partial<AppState>,
   profileType?: ProfileType
 ) => boolean;
 

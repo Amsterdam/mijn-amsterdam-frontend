@@ -33,6 +33,7 @@ import {
 import { erfpachtRouter } from '../services/erfpacht/erfpacht-router.ts';
 import { hliRouter } from '../services/hli/hli-router.ts';
 import { jzdRouter } from '../services/jzd/jzd-router.ts';
+import { klantcontactRouter } from '../services/klantcontact/klantcontact-router.ts';
 import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service.ts';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler.ts';
 import { userFeedbackRouter } from '../services/user-feedback/user-feedback.router.ts';
@@ -121,7 +122,8 @@ router.use(
   afisRouter.protected,
   bezwarenRouter.protected,
   userFeedbackRouter.protected,
-  erfpachtRouter.protected
+  erfpachtRouter.protected,
+  klantcontactRouter.protected
 );
 
 // Decos (Vergunningen, Horeca, Toeristische verhuur, Parkeren)

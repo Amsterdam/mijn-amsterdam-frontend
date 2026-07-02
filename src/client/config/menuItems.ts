@@ -1,9 +1,9 @@
 import type { ThemaMenuItemTransformed, ThemaMenuItem } from './thema-types.ts';
-import { myThemasMenuItems } from './thema.ts';
 import type { AppState } from '../../universal/types/App.types.ts';
 import { useAppStateGetter } from '../hooks/useAppStateStore.ts';
 
 export function useThemasByProfileType(
+  myThemasMenuItems: ThemaMenuItem[],
   profileType: ProfileType
 ): ThemaMenuItemTransformed[] {
   const appState = useAppStateGetter();
