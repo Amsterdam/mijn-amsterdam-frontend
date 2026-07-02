@@ -48,6 +48,7 @@ import {
 import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 import { captureMessage, trackEvent } from '../monitoring.ts';
 import { fetchEMandates } from './afis-e-mandates.ts';
+import { isEnabled } from '../../config/azure-appconfiguration.ts';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
 const AFIS_MAX_FACTUREN_TOP = 2000;
@@ -768,7 +769,10 @@ export async function fetchAfisFacturenOverview(
 
     openFacturenContent = openFacturenContentSorted;
 
-    if (facturen.filter((factuur) => !!factuur.eMandateId).length) {
+    if (
+      isEnabled('AFIS.EMandates') &&
+      facturen.filter((factuur) => !!factuur.eMandateId).length
+    ) {
       const eMandatesResponse = await fetchEMandates(
         { businessPartnerId: params.businessPartnerID },
         sessionID
