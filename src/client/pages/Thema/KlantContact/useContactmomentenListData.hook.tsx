@@ -6,7 +6,6 @@ import {
   PersonAtDeskIcon,
 } from '@amsterdam/design-system-react-icons';
 
-import type { ContactmomentProps } from './KlantContact-thema-config.ts';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import type { Kanaal } from '../../../../server/services/klantcontact/klantcontact.types.ts';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
@@ -89,7 +88,6 @@ function addIcon(type: Kanaal) {
 
 export function useContactmomentenListData() {
   const {
-    id,
     themaConfig,
     contactmomenten,
     tableConfigs,
@@ -99,26 +97,21 @@ export function useContactmomentenListData() {
   } = useKlantcontactData();
   const { items: myThemasMenuItems } = useActiveThemaMenuItems();
 
-  const contactmomenten_: ContactmomentProps[] = contactmomenten.map(
-    (contactmoment) => {
-      const menuItemId = // getMenuItem can not be used because it is dependend on the user having the thema at the current moment
-        mapperContactmomentToMenuItem[
-          contactmoment.subject as keyof typeof mapperContactmomentToMenuItem
-        ] || contactmoment.subject;
-      return {
-        ...contactmoment,
-        className: getRedactedClass(menuItemId),
-        kanaalEl: addIcon(contactmoment.kanaal),
-        subjectLink: getLinkToThemaPage(
-          contactmoment.subject,
-          myThemasMenuItems
-        ),
-      };
-    }
-  );
+  const contactmomenten_ = contactmomenten.map((contactmoment) => {
+    const menuItemId = // getMenuItem can not be used because it is dependend on the user having the thema at the current moment
+      mapperContactmomentToMenuItem[
+        contactmoment.subject as keyof typeof mapperContactmomentToMenuItem
+      ] || contactmoment.subject;
+    return {
+      ...contactmoment,
+      className: getRedactedClass(menuItemId),
+      kanaalEl: addIcon(contactmoment.kanaal),
+      subjectLink: getLinkToThemaPage(contactmoment.subject, myThemasMenuItems),
+    };
+  });
 
   return {
-    id,
+    themaId: themaConfig.id,
     tableConfig: tableConfigs.contactmomenten,
     isLoading,
     isError,
