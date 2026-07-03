@@ -5,6 +5,8 @@ import { Pagination } from '@amsterdam/design-system-react';
 import paginate from 'jw-paginate';
 import { useNavigate } from 'react-router';
 
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
+
 export interface PaginationPageButtonProps extends PropsWithChildren {
   page: number;
   currentPage: number;
@@ -29,7 +31,10 @@ export function PaginationV2({
   currentPage = 1,
   className,
 }: PaginationProps) {
-  if (/\/:[a-zA-Z]*/.test(path)) {
+  // An optional page paramater indicates incorrect usage of the component but we can still handle it gracefully in production by removing this specific expected case from the path. Use generatePath in the caller to create and pass a concretePath to this component instead of a raw path with optional params.
+  const normalizedPath = IS_PRODUCTION ? path.replace(/\/:page\?$/, '') : path;
+
+  if (/\/:[a-zA-Z]*/.test(normalizedPath)) {
     throw Error(`Unparsed router path encountered: '${path}'`);
   }
   const { totalPages } = useMemo(
@@ -59,7 +64,7 @@ export function PaginationV2({
         );
       }}
       linkTemplate={function p(x) {
-        return `${path}/${x}`;
+        return `${normalizedPath}/${x}`;
       }}
       page={currentPage}
       totalPages={totalPages}
