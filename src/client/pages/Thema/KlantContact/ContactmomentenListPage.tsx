@@ -5,7 +5,7 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function ContactmomentenListPage() {
   const {
-    id,
+    themaId,
     contactmomenten,
     tableConfig,
     routeConfig,
@@ -19,7 +19,7 @@ export function ContactmomentenListPage() {
   return (
     <ListPagePaginated<ContactmomentFrontendFinal>
       items={contactmomenten}
-      themaId={id}
+      themaId={themaId}
       title={`Alle ${tableConfig.title.toLowerCase()}`}
       appRoute={tableConfig.listPageRoute}
       breadcrumbs={breadcrumbs}

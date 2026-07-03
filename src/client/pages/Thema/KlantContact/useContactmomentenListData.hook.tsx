@@ -89,7 +89,6 @@ function addIcon(type: Kanaal) {
 
 export function useContactmomentenListData() {
   const {
-    id,
     themaConfig,
     contactmomenten,
     tableConfigs,
@@ -118,7 +117,7 @@ export function useContactmomentenListData() {
   );
 
   return {
-    id,
+    themaId: themaConfig.id,
     tableConfig: tableConfigs.contactmomenten,
     isLoading,
     isError,
