@@ -6,7 +6,7 @@ import {
   PersonAtDeskIcon,
 } from '@amsterdam/design-system-react-icons';
 
-import type { ContactmomentProps } from './KlantContact-thema-config.ts';
+import type { ContactmomentFrontendFinal } from './KlantContact-thema-config.ts';
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import type { Kanaal } from '../../../../server/services/klantcontact/klantcontact.types.ts';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
@@ -99,7 +99,7 @@ export function useContactmomentenListData() {
   } = useKlantcontactData();
   const { items: myThemasMenuItems } = useActiveThemaMenuItems();
 
-  const contactmomenten_: ContactmomentProps[] = contactmomenten.map(
+  const contactmomenten_: ContactmomentFrontendFinal[] = contactmomenten.map(
     (contactmoment) => {
       const menuItemId = // getMenuItem can not be used because it is dependend on the user having the thema at the current moment
         mapperContactmomentToMenuItem[
