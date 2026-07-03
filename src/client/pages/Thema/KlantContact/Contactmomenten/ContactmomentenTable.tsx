@@ -4,7 +4,6 @@ import { ThemaPaginaTable } from '../../../../components/Thema/ThemaPaginaTable.
 import {
   type ContactmomentFrontendFinal,
   tableConfigs,
-  themaConfig,
 } from '../KlantContact-thema-config.ts';
 
 export function ContactMomenten({
@@ -36,7 +35,7 @@ export function ContactMomenten({
       maxItems={tableConfigs.contactmomenten.maxItems}
       displayProps={tableConfigs.contactmomenten.displayProps}
       listPageLinkTitle="Bekijk alle contactmomenten"
-      listPageRoute={themaConfig.listPageContactmomenten.route.path}
+      listPageRoute={tableConfigs.contactmomenten.listPageRoute}
       title="Contactmomenten"
     />
   );
