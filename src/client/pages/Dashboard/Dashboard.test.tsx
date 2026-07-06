@@ -173,7 +173,7 @@ describe('<Dashboard />', () => {
       expect(
         screen.getAllByRole('heading', { name: 'Varen Afspraak' })
       ).toHaveLength(MAX_TABLE_ROWS_ON_THEMA_PAGINA);
-      screen.getByRole('link', { name: 'Toon meer' });
+      screen.getByRole('link', { name: 'Toon alle' });
     });
   });
 
