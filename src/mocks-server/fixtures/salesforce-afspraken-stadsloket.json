@@ -43,7 +43,7 @@
       "cancellationLink": "http://localhost:3000/mijn-contact?cancel=xxxxxx"
     },
         {
-      "subject": "Fictief: Extreem lange titel die opzich voor kan komen omdat dit een open invoerveld betreft",
+      "subject": "Informatie en advies op het Stadsloket",
       "status": "New",
       "startDate": "2050-01-01 10:30:00",
       "qrCode": "a35e003d235841327843",
@@ -64,7 +64,7 @@
       "cancellationLink": "http://localhost:3000/mijn-contact?cancel=xxxxxx"
     },
         {
-      "subject": "Fictief: Extreem lange titel die opzich voor kan komen omdat dit een open invoerveld betreft",
+      "subject": "Partnerschap omzetten in huwelijk",
       "status": "New",
       "startDate": "2050-01-01 10:30:00",
       "qrCode": "a35e003d235841327843",
@@ -74,30 +74,9 @@
         }
       ],
       "location": {
-        "street": "Amstel 1",
+        "street": "Oranje-Vrijstaatplein 2",
         "postalCode": "1011 PN",
-        "name": "Centrum",
-        "countryCode": "NL",
-        "city": "Amsterdam"
-      },
-      "endDate": "2050-01-01 11:00:00",
-      "caseReference": "06157415",
-      "cancellationLink": "http://localhost:3000/mijn-contact?cancel=xxxxxx"
-    },
-        {
-      "subject": "Fictief: Extreem lange titel die opzich voor kan komen omdat dit een open invoerveld betreft",
-      "status": "New",
-      "startDate": "2050-01-01 10:30:00",
-      "qrCode": "a35e003d235841327843",
-      "products": [
-        {
-          "name": ""
-        }
-      ],
-      "location": {
-        "street": "Amstel 1",
-        "postalCode": "1011 PN",
-        "name": "Centrum",
+        "name": "Oost",
         "countryCode": "NL",
         "city": "Amsterdam"
       },
