@@ -8,11 +8,11 @@ export function AfspraakListPage() {
   useHTMLDocumentTitle(themaConfig.listPageAfspraken.route);
   return (
     <PageV2 heading="Alle afspraken" breadcrumbs={breadcrumbs}>
-      <PageContentCell>
         {afspraken.map((afspraak) => (
-          <AfspraakCard key={afspraak.caseReference} afspraak={afspraak} />
-        ))}
+      <PageContentCell key={afspraak.caseReference} spanWide={8}>
+          <AfspraakCard afspraak={afspraak} />
       </PageContentCell>
+        ))}
     </PageV2>
   );
 }

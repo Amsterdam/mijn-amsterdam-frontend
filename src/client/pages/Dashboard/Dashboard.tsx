@@ -21,7 +21,8 @@ import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 import { useAppStateNotifications } from '../../hooks/useNotifications.ts';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
-import { Afspraken } from '../Thema/KlantContact/Afspraken/Afspraken.tsx';
+import { AfsprakenDashboard } from '../Thema/KlantContact/Afspraken/Afspraken.tsx';
+import { themaConfig } from '../Thema/KlantContact/KlantContact-thema-config.ts';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
 
@@ -69,15 +70,28 @@ export function Dashboard() {
           className={getRedactedClass(null, 'full')}
         >
           {!!afspraken.length && (
-            <Afspraken
-              className="ams-mb-l"
+          <>
+            <Heading level={2} className="ams-mb-m">
+              Afspraken bij een stadsloket{' '}
+              {2 < afspraken.length&& (
+                <MaRouterLink
+                  className={styles.LinkToNotifications}
+                  href={themaConfig.listPageAfspraken.route.path}
+                >
+                  Toon alle
+                </MaRouterLink>
+              )}
+            </Heading>
+            <AfsprakenDashboard
+              className="ams-mb-m"
               afspraken={afspraken}
               compact={true}
             />
+          </>
           )}
           <Heading level={2} className="ams-mb-m">
             Recente berichten{' '}
-            {total > notifications.length && (
+            {notifications.length < total && (
               <MaRouterLink
                 className={styles.LinkToNotifications}
                 href={myNotificationsMenuItem.to}

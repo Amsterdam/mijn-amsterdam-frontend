@@ -1,4 +1,4 @@
-import { Paragraph } from '@amsterdam/design-system-react';
+import { Heading, Paragraph } from '@amsterdam/design-system-react';
 
 import { Afspraken } from './Afspraken/Afspraken.tsx';
 import { CommunicatieVoorkeuren } from './Communicatievoorkeuren/CommunicatieVoorkeuren.tsx';
@@ -67,6 +67,9 @@ export function KlantContactThema() {
               spanWide={9}
               className={getRedactedClass(null, 'full')}
             >
+              <Heading level={2} className="ams-mb-m">
+                Afspraken bij een stadsloket
+              </Heading>
               <Afspraken afspraken={afspraken} />
             </PageContentCell>
           )}
