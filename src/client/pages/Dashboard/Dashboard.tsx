@@ -69,11 +69,14 @@ export function Dashboard() {
           className={getRedactedClass(null, 'full')}
         >
           {!!afspraken.length && (
-            <Afspraken
-              className="ams-mb-l"
-              afspraken={afspraken}
-              compact={true}
-            />
+            <>
+              <Afspraken
+                className="ams-mb-l"
+                afspraken={afspraken}
+                compact={true}
+                maxAmountAfspraakDisplayed={1}
+              />
+            </>
           )}
           <Heading level={2} className="ams-mb-m">
             Recente berichten{' '}
