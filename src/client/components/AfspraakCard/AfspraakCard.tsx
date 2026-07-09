@@ -45,13 +45,13 @@ export function AfspraakCard({
               {afspraak.displayDateTime}
             </time>
           </Paragraph>
-          <Paragraph>
+          <Paragraph className={'ams-mb-s'}>
             Locatie: Stadsloket {afspraak.location.name},{' '}
             {afspraak.location.street}
           </Paragraph>
           {!compact && (
             <>
-              <ActionGroup style={{ paddingTop: 'var(--ams-space-s)' }}>
+              <ActionGroup>
                 <ModalAndButton
                   modal={{
                     title: `QR code - Stadsloket ${afspraak.location.name}`,
@@ -88,7 +88,7 @@ export function AfspraakCard({
                   rel="noopener noreferrer"
                   href={afspraak.cancellationLink}
                 >
-                  Annuleren
+                  Afspraak annuleren
                 </MaButtonLink>
               </ActionGroup>
             </>
