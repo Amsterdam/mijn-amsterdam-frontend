@@ -12,7 +12,7 @@ import QRCode from 'react-qr-code';
 import styles from './AfspraakCard.module.scss';
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
 import { LocationModal } from '../LocationModal/LocationModal.tsx';
-import { MaButtonLink, MaRouterLink } from '../MaLink/MaLink.tsx';
+import { MaButtonLink } from '../MaLink/MaLink.tsx';
 import { ModalAndButton } from '../Modal/Modal.tsx';
 
 type AfspraakCardProps = {
