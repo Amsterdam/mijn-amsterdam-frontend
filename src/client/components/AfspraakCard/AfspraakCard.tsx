@@ -29,12 +29,14 @@ export function AfspraakCard({
   return (
     <article className={className}>
       <Row>
-        <Icon
-          className={styles.Icon}
-          svg={PersonAtDeskIcon}
-          hidden
-          size="heading-2"
-        />
+        {!compact && (
+          <Icon
+            className={styles.Icon}
+            svg={PersonAtDeskIcon}
+            hidden
+            size="heading-2"
+          />
+        )}
         <Column>
           <Heading level={3} size="level-3">
             {afspraak.subject}
