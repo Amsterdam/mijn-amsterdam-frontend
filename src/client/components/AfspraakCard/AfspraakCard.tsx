@@ -80,8 +80,10 @@ export function AfspraakCard({
                 <MaButtonLink
                   variant="tertiary"
                   href={afspraak.icsLink.to}
-                  download={afspraak.icsLink.download}
                   rel="noopener noreferrer"
+                  content-Type="text/calendar"
+                  content-Disposition="inline"
+                  className={styles.AgendaButton}
                 >
                   Voeg toe aan uw agenda
                 </MaButtonLink>
