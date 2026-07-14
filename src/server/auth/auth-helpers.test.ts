@@ -3,6 +3,7 @@ import type { Request } from 'express';
 
 import { getReturnToUrl } from './auth-after-redirect-returnto.ts';
 import {
+  RETURNTO_AMSAPP_AUTH_CALLBACK,
   RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
   RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
 } from './auth-after-redirect-returnto.ts';
@@ -291,6 +292,17 @@ describe('auth-helpers', () => {
 
       expect(url).toBe(
         'http://bff-api-host/api/v1/services/amsapp/stadspas/app-landing'
+      );
+    });
+
+    test('getReturnToUrl should return the correct RETURNTO_AMSAPP_AUTH_CALLBACK url', () => {
+      const url = getReturnToUrl({
+        returnTo: RETURNTO_AMSAPP_AUTH_CALLBACK,
+        'amsapp-login-id': 'login-id-123',
+      });
+
+      expect(url).toBe(
+        'http://bff-api-host/api/v1/services/amsapp/auth/callback/login-id-123'
       );
     });
 
