@@ -36,6 +36,46 @@ import { countLoggedInVisit } from '../services/admin/admin-visitors.ts';
 
 export const authRouterDevelopment = createBFFRouter({ id: 'router-dev' });
 
+function parseDevelopmentSessionCookie(sessionCookieValue: string) {
+  try {
+    const parsed = JSON.parse(
+      Buffer.from(sessionCookieValue, 'base64').toString('ascii')
+    ) as AuthProfile;
+
+    if (
+      parsed &&
+      typeof parsed.id === 'string' &&
+      typeof parsed.sid === 'string' &&
+      (parsed.authMethod === 'digid' || parsed.authMethod === 'eherkenning') &&
+      (parsed.profileType === 'private' || parsed.profileType === 'commercial')
+    ) {
+      return parsed;
+    }
+  } catch {
+    // Ignore parsing errors; this cookie format only exists in local development.
+  }
+
+  return null;
+}
+
+export async function ensureDevelopmentAuthContext(req: Request) {
+  if (getAuth(req)) {
+    return;
+  }
+
+  const sessionCookieValue = req.cookies?.[OIDC_SESSION_COOKIE_NAME] ?? '';
+  if (!sessionCookieValue) {
+    return;
+  }
+
+  const authProfile = parseDevelopmentSessionCookie(sessionCookieValue);
+  if (!authProfile) {
+    return;
+  }
+
+  await createOIDCStub(req, authProfile);
+}
+
 export async function createOIDCStub(
   req: Request,
   authProfile: AuthProfile,
@@ -94,12 +134,8 @@ function getPredefinedRedirectUrl<
 
 authRouterDevelopment.use(async (req, res, next) => {
   if (hasSessionCookie(req)) {
-    const cookieValue = req.cookies[OIDC_SESSION_COOKIE_NAME];
     try {
-      await createOIDCStub(
-        req,
-        JSON.parse(Buffer.from(cookieValue, 'base64').toString('ascii'))
-      );
+      await ensureDevelopmentAuthContext(req);
     } catch (error) {
       res.clearCookie(OIDC_SESSION_COOKIE_NAME);
       return sendUnauthorized(res);

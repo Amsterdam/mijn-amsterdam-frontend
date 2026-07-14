@@ -2,6 +2,7 @@ import type { Request, Response } from 'express';
 
 import {
   handleAdministratienummerExchange,
+  sendAdministratienummerResponse,
   sendAppLandingResponse,
   sendStadspassenResponse,
   sendDiscountTransactionsResponse,
@@ -52,6 +53,12 @@ routerInternet.get(
 const routerPrivateNetwork = createBFFRouter({
   id: 'external-consumer-private-network-stadspas',
 });
+
+routerPrivateNetwork.get(
+  routes.private.STADSPAS_ADMINISTRATIENUMMER,
+  apiKeyVerificationHandler,
+  sendAdministratienummerResponse
+);
 
 routerPrivateNetwork.get(
   routes.private.STADSPAS_PASSEN,
