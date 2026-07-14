@@ -31,9 +31,9 @@ describe('amsapp-auth-route-handlers', () => {
     clearAmsAppAuthStore();
   });
 
-  test('login-start stores code_challenge and redirects to DigiD login', async () => {
+  test('login-start stores codeChallenge and redirects to DigiD login', async () => {
     const reqMock = RequestMock.new().setQuery({
-      code_challenge: 'test-code-challenge',
+      codeChallenge: 'test-code-challenge',
     });
     const req = reqMock.get();
     const resMock = ResponseMock.new();
@@ -56,7 +56,7 @@ describe('amsapp-auth-route-handlers', () => {
     expect(storedLoginAttempt?.status).toBe('pending');
   });
 
-  test('callback marks authorization_code ready and returns deeplink', async () => {
+  test('callback marks authorizationCode ready and returns deeplink', async () => {
     const loginId = createLoginAttempt('code-challenge-123');
     const reqMock = RequestMock.new()
       .setParams({ loginId })
@@ -79,7 +79,7 @@ describe('amsapp-auth-route-handlers', () => {
       'amsterdam://mijn-amsterdam/gelukt'
     );
 
-    const authorizationCode = appHref.searchParams.get('authorization_code');
+    const authorizationCode = appHref.searchParams.get('authorizationCode');
     expect(authorizationCode).toBeTruthy();
 
     const storedLoginAttempt = getByLoginId(loginId);
@@ -101,8 +101,8 @@ describe('amsapp-auth-route-handlers', () => {
 
     const req = {
       body: {
-        authorization_code: readyRecord?.authorizationCode,
-        code_verifier: codeVerifier,
+        authorizationCode: readyRecord?.authorizationCode,
+        codeVerifier: codeVerifier,
       },
     } as Request;
     const resMock = ResponseMock.new();
@@ -133,8 +133,8 @@ describe('amsapp-auth-route-handlers', () => {
 
     const req = {
       body: {
-        authorization_code: readyRecord?.authorizationCode,
-        code_verifier: 'other-verifier',
+        authorizationCode: readyRecord?.authorizationCode,
+        codeVerifier: 'other-verifier',
       },
     } as Request;
 
@@ -163,8 +163,8 @@ describe('amsapp-auth-route-handlers', () => {
 
     const firstReq = {
       body: {
-        authorization_code: authorizationCode,
-        code_verifier: codeVerifier,
+        authorizationCode: authorizationCode,
+        codeVerifier: codeVerifier,
       },
     } as Request;
 
@@ -173,8 +173,8 @@ describe('amsapp-auth-route-handlers', () => {
 
     const secondReq = {
       body: {
-        authorization_code: authorizationCode,
-        code_verifier: codeVerifier,
+        authorizationCode: authorizationCode,
+        codeVerifier: codeVerifier,
       },
     } as Request;
 
@@ -185,7 +185,7 @@ describe('amsapp-auth-route-handlers', () => {
     expect(secondRes.send).toHaveBeenCalledWith(
       expect.objectContaining({
         status: 'ERROR',
-        message: 'Bad request: Unknown or invalid authorization_code',
+        message: 'Bad request: Unknown or invalid authorizationCode',
         code: 400,
       })
     );
