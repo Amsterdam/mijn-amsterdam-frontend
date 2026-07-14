@@ -1,6 +1,7 @@
 import {
   handleAmsAppAuthCallback,
   handleAmsAppAuthLoginStart,
+  handleAmsAppAuthServicesAllProxy,
   handleAmsAppAuthTokenExchange,
 } from './amsapp-auth-route-handlers.ts';
 import { routes } from './amsapp-auth-service-config.ts';
@@ -22,6 +23,12 @@ routerPrivate.post(
   routes.private.AMSAPP_AUTH_TOKEN,
   apiKeyVerificationHandler,
   handleAmsAppAuthTokenExchange
+);
+
+routerPrivate.get(
+  routes.private.AMSAPP_AUTH_SERVICES_ALL,
+  apiKeyVerificationHandler,
+  handleAmsAppAuthServicesAllProxy
 );
 
 export const amsappAuthRouter = {

@@ -7,6 +7,7 @@ export const routes = {
   },
   private: {
     AMSAPP_AUTH_TOKEN: `${AMSAPP_BASE_PATH}/auth/token`,
+    AMSAPP_AUTH_SERVICES_ALL: `${AMSAPP_BASE_PATH}/auth/services/all`,
   },
 } as const;
 

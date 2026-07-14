@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 
-import type { Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import z from 'zod';
 
 import {
@@ -19,7 +19,10 @@ import { RETURNTO_AMSAPP_AUTH_CALLBACK } from '../../../auth/auth-after-redirect
 import { OIDC_SESSION_COOKIE_NAME } from '../../../auth/auth-config.ts';
 import { getAuth } from '../../../auth/auth-helpers.ts';
 import { authRoutes } from '../../../auth/auth-routes.ts';
+import type { AuthProfile } from '../../../auth/auth-types.ts';
 import { logger } from '../../../logging.ts';
+import { createOIDCStub } from '../../../routing/app-router-development.ts';
+import { handleServicesAll } from '../../../routing/app-router-protected.ts';
 import {
   generateFullApiUrlBFF,
   sendBadRequest,
@@ -43,6 +46,46 @@ function getCodeChallengeFromVerifier(codeVerifier: string) {
 
 function isPkceMatch(codeVerifier: string, codeChallenge: string) {
   return getCodeChallengeFromVerifier(codeVerifier) === codeChallenge;
+}
+
+function parseDevelopmentSessionCookie(sessionCookieValue: string) {
+  try {
+    const parsed = JSON.parse(
+      Buffer.from(sessionCookieValue, 'base64').toString('ascii')
+    ) as AuthProfile;
+
+    if (
+      parsed &&
+      typeof parsed.id === 'string' &&
+      typeof parsed.sid === 'string' &&
+      (parsed.authMethod === 'digid' || parsed.authMethod === 'eherkenning') &&
+      (parsed.profileType === 'private' || parsed.profileType === 'commercial')
+    ) {
+      return parsed;
+    }
+  } catch {
+    // Ignore parsing errors; this cookie format only exists in local development.
+  }
+
+  return null;
+}
+
+async function ensureDevelopmentAuthContext(req: Request) {
+  if (IS_PRODUCTION || getAuth(req)) {
+    return;
+  }
+
+  const sessionCookieValue = req.cookies?.[OIDC_SESSION_COOKIE_NAME] ?? '';
+  if (!sessionCookieValue) {
+    return;
+  }
+
+  const authProfile = parseDevelopmentSessionCookie(sessionCookieValue);
+  if (!authProfile) {
+    return;
+  }
+
+  await createOIDCStub(req, authProfile);
 }
 
 function getErrorRenderProps(loginId: string, error: ApiError): RenderProps {
@@ -159,4 +202,13 @@ export async function handleAmsAppAuthTokenExchange(
       },
     })
   );
+}
+
+export async function handleAmsAppAuthServicesAllProxy(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  await ensureDevelopmentAuthContext(req);
+  return handleServicesAll(req, res, next);
 }
