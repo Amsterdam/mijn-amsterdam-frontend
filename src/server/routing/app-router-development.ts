@@ -309,9 +309,7 @@ function filterUndefinedQueryParams(
   queryParams: Record<string, string | undefined>
 ) {
   return Object.fromEntries(
-    Object.entries(queryParams).filter(
-      ([, value]): value is string => typeof value === 'string'
-    )
+    Object.entries(queryParams).filter(([, value]) => typeof value === 'string')
   );
 }
 
