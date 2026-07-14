@@ -13,11 +13,13 @@ import {
   getByAuthorizationCode,
   markLoginReady,
 } from './amsapp-auth-store.ts';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { apiSuccessResult } from '../../../../universal/helpers/api.ts';
 import { RETURNTO_AMSAPP_AUTH_CALLBACK } from '../../../auth/auth-after-redirect-returnto.ts';
 import { OIDC_SESSION_COOKIE_NAME } from '../../../auth/auth-config.ts';
 import { getAuth } from '../../../auth/auth-helpers.ts';
 import { authRoutes } from '../../../auth/auth-routes.ts';
+import { logger } from '../../../logging.ts';
 import {
   generateFullApiUrlBFF,
   sendBadRequest,
@@ -76,6 +78,11 @@ export async function handleAmsAppAuthCallback(
   res: Response
 ) {
   const auth = getAuth(req);
+  if (!IS_PRODUCTION) {
+    logger.info(
+      `AmsApp auth callback received for loginId=${req.params.loginId}`
+    );
+  }
 
   if (!auth || auth.profile.profileType !== 'private') {
     return res.render(
@@ -103,6 +110,12 @@ export async function handleAmsAppAuthCallback(
     promptOpenApp: false,
   };
 
+  if (!IS_PRODUCTION) {
+    logger.info(
+      `AmsApp auth callback (non-production) for loginId=${record.loginId}, authorizationCode=${record.authorizationCode}`
+    );
+  }
+
   return res.render('amsapp-open-app', renderProps);
 }
 
@@ -111,6 +124,13 @@ export async function handleAmsAppAuthTokenExchange(
   res: Response
 ) {
   const result = tokenExchangeBodySchema.safeParse(req.body);
+  if (!IS_PRODUCTION) {
+    logger.debug(
+      `AmsApp auth token exchange request received with body: ${JSON.stringify(
+        req.body
+      )}`
+    );
+  }
   if (!result.success) {
     return sendBadRequestInvalidInput(res, result.error);
   }
