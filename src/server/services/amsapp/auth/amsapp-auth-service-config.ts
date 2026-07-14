@@ -20,4 +20,4 @@ export const apiResponseErrors = {
 
 export const AMSAPP_AUTH_DEEP_LINK_BASE = 'amsterdam://mijn-amsterdam';
 
-export const AUTHORIZATION_CODE_TTL_MS = 2 * 60 * 1000;
+export const AUTHORIZATION_CODE_TTL_MS = 20 * 60 * 1000;
