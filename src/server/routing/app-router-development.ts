@@ -141,7 +141,11 @@ authRouterDevelopment.get(
       authMethod === 'digid' ? 'MA_TEST_ACCOUNTS' : 'MA_TEST_ACCOUNTS_EH';
 
     if (!req.query.username) {
-      return sendRenderedTestAccountTable(res, authMethod);
+      return sendRenderedTestAccountTable(
+        res,
+        authMethod,
+        req.query as Record<string, string | undefined>
+      );
     }
 
     const profileId = getValueFromEnvByKey(envKey, req.query.username);
@@ -216,7 +220,8 @@ function transformAccount(account: TestUserAccount): TestUserAccount {
 
 async function sendRenderedTestAccountTable(
   res: Response,
-  authMethod: AuthMethod
+  authMethod: AuthMethod,
+  loginQueryParams: Record<string, string | undefined> = {}
 ) {
   const envKey =
     authMethod === 'digid' ? 'MA_TEST_ACCOUNTS' : 'MA_TEST_ACCOUNTS_EH';
@@ -287,7 +292,8 @@ async function sendRenderedTestAccountTable(
 
   const accountsWithLoginLink = addLoginLinkToUsernameProp(
     testAccountsData,
-    authMethod
+    authMethod,
+    loginQueryParams
   );
 
   const renderProps = {
@@ -299,16 +305,30 @@ async function sendRenderedTestAccountTable(
   return res.render('select-test-account', renderProps);
 }
 
+function filterUndefinedQueryParams(
+  queryParams: Record<string, string | undefined>
+) {
+  return Object.fromEntries(
+    Object.entries(queryParams).filter(
+      ([, value]): value is string => typeof value === 'string'
+    )
+  );
+}
+
 function addLoginLinkToUsernameProp(
   testAccountData: TestUserData,
-  authMethod: AuthProfile['authMethod']
+  authMethod: AuthProfile['authMethod'],
+  loginQueryParams: Record<string, string | undefined>
 ) {
   const authRoute = `${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}`;
 
   return testAccountData.accounts.map((account) => {
-    const authLoginRoute = generateFullApiUrlBFF(authRoute, [
-      { username: account.username },
-    ]);
+    const queryParams = {
+      ...filterUndefinedQueryParams(loginQueryParams),
+      username: account.username,
+    };
+
+    const authLoginRoute = generateFullApiUrlBFF(authRoute, [queryParams]);
     return {
       ...account,
       username: `<a href="${authLoginRoute}" class="test-account-name">${account.username.replace(/^[a-zA-Z]_/, '')}</a>`,
