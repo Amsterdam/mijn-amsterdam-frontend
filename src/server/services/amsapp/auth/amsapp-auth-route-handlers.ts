@@ -27,12 +27,12 @@ import { baseRenderProps } from '../amsapp-service-config.ts';
 import type { ApiError, RenderProps } from '../amsapp-types.ts';
 
 const loginStartQuerySchema = z.object({
-  code_challenge: z.string().min(1),
+  codeChallenge: z.string().min(1),
 });
 
 const tokenExchangeBodySchema = z.object({
-  authorization_code: z.string().min(1),
-  code_verifier: z.string().min(1),
+  authorizationCode: z.string().min(1),
+  codeVerifier: z.string().min(1),
 });
 
 function getCodeChallengeFromVerifier(codeVerifier: string) {
@@ -68,7 +68,7 @@ export async function handleAmsAppAuthLoginStart(req: Request, res: Response) {
     return sendBadRequestInvalidInput(res, result.error);
   }
 
-  const loginId = createLoginAttempt(result.data.code_challenge);
+  const loginId = createLoginAttempt(result.data.codeChallenge);
 
   return res.redirect(
     generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_DIGID, [
@@ -108,7 +108,7 @@ export async function handleAmsAppAuthCallback(
   const renderProps: RenderProps = {
     ...baseRenderProps,
     identifier: record.loginId,
-    appHref: `${AMSAPP_AUTH_DEEP_LINK_BASE}/gelukt?authorization_code=${record.authorizationCode}`,
+    appHref: `${AMSAPP_AUTH_DEEP_LINK_BASE}/gelukt?authorizationCode=${record.authorizationCode}`,
     promptOpenApp: false,
   };
 
@@ -124,20 +124,20 @@ export async function handleAmsAppAuthTokenExchange(
     return sendBadRequestInvalidInput(res, result.error);
   }
 
-  const record = getByAuthorizationCode(result.data.authorization_code);
+  const record = getByAuthorizationCode(result.data.authorizationCode);
   if (!record || record.status !== 'ready') {
-    return sendBadRequest(res, 'Unknown or invalid authorization_code');
+    return sendBadRequest(res, 'Unknown or invalid authorizationCode');
   }
 
-  if (!isPkceMatch(result.data.code_verifier, record.codeChallenge)) {
-    return sendBadRequest(res, 'Invalid code_verifier for authorization_code');
+  if (!isPkceMatch(result.data.codeVerifier, record.codeChallenge)) {
+    return sendBadRequest(res, 'Invalid codeVerifier for authorizationCode');
   }
 
   const consumedRecord = consumeByAuthorizationCode(
-    result.data.authorization_code
+    result.data.authorizationCode
   );
   if (!consumedRecord?.maSessionCookieValue) {
-    return sendBadRequest(res, 'Unknown or invalid authorization_code');
+    return sendBadRequest(res, 'Unknown or invalid authorizationCode');
   }
 
   return res.send(
