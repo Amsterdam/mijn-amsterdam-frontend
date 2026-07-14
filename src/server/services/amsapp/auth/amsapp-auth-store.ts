@@ -9,6 +9,7 @@ export type AuthorizationCodeRecord = {
   status: AuthorizationCodeStatus;
   codeChallenge: string;
   authorizationCode: string | null;
+  maSessionCookieValue: string | null;
   createdAtMs: number;
   expiresAtMs: number;
 };
@@ -42,6 +43,7 @@ export function createLoginAttempt(codeChallenge: string) {
     status: 'pending',
     codeChallenge,
     authorizationCode: null,
+    maSessionCookieValue: null,
     createdAtMs,
     expiresAtMs: createdAtMs + AUTHORIZATION_CODE_TTL_MS,
   });
@@ -49,15 +51,16 @@ export function createLoginAttempt(codeChallenge: string) {
   return loginId;
 }
 
-export function markLoginReady(loginId: string) {
+export function markLoginReady(loginId: string, maSessionCookieValue: string) {
   const record = getRecord(loginId);
 
-  if (!record || record.status !== 'pending') {
+  if (!record || record.status !== 'pending' || !maSessionCookieValue) {
     return null;
   }
 
   record.status = 'ready';
   record.authorizationCode = randomUUID();
+  record.maSessionCookieValue = maSessionCookieValue;
 
   return record;
 }
@@ -78,6 +81,16 @@ export function getByAuthorizationCode(authorizationCode: string) {
   }
 
   return null;
+}
+
+export function consumeByAuthorizationCode(authorizationCode: string) {
+  const record = getByAuthorizationCode(authorizationCode);
+  if (!record) {
+    return null;
+  }
+
+  authorizationCodeStore.delete(record.loginId);
+  return record;
 }
 
 export function getByLoginId(loginId: string) {

@@ -1,3 +1,5 @@
+import { createHash, timingSafeEqual } from 'node:crypto';
+
 import type { Request, Response } from 'express';
 import z from 'zod';
 
@@ -6,12 +8,14 @@ import {
   apiResponseErrors,
 } from './amsapp-auth-service-config.ts';
 import {
+  consumeByAuthorizationCode,
   createLoginAttempt,
   getByAuthorizationCode,
   markLoginReady,
 } from './amsapp-auth-store.ts';
 import { apiSuccessResult } from '../../../../universal/helpers/api.ts';
 import { RETURNTO_AMSAPP_AUTH_CALLBACK } from '../../../auth/auth-after-redirect-returnto.ts';
+import { OIDC_SESSION_COOKIE_NAME } from '../../../auth/auth-config.ts';
 import { getAuth } from '../../../auth/auth-helpers.ts';
 import { authRoutes } from '../../../auth/auth-routes.ts';
 import {
@@ -28,7 +32,25 @@ const loginStartQuerySchema = z.object({
 
 const tokenExchangeBodySchema = z.object({
   authorization_code: z.string().min(1),
+  code_verifier: z.string().min(1),
 });
+
+function getCodeChallengeFromVerifier(codeVerifier: string) {
+  return createHash('sha256').update(codeVerifier).digest('base64url');
+}
+
+function isPkceMatch(codeVerifier: string, codeChallenge: string) {
+  const expectedCodeChallenge = Buffer.from(
+    getCodeChallengeFromVerifier(codeVerifier)
+  );
+  const givenCodeChallenge = Buffer.from(codeChallenge);
+
+  if (expectedCodeChallenge.length !== givenCodeChallenge.length) {
+    return false;
+  }
+
+  return timingSafeEqual(expectedCodeChallenge, givenCodeChallenge);
+}
 
 function getErrorRenderProps(loginId: string, error: ApiError): RenderProps {
   return {
@@ -71,7 +93,8 @@ export async function handleAmsAppAuthCallback(
     );
   }
 
-  const record = markLoginReady(req.params.loginId);
+  const maSessionCookieValue = req.cookies?.[OIDC_SESSION_COOKIE_NAME] ?? '';
+  const record = markLoginReady(req.params.loginId, maSessionCookieValue);
   if (!record?.authorizationCode) {
     return res.render(
       'amsapp-open-app',
@@ -106,10 +129,23 @@ export async function handleAmsAppAuthTokenExchange(
     return sendBadRequest(res, 'Unknown or invalid authorization_code');
   }
 
+  if (!isPkceMatch(result.data.code_verifier, record.codeChallenge)) {
+    return sendBadRequest(res, 'Invalid code_verifier for authorization_code');
+  }
+
+  const consumedRecord = consumeByAuthorizationCode(
+    result.data.authorization_code
+  );
+  if (!consumedRecord?.maSessionCookieValue) {
+    return sendBadRequest(res, 'Unknown or invalid authorization_code');
+  }
+
   return res.send(
     apiSuccessResult({
-      login_id: record.loginId,
-      status: record.status,
+      session: {
+        name: OIDC_SESSION_COOKIE_NAME,
+        value: consumedRecord.maSessionCookieValue,
+      },
     })
   );
 }
