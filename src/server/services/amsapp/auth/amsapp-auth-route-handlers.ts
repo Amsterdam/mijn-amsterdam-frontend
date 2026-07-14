@@ -1,4 +1,4 @@
-import { createHash, timingSafeEqual } from 'node:crypto';
+import { createHash } from 'node:crypto';
 
 import type { Request, Response } from 'express';
 import z from 'zod';
@@ -40,16 +40,7 @@ function getCodeChallengeFromVerifier(codeVerifier: string) {
 }
 
 function isPkceMatch(codeVerifier: string, codeChallenge: string) {
-  const expectedCodeChallenge = Buffer.from(
-    getCodeChallengeFromVerifier(codeVerifier)
-  );
-  const givenCodeChallenge = Buffer.from(codeChallenge);
-
-  if (expectedCodeChallenge.length !== givenCodeChallenge.length) {
-    return false;
-  }
-
-  return timingSafeEqual(expectedCodeChallenge, givenCodeChallenge);
+  return getCodeChallengeFromVerifier(codeVerifier) === codeChallenge;
 }
 
 function getErrorRenderProps(loginId: string, error: ApiError): RenderProps {
