@@ -20,7 +20,6 @@ import { OIDC_SESSION_COOKIE_NAME } from '../../../auth/auth-config.ts';
 import { getAuth } from '../../../auth/auth-helpers.ts';
 import { authRoutes } from '../../../auth/auth-routes.ts';
 import { logger } from '../../../logging.ts';
-import { ensureDevelopmentAuthContext } from '../../../routing/app-router-development.ts';
 import { handleServicesAll } from '../../../routing/app-router-protected.ts';
 import {
   generateFullApiUrlBFF,
@@ -168,8 +167,5 @@ export async function handleAmsAppAuthServicesAllProxy(
   res: Response,
   next: NextFunction
 ) {
-  if (!IS_PRODUCTION) {
-    await ensureDevelopmentAuthContext(req);
-  }
   return handleServicesAll(req, res, next);
 }
