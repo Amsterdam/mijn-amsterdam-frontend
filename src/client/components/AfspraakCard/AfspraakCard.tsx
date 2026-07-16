@@ -8,8 +8,6 @@ import {
 } from '@amsterdam/design-system-react';
 import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 import QRCode from 'react-qr-code';
-
-import styles from './AfspraakCard.module.scss';
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
 import { LocationModal } from '../LocationModal/LocationModal.tsx';
 import { MaButtonLink } from '../MaLink/MaLink.tsx';
