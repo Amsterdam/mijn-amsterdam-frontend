@@ -8,6 +8,7 @@ import {
   openIdAuth,
 } from '../auth/auth-config.ts';
 import { getAuth } from '../auth/auth-helpers.ts';
+import { featureToggle } from '../services/amsapp/auth/amsapp-auth-service-config.ts';
 
 export const AMSAPP_SESSION_TOKEN_HEADER = 'x-amsapp-session-token';
 
@@ -55,6 +56,10 @@ function appendSessionCookieHeader(req: Request, sessionToken: string) {
 }
 
 function applyAmsAppSessionTokenAsCookie(req: Request) {
+  if (!featureToggle.amsAppUniversalAuthIsActive) {
+    return;
+  }
+
   const token = getHeaderValue(req, AMSAPP_SESSION_TOKEN_HEADER);
   if (!token || req.cookies?.[OIDC_SESSION_COOKIE_NAME]) {
     return;
@@ -66,6 +71,9 @@ function applyAmsAppSessionTokenAsCookie(req: Request) {
 }
 
 async function ensureOidcAuthContext(req: Request, res: Response) {
+  if (!featureToggle.amsAppUniversalAuthIsActive) {
+    return;
+  }
   await new Promise<void>((resolve, reject) => {
     getOidcDigidAuthHandler()(req, res, (error?: unknown) => {
       if (error) {

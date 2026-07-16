@@ -40,9 +40,7 @@ export async function sendAdministratienummerResponse(
   req: Request,
   res: Response
 ) {
-  if (!IS_PRODUCTION) {
-    await ensureDevelopmentAuthContext(req);
-  }
+  await ensureDevelopmentAuthContext(req);
 
   const authProfileAndToken: AuthProfileAndToken | null = getAuth(req);
 
