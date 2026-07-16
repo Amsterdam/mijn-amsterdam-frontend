@@ -136,7 +136,7 @@ authRouterDevelopment.use(async (req, res, next) => {
   if (hasSessionCookie(req)) {
     try {
       await ensureDevelopmentAuthContext(req);
-    } catch (error) {
+    } catch (_error) {
       res.clearCookie(OIDC_SESSION_COOKIE_NAME);
       return sendUnauthorized(res);
     }
