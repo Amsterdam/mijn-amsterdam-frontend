@@ -102,22 +102,25 @@ describe('amsapp-auth-route-handlers', () => {
     const req = {
       body: {
         authorizationCode: readyRecord?.authorizationCode,
-        codeVerifier: codeVerifier,
+        codeVerifier,
       },
     } as Request;
     const resMock = ResponseMock.new();
 
     await handleAmsAppAuthTokenExchange(req, resMock);
 
-    expect(resMock.send).toHaveBeenCalledWith({
-      status: 'OK',
-      content: {
-        session: {
-          name: OIDC_SESSION_COOKIE_NAME,
-          value: 'ma-session-cookie-value',
-        },
-      },
-    });
+    expect(resMock.send).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: 'OK',
+        content: expect.objectContaining({
+          session: expect.objectContaining({
+            name: OIDC_SESSION_COOKIE_NAME,
+            value: 'ma-session-cookie-value',
+            expiresAt: expect.any(Number),
+          }),
+        }),
+      })
+    );
 
     expect(getByLoginId(loginId)).toBeNull();
   });
@@ -163,8 +166,8 @@ describe('amsapp-auth-route-handlers', () => {
 
     const firstReq = {
       body: {
-        authorizationCode: authorizationCode,
-        codeVerifier: codeVerifier,
+        authorizationCode,
+        codeVerifier,
       },
     } as Request;
 
@@ -173,8 +176,8 @@ describe('amsapp-auth-route-handlers', () => {
 
     const secondReq = {
       body: {
-        authorizationCode: authorizationCode,
-        codeVerifier: codeVerifier,
+        authorizationCode,
+        codeVerifier,
       },
     } as Request;
 

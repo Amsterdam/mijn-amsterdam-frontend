@@ -16,9 +16,13 @@ import {
 import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { apiSuccessResult } from '../../../../universal/helpers/api.ts';
 import { RETURNTO_AMSAPP_AUTH_CALLBACK } from '../../../auth/auth-after-redirect-returnto.ts';
-import { OIDC_SESSION_COOKIE_NAME } from '../../../auth/auth-config.ts';
+import {
+  OIDC_SESSION_COOKIE_NAME,
+  OIDC_SESSION_MAX_AGE_SECONDS,
+} from '../../../auth/auth-config.ts';
 import { getAuth } from '../../../auth/auth-helpers.ts';
 import { authRoutes } from '../../../auth/auth-routes.ts';
+import { ONE_SECOND_MS } from '../../../config/app.ts';
 import { logger } from '../../../logging.ts';
 import { handleServicesAll } from '../../../routing/app-router-protected.ts';
 import {
@@ -157,6 +161,7 @@ export async function handleAmsAppAuthTokenExchange(
       session: {
         name: OIDC_SESSION_COOKIE_NAME,
         value: consumedRecord.maSessionCookieValue,
+        expiresAt: Date.now() + OIDC_SESSION_MAX_AGE_SECONDS * ONE_SECOND_MS,
       },
     })
   );
