@@ -1,4 +1,12 @@
+import { isEnabled } from '../../../config/azure-appconfiguration.ts';
 import { AMSAPP_BASE_PATH } from '../amsapp-constants.ts';
+
+export const featureToggle = {
+  amsAppUniversalAuthIsActive: isEnabled('AMSAPP.universalAuth'),
+  amsAppUniversalAuthServicesAllAccessIsActive:
+    isEnabled('AMSAPP.universalAuth') &&
+    isEnabled('AMSAPP.universalAuth.servicesAllAccess'),
+} as const;
 
 export const routes = {
   public: {
