@@ -181,6 +181,25 @@ describe('<Dashboard />', () => {
     });
   });
 
+  it('Displays message when there are 0 afspraken', () => {
+    const state = {
+      KLANT_CONTACT: {
+        status: 'OK',
+        content: {
+          contactmomenten: [],
+          afspraken: [],
+        },
+      },
+    } as unknown as AppState;
+    const Component = createDashboardComponent(state);
+    const screen = render(<Component />);
+
+    expect(
+      screen.queryByRole('heading', { name: 'Varen Afspraak' })
+    ).not.toBeInTheDocument();
+    screen.getByText('Er zijn geen afspraken bij het stadsloket.');
+  });
+
   describe('Notifications', () => {
     const state = {
       NOTIFICATIONS: {
