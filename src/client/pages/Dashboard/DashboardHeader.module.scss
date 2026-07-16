@@ -39,4 +39,5 @@
   @media screen and (min-width: $ams-breakpoint-medium) {
     width: 63%;
   }
+  z-index: z-index(main-header-searchbar);
 }
