@@ -33,6 +33,7 @@ import {
   mergeWithDynamicTableHeaders,
 } from '../helpers/test-accounts.ts';
 import { countLoggedInVisit } from '../services/admin/admin-visitors.ts';
+import { featureToggle } from '../services/amsapp/auth/amsapp-auth-service-config.ts';
 
 export const authRouterDevelopment = createBFFRouter({ id: 'router-dev' });
 
@@ -59,6 +60,10 @@ function parseDevelopmentSessionCookie(sessionCookieValue: string) {
 }
 
 export async function ensureDevelopmentAuthContext(req: Request) {
+  if (!featureToggle.amsAppUniversalAuthIsActive) {
+    return;
+  }
+
   if (getAuth(req)) {
     return;
   }
