@@ -7,12 +7,14 @@ import { AfspraakCard } from '../../../../components/AfspraakCard/AfspraakCard.t
 import { LinkToListPage } from '../../../../components/LinkToListPage/LinkToListPage.tsx';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../../config/app.ts';
 import { themaConfig } from '../KlantContact-thema-config.ts';
+import { LoadingContent } from '../../../../components/LoadingContent/LoadingContent.tsx';
 
 type AfsprakenProps = {
   compact?: boolean;
   afspraken: AfspraakFrontend[];
   className?: string;
   maxAfsprakenDisplayed?: number;
+  isLoading: boolean;
 };
 
 export function Afspraken({
@@ -20,8 +22,16 @@ export function Afspraken({
   afspraken = [],
   maxAfsprakenDisplayed = MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   className,
+  isLoading,
 }: AfsprakenProps) {
   const hasAfspraken = afspraken.length > 0;
+
+  if (isLoading)
+    return (
+      <AfsprakenBase className={className}>
+        <LoadingContent />
+      </AfsprakenBase>
+    );
 
   if (!hasAfspraken)
     return (

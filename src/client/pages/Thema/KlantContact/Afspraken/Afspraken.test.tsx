@@ -36,8 +36,22 @@ function createAfspraak(index: number): AfspraakFrontend {
 }
 
 describe('Afspraken', () => {
+  test('shows loading state while afspraken are loading', () => {
+    const screen = render(<Afspraken afspraken={[]} isLoading={true} />, {
+      wrapper: BrowserRouter,
+    });
+
+    expect(
+      screen.getByRole('heading', { name: 'Afspraken bij een stadsloket' })
+    ).toBeInTheDocument();
+    expect(screen.getByText('Inhoud wordt opgehaald...')).toBeInTheDocument();
+    expect(
+      screen.queryByText('Er zijn geen afspraken bij het stadsloket.')
+    ).not.toBeInTheDocument();
+  });
+
   test('shows empty state when there are no afspraken', () => {
-    const screen = render(<Afspraken afspraken={[]} />, {
+    const screen = render(<Afspraken afspraken={[]} isLoading={false} />, {
       wrapper: BrowserRouter,
     });
 
@@ -52,7 +66,11 @@ describe('Afspraken', () => {
   test('renders only maxAmountAfspraakDisplayed afspraken and shows link to list page', () => {
     const afspraken = [createAfspraak(1), createAfspraak(2), createAfspraak(3)];
     const screen = render(
-      <Afspraken afspraken={afspraken} maxAfsprakenDisplayed={2} />,
+      <Afspraken
+        afspraken={afspraken}
+        maxAfsprakenDisplayed={2}
+        isLoading={false}
+      />,
       {
         wrapper: BrowserRouter,
       }
@@ -75,9 +93,12 @@ describe('Afspraken', () => {
       createAfspraak(3),
       createAfspraak(4),
     ];
-    const screen = render(<Afspraken afspraken={afspraken} />, {
-      wrapper: BrowserRouter,
-    });
+    const screen = render(
+      <Afspraken afspraken={afspraken} isLoading={false} />,
+      {
+        wrapper: BrowserRouter,
+      }
+    );
 
     expect(screen.getByText('Afspraak 1')).toBeInTheDocument();
     expect(screen.getByText('Afspraak 2')).toBeInTheDocument();
@@ -93,7 +114,11 @@ describe('Afspraken', () => {
   test('does not show link to list page when count is not above threshold', () => {
     const afspraken = [createAfspraak(1), createAfspraak(2)];
     const screen = render(
-      <Afspraken afspraken={afspraken} maxAfsprakenDisplayed={2} />,
+      <Afspraken
+        afspraken={afspraken}
+        maxAfsprakenDisplayed={2}
+        isLoading={false}
+      />,
       {
         wrapper: BrowserRouter,
       }
