@@ -76,7 +76,7 @@ describe('Renders afspraak data', () => {
     screen.getByText(/QR code - Stadsloket Centrum/i);
   });
 
-  test('Opens location modal', async () => {
+  it('Opens location modal', async () => {
     const screen = renderAfspraakCard(afspraak);
     const user = userEvent.setup();
     const button = screen.getByRole('button', {
