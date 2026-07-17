@@ -10,7 +10,7 @@ import type {
   BAGQueryParams,
   BAGSourceData,
 } from '../../../server/services/bag/bag.types.ts';
-import { LOCATION_ZOOM } from '../../../universal/config/myarea-datasets.ts';
+import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets.ts';
 import type { LatLngWithAddress } from '../../../universal/helpers/bag.ts';
 import {
   extractAddressParts,
@@ -125,9 +125,9 @@ function LocationMap({ address, latlng, markerLabel }: LocationMapProps) {
       {hasLocationDataAndCenterMarker && (
         <MyAreaLoader
           showPanels={false}
-          zoom={LOCATION_ZOOM}
+          zoom={HOOD_ZOOM}
           datasetIds={[]}
-          activeBaseLayerType={BaseLayerType.Aerial}
+          activeBaseLayerType={BaseLayerType.Topo}
           centerMarker={centerMarker}
           showHomeLocationMarker={false}
           showSecondaryLocationMarkers={false}
