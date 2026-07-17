@@ -72,7 +72,7 @@ export function Dashboard() {
             className="ams-mb-l"
             afspraken={afspraken}
             compact={true}
-            maxAmountAfspraakDisplayed={1}
+            maxAfsprakenDisplayed={1}
           />
           <Heading level={2} className="ams-mb-m">
             Recente berichten{' '}
