@@ -66,11 +66,7 @@ describe('Afspraken', () => {
   test('renders only maxAmountAfspraakDisplayed afspraken and shows link to list page', () => {
     const afspraken = [createAfspraak(1), createAfspraak(2), createAfspraak(3)];
     const screen = render(
-      <Afspraken
-        afspraken={afspraken}
-        maxAfsprakenDisplayed={2}
-        isLoading={false}
-      />,
+      <Afspraken afspraken={afspraken} maxItems={2} isLoading={false} />,
       {
         wrapper: BrowserRouter,
       }
@@ -114,11 +110,7 @@ describe('Afspraken', () => {
   test('does not show link to list page when count is not above threshold', () => {
     const afspraken = [createAfspraak(1), createAfspraak(2)];
     const screen = render(
-      <Afspraken
-        afspraken={afspraken}
-        maxAfsprakenDisplayed={2}
-        isLoading={false}
-      />,
+      <Afspraken afspraken={afspraken} maxItems={2} isLoading={false} />,
       {
         wrapper: BrowserRouter,
       }

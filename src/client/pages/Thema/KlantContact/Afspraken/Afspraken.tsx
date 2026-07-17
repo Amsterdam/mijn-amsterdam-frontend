@@ -13,14 +13,14 @@ type AfsprakenProps = {
   compact?: boolean;
   afspraken: AfspraakFrontend[];
   className?: string;
-  maxAfsprakenDisplayed?: number;
+  maxItems?: number;
   isLoading: boolean;
 };
 
 export function Afspraken({
   compact = false,
   afspraken = [],
-  maxAfsprakenDisplayed = MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+  maxItems = MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   className,
   isLoading,
 }: AfsprakenProps) {
@@ -42,20 +42,18 @@ export function Afspraken({
 
   return (
     <AfsprakenBase className={className}>
-      {afspraken
-        .slice(0, maxAfsprakenDisplayed)
-        .map((afspraak, i, afspraken) => (
-          <AfspraakCard
-            compact={compact}
-            key={afspraak.caseReference}
-            afspraak={afspraak}
-            className={i < afspraken.length - 1 ? 'ams-mb-l' : ''}
-          />
-        ))}
+      {afspraken.slice(0, maxItems).map((afspraak, i, afspraken) => (
+        <AfspraakCard
+          compact={compact}
+          key={afspraak.caseReference}
+          afspraak={afspraak}
+          className={i < afspraken.length - 1 ? 'ams-mb-l' : ''}
+        />
+      ))}
       <LinkToListPage
         count={afspraken.length}
         route={themaConfig.listPageAfspraken.route.path}
-        threshold={maxAfsprakenDisplayed}
+        threshold={maxItems}
         label={`Al uw ${afspraken.length} afspraken bij een stadsloket`}
       />
     </AfsprakenBase>

@@ -73,7 +73,7 @@ export function Dashboard() {
             className="ams-mb-l"
             afspraken={afspraken}
             compact={true}
-            maxAfsprakenDisplayed={1}
+            maxItems={1}
             isLoading={isKlantcontactLoading}
           />
           <Heading level={2} className="ams-mb-m">
