@@ -16,6 +16,22 @@ const DIGID_PROFILE: AuthProfile = {
   id: 'x1',
 };
 
+type PrivateAuthRequest = Request & {
+  headers: Record<string, string>;
+  path: string;
+  url: string;
+};
+
+function createPrivateAuthRequest(headers: Record<string, string>) {
+  const req = RequestMock.new().get() as PrivateAuthRequest;
+  Object.assign(req, {
+    headers,
+    path: '/services/amsapp/auth/services/all',
+    url: '/services/amsapp/auth/services/all',
+  });
+  return req;
+}
+
 describe('app-router-private-auth-context', () => {
   beforeEach(() => {
     vi.resetAllMocks();
@@ -26,14 +42,9 @@ describe('app-router-private-auth-context', () => {
       'base64'
     );
 
-    const req = RequestMock.new().get() as Request;
-    (req as Request & { headers: Record<string, string> }).headers = {
+    const req = createPrivateAuthRequest({
       [AMSAPP_SESSION_TOKEN_HEADER]: sessionToken,
-    };
-    (req as Request & { path: string; url: string }).path =
-      '/services/amsapp/auth/services/all';
-    (req as Request & { path: string; url: string }).url =
-      '/services/amsapp/auth/services/all';
+    });
 
     const resMock = ResponseMock.new();
     const next = vi.fn();
@@ -50,14 +61,9 @@ describe('app-router-private-auth-context', () => {
       'base64'
     );
 
-    const req = RequestMock.new().get() as Request;
-    (req as Request & { headers: Record<string, string> }).headers = {
+    const req = createPrivateAuthRequest({
       authorization: `Bearer ${sessionToken}`,
-    };
-    (req as Request & { path: string; url: string }).path =
-      '/services/amsapp/auth/services/all';
-    (req as Request & { path: string; url: string }).url =
-      '/services/amsapp/auth/services/all';
+    });
 
     const resMock = ResponseMock.new();
     const next = vi.fn();

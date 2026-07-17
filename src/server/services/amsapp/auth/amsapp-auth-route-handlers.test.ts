@@ -91,10 +91,8 @@ describe('amsapp-auth-route-handlers', () => {
   });
 
   test('token exchange validates PKCE and returns MA session cookie value', async () => {
-    const codeVerifier = 'mobile-app-code-verifier';
-    const codeChallenge = createHash('sha256')
-      .update(codeVerifier)
-      .digest('base64url');
+    const codeVerifier = 'test';
+    const codeChallenge = 'n4bQgYhMfWWaL-qgxVrQFaO_TxsrC4Is0V1sFbDwCgg'; // createHash('sha256').update(codeVerifier).digest('base64url');
 
     const loginId = createLoginAttempt(codeChallenge);
     const readyRecord = markLoginReady(loginId, 'ma-session-cookie-value');
@@ -137,7 +135,7 @@ describe('amsapp-auth-route-handlers', () => {
     const req = {
       body: {
         authorizationCode: readyRecord?.authorizationCode,
-        codeVerifier: 'other-verifier',
+        codeVerifier: `${codeVerifier}-mismatch`,
       },
     } as Request;
 
