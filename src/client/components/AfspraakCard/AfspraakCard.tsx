@@ -66,6 +66,7 @@ export function AfspraakCard({
                 </ModalAndButton>
                 {afspraak.location.street && (
                   <LocationModal
+                    modalTitle={`Stadsloket ${afspraak.location.name} - ${afspraak.location.street}`}
                     address={afspraak.location.street}
                     buttonLabel={'Toon op kaart'}
                   />
