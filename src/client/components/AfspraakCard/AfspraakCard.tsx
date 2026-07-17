@@ -27,14 +27,7 @@ export function AfspraakCard({
   return (
     <article className={className}>
       <Row>
-        {!compact && (
-          <Icon
-            className={styles.Icon}
-            svg={PersonAtDeskIcon}
-            hidden
-            size="heading-2"
-          />
-        )}
+        {!compact && <Icon svg={PersonAtDeskIcon} hidden size="heading-2" />}
         <Column>
           <Heading level={3} size="level-3">
             {afspraak.subject}
@@ -81,7 +74,6 @@ export function AfspraakCard({
                   rel="noopener noreferrer"
                   content-Type="text/calendar"
                   content-Disposition="inline"
-                  className={styles.AgendaButton}
                 >
                   Voeg toe aan uw agenda
                 </MaButtonLink>

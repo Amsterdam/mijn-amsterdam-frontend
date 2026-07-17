@@ -42,7 +42,7 @@ exports[`Renders afspraak data > Regular variant 1`] = `
       class="ams-row"
     >
       <span
-        class="ams-icon ams-icon--heading-2 _Icon_0a51e6"
+        class="ams-icon ams-icon--heading-2"
         hidden=""
       >
         <svg
@@ -104,7 +104,7 @@ exports[`Renders afspraak data > Regular variant 1`] = `
           </button>
           <a
             aria-disabled="false"
-            class="_MaButtonLink_10c0a4 ams-button ams-button--tertiary _AgendaButton_0a51e6"
+            class="_MaButtonLink_10c0a4 ams-button ams-button--tertiary"
             content-disposition="inline"
             content-type="text/calendar"
             href="data:text/calendar;base64,abc123"
