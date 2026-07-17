@@ -39,8 +39,8 @@ export function AfspraakCard({
             </time>
           </Paragraph>
           <Paragraph className={'ams-mb-s'}>
-            Locatie: Stadsloket {afspraak.location.name},{' '}
-            {afspraak.location.street}
+            Locatie: Stadsloket {afspraak.location.name}
+            {afspraak.location.street && `, ${afspraak.location.street}`}
           </Paragraph>
           {!compact && (
             <>
@@ -64,10 +64,12 @@ export function AfspraakCard({
                     </Paragraph>
                   </>
                 </ModalAndButton>
-                <LocationModal
-                  address={afspraak.location.street ?? afspraak.location.name}
-                  buttonLabel={'Toon op kaart'}
-                />
+                {afspraak.location.street && (
+                  <LocationModal
+                    address={afspraak.location.street}
+                    buttonLabel={'Toon op kaart'}
+                  />
+                )}
                 <MaButtonLink
                   variant="tertiary"
                   href={afspraak.icsLink.to}

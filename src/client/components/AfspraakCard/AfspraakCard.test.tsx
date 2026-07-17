@@ -75,4 +75,31 @@ describe('Renders afspraak data', () => {
     await user.click(button);
     screen.getByText(/QR code - Stadsloket Centrum/i);
   });
+
+  test('Opens location modal', async () => {
+    const screen = renderAfspraakCard(afspraak);
+    const user = userEvent.setup();
+    const button = screen.getByRole('button', {
+      name: /Toon op kaart/i,
+    });
+    await user.click(button);
+    screen.getByText(/Het adres Amstel 1/i);
+    screen.getByText(`Locatie: Stadsloket Centrum, Amstel 1`);
+  });
+
+  test('doesn not render location model, if there is no street in afspraak', async () => {
+    const afspraakWithoutStreet: AfspraakFrontend = {
+      ...afspraak,
+      location: {
+        ...afspraak.location,
+        street: null,
+      },
+    };
+    const screen = renderAfspraakCard(afspraakWithoutStreet);
+    const button = screen.queryByRole('button', {
+      name: /Toon op kaart/i,
+    });
+    expect(button).not.toBeInTheDocument();
+    screen.getByText(`Locatie: Stadsloket Centrum`);
+  });
 });
