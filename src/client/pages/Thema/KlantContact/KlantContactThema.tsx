@@ -64,7 +64,7 @@ export function KlantContactThema() {
         <>
           {!!afspraken.length && (
             <PageContentCell
-              spanWide={9}
+              spanWide={10}
               className={getRedactedClass(null, 'full')}
             >
               <Afspraken afspraken={afspraken} />

@@ -154,16 +154,18 @@ describe('<Dashboard />', () => {
       ).not.toBeInTheDocument();
     });
 
-    it('Displays link to listpage when there are too many afspraken', () => {
+    it('Displays link to listpage and shows only 1 afspraak', () => {
+      const afspraken = new Array(MAX_TABLE_ROWS_ON_THEMA_PAGINA)
+        .fill(afspraak)
+        // caseReference is used as key in react, so it must be unique from other items.
+        .map((a, i) => ({ ...a, caseReference: i }));
+
       const state = {
         KLANT_CONTACT: {
           status: 'OK',
           content: {
             contactmomenten: [],
-            afspraken: new Array(MAX_TABLE_ROWS_ON_THEMA_PAGINA + 1)
-              .fill(afspraak)
-              // caseReference is used as key in react, so it must be unique from other items.
-              .map((a, i) => ({ ...a, caseReference: i })),
+            afspraken,
           },
         },
       } as unknown as AppState;
@@ -172,9 +174,30 @@ describe('<Dashboard />', () => {
 
       expect(
         screen.getAllByRole('heading', { name: 'Varen Afspraak' })
-      ).toHaveLength(MAX_TABLE_ROWS_ON_THEMA_PAGINA);
-      screen.getByRole('link', { name: 'Toon meer' });
+      ).toHaveLength(1);
+      screen.getByRole('link', {
+        name: `Al uw ${afspraken.length} afspraken bij een stadsloket`,
+      });
     });
+  });
+
+  it('Displays message when there are 0 afspraken', () => {
+    const state = {
+      KLANT_CONTACT: {
+        status: 'OK',
+        content: {
+          contactmomenten: [],
+          afspraken: [],
+        },
+      },
+    } as unknown as AppState;
+    const Component = createDashboardComponent(state);
+    const screen = render(<Component />);
+
+    expect(
+      screen.queryByRole('heading', { name: 'Varen Afspraak' })
+    ).not.toBeInTheDocument();
+    screen.getByText('Er zijn geen afspraken bij het stadsloket.');
   });
 
   describe('Notifications', () => {
