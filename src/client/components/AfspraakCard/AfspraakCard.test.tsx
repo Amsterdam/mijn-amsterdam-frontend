@@ -87,7 +87,7 @@ describe('Renders afspraak data', () => {
     screen.getByText(`Locatie: Stadsloket Centrum, Amstel 1`);
   });
 
-  test('doesn not render location model, if there is no street in afspraak', async () => {
+  it('Does not render location model, if there is no street in afspraak', async () => {
     const afspraakWithoutStreet: AfspraakFrontend = {
       ...afspraak,
       location: {
