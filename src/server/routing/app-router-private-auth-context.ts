@@ -90,6 +90,9 @@ export async function privateNetworkAuthContextMiddleware(
   res: Response,
   next: NextFunction
 ) {
+  if (!featureToggle.amsAppUniversalAuthIsActive) {
+    return next();
+  }
   try {
     applyAmsAppSessionTokenAsCookie(req);
 
