@@ -105,10 +105,9 @@ exports[`Renders afspraak data > Regular variant 1`] = `
           <a
             aria-disabled="false"
             class="_MaButtonLink_10c0a4 ams-button ams-button--tertiary"
-            content-disposition="inline"
-            content-type="text/calendar"
             href="data:text/calendar;base64,abc123"
             rel="noopener noreferrer"
+            type="text/calendar"
           >
             Voeg toe aan uw agenda
           </a>

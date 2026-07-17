@@ -74,8 +74,7 @@ export function AfspraakCard({
                   variant="tertiary"
                   href={afspraak.icsLink.to}
                   rel="noopener noreferrer"
-                  content-Type="text/calendar"
-                  content-Disposition="inline"
+                  type="text/calendar"
                 >
                   Voeg toe aan uw agenda
                 </MaButtonLink>
