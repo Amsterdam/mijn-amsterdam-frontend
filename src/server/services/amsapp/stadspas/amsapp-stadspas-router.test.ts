@@ -185,7 +185,7 @@ describe('hli/router-external-consumer', async () => {
       );
     });
 
-    test('Private encrypted administratienummer endpoint - OK', async () => {
+    test('Private encrypted administratienummer endpoint uses session cookie - OK', async () => {
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
         persoon: {
           clientidentificatie: '123-123',
