@@ -44,7 +44,7 @@ export function AfspraakCard({
           </Paragraph>
           {!compact && (
             <>
-              <ActionGroup>
+              <ActionGroup className="ams-mb-l">
                 <ModalAndButton
                   modal={{
                     title: `QR code - Stadsloket ${afspraak.location.name}`,

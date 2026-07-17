@@ -47,7 +47,6 @@ export function Afspraken({
           compact={compact}
           key={afspraak.caseReference}
           afspraak={afspraak}
-          className={i < afspraken.length - 1 ? 'ams-mb-l' : ''}
         />
       ))}
       <LinkToListPage

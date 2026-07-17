@@ -87,7 +87,7 @@ exports[`Renders afspraak data > Regular variant 1`] = `
           Locatie: Stadsloket Centrum, Amstel 1
         </p>
         <div
-          class="ams-action-group"
+          class="ams-action-group ams-mb-l"
           role="group"
         >
           <button
