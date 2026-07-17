@@ -165,7 +165,7 @@ describe('<Dashboard />', () => {
           status: 'OK',
           content: {
             contactmomenten: [],
-            afspraken: afspraken,
+            afspraken,
           },
         },
       } as unknown as AppState;
