@@ -73,7 +73,7 @@ describe('hli/router-external-consumer', async () => {
 
       const resMock = ResponseMock.new();
 
-      await forTesting.sendAdministratienummerResponse(
+      await forTesting.handleAdministratienummerExchange(
         reqMockWithTokenParams,
         resMock
       );
@@ -97,7 +97,7 @@ describe('hli/router-external-consumer', async () => {
         await createAuthenticatedRequestMock<typeof params>(params);
       const resMock = ResponseMock.new();
 
-      await forTesting.sendAdministratienummerResponse(
+      await forTesting.handleAdministratienummerExchange(
         reqMockWithTokenParams,
         resMock
       );
@@ -117,7 +117,7 @@ describe('hli/router-external-consumer', async () => {
       const resMock = ResponseMock.new();
       const reqMock = RequestMock.new().get<typeof params>();
 
-      await forTesting.sendAdministratienummerResponse(reqMock, resMock);
+      await forTesting.handleAdministratienummerExchange(reqMock, resMock);
 
       const renderSecondArg = resMock.render.mock.calls[0][1];
       expect(renderSecondArg.error).toStrictEqual({
@@ -133,7 +133,7 @@ describe('hli/router-external-consumer', async () => {
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(404);
       const resMock = ResponseMock.new();
 
-      await forTesting.sendAdministratienummerResponse(
+      await forTesting.handleAdministratienummerExchange(
         reqMockWithTokenParams,
         resMock
       );
@@ -152,7 +152,7 @@ describe('hli/router-external-consumer', async () => {
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
       const resMock = ResponseMock.new();
 
-      await forTesting.sendAdministratienummerResponse(
+      await forTesting.handleAdministratienummerExchange(
         reqMockWithTokenParams,
         resMock
       );
@@ -170,7 +170,7 @@ describe('hli/router-external-consumer', async () => {
     test('Unauthorized', async () => {
       const resMock = ResponseMock.new();
 
-      await forTesting.sendAdministratienummerResponse(
+      await forTesting.handleAdministratienummerExchange(
         RequestMock.new().get(),
         resMock
       );

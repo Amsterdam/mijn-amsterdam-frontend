@@ -36,10 +36,7 @@ import { captureMessage, captureException } from '../../monitoring.ts';
 import { baseRenderProps } from '../amsapp-service-config.ts';
 import type { ApiError, RenderProps } from '../amsapp-types.ts';
 
-export async function sendAdministratienummerResponse(
-  req: Request,
-  res: Response
-) {
+async function sendAdministratienummerResponse(req: Request, res: Response) {
   await ensureDevelopmentAuthContext(req);
 
   const authProfileAndToken: AuthProfileAndToken | null = getAuth(req);
@@ -265,7 +262,7 @@ export async function sendStadspasBlockRequest(
 }
 
 export const forTesting = {
-  sendAdministratienummerResponse: handleAdministratienummerExchange,
+  handleAdministratienummerExchange,
   sendAdministratienummerEncryptedResponse: sendAdministratienummerResponse,
   sendStadspassenResponse,
   sendDiscountTransactionsResponse,

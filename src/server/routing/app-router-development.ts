@@ -39,23 +39,12 @@ export const authRouterDevelopment = createBFFRouter({ id: 'router-dev' });
 
 function parseDevelopmentSessionCookie(sessionCookieValue: string) {
   try {
-    const parsed = JSON.parse(
+    return JSON.parse(
       Buffer.from(sessionCookieValue, 'base64').toString('ascii')
     ) as AuthProfile;
-
-    if (
-      parsed &&
-      typeof parsed.id === 'string' &&
-      typeof parsed.sid === 'string' &&
-      (parsed.authMethod === 'digid' || parsed.authMethod === 'eherkenning') &&
-      (parsed.profileType === 'private' || parsed.profileType === 'commercial')
-    ) {
-      return parsed;
-    }
   } catch {
     // Ignore parsing errors; this cookie format only exists in local development.
   }
-
   return null;
 }
 
@@ -68,7 +57,7 @@ export async function ensureDevelopmentAuthContext(req: Request) {
     return;
   }
 
-  const sessionCookieValue = req.cookies?.[OIDC_SESSION_COOKIE_NAME] ?? '';
+  const sessionCookieValue = req.cookies?.[OIDC_SESSION_COOKIE_NAME] ?? null;
   if (!sessionCookieValue) {
     return;
   }
