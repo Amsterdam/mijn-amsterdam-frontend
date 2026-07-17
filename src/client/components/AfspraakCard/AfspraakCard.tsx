@@ -38,7 +38,7 @@ export function AfspraakCard({
               {afspraak.displayDateTime}
             </time>
           </Paragraph>
-          <Paragraph className={'ams-mb-s'}>
+          <Paragraph className="ams-mb-s">
             Locatie: Stadsloket {afspraak.location.name}
             {afspraak.location.street && `, ${afspraak.location.street}`}
           </Paragraph>
