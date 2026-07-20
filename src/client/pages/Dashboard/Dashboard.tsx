@@ -69,13 +69,20 @@ export function Dashboard() {
           spanWide={7}
           className={getRedactedClass(null, 'full')}
         >
-          <Afspraken
-            className="ams-mb-l"
-            afspraken={afspraken}
-            compact={true}
-            maxItems={1}
-            isLoading={isKlantcontactLoading}
-          />
+          {isKlantcontactLoading ? (
+            <LoadingContent />
+          ) : (
+            afspraken && (
+              <Afspraken
+                className="ams-mb-l"
+                afspraken={afspraken}
+                compact={true}
+                maxItems={1}
+                isLoading={false}
+              />
+            )
+          )}
+
           <Heading level={2} className="ams-mb-m">
             Recente berichten{' '}
             {total > notifications.length && (
