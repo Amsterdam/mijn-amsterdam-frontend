@@ -28,20 +28,20 @@ export function Afspraken({
 
   if (isLoading)
     return (
-      <AfsprakenBase className={className}>
+      <AfsprakenBase className={className} compact={compact}>
         <LoadingContent />
       </AfsprakenBase>
     );
 
   if (!hasAfspraken)
     return (
-      <AfsprakenBase className={className}>
+      <AfsprakenBase className={className} compact={compact}>
         <Paragraph>Er zijn geen afspraken bij het Stadsloket.</Paragraph>
       </AfsprakenBase>
     );
 
   return (
-    <AfsprakenBase className={className}>
+    <AfsprakenBase className={className} compact={compact}>
       {afspraken.slice(0, maxItems).map((afspraak, i, afspraken) => (
         <AfspraakCard
           compact={compact}
@@ -62,7 +62,7 @@ export function Afspraken({
 type AfsprakenBaseProps = {
   className?: string;
   children: ReactNode;
-  compact?: boolean;
+  compact: boolean;
 };
 
 export function AfsprakenBase({
