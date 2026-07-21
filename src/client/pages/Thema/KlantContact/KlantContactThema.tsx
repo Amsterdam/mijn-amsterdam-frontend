@@ -63,14 +63,12 @@ export function KlantContactThema() {
       errorAlertContent={pageContentErrorAlert}
       pageContentMain={
         <>
-          {!!afspraken.length && (
-            <PageContentCell
-              spanWide={10}
-              className={getRedactedClass(null, 'full')}
-            >
-              <Afspraken afspraken={afspraken} />
-            </PageContentCell>
-          )}
+          <PageContentCell
+            spanWide={10}
+            className={getRedactedClass(null, 'full')}
+          >
+            <Afspraken afspraken={afspraken} isLoading={isLoading} />
+          </PageContentCell>
           {communicatievoorkeuren !== null && (
             <PageContentCell
               spanWide={8}
