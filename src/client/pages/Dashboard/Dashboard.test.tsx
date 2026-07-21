@@ -154,7 +154,7 @@ describe('<Dashboard />', () => {
       ).not.toBeInTheDocument();
     });
 
-    it('Displays link to listpage and shows only 1 afspraak', () => {
+    it('Displays no afspraken component, if there are 0 afspraken', () => {
       const afspraken = new Array(MAX_TABLE_ROWS_ON_THEMA_PAGINA)
         .fill(afspraak)
         // caseReference is used as key in react, so it must be unique from other items.
@@ -165,7 +165,7 @@ describe('<Dashboard />', () => {
           status: 'OK',
           content: {
             contactmomenten: [],
-            afspraken,
+            afspraken: [],
           },
         },
       } as unknown as AppState;
@@ -173,31 +173,9 @@ describe('<Dashboard />', () => {
       const screen = render(<Component />);
 
       expect(
-        screen.getAllByRole('heading', { name: 'Varen Afspraak' })
-      ).toHaveLength(1);
-      screen.getByRole('link', {
-        name: `Al uw ${afspraken.length} afspraken bij een stadsloket`,
-      });
+        screen.queryByRole('heading', { name: 'Afspraken bij een stadsloket' })
+      ).not.toBeInTheDocument();
     });
-  });
-
-  it('Displays message when there are 0 afspraken', () => {
-    const state = {
-      KLANT_CONTACT: {
-        status: 'OK',
-        content: {
-          contactmomenten: [],
-          afspraken: [],
-        },
-      },
-    } as unknown as AppState;
-    const Component = createDashboardComponent(state);
-    const screen = render(<Component />);
-
-    expect(
-      screen.queryByRole('heading', { name: 'Varen Afspraak' })
-    ).not.toBeInTheDocument();
-    screen.getByText('Er zijn geen afspraken bij het stadsloket.');
   });
 
   describe('Notifications', () => {
