@@ -4,7 +4,7 @@
     "page": [
       {
         "image": "https://www.amsterdam.nl/publish/pages/956945/groene-stip.png",
-        "url": "https://www.amsterdam.nl/toerisme-vrije-tijd/stadspas/",
+        "url": "https://stadspas.amsterdam.nl/",
         "sections": [
           "Stadspas",
           "We gaan er weer op uit!",
@@ -95,7 +95,7 @@
       },
       {
         "image": "https://www.amsterdam.nl/publish/varianten/368/logo_voor_social.png",
-        "url": "https://www.amsterdam.nl/toerisme-vrije-tijd/stadspas/sporten-met-stadspas/stadspas-sportwijzer/",
+        "url": "https://stadspas.amsterdam.nl/acties?page=1&filter_categorie=Sport",
         "sections": [
           "Stadspas Sportwijzer",
           "Sportverenigingen in Centrum",
@@ -129,7 +129,7 @@
       },
       {
         "image": "https://www.amsterdam.nl/publish/pages/897130/80px/verschil_tussen_stip_en_ruit.jpg",
-        "url": "https://www.amsterdam.nl/toerisme-vrije-tijd/stadspas/stadspas/",
+        "url": "https://stadspas.amsterdam.nl/acties",
         "sections": [
           "Wat is de Stadspas",
           "De Stadspas",
