@@ -52,7 +52,7 @@ export function Afspraken({
       <LinkToListPage
         count={afspraken.length}
         route={themaConfig.listPageAfspraken.route.path}
-        threshold={maxItems}
+        threshold={compact ? 0 : maxItems}
         label={`Bekijk uw ${afspraken.length} ${afspraken.length === 1 ? 'afspraak' : 'afspraken'}`}
       />
     </AfsprakenBase>
