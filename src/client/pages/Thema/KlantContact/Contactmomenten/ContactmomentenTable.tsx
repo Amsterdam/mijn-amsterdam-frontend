@@ -16,14 +16,18 @@ export function ContactMomenten({
       contentAfterTheTitle={
         <>
           <Paragraph className="ams-mb-m">
-            De lijst met contactmomenten wordt alleen bijgehouden met
-            telefoongesprekken naar telefoonnummer 14 020 of chatberichten met
-            een medewerker, waarbij er voor het beantwoorden van de vraag
-            persoonsgegevens nodig zijn.
+            We bewaren alleen een overzicht van uw contact met ons als:
           </Paragraph>
+          <ul className="ams-mb-m">
+            <li>u een afspraak maakt bij het Stadsloket.</li>
+            <li>u belt naar 14 020.</li>
+            <li>u chat met een medewerker.</li>
+          </ul>
           <Paragraph className="ams-mb-m">
-            Brieven, klachten vanuit het klachtenformulier, WhatsApp- en
-            socialmediaberichten staan niet in deze lijst.
+            Dit doen we alleen als we uw persoonsgegevens nodig hebben om uw
+            vraag te beantwoorden. Brieven, klachten vanuit het
+            klachtenformulier, WhatsApp- en socialmediaberichten staan niet in
+            deze lijst.
           </Paragraph>
           <Paragraph className="ams-mb-m">
             Wilt u een eerder contactmoment doorgeven bij een volgende vraag?
