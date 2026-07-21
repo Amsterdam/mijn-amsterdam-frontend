@@ -1,6 +1,6 @@
 ---
 name: jira-ticket-create
-description: 'Maak een Jira ticket direct aan of lever een kopieer-klaar aanmaakblok als directe integratie niet beschikbaar is. Gebruik wanneer de gebruiker vraagt om direct aanmaken, "ja" zegt op Jira-aanmaak, of na afronding van jira-ticket-grill.'
+description: 'Maak een Jira ticket aan.'
 argument-hint: 'Project key, issue type en tickettekst'
 ---
 
