@@ -53,7 +53,7 @@ export function Afspraken({
         count={afspraken.length}
         route={themaConfig.listPageAfspraken.route.path}
         threshold={maxItems}
-        label={`Al uw ${afspraken.length} afspraken bij een stadsloket`}
+        label={`Bekijk uw ${afspraken.length} ${afspraken.length === 1 ? 'afspraak' : 'afspraken'}`}
       />
     </AfsprakenBase>
   );

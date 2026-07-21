@@ -77,7 +77,7 @@ describe('Afspraken', () => {
     expect(screen.queryByText('Afspraak 3')).not.toBeInTheDocument();
 
     const listLink = screen.getByRole('link', {
-      name: 'Al uw 3 afspraken bij een stadsloket',
+      name: 'Bekijk uw 3 afspraken',
     });
     expect(listLink).toHaveAttribute('href', '/mijn-contact/afspraken');
   });
@@ -102,7 +102,7 @@ describe('Afspraken', () => {
     expect(screen.queryByText('Afspraak 4')).not.toBeInTheDocument();
 
     const listLink = screen.getByRole('link', {
-      name: 'Al uw 4 afspraken bij een stadsloket',
+      name: 'Bekijk uw 4 afspraken',
     });
     expect(listLink).toHaveAttribute('href', '/mijn-contact/afspraken');
   });
