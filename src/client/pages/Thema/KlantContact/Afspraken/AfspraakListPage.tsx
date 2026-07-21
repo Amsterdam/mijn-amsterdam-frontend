@@ -1,6 +1,7 @@
+import { Paragraph } from '@amsterdam/design-system-react';
+
 import { AfspraakCard } from '../../../../components/AfspraakCard/AfspraakCard.tsx';
 import { PageV2, PageContentCell } from '../../../../components/Page/Page.tsx';
-import { Paragraph } from '@amsterdam/design-system-react';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
 import { useKlantcontactData } from '../useKlantcontactData.hook.tsx';
 
