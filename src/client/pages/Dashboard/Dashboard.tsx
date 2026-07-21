@@ -44,6 +44,7 @@ export function Dashboard() {
   const { items: myThemaItems, isLoading: isMyThemasLoading } =
     useActiveThemaMenuItems();
   const { afspraken, isLoading: isKlantcontactLoading } = useKlantcontactData();
+  const hasAfspraken = afspraken.length > 0;
 
   // We only want to run this on mount.
   useEffect(() => {
@@ -69,13 +70,16 @@ export function Dashboard() {
           spanWide={7}
           className={getRedactedClass(null, 'full')}
         >
-          <Afspraken
-            className="ams-mb-l"
-            afspraken={afspraken}
-            compact={true}
-            maxItems={1}
-            isLoading={isKlantcontactLoading}
-          />
+          {isKlantcontactLoading && <LoadingContent />}
+          {!isKlantcontactLoading && hasAfspraken && (
+            <Afspraken
+              className="ams-mb-l"
+              afspraken={afspraken}
+              compact={true}
+              maxItems={1}
+            />
+          )}
+
           <Heading level={2} className="ams-mb-m">
             Recente berichten{' '}
             {total > notifications.length && (

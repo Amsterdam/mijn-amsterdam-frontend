@@ -14,7 +14,7 @@ type AfsprakenProps = {
   afspraken: AfspraakFrontend[];
   className?: string;
   maxItems?: number;
-  isLoading: boolean;
+  isLoading?: boolean;
 };
 
 export function Afspraken({
@@ -22,26 +22,26 @@ export function Afspraken({
   afspraken = [],
   maxItems = MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   className,
-  isLoading,
+  isLoading = false,
 }: AfsprakenProps) {
   const hasAfspraken = afspraken.length > 0;
 
   if (isLoading)
     return (
-      <AfsprakenBase className={className}>
+      <AfsprakenBase className={className} compact={compact}>
         <LoadingContent />
       </AfsprakenBase>
     );
 
   if (!hasAfspraken)
     return (
-      <AfsprakenBase className={className}>
-        <Paragraph>Er zijn geen afspraken bij het stadsloket.</Paragraph>
+      <AfsprakenBase className={className} compact={compact}>
+        <Paragraph>Er zijn geen afspraken bij het Stadsloket.</Paragraph>
       </AfsprakenBase>
     );
 
   return (
-    <AfsprakenBase className={className}>
+    <AfsprakenBase className={className} compact={compact}>
       {afspraken.slice(0, maxItems).map((afspraak, i, afspraken) => (
         <AfspraakCard
           compact={compact}
@@ -52,8 +52,8 @@ export function Afspraken({
       <LinkToListPage
         count={afspraken.length}
         route={themaConfig.listPageAfspraken.route.path}
-        threshold={maxItems}
-        label={`Al uw ${afspraken.length} afspraken bij een stadsloket`}
+        threshold={compact ? 0 : maxItems}
+        label={`Bekijk uw ${afspraken.length} ${afspraken.length === 1 ? 'afspraak' : 'afspraken'}`}
       />
     </AfsprakenBase>
   );
@@ -62,14 +62,26 @@ export function Afspraken({
 type AfsprakenBaseProps = {
   className?: string;
   children: ReactNode;
+  compact: boolean;
 };
 
-export function AfsprakenBase({ className, children }: AfsprakenBaseProps) {
+export function AfsprakenBase({
+  className,
+  children,
+  compact,
+}: AfsprakenBaseProps) {
   return (
     <div className={className}>
       <Heading level={2} className="ams-mb-m">
-        Afspraken bij een stadsloket
+        Afspraken bij een Stadsloket
       </Heading>
+      {!compact && (
+        <Paragraph className="ams-mb-m">
+          Hier ziet u niet al uw afspraken. In het overzicht ziet u alleen de
+          afspraken waarbij we uw persoonsgegevens nodig hebben om uw vraag te
+          beantwoorden.
+        </Paragraph>
+      )}
       {children}
     </div>
   );

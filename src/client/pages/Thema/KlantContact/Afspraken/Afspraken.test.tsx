@@ -42,11 +42,11 @@ describe('Afspraken', () => {
     });
 
     expect(
-      screen.getByRole('heading', { name: 'Afspraken bij een stadsloket' })
+      screen.getByRole('heading', { name: 'Afspraken bij een Stadsloket' })
     ).toBeInTheDocument();
     expect(screen.getByText('Inhoud wordt opgehaald...')).toBeInTheDocument();
     expect(
-      screen.queryByText('Er zijn geen afspraken bij het stadsloket.')
+      screen.queryByText('Er zijn geen afspraken bij het Stadsloket.')
     ).not.toBeInTheDocument();
   });
 
@@ -56,10 +56,10 @@ describe('Afspraken', () => {
     });
 
     expect(
-      screen.getByRole('heading', { name: 'Afspraken bij een stadsloket' })
+      screen.getByRole('heading', { name: 'Afspraken bij een Stadsloket' })
     ).toBeInTheDocument();
     expect(
-      screen.getByText('Er zijn geen afspraken bij het stadsloket.')
+      screen.getByText('Er zijn geen afspraken bij het Stadsloket.')
     ).toBeInTheDocument();
   });
 
@@ -77,7 +77,7 @@ describe('Afspraken', () => {
     expect(screen.queryByText('Afspraak 3')).not.toBeInTheDocument();
 
     const listLink = screen.getByRole('link', {
-      name: 'Al uw 3 afspraken bij een stadsloket',
+      name: 'Bekijk uw 3 afspraken',
     });
     expect(listLink).toHaveAttribute('href', '/mijn-contact/afspraken');
   });
@@ -102,7 +102,7 @@ describe('Afspraken', () => {
     expect(screen.queryByText('Afspraak 4')).not.toBeInTheDocument();
 
     const listLink = screen.getByRole('link', {
-      name: 'Al uw 4 afspraken bij een stadsloket',
+      name: 'Bekijk uw 4 afspraken',
     });
     expect(listLink).toHaveAttribute('href', '/mijn-contact/afspraken');
   });
@@ -118,8 +118,28 @@ describe('Afspraken', () => {
 
     expect(
       screen.queryByRole('link', {
-        name: 'Al uw 2 afspraken bij een stadsloket',
+        name: 'Bekijk uw 2 afspraken',
       })
     ).not.toBeInTheDocument();
+  });
+
+  test('does show link to list page when count is not above threshold, but compactmodus is true', () => {
+    const afspraken = [createAfspraak(1)];
+    const screen = render(
+      <Afspraken
+        afspraken={afspraken}
+        maxItems={1}
+        isLoading={false}
+        compact={true}
+      />,
+      {
+        wrapper: BrowserRouter,
+      }
+    );
+
+    const listLink = screen.getByRole('link', {
+      name: 'Bekijk uw 1 afspraak',
+    });
+    expect(listLink).toHaveAttribute('href', '/mijn-contact/afspraken');
   });
 });

@@ -1,0 +1,121 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ContactMomenten > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+  >
+    <h2
+      class="ams-heading ams-heading--2 ams-mb-s"
+    >
+      Contactmomenten
+    </h2>
+    <p
+      class="ams-paragraph ams-mb-m"
+    >
+      We bewaren alleen een overzicht van uw contact met ons als:
+    </p>
+    <ul
+      class="ams-unordered-list ams-mb-m"
+    >
+      <li
+        class="ams-unordered-list__item"
+      >
+        u een afspraak maakt bij het Stadsloket.
+      </li>
+      <li
+        class="ams-unordered-list__item"
+      >
+        u belt naar 14 020.
+      </li>
+      <li
+        class="ams-unordered-list__item"
+      >
+        u chat met een medewerker.
+      </li>
+    </ul>
+    <p
+      class="ams-paragraph ams-mb-m"
+    >
+      Dit doen we alleen als we uw persoonsgegevens nodig hebben om uw vraag te beantwoorden. Brieven, klachten vanuit het klachtenformulier, WhatsApp- en socialmediaberichten staan niet in deze lijst.
+    </p>
+    <p
+      class="ams-paragraph ams-mb-m"
+    >
+      Wilt u een eerder contactmoment doorgeven bij een volgende vraag? Geef dan het referentienummer door.
+    </p>
+    <div
+      class="ams-table"
+    >
+      <table
+        class="ams-table__table _TableV2_1fc147"
+      >
+        <thead
+          class="ams-table__header"
+        >
+          <tr
+            class="ams-table__row"
+          >
+            <th
+              class="ams-table__header-cell"
+              style="width: 25%;"
+            >
+              Contactvorm
+            </th>
+            <th
+              class="ams-table__header-cell"
+              style="width: 30%;"
+            >
+              Onderwerp
+            </th>
+            <th
+              class="ams-table__header-cell"
+              style="width: 25%;"
+            >
+              Datum
+            </th>
+            <th
+              class="ams-table__header-cell"
+              style="width: 20%;"
+            >
+              Referentienummer
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="ams-table__body"
+        >
+          <tr
+            class="ams-table__row contactmoment-row"
+          >
+            <td
+              class="ams-table__cell"
+            >
+              Telefoon
+            </td>
+            <td
+              class="ams-table__cell"
+            >
+              <a
+                href="/mijn-contact/contactmomenten/CM-12345"
+              >
+                Vraag over verhuizing
+              </a>
+            </td>
+            <td
+              class="ams-table__cell"
+            >
+              1 juli 2026
+            </td>
+            <td
+              class="ams-table__cell"
+            >
+              CM-12345
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</DocumentFragment>
+`;

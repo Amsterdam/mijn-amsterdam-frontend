@@ -88,7 +88,7 @@ describe('KlantContactThema', () => {
     const screen = render(<KlantContactThema />);
 
     expect(
-      screen.getByRole('heading', { name: 'Afspraken bij een stadsloket' })
+      screen.getByRole('heading', { name: 'Afspraken bij een Stadsloket' })
     ).toBeInTheDocument();
     expect(screen.getByText(afspraakTitle)).toBeInTheDocument();
   });

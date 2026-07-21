@@ -26,9 +26,10 @@ export function KlantContactThema() {
   const pageContentTop = (
     <PageContentCell spanWide={8}>
       <Paragraph>
-        Wij registreren uw afspraken bij een stadsloket, uw contactmomenten en
-        uw communicatievoorkeuren. Zo kunnen we u beter van dienst zijn.
-        Hieronder vindt u een overzicht van deze gegevens.
+        Uw afspraken bij een Stadsloket slaan we op. Ook bewaren we gegevens
+        over wanneer u contact met ons hebt gehad en hoe u het liefst met ons
+        communiceert. Zo kunnen we u beter helpen. Hieronder ziet u welke
+        gegevens we van u hebben.
       </Paragraph>
     </PageContentCell>
   );
@@ -62,14 +63,12 @@ export function KlantContactThema() {
       errorAlertContent={pageContentErrorAlert}
       pageContentMain={
         <>
-          {!!afspraken.length && (
-            <PageContentCell
-              spanWide={10}
-              className={getRedactedClass(null, 'full')}
-            >
-              <Afspraken afspraken={afspraken} />
-            </PageContentCell>
-          )}
+          <PageContentCell
+            spanWide={10}
+            className={getRedactedClass(null, 'full')}
+          >
+            <Afspraken afspraken={afspraken} isLoading={isLoading} />
+          </PageContentCell>
           {communicatievoorkeuren !== null && (
             <PageContentCell
               spanWide={8}
