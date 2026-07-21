@@ -131,7 +131,7 @@ describe('<Dashboard />', () => {
       const Component = createDashboardComponent(state);
       const screen = render(<Component />);
 
-      screen.getByRole('heading', { name: 'Afspraken bij een stadsloket' });
+      screen.getByRole('heading', { name: 'Afspraken bij een Stadsloket' });
       screen.getByRole('heading', { name: 'Varen Afspraak' });
     });
 
@@ -173,7 +173,7 @@ describe('<Dashboard />', () => {
       const screen = render(<Component />);
 
       expect(
-        screen.queryByRole('heading', { name: 'Afspraken bij een stadsloket' })
+        screen.queryByRole('heading', { name: 'Afspraken bij een Stadsloket' })
       ).not.toBeInTheDocument();
     });
   });

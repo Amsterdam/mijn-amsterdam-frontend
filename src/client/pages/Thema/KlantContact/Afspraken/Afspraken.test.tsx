@@ -42,11 +42,11 @@ describe('Afspraken', () => {
     });
 
     expect(
-      screen.getByRole('heading', { name: 'Afspraken bij een stadsloket' })
+      screen.getByRole('heading', { name: 'Afspraken bij een Stadsloket' })
     ).toBeInTheDocument();
     expect(screen.getByText('Inhoud wordt opgehaald...')).toBeInTheDocument();
     expect(
-      screen.queryByText('Er zijn geen afspraken bij het stadsloket.')
+      screen.queryByText('Er zijn geen afspraken bij het Stadsloket.')
     ).not.toBeInTheDocument();
   });
 
@@ -56,10 +56,10 @@ describe('Afspraken', () => {
     });
 
     expect(
-      screen.getByRole('heading', { name: 'Afspraken bij een stadsloket' })
+      screen.getByRole('heading', { name: 'Afspraken bij een Stadsloket' })
     ).toBeInTheDocument();
     expect(
-      screen.getByText('Er zijn geen afspraken bij het stadsloket.')
+      screen.getByText('Er zijn geen afspraken bij het Stadsloket.')
     ).toBeInTheDocument();
   });
 
@@ -118,7 +118,7 @@ describe('Afspraken', () => {
 
     expect(
       screen.queryByRole('link', {
-        name: 'Al uw 2 afspraken bij een stadsloket',
+        name: 'Al uw 2 afspraken bij een Stadsloket',
       })
     ).not.toBeInTheDocument();
   });

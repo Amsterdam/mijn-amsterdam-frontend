@@ -36,7 +36,7 @@ export function Afspraken({
   if (!hasAfspraken)
     return (
       <AfsprakenBase className={className}>
-        <Paragraph>Er zijn geen afspraken bij het stadsloket.</Paragraph>
+        <Paragraph>Er zijn geen afspraken bij het Stadsloket.</Paragraph>
       </AfsprakenBase>
     );
 
@@ -73,7 +73,7 @@ export function AfsprakenBase({
   return (
     <div className={className}>
       <Heading level={2} className="ams-mb-m">
-        Afspraken bij een stadsloket
+        Afspraken bij een Stadsloket
       </Heading>
       {!compact && (
         <Paragraph className="ams-mb-m">
