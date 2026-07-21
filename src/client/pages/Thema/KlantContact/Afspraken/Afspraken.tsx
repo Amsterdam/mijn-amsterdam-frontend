@@ -14,7 +14,7 @@ type AfsprakenProps = {
   afspraken: AfspraakFrontend[];
   className?: string;
   maxItems?: number;
-  isLoading: boolean;
+  isLoading?: boolean;
 };
 
 export function Afspraken({
@@ -22,7 +22,7 @@ export function Afspraken({
   afspraken = [],
   maxItems = MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   className,
-  isLoading,
+  isLoading = false,
 }: AfsprakenProps) {
   const hasAfspraken = afspraken.length > 0;
 
