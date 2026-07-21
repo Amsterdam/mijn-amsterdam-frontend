@@ -22,7 +22,7 @@ import type {
 import { isError, isLoading } from '../../../../universal/helpers/api.ts';
 import { dateSort } from '../../../../universal/helpers/date.ts';
 import { ErrorAlert } from '../../../components/Alert/Alert.tsx';
-import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import { Datalist, type Row } from '../../../components/Datalist/Datalist.tsx';
 import {
   LoadingContent,
   type BarConfig,
@@ -91,17 +91,22 @@ export function HLIStadspasDetail() {
   const isLoadingStadspas = isLoading(HLI);
   const noContent = !stadspas;
 
-  const NAME = {
+  const NAME: Row = {
     label: 'Naam',
     content: stadspas?.owner.firstname,
   };
 
-  const NUMBER = {
+  const STATUS: Row = {
+    label: 'Status',
+    content: stadspas?.actief ? 'Actief' : 'Geblokkeerd',
+  };
+
+  const NUMBER: Row = {
     label: 'Stadspasnummer',
     content: stadspas?.passNumberComplete,
   };
 
-  const BALANCE = {
+  const BALANCE: Row = {
     label: 'Saldo',
     content: `${stadspas?.balanceFormatted} (Dit is het bedrag dat u nog kunt uitgeven)`,
   };
@@ -138,11 +143,7 @@ export function HLIStadspasDetail() {
         <>
           <PageContentCell>
             <Datalist rows={[NAME]} />
-            <Paragraph className={styles.StadspasNummerInfo}>
-              Hieronder staat het Stadspasnummer van uw{' '}
-              {stadspas.actief ? 'actieve' : 'geblokkeerde'} pas.
-              <br /> Dit pasnummer staat ook op de achterkant van uw pas.
-            </Paragraph>
+            <Datalist rows={[STATUS]} />
             <Datalist rows={[NUMBER]} />
             {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
             {isEnabled('HLI.stadspas.securityCode') &&
