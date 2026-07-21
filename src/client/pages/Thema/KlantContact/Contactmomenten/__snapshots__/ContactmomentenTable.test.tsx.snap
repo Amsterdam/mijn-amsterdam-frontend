@@ -16,15 +16,21 @@ exports[`ContactMomenten > matches snapshot 1`] = `
       We bewaren alleen een overzicht van uw contact met ons als:
     </p>
     <ul
-      class="ams-mb-m"
+      class="ams-unordered-list ams-mb-m"
     >
-      <li>
+      <li
+        class="ams-unordered-list__item"
+      >
         u een afspraak maakt bij het Stadsloket.
       </li>
-      <li>
+      <li
+        class="ams-unordered-list__item"
+      >
         u belt naar 14 020.
       </li>
-      <li>
+      <li
+        class="ams-unordered-list__item"
+      >
         u chat met een medewerker.
       </li>
     </ul>

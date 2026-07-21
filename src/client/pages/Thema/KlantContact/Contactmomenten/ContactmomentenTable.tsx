@@ -1,4 +1,4 @@
-import { Paragraph } from '@amsterdam/design-system-react';
+import { Paragraph, UnorderedList } from '@amsterdam/design-system-react';
 
 import { ThemaPaginaTable } from '../../../../components/Thema/ThemaPaginaTable.tsx';
 import {
@@ -18,11 +18,13 @@ export function ContactMomenten({
           <Paragraph className="ams-mb-m">
             We bewaren alleen een overzicht van uw contact met ons als:
           </Paragraph>
-          <ul className="ams-mb-m">
-            <li>u een afspraak maakt bij het Stadsloket.</li>
-            <li>u belt naar 14 020.</li>
-            <li>u chat met een medewerker.</li>
-          </ul>
+          <UnorderedList className="ams-mb-m">
+            <UnorderedList.Item>
+              u een afspraak maakt bij het Stadsloket.
+            </UnorderedList.Item>
+            <UnorderedList.Item>u belt naar 14 020.</UnorderedList.Item>
+            <UnorderedList.Item>u chat met een medewerker.</UnorderedList.Item>
+          </UnorderedList>
           <Paragraph className="ams-mb-m">
             Dit doen we alleen als we uw persoonsgegevens nodig hebben om uw
             vraag te beantwoorden. Brieven, klachten vanuit het
