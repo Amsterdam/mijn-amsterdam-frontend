@@ -62,14 +62,26 @@ export function Afspraken({
 type AfsprakenBaseProps = {
   className?: string;
   children: ReactNode;
+  compact?: boolean;
 };
 
-export function AfsprakenBase({ className, children }: AfsprakenBaseProps) {
+export function AfsprakenBase({
+  className,
+  children,
+  compact,
+}: AfsprakenBaseProps) {
   return (
     <div className={className}>
       <Heading level={2} className="ams-mb-m">
         Afspraken bij een stadsloket
       </Heading>
+      {!compact && (
+        <Paragraph className="ams-mb-m">
+          Hier ziet u niet al uw afspraken. In het overzicht ziet u alleen de
+          afspraken waarbij we uw persoonsgegevens nodig hebben om uw vraag te
+          beantwoorden.
+        </Paragraph>
+      )}
       {children}
     </div>
   );
