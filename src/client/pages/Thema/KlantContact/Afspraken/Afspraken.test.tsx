@@ -118,7 +118,7 @@ describe('Afspraken', () => {
 
     expect(
       screen.queryByRole('link', {
-        name: 'Al uw 2 afspraken bij een Stadsloket',
+        name: 'Bekijk uw 2 afspraken',
       })
     ).not.toBeInTheDocument();
   });
