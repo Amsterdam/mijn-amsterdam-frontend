@@ -73,7 +73,9 @@ describe('Renders afspraak data', () => {
       name: /Toon QR code/i,
     });
     await user.click(button);
-    screen.getByText(/QR code - Stadsloket Centrum/i);
+    expect(
+      screen.getByText(/QR code - Stadsloket Centrum/i)
+    ).toBeInTheDocument();
   });
 
   it('Opens location modal', async () => {
@@ -83,8 +85,10 @@ describe('Renders afspraak data', () => {
       name: /Toon op kaart/i,
     });
     await user.click(button);
-    screen.getByText(/Het adres Amstel 1/i);
-    screen.getByText(`Locatie: Stadsloket Centrum, Amstel 1`);
+    expect(
+      screen.getByText(/Stadsloket Centrum - Amstel 1/i)
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Het adres Amstel 1/i)).toBeInTheDocument();
   });
 
   it('Does not render location model, if there is no street in afspraak', async () => {
@@ -100,6 +104,6 @@ describe('Renders afspraak data', () => {
       name: /Toon op kaart/i,
     });
     expect(button).not.toBeInTheDocument();
-    screen.getByText(`Locatie: Stadsloket Centrum`);
+    expect(screen.getByText(`Locatie: Stadsloket Centrum`)).toBeInTheDocument();
   });
 });
