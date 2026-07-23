@@ -137,6 +137,8 @@ function transformStadspasResponse(
       passNumberComplete: gpassStadspasResonseData.pasnummer_volledig,
       actief: gpassStadspasResonseData.actief,
       securityCode: securityCode ?? null,
+      categorie: gpassStadspasResonseData.categorie,
+      categorieCode: gpassStadspasResonseData.categorie_code,
     };
 
     return stadspasTransformed;
