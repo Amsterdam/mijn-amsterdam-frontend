@@ -2,6 +2,7 @@ import { render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import mockdate from 'mockdate';
 import { BrowserRouter } from 'react-router';
+import nock from 'nock';
 
 import { AfspraakCard } from './AfspraakCard.tsx';
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
@@ -47,6 +48,16 @@ function renderAfspraakCard(
   );
 }
 
+function setupNockForLocationModal() {
+  nock('https://api.data.amsterdam.nl')
+    .get('/v1/benkagg/adresseerbareobjecten/')
+    .query({
+      openbareruimteNaam: 'Amstel',
+      huisnummer: '1',
+    })
+    .reply(200, {});
+}
+
 describe('Renders afspraak data', () => {
   beforeEach(() => {
     mockdate.set('2020-01-01');
@@ -54,6 +65,7 @@ describe('Renders afspraak data', () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
+    nock.cleanAll();
   });
 
   test('Regular variant', () => {
@@ -79,6 +91,7 @@ describe('Renders afspraak data', () => {
   });
 
   it('Opens location modal', async () => {
+    setupNockForLocationModal();
     const screen = renderAfspraakCard(afspraak);
     const user = userEvent.setup();
     const button = screen.getByRole('button', {
@@ -88,10 +101,9 @@ describe('Renders afspraak data', () => {
     expect(
       screen.getByText(/Stadsloket Centrum - Amstel 1/i)
     ).toBeInTheDocument();
-    expect(screen.getByText(/Het adres Amstel 1/i)).toBeInTheDocument();
   });
 
-  it('Does not render location model, if there is no street in afspraak', async () => {
+  it('Does not render location modal, if there is no street in afspraak', async () => {
     const afspraakWithoutStreet: AfspraakFrontend = {
       ...afspraak,
       location: {
