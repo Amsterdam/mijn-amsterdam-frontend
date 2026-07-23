@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import mockdate from 'mockdate';
-import { BrowserRouter } from 'react-router';
 import nock from 'nock';
+import { BrowserRouter } from 'react-router';
 
 import { AfspraakCard } from './AfspraakCard.tsx';
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
