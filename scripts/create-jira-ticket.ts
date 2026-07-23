@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env -S node --experimental-strip-types
 
 import { existsSync, readFileSync } from 'node:fs';
 
