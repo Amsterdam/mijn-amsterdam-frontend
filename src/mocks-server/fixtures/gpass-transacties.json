@@ -5,7 +5,7 @@
     {
       "id": 1,
       "transactiedatum": "2020-12-05T04:01:01.0000",
-      "bedrag": 17,
+      "bedrag": -17,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -33,7 +33,7 @@
     {
       "id": 2,
       "transactiedatum": "2020-11-05T04:01:01.0000",
-      "bedrag": 10,
+      "bedrag": -10,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -61,7 +61,7 @@
     {
       "id": 3,
       "transactiedatum": "2020-10-05T04:01:01.0000",
-      "bedrag": 1,
+      "bedrag": -1,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -89,7 +89,7 @@
     {
       "id": 4,
       "transactiedatum": "2020-09-05T04:01:01.0000",
-      "bedrag": 16,
+      "bedrag": -16,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -117,7 +117,7 @@
     {
       "id": 5,
       "transactiedatum": "2020-08-05T04:01:01.0000",
-      "bedrag": 17,
+      "bedrag": -17,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -145,7 +145,7 @@
     {
       "id": 6,
       "transactiedatum": "2020-07-05T04:01:01.0000",
-      "bedrag": 19,
+      "bedrag": -19,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -201,7 +201,7 @@
     {
       "id": 7,
       "transactiedatum": "2020-05-05T04:01:01.0000",
-      "bedrag": 11,
+      "bedrag": -11,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -229,7 +229,7 @@
     {
       "id": 8,
       "transactiedatum": "2020-04-05T04:01:01.0000",
-      "bedrag": 7,
+      "bedrag": -7,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -257,7 +257,7 @@
     {
       "id": 9,
       "transactiedatum": "2020-03-05T04:01:01.0000",
-      "bedrag": 7,
+      "bedrag": -7,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -285,7 +285,7 @@
     {
       "id": 10,
       "transactiedatum": "2020-02-05T04:01:01.0000",
-      "bedrag": 13,
+      "bedrag": -13,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -313,7 +313,7 @@
     {
       "id": 11,
       "transactiedatum": "2020-01-05T04:01:01.0000",
-      "bedrag": 19,
+      "bedrag": -19,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -341,7 +341,7 @@
     {
       "id": 12,
       "transactiedatum": "2020-12-05T04:01:01.0000",
-      "bedrag": 9,
+      "bedrag": -9,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -369,7 +369,7 @@
     {
       "id": 13,
       "transactiedatum": "2020-12-05T04:01:01.0000",
-      "bedrag": 10,
+      "bedrag": -10,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -397,7 +397,7 @@
     {
       "id": 14,
       "transactiedatum": "2020-12-05T04:01:01.0000",
-      "bedrag": 10,
+      "bedrag": -10,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -425,7 +425,7 @@
     {
       "id": 15,
       "transactiedatum": "2020-12-05T04:01:01.0000",
-      "bedrag": 8,
+      "bedrag": -8,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -453,7 +453,7 @@
     {
       "id": 16,
       "transactiedatum": "2020-12-05T04:01:01.0000",
-      "bedrag": 8,
+      "bedrag": -8,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -481,7 +481,7 @@
     {
       "id": 17,
       "transactiedatum": "2020-12-05T04:01:01.0000",
-      "bedrag": 2,
+      "bedrag": -2,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -509,7 +509,7 @@
     {
       "id": 18,
       "transactiedatum": "2020-12-05T04:01:01.0000",
-      "bedrag": 15,
+      "bedrag": -15,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -537,7 +537,7 @@
     {
       "id": 19,
       "transactiedatum": "2020-12-05T04:01:01.0000",
-      "bedrag": 6,
+      "bedrag": -6,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -565,7 +565,7 @@
     {
       "id": 20,
       "transactiedatum": "2020-12-05T04:01:01.0000",
-      "bedrag": 6,
+      "bedrag": -6,
       "pashouder": {
         "id": 1,
         "hoofd_pashouder_id": 2
@@ -587,6 +587,34 @@
         "aanbieder": {
           "id": 222222,
           "naam": "Fietsenwinkel - B.V. 19"
+        }
+      }
+    },
+    {
+      "id": 21,
+      "transactiedatum": "2020-12-05T04:01:01.0000",
+      "bedrag": -6,
+      "pashouder": {
+        "id": 1,
+        "hoofd_pashouder_id": 2
+      },
+      "pas": {
+        "id": 2,
+        "pasnummer": 6666666666666,
+        "pasnummer_volledig": "66666666666666",
+        "originele_pas": {
+          "id": 1,
+          "pasnummer": 66666666666666,
+          "pasnummer_volledig": "66666666666666"
+        }
+      },
+      "budget": {
+        "id": 178,
+        "code": "2025_AMSTEG_PC",
+        "naam": "25/26 PC Tegoed",
+        "aanbieder": {
+          "id": 222222,
+          "naam": "PCWinkel - B.V. 19"
         }
       }
     }

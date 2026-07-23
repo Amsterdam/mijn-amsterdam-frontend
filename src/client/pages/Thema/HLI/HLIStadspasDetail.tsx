@@ -67,10 +67,16 @@ const displayPropsTransactiesWithBudget = {
   amountFormatted: displayPropsTransacties.amountFormatted,
 };
 
-const displayPropsBudgets = {
+const displayPropsBudgetsAssigned = {
   title: budgetFieldName,
   dateEndFormatted: 'Geldig t/m',
   budgetAssignedFormatted: 'Bedrag',
+};
+
+const displayPropsBudgetsBalance = {
+  title: budgetFieldName,
+  dateEndFormatted: 'Geldig t/m',
+  budgetBalanceFormatted: 'Resterend bedrag',
 };
 
 const PHONENUMBERS = {
@@ -101,11 +107,6 @@ export function HLIStadspasDetail() {
     content: stadspas?.passNumberComplete,
   };
 
-  const BALANCE = {
-    label: 'Saldo',
-    content: `${stadspas?.balanceFormatted} (Dit is het bedrag dat u nog kunt uitgeven)`,
-  };
-
   const transactionsApi = useBffApi<StadspasBudgetTransaction[]>(
     stadspas?.urlTransactions
   );
@@ -120,6 +121,10 @@ export function HLIStadspasDetail() {
 
   const showMultiBudgetTransactions =
     !!stadspas?.budgets.length && stadspas.budgets.length > 1 && !isPhoneScreen;
+
+  const showBudgetBalanceAmounts = isEnabled(
+    'HLI.stadspas.pcBudgetNormalization'
+  );
 
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
@@ -144,7 +149,6 @@ export function HLIStadspasDetail() {
               <br /> Dit pasnummer staat ook op de achterkant van uw pas.
             </Paragraph>
             <Datalist rows={[NUMBER]} />
-            {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
             {isEnabled('HLI.stadspas.securityCode') &&
               stadspas.securityCode && (
                 <Beveiligingscode
@@ -172,18 +176,27 @@ export function HLIStadspasDetail() {
       )}
       <PageContentCell>
         <Heading size="level-3" level={3} className="ams-mb-m">
-          Gekregen tegoed
+          {showBudgetBalanceAmounts ? 'Tegoeden' : 'Gekregen tegoed'}
         </Heading>
         {isLoadingStadspas && (
           <LoadingContent barConfig={loadingContentBarConfigList} />
         )}
         {!isLoadingStadspas && !!stadspas?.budgets.length && (
           <TableV2
+            contentAfterTheCaption={
+              showBudgetBalanceAmounts
+                ? 'Let op: u kunt het pc-tegoed maar één keer gebruiken. Het geld dat u niet gebruikt, gaat verloren.'
+                : undefined
+            }
             className={styles.Table_budgets}
             items={stadspas.budgets
               .map(addReadMoreLink)
               .toSorted(dateSort('dateEnd', 'asc'))}
-            displayProps={displayPropsBudgets}
+            displayProps={
+              showBudgetBalanceAmounts
+                ? displayPropsBudgetsBalance
+                : displayPropsBudgetsAssigned
+            }
           />
         )}
         {!isLoadingStadspas && !stadspas?.budgets.length && (
