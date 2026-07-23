@@ -7,6 +7,8 @@ import nock from 'nock';
 import { AfspraakCard } from './AfspraakCard.tsx';
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
 
+const address = { street: 'Amstel', houseNumber: 1 };
+
 const afspraak: AfspraakFrontend = {
   subject: 'Varen',
   dateStart: '2020-01-17T17:50:00Z',
@@ -20,7 +22,7 @@ const afspraak: AfspraakFrontend = {
   displayDateTime: 'maandag 01 januari 2025 van 17:50 tot 18:20',
   location: {
     name: 'Centrum',
-    street: 'Amstel 1',
+    street: address.street + ' ' + address.houseNumber,
     postalCode: '1020 HA',
     city: 'Amsterdam',
     countryCode: 'NL',
@@ -52,8 +54,8 @@ function setupNockForLocationModal() {
   nock('https://api.data.amsterdam.nl')
     .get('/v1/benkagg/adresseerbareobjecten/')
     .query({
-      openbareruimteNaam: 'Amstel',
-      huisnummer: '1',
+      openbareruimteNaam: address.street,
+      huisnummer: address.houseNumber,
     })
     .reply(200, {});
 }
