@@ -7,6 +7,7 @@ export type ApiError = {
 export type RenderProps = {
   nonce: string;
   promptOpenApp: boolean;
+  showIdentifier?: boolean;
   urlToImage: string;
   urlToCSS: string;
   error?: ApiError;

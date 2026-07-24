@@ -33,8 +33,42 @@ import {
   mergeWithDynamicTableHeaders,
 } from '../helpers/test-accounts.ts';
 import { countLoggedInVisit } from '../services/admin/admin-visitors.ts';
+import { featureToggle } from '../services/amsapp/auth/amsapp-auth-service-config.ts';
 
 export const authRouterDevelopment = createBFFRouter({ id: 'router-dev' });
+
+function parseDevelopmentSessionCookie(sessionCookieValue: string) {
+  try {
+    return JSON.parse(
+      Buffer.from(sessionCookieValue, 'base64').toString('ascii')
+    ) as AuthProfile;
+  } catch {
+    // Ignore parsing errors; this cookie format only exists in local development.
+  }
+  return null;
+}
+
+export async function ensureDevelopmentAuthContext(req: Request) {
+  if (!featureToggle.amsAppUniversalAuthIsActive) {
+    return;
+  }
+
+  if (getAuth(req)) {
+    return;
+  }
+
+  const sessionCookieValue = req.cookies?.[OIDC_SESSION_COOKIE_NAME] ?? null;
+  if (!sessionCookieValue) {
+    return;
+  }
+
+  const authProfile = parseDevelopmentSessionCookie(sessionCookieValue);
+  if (!authProfile) {
+    return;
+  }
+
+  await createOIDCStub(req, authProfile);
+}
 
 export async function createOIDCStub(
   req: Request,
@@ -94,13 +128,9 @@ function getPredefinedRedirectUrl<
 
 authRouterDevelopment.use(async (req, res, next) => {
   if (hasSessionCookie(req)) {
-    const cookieValue = req.cookies[OIDC_SESSION_COOKIE_NAME];
     try {
-      await createOIDCStub(
-        req,
-        JSON.parse(Buffer.from(cookieValue, 'base64').toString('ascii'))
-      );
-    } catch (error) {
+      await ensureDevelopmentAuthContext(req);
+    } catch (_error) {
       res.clearCookie(OIDC_SESSION_COOKIE_NAME);
       return sendUnauthorized(res);
     }
@@ -141,7 +171,11 @@ authRouterDevelopment.get(
       authMethod === 'digid' ? 'MA_TEST_ACCOUNTS' : 'MA_TEST_ACCOUNTS_EH';
 
     if (!req.query.username) {
-      return sendRenderedTestAccountTable(res, authMethod);
+      return sendRenderedTestAccountTable(
+        res,
+        authMethod,
+        req.query as Record<string, string | undefined>
+      );
     }
 
     const profileId = getValueFromEnvByKey(envKey, req.query.username);
@@ -216,7 +250,8 @@ function transformAccount(account: TestUserAccount): TestUserAccount {
 
 async function sendRenderedTestAccountTable(
   res: Response,
-  authMethod: AuthMethod
+  authMethod: AuthMethod,
+  loginQueryParams: Record<string, string | undefined> = {}
 ) {
   const envKey =
     authMethod === 'digid' ? 'MA_TEST_ACCOUNTS' : 'MA_TEST_ACCOUNTS_EH';
@@ -287,7 +322,8 @@ async function sendRenderedTestAccountTable(
 
   const accountsWithLoginLink = addLoginLinkToUsernameProp(
     testAccountsData,
-    authMethod
+    authMethod,
+    loginQueryParams
   );
 
   const renderProps = {
@@ -299,16 +335,28 @@ async function sendRenderedTestAccountTable(
   return res.render('select-test-account', renderProps);
 }
 
+function filterUndefinedQueryParams(
+  queryParams: Record<string, string | undefined>
+) {
+  return Object.fromEntries(
+    Object.entries(queryParams).filter(([, value]) => typeof value === 'string')
+  );
+}
+
 function addLoginLinkToUsernameProp(
   testAccountData: TestUserData,
-  authMethod: AuthProfile['authMethod']
+  authMethod: AuthProfile['authMethod'],
+  loginQueryParams: Record<string, string | undefined>
 ) {
   const authRoute = `${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}`;
 
   return testAccountData.accounts.map((account) => {
-    const authLoginRoute = generateFullApiUrlBFF(authRoute, [
-      { username: account.username },
-    ]);
+    const queryParams = {
+      ...filterUndefinedQueryParams(loginQueryParams),
+      username: account.username,
+    };
+
+    const authLoginRoute = generateFullApiUrlBFF(authRoute, [queryParams]);
     return {
       ...account,
       username: `<a href="${authLoginRoute}" class="test-account-name">${account.username.replace(/^[a-zA-Z]_/, '')}</a>`,

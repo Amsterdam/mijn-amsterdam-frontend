@@ -10,6 +10,7 @@ import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../../universal/helpers/api.ts';
+import { OIDC_SESSION_COOKIE_NAME } from '../../../auth/auth-config.ts';
 import type { AuthProfile } from '../../../auth/auth-types.ts';
 import * as gpass from '../../hli/stadspas-gpass-service.ts';
 import type { Stadspas } from '../../hli/stadspas-types.ts';
@@ -72,7 +73,7 @@ describe('hli/router-external-consumer', async () => {
 
       const resMock = ResponseMock.new();
 
-      await forTesting.sendAdministratienummerResponse(
+      await forTesting.handleAdministratienummerExchange(
         reqMockWithTokenParams,
         resMock
       );
@@ -96,7 +97,7 @@ describe('hli/router-external-consumer', async () => {
         await createAuthenticatedRequestMock<typeof params>(params);
       const resMock = ResponseMock.new();
 
-      await forTesting.sendAdministratienummerResponse(
+      await forTesting.handleAdministratienummerExchange(
         reqMockWithTokenParams,
         resMock
       );
@@ -116,7 +117,7 @@ describe('hli/router-external-consumer', async () => {
       const resMock = ResponseMock.new();
       const reqMock = RequestMock.new().get<typeof params>();
 
-      await forTesting.sendAdministratienummerResponse(reqMock, resMock);
+      await forTesting.handleAdministratienummerExchange(reqMock, resMock);
 
       const renderSecondArg = resMock.render.mock.calls[0][1];
       expect(renderSecondArg.error).toStrictEqual({
@@ -132,7 +133,7 @@ describe('hli/router-external-consumer', async () => {
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(404);
       const resMock = ResponseMock.new();
 
-      await forTesting.sendAdministratienummerResponse(
+      await forTesting.handleAdministratienummerExchange(
         reqMockWithTokenParams,
         resMock
       );
@@ -151,7 +152,7 @@ describe('hli/router-external-consumer', async () => {
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
       const resMock = ResponseMock.new();
 
-      await forTesting.sendAdministratienummerResponse(
+      await forTesting.handleAdministratienummerExchange(
         reqMockWithTokenParams,
         resMock
       );
@@ -169,7 +170,7 @@ describe('hli/router-external-consumer', async () => {
     test('Unauthorized', async () => {
       const resMock = ResponseMock.new();
 
-      await forTesting.sendAdministratienummerResponse(
+      await forTesting.handleAdministratienummerExchange(
         RequestMock.new().get(),
         resMock
       );
@@ -181,6 +182,47 @@ describe('hli/router-external-consumer', async () => {
       });
       expect(renderSecondArg.appHref).toStrictEqual(
         'amsterdam://stadspas/mislukt?errorMessage=Niet%20ingelogd%20met%20Digid&errorCode=001'
+      );
+    });
+
+    test('Private encrypted administratienummer endpoint uses session cookie - OK', async () => {
+      remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
+        persoon: {
+          clientidentificatie: '123-123',
+        },
+      });
+
+      const reqMock = RequestMock.new().setCookies({
+        [OIDC_SESSION_COOKIE_NAME]: Buffer.from(
+          JSON.stringify(USER_PROFILE)
+        ).toString('base64'),
+      });
+      const req = reqMock.get();
+      const resMock = ResponseMock.new();
+
+      await forTesting.sendAdministratienummerEncryptedResponse(req, resMock);
+
+      expect(resMock.send).toHaveBeenCalledWith({
+        status: 'OK',
+        content: {
+          administratienummerEncrypted: 'test-encrypted-id',
+        },
+      });
+    });
+
+    test('Private encrypted administratienummer endpoint - unauthorized without cookie', async () => {
+      const req = RequestMock.new().get();
+      const resMock = ResponseMock.new();
+
+      await forTesting.sendAdministratienummerEncryptedResponse(req, resMock);
+
+      expect(resMock.status).toHaveBeenCalledWith(400);
+      expect(resMock.send).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: 'ERROR',
+          message: 'Bad request: ApiError 001 - Niet ingelogd met Digid',
+          code: 400,
+        })
       );
     });
   });

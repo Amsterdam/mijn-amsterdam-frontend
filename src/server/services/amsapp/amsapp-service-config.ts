@@ -3,10 +3,12 @@ import { authRoutes } from '../../auth/auth-routes.ts';
 import { MA_FRONTEND_URL } from '../../config/app.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 
 export const nonce = getFromEnv('BFF_AMSAPP_NONCE')!; // This nonce is whitelisted in the CSP config
 export const baseRenderProps = {
   nonce,
+  showIdentifier: !IS_PRODUCTION,
   urlToImage: `${MA_FRONTEND_URL}/img/logo-amsterdam.svg`,
   urlToCSS: `${MA_FRONTEND_URL}/css/amsapp-landing.css`,
   get logoutUrl() {

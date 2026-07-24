@@ -452,7 +452,7 @@ export async function loadServicesSSE(req: Request, res: Response) {
   });
 }
 
-export async function loadServicesAll(req: Request, res: Response) {
+export async function loadServicesAll(req: Request, _res: Response) {
   const authProfileAndToken = getAuth(req);
 
   if (!authProfileAndToken) {
