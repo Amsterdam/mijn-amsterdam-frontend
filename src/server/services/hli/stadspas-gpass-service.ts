@@ -89,7 +89,7 @@ function getNormalizedBudgetBalance(
     return budget.budget_balance;
   }
 
-  const difference = Math.abs(budget.budget_assigned - budget.budget_balance);
+  const difference = budget.budget_assigned - budget.budget_balance;
   const hasExpenses = difference > PC_BUDGET_NORMALIZATION_THRESHOLD;
 
   return hasExpenses ? 0 : budget.budget_balance;
