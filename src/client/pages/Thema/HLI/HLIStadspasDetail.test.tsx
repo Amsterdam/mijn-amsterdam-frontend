@@ -25,6 +25,21 @@ const pasBlockedState = createHLIState({
     createStadspas({ actief: false, passNumber }, { firstname: 'Lou' }),
   ],
 });
+const pasKindTypeState = createHLIState({
+  stadspas: [
+    createStadspas({ categorieCode: 'K', passNumber }, { firstname: 'Noa' }),
+  ],
+});
+
+const pasVolwasseneTypeState = createHLIState({
+  stadspas: [
+    createStadspas({ categorieCode: 'M', passNumber }, { firstname: 'Piet' }),
+  ],
+});
+
+const pasUnknownTypeState = createHLIState({
+  stadspas: [createStadspas({ passNumber }, { firstname: 'Onbekend' })],
+});
 
 const createHLIStadspasComponent = componentCreator({
   component: HLIStadspasDetail,
@@ -50,9 +65,9 @@ describe('With basic request where data returned does not matter', () => {
     const HLIStadspas = createHLIStadspasComponent(activePasState);
     const screen = render(<HLIStadspas />);
 
-    expect(
-      screen.getByText(/Hieronder staat het Stadspasnummer van uw actieve pas./)
-    ).toBeInTheDocument();
+    expect(screen.getByText('Status').nextElementSibling).toHaveTextContent(
+      'Actief'
+    );
 
     expect(
       screen.getByRole('button', { name: 'Blokkeer deze Stadspas' })
@@ -63,17 +78,42 @@ describe('With basic request where data returned does not matter', () => {
     const HLIStadspas = createHLIStadspasComponent(pasBlockedState);
     const screen = render(<HLIStadspas />);
 
-    expect(
-      screen.getByText(
-        /Hieronder staat het Stadspasnummer van uw geblokkeerde pas./
-      )
-    ).toBeInTheDocument();
+    expect(screen.getByText('Status').nextElementSibling).toHaveTextContent(
+      'Geblokkeerd'
+    );
 
     expect(
       screen.getByRole('heading', {
         name: 'Deze pas heeft u geblokkeerd, hoe nu verder?',
       })
     ).toBeInTheDocument();
+  });
+
+  it("displays pas type 'kind'", () => {
+    const HLIStadspas = createHLIStadspasComponent(pasKindTypeState);
+    const screen = render(<HLIStadspas />);
+
+    expect(screen.getByText('Type').nextElementSibling).toHaveTextContent(
+      'Kind'
+    );
+  });
+
+  it("displays pas type 'Volwassene'", () => {
+    const HLIStadspas = createHLIStadspasComponent(pasVolwasseneTypeState);
+    const screen = render(<HLIStadspas />);
+
+    expect(screen.getByText('Type').nextElementSibling).toHaveTextContent(
+      'Volwassene'
+    );
+  });
+
+  it("displays pas type 'Onbekend'", () => {
+    const HLIStadspas = createHLIStadspasComponent(pasUnknownTypeState);
+    const screen = render(<HLIStadspas />);
+
+    expect(screen.getByText('Type').nextElementSibling).toHaveTextContent(
+      'Onbekend'
+    );
   });
 
   test("Appears with all it's buttons", async () => {

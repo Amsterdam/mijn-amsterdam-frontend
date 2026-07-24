@@ -101,13 +101,34 @@ exports[`With basic request where data returned does not matter > Matches snapsh
               Kerub
             </dd>
           </dl>
-          <p
-            class="ams-paragraph _StadspasNummerInfo_d6b013"
+          <dl
+            class="_Datalist_240c86"
           >
-            Hieronder staat het Stadspasnummer van uw actieve pas.
-            <br />
-             Dit pasnummer staat ook op de achterkant van uw pas.
-          </p>
+            <dt
+              class="_Datalist__title_240c86"
+            >
+              Status
+            </dt>
+            <dd
+              class="_Datalist__description_240c86"
+            >
+              Actief
+            </dd>
+          </dl>
+          <dl
+            class="_Datalist_240c86"
+          >
+            <dt
+              class="_Datalist__title_240c86"
+            >
+              Type
+            </dt>
+            <dd
+              class="_Datalist__description_240c86"
+            >
+              Onbekend
+            </dd>
+          </dl>
           <dl
             class="_Datalist_240c86"
           >

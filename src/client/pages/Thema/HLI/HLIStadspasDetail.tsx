@@ -104,25 +104,24 @@ export function HLIStadspasDetail() {
   const isLoadingStadspas = isLoading(HLI);
   const noContent = !stadspas;
 
-  const NAME: Row = {
-    label: 'Naam',
-    content: stadspas?.owner.firstname,
-  };
-
-  const STATUS: Row = {
-    label: 'Status',
-    content: stadspas?.actief ? 'Actief' : 'Geblokkeerd',
-  };
-
-  const CATEGORIE: Row = {
-    label: 'Type',
-    content: mapStadspasCategorieToType(stadspas?.categorieCode),
-  };
-
-  const NUMBER: Row = {
-    label: 'Stadspasnummer',
-    content: stadspas?.passNumberComplete,
-  };
+  const dataListRows: Row[] = [
+    {
+      label: 'Naam',
+      content: stadspas?.owner.firstname,
+    },
+    {
+      label: 'Status',
+      content: stadspas?.actief ? 'Actief' : 'Geblokkeerd',
+    },
+    {
+      label: 'Type',
+      content: mapStadspasCategorieToType(stadspas?.categorieCode),
+    },
+    {
+      label: 'Stadspasnummer',
+      content: stadspas?.passNumberComplete,
+    },
+  ];
 
   const BALANCE: Row = {
     label: 'Saldo',
@@ -160,10 +159,9 @@ export function HLIStadspasDetail() {
       {stadspas ? (
         <>
           <PageContentCell>
-            <Datalist rows={[NAME]} />
-            <Datalist rows={[CATEGORIE]} />
-            <Datalist rows={[STATUS]} />
-            <Datalist rows={[NUMBER]} />
+            {dataListRows.map((row) => (
+              <Datalist key={row.label as string} rows={[row]} />
+            ))}
             {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
             {isEnabled('HLI.stadspas.securityCode') &&
               stadspas.securityCode && (
