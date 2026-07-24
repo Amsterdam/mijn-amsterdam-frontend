@@ -109,6 +109,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
                 >
                   <svg
                     aria-hidden="true"
+                    data-directional="true"
                     focusable="false"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -289,6 +290,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
                 >
                   <svg
                     aria-hidden="true"
+                    data-directional="true"
                     focusable="false"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -470,6 +472,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
                 >
                   <svg
                     aria-hidden="true"
+                    data-directional="true"
                     focusable="false"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
