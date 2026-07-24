@@ -34,6 +34,7 @@ import {
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import { displayAmount } from '../../../universal/helpers/text.ts';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
+import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import {
@@ -55,6 +56,10 @@ const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   administratienummer: null,
 });
 
+// TODO MIJN-13378: When GPASS behavior is adjusted we can remove the normalization logic
+const PC_BUDGET_CODE_PATTERN = /^\d{4}_AMSTEG_PC$/;
+const PC_BUDGET_NORMALIZATION_THRESHOLD = 1;
+
 function getHeaders(administratienummer: string) {
   return {
     Authorization: `AppBearer ${GPASS_API_TOKEN},${administratienummer}`,
@@ -71,16 +76,36 @@ function getOwner(pashouder: StadspasHouderSource): StadspasOwner {
   };
 }
 
+// TODO MIJN-13378: When GPASS behavior is adjusted we can remove the normalization logic
+// For PC budgets the budget balance can only be spend at once. If the budget balance is less than the assigned budget, it means that the budget has been spent and the balance should be normalized to 0.
+function getNormalizedBudgetBalance(
+  budget: StadspasDetailBudgetSource
+): number {
+  if (!isEnabled('HLI.stadspas.pcBudgetNormalization')) {
+    return budget.budget_balance;
+  }
+
+  if (!PC_BUDGET_CODE_PATTERN.test(budget.code)) {
+    return budget.budget_balance;
+  }
+
+  const difference = budget.budget_assigned - budget.budget_balance;
+  const hasExpenses = difference > PC_BUDGET_NORMALIZATION_THRESHOLD;
+
+  return hasExpenses ? 0 : budget.budget_balance;
+}
+
 function transformBudget(budget: StadspasDetailBudgetSource) {
   if (typeof budget === 'object' && 'naam' in budget) {
+    const budgetBalance = getNormalizedBudgetBalance(budget);
     const stadspasBudget: StadspasBudget = {
       title: budget.naam,
       description: budget.omschrijving ?? '',
       code: budget.code,
       budgetAssigned: budget.budget_assigned,
       budgetAssignedFormatted: `€${displayAmount(budget.budget_assigned)}`,
-      budgetBalance: budget.budget_balance,
-      budgetBalanceFormatted: `€${displayAmount(budget.budget_balance)}`,
+      budgetBalance,
+      budgetBalanceFormatted: `€${displayAmount(budgetBalance)}`,
       dateEnd: budget.expiry_date,
       dateEndFormatted: defaultDateFormat(budget.expiry_date),
       readMoreLink: getReadMoreLink(budget),
@@ -554,6 +579,7 @@ export async function mutateGpassSetPasIsBlockedState(
 
 export const forTesting = {
   getHeaders,
+  getNormalizedBudgetBalance,
   getOwner,
   isVisiblePass,
   transformBudget,

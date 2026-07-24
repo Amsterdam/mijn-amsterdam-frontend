@@ -51,9 +51,7 @@ function Stadspassen({
             className={styles.Stadspas_owner}
           >{`Stadspas van ${pas.owner.firstname}`}</span>
           {!!pas.balance && (
-            <span className={styles.Stadspas_balance}>
-              Saldo {pas.balanceFormatted}
-            </span>
+            <span className={styles.Stadspas_balance}>heeft tegoed</span>
           )}
         </MaRouterLink>
       ),
