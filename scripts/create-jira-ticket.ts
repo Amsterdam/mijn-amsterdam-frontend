@@ -45,7 +45,6 @@ type AdfDoc = {
 };
 
 const DEFAULT_PROJECT_KEY = 'MIJN';
-const HARDCODED_PARENT_ISSUE_KEY = 'MIJN-124';
 const ALLOWED_ISSUE_TYPES = ['story', 'bug', 'spike'] as const;
 
 function printHelp() {
@@ -499,6 +498,7 @@ async function createIssue(
   options: CliOptions
 ) {
   const projectKey = input.projectKey ?? DEFAULT_PROJECT_KEY;
+  const parentIssueKey = input.parentIssueKey?.trim();
   const requestedIssueType = normalizeIssueTypeName(input.issueTypeName);
   const issueType = await resolveIssueType(
     config,
@@ -515,8 +515,11 @@ async function createIssue(
     issuetype: { id: issueType.id },
     summary: input.summary,
     description: markdownToAdf(input.description),
-    parent: { key: HARDCODED_PARENT_ISSUE_KEY },
   };
+
+  if (parentIssueKey) {
+    fields.parent = { key: parentIssueKey };
+  }
 
   fields[acceptanceCriteriaFieldId] = markdownToAdf(input.acceptanceCriteria);
 
@@ -529,7 +532,7 @@ async function createIssue(
           mode: 'dry-run',
           projectKey,
           issueType: { id: issueType.id, name: issueType.name },
-          parentIssueKey: HARDCODED_PARENT_ISSUE_KEY,
+          ...(parentIssueKey ? { parentIssueKey } : {}),
           payload,
         },
         null,
@@ -584,7 +587,7 @@ async function createIssue(
         issueUrl: `${config.siteUrl}/browse/${created.key}`,
         projectKey,
         issueType: { id: issueType.id, name: issueType.name },
-        parentIssueKey: HARDCODED_PARENT_ISSUE_KEY,
+        ...(parentIssueKey ? { parentIssueKey } : {}),
         acceptanceCriteriaFieldId,
         commentAdded,
       },
