@@ -39,6 +39,8 @@ import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
 
+const PC_BUDGET_CODE_PATTERN = /^\d{4}_AMSTEG_PC$/;
+
 const loadingContentBarConfigDetails: BarConfig = [
   ['10rem', '2rem', '.5rem'],
   ['16rem', '2rem', '3rem'],
@@ -184,8 +186,11 @@ export function HLIStadspasDetail() {
         {!isLoadingStadspas && !!stadspas?.budgets.length && (
           <TableV2
             contentAfterTheCaption={
-              showBudgetBalanceAmounts
-                ? 'Let op: u kunt het pc-tegoed maar één keer gebruiken. Het geld dat u niet gebruikt, gaat verloren.'
+              showBudgetBalanceAmounts &&
+              stadspas.budgets.some((budget) =>
+                PC_BUDGET_CODE_PATTERN.test(budget.code)
+              )
+                ? 'Let op: u kunt het PC tegoed maar één keer gebruiken. Het geld dat u niet gebruikt, gaat verloren.'
                 : undefined
             }
             className={styles.Table_budgets}

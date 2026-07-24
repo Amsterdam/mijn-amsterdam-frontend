@@ -172,6 +172,88 @@ describe('With basic request where data returned does not matter', () => {
     expect(screen.getByText('€132,00')).toBeInTheDocument();
     expect(screen.queryByText('€150,00')).not.toBeInTheDocument();
   });
+
+  test('shows pc budget warning when at least one budget code matches the PC pattern', () => {
+    const Component = createHLIStadspasComponent(
+      createHLIState({
+        stadspas: [
+          createStadspas({
+            actief: true,
+            passNumber,
+            budgets: [
+              {
+                title: '25/26 PC Tegoed',
+                description: '',
+                budgetAssigned: 580,
+                budgetAssignedFormatted: '€580,00',
+                budgetBalance: 0,
+                budgetBalanceFormatted: '€0,00',
+                code: '2025_AMSTEG_PC',
+                dateEnd: '2026-07-31T21:59:59.000Z',
+                dateEndFormatted: '31 juli 2026',
+                readMoreLink: null,
+              },
+              {
+                title: 'Witgoedregeling',
+                description: 'Witgoedregeling',
+                budgetAssigned: 300,
+                budgetAssignedFormatted: '€300,00',
+                budgetBalance: 0,
+                budgetBalanceFormatted: '€0,00',
+                code: 'WITGOEDREGELING',
+                dateEnd: '2025-03-25T21:59:59.000Z',
+                dateEndFormatted: '25 maart 2025',
+                readMoreLink: null,
+              },
+            ],
+          }),
+        ],
+      })
+    );
+
+    const screen = render(<Component />);
+
+    expect(
+      screen.getByText(
+        'Let op: u kunt het PC tegoed maar één keer gebruiken. Het geld dat u niet gebruikt, gaat verloren.'
+      )
+    ).toBeInTheDocument();
+  });
+
+  test('does not show pc budget warning when no budget code matches the PC pattern', () => {
+    const Component = createHLIStadspasComponent(
+      createHLIState({
+        stadspas: [
+          createStadspas({
+            actief: true,
+            passNumber,
+            budgets: [
+              {
+                title: 'Kindtegoed 10-14',
+                description: 'Kindtegoed',
+                budgetAssigned: 150,
+                budgetAssignedFormatted: '€150,00',
+                budgetBalance: 132,
+                budgetBalanceFormatted: '€132,00',
+                code: 'AMSTEG_10-14',
+                dateEnd: '2080-08-31T21:59:59.000Z',
+                dateEndFormatted: '31 augustus 2080',
+                readMoreLink: null,
+              },
+            ],
+          }),
+        ],
+      })
+    );
+
+    const screen = render(<Component />);
+
+    expect(
+      screen.queryByText(
+        'Let op: u kunt het PC tegoed maar één keer gebruiken. Het geld dat u niet gebruikt, gaat verloren.'
+      )
+    ).not.toBeInTheDocument();
+  });
 });
 
 describe('Displayed description of uw uitgaven text', () => {
