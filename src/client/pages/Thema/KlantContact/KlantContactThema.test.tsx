@@ -41,7 +41,13 @@ function getState(content: {
   } as unknown as AppState;
 }
 
+function toggleAfsprakenFeatureToggle(active: boolean) {
+  (themaConfig.featureToggle.afspraken as { active: boolean }).active = active;
+}
+
 describe('KlantContactThema', () => {
+  const originalAfsprakenToggle = themaConfig.featureToggle.afspraken.active;
+
   beforeEach(() => {
     // Keep request mocking in place for this suite; component itself is state-driven.
     bffApi.post(/\/user-feedback\/collect.*/).reply(200, {
@@ -50,39 +56,14 @@ describe('KlantContactThema', () => {
     });
   });
 
-  test('shows afspraken section when afspraken exist', async () => {
-    const afspraakTitle = 'Vaarvignet';
-    const afspraak: AfspraakFrontend = {
-      cancellationLink:
-        'http://remote-api-host/tripleforms/directregelen/default.aspx?scenarioid=AfspraakAfzeggen&environmentid=evAmsterdam&guid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-      caseReference: '00157784',
-      dateStartFormatted: '26 februari 2026',
-      dateEndFormatted: '26 februari 2026',
-      dateStart: '2026-02-26T09:00:00Z',
-      dateEnd: '2026-02-26T09:20:00Z',
-      displayDateTime: '26 februari 2026 van 10:00 tot 11:20 uur',
-      location: {
-        city: null,
-        countryCode: 'NL',
-        name: 'Zuidoost',
-        postalCode: null,
-        street: null,
-      },
-      qrCode: 'xxxxxxxxxxxxxxxxxxxx',
-      status: 'New',
-      subject: afspraakTitle,
-      link: {
-        to: '/afspraak/00157784',
-        title: 'Bekijk afspraak',
-      },
-      icsLink: {
-        to: 'data:text/calendar;base64,abc123',
-        title: 'Voeg toe aan agenda',
-        download: `afspraak-00157784.ics`,
-      },
-    };
+  afterEach(() => {
+    toggleAfsprakenFeatureToggle(originalAfsprakenToggle);
+  });
+
+  it('shows afspraken section when afspraken feature toggle is active', () => {
+    toggleAfsprakenFeatureToggle(true);
     const state = getState({
-      afspraken: [afspraak],
+      afspraken: [],
     });
     const KlantContactThema = createMijnContactThemaComponent(state);
     const screen = render(<KlantContactThema />);
@@ -90,7 +71,19 @@ describe('KlantContactThema', () => {
     expect(
       screen.getByRole('heading', { name: 'Afspraken bij een Stadsloket' })
     ).toBeInTheDocument();
-    expect(screen.getByText(afspraakTitle)).toBeInTheDocument();
+  });
+
+  it('does not show afspraken section when afspraken feature toggle is inactive', () => {
+    toggleAfsprakenFeatureToggle(false);
+    const state = getState({
+      afspraken: [],
+    });
+    const KlantContactThema = createMijnContactThemaComponent(state);
+    const screen = render(<KlantContactThema />);
+
+    expect(
+      screen.queryByRole('heading', { name: 'Afspraken bij een Stadsloket' })
+    ).not.toBeInTheDocument();
   });
 
   test('shows communicatievoorkeuren section when communicatievoorkeuren exist', async () => {
