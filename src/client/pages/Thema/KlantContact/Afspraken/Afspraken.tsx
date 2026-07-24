@@ -5,9 +5,9 @@ import { Heading, Paragraph } from '@amsterdam/design-system-react';
 import type { AfspraakFrontend } from '../../../../../server/services/klantcontact/klantcontact.types.ts';
 import { AfspraakCard } from '../../../../components/AfspraakCard/AfspraakCard.tsx';
 import { LinkToListPage } from '../../../../components/LinkToListPage/LinkToListPage.tsx';
+import { LoadingContent } from '../../../../components/LoadingContent/LoadingContent.tsx';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../../config/app.ts';
 import { themaConfig } from '../KlantContact-thema-config.ts';
-import { LoadingContent } from '../../../../components/LoadingContent/LoadingContent.tsx';
 
 type AfsprakenProps = {
   compact?: boolean;
@@ -42,7 +42,7 @@ export function Afspraken({
 
   return (
     <AfsprakenBase className={className} compact={compact}>
-      {afspraken.slice(0, maxItems).map((afspraak, i, afspraken) => (
+      {afspraken.slice(0, maxItems).map((afspraak) => (
         <AfspraakCard
           compact={compact}
           key={afspraak.caseReference}

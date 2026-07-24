@@ -8,6 +8,7 @@ import {
 } from '@amsterdam/design-system-react';
 import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 import QRCode from 'react-qr-code';
+
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
 import { LocationModal } from '../LocationModal/LocationModal.tsx';
 import { MaButtonLink } from '../MaLink/MaLink.tsx';
@@ -68,7 +69,7 @@ export function AfspraakCard({
                   <LocationModal
                     modalTitle={`Stadsloket ${afspraak.location.name} - ${afspraak.location.street}`}
                     address={afspraak.location.street}
-                    buttonLabel={'Toon op kaart'}
+                    buttonLabel="Toon op kaart"
                   />
                 )}
                 <MaButtonLink
