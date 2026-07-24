@@ -101,6 +101,11 @@ export function HLIStadspasDetail() {
     content: stadspas?.actief ? 'Actief' : 'Geblokkeerd',
   };
 
+  const CATEGORIE: Row = {
+    label: 'Categorie',
+    content: stadspas?.categorie ? stadspas.categorie : 'Onbekend',
+  };
+
   const NUMBER: Row = {
     label: 'Stadspasnummer',
     content: stadspas?.passNumberComplete,
@@ -143,6 +148,7 @@ export function HLIStadspasDetail() {
         <>
           <PageContentCell>
             <Datalist rows={[NAME]} />
+            <Datalist rows={[CATEGORIE]} />
             <Datalist rows={[STATUS]} />
             <Datalist rows={[NUMBER]} />
             {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
