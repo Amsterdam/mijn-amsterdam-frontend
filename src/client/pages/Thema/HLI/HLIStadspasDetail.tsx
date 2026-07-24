@@ -39,6 +39,7 @@ import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
 
+// TODO MIJN-13378: When GPASS behavior is adjusted we can remove the normalization logic
 const PC_BUDGET_CODE_PATTERN = /^\d{4}_AMSTEG_PC$/;
 
 const loadingContentBarConfigDetails: BarConfig = [

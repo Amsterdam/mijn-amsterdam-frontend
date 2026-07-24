@@ -56,6 +56,7 @@ const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   administratienummer: null,
 });
 
+// TODO MIJN-13378: When GPASS behavior is adjusted we can remove the normalization logic
 const PC_BUDGET_CODE_PATTERN = /^\d{4}_AMSTEG_PC$/;
 const PC_BUDGET_NORMALIZATION_THRESHOLD = 1;
 
@@ -75,6 +76,7 @@ function getOwner(pashouder: StadspasHouderSource): StadspasOwner {
   };
 }
 
+// TODO MIJN-13378: When GPASS behavior is adjusted we can remove the normalization logic
 // For PC budgets the budget balance can only be spend at once. If the budget balance is less than the assigned budget, it means that the budget has been spent and the balance should be normalized to 0.
 function getNormalizedBudgetBalance(
   budget: StadspasDetailBudgetSource
