@@ -16,7 +16,7 @@ import {
   transformPBZaakFrontend,
 } from '../../powerbrowser/powerbrowser-service.ts';
 
-// See also: https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/oude-regels-bed-breakfast/
+//Als een B&B voor 1 januari 2019 was aangevraagd. Dan mocht tot 1 juli 2026 verhuurt worden volgens andere regels.
 const DATE_NEW_REGIME_BB_RULES = '2019-01-01';
 
 function transformBBFrontend(zaak: BedAndBreakfastType): BBVergunningFrontend {

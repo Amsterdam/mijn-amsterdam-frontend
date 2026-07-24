@@ -1,0 +1,9 @@
+{
+  "projectKey": "MIJN",
+  "issueTypeName": "Story",
+  "parentIssueKey": "MIJN-124",
+  "summary": "test aanmaken ticket vanuit skill",
+  "description": "# 1. Huidige situatie\n1. Dit is een testinvoer.\n```javascript\nconsole.log('js code example');\n```",
+  "acceptanceCriteria": "1. Ticket wordt aangemaakt in Jira.\n2. Description bevat headings en genummerde lijsten.\n3. Een javascript codeblock wordt gerenderd als code.",
+  "comment": "Gebruiker vroeg om REST aanmaak te testen."
+}
