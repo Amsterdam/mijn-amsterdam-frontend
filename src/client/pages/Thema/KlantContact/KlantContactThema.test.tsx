@@ -41,6 +41,10 @@ function getState(content: {
   } as unknown as AppState;
 }
 
+function toggleAfsprakenFeatureToggle(active: boolean) {
+  (themaConfig.featureToggle.afspraken as { active: boolean }).active = active;
+}
+
 describe('KlantContactThema', () => {
   const originalAfsprakenToggle = themaConfig.featureToggle.afspraken.active;
 
@@ -53,12 +57,11 @@ describe('KlantContactThema', () => {
   });
 
   afterEach(() => {
-    (themaConfig.featureToggle.afspraken as { active: boolean }).active =
-      originalAfsprakenToggle;
+    toggleAfsprakenFeatureToggle(originalAfsprakenToggle);
   });
 
-  it('shows afspraken section when afspraken feature toggle is active', async () => {
-    (themaConfig.featureToggle.afspraken as { active: boolean }).active = true;
+  it('shows afspraken section when afspraken feature toggle is active', () => {
+    toggleAfsprakenFeatureToggle(true);
     const state = getState({
       afspraken: [],
     });
@@ -70,8 +73,8 @@ describe('KlantContactThema', () => {
     ).toBeInTheDocument();
   });
 
-  it('does not show afspraken section when afspraken feature toggle is inactive', async () => {
-    (themaConfig.featureToggle.afspraken as { active: boolean }).active = false;
+  it('does not show afspraken section when afspraken feature toggle is inactive', () => {
+    toggleAfsprakenFeatureToggle(false);
     const state = getState({
       afspraken: [],
     });
