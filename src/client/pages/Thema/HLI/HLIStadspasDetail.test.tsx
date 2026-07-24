@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { generatePath } from 'react-router';
+import { vi } from 'vitest';
 
 import { themaConfig } from './HLI-thema-config.ts';
 import { HLIStadspasDetail } from './HLIStadspasDetail.tsx';
@@ -9,6 +10,7 @@ import { createHLIState } from './test-helpers.ts';
 import { stadspasCreator } from './test-helpers.ts';
 import type { StadspasBudget } from '../../../../server/services/hli/stadspas-types.ts';
 import { bffApi } from '../../../../testing/utils.ts';
+import * as featureToggles from '../../../config/feature-toggles.ts';
 import { componentCreator } from '../../MockApp.tsx';
 
 const createStadspas = stadspasCreator();
@@ -36,6 +38,7 @@ const createHLIStadspasComponent = componentCreator({
 
 describe('With basic request where data returned does not matter', () => {
   beforeEach(() => {
+    vi.restoreAllMocks();
     bffApi.get('/url-transactions').reply(200, { content: [] });
   });
 
@@ -141,7 +144,14 @@ describe('With basic request where data returned does not matter', () => {
     );
   });
 
-  test('shows budget balance amount in gekregen tegoed when toggle is enabled', () => {
+  // This toggle-specific test can be removed when feature toggle HLI.stadspas.pcBudgetNormalization is removed.
+  test('shows heading and budget column for balance when toggle is enabled', () => {
+    vi.spyOn(featureToggles, 'isEnabled').mockImplementation(
+      (featureToggle) => {
+        return featureToggle === 'HLI.stadspas.pcBudgetNormalization';
+      }
+    );
+
     const Component = createHLIStadspasComponent(
       createHLIState({
         stadspas: [
@@ -169,8 +179,61 @@ describe('With basic request where data returned does not matter', () => {
 
     const screen = render(<Component />);
 
-    expect(screen.getByText('€132,00')).toBeInTheDocument();
-    expect(screen.queryByText('€150,00')).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'Tegoeden', level: 3 })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('columnheader', { name: 'Resterend bedrag' })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole('columnheader', { name: 'Bedrag' })
+    ).not.toBeInTheDocument();
+  });
+
+  // This toggle-specific test can be removed when feature toggle HLI.stadspas.pcBudgetNormalization is removed.
+  test('shows heading and budget column for assigned amount when toggle is disabled', () => {
+    vi.spyOn(featureToggles, 'isEnabled').mockImplementation(
+      (featureToggle) => {
+        return featureToggle !== 'HLI.stadspas.pcBudgetNormalization';
+      }
+    );
+
+    const Component = createHLIStadspasComponent(
+      createHLIState({
+        stadspas: [
+          createStadspas({
+            actief: true,
+            passNumber,
+            budgets: [
+              {
+                title: 'Kindtegoed 10-14',
+                description: 'Kindtegoed',
+                budgetAssigned: 150,
+                budgetAssignedFormatted: '€150,00',
+                budgetBalance: 132,
+                budgetBalanceFormatted: '€132,00',
+                code: 'AMSTEG_10-14',
+                dateEnd: '2080-08-31T21:59:59.000Z',
+                dateEndFormatted: '31 augustus 2080',
+                readMoreLink: null,
+              },
+            ],
+          }),
+        ],
+      })
+    );
+
+    const screen = render(<Component />);
+
+    expect(
+      screen.getByRole('heading', { name: 'Gekregen tegoed', level: 3 })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('columnheader', { name: 'Bedrag' })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole('columnheader', { name: 'Resterend bedrag' })
+    ).not.toBeInTheDocument();
   });
 
   test('shows pc budget warning when at least one budget code matches the PC pattern', () => {
