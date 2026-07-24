@@ -15,10 +15,8 @@ build-bff
 .idea
 .history
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*
+!.env.*.template
 
 .eslintcache
 *.flat-cache.json
