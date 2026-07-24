@@ -157,6 +157,8 @@ describe('stadspas services', () => {
         actief: true,
         balance: 0,
         balanceFormatted: '€0,00',
+        categorie: 'Amsterdamse Digitale Stadspas',
+        categorieCode: 'A',
         blockPassURL:
           'http://bff-api-host/api/v1/services/stadspas/block/1x2x3x-%23%23%23%23%23%23%23%23%23%23-4x5x6x',
         budgets: [
