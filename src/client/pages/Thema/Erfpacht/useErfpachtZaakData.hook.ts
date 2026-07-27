@@ -1,5 +1,6 @@
 import { useParams } from 'react-router';
 
+import { addLinkToDossiernummers } from './Erfpacht-helpers.tsx';
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook.tsx';
 import type { ErfpachtZaakDetailFrontend } from '../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
 import { useBffApi } from '../../../hooks/api/useBffApi.ts';
@@ -23,13 +24,12 @@ export function useZaakDetailData() {
   const { data, isLoading, isError } = useBffApi<ErfpachtZaakDetailFrontend>(
     zaakBase?.fetchZaakDetailUrl ?? null
   );
-  const zaak = data?.content ?? null;
+  const zaak = data?.content ? addLinkToDossiernummers(data.content) : null;
 
   return {
     themaId,
     title: zaak?.title ?? 'Wijzigen Erfpachtrecht',
     zaak,
-    dossierLinks: zaakBase?.dossierLinks ?? [],
     isLoading,
     isError,
     isLoadingThemaData,

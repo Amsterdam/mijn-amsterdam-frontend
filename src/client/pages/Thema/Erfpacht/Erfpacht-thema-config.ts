@@ -179,7 +179,7 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
 
   const tableConfig = {
     [listPageParamKind.erfpachtZaken]: {
-      title: 'Lopende wijzigingsaanvragen',
+      title: 'Wijzigingsaanvragen',
       displayProps: displayPropsZaken,
       listPageRoute: generatePath(themaConfig.listPageZaken.route.path, {
         page: null,

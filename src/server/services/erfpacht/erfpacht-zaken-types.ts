@@ -74,16 +74,13 @@ export type ZaakInfoResponseSource = {
 
 export type ZaakStatusSource = {
   datumStatusGezet: string;
-  statustoelichting: string;
+  statustoelichting: ZaakStatusTypeSource;
 };
 
 export type ZaakStatussenResponseSource = {
   zaakStatussen: ZaakStatusSource[];
   zaakResultaat: string;
 };
-
-// TODO: Welke gegevens zijn nodig?
-export type ErfpachtZaakDetailFrontend = ZaakAanvraagDetail & {};
 
 export type ZaakStatusFrontend =
   | 'Ontvangen'
@@ -101,3 +98,9 @@ export type ErfpachtZaakExcerptFrontend = ZaakInfoSource & {
   displayStatus: string;
   dossierLinks: (LinkProps | string)[];
 };
+
+// TODO: Welke gegevens zijn nodig?
+export type ErfpachtZaakDetailFrontend = Prettify<
+  ErfpachtZaakExcerptFrontend &
+    ZaakAanvraagDetail & { resultaat: string | null }
+>;

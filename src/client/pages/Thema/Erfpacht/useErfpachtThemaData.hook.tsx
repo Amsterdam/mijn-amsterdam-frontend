@@ -1,5 +1,4 @@
-import { generatePath } from 'react-router';
-
+import { addLinkToDossiernummers } from './Erfpacht-helpers.tsx';
 import {
   erfpachtFacturenTableConfig,
   getTableConfig,
@@ -7,7 +6,6 @@ import {
   themaConfig,
 } from './Erfpacht-thema-config.ts';
 import { isError, isLoading } from '../../../../universal/helpers/api.ts';
-import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
@@ -27,25 +25,7 @@ export function useErfpachtThemaData() {
 
   const zakenBase = erfpachtData?.zaken ?? null;
   const zaken = addLinkElementToProperty(zakenBase ?? [], 'zaakNummer').map(
-    (zaak) => {
-      return {
-        ...zaak,
-        dossierLinks:
-          zaak?.zaakDossiers?.map((dossierId) => {
-            return (
-              <MaRouterLink
-                maVariant="noUnderline"
-                key={dossierId}
-                href={generatePath(themaConfig.detailPageDossier.route.path, {
-                  dossierId,
-                })}
-              >
-                {dossierId}
-              </MaRouterLink>
-            );
-          }) ?? [],
-      };
-    }
+    addLinkToDossiernummers
   );
 
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);

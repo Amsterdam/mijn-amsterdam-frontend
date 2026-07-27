@@ -117,17 +117,21 @@ export function Steps({ steps, title }: StepsProps) {
         </Heading>
       )}
       <ProgressList headingLevel={3} collapsible={false}>
-        {steps.map((item) => (
-          <Step key={item.id} step={item}>
-            {!!steps.length && (
-              <ProgressList.Substeps>
-                {item.substeps?.map((substep) => (
-                  <Step key={substep.id} step={substep} isSubstep />
-                ))}
-              </ProgressList.Substeps>
-            )}
-          </Step>
-        ))}
+        {steps
+          .filter((step) => step.isVisible !== false)
+          .map((item) => (
+            <Step key={item.id} step={item}>
+              {!!steps.length && (
+                <ProgressList.Substeps>
+                  {item.substeps
+                    ?.filter((step) => step.isVisible !== false)
+                    .map((substep) => (
+                      <Step key={substep.id} step={substep} isSubstep />
+                    ))}
+                </ProgressList.Substeps>
+              )}
+            </Step>
+          ))}
       </ProgressList>
     </section>
   );

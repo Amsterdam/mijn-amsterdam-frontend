@@ -28,7 +28,7 @@ import {
   type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
-import { jsonCopy, sortAlpha } from '../../../universal/helpers/utils.ts';
+import { hash, jsonCopy, sortAlpha } from '../../../universal/helpers/utils.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getFromEnv } from '../../helpers/env.ts';
@@ -150,9 +150,9 @@ export function transformDossierResponse(
   return responseData;
 }
 
-export async function fetchErfpacht(
+async function fetchErfpachter(
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<ErfpachtResponseFrontend | ErfpachtErpachterResponse>> {
+): Promise<ApiResponse<ErfpachtErpachterResponse>> {
   const config = getCustomApiConfig(dataRequestConfig, {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/vernise/api/erfpachter`;
@@ -169,10 +169,18 @@ export async function fetchErfpacht(
     authProfileAndToken
   );
 
+  return erfpachterResponse;
+}
+
+export async function fetchErfpacht(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<ApiResponse<ErfpachtResponseFrontend | ErfpachtErpachterResponse>> {
   // Commerciële gebruikers (EHerkenning) maken gebruik van een eigen portaal (Patroon C)
   // Het is niet nodig om voor deze gebruikers dossiers op te halen, omdat zij deze ook niet in het portaal kunnen inzien.
   const isNotCommercial =
     authProfileAndToken.profile.profileType !== 'commercial';
+
+  const erfpachterResponse = await fetchErfpachter(authProfileAndToken);
 
   if (!!erfpachterResponse.content?.isKnown && isNotCommercial) {
     const dossierInfoRequest = fetchErfpachtDossierInfo(
@@ -278,7 +286,7 @@ function transformErfpachtZakenResponse(
         title: zaakInfo.zaakOmschrijving,
       },
       dossierLinks: zaakInfo.zaakDossiers,
-      displayStatus: `${getStatus(zaakInfo.statusOmschrijving)}: ${zaakInfo.statusOmschrijving}`,
+      displayStatus: getStatus(zaakInfo.statusOmschrijving),
     };
     return zaak;
   });
@@ -287,7 +295,7 @@ function transformErfpachtZakenResponse(
 /**
  * Fetches wijzigingsaanvraag zaken.
  */
-export async function fetchErfpachtZaakInfo(
+async function fetchErfpachtZaakInfo(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<ErfpachtZaakExcerptFrontend[]>> {
   const config = getCustomApiConfig(dataRequestConfig, {
@@ -310,130 +318,168 @@ export async function fetchErfpachtZaakInfo(
   return zaakInfoResponse;
 }
 
-function getStatus(statustekst?: ZaakStatusTypeSource): ZaakStatusFrontend {
+function getStatus(statustekst: ZaakStatusTypeSource): ZaakStatusFrontend {
   switch (statustekst) {
     case 'Aanvraag':
-      return 'Ontvangen';
+    case 'Aanvraag beoordelen':
+    case 'Aanvraag gereed voor behandeling':
+      return 'Aanvraag';
+
     case 'Informatie opgevraagd':
     case 'Informatie aangeleverd':
       return 'Meer informatie nodig';
-    case 'Aanvraag beoordelen':
-    case 'Aanvraag gereed voor behandeling':
+
     case 'Behandeling':
     case 'Indicatie verstuurd':
     case 'Aanbieding':
     case 'Acceptatie ontvangen':
     case 'Besluit verstuurd':
       return 'In behandeling';
+
     case 'Akte gepasseerd':
       return 'Aanpassing akte door de notaris';
+
     case 'Aanvraag afgerond':
       return 'Afgehandeld';
+
     default:
       return 'Onbekend';
   }
 }
 
+type ZaakStatusResponseFrontend = {
+  steps: StatusLineItem<ZaakStatusFrontend, ZaakStatusTypeSource>[];
+  result: string;
+};
+
 function transformErfpachtZaakDetailResponse(
-  zaakStatussenResponseSource: ZaakStatussenResponseSource,
-  useSubsteps = true
-): ErfpachtZaakDetailFrontend {
+  zaakStatussenResponseSource: ZaakStatussenResponseSource
+): ZaakStatusResponseFrontend {
   const stepStatusFixed: ZaakStatusFrontend[] = [
-    'Ontvangen',
-    // 'Aanvraag',
+    'Aanvraag',
     'Meer informatie nodig',
     'In behandeling',
-    'Aanpassing akte door de notaris',
     'Afgehandeld',
   ];
 
-  // const stepsFixed: StatusLineItem<ZaakStatusFrontend, ZaakStatusTypeSource>[] =
-  //   stepStatusFixed
-  //     .map((statusFixed) => {
-  //       const substeps: StatusLineItem<ZaakStatusTypeSource>[] =
-  //         zaakStatussenResponseSource.results
-  //           .filter(
-  //             (statusSource) =>
-  //               getStatus(statusSource._expand?.statustype?.statustekst) ===
-  //               statusFixed
-  //           )
-  //           .map((statusSource) => {
-  //             const substatus =
-  //               statusSource._expand?.statustype?.statustekst ?? 'Onbekend';
-  //             return {
-  //               id: statusSource.uuid,
-  //               status: substatus,
-  //               description: substatus,
-  //               datePublished: statusSource.datumStatusGezet,
-  //               isActive: false,
-  //               isChecked: true,
-  //             };
-  //           });
+  const stepsFixed: StatusLineItem<ZaakStatusFrontend, ZaakStatusTypeSource>[] =
+    stepStatusFixed.map((statusFixed) => {
+      const substeps: StatusLineItem<ZaakStatusFrontend>[] =
+        zaakStatussenResponseSource.zaakStatussen
+          .filter(
+            (statusSource) =>
+              getStatus(statusSource.statustoelichting) === statusFixed
+          )
+          .map((statusSource) => {
+            const status = getStatus(statusSource.statustoelichting);
+            return {
+              id: hash(`${status}-${statusSource.datumStatusGezet}`),
+              status,
+              description: `Uw zaak heeft status "${statusSource.statustoelichting}" gekregen op ${defaultDateFormat(
+                statusSource.datumStatusGezet
+              )}.`,
+              datePublished: statusSource.datumStatusGezet,
+              isActive: false,
+              isChecked: true,
+            };
+          });
+      const hasMatchingSubsteps = !!substeps?.length;
+      const step: StatusLineItem<ZaakStatusFrontend, ZaakStatusTypeSource> = {
+        id: hash(statusFixed),
+        status: statusFixed,
+        datePublished: substeps?.at(-1)?.datePublished ?? '',
+        isActive: false,
+        isChecked: hasMatchingSubsteps,
+        description: '',
+        isVisible: hasMatchingSubsteps,
+      };
 
-  //       if (statusFixed === 'Meer informatie nodig' && substeps.length === 0) {
-  //         return null;
-  //       }
+      return step;
+    });
 
-  //       return {
-  //         id: statusFixed,
-  //         status: statusFixed,
-  //         datePublished: substeps.at(-1)?.datePublished ?? '',
-  //         isActive: false,
-  //         isChecked:
-  //           !!substeps.length && substeps.every((substep) => substep.isChecked),
-  //         substeps: useSubsteps && substeps.length > 1 ? substeps : [],
-  //       };
-  //     })
-  //     .filter((step) => step !== null);
+  const lastCheckedStep = stepsFixed.findLast((step) => step.isChecked);
+  if (lastCheckedStep) {
+    lastCheckedStep.isActive = true;
+  } else {
+    const firstStep = stepsFixed.at(0);
+    if (firstStep) {
+      firstStep.isActive = true;
+    }
+  }
 
-  // const lastStepWithSubsteps = stepsFixed.findLast((step) => step?.isChecked);
-
-  // if (lastStepWithSubsteps) {
-  //   lastStepWithSubsteps.isActive = true;
-  //   const lastSubstep = lastStepWithSubsteps.substeps?.at(-1);
-  //   if (lastSubstep) {
-  //     lastSubstep.isActive = true;
-  //   }
-  // }
-
-  const zaakDetail: ErfpachtZaakDetailFrontend = {
-    title: 'tbd',
-    id: 'tbd',
-    link: {
-      to: generatePath(themaConfig.detailPageZaak.route.path, {
-        uuid: 'tbd',
-      }),
-      title: 'tbd',
-    },
-    steps: zaakStatussenResponseSource as unknown as StatusLineItem<
-      ZaakStatusFrontend,
-      ZaakStatusTypeSource
-    >[],
-    displayStatus: 'to be implemented',
+  return {
+    steps: stepsFixed,
+    result: zaakStatussenResponseSource.zaakResultaat,
   };
+}
 
-  return zaakDetail;
+async function fetchErfpachtZaakStatussen(
+  authProfileAndToken: AuthProfileAndToken,
+  uuid: ErfpachtZaakExcerptFrontend['zaakUuid']
+): Promise<ApiResponse<ZaakStatusResponseFrontend>> {
+  const config = getCustomApiConfig(dataRequestConfig, {
+    formatUrl(requestConfig) {
+      return `${requestConfig.url}/vernise/api/zaak/${uuid}/status`;
+    },
+    transformResponse: transformErfpachtZaakDetailResponse,
+  });
+
+  const zaakStatussenResponse = requestData<ZaakStatusResponseFrontend>(
+    config,
+    authProfileAndToken
+  );
+
+  return zaakStatussenResponse;
 }
 
 export async function fetchErfpachtZaakDetail(
   authProfileAndToken: AuthProfileAndToken,
   uuid: ErfpachtZaakExcerptFrontend['zaakUuid']
 ): Promise<ApiResponse<ErfpachtZaakDetailFrontend>> {
-  const config = getCustomApiConfig(dataRequestConfig, {
-    formatUrl(requestConfig) {
-      return `${requestConfig.url}/vernise/api/zaak/${uuid}/status`;
-    },
-    transformResponse: (
-      zaakStatussenResponseSource: ZaakStatussenResponseSource
-    ) => transformErfpachtZaakDetailResponse(zaakStatussenResponseSource),
-  });
-
-  const zaakInfoResponse = await requestData<ErfpachtZaakDetailFrontend>(
-    config,
-    authProfileAndToken
+  const erfpachtRequest = fetchErfpacht(authProfileAndToken);
+  const zaakStatussenRequest = fetchErfpachtZaakStatussen(
+    authProfileAndToken,
+    uuid
   );
 
-  return zaakInfoResponse;
+  const [zaakStatussenResponse, erfpachtResponse] = await Promise.all([
+    zaakStatussenRequest,
+    erfpachtRequest,
+  ]);
+
+  if (
+    zaakStatussenResponse.status !== 'OK' ||
+    erfpachtResponse.status !== 'OK'
+  ) {
+    return apiErrorResult('Failed to fetch zaak details', null);
+  }
+
+  // We're checking the existence of 'zaken' because the response can be either ErfpachtResponseFrontend or ErfpachtErpachterResponse.
+  const zaakBase =
+    erfpachtResponse.content && 'zaken' in erfpachtResponse.content
+      ? erfpachtResponse.content.zaken.find((zaak) => zaak.zaakUuid === uuid)
+      : null;
+
+  if (!zaakBase) {
+    return apiErrorResult('Zaak not found', null);
+  }
+
+  const resultaat = zaakStatussenResponse.content.result || null;
+  const steps = zaakStatussenResponse.content.steps ?? [];
+
+  const zaakDetail: ErfpachtZaakDetailFrontend = {
+    ...zaakBase,
+    id: zaakBase.zaakUuid,
+    title: zaakBase.zaakOmschrijving,
+    steps,
+    displayStatus:
+      resultaat ??
+      steps.findLast((step) => step.isChecked)?.status ??
+      'Onbekend',
+    resultaat,
+  };
+
+  return apiSuccessResult(zaakDetail);
 }
 
 export const forTesting = {
