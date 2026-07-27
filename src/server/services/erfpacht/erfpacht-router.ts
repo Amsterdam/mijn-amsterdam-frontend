@@ -2,10 +2,10 @@ import type { Request } from 'express';
 
 import { featureToggle, routes } from './erfpacht-service-config.ts';
 import type { ErfpachtDossiersDetailSource } from './erfpacht-types.ts';
-import type { ZaakInfoSource } from './erfpacht-zaken-types.ts';
+import type { ErfpachtZaakExcerptFrontend } from './erfpacht-zaken-types.ts';
 import {
   fetchErfpachtDossiersDetail,
-  fetchZaakDetailWithStatussen,
+  fetchErfpachtZaakDetail,
 } from './erfpacht.ts';
 import {
   createBFFRouter,
@@ -37,15 +37,14 @@ erfpachtRouterProtected.get(
   routes.protected.ERFPACHT_ZAAK_DETAILS,
   async (
     req: Request<{
-      zaakUrl: ZaakInfoSource['zaakUrl'];
-      uuid: ZaakInfoSource['zaakUuid'];
+      zaakUrl: ErfpachtZaakExcerptFrontend['zaakUrl'];
+      uuid: ErfpachtZaakExcerptFrontend['zaakUuid'];
     }>,
     res: ResponseAuthenticated
   ) => {
-    const response = await fetchZaakDetailWithStatussen(
+    const response = await fetchErfpachtZaakDetail(
       res.locals.authProfileAndToken,
-      req.params.uuid,
-      req.params.zaakUrl
+      req.params.uuid
     );
     return sendResponse(res, response);
   }

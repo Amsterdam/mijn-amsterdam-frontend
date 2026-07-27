@@ -6,7 +6,7 @@ import {
 } from './Erfpacht-helpers.tsx';
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook.tsx';
 import type { ErfpachtDossierFrontend } from '../../../../server/services/erfpacht/erfpacht-types.ts';
-import type { ZaakInfoFrontend } from '../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
+import type { ErfpachtZaakExcerptFrontend } from '../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
 import { entries } from '../../../../universal/helpers/utils.ts';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
@@ -38,7 +38,7 @@ export function ErfpachtThema() {
         return null;
       }
       return (
-        <ThemaPaginaTable<ErfpachtDossierFrontend | ZaakInfoFrontend>
+        <ThemaPaginaTable<ErfpachtDossierFrontend | ErfpachtZaakExcerptFrontend>
           key={kind}
           title={title}
           zaken={items}

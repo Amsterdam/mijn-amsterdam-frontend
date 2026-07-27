@@ -6,7 +6,7 @@ import type {
   ErfpachtDossierFrontend,
   ErfpachtResponseFrontend,
 } from '../../../../server/services/erfpacht/erfpacht-types.ts';
-import type { ZaakInfoFrontend } from '../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
+import type { ErfpachtZaakExcerptFrontend } from '../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
 import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { propagateFeatureToggles } from '../../../config/feature-toggles.ts';
@@ -155,7 +155,7 @@ export const erfpachtFacturenTableConfig = getFacturenTableConfig({
 
 type DisplayPropsDossiers = DisplayProps<ErfpachtDossierFrontend>;
 type DisplayPropsZaken = DisplayProps<
-  ZaakInfoFrontend & { dossierLinks: ReactNode[] }
+  ErfpachtZaakExcerptFrontend & { dossierLinks: ReactNode[] }
 >;
 
 export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
