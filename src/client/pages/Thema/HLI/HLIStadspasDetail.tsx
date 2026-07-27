@@ -78,19 +78,6 @@ const PHONENUMBERS = {
   WerkEnInkomen: '020 252 6000',
 } as const;
 
-function mapStadspasCategorieToType(
-  categorieCode?: StadspasFrontend['categorieCode']
-): string {
-  switch (categorieCode) {
-    case 'K':
-      return 'Kind';
-    case 'M':
-      return 'Volwassene';
-    default:
-      return 'Onbekend';
-  }
-}
-
 export function HLIStadspasDetail() {
   const isPhoneScreen = useSmallScreen();
   const appState = useAppStateGetter();
@@ -115,7 +102,7 @@ export function HLIStadspasDetail() {
     },
     {
       label: 'Type',
-      content: mapStadspasCategorieToType(stadspas?.categorieCode),
+      content: stadspas?.type,
     },
     {
       label: 'Stadspasnummer',

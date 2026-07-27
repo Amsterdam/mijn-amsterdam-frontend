@@ -247,92 +247,125 @@ describe('hli/router-external-consumer', async () => {
     });
   });
 
-  describe('Budget transactions endpoint', async () => {
-    test('Happy path without budgetcode filter', async () => {
-      const resMock = ResponseMock.new();
+  test('Returns stadpassen with CategorieCode', async () => {
+    const resMock = ResponseMock.new();
 
-      const fetchStadspasTransactionsSpy = vi
-        .spyOn(stadspas, 'fetchStadspasBudgetTransactions')
-        .mockResolvedValueOnce(apiSuccessResult([]));
-
-      const params = { transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED };
-      const reqMock = RequestMock.new().setParams(params).get<typeof params>();
-
-      await forTesting.sendBudgetTransactionsResponse(reqMock, resMock);
-
-      expect(fetchStadspasTransactionsSpy).toHaveBeenCalledOnce();
-      expect(resMock.send).toHaveBeenCalledOnce();
+    vi.spyOn(
+      gpass,
+      'fetchStadspassenByAdministratienummer'
+    ).mockResolvedValueOnce({
+      status: 'OK',
+      content: {
+        administratienummer: '123456789',
+        stadspassen: [{ categorieCode: 'ABC' } as unknown as Stadspas],
+      },
     });
 
-    test('Happy path with budgetcode filter.', async () => {
-      const resMock = ResponseMock.new();
+    const params = {
+      administratienummerEncrypted: 'ADMINISTRATIENUMMER',
+    };
+    const reqMock = RequestMock.new().setParams(params).get<typeof params>();
 
-      const fetchStadspasTransactionsSpy = vi
-        .spyOn(stadspas, 'fetchStadspasBudgetTransactions')
-        .mockResolvedValueOnce(apiSuccessResult([]));
+    await forTesting.sendStadspassenResponse(reqMock, resMock);
 
-      const params = {
-        transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED,
-      };
-
-      const reqMock = RequestMock.new()
-        .setParams(params)
-        .setQuery({
-          budgetCode: 'GPAS05_19',
-        })
-        .get<typeof params>();
-
-      await forTesting.sendBudgetTransactionsResponse(reqMock, resMock);
-
-      expect(fetchStadspasTransactionsSpy).toHaveBeenCalledOnce();
-      expect(resMock.send).toHaveBeenCalledOnce();
-      expect(resMock.send).toHaveBeenCalledWith({ content: [], status: 'OK' });
+    expect(resMock.send).toHaveBeenCalledOnce();
+    expect(resMock.send).toHaveBeenCalledWith({
+      status: 'OK',
+      content: [
+        {
+          categorieCode: 'ABC',
+          transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED,
+        },
+      ],
     });
   });
+});
 
-  describe('Aanbieding transactions endpoint', async () => {
-    test('Happy path', async () => {
-      const fetchStadspasDiscountTransactionsSpy = vi
-        .spyOn(stadspas, 'fetchStadspasDiscountTransactions')
-        .mockResolvedValueOnce(apiSuccessResult([]));
+describe('Budget transactions endpoint', async () => {
+  test('Happy path without budgetcode filter', async () => {
+    const resMock = ResponseMock.new();
 
-      const params = {
-        transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED,
-      };
+    const fetchStadspasTransactionsSpy = vi
+      .spyOn(stadspas, 'fetchStadspasBudgetTransactions')
+      .mockResolvedValueOnce(apiSuccessResult([]));
 
-      const reqMock = RequestMock.new().setParams(params).get<typeof params>();
-      const resMock = ResponseMock.new();
+    const params = { transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED };
+    const reqMock = RequestMock.new().setParams(params).get<typeof params>();
 
-      await forTesting.sendDiscountTransactionsResponse(reqMock, resMock);
+    await forTesting.sendBudgetTransactionsResponse(reqMock, resMock);
 
-      expect(fetchStadspasDiscountTransactionsSpy).toHaveBeenCalledWith(
-        TRANSACTIONS_KEY_ENCRYPTED
-      );
-
-      expect(resMock.send).toHaveBeenCalledWith({ content: [], status: 'OK' });
-    });
+    expect(fetchStadspasTransactionsSpy).toHaveBeenCalledOnce();
+    expect(resMock.send).toHaveBeenCalledOnce();
   });
 
-  describe('sendStadspasBlockRequest', async () => {
-    const TRANSACTIONS_KEY_ENCRYPTED = 'test-encrypted-id';
+  test('Happy path with budgetcode filter.', async () => {
+    const resMock = ResponseMock.new();
 
-    test('Passes response from sendStadspasBlockRequest through as is.', async () => {
-      const params = {
-        transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED,
-      };
-      const reqMock = RequestMock.new().setParams(params).get<typeof params>();
-      const resMock = ResponseMock.new();
+    const fetchStadspasTransactionsSpy = vi
+      .spyOn(stadspas, 'fetchStadspasBudgetTransactions')
+      .mockResolvedValueOnce(apiSuccessResult([]));
 
-      vi.spyOn(stadspas, 'blockStadspas').mockResolvedValueOnce(
-        apiSuccessResult({ passNumber: 123123, actief: false })
-      );
+    const params = {
+      transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED,
+    };
 
-      await forTesting.sendStadspasBlockRequest(reqMock, resMock);
+    const reqMock = RequestMock.new()
+      .setParams(params)
+      .setQuery({
+        budgetCode: 'GPAS05_19',
+      })
+      .get<typeof params>();
 
-      expect(resMock.send).toHaveBeenCalledWith({
-        status: 'OK',
-        content: { passNumber: 123123, actief: false },
-      });
+    await forTesting.sendBudgetTransactionsResponse(reqMock, resMock);
+
+    expect(fetchStadspasTransactionsSpy).toHaveBeenCalledOnce();
+    expect(resMock.send).toHaveBeenCalledOnce();
+    expect(resMock.send).toHaveBeenCalledWith({ content: [], status: 'OK' });
+  });
+});
+
+describe('Aanbieding transactions endpoint', async () => {
+  test('Happy path', async () => {
+    const fetchStadspasDiscountTransactionsSpy = vi
+      .spyOn(stadspas, 'fetchStadspasDiscountTransactions')
+      .mockResolvedValueOnce(apiSuccessResult([]));
+
+    const params = {
+      transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED,
+    };
+
+    const reqMock = RequestMock.new().setParams(params).get<typeof params>();
+    const resMock = ResponseMock.new();
+
+    await forTesting.sendDiscountTransactionsResponse(reqMock, resMock);
+
+    expect(fetchStadspasDiscountTransactionsSpy).toHaveBeenCalledWith(
+      TRANSACTIONS_KEY_ENCRYPTED
+    );
+
+    expect(resMock.send).toHaveBeenCalledWith({ content: [], status: 'OK' });
+  });
+});
+
+describe('sendStadspasBlockRequest', async () => {
+  const TRANSACTIONS_KEY_ENCRYPTED = 'test-encrypted-id';
+
+  test('Passes response from sendStadspasBlockRequest through as is.', async () => {
+    const params = {
+      transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED,
+    };
+    const reqMock = RequestMock.new().setParams(params).get<typeof params>();
+    const resMock = ResponseMock.new();
+
+    vi.spyOn(stadspas, 'blockStadspas').mockResolvedValueOnce(
+      apiSuccessResult({ passNumber: 123123, actief: false })
+    );
+
+    await forTesting.sendStadspasBlockRequest(reqMock, resMock);
+
+    expect(resMock.send).toHaveBeenCalledWith({
+      status: 'OK',
+      content: { passNumber: 123123, actief: false },
     });
   });
 });

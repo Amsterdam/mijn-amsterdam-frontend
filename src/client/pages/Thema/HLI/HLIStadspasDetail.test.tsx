@@ -27,18 +27,20 @@ const pasBlockedState = createHLIState({
 });
 const pasKindTypeState = createHLIState({
   stadspas: [
-    createStadspas({ categorieCode: 'K', passNumber }, { firstname: 'Noa' }),
+    createStadspas({ type: 'kind', passNumber }, { firstname: 'Noa' }),
   ],
 });
 
 const pasVolwasseneTypeState = createHLIState({
   stadspas: [
-    createStadspas({ categorieCode: 'M', passNumber }, { firstname: 'Piet' }),
+    createStadspas({ type: 'volwassen', passNumber }, { firstname: 'Piet' }),
   ],
 });
 
 const pasUnknownTypeState = createHLIState({
-  stadspas: [createStadspas({ passNumber }, { firstname: 'Onbekend' })],
+  stadspas: [
+    createStadspas({ type: 'onbekend', passNumber }, { firstname: 'Onbekend' }),
+  ],
 });
 
 const createHLIStadspasComponent = componentCreator({
@@ -94,7 +96,7 @@ describe('With basic request where data returned does not matter', () => {
     const screen = render(<HLIStadspas />);
 
     expect(screen.getByText('Type').nextElementSibling).toHaveTextContent(
-      'Kind'
+      'kind'
     );
   });
 
@@ -103,7 +105,7 @@ describe('With basic request where data returned does not matter', () => {
     const screen = render(<HLIStadspas />);
 
     expect(screen.getByText('Type').nextElementSibling).toHaveTextContent(
-      'Volwassene'
+      'volwassen'
     );
   });
 
@@ -112,7 +114,7 @@ describe('With basic request where data returned does not matter', () => {
     const screen = render(<HLIStadspas />);
 
     expect(screen.getByText('Type').nextElementSibling).toHaveTextContent(
-      'Onbekend'
+      'onbekend'
     );
   });
 

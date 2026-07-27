@@ -176,8 +176,7 @@ export interface Stadspas {
   balance: number;
   actief: boolean;
   securityCode: SecurityCode | null;
-  categorie: string;
-  categorieCode: string;
+  type: 'kind' | 'volwassen' | 'onbekend';
 }
 
 export type TransactionKeysEncrypted = string;

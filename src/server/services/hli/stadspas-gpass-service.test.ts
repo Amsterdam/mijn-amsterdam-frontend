@@ -135,8 +135,8 @@ describe('stadspas-gpass-service', () => {
         actief: false,
         balance_update_time: '',
         budgetten_actief: false,
-        categorie: '',
-        categorie_code: '',
+        categorie: 'Kindpas Minima',
+        categorie_code: 'K',
         originele_pas: {
           categorie: '',
           categorie_code: '',
@@ -182,8 +182,6 @@ describe('stadspas-gpass-service', () => {
           infix: 'van',
           initials: 'J.D.',
         },
-        categorie: '',
-        categorieCode: '',
         dateEnd: '2023-12-31',
         dateEndFormatted: '31 december 2023',
         budgets: [
@@ -221,6 +219,7 @@ describe('stadspas-gpass-service', () => {
         passNumber: 12345,
         passNumberComplete: '12345-67890',
         securityCode: '0123456',
+        type: 'kind',
       });
 
       const transformedResponseNoSecurityCode =
@@ -584,8 +583,6 @@ describe('stadspas-gpass-service', () => {
             title: 'Kindtegoed 10-14',
           }),
         ],
-        categorie: 'Amsterdamse Digitale Stadspas',
-        categorieCode: 'A',
         dateEnd: '2025-07-31',
         dateEndFormatted: '31 juli 2025',
         id: '999999',
@@ -598,6 +595,7 @@ describe('stadspas-gpass-service', () => {
         passNumber: 111111111111,
         passNumberComplete: '6666666666666666666',
         securityCode: '012345',
+        type: 'volwassen',
       });
     });
   });
