@@ -5,6 +5,7 @@ import {
   location,
   dateStart,
   dateEnd,
+  DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11,
 } from '../decos/decos-field-transformers.ts';
 import type { DecosZaakTransformer } from '../decos/decos-types.ts';
 
@@ -20,15 +21,23 @@ export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<DecosVakant
       date6: dateStart,
       date7: dateEnd,
     },
-    async afterTransform(vergunning) {
+    async afterTransform(vergunning, zaakSource) {
       /**
        * Vakantieverhuur vergunningen worden na betaling direct verleend en per mail toegekend zonder dat de juiste status in Decos wordt gezet.
        * Later, na controle, wordt mogelijk de vergunning weer ingetrokken.
        */
-      vergunning.processed = true;
-      vergunning.dateDecision = vergunning.dateDecision
-        ? vergunning.dateDecision
-        : vergunning.dateRequest;
+      if (
+        // Only override source data if we know the payment is confirmed and the vergunning is not yet processed.
+        // We do this so we let the user know that the vergunning is granted because the conditions to aquire the vergunning are met and the payment is confirmed.
+        !vergunning.processed &&
+        zaakSource.fields.text11?.toLowerCase() !==
+          DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11
+      ) {
+        vergunning.processed = true;
+        vergunning.dateDecision = vergunning.dateDecision
+          ? vergunning.dateDecision
+          : vergunning.dateRequest;
+      }
 
       if (vergunning.decision?.toLowerCase().includes('ingetrokken')) {
         vergunning.decision = 'Ingetrokken';

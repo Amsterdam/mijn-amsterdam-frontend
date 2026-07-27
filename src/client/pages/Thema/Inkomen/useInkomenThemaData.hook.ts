@@ -99,7 +99,6 @@ export function useInkomenThemaData() {
     listPageParamKind,
     tableConfig,
     breadcrumbs,
-    listPageRoute: themaConfig.listPage.route.path,
     themaConfig,
   };
 }

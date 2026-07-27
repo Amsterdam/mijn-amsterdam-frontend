@@ -131,7 +131,7 @@ describe('<Dashboard />', () => {
       const Component = createDashboardComponent(state);
       const screen = render(<Component />);
 
-      screen.getByRole('heading', { name: 'Afspraken bij een stadsloket' });
+      screen.getByRole('heading', { name: 'Afspraken bij een Stadsloket' });
       screen.getByRole('heading', { name: 'Varen Afspraak' });
     });
 
@@ -154,16 +154,18 @@ describe('<Dashboard />', () => {
       ).not.toBeInTheDocument();
     });
 
-    it('Displays link to listpage when there are too many afspraken', () => {
+    it('Displays no afspraken component, if there are 0 afspraken', () => {
+      const afspraken = new Array(MAX_TABLE_ROWS_ON_THEMA_PAGINA)
+        .fill(afspraak)
+        // caseReference is used as key in react, so it must be unique from other items.
+        .map((a, i) => ({ ...a, caseReference: i }));
+
       const state = {
         KLANT_CONTACT: {
           status: 'OK',
           content: {
             contactmomenten: [],
-            afspraken: new Array(MAX_TABLE_ROWS_ON_THEMA_PAGINA + 1)
-              .fill(afspraak)
-              // caseReference is used as key in react, so it must be unique from other items.
-              .map((a, i) => ({ ...a, caseReference: i })),
+            afspraken: [],
           },
         },
       } as unknown as AppState;
@@ -171,9 +173,8 @@ describe('<Dashboard />', () => {
       const screen = render(<Component />);
 
       expect(
-        screen.getAllByRole('heading', { name: 'Varen Afspraak' })
-      ).toHaveLength(MAX_TABLE_ROWS_ON_THEMA_PAGINA);
-      screen.getByRole('link', { name: 'Toon meer' });
+        screen.queryByRole('heading', { name: 'Afspraken bij een Stadsloket' })
+      ).not.toBeInTheDocument();
     });
   });
 

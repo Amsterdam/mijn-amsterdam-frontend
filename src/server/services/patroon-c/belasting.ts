@@ -7,12 +7,8 @@ import { themaConfig } from '../../../client/pages/Thema/Belastingen/Belastingen
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
-import { getFromEnv } from '../../helpers/env.ts';
+import { getFromEnv, translateValueFromEnv } from '../../helpers/env.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
-
-const translationsJson = process.env.BFF_BELASTINGEN_BSN_TRANSLATIONS
-  ? JSON.parse(process.env.BFF_BELASTINGEN_BSN_TRANSLATIONS)
-  : {};
 
 interface BelastingMessage {
   thema: 'Belastingen';
@@ -33,7 +29,7 @@ interface BelastingenSourceContent {
 }
 
 function getBsnTranslation(bsnOrKvk: string): string {
-  return translationsJson?.[bsnOrKvk] ?? bsnOrKvk;
+  return translateValueFromEnv('BFF_BELASTINGEN_BSN_TRANSLATIONS', bsnOrKvk);
 }
 
 function transformBelastingResponse(

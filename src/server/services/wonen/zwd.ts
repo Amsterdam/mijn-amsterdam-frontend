@@ -2,7 +2,6 @@ import { HttpStatusCode } from 'axios';
 
 import { featureToggle, ZWDApiReqestConfig } from './wonen-service-config.ts';
 import type { VvEDataFrontend, ZwdVveDataSource } from './zwd.types.ts';
-import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import {
   apiErrorResult,
   apiPostponeResult,
@@ -16,7 +15,7 @@ import type {
   DataRequestHeaders,
 } from '../../config/source-api.ts';
 import { camelize } from '../../helpers/camelize.ts';
-import { getFromEnv } from '../../helpers/env.ts';
+import { translateValueFromEnv } from '../../helpers/env.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import {
   isSuccessStatus,
@@ -26,19 +25,7 @@ import type { BAGID, BAGLocation } from '../bag/bag.types.ts';
 import { fetchCommercial, fetchPrivate } from '../bag/my-locations.ts';
 
 export function translateVerblijfObjectId(bagID: BAGID): BAGID {
-  const bagIdTranslations = getFromEnv('BFF_BAG_TRANSLATIONS', false);
-  // IS_PRODUCTION is explicitly set to exclude this code from being used in this environment.
-  if (!bagIdTranslations || IS_PRODUCTION) {
-    return bagID;
-  }
-
-  const translationsMap = new Map(
-    bagIdTranslations.split(',').map((pair) => pair.split('=')) as Iterable<
-      [string, string]
-    >
-  );
-
-  return translationsMap.get(bagID) ?? bagID;
+  return translateValueFromEnv('BFF_BAG_TRANSLATIONS', bagID);
 }
 
 async function fetchZWDAPI<T>(dataRequestConfigSpecific: DataRequestConfig) {

@@ -13,17 +13,15 @@ export function ContactmomentenListPage() {
     breadcrumbs,
   } = useKlantcontactData();
 
+  useHTMLDocumentTitle(themaConfig.listPageContactmomenten.route);
+
   const tableConfig = tableConfigs.contactmomenten;
-  const routeConfig = themaConfig.listPageContactmomenten.route;
-
-  useHTMLDocumentTitle(routeConfig);
-
   return (
     <ListPagePaginated<ContactmomentFrontendFinal>
       items={contactmomenten}
       themaId={themaConfig.id}
       title={`Alle ${tableConfig.title.toLowerCase()}`}
-      appRoute={routeConfig.path}
+      appRoute={tableConfig.listPageRoute}
       breadcrumbs={breadcrumbs}
       displayProps={tableConfig.displayProps}
       isLoading={isLoading}

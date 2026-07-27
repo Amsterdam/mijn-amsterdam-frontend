@@ -10,9 +10,11 @@ import {
 import type { DecosZaakBase } from './decos-types.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
-import type { TestUserData } from '../../auth/auth-development.ts';
-import { getTestAccountData } from '../../auth/auth-development.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import {
+  getTestAccountsBaseFromEnv,
+  type TestUserData,
+} from '../../helpers/test-accounts.ts';
 import type { RequestWithQueryParams } from '../../routing/route-helpers.ts';
 import {
   sendBadRequest,
@@ -108,11 +110,11 @@ export async function fetchZakenByUserIDs(
   const userIDsFromEnv =
     req.query.profileType === 'private'
       ? getUserIds(
-          await getTestAccountData('MA_TEST_ACCOUNTS'),
+          getTestAccountsBaseFromEnv('MA_TEST_ACCOUNTS'),
           req.query.username
         )
       : getUserIds(
-          await getTestAccountData('MA_TEST_ACCOUNTS_EH'),
+          getTestAccountsBaseFromEnv('MA_TEST_ACCOUNTS_EH'),
           req.query.username
         );
 

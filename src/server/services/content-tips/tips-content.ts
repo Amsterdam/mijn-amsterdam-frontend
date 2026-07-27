@@ -1,6 +1,5 @@
 import {
   hasBijstandsuitkering,
-  hasBnBTransitionRight,
   hasBnBVergunning,
   hasOldestKidBornFrom2016,
   hasStadspasGroeneStip,
@@ -80,7 +79,7 @@ export const contentTips: ContentTipSource[] = [
     predicates: [hasValidRecentStadspasRequest],
     link: {
       title: 'Bekijk de aanbiedingen',
-      to: 'https://www.amsterdam.nl/toerisme-vrije-tijd/stadspas/',
+      to: 'https://stadspas.amsterdam.nl/acties',
     },
   },
 
@@ -127,7 +126,7 @@ export const contentTips: ContentTipSource[] = [
       'U ziet deze tip omdat u een Stadspas hebt en u een kind tussen de 2 en 18 hebt.',
     link: {
       title: 'Kies een sportvereniging',
-      to: 'https://www.amsterdam.nl/svjeugd',
+      to: 'https://stadspas.amsterdam.nl/tegoed-en-meer/sportvergoeding-jeugd',
     },
   },
   {
@@ -235,26 +234,7 @@ export const contentTips: ContentTipSource[] = [
       to: 'https://www.amsterdam.nl/vakantieverhuur',
     },
   },
-  {
-    id: 'mijn-34',
-    owner: '',
-    dateActiveStart: null,
-    dateActiveEnd: '2026-01-07',
-    active: true,
-    datePublished: '2021-06-15',
-    title: 'Tip: Overgangsrecht bij Bed and breakfast',
-    themaID: toeristischeVerhuurThemaConfig.id,
-    profileTypes: ['private'],
-    description:
-      'Heeft u uw B&B voor 1 januari 2019 aangevraagd? Dan mag u tot 1 juli 2026 verhuren volgens deze regels.',
-    predicates: [hasBnBTransitionRight],
-    reason:
-      'U ziet deze tip omdat u een B&B vergunning aangevraagd heeft voor 2019',
-    link: {
-      title: 'Lees hier de voorwaarde',
-      to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/oude-regels-bed-breakfast/',
-    },
-  },
+
   {
     id: 'mijn-35',
     owner: '',

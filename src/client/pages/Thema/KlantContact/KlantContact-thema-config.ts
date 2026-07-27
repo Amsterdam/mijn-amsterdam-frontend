@@ -27,7 +27,7 @@ type ContactThema = ThemaConfigBase &
   WithPageConfig<'detailPageContactgegevenInstellen'> &
   WithPageConfig<'listPageAfspraken'>;
 
-const BASE_PATH = '/mijn-contact';
+const BASE_PATH = 'mijn-contact';
 
 export const themaConfig = {
   id: THEMA_ID,
@@ -44,20 +44,20 @@ export const themaConfig = {
   profileTypes: ['private'],
   redactedScope: 'content',
   route: {
-    path: BASE_PATH,
+    path: `/${BASE_PATH}`,
     documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
   },
   listPageContactmomenten: {
     route: {
-      path: `${BASE_PATH}/contactmomenten/:page?`,
+      path: `/${BASE_PATH}/contactmomenten/:page?`,
       documentTitle: `Alle contactmomenten | ${THEMA_TITLE}`,
       trackingUrl: null,
     },
   },
   listPageAfspraken: {
     route: {
-      path: `${BASE_PATH}/afspraken/:page?`,
+      path: `/${BASE_PATH}/afspraken/:page?`,
       documentTitle: `Alle afspraken | ${THEMA_TITLE}`,
       trackingUrl: null,
     },

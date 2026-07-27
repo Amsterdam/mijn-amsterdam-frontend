@@ -1,5 +1,6 @@
 import memoizee from 'memoizee';
 
+import { IS_PRODUCTION } from '../../universal/config/env.ts';
 import { logger } from '../logging.ts';
 import { captureException } from '../services/monitoring.ts';
 
@@ -33,3 +34,41 @@ function getFromEnv_(
 // Prevents spamming the console with duplicate missing env messages
 export const getFromEnv = memoizee(getFromEnv_);
 export const forTesting = { getFromEnv_ };
+
+export function parseValueMapString(envValue?: string): Map<string, string> {
+  if (!envValue) {
+    return new Map();
+  }
+
+  const envValueMap = new Map(
+    envValue
+      .split(',')
+      .filter((pair) => pair.includes('='))
+      .map((pair) => pair.split('='))
+      .filter(([key]) => !!key) as Iterable<[string, string]>
+  );
+
+  return envValueMap;
+}
+
+export function getValueMapFromEnv(envKey: string): Map<string, string> {
+  return parseValueMapString(getFromEnv(envKey, false));
+}
+
+export function getValueFromEnvByKey(
+  envKey: string,
+  valueKey: string
+): string | null {
+  return getValueMapFromEnv(envKey).get(valueKey) ?? null;
+}
+
+export function translateValueFromEnv<K>(envKey: string, valueKey: K): K {
+  // IS_PRODUCTION is explicitly set to exclude this code from being used in this environment.
+  const envValueMap = getValueMapFromEnv(envKey);
+
+  if (IS_PRODUCTION || envValueMap.size === 0) {
+    return valueKey;
+  }
+
+  return (envValueMap.get(valueKey as unknown as string) as K) ?? valueKey;
+}

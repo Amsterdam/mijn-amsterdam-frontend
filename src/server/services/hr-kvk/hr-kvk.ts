@@ -31,7 +31,7 @@ import {
 import { sortByNumber } from '../../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { ONE_HOUR_MS } from '../../config/app.ts';
-import { getFromEnv } from '../../helpers/env.ts';
+import { getFromEnv, translateValueFromEnv } from '../../helpers/env.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import { isAmsterdamAddress } from '../buurt/helpers.ts';
@@ -41,19 +41,7 @@ const TOKEN_VALIDITY_PERIOD = 1 * ONE_HOUR_MS;
 const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;
 
 function translateKVKNummer(kvknummer: KVKNummer): KVKNummer {
-  const translations = getFromEnv('BFF_HR_KVK_KVKNUMMER_TRANSLATIONS', false);
-  // IS_PRODUCTION is explicitly set to exclude this code from being used in this environment.
-  if (!translations || IS_PRODUCTION) {
-    return kvknummer;
-  }
-
-  const translationsMap = new Map(
-    translations.split(',').map((pair) => pair.split('=')) as Iterable<
-      [string, string]
-    >
-  );
-
-  return translationsMap.get(kvknummer) ?? kvknummer;
+  return translateValueFromEnv('BFF_HR_KVK_KVKNUMMER_TRANSLATIONS', kvknummer);
 }
 
 function fetchTokenHeader() {

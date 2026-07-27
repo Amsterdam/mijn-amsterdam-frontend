@@ -20,6 +20,7 @@ import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 import { useAppStateNotifications } from '../../hooks/useNotifications.ts';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
+import { useKlantcontactData } from '../Thema/KlantContact/useKlantcontactData.hook.tsx';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
 import { Afspraken } from '../Thema/KlantContact/Afspraken/Afspraken.tsx';
 
@@ -42,7 +43,8 @@ export function Dashboard() {
 
   const { items: myThemaItems, isLoading: isMyThemasLoading } =
     useActiveThemaMenuItems();
-  const afspraken = appState.KLANT_CONTACT.content?.afspraken ?? [];
+  const { afspraken, isLoading: isKlantcontactLoading } = useKlantcontactData();
+  const hasAfspraken = afspraken.length > 0;
 
   // We only want to run this on mount.
   useEffect(() => {
@@ -68,13 +70,16 @@ export function Dashboard() {
           spanWide={7}
           className={getRedactedClass(null, 'full')}
         >
-          {!!afspraken.length && (
+          {isKlantcontactLoading && <LoadingContent />}
+          {!isKlantcontactLoading && hasAfspraken && (
             <Afspraken
               className="ams-mb-l"
               afspraken={afspraken}
               compact={true}
+              maxItems={1}
             />
           )}
+
           <Heading level={2} className="ams-mb-m">
             Recente berichten{' '}
             {total > notifications.length && (

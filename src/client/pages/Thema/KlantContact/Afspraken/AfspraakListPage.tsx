@@ -1,3 +1,5 @@
+import { Paragraph } from '@amsterdam/design-system-react';
+
 import { AfspraakCard } from '../../../../components/AfspraakCard/AfspraakCard.tsx';
 import { PageV2, PageContentCell } from '../../../../components/Page/Page.tsx';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
@@ -8,9 +10,18 @@ export function AfspraakListPage() {
   useHTMLDocumentTitle(themaConfig.listPageAfspraken.route);
   return (
     <PageV2 heading="Alle afspraken" breadcrumbs={breadcrumbs}>
-      <PageContentCell>
+      <PageContentCell spanWide={10}>
+        <Paragraph className="ams-mb-m">
+          Hier ziet u niet al uw afspraken. In het overzicht ziet u alleen de
+          afspraken waarbij we uw persoonsgegevens nodig hebben om uw vraag te
+          beantwoorden.
+        </Paragraph>
         {afspraken.map((afspraak) => (
-          <AfspraakCard key={afspraak.caseReference} afspraak={afspraak} />
+          <AfspraakCard
+            key={afspraak.caseReference}
+            afspraak={afspraak}
+            className="ams-mb-l"
+          />
         ))}
       </PageContentCell>
     </PageV2>

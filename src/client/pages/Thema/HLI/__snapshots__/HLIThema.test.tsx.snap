@@ -188,7 +188,7 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                       <span
                         class="_Stadspas_balance_b80084"
                       >
-                        Saldo €5,00
+                        heeft tegoed
                       </span>
                     </a>
                   </td>
@@ -219,7 +219,7 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                       <span
                         class="_Stadspas_balance_b80084"
                       >
-                        Saldo €4,00
+                        heeft tegoed
                       </span>
                     </a>
                   </td>

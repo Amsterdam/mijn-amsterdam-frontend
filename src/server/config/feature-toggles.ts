@@ -14,7 +14,8 @@ export const featureToggle = {
   ['KLANT_CONTACT.afspraken']: !IS_PRODUCTION,
   ['KLANT_CONTACT.communicatievoorkeuren']: !IS_PRODUCTION,
   ['KLANT_CONTACT.thema']: !IS_PRODUCTION,
-  ['HLI.stadspas.securityCode']: !IS_PRODUCTION,
+  ['HLI.stadspas.securityCode']: true,
+  ['HLI.stadspas.pcBudgetNormalization']: !IS_PRODUCTION,
   ['WMO.fetchWmo.addMaVoorzieningenApiProps']: !IS_PRODUCTION,
   ['ERFPACHT.service']: !IS_PRODUCTION,
 };

@@ -1,10 +1,9 @@
-import { Paragraph } from '@amsterdam/design-system-react';
+import { Paragraph, UnorderedList } from '@amsterdam/design-system-react';
 
 import { ThemaPaginaTable } from '../../../../components/Thema/ThemaPaginaTable.tsx';
 import {
   type ContactmomentFrontendFinal,
   tableConfigs,
-  themaConfig,
 } from '../KlantContact-thema-config.ts';
 
 export function ContactMomenten({
@@ -17,14 +16,20 @@ export function ContactMomenten({
       contentAfterTheTitle={
         <>
           <Paragraph className="ams-mb-m">
-            De lijst met contactmomenten wordt alleen bijgehouden met
-            telefoongesprekken naar telefoonnummer 14 020 of chatberichten met
-            een medewerker, waarbij er voor het beantwoorden van de vraag
-            persoonsgegevens nodig zijn.
+            We bewaren alleen een overzicht van uw contact met ons als:
           </Paragraph>
+          <UnorderedList className="ams-mb-m">
+            <UnorderedList.Item>
+              u een afspraak maakt bij het Stadsloket.
+            </UnorderedList.Item>
+            <UnorderedList.Item>u belt naar 14 020.</UnorderedList.Item>
+            <UnorderedList.Item>u chat met een medewerker.</UnorderedList.Item>
+          </UnorderedList>
           <Paragraph className="ams-mb-m">
-            Brieven, klachten vanuit het klachtenformulier, WhatsApp- en
-            socialmediaberichten staan niet in deze lijst.
+            Dit doen we alleen als we uw persoonsgegevens nodig hebben om uw
+            vraag te beantwoorden. Brieven, klachten vanuit het
+            klachtenformulier, WhatsApp- en socialmediaberichten staan niet in
+            deze lijst.
           </Paragraph>
           <Paragraph className="ams-mb-m">
             Wilt u een eerder contactmoment doorgeven bij een volgende vraag?
@@ -36,7 +41,7 @@ export function ContactMomenten({
       maxItems={tableConfigs.contactmomenten.maxItems}
       displayProps={tableConfigs.contactmomenten.displayProps}
       listPageLinkTitle="Bekijk alle contactmomenten"
-      listPageRoute={themaConfig.listPageContactmomenten.route.path}
+      listPageRoute={tableConfigs.contactmomenten.listPageRoute}
       title="Contactmomenten"
     />
   );
