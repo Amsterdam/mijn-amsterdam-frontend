@@ -45,7 +45,7 @@ export const routes = {
 } as const;
 
 export const AMSAPP_STADSPAS_DEEP_LINK_BASE = 'amsterdam://stadspas';
-export const DEV_REDIRECT_TIMEOUT_MS = 6000; // In development we want to see the redirect happen and therefore we set a timeout of X seconds before redirecting to the logout route.
+export const DEV_REDIRECT_TIMEOUT_MS = 6000; // In development we want to see the redirect happen and therefore we set a timeout of X milliseconds before redirecting to the logout route.
 
 const apiRequestConfig = {
   url: `${getFromEnv('BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT')}`,

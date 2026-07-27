@@ -1,7 +1,6 @@
 import { differenceInSeconds } from 'date-fns';
 import type { CookieOptions, Request, Response } from 'express';
 import type { AccessToken } from 'express-openid-connect';
-import type { ParsedQs } from 'qs';
 import UID from 'uid-safe';
 
 import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes.ts';
@@ -218,7 +217,7 @@ function transformAccount(account: TestUserAccount): TestUserAccount {
 async function sendRenderedTestAccountTable(
   res: Response,
   authMethod: AuthMethod,
-  queryParams: ParsedQs = {}
+  queryParams: Record<string, string> = {}
 ) {
   const envKey =
     authMethod === 'digid' ? 'MA_TEST_ACCOUNTS' : 'MA_TEST_ACCOUNTS_EH';
@@ -305,7 +304,7 @@ async function sendRenderedTestAccountTable(
 function addLoginLinkToUsernameProp(
   testAccountData: TestUserData,
   authMethod: AuthProfile['authMethod'],
-  queryParams: ParsedQs = {}
+  queryParams: Record<string, string> = {}
 ) {
   const authRoute = `${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}`;
   return testAccountData.accounts.map((account) => {
