@@ -79,7 +79,9 @@ describe('hli/router-external-consumer', async () => {
 
       const renderSecondArg = resMock.render.mock.calls[0][1];
 
-      expect(renderSecondArg.identifier).toStrictEqual('test-encrypted-id');
+      expect(renderSecondArg.administratienummerEncrypted).toStrictEqual(
+        'test-encrypted-id'
+      );
       expect(renderSecondArg.appHref).toStrictEqual(
         'amsterdam://stadspas/gelukt'
       );
