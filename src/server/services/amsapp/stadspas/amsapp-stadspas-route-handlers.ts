@@ -84,7 +84,9 @@ export async function handleAdministratienummerExchange(
           redirectTimeout: IS_DEVELOPMENT ? DEV_REDIRECT_TIMEOUT_MS : 0, // In development we want to see the redirect happen, in production we want to redirect immediately.
           redirectToLogout: true,
           appHref: `${AMSAPP_STADSPAS_DEEP_LINK_BASE}/gelukt`,
-          identifier: !IS_PRODUCTION ? administratienummerEncrypted : '',
+          administratienummerEncrypted: !IS_PRODUCTION
+            ? administratienummerEncrypted
+            : '',
         };
         return res.render('amsapp-open-app', renderProps);
       }
