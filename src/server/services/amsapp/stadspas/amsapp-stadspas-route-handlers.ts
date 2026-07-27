@@ -3,9 +3,13 @@ import type { Request, Response } from 'express';
 import {
   AMSAPP_STADSPAS_DEEP_LINK_BASE,
   apiResponseErrors,
+  DEV_REDIRECT_TIMEOUT_MS,
   getAmsAppRequestConfig,
 } from './amsapp-stadspas-service-config.ts';
-import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
+import {
+  IS_DEVELOPMENT,
+  IS_PRODUCTION,
+} from '../../../../universal/config/env.ts';
 import { apiSuccessResult } from '../../../../universal/helpers/api.ts';
 import { getAuth } from '../../../auth/auth-helpers.ts';
 import type { AuthProfileAndToken } from '../../../auth/auth-types.ts';
@@ -77,7 +81,8 @@ export async function handleAdministratienummerExchange(
       ) {
         const renderProps: RenderProps = {
           ...baseRenderProps,
-          promptOpenApp: false,
+          redirectTimeout: IS_DEVELOPMENT ? DEV_REDIRECT_TIMEOUT_MS : 0, // In development we want to see the redirect happen, in production we want to redirect immediately.
+          redirectToLogout: true,
           appHref: `${AMSAPP_STADSPAS_DEEP_LINK_BASE}/gelukt`,
           identifier: !IS_PRODUCTION ? administratienummerEncrypted : '',
         };
@@ -113,7 +118,8 @@ export async function handleAdministratienummerExchange(
     appHref: `${AMSAPP_STADSPAS_DEEP_LINK_BASE}/mislukt?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
     // If the Digid login failed we don't want the user to be redirected to logout. In this case we can open the app directly.
     // If the error is not related to the Digid login, the user must always be redirected to logout. See the amsapp-open-app.pug for logic on how we handle the redirection to logout vs opening the app directly.
-    promptOpenApp: apiResponseError.code === apiResponseErrors.DIGID_AUTH.code,
+    redirectToLogout:
+      apiResponseError.code !== apiResponseErrors.DIGID_AUTH.code,
   };
 
   return res.render('amsapp-open-app', renderProps);
@@ -121,7 +127,7 @@ export async function handleAdministratienummerExchange(
 export function sendAppLandingResponse(_req: Request, res: Response) {
   const renderProps: RenderProps = {
     ...baseRenderProps,
-    promptOpenApp: true,
+    redirectToLogout: false,
   };
   return res.render('amsapp-open-app', renderProps);
 }

@@ -6,7 +6,8 @@ export type ApiError = {
 };
 export type RenderProps = {
   nonce: string;
-  promptOpenApp: boolean;
+  redirectToLogout: boolean;
+  redirectTimeout?: number;
   urlToImage: string;
   urlToCSS: string;
   error?: ApiError;
