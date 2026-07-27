@@ -25,7 +25,6 @@ import {
   apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
-  getSettledResult,
   type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
@@ -181,20 +180,40 @@ export async function fetchErfpacht(
       authProfileAndToken
     );
     const zaakInfoRequest = fetchErfpachtZaakInfo(authProfileAndToken);
-    const [dossierInfoResponse, zaakInfoResponse] = await Promise.allSettled([
+    const [dossierInfoResponse, zaakInfoResponse] = await Promise.all([
       dossierInfoRequest,
       zaakInfoRequest,
     ]);
-    const dossierInfoResult = getSettledResult(dossierInfoResponse);
-    const zaakInfoResult = getSettledResult(zaakInfoResponse);
 
-    if (dossierInfoResult.status !== 'OK') {
+    if (dossierInfoResponse.status !== 'OK') {
       return apiErrorResult('Failed to fetch dossier info', null);
     }
 
     const responseContent: ErfpachtResponseFrontend = {
-      ...dossierInfoResult.content,
-      zaken: zaakInfoResult.content ?? [],
+      ...dossierInfoResponse.content,
+      zaken: (zaakInfoResponse.content ?? []).map((zaak) => {
+        return {
+          ...zaak,
+          dossierLinks:
+            zaak.zaakDossiers?.map((dossierNummer) => {
+              const dossier =
+                dossierInfoResponse.content?.dossiers.dossiers.find(
+                  (dossier) => dossier.dossierNummer === dossierNummer
+                );
+              if (!dossier) {
+                return dossierNummer;
+              }
+              const dossierId =
+                dossier?.dossierId ?? getDossierNummerUrlParam(dossierNummer);
+              return {
+                to: generatePath(themaConfig.detailPageDossier.route.path, {
+                  dossierId,
+                }),
+                title: dossierNummer,
+              };
+            }) ?? [],
+        };
+      }),
     };
     return apiSuccessResult(
       responseContent,
@@ -258,6 +277,7 @@ function transformErfpachtZakenResponse(
         }),
         title: zaakInfo.zaakOmschrijving,
       },
+      dossierLinks: zaakInfo.zaakDossiers,
       displayStatus: `${getStatus(zaakInfo.statusOmschrijving)}: ${zaakInfo.statusOmschrijving}`,
     };
     return zaak;
