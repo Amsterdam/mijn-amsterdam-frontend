@@ -343,7 +343,7 @@ function getStatus(statustekst: ZaakStatusTypeSource): ZaakStatusFrontend {
       return 'Afgehandeld';
 
     default:
-      return 'Onbekend';
+      return `Onbekend: ${statustekst}`;
   }
 }
 
@@ -383,6 +383,7 @@ function transformErfpachtZaakDetailResponse(
               isChecked: true,
             };
           });
+      const isOptionalStep = statusFixed === 'Meer informatie nodig';
       const hasMatchingSubsteps = !!substeps?.length;
       const step: StatusLineItem<ZaakStatusFrontend, ZaakStatusTypeSource> = {
         id: hash(statusFixed),
@@ -391,7 +392,7 @@ function transformErfpachtZaakDetailResponse(
         isActive: false,
         isChecked: hasMatchingSubsteps,
         description: '',
-        isVisible: hasMatchingSubsteps,
+        isVisible: !isOptionalStep && hasMatchingSubsteps,
       };
 
       return step;

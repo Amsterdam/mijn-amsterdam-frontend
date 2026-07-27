@@ -89,7 +89,8 @@ export type ZaakStatusFrontend =
   | 'In behandeling'
   | 'Aanpassing akte door de notaris'
   | 'Afgehandeld'
-  | 'Onbekend';
+  | 'Onbekend'
+  | `Onbekend: ${string}`;
 
 //
 export type ErfpachtZaakExcerptFrontend = ZaakInfoSource & {
