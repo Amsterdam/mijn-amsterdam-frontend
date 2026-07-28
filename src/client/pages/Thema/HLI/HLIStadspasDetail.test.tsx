@@ -70,6 +70,10 @@ describe('With basic request where data returned does not matter', () => {
     const HLIStadspas = createHLIStadspasComponent(activePasState);
     const screen = render(<HLIStadspas />);
 
+    expect(
+      screen.getByText(/Hieronder staat het Stadspasnummer van uw actieve pas./)
+    ).toBeInTheDocument();
+
     expect(screen.getByText('Status').nextElementSibling).toHaveTextContent(
       'Actief'
     );
@@ -84,6 +88,12 @@ describe('With basic request where data returned does not matter', () => {
   test('Blocked pas state', () => {
     const HLIStadspas = createHLIStadspasComponent(pasBlockedState);
     const screen = render(<HLIStadspas />);
+
+    expect(
+      screen.getByText(
+        /Hieronder staat het Stadspasnummer van uw geblokkeerde pas./
+      )
+    ).toBeInTheDocument();
 
     expect(screen.getByText('Status').nextElementSibling).toHaveTextContent(
       'Geblokkeerd'

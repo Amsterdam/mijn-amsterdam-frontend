@@ -107,20 +107,6 @@ exports[`With basic request where data returned does not matter > Matches snapsh
             <dt
               class="_Datalist__title_240c86"
             >
-              Status
-            </dt>
-            <dd
-              class="_Datalist__description_240c86"
-            >
-              Actief
-            </dd>
-          </dl>
-          <dl
-            class="_Datalist_240c86"
-          >
-            <dt
-              class="_Datalist__title_240c86"
-            >
               Type
             </dt>
             <dd
@@ -129,6 +115,27 @@ exports[`With basic request where data returned does not matter > Matches snapsh
               Onbekend
             </dd>
           </dl>
+          <dl
+            class="_Datalist_240c86"
+          >
+            <dt
+              class="_Datalist__title_240c86"
+            >
+              Status
+            </dt>
+            <dd
+              class="_Datalist__description_240c86"
+            >
+              Actief
+            </dd>
+          </dl>
+          <p
+            class="ams-paragraph ams-mb-m"
+          >
+            Hieronder staat het Stadspasnummer van uw actieve pas.
+            <br />
+             Dit pasnummer staat ook op de achterkant van uw pas.
+          </p>
           <dl
             class="_Datalist_240c86"
           >

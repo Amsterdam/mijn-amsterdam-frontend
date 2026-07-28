@@ -101,24 +101,25 @@ export function HLIStadspasDetail() {
   const isLoadingStadspas = isLoading(HLI);
   const noContent = !stadspas;
 
-  const dataListRows: Row[] = [
-    {
-      label: 'Naam',
-      content: stadspas?.owner.firstname,
-    },
-    {
-      label: 'Status',
-      content: stadspas?.actief ? 'Actief' : 'Geblokkeerd',
-    },
-    {
-      label: 'Type',
-      content: capitalizeFirstLetter(stadspas?.type ?? ''),
-    },
-    {
-      label: 'Stadspasnummer',
-      content: stadspas?.passNumberComplete,
-    },
-  ];
+  const NAME: Row = {
+    label: 'Naam',
+    content: stadspas?.owner.firstname,
+  };
+
+  const STATUS: Row = {
+    label: 'Status',
+    content: stadspas?.actief ? 'Actief' : 'Geblokkeerd',
+  };
+
+  const CATEGORIE: Row = {
+    label: 'Type',
+    content: capitalizeFirstLetter(stadspas?.type || ''),
+  };
+
+  const NUMBER: Row = {
+    label: 'Stadspasnummer',
+    content: stadspas?.passNumberComplete,
+  };
 
   const transactionsApi = useBffApi<StadspasBudgetTransaction[]>(
     stadspas?.urlTransactions
@@ -155,9 +156,15 @@ export function HLIStadspasDetail() {
       {stadspas ? (
         <>
           <PageContentCell>
-            {dataListRows.map((row) => (
-              <Datalist key={row.label as string} rows={[row]} />
-            ))}
+            <Datalist rows={[NAME]} />
+            <Datalist rows={[CATEGORIE]} />
+            <Datalist rows={[STATUS]} />
+            <Paragraph className="ams-mb-m">
+              Hieronder staat het Stadspasnummer van uw{' '}
+              {stadspas.actief ? 'actieve' : 'geblokkeerde'} pas.
+              <br /> Dit pasnummer staat ook op de achterkant van uw pas.
+            </Paragraph>
+            <Datalist rows={[NUMBER]} />
             {isEnabled('HLI.stadspas.securityCode') &&
               stadspas.securityCode && (
                 <Beveiligingscode
