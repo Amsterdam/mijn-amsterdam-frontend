@@ -11,6 +11,6 @@ export type RenderProps = {
   urlToImage: string;
   urlToCSS: string;
   error?: ApiError;
-  administratienummerEncrypted?: string; // Only included in debug build.
+  identifier?: string; // Only included in debug build.
   appHref?: `${typeof AMSAPP_PROTOCOL}${'stadspas' | 'mijn-amsterdam'}/${'gelukt' | 'mislukt'}${string}`;
 };
