@@ -166,7 +166,7 @@ function transformStadspasResponse(
         gpassStadspasResonseData.categorie_code === 'K'
           ? 'kind'
           : gpassStadspasResonseData.categorie_code === 'M'
-            ? 'volwassen'
+            ? 'volwassene'
             : 'onbekend',
     };
 

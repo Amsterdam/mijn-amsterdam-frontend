@@ -164,7 +164,7 @@ export interface StadspasOwner {
   lastname: string;
 }
 
-export type StadspasType = 'kind' | 'volwassen' | 'onbekend';
+export type StadspasType = 'kind' | 'volwassene' | 'onbekend';
 
 export interface Stadspas {
   id: string;

@@ -189,7 +189,7 @@ describe('stadspas services', () => {
         passNumberComplete: '6666666666666666666',
         securityCode: '012345',
         transactionsKeyEncrypted: '1x2x3x-##########-4x5x6x',
-        type: 'volwassen',
+        type: 'volwassene',
         unblockPassURL:
           'http://bff-api-host/api/v1/services/stadspas/unblock/1x2x3x-%23%23%23%23%23%23%23%23%23%23-4x5x6x',
         urlTransactions:

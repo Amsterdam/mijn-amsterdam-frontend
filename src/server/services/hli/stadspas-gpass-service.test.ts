@@ -668,7 +668,7 @@ describe('stadspas-gpass-service', () => {
         passNumber: 111111111111,
         passNumberComplete: '6666666666666666666',
         securityCode: '012345',
-        type: 'volwassen',
+        type: 'volwassene',
       });
     });
   });
