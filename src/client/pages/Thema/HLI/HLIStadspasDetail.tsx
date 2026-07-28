@@ -156,9 +156,7 @@ export function HLIStadspasDetail() {
       {stadspas ? (
         <>
           <PageContentCell>
-            <Datalist rows={[NAME]} />
-            <Datalist rows={[CATEGORIE]} />
-            <Datalist rows={[STATUS]} />
+            <Datalist rows={[NAME, CATEGORIE, STATUS]} />
             <Paragraph className="ams-mb-m">
               Hieronder staat het Stadspasnummer van uw{' '}
               {stadspas.actief ? 'actieve' : 'geblokkeerde'} pas.
