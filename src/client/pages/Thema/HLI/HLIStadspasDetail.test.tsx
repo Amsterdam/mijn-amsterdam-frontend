@@ -10,7 +10,6 @@ import { createHLIState } from './test-helpers.ts';
 import { stadspasCreator } from './test-helpers.ts';
 import type { StadspasBudget } from '../../../../server/services/hli/stadspas-types.ts';
 import { bffApi } from '../../../../testing/utils.ts';
-import * as featureToggles from '../../../config/feature-toggles.ts';
 import { componentCreator } from '../../MockApp.tsx';
 
 const createStadspas = stadspasCreator();
@@ -196,14 +195,7 @@ describe('With basic request where data returned does not matter', () => {
     );
   });
 
-  // This toggle-specific test can be removed when feature toggle HLI.stadspas.pcBudgetNormalization is removed.
-  test('shows heading and budget column for balance when toggle is enabled', () => {
-    vi.spyOn(featureToggles, 'isEnabled').mockImplementation(
-      (featureToggle) => {
-        return featureToggle === 'HLI.stadspas.pcBudgetNormalization';
-      }
-    );
-
+  test('shows heading and budget column for balance', () => {
     const Component = createHLIStadspasComponent(
       createHLIState({
         stadspas: [
@@ -239,52 +231,6 @@ describe('With basic request where data returned does not matter', () => {
     ).toBeInTheDocument();
     expect(
       screen.queryByRole('columnheader', { name: 'Bedrag' })
-    ).not.toBeInTheDocument();
-  });
-
-  // This toggle-specific test can be removed when feature toggle HLI.stadspas.pcBudgetNormalization is removed.
-  test('shows heading and budget column for assigned amount when toggle is disabled', () => {
-    vi.spyOn(featureToggles, 'isEnabled').mockImplementation(
-      (featureToggle) => {
-        return featureToggle !== 'HLI.stadspas.pcBudgetNormalization';
-      }
-    );
-
-    const Component = createHLIStadspasComponent(
-      createHLIState({
-        stadspas: [
-          createStadspas({
-            actief: true,
-            passNumber,
-            budgets: [
-              {
-                title: 'Kindtegoed 10-14',
-                description: 'Kindtegoed',
-                budgetAssigned: 150,
-                budgetAssignedFormatted: '€150,00',
-                budgetBalance: 132,
-                budgetBalanceFormatted: '€132,00',
-                code: 'AMSTEG_10-14',
-                dateEnd: '2080-08-31T21:59:59.000Z',
-                dateEndFormatted: '31 augustus 2080',
-                readMoreLink: null,
-              },
-            ],
-          }),
-        ],
-      })
-    );
-
-    const screen = render(<Component />);
-
-    expect(
-      screen.getByRole('heading', { name: 'Gekregen tegoed', level: 3 })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('columnheader', { name: 'Bedrag' })
-    ).toBeInTheDocument();
-    expect(
-      screen.queryByRole('columnheader', { name: 'Resterend bedrag' })
     ).not.toBeInTheDocument();
   });
 

@@ -130,10 +130,6 @@ export function HLIStadspasDetail() {
   const showMultiBudgetTransactions =
     !!stadspas?.budgets.length && stadspas.budgets.length > 1 && !isPhoneScreen;
 
-  const showBudgetBalanceAmounts = isEnabled(
-    'HLI.stadspas.pcBudgetNormalization'
-  );
-
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   return (
@@ -184,7 +180,7 @@ export function HLIStadspasDetail() {
       )}
       <PageContentCell>
         <Heading size="level-3" level={3} className="ams-mb-m">
-          {showBudgetBalanceAmounts ? 'Tegoeden' : 'Gekregen tegoed'}
+          Tegoeden
         </Heading>
         {isLoadingStadspas && (
           <LoadingContent barConfig={loadingContentBarConfigList} />
