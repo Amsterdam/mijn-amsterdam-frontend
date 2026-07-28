@@ -285,7 +285,7 @@ function transformErfpachtZakenResponse(
         }),
         title: zaakInfo.zaakOmschrijving,
       },
-      dossierLinks: zaakInfo.zaakDossiers,
+      dossierLinks: zaakInfo.zaakDossiers ?? [],
       displayStatus: getStatus(zaakInfo.statusOmschrijving),
     };
     return zaak;
@@ -364,34 +364,26 @@ function transformErfpachtZaakDetailResponse(
 
   const stepsFixed: StatusLineItem<ZaakStatusFrontend, ZaakStatusTypeSource>[] =
     stepStatusFixed.map((statusFixed) => {
-      const substeps: StatusLineItem<ZaakStatusFrontend>[] =
-        zaakStatussenResponseSource.zaakStatussen
-          .filter(
-            (statusSource) =>
-              getStatus(statusSource.statustoelichting) === statusFixed
-          )
-          .map((statusSource) => {
-            const status = getStatus(statusSource.statustoelichting);
-            return {
-              id: hash(`${status}-${statusSource.datumStatusGezet}`),
-              status,
-              description: `Uw zaak heeft status "${statusSource.statustoelichting}" gekregen op ${defaultDateFormat(
-                statusSource.datumStatusGezet
-              )}.`,
-              datePublished: statusSource.datumStatusGezet,
-              isActive: false,
-              isChecked: true,
-            };
-          });
-      const isOptionalStep = statusFixed === 'Meer informatie nodig';
+      const substeps = zaakStatussenResponseSource.zaakStatussen.filter(
+        (statusSource) =>
+          getStatus(statusSource.statustoelichting) === statusFixed
+      );
+      const isMeerInformatieStep = statusFixed === 'Meer informatie nodig';
+      const isOptionalStep = isMeerInformatieStep;
       const hasMatchingSubsteps = !!substeps?.length;
+
+      let description = '';
+      if (isMeerInformatieStep) {
+        description = `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen. U ontvangt van ons bericht met meer details.`;
+      }
+
       const step: StatusLineItem<ZaakStatusFrontend, ZaakStatusTypeSource> = {
         id: hash(statusFixed),
         status: statusFixed,
-        datePublished: substeps?.at(-1)?.datePublished ?? '',
+        datePublished: substeps?.at(-1)?.datumStatusGezet ?? '',
         isActive: false,
         isChecked: hasMatchingSubsteps,
-        description: '',
+        description,
         isVisible: isOptionalStep ? hasMatchingSubsteps : true,
       };
 
