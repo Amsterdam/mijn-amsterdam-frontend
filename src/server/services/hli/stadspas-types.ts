@@ -164,6 +164,8 @@ export interface StadspasOwner {
   lastname: string;
 }
 
+export type StadspasType = 'kind' | 'volwassene' | 'onbekend';
+
 export interface Stadspas {
   id: string;
   passNumber: number;
@@ -176,6 +178,7 @@ export interface Stadspas {
   balance: number;
   actief: boolean;
   securityCode: SecurityCode | null;
+  type: StadspasType;
 }
 
 export type TransactionKeysEncrypted = string;

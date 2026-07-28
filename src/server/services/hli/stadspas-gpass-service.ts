@@ -162,6 +162,12 @@ function transformStadspasResponse(
       passNumberComplete: gpassStadspasResonseData.pasnummer_volledig,
       actief: gpassStadspasResonseData.actief,
       securityCode: securityCode ?? null,
+      type:
+        gpassStadspasResonseData.categorie_code === 'K'
+          ? 'kind'
+          : gpassStadspasResonseData.categorie_code === 'M'
+            ? 'volwassene'
+            : 'onbekend',
     };
 
     return stadspasTransformed;
