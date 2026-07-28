@@ -73,8 +73,10 @@ export function ErfpachtThema() {
             </Paragraph>
             <Paragraph>
               Als u een ontvangstbevestiging heeft gehad, is uw aanvraag door
-              ons ontvangen. Heeft u nog een vraag, stuur dan een e-mail naar
-              erfpacht@amsterdam.nl.
+              ons ontvangen. Heeft u nog een vraag, stuur dan een e-mail naar{' '}
+              <Link rel="noreferrer" href="mailto:erfpacht@amsterdam.nl">
+                erfpacht@amsterdam.nl
+              </Link>
             </Paragraph>
           </PageContentCell>
         </>
