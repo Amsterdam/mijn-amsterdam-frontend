@@ -34,7 +34,8 @@ export const routes: MockRouteDefinition[] = [
     handler: {
       type: 'middleware',
       middleware: (req, res) => {
-        const dossierNummer = req.params.dossierId;
+        const [type, ...rest] = (req.params.dossierId as string).split('.');
+        const dossierNummer = `${type}${rest.join('/')}`;
         return res.send({
           ...ERFPACHT_V2_DOSSIER_INFO_DETAILS,
           dossierNummer,
