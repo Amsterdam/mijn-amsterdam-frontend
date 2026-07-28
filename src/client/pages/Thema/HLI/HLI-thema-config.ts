@@ -128,7 +128,7 @@ const displayPropsHuidigeRegelingen: DisplayProps<HLIRegelingFrontend> = {
     betrokkenen: 'Ontvangers',
   },
   colWidths: {
-    large: ['80%', '20%'],
+    large: ['60%', '40%'],
     small: ['100%', '0'],
   },
 };
@@ -140,8 +140,8 @@ const displayPropsEerdereRegelingen: DisplayProps<HLIRegelingFrontend> = {
     betrokkenen: 'Ontvangers',
   },
   colWidths: {
-    large: ['80%', '20%'],
-    small: ['100%', '0'],
+    large: ['60%', '20%', '20%'],
+    small: ['100%', '0', '0'],
   },
 };
 
@@ -154,8 +154,32 @@ type SpecificatieDisplayProps = {
 };
 
 const specificatieDisplayProps: DisplayProps<SpecificatieDisplayProps> = {
-  datePublishedFormatted: 'Datum',
-  documentUrl: 'Document',
+  props: {
+    datePublishedFormatted: 'Datum',
+    documentUrl: 'Document',
+  },
+  colWidths: {
+    large: ['60%', '40%'],
+    small: ['60%', '40%'],
+  },
+};
+
+export type StadspasDisplayProps = {
+  owner: ReactNode;
+  actief: ReactNode;
+  heeftTegoed: ReactNode;
+};
+
+export const stadspasDisplayProps: DisplayProps<StadspasDisplayProps> = {
+  props: {
+    owner: '',
+    heeftTegoed: 'Tegoed',
+    actief: 'Status',
+  },
+  colWidths: {
+    large: ['60%', '20%', '20%'],
+    small: ['100%', '0', '0'],
+  },
 };
 
 export const listPageParamKind = {
