@@ -12,7 +12,7 @@ export type ZaakStatusTypeSource =
   | 'Informatie aangeleverd'
 
   // In behandeling
-  | 'Aanvraag beoordelen'
+  | 'Aanvraag Beoordelen'
   | 'Aanvraag gereed voor behandeling'
   | 'Behandeling'
   | 'Indicatie verstuurd'

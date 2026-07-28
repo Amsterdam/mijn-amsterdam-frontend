@@ -321,7 +321,7 @@ async function fetchErfpachtZaakInfo(
 function getStatus(statustekst: ZaakStatusTypeSource): ZaakStatusFrontend {
   switch (statustekst) {
     case 'Aanvraag':
-    case 'Aanvraag beoordelen':
+    case 'Aanvraag Beoordelen':
     case 'Aanvraag gereed voor behandeling':
       return 'Aanvraag';
 
