@@ -52,7 +52,7 @@ const createHLIStadspasComponent = componentCreator({
   }),
 });
 
-describe('With basic request where data returned does not matter', () => {
+describe('Stadspas detail page', () => {
   beforeEach(() => {
     vi.restoreAllMocks();
     bffApi.get('/url-transactions').reply(200, { content: [] });
@@ -227,11 +227,8 @@ describe('With basic request where data returned does not matter', () => {
       screen.getByRole('heading', { name: 'Tegoeden', level: 3 })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole('columnheader', { name: 'Resterend bedrag' })
-    ).toBeInTheDocument();
-    expect(
       screen.queryByRole('columnheader', { name: 'Bedrag' })
-    ).not.toBeInTheDocument();
+    ).toBeInTheDocument();
   });
 
   test('shows pc budget warning when at least one budget code matches the PC pattern', () => {
@@ -275,8 +272,8 @@ describe('With basic request where data returned does not matter', () => {
     const screen = render(<Component />);
 
     expect(
-      screen.getByText(
-        'Let op: u kunt het PC tegoed maar één keer gebruiken. Het geld dat u niet gebruikt, gaat verloren.'
+      screen.queryByText(
+        'U mag het PC-tegoed 1 keer gebruiken. Geld dat overblijft na een aankoop kunt u niet meer uitgeven.'
       )
     ).toBeInTheDocument();
   });
@@ -350,7 +347,9 @@ describe('Displayed description of uw uitgaven text', () => {
         <React.Fragment>
           U heeft nog geen uitgaven.
         </React.Fragment>
-         Deze informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft klopt altijd.
+        <React.Fragment>
+          Deze informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft klopt altijd.
+        </React.Fragment>
       </React.Fragment>
     `);
   });
