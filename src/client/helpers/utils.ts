@@ -21,38 +21,48 @@ export function getElementOnPageAsync(
   query: string,
   timeoutAfterMS: number = FAIL_TIMEOUT_MS,
   interval: number = POLL_INTERVAL_MS
-): Promise<Element | null> {
-  return new Promise((resolve_) => {
-    function resolve(result: Element | null) {
-      if (timeout !== null) {
-        clearTimeout(timeout);
-        timeout = null;
-      }
-      return resolve_(result);
+): { promise: Promise<Element | null>; cancel: () => void } {
+  let timeout: ReturnType<typeof setTimeout> | null = null;
+  let resolve_: (result: Element | null) => void = () => {};
+
+  function resolve(result: Element | null) {
+    if (timeout !== null) {
+      clearTimeout(timeout);
+      timeout = null;
     }
+    return resolve_(result);
+  }
 
-    function checkIfElementIsInDOM() {
-      const doc = globalThis.document;
-      if (!doc) {
-        resolve(null);
-        return;
+  const startTime = Date.now();
+
+  return {
+    promise: new Promise((resolve) => {
+      resolve_ = resolve;
+
+      function checkIfElementIsInDOM() {
+        const doc = globalThis.document;
+        if (!doc) {
+          resolve(null);
+          return;
+        }
+
+        const elem = doc.querySelector(query);
+        if (elem) {
+          return resolve(elem);
+        }
+
+        const timeElapsed = Date.now() - startTime;
+        if (timeElapsed > timeoutAfterMS) {
+          return resolve(null);
+        }
+
+        timeout = setTimeout(checkIfElementIsInDOM, interval);
       }
 
-      const elem = doc.querySelector(query);
-      if (elem) {
-        return resolve(elem);
-      }
-
-      const timeElapsed = Date.now() - startTime;
-      if (timeElapsed > timeoutAfterMS) {
-        return resolve(null);
-      }
-
-      timeout = setTimeout(checkIfElementIsInDOM, interval);
-    }
-
-    let timeout: ReturnType<typeof setTimeout> | null = null;
-    const startTime = Date.now();
-    checkIfElementIsInDOM();
-  });
+      checkIfElementIsInDOM();
+    }),
+    cancel: () => {
+      resolve(null);
+    },
+  };
 }
