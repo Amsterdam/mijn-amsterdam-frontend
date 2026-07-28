@@ -392,7 +392,7 @@ function transformErfpachtZaakDetailResponse(
         isActive: false,
         isChecked: hasMatchingSubsteps,
         description: '',
-        isVisible: !isOptionalStep && hasMatchingSubsteps,
+        isVisible: isOptionalStep ? hasMatchingSubsteps : true,
       };
 
       return step;
