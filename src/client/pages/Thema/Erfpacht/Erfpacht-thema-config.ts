@@ -133,6 +133,7 @@ export const themaConfig = {
 export const listPageParamKind = {
   erfpachtDossiers: 'erfpacht-dossiers',
   erfpachtZaken: 'erfpacht-zaken',
+  erfpachtDossierDetailZaken: 'erfpacht-dossier-detail-zaken',
 } as const;
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
@@ -177,10 +178,31 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
 
   const titleDossiers = erfpachtData?.titelDossiersKop;
 
+  const displayPropsDossierDetailZaken: DisplayProps<ErfpachtZaakExcerptFrontend> =
+    {
+      props: {
+        zaakNummer: firstZaak?.titelZaakNummer,
+        displayStatus: 'Status',
+        formattedStatusDatum: firstZaak?.titelFormattedStatusDatum,
+      },
+      colWidths: {
+        large: ['33%', '33%', '34%'],
+        small: ['50%', '50%', '0'],
+      },
+    };
+
   const tableConfig = {
     [listPageParamKind.erfpachtZaken]: {
       title: 'Wijzigingsaanvragen',
       displayProps: displayPropsZaken,
+      listPageRoute: generatePath(themaConfig.listPageZaken.route.path, {
+        page: null,
+      }),
+      maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS,
+    },
+    [listPageParamKind.erfpachtDossierDetailZaken]: {
+      title: 'Wijzigingsaanvragen',
+      displayProps: displayPropsDossierDetailZaken,
       listPageRoute: generatePath(themaConfig.listPageZaken.route.path, {
         page: null,
       }),

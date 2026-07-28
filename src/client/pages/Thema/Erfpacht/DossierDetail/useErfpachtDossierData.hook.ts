@@ -17,18 +17,25 @@ export function useDossierData() {
     breadcrumbs,
     themaId,
     themaConfig,
+    zaken,
+    tableConfig,
   } = useErfpachtThemaData();
+
   const url = dossierId
     ? `${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierId}`
     : undefined;
 
   const { data, isLoading, isError } = useBffApi<ErfpachtDossiersDetail>(url);
   const dossier = data?.content ?? null;
+  const zaken_ = dossier
+    ? zaken.filter((zaak) => zaak.zaakDossiers.includes(dossier.dossierNummer))
+    : [];
 
   return {
     themaId,
     title: dossier?.title ?? 'Erfpachtdossier',
     dossier,
+    zaken: zaken_,
     isLoading,
     isError,
     isLoadingThemaData,
@@ -36,5 +43,6 @@ export function useDossierData() {
     relatieCode,
     breadcrumbs,
     themaConfig,
+    tableConfigZaken: tableConfig['erfpacht-dossier-detail-zaken'],
   };
 }

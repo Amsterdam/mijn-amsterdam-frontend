@@ -7,7 +7,6 @@ import {
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook.tsx';
 import type { ErfpachtDossierFrontend } from '../../../../server/services/erfpacht/erfpacht-types.ts';
 import type { ErfpachtZaakExcerptFrontend } from '../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
-import { entries } from '../../../../universal/helpers/utils.ts';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
@@ -31,24 +30,26 @@ export function ErfpachtThema() {
 
   useHTMLDocumentTitle(themaConfig.route);
 
-  const pageContentTables = entries(tableConfig)
-    .map(([kind, { title, displayProps, listPageRoute, maxItems }]) => {
-      const items = kind === 'erfpacht-dossiers' ? dossiers : zaken;
-      if (!items.length && kind !== 'erfpacht-dossiers') {
-        return null;
-      }
-      return (
-        <ThemaPaginaTable<ErfpachtDossierFrontend | ErfpachtZaakExcerptFrontend>
-          key={kind}
-          title={title}
-          zaken={items}
-          displayProps={displayProps}
-          maxItems={maxItems}
-          listPageRoute={listPageRoute}
-        />
-      );
-    })
-    .filter((table) => table !== null);
+  const zakenTableConfig = tableConfig['erfpacht-zaken'];
+  const zakenTable = (
+    <ThemaPaginaTable<ErfpachtDossierFrontend | ErfpachtZaakExcerptFrontend>
+      title={title}
+      zaken={zaken}
+      displayProps={zakenTableConfig.displayProps}
+      maxItems={zakenTableConfig.maxItems}
+      listPageRoute={zakenTableConfig.listPageRoute}
+    />
+  );
+  const dossiersTableConfig = tableConfig['erfpacht-dossiers'];
+  const dossiersTable = (
+    <ThemaPaginaTable<ErfpachtDossierFrontend | ErfpachtZaakExcerptFrontend>
+      title={title}
+      zaken={dossiers}
+      displayProps={dossiersTableConfig.displayProps}
+      maxItems={dossiersTableConfig.maxItems}
+      listPageRoute={dossiersTableConfig.listPageRoute}
+    />
+  );
 
   return (
     <ThemaPagina
@@ -80,7 +81,8 @@ export function ErfpachtThema() {
       }
       pageContentMain={
         <>
-          {pageContentTables}
+          {zakenTable}
+          {dossiersTable}
           <AfisFacturenTables
             themaContextParams={{
               tableConfig: erfpachtFacturenTableConfig,
