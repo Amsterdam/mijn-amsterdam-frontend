@@ -15,9 +15,9 @@ html(lang="nl")
       h1 Inloggen
       p Open de Amsterdam App om verder te gaan.
 
-      if !error && administratienummerEncrypted
-        strong Administratienummer:&nbsp;
-        code #{administratienummerEncrypted} &mdash;
+      if !error && identifier
+        strong Identifier:&nbsp;
+        code #{identifier} &mdash;
         | &nbsp;Redirecting in&nbsp;
         span(id='redirect-interval-timer') #{redirectTimeout || 0}
         | &nbsp;seconds
