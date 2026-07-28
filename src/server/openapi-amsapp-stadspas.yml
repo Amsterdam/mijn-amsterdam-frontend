@@ -384,7 +384,7 @@ components:
         type:
           type: string
           enum:
-            - 'volwassen'
+            - 'volwassene'
             - 'kind'
             - 'onbekend'
         transactionsKeyEncrypted:
