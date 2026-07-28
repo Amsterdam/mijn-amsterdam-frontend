@@ -68,15 +68,22 @@ function FocusTrap({
   const [isReady, setIsReady] = useState(pollingQuerySelector ? false : true);
 
   useEffect(() => {
+    let elementResolver: ReturnType<typeof getElementOnPageAsync> | null = null;
     if (!isReady && pollingQuerySelector) {
       // Delays the initialization of the focus trap. This is necessary because some dialog content is not yet rendered when the dialog is opened.
-      getElementOnPageAsync(
+      elementResolver = getElementOnPageAsync(
         pollingQuerySelector,
         giveUpOnReadyPollingAfterMs
-      ).then(() => {
-        setIsReady(true);
+      );
+      elementResolver.promise.then((el) => {
+        if (el) {
+          setIsReady(true);
+        }
       });
     }
+    return () => {
+      elementResolver?.cancel();
+    };
   }, [giveUpOnReadyPollingAfterMs, isReady, pollingQuerySelector]);
 
   return isReady ? <FocusTrapInner /> : null;
