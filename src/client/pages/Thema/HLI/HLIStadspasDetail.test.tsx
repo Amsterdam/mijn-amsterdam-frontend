@@ -373,26 +373,10 @@ describe('With basic request where data returned does not matter', () => {
 
 describe('Displayed description of uw uitgaven text', () => {
   test('Without budget or expenses', () => {
-    const result = forTesting.determineUwUitgavenDescription(
-      createStadspas(),
-      false
-    );
+    const result = forTesting.determineUwUitgavenDescription(createStadspas());
     expect(result).toMatchInlineSnapshot(`
       <React.Fragment>
         U heeft nog geen uitgaven.
-      </React.Fragment>
-    `);
-  });
-
-  test('With transactions', () => {
-    const result = forTesting.determineUwUitgavenDescription(
-      createStadspas(),
-      true
-    );
-
-    expect(result).toMatchInlineSnapshot(`
-      <React.Fragment>
-        Hieronder ziet u bij welke winkels u het tegoed hebt uitgegeven. Deze informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft klopt altijd.
       </React.Fragment>
     `);
   });
@@ -412,8 +396,7 @@ describe('Displayed description of uw uitgaven text', () => {
     };
 
     const result = forTesting.determineUwUitgavenDescription(
-      createStadspas({ budgets: [budget], balance: 5 }),
-      false
+      createStadspas({ budgets: [budget], balance: 5 })
     );
     // prettier-ignore
     expect(result).toMatchInlineSnapshot(`
@@ -421,9 +404,7 @@ describe('Displayed description of uw uitgaven text', () => {
         <React.Fragment>
           U heeft nog geen uitgaven.
         </React.Fragment>
-        <React.Fragment>
-          Deze informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft klopt altijd.
-        </React.Fragment>
+         Deze informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft klopt altijd.
       </React.Fragment>
     `);
   });
