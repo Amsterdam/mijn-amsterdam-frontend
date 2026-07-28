@@ -125,12 +125,15 @@ export function HLIStadspasDetail() {
       ? transactionsApi.data.content
       : [];
 
+  const hasBudgets = !!stadspas?.budgets.length;
   const hasTransactions = !!transactionsApi.data?.content?.length;
 
   const showMultiBudgetTransactions =
     !!stadspas?.budgets.length && stadspas.budgets.length > 1 && !isPhoneScreen;
 
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
+  const showNoContentAlert =
+    isErrorStadspas || (!isLoadingStadspas && noContent);
 
   return (
     <PageV2
@@ -168,7 +171,7 @@ export function HLIStadspasDetail() {
           {isLoadingStadspas && (
             <LoadingContent barConfig={loadingContentBarConfigDetails} />
           )}
-          {(isErrorStadspas || (!isLoadingStadspas && noContent)) && (
+          {showNoContentAlert && (
             <ErrorAlert>
               We kunnen op dit moment geen gegevens tonen.{' '}
               <MaRouterLink href={themaConfig.route.path}>
@@ -179,43 +182,52 @@ export function HLIStadspasDetail() {
         </PageContentCell>
       )}
       <PageContentCell>
-        <Heading size="level-3" level={3} className="ams-mb-m">
-          Tegoeden
-        </Heading>
-        {isLoadingStadspas && (
-          <LoadingContent barConfig={loadingContentBarConfigList} />
-        )}
-        {!isLoadingStadspas && !!stadspas?.budgets.length && (
-          <TableV2
-            contentAfterTheCaption={
-              stadspas.budgets.some((budget) =>
-                PC_BUDGET_CODE_PATTERN.test(budget.code)
-              ) ? (
-                <Paragraph className="ams-mb-m">
-                  U mag het PC-tegoed 1 keer gebruiken. Geld dat overblijft na
-                  een aankoop kunt u niet meer uitgeven.
-                </Paragraph>
-              ) : undefined
-            }
-            className={styles.Table_budgets}
-            items={stadspas.budgets
+        <TableV2
+          caption="Tegoeden"
+          showTHead={hasBudgets}
+          contentAfterTheCaption={
+            isLoadingStadspas ? (
+              <LoadingContent barConfig={loadingContentBarConfigList} />
+            ) : (
+              <>
+                {!hasBudgets && !isLoadingTransacties && (
+                  <Paragraph className="ams-mb-m">
+                    U heeft (nog) geen tegoed gekregen.
+                  </Paragraph>
+                )}
+                {stadspas?.budgets.some((budget) =>
+                  PC_BUDGET_CODE_PATTERN.test(budget.code)
+                ) ? (
+                  <Paragraph className="ams-mb-m">
+                    U mag het PC-tegoed 1 keer gebruiken. Geld dat overblijft na
+                    een aankoop kunt u niet meer uitgeven.
+                  </Paragraph>
+                ) : undefined}
+              </>
+            )
+          }
+          className={styles.Table_budgets}
+          items={
+            stadspas?.budgets
               .map(addReadMoreLink)
-              .toSorted(dateSort('dateEnd', 'asc'))}
-            displayProps={displayPropsBudgetsBalance}
-          />
-        )}
-        {!isLoadingStadspas && !stadspas?.budgets.length && (
-          <Paragraph>U heeft (nog) geen tegoed gekregen.</Paragraph>
-        )}
+              .toSorted(dateSort('dateEnd', 'asc')) ?? []
+          }
+          displayProps={displayPropsBudgetsBalance}
+        />
       </PageContentCell>
-      {!isLoadingTransacties && !isLoadingStadspas && (
+      {hasBudgets && (
         <PageContentCell>
           <TableV2<StadspasBudgetTransaction>
             caption="Uw uitgaven"
+            showTHead={hasTransactions}
             contentAfterTheCaption={
-              <Paragraph className="ams-mb-m">
-                {determineUwUitgavenDescription(stadspas, hasTransactions)}
-              </Paragraph>
+              isLoadingTransacties ? (
+                <LoadingContent barConfig={loadingContentBarConfigList} />
+              ) : (
+                <Paragraph className="ams-mb-m">
+                  {determineUwUitgavenDescription(stadspas, hasTransactions)}
+                </Paragraph>
+              )
             }
             className={
               showMultiBudgetTransactions
