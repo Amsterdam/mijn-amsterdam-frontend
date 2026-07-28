@@ -28,7 +28,7 @@ export function useDossierData() {
   const { data, isLoading, isError } = useBffApi<ErfpachtDossiersDetail>(url);
   const dossier = data?.content ?? null;
   const zaken_ = dossier
-    ? zaken.filter((zaak) => zaak.zaakDossiers.includes(dossier.dossierNummer))
+    ? zaken.filter((zaak) => zaak.zaakDossiers?.includes(dossier.dossierNummer))
     : [];
 
   return {
