@@ -71,16 +71,10 @@ const displayPropsTransactiesWithBudget = {
   amountFormatted: displayPropsTransacties.amountFormatted,
 };
 
-const displayPropsBudgetsAssigned = {
-  title: budgetFieldName,
-  dateEndFormatted: 'Geldig t/m',
-  budgetAssignedFormatted: 'Bedrag',
-};
-
 const displayPropsBudgetsBalance = {
   title: budgetFieldName,
   dateEndFormatted: 'Geldig t/m',
-  budgetBalanceFormatted: 'Resterend bedrag',
+  budgetBalanceFormatted: 'Bedrag',
 };
 
 const PHONENUMBERS = {
@@ -198,46 +192,34 @@ export function HLIStadspasDetail() {
         {!isLoadingStadspas && !!stadspas?.budgets.length && (
           <TableV2
             contentAfterTheCaption={
-              showBudgetBalanceAmounts &&
               stadspas.budgets.some((budget) =>
                 PC_BUDGET_CODE_PATTERN.test(budget.code)
-              )
-                ? 'Let op: u kunt het PC tegoed maar één keer gebruiken. Het geld dat u niet gebruikt, gaat verloren.'
-                : undefined
+              ) ? (
+                <Paragraph className="ams-mb-m">
+                  U mag het PC-tegoed 1 keer gebruiken. Geld dat overblijft na
+                  een aankoop kunt u niet meer uitgeven.
+                </Paragraph>
+              ) : undefined
             }
             className={styles.Table_budgets}
             items={stadspas.budgets
               .map(addReadMoreLink)
               .toSorted(dateSort('dateEnd', 'asc'))}
-            displayProps={
-              showBudgetBalanceAmounts
-                ? displayPropsBudgetsBalance
-                : displayPropsBudgetsAssigned
-            }
+            displayProps={displayPropsBudgetsBalance}
           />
         )}
         {!isLoadingStadspas && !stadspas?.budgets.length && (
           <Paragraph>U heeft (nog) geen tegoed gekregen.</Paragraph>
         )}
       </PageContentCell>
-      <PageContentCell>
-        <Heading size="level-3" level={3} className="ams-mb-m">
-          Uw uitgaven
-        </Heading>
-        {(isLoadingTransacties || isLoadingStadspas) && (
-          <LoadingContent barConfig={loadingContentBarConfigList} />
-        )}
-        {!isLoadingStadspas && !isLoadingTransacties && !hasTransactions && (
-          <Paragraph>{determineUwUitgavenDescription(stadspas)}</Paragraph>
-        )}
-        {!isLoadingTransacties && hasTransactions && (
+      {!isLoadingTransacties && !isLoadingStadspas && (
+        <PageContentCell>
           <TableV2<StadspasBudgetTransaction>
+            caption="Uw uitgaven"
             contentAfterTheCaption={
-              <>
-                Hieronder ziet u bij welke winkels u het tegoed hebt uitgegeven.
-                Deze informatie kan een dag achterlopen. Maar het saldo dat u
-                nog over heeft klopt altijd.
-              </>
+              <Paragraph className="ams-mb-m">
+                {determineUwUitgavenDescription(stadspas, hasTransactions)}
+              </Paragraph>
             }
             className={
               showMultiBudgetTransactions
@@ -251,8 +233,8 @@ export function HLIStadspasDetail() {
                 : displayPropsTransacties
             }
           />
-        )}
-      </PageContentCell>
+        </PageContentCell>
+      )}
     </PageV2>
   );
 }
@@ -278,15 +260,35 @@ function addReadMoreLink(budget: StadspasBudget) {
 }
 
 function determineUwUitgavenDescription(
-  stadspas: StadspasFrontend | undefined
-): JSX.Element {
+  stadspas: StadspasFrontend | undefined,
+  hasTransactions: boolean
+) {
   const expenseInfoTextBase = <>U heeft nog geen uitgaven.</>;
 
-  if (stadspas?.budgets && stadspas?.balance > 0) {
+  const extraInfo = (
+    <>
+      Deze informatie kan een dag achterlopen. Maar het saldo dat u nog over
+      heeft klopt altijd.
+    </>
+  );
+
+  if (!stadspas) {
+    return expenseInfoTextBase;
+  }
+
+  if (hasTransactions) {
     return (
       <>
-        {expenseInfoTextBase} Deze informatie kan een dag achterlopen. Maar het
-        saldo dat u nog over heeft klopt altijd.
+        Hieronder ziet u bij welke winkels u het tegoed hebt uitgegeven. Deze
+        informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft
+        klopt altijd.
+      </>
+    );
+  } else if (stadspas.budgets && stadspas.balance > 0) {
+    return (
+      <>
+        {expenseInfoTextBase}
+        {extraInfo}
       </>
     );
   }
