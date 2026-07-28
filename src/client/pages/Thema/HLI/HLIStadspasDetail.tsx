@@ -39,6 +39,9 @@ import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
 
+// TODO MIJN-13378: When GPASS behavior is adjusted we can remove the normalization logic
+const PC_BUDGET_CODE_PATTERN = /^\d{4}_AMSTEG_PC$/;
+
 const loadingContentBarConfigDetails: BarConfig = [
   ['10rem', '2rem', '.5rem'],
   ['16rem', '2rem', '3rem'],
@@ -67,10 +70,16 @@ const displayPropsTransactiesWithBudget = {
   amountFormatted: displayPropsTransacties.amountFormatted,
 };
 
-const displayPropsBudgets = {
+const displayPropsBudgetsAssigned = {
   title: budgetFieldName,
   dateEndFormatted: 'Geldig t/m',
   budgetAssignedFormatted: 'Bedrag',
+};
+
+const displayPropsBudgetsBalance = {
+  title: budgetFieldName,
+  dateEndFormatted: 'Geldig t/m',
+  budgetBalanceFormatted: 'Resterend bedrag',
 };
 
 const PHONENUMBERS = {
@@ -110,9 +119,9 @@ export function HLIStadspasDetail() {
     },
   ];
 
-  const BALANCE: Row = {
-    label: 'Saldo',
-    content: `${stadspas?.balanceFormatted} (Dit is het bedrag dat u nog kunt uitgeven)`,
+  const NUMBER = {
+    label: 'Stadspasnummer',
+    content: stadspas?.passNumberComplete,
   };
 
   const transactionsApi = useBffApi<StadspasBudgetTransaction[]>(
@@ -129,6 +138,10 @@ export function HLIStadspasDetail() {
 
   const showMultiBudgetTransactions =
     !!stadspas?.budgets.length && stadspas.budgets.length > 1 && !isPhoneScreen;
+
+  const showBudgetBalanceAmounts = isEnabled(
+    'HLI.stadspas.pcBudgetNormalization'
+  );
 
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
@@ -149,7 +162,6 @@ export function HLIStadspasDetail() {
             {dataListRows.map((row) => (
               <Datalist key={row.label as string} rows={[row]} />
             ))}
-            {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
             {isEnabled('HLI.stadspas.securityCode') &&
               stadspas.securityCode && (
                 <Beveiligingscode
@@ -177,18 +189,30 @@ export function HLIStadspasDetail() {
       )}
       <PageContentCell>
         <Heading size="level-3" level={3} className="ams-mb-m">
-          Gekregen tegoed
+          {showBudgetBalanceAmounts ? 'Tegoeden' : 'Gekregen tegoed'}
         </Heading>
         {isLoadingStadspas && (
           <LoadingContent barConfig={loadingContentBarConfigList} />
         )}
         {!isLoadingStadspas && !!stadspas?.budgets.length && (
           <TableV2
+            contentAfterTheCaption={
+              showBudgetBalanceAmounts &&
+              stadspas.budgets.some((budget) =>
+                PC_BUDGET_CODE_PATTERN.test(budget.code)
+              )
+                ? 'Let op: u kunt het PC tegoed maar één keer gebruiken. Het geld dat u niet gebruikt, gaat verloren.'
+                : undefined
+            }
             className={styles.Table_budgets}
             items={stadspas.budgets
               .map(addReadMoreLink)
               .toSorted(dateSort('dateEnd', 'asc'))}
-            displayProps={displayPropsBudgets}
+            displayProps={
+              showBudgetBalanceAmounts
+                ? displayPropsBudgetsBalance
+                : displayPropsBudgetsAssigned
+            }
           />
         )}
         {!isLoadingStadspas && !stadspas?.budgets.length && (

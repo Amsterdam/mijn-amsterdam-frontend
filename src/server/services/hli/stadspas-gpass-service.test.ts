@@ -25,10 +25,17 @@ import {
 import { blockStadspas } from './stadspas.ts';
 import { remoteApi } from '../../../testing/utils.ts';
 import type { ApiErrorResponse } from '../../../universal/helpers/api.ts';
+import { featureToggle } from '../../config/feature-toggles.ts';
+
+const PC_BUDGET_NORMALIZATION_TOGGLE = 'HLI.stadspas.pcBudgetNormalization';
+const ORIGINAL_PC_BUDGET_NORMALIZATION_TOGGLE_VALUE =
+  featureToggle[PC_BUDGET_NORMALIZATION_TOGGLE];
 
 describe('stadspas-gpass-service', () => {
   afterEach(() => {
     Mockdate.reset();
+    featureToggle[PC_BUDGET_NORMALIZATION_TOGGLE] =
+      ORIGINAL_PC_BUDGET_NORMALIZATION_TOGGLE_VALUE;
     vi.restoreAllMocks();
     vi.resetAllMocks();
   });
@@ -96,6 +103,72 @@ describe('stadspas-gpass-service', () => {
       } as unknown as StadspasDetailBudgetSource;
       const transformedBudget = forTesting.transformBudget(budget);
       expect(transformedBudget).toStrictEqual(budget);
+    });
+
+    test('should zero pc budget balance when toggle is enabled and absolute difference is larger than 1 euro', () => {
+      featureToggle[PC_BUDGET_NORMALIZATION_TOGGLE] = true;
+
+      const budget: StadspasDetailBudgetSource = {
+        naam: '25/26 PC Tegoed',
+        omschrijving: '',
+        code: '2025_AMSTEG_PC',
+        budget_assigned: 580,
+        budget_balance: 475,
+        expiry_date: '2026-07-31T21:59:59.000Z',
+      };
+
+      const transformedBudget = forTesting.transformBudget(budget);
+
+      expect(transformedBudget).toEqual(
+        expect.objectContaining({
+          budgetBalance: 0,
+          budgetBalanceFormatted: '€0,00',
+        })
+      );
+    });
+
+    test('should keep pc budget balance when difference is exactly 1 euro or lower', () => {
+      featureToggle[PC_BUDGET_NORMALIZATION_TOGGLE] = true;
+
+      const budget: StadspasDetailBudgetSource = {
+        naam: '25/26 PC Tegoed',
+        omschrijving: '',
+        code: '2025_AMSTEG_PC',
+        budget_assigned: 100,
+        budget_balance: 99,
+        expiry_date: '2026-07-31T21:59:59.000Z',
+      };
+
+      const transformedBudget = forTesting.transformBudget(budget);
+
+      expect(transformedBudget).toEqual(
+        expect.objectContaining({
+          budgetBalance: 99,
+          budgetBalanceFormatted: '€99,00',
+        })
+      );
+    });
+
+    test('should keep pc budget balance when toggle is disabled', () => {
+      featureToggle[PC_BUDGET_NORMALIZATION_TOGGLE] = false;
+
+      const budget: StadspasDetailBudgetSource = {
+        naam: '25/26 PC Tegoed',
+        omschrijving: '',
+        code: '2025_AMSTEG_PC',
+        budget_assigned: 580,
+        budget_balance: 475,
+        expiry_date: '2026-07-31T21:59:59.000Z',
+      };
+
+      const transformedBudget = forTesting.transformBudget(budget);
+
+      expect(transformedBudget).toEqual(
+        expect.objectContaining({
+          budgetBalance: 475,
+          budgetBalanceFormatted: '€475,00',
+        })
+      );
     });
   });
 

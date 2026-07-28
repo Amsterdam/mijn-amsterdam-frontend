@@ -1,10 +1,13 @@
 import { render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import mockdate from 'mockdate';
+import nock from 'nock';
 import { BrowserRouter } from 'react-router';
 
 import { AfspraakCard } from './AfspraakCard.tsx';
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
+
+const address = { street: 'Amstel', houseNumber: 1 };
 
 const afspraak: AfspraakFrontend = {
   subject: 'Varen',
@@ -19,7 +22,7 @@ const afspraak: AfspraakFrontend = {
   displayDateTime: 'maandag 01 januari 2025 van 17:50 tot 18:20',
   location: {
     name: 'Centrum',
-    street: 'Amstel 1',
+    street: address.street + ' ' + address.houseNumber,
     postalCode: '1020 HA',
     city: 'Amsterdam',
     countryCode: 'NL',
@@ -47,6 +50,16 @@ function renderAfspraakCard(
   );
 }
 
+function setupNockForLocationModal() {
+  nock('https://api.data.amsterdam.nl')
+    .get('/v1/benkagg/adresseerbareobjecten/')
+    .query({
+      openbareruimteNaam: address.street,
+      huisnummer: address.houseNumber,
+    })
+    .reply(200, {});
+}
+
 describe('Renders afspraak data', () => {
   beforeEach(() => {
     mockdate.set('2020-01-01');
@@ -54,6 +67,7 @@ describe('Renders afspraak data', () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
+    nock.cleanAll();
   });
 
   test('Regular variant', () => {
@@ -73,21 +87,25 @@ describe('Renders afspraak data', () => {
       name: /Toon QR code/i,
     });
     await user.click(button);
-    screen.getByText(/QR code - Stadsloket Centrum/i);
+    expect(
+      screen.getByText(/QR code - Stadsloket Centrum/i)
+    ).toBeInTheDocument();
   });
 
   it('Opens location modal', async () => {
+    setupNockForLocationModal();
     const screen = renderAfspraakCard(afspraak);
     const user = userEvent.setup();
     const button = screen.getByRole('button', {
       name: /Toon op kaart/i,
     });
     await user.click(button);
-    screen.getByText(/Het adres Amstel 1/i);
-    screen.getByText(`Locatie: Stadsloket Centrum, Amstel 1`);
+    expect(
+      screen.getByText(/Stadsloket Centrum - Amstel 1/i)
+    ).toBeInTheDocument();
   });
 
-  it('Does not render location model, if there is no street in afspraak', async () => {
+  it('Does not render location modal, if there is no street in afspraak', async () => {
     const afspraakWithoutStreet: AfspraakFrontend = {
       ...afspraak,
       location: {
@@ -100,6 +118,6 @@ describe('Renders afspraak data', () => {
       name: /Toon op kaart/i,
     });
     expect(button).not.toBeInTheDocument();
-    screen.getByText(`Locatie: Stadsloket Centrum`);
+    expect(screen.getByText(`Locatie: Stadsloket Centrum`)).toBeInTheDocument();
   });
 });

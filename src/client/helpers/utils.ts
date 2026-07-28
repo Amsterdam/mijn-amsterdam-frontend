@@ -19,21 +19,40 @@ const FAIL_TIMEOUT_MS = 1000;
 
 export function getElementOnPageAsync(
   query: string,
-  timeout: number = FAIL_TIMEOUT_MS,
+  timeoutAfterMS: number = FAIL_TIMEOUT_MS,
   interval: number = POLL_INTERVAL_MS
 ): Promise<Element | null> {
-  return new Promise((resolve) => {
-    const startTime = Date.now();
-    function checkIfElementIsInDOM() {
-      const elem = document?.querySelector(query);
-      if (elem) {
-        resolve(elem); // Found the element
-      } else if (Date.now() - startTime > timeout) {
-        resolve(null); // Give up eventually
-      } else {
-        setTimeout(checkIfElementIsInDOM, interval); // check again every interval ms
+  return new Promise((resolve_) => {
+    function resolve(result: Element | null) {
+      if (timeout !== null) {
+        clearTimeout(timeout);
+        timeout = null;
       }
+      return resolve_(result);
     }
-    checkIfElementIsInDOM(); // Initial check
+
+    function checkIfElementIsInDOM() {
+      const doc = globalThis.document;
+      if (!doc) {
+        resolve(null);
+        return;
+      }
+
+      const elem = doc.querySelector(query);
+      if (elem) {
+        return resolve(elem);
+      }
+
+      const timeElapsed = Date.now() - startTime;
+      if (timeElapsed > timeoutAfterMS) {
+        return resolve(null);
+      }
+
+      timeout = setTimeout(checkIfElementIsInDOM, interval);
+    }
+
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+    const startTime = Date.now();
+    checkIfElementIsInDOM();
   });
 }

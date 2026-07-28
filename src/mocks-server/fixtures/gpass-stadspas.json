@@ -11,6 +11,14 @@
       "budget_balance": 580
     },
     {
+      "code": "2026_AMSTEG_PC",
+      "naam": "26/27 PC Tegoed",
+      "omschrijving": "",
+      "expiry_date": "2027-07-31T21:59:59.000Z",
+      "budget_assigned": 580,
+      "budget_balance": 574
+    },
+    {
       "code": "2025_AMSTEG_PC",
       "naam": "25/26 Kindtegoed 12 tm 14 jaar",
       "omschrijving": "Kindtegoed",
