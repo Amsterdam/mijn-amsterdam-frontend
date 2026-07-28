@@ -1,4 +1,5 @@
 import type { ErfpachtDossiersDetailSource } from './erfpacht-types.ts';
+import type { SomeOtherString } from '../../../universal/helpers/types.ts';
 import type {
   LinkProps,
   ZaakAanvraagDetail,
@@ -83,14 +84,11 @@ export type ZaakStatussenResponseSource = {
 };
 
 export type ZaakStatusFrontend =
-  | 'Ontvangen'
   | 'Aanvraag'
   | 'Meer informatie nodig'
   | 'In behandeling'
-  | 'Aanpassing akte door de notaris'
   | 'Afgehandeld'
-  | 'Onbekend'
-  | `Onbekend: ${string}`;
+  | SomeOtherString;
 
 //
 export type ErfpachtZaakExcerptFrontend = ZaakInfoSource & {

@@ -319,31 +319,31 @@ async function fetchErfpachtZaakInfo(
 }
 
 function getStatus(statustekst: ZaakStatusTypeSource): ZaakStatusFrontend {
-  switch (statustekst) {
-    case 'Aanvraag':
-    case 'Aanvraag Beoordelen':
-    case 'Aanvraag gereed voor behandeling':
+  switch (statustekst.toLowerCase()) {
+    case 'aanvraag':
+    case 'aanvraag beoordelen':
+    case 'aanvraag gereed voor behandeling':
       return 'Aanvraag';
 
-    case 'Informatie opgevraagd':
-    case 'Informatie aangeleverd':
+    case 'informatie opgevraagd':
+    case 'informatie aangeleverd':
       return 'Meer informatie nodig';
 
-    case 'Behandeling':
-    case 'Indicatie verstuurd':
-    case 'Aanbieding':
-    case 'Acceptatie ontvangen':
-    case 'Besluit verstuurd':
+    case 'behandeling':
+    case 'indicatie verstuurd':
+    case 'aanbieding':
+    case 'acceptatie ontvangen':
+    case 'besluit verstuurd':
       return 'In behandeling';
 
-    case 'Akte gepasseerd':
+    case 'akte gepasseerd':
       return 'Aanpassing akte door de notaris';
 
-    case 'Aanvraag afgerond':
+    case 'aanvraag afgerond':
       return 'Afgehandeld';
 
     default:
-      return `Onbekend: ${statustekst}`;
+      return `${statustekst}`;
   }
 }
 
