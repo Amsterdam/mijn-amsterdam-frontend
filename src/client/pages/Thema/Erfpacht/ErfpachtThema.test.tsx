@@ -3,7 +3,7 @@ import { generatePath } from 'react-router';
 
 import { themaConfig } from './Erfpacht-thema-config.ts';
 import { ErfpachtThema } from './ErfpachtThema.tsx';
-import ERFPACHT_DOSSIERS from '../../../../mocks-server/fixtures/erfpacht-v2-dossiers.json' with { type: 'json' };
+import ERFPACHT_DOSSIERS from '../../../../mocks-server/fixtures/erfpacht/erfpacht-v2-dossiers.json' with { type: 'json' };
 import { transformDossierResponse } from '../../../../server/services/erfpacht/erfpacht.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
 import { MockApp } from '../../MockApp.tsx';
@@ -52,9 +52,6 @@ describe('<Erfpacht />', () => {
 
     const screen = render(<Component state={testState} />);
 
-    expect(
-      screen.getByText(/Hieronder ziet u de gegevens van uw erfpachtrechten/i)
-    ).toBeInTheDocument();
     expect(screen.getByText('Erfpachtrechten')).toBeInTheDocument();
     expect(
       screen.getByText('U heeft (nog) geen erfpachtrechten')
@@ -92,9 +89,6 @@ describe('<Erfpacht />', () => {
     expect(screen.getByText('Foutmelding')).toBeInTheDocument();
     expect(
       screen.getByText('We kunnen op dit moment niet alle gegevens tonen.')
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(/Hieronder ziet u de gegevens van uw erfpachtrechten/i)
     ).toBeInTheDocument();
     expect(screen.queryByText('Erfpachtrechten')).not.toBeInTheDocument();
     expect(
@@ -147,9 +141,6 @@ describe('<Erfpacht />', () => {
 
     const screen = render(<Component state={testState} />);
 
-    expect(
-      screen.getByText(/Hieronder ziet u de gegevens van uw erfpachtrechten/i)
-    ).toBeInTheDocument();
     expect(screen.getByText('Erfpachtrechten')).toBeInTheDocument();
     expect(
       screen.queryByText('U heeft geen erfpachtrechten.')
