@@ -79,9 +79,8 @@ describe('hli/router-external-consumer', async () => {
 
       const renderSecondArg = resMock.render.mock.calls[0][1];
 
-      expect(renderSecondArg.administratienummerEncrypted).toStrictEqual(
-        'test-encrypted-id'
-      );
+      expect(renderSecondArg.identifier).toStrictEqual('test-encrypted-id');
+
       expect(renderSecondArg.appHref).toStrictEqual(
         'amsterdam://stadspas/gelukt'
       );
@@ -249,7 +248,7 @@ describe('hli/router-external-consumer', async () => {
     });
   });
 
-  test('Returns stadpassen with CategorieCode', async () => {
+  test('Returns stadpassen with Type', async () => {
     const resMock = ResponseMock.new();
 
     vi.spyOn(
@@ -259,7 +258,7 @@ describe('hli/router-external-consumer', async () => {
       status: 'OK',
       content: {
         administratienummer: '123456789',
-        stadspassen: [{ categorieCode: 'ABC' } as unknown as Stadspas],
+        stadspassen: [{ type: 'kind' } as unknown as Stadspas],
       },
     });
 
@@ -275,7 +274,7 @@ describe('hli/router-external-consumer', async () => {
       status: 'OK',
       content: [
         {
-          categorieCode: 'ABC',
+          type: 'kind',
           transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED,
         },
       ],
