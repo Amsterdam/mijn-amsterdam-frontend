@@ -34,7 +34,7 @@ export function ErfpachtThema() {
   const pageContentTables = entries(tableConfig)
     .map(([kind, { title, displayProps, listPageRoute, maxItems }]) => {
       const items = kind === 'erfpacht-dossiers' ? dossiers : zaken;
-      if (!items.length) {
+      if (!items.length && kind !== 'erfpacht-dossiers') {
         return null;
       }
       return (
