@@ -23,6 +23,7 @@ export function ErfpachtZaakDetail() {
     {
       label: 'Dossiers',
       content: zaak?.dossierLinks ?? [],
+      isVisible: !!zaak?.dossierLinks?.length,
     },
     {
       label: 'Resultaat',
