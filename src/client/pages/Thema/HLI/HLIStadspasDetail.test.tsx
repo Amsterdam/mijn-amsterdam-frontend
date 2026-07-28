@@ -101,16 +101,16 @@ describe('With basic request where data returned does not matter', () => {
     const screen = render(<HLIStadspas />);
 
     expect(screen.getByText('Type').nextElementSibling).toHaveTextContent(
-      'kind'
+      'Kind'
     );
   });
 
-  it("displays pas type 'Volwassene'", () => {
+  it("displays pas type 'Volwassen'", () => {
     const HLIStadspas = createHLIStadspasComponent(pasVolwasseneTypeState);
     const screen = render(<HLIStadspas />);
 
     expect(screen.getByText('Type').nextElementSibling).toHaveTextContent(
-      'volwassen'
+      'Volwassen'
     );
   });
 
@@ -119,7 +119,7 @@ describe('With basic request where data returned does not matter', () => {
     const screen = render(<HLIStadspas />);
 
     expect(screen.getByText('Type').nextElementSibling).toHaveTextContent(
-      'onbekend'
+      'Onbekend'
     );
   });
 

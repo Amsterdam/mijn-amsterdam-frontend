@@ -21,6 +21,7 @@ import type {
 } from '../../../../server/services/hli/stadspas-types.ts';
 import { isError, isLoading } from '../../../../universal/helpers/api.ts';
 import { dateSort } from '../../../../universal/helpers/date.ts';
+import { capitalizeFirstLetter } from '../../../../universal/helpers/text.ts';
 import { ErrorAlert } from '../../../components/Alert/Alert.tsx';
 import { Datalist, type Row } from '../../../components/Datalist/Datalist.tsx';
 import {
@@ -111,18 +112,13 @@ export function HLIStadspasDetail() {
     },
     {
       label: 'Type',
-      content: stadspas?.type,
+      content: capitalizeFirstLetter(stadspas?.type ?? ''),
     },
     {
       label: 'Stadspasnummer',
       content: stadspas?.passNumberComplete,
     },
   ];
-
-  const NUMBER = {
-    label: 'Stadspasnummer',
-    content: stadspas?.passNumberComplete,
-  };
 
   const transactionsApi = useBffApi<StadspasBudgetTransaction[]>(
     stadspas?.urlTransactions
