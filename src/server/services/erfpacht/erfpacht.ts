@@ -373,8 +373,17 @@ function transformErfpachtZaakDetailResponse(
       const hasMatchingSubsteps = !!substeps?.length;
 
       let description = '';
-      if (isMeerInformatieStep) {
-        description = `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen. U ontvangt van ons bericht met meer details.`;
+
+      switch (true) {
+        case isMeerInformatieStep:
+          description = `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen. U ontvangt van ons bericht met meer details.`;
+          break;
+        case statusFixed === 'In behandeling':
+          description = `Wij hebben uw aanvraag in behandeling genomen.`;
+          break;
+        case statusFixed === 'Afgehandeld':
+          description = `Wij hebben uw aanvraag afgerond en hebben u hierover bericht gestuurd.`;
+          break;
       }
 
       const step: StatusLineItem<ZaakStatusFrontend, ZaakStatusTypeSource> = {
