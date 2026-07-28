@@ -141,7 +141,7 @@ authRouterDevelopment.get(
       authMethod === 'digid' ? 'MA_TEST_ACCOUNTS' : 'MA_TEST_ACCOUNTS_EH';
 
     if (!req.query.username) {
-      return sendRenderedTestAccountTable(res, authMethod);
+      return sendRenderedTestAccountTable(res, authMethod, req.query);
     }
 
     const profileId = getValueFromEnvByKey(envKey, req.query.username);
@@ -216,7 +216,8 @@ function transformAccount(account: TestUserAccount): TestUserAccount {
 
 async function sendRenderedTestAccountTable(
   res: Response,
-  authMethod: AuthMethod
+  authMethod: AuthMethod,
+  queryParams: Record<string, string> = {}
 ) {
   const envKey =
     authMethod === 'digid' ? 'MA_TEST_ACCOUNTS' : 'MA_TEST_ACCOUNTS_EH';
@@ -287,7 +288,8 @@ async function sendRenderedTestAccountTable(
 
   const accountsWithLoginLink = addLoginLinkToUsernameProp(
     testAccountsData,
-    authMethod
+    authMethod,
+    queryParams
   );
 
   const renderProps = {
@@ -301,13 +303,13 @@ async function sendRenderedTestAccountTable(
 
 function addLoginLinkToUsernameProp(
   testAccountData: TestUserData,
-  authMethod: AuthProfile['authMethod']
+  authMethod: AuthProfile['authMethod'],
+  queryParams: Record<string, string> = {}
 ) {
   const authRoute = `${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}`;
-
   return testAccountData.accounts.map((account) => {
     const authLoginRoute = generateFullApiUrlBFF(authRoute, [
-      { username: account.username },
+      { username: account.username, ...queryParams },
     ]);
     return {
       ...account,
