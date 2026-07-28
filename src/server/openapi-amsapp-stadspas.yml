@@ -381,6 +381,12 @@ components:
         securityCode:
           nullable: true
           type: string
+        type:
+          type: string
+          enum:
+            - 'volwassen'
+            - 'kind'
+            - 'onbekend'
         transactionsKeyEncrypted:
           description: |
             Used in subsequent requests to other endpoints requiring this.
