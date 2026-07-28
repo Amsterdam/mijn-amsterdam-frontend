@@ -268,25 +268,14 @@ function addReadMoreLink(budget: StadspasBudget) {
 
 function determineUwUitgavenDescription(
   stadspas: StadspasFrontend | undefined
-) {
+): JSX.Element {
   const expenseInfoTextBase = <>U heeft nog geen uitgaven.</>;
 
-  const extraInfo = (
-    <>
-      Deze informatie kan een dag achterlopen. Maar het saldo dat u nog over
-      heeft klopt altijd.
-    </>
-  );
-
-  if (!stadspas) {
-    return expenseInfoTextBase;
-  }
-
-  if (stadspas.budgets && stadspas.balance > 0) {
+  if (stadspas?.budgets && stadspas?.balance > 0) {
     return (
       <>
-        {expenseInfoTextBase}
-        {extraInfo}
+        {expenseInfoTextBase} Deze informatie kan een dag achterlopen. Maar het
+        saldo dat u nog over heeft klopt altijd.
       </>
     );
   }

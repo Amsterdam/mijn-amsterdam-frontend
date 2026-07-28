@@ -352,9 +352,7 @@ describe('Displayed description of uw uitgaven text', () => {
         <React.Fragment>
           U heeft nog geen uitgaven.
         </React.Fragment>
-        <React.Fragment>
-          Deze informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft klopt altijd.
-        </React.Fragment>
+         Deze informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft klopt altijd.
       </React.Fragment>
     `);
   });
