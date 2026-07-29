@@ -80,3 +80,7 @@ export async function fetchErfpachtNotifications(
 
   return apiSuccessResult({ notifications });
 }
+
+export const forTesting = {
+  getTitleAndDescriptionForNotification,
+};

@@ -1,12 +1,10 @@
 import type { Request } from 'express';
 
+import { fetchErfpachtDossiersDetail } from './erfpacht-dossiers.ts';
 import { featureToggle, routes } from './erfpacht-service-config.ts';
 import type { ErfpachtDossiersDetailSource } from './erfpacht-types.ts';
 import type { ErfpachtZaakExcerptFrontend } from './erfpacht-zaken-types.ts';
-import {
-  fetchErfpachtDossiersDetail,
-  fetchErfpachtZaakDetail,
-} from './erfpacht-dossiers.ts';
+import { fetchErfpachtZaakDetail } from './erfpacht-zaken.ts';
 import {
   createBFFRouter,
   type ResponseAuthenticated,

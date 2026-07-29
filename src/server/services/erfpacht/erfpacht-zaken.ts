@@ -239,4 +239,6 @@ export async function fetchErfpachtZaakDetail(
 
 export const forTesting = {
   transformErfpachtZaakDetailResponse,
+  transformErfpachtZakenResponse,
+  fetchErfpachtZaakStatussen,
 };
