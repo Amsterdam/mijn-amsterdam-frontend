@@ -1,8 +1,10 @@
-import type { ReactNode } from 'react';
-
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { listPageParamKind } from './HLI-thema-config.ts';
+import {
+  listPageParamKind,
+  stadspasDisplayProps,
+  type StadspasDisplayProps,
+} from './HLI-thema-config.ts';
 import styles from './HLIThema.module.scss';
 import { useHliThemaData } from './useHliThemaData.ts';
 import type {
@@ -15,7 +17,6 @@ import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
 import { TableV2 } from '../../../components/Table/TableV2.tsx';
-import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
@@ -29,16 +30,6 @@ export function HistoricItemsMention() {
   );
 }
 
-type StadspasDisplayProps = {
-  owner: ReactNode;
-  actief: ReactNode;
-};
-
-const stadspasDisplayProps: DisplayProps<StadspasDisplayProps> = {
-  owner: '',
-  actief: 'Status',
-};
-
 function Stadspassen({
   stadspassen,
   dateExpiryFormatted,
@@ -46,15 +37,17 @@ function Stadspassen({
   const passen = stadspassen.map((pas) => {
     return {
       owner: (
-        <MaRouterLink maVariant="fatNoUnderline" href={pas.link?.to}>
+        <MaRouterLink
+          maVariant="fatNoUnderline"
+          href={pas.link?.to}
+          title={`Overzicht en uitgaven van Stadspas van ${pas.owner.firstname}`}
+        >
           <span
             className={styles.Stadspas_owner}
           >{`Stadspas van ${pas.owner.firstname}`}</span>
-          {!!pas.balance && (
-            <span className={styles.Stadspas_balance}>heeft tegoed</span>
-          )}
         </MaRouterLink>
       ),
+      heeftTegoed: pas.budgets.length ? 'Ja' : 'Nee',
       actief: (
         <span className={styles.StatusValue}>
           {pas.actief ? 'Actief' : 'Geblokkeerd'}

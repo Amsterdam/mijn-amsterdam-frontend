@@ -163,6 +163,13 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                   />
                   <th
                     class="ams-table__header-cell"
+                    style="width: 20%;"
+                  >
+                    Tegoed
+                  </th>
+                  <th
+                    class="ams-table__header-cell"
+                    style="width: 40%;"
                   >
                     Status
                   </th>
@@ -179,18 +186,19 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                   >
                     <a
                       class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
+                      title="Overzicht en uitgaven van Stadspas van Kerub"
                     >
                       <span
                         class="_Stadspas_owner_b80084"
                       >
                         Stadspas van Kerub
                       </span>
-                      <span
-                        class="_Stadspas_balance_b80084"
-                      >
-                        heeft tegoed
-                      </span>
                     </a>
+                  </td>
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Nee
                   </td>
                   <td
                     class="ams-table__cell"
@@ -210,18 +218,19 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                   >
                     <a
                       class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
+                      title="Overzicht en uitgaven van Stadspas van Lou"
                     >
                       <span
                         class="_Stadspas_owner_b80084"
                       >
                         Stadspas van Lou
                       </span>
-                      <span
-                        class="_Stadspas_balance_b80084"
-                      >
-                        heeft tegoed
-                      </span>
                     </a>
+                  </td>
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Nee
                   </td>
                   <td
                     class="ams-table__cell"
@@ -268,11 +277,13 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                 >
                   <th
                     class="ams-table__header-cell"
+                    style="width: 60%;"
                   >
                     Datum
                   </th>
                   <th
                     class="ams-table__header-cell"
+                    style="width: 40%;"
                   >
                     Document
                   </th>
@@ -352,13 +363,13 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                 >
                   <th
                     class="ams-table__header-cell"
-                    style="width: 80%;"
+                    style="width: 60%;"
                   >
                     Regeling
                   </th>
                   <th
                     class="ams-table__header-cell"
-                    style="width: 20%;"
+                    style="width: 40%;"
                   >
                     Ontvangers
                   </th>
