@@ -16,6 +16,7 @@ import type {
   ErfpachtResponseFrontend,
 } from './erfpacht-types.ts';
 import { type ErfpachtDossiersResponseSource } from './erfpacht-types.ts';
+import { getStatus } from './erfpacht-zaken-config.ts';
 import type {
   ErfpachtZaakDetailFrontend,
   ErfpachtZaakExcerptFrontend,
@@ -31,7 +32,12 @@ import {
   getFailedDependencies,
   type ApiResponse,
 } from '../../../universal/helpers/api.ts';
-import { defaultDateFormat } from '../../../universal/helpers/date.ts';
+import {
+  defaultDateFormat,
+  parseDutchDateStringToISO,
+  toDateFormatted,
+  toISOString,
+} from '../../../universal/helpers/date.ts';
 import { hash, jsonCopy, sortAlpha } from '../../../universal/helpers/utils.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
@@ -274,8 +280,16 @@ function transformErfpachtZakenResponse(
   zakenResponseSource: ZaakInfoResponseSource
 ): ErfpachtZaakExcerptFrontend[] {
   return (zakenResponseSource.content ?? []).map((zaakInfo) => {
+    const datePublished = zaakInfo.formattedStatusDatum
+      ? parseDutchDateStringToISO(zaakInfo.formattedStatusDatum)
+      : null;
+
     const zaak: ErfpachtZaakExcerptFrontend = {
       ...zaakInfo,
+      // Added these fields because the date notation from the API is not in ISO format, and we need to ensure that the date is in a consistent format for frontend use.
+      datePublished: datePublished ? toISOString(datePublished) : null,
+      datePublishedFormatted: toDateFormatted(datePublished),
+      //
       fetchZaakDetailUrl: generateFullApiUrlBFF(
         routes.protected.ERFPACHT_ZAAK_DETAILS,
         {
@@ -299,7 +313,7 @@ function transformErfpachtZakenResponse(
 /**
  * Fetches wijzigingsaanvraag zaken.
  */
-async function fetchErfpachtZaakInfo(
+export async function fetchErfpachtZaakInfo(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<ErfpachtZaakExcerptFrontend[]>> {
   const config = getCustomApiConfig(dataRequestConfig, {
@@ -323,35 +337,6 @@ async function fetchErfpachtZaakInfo(
   );
 
   return zaakInfoResponse;
-}
-
-function getStatus(statustekst: ZaakStatusTypeSource): ZaakStatusFrontend {
-  switch (statustekst.toLowerCase()) {
-    case 'aanvraag':
-    case 'aanvraag beoordelen':
-    case 'aanvraag gereed voor behandeling':
-      return 'Aanvraag';
-
-    case 'informatie opgevraagd':
-    case 'informatie aangeleverd':
-      return 'Meer informatie nodig';
-
-    case 'behandeling':
-    case 'indicatie verstuurd':
-    case 'aanbieding':
-    case 'acceptatie ontvangen':
-    case 'besluit verstuurd':
-      return 'In behandeling';
-
-    case 'akte gepasseerd':
-      return 'Aanpassing akte door de notaris';
-
-    case 'aanvraag afgerond':
-      return 'Afgehandeld';
-
-    default:
-      return `${statustekst}`;
-  }
 }
 
 type ZaakStatusResponseFrontend = {

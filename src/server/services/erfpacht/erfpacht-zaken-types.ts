@@ -91,12 +91,16 @@ export type ZaakStatusFrontend =
   | SomeOtherString;
 
 //
-export type ErfpachtZaakExcerptFrontend = ZaakInfoSource & {
-  fetchZaakDetailUrl: string;
-  link: LinkProps;
-  displayStatus: string;
-  dossierLinks: (LinkProps | string)[];
-};
+export type ErfpachtZaakExcerptFrontend = Prettify<
+  ZaakInfoSource & {
+    datePublished: string | null;
+    datePublishedFormatted: string | null;
+    fetchZaakDetailUrl: string;
+    link: LinkProps;
+    displayStatus: string;
+    dossierLinks: (LinkProps | string)[];
+  }
+>;
 
 // TODO: Welke gegevens zijn nodig?
 export type ErfpachtZaakDetailFrontend = Prettify<

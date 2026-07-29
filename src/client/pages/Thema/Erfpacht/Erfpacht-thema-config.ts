@@ -178,13 +178,27 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
       zaakNummer: firstZaak?.titelZaakNummer,
       dossierLinks: 'Erfpachtdossier',
       displayStatus: 'Status',
-      formattedStatusDatum: firstZaak?.titelFormattedStatusDatum,
+      datePublishedFormatted: firstZaak?.titelFormattedStatusDatum,
     },
     colWidths: {
       large: ['25%', '25%', '25%', '25%'],
       small: ['100%', '0', '0', '0'],
     },
   };
+
+  // Wijzigingsaanvragen table on Dossier detail page
+  const displayPropsDossierDetailZaken: DisplayProps<ErfpachtZaakExcerptFrontend> =
+    {
+      props: {
+        zaakNummer: firstZaak?.titelZaakNummer,
+        displayStatus: 'Status',
+        datePublishedFormatted: firstZaak?.titelFormattedStatusDatum,
+      },
+      colWidths: {
+        large: ['33%', '33%', '34%'],
+        small: ['50%', '50%', '0'],
+      },
+    };
 
   // Erfpachtrechten table on themapagina
   const displayPropsDossiers: DisplayPropsDossiers = {
@@ -199,20 +213,6 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
   };
 
   const titleDossiers = erfpachtData?.titelDossiersKop;
-
-  // Table on dossier detail pagina
-  const displayPropsDossierDetailZaken: DisplayProps<ErfpachtZaakExcerptFrontend> =
-    {
-      props: {
-        zaakNummer: firstZaak?.titelZaakNummer,
-        displayStatus: 'Status',
-        formattedStatusDatum: firstZaak?.titelFormattedStatusDatum,
-      },
-      colWidths: {
-        large: ['33%', '33%', '34%'],
-        small: ['50%', '50%', '0'],
-      },
-    };
 
   const tableConfig = {
     [listPageParamKind.erfpachtZaken]: {
