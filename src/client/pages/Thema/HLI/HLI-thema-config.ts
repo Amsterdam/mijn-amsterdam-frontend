@@ -178,7 +178,7 @@ export const stadspasDisplayProps: DisplayProps<StadspasDisplayProps> = {
   },
   colWidths: {
     large: ['60%', '20%', '20%'],
-    small: ['100%', '0', '0'],
+    small: ['80%', '20%', '0'],
   },
 };
 
