@@ -140,7 +140,7 @@ const displayPropsEerdereRegelingen: DisplayProps<HLIRegelingFrontend> = {
     betrokkenen: 'Ontvangers',
   },
   colWidths: {
-    large: ['60%', '20%', '20%'],
+    large: ['40%', '20%', '40%'],
     small: ['100%', '0', '0'],
   },
 };
@@ -177,7 +177,7 @@ export const stadspasDisplayProps: DisplayProps<StadspasDisplayProps> = {
     actief: 'Status',
   },
   colWidths: {
-    large: ['60%', '20%', '20%'],
+    large: ['40%', '20%', '40%'],
     small: ['80%', '20%', '0'],
   },
 };
