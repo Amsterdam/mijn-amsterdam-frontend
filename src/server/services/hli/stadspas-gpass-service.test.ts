@@ -208,8 +208,8 @@ describe('stadspas-gpass-service', () => {
         actief: false,
         balance_update_time: '',
         budgetten_actief: false,
-        categorie: '',
-        categorie_code: '',
+        categorie: 'Kindpas Minima',
+        categorie_code: 'K',
         originele_pas: {
           categorie: '',
           categorie_code: '',
@@ -292,6 +292,7 @@ describe('stadspas-gpass-service', () => {
         passNumber: 12345,
         passNumberComplete: '12345-67890',
         securityCode: '0123456',
+        type: 'kind',
       });
 
       const transformedResponseNoSecurityCode =
@@ -667,6 +668,7 @@ describe('stadspas-gpass-service', () => {
         passNumber: 111111111111,
         passNumberComplete: '6666666666666666666',
         securityCode: '012345',
+        type: 'volwassene',
       });
     });
   });

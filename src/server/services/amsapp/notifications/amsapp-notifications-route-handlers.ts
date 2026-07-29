@@ -44,7 +44,8 @@ function getRenderPropsForApiError(
     identifier: !IS_PRODUCTION ? identifier : '',
     // If the Digid login failed we don't want the user to be redirected to logout. In this case we can open the app directly.
     // If the error is not related to the Digid login, the user must always be redirected to logout. See the amsapp-open-app.pug for logic on how we handle the redirection to logout vs opening the app directly.
-    promptOpenApp: apiResponseError.code === apiResponseErrors.DIGID_AUTH.code,
+    redirectToLogout:
+      apiResponseError.code !== apiResponseErrors.DIGID_AUTH.code,
   };
 }
 
@@ -142,7 +143,7 @@ export async function handleRegisterConsumer(
   const renderProps: RenderProps = {
     ...baseRenderProps,
     appHref: `${AMSAPP_NOTIFICATIONS_DEEP_LINK_BASE}/gelukt`,
-    promptOpenApp: false, // We want the user to be redirected to logout first.
+    redirectToLogout: true, // We want the user to be redirected to logout first.
     identifier: !IS_PRODUCTION ? req.params.consumerId : '',
   };
 

@@ -21,8 +21,9 @@ import type {
 } from '../../../../server/services/hli/stadspas-types.ts';
 import { isError, isLoading } from '../../../../universal/helpers/api.ts';
 import { dateSort } from '../../../../universal/helpers/date.ts';
+import { capitalizeFirstLetter } from '../../../../universal/helpers/text.ts';
 import { ErrorAlert } from '../../../components/Alert/Alert.tsx';
-import { Datalist } from '../../../components/Datalist/Datalist.tsx';
+import { Datalist, type Row } from '../../../components/Datalist/Datalist.tsx';
 import {
   LoadingContent,
   type BarConfig,
@@ -100,12 +101,22 @@ export function HLIStadspasDetail() {
   const isLoadingStadspas = isLoading(HLI);
   const noContent = !stadspas;
 
-  const NAME = {
+  const NAME: Row = {
     label: 'Naam',
     content: stadspas?.owner.firstname,
   };
 
-  const NUMBER = {
+  const STATUS: Row = {
+    label: 'Status',
+    content: stadspas?.actief ? 'Actief' : 'Geblokkeerd',
+  };
+
+  const CATEGORIE: Row = {
+    label: 'Type',
+    content: capitalizeFirstLetter(stadspas?.type || ''),
+  };
+
+  const NUMBER: Row = {
     label: 'Stadspasnummer',
     content: stadspas?.passNumberComplete,
   };
@@ -145,8 +156,8 @@ export function HLIStadspasDetail() {
       {stadspas ? (
         <>
           <PageContentCell>
-            <Datalist rows={[NAME]} />
-            <Paragraph className={styles.StadspasNummerInfo}>
+            <Datalist rows={[NAME, CATEGORIE, STATUS]} />
+            <Paragraph className="ams-mb-m">
               Hieronder staat het Stadspasnummer van uw{' '}
               {stadspas.actief ? 'actieve' : 'geblokkeerde'} pas.
               <br /> Dit pasnummer staat ook op de achterkant van uw pas.
@@ -216,15 +227,18 @@ export function HLIStadspasDetail() {
         {(isLoadingTransacties || isLoadingStadspas) && (
           <LoadingContent barConfig={loadingContentBarConfigList} />
         )}
-        {!isLoadingStadspas && !isLoadingTransacties && (
-          <Paragraph>
-            {determineUwUitgavenDescription(stadspas, hasTransactions)}
-          </Paragraph>
+        {!isLoadingStadspas && !isLoadingTransacties && !hasTransactions && (
+          <Paragraph>{determineUwUitgavenDescription(stadspas)}</Paragraph>
         )}
-      </PageContentCell>
-      {!isLoadingTransacties && hasTransactions && (
-        <PageContentCell>
+        {!isLoadingTransacties && hasTransactions && (
           <TableV2<StadspasBudgetTransaction>
+            contentAfterTheCaption={
+              <>
+                Hieronder ziet u bij welke winkels u het tegoed hebt uitgegeven.
+                Deze informatie kan een dag achterlopen. Maar het saldo dat u
+                nog over heeft klopt altijd.
+              </>
+            }
             className={
               showMultiBudgetTransactions
                 ? styles.Table_transactions__withBudget
@@ -237,8 +251,8 @@ export function HLIStadspasDetail() {
                 : displayPropsTransacties
             }
           />
-        </PageContentCell>
-      )}
+        )}
+      </PageContentCell>
     </PageV2>
   );
 }
@@ -264,35 +278,15 @@ function addReadMoreLink(budget: StadspasBudget) {
 }
 
 function determineUwUitgavenDescription(
-  stadspas: StadspasFrontend | undefined,
-  hasTransactions: boolean
-) {
+  stadspas: StadspasFrontend | undefined
+): JSX.Element {
   const expenseInfoTextBase = <>U heeft nog geen uitgaven.</>;
 
-  const extraInfo = (
-    <>
-      Deze informatie kan een dag achterlopen. Maar het saldo dat u nog over
-      heeft klopt altijd.
-    </>
-  );
-
-  if (!stadspas) {
-    return expenseInfoTextBase;
-  }
-
-  if (hasTransactions) {
+  if (stadspas?.budgets && stadspas?.balance > 0) {
     return (
       <>
-        Hieronder ziet u bij welke winkels u het tegoed hebt uitgegeven. Deze
-        informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft
-        klopt altijd.
-      </>
-    );
-  } else if (stadspas.budgets && stadspas.balance > 0) {
-    return (
-      <>
-        {expenseInfoTextBase}
-        {extraInfo}
+        {expenseInfoTextBase} Deze informatie kan een dag achterlopen. Maar het
+        saldo dat u nog over heeft klopt altijd.
       </>
     );
   }

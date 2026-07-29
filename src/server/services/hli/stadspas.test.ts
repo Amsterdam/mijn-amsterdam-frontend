@@ -45,8 +45,8 @@ export function createPas(
       },
     ],
     vervangen: false,
-    categorie: 'Amsterdamse Digitale Stadspas',
-    categorie_code: 'A',
+    categorie: 'Minima',
+    categorie_code: 'M',
     expiry_date: '2080-08-31T23:59:59.000Z',
     id: 999999,
     pasnummer: 777777777777,
@@ -189,6 +189,7 @@ describe('stadspas services', () => {
         passNumberComplete: '6666666666666666666',
         securityCode: '012345',
         transactionsKeyEncrypted: '1x2x3x-##########-4x5x6x',
+        type: 'volwassene',
         unblockPassURL:
           'http://bff-api-host/api/v1/services/stadspas/unblock/1x2x3x-%23%23%23%23%23%23%23%23%23%23-4x5x6x',
         urlTransactions:

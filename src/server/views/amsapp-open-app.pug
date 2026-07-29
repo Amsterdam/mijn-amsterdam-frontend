@@ -15,23 +15,49 @@ html(lang="nl")
       h1 Inloggen
       p Open de Amsterdam App om verder te gaan.
 
-      if identifier
-        pre #{identifier}
+      if !error && identifier
+        strong Identifier:&nbsp;
+        code #{identifier} &mdash;
+        | &nbsp;Redirecting in&nbsp;
+        span(id='redirect-interval-timer') #{redirectTimeout || 0}
+        | &nbsp;seconds
 
       if error
         p Foutmelding: #{error.code} - #{error.message}
 
-      if promptOpenApp
+      if !redirectToLogout
         a(href=appHref id='protocol-link-button') Open Amsterdam App
 
     //- If we have a logoutUrl and should not prompt the device to open the app, it means we want to redirect the user to the logout route.
-    //- Afther the logout the user will be redirected back to the app landing page, where we can prompt them to open the app.
-    if !promptOpenApp && logoutUrl
+    //- After the logout the user will be redirected back to the app landing page, where we can prompt them to open the app.
+    if redirectToLogout && logoutUrl
       script(type='text/javascript' nonce=nonce).
-        window.sessionStorage.setItem('amsapphref','#{appHref}');
-        window.location.href = '#{logoutUrl}';
+        const ONE_SECOND = 1000;
+        const intervalTimer = document.getElementById('redirect-interval-timer')
 
-    if promptOpenApp
+        let redirectTimeout = #{redirectTimeout || 0};
+
+        window.sessionStorage.setItem('amsapphref','#{appHref}');
+
+        function setIntervalContent() {
+          if (intervalTimer) {
+            intervalTimer.textContent = Math.ceil(redirectTimeout / ONE_SECOND);
+          }
+        }
+
+        setIntervalContent();
+
+        const redirectInterval = setInterval(function() {
+          if (redirectTimeout <= ONE_SECOND) {
+            clearInterval(redirectInterval);
+            window.location.href = '#{logoutUrl}';
+          } else {
+            redirectTimeout -= ONE_SECOND;
+            setIntervalContent();
+          }
+        }, ONE_SECOND);
+
+    if !redirectToLogout
       script(type='text/javascript' nonce=nonce).
         const protocolLink = document.getElementById('protocol-link-button');
         const appHref = window.sessionStorage.getItem('amsapphref');

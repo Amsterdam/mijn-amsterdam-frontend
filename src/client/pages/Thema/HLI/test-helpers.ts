@@ -63,6 +63,7 @@ export function stadspasCreator() {
       unblockPassURL: 'http://example.com/stadspas/unblock',
       actief: true,
       securityCode: '123-securitycode-123',
+      type: 'onbekend',
       ...fieldsToOverwrite,
     };
   }
