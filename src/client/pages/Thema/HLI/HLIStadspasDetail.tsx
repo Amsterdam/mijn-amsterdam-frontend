@@ -287,9 +287,8 @@ function determineUwUitgavenDescription(
   if (hasTransactions) {
     return (
       <>
-        Hieronder ziet u bij welke winkels u het tegoed hebt uitgegeven. Deze
-        informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft
-        klopt altijd.
+        Hieronder ziet u bij welke winkels u het tegoed hebt uitgegeven.{' '}
+        {extraInfo}
       </>
     );
   } else if (stadspas.budgets && stadspas.balance > 0) {
