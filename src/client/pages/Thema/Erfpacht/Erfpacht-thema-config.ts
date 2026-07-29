@@ -9,7 +9,10 @@ import type {
 import type { ErfpachtZaakExcerptFrontend } from '../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
 import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
-import { propagateFeatureToggles } from '../../../config/feature-toggles.ts';
+import {
+  isEnabled,
+  propagateFeatureToggles,
+} from '../../../config/feature-toggles.ts';
 import type {
   PageConfig,
   ThemaConfigBase,
@@ -60,6 +63,7 @@ export const themaConfig = {
   featureToggle: propagateFeatureToggles({
     active: true,
     canonmatigingLinkActive: true,
+    wijzigingsaanvragenActive: isEnabled('ERFPACHT.wijzigingsaanvragen'),
   }),
   pageLinks: [
     {
@@ -144,6 +148,11 @@ export const erfpachtFacturenTableConfig = getFacturenTableConfig({
   mergeConfig: {
     open: {
       title: 'Openstaande erfpachtfacturen',
+      displayProps: {
+        colWidths: {
+          large: ['25%', '25%', '25%', '25%'],
+        },
+      },
     },
     overgedragen: {
       title: 'Overgedragen erfpachtfacturen',
@@ -155,7 +164,7 @@ export const erfpachtFacturenTableConfig = getFacturenTableConfig({
 });
 
 type DisplayPropsDossiers = DisplayProps<ErfpachtDossierFrontend>;
-type DisplayPropsZaken = DisplayProps<
+type DisplayPropsWijzigingsaanvragen = DisplayProps<
   ErfpachtZaakExcerptFrontend & { dossierLinks: ReactNode[] }
 >;
 
@@ -163,21 +172,35 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
   const dossiersBase = erfpachtData?.dossiers;
   const [firstZaak] = erfpachtData?.zaken ?? [];
 
-  const displayPropsDossiers: DisplayPropsDossiers = {
-    voorkeursadres: dossiersBase?.titelVoorkeursAdres,
-    dossierNummer: dossiersBase?.titelDossiernummer,
+  // Wijzigingsaanvragen table on themapagina
+  const displayPropsWijzigingsaanvragen: DisplayPropsWijzigingsaanvragen = {
+    props: {
+      zaakNummer: firstZaak?.titelZaakNummer,
+      dossierLinks: 'Erfpachtdossier',
+      displayStatus: 'Status',
+      formattedStatusDatum: firstZaak?.titelFormattedStatusDatum,
+    },
+    colWidths: {
+      large: ['25%', '25%', '25%', '25%'],
+      small: ['100%', '0', '0', '0'],
+    },
   };
 
-  const displayPropsZaken: DisplayPropsZaken = {
-    zaakNummer: firstZaak?.titelZaakNummer,
-    dossierLinks: 'Erfpachtdossier',
-    displayStatus: 'Status',
-    // statusOmschrijving: firstZaak?.titelStatusOmschrijving,
-    formattedStatusDatum: firstZaak?.titelFormattedStatusDatum,
+  // Erfpachtrechten table on themapagina
+  const displayPropsDossiers: DisplayPropsDossiers = {
+    props: {
+      dossierNummer: dossiersBase?.titelDossiernummer,
+      voorkeursadres: dossiersBase?.titelVoorkeursAdres,
+    },
+    colWidths: {
+      large: ['50%', '50%'],
+      small: ['30%', '70%'],
+    },
   };
 
   const titleDossiers = erfpachtData?.titelDossiersKop;
 
+  // Table on dossier detail pagina
   const displayPropsDossierDetailZaken: DisplayProps<ErfpachtZaakExcerptFrontend> =
     {
       props: {
@@ -194,7 +217,7 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
   const tableConfig = {
     [listPageParamKind.erfpachtZaken]: {
       title: 'Wijzigingsaanvragen',
-      displayProps: displayPropsZaken,
+      displayProps: displayPropsWijzigingsaanvragen,
       listPageRoute: generatePath(themaConfig.listPageZaken.route.path, {
         page: null,
       }),

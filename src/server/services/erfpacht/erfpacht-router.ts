@@ -15,7 +15,7 @@ import {
 
 const erfpachtRouterProtected = createBFFRouter({
   id: 'erfpacht-router-protected',
-  isEnabled: featureToggle.service.enabled,
+  isEnabled: featureToggle.serviceEnabled,
 });
 
 erfpachtRouterProtected.get(

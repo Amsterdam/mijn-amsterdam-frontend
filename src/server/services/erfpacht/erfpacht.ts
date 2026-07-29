@@ -1,6 +1,10 @@
 import { generatePath } from 'react-router';
 
-import { dataRequestConfig, routes } from './erfpacht-service-config.ts';
+import {
+  dataRequestConfig,
+  featureToggle,
+  routes,
+} from './erfpacht-service-config.ts';
 import type {
   ErfpachtErpachterResponseSource,
   ErfpachtErpachterResponse,
@@ -308,6 +312,9 @@ async function fetchErfpachtZaakInfo(
       sort: ['desc'],
     },
     transformResponse: transformErfpachtZakenResponse,
+    postponeFetch:
+      !featureToggle.wijzigingsaanvragenEnabled ||
+      !featureToggle.serviceEnabled,
   });
 
   const zaakInfoResponse = await requestData<ErfpachtZaakExcerptFrontend[]>(

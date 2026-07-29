@@ -6,9 +6,8 @@ import {
 import { getFromEnv } from '../../helpers/env.ts';
 
 export const featureToggle = {
-  service: {
-    enabled: isEnabled('ERFPACHT.service'),
-  },
+  serviceEnabled: isEnabled('ERFPACHT.service'),
+  wijzigingsaanvragenEnabled: isEnabled('ERFPACHT.wijzigingsaanvragen'),
 } as const;
 
 export const routes = {
@@ -23,7 +22,7 @@ export const dataRequestConfig: DataRequestConfig = {
   passthroughOIDCToken: true,
   httpsAgent: httpsAgentBFF,
   postponeFetch:
-    !featureToggle.service.enabled || !getFromEnv('BFF_ERFPACHT_API_URL'),
+    !featureToggle.serviceEnabled || !getFromEnv('BFF_ERFPACHT_API_URL'),
   headers: {
     'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',
     apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
