@@ -221,7 +221,7 @@ export function asEnum<T extends readonly string[]>(values: T) {
   );
 }
 
-export function parseDutchDateStringToISO(dateString: string): Date | null {
+export function parseDutchDateString(dateString: string): Date | null {
   const match = /^(\d{2})-(\d{2})-(\d{4})$/.exec(dateString);
   if (!match) {
     return null;

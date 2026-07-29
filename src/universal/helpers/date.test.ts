@@ -1,6 +1,6 @@
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { parseDutchDateStringToISO, toISOString } from './date.ts';
+import { parseDutchDateString, toISOString } from './date.ts';
 
 describe('parseDateToIso', () => {
   const consoleErrorSpy = vi
@@ -63,16 +63,16 @@ describe('parseDateToIso', () => {
 
   describe('parseDutchDateStringToISO', () => {
     it('parses a Dutch date string to an ISO string', () => {
-      expect(parseDutchDateStringToISO('01-04-2024')).toEqual(
+      expect(parseDutchDateString('01-04-2024')).toEqual(
         new Date('2024-04-01T00:00:00.000Z')
       );
     });
 
     it('returns null for invalid Dutch date strings', () => {
-      expect(parseDutchDateStringToISO('invalid-date')).toBeNull();
-      expect(parseDutchDateStringToISO('32-01-2024')).toBeNull();
-      expect(parseDutchDateStringToISO('01-13-2024')).toBeNull();
-      expect(parseDutchDateStringToISO('01-04-24')).toBeNull();
+      expect(parseDutchDateString('invalid-date')).toBeNull();
+      expect(parseDutchDateString('32-01-2024')).toBeNull();
+      expect(parseDutchDateString('01-13-2024')).toBeNull();
+      expect(parseDutchDateString('01-04-24')).toBeNull();
     });
   });
 });

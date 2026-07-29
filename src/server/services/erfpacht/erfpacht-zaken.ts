@@ -24,7 +24,7 @@ import {
   type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import {
-  parseDutchDateStringToISO,
+  parseDutchDateString,
   toDateFormatted,
   toISOString,
 } from '../../../universal/helpers/date.ts';
@@ -40,7 +40,7 @@ function transformErfpachtZakenResponse(
 ): ErfpachtZaakExcerptFrontend[] {
   return (zakenResponseSource.content ?? []).map((zaakInfo) => {
     const datePublished = zaakInfo.formattedStatusDatum
-      ? parseDutchDateStringToISO(zaakInfo.formattedStatusDatum)
+      ? parseDutchDateString(zaakInfo.formattedStatusDatum)
       : null;
 
     const zaak: ErfpachtZaakExcerptFrontend = {
