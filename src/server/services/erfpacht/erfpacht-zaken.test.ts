@@ -79,7 +79,7 @@ describe('erfpacht-zaken', () => {
           "result": "Aangegaan",
           "steps": [
             {
-              "datePublished": "2026-02-25T14:12:22.808Z",
+              "datePublished": "2026-02-25T14:12:23.486Z",
               "description": "",
               "id": "392366984",
               "isActive": false,
@@ -97,7 +97,7 @@ describe('erfpacht-zaken', () => {
               "status": "Meer informatie nodig",
             },
             {
-              "datePublished": "2026-02-25T14:14:55.89Z",
+              "datePublished": "2026-02-25T14:22:40.585Z",
               "description": "Wij hebben uw aanvraag in behandeling genomen.",
               "id": "1078733647",
               "isActive": false,
@@ -201,7 +201,7 @@ describe('erfpacht-zaken', () => {
           "result": "Aangegaan",
           "steps": [
             {
-              "datePublished": "2026-02-25T14:12:22.808Z",
+              "datePublished": "2026-02-25T14:12:23.486Z",
               "description": "",
               "id": "392366984",
               "isActive": false,
@@ -219,7 +219,7 @@ describe('erfpacht-zaken', () => {
               "status": "Meer informatie nodig",
             },
             {
-              "datePublished": "2026-02-25T14:14:55.89Z",
+              "datePublished": "2026-02-25T14:22:40.585Z",
               "description": "Wij hebben uw aanvraag in behandeling genomen.",
               "id": "1078733647",
               "isActive": false,
@@ -260,7 +260,7 @@ describe('erfpacht-zaken', () => {
     expect(response.content?.steps).toMatchInlineSnapshot(`
       [
         {
-          "datePublished": "2026-02-25T14:12:22.808Z",
+          "datePublished": "2026-02-25T14:12:23.486Z",
           "description": "",
           "id": "392366984",
           "isActive": false,
@@ -278,7 +278,7 @@ describe('erfpacht-zaken', () => {
           "status": "Meer informatie nodig",
         },
         {
-          "datePublished": "2026-02-25T14:14:55.89Z",
+          "datePublished": "2026-02-25T14:22:40.585Z",
           "description": "Wij hebben uw aanvraag in behandeling genomen.",
           "id": "1078733647",
           "isActive": false,

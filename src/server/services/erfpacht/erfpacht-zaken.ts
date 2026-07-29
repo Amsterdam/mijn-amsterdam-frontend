@@ -24,6 +24,7 @@ import {
   type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import {
+  dateSort,
   parseDutchDateString,
   toDateFormatted,
   toISOString,
@@ -115,10 +116,12 @@ function transformErfpachtZaakDetailResponse(
 
   const stepsFixed: StatusLineItem<ZaakStatusFrontend, ZaakStatusTypeSource>[] =
     stepStatusFixed.map((statusFixed) => {
-      const substeps = zaakStatussenResponseSource.zaakStatussen.filter(
-        (statusSource) =>
-          getDisplayStatus(statusSource.statustoelichting) === statusFixed
-      );
+      const substeps = zaakStatussenResponseSource.zaakStatussen
+        .filter(
+          (statusSource) =>
+            getDisplayStatus(statusSource.statustoelichting) === statusFixed
+        )
+        .toSorted(dateSort('datumStatusGezet', 'asc'));
       const isMeerInformatieStep =
         statusFixed === ZAAK_STATUS_FRONTEND.MEER_INFORMATIE_NODIG;
       const isOptionalStep = isMeerInformatieStep;
