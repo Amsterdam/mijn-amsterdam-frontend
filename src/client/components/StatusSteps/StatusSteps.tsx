@@ -121,7 +121,7 @@ export function Steps({ steps, title }: StepsProps) {
           .filter((step) => step.isVisible !== false)
           .map((item) => (
             <Step key={item.id} step={item}>
-              {!!item.substeps && (
+              {!!item.substeps?.length && (
                 <ProgressList.Substeps>
                   {item.substeps
                     ?.filter((step) => step.isVisible !== false)
