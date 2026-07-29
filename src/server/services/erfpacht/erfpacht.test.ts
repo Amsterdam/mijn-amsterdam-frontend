@@ -1,11 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
-import {
-  fetchErfpacht,
-  fetchErfpachtDossiersDetail,
-  forTesting,
-} from './erfpacht.ts';
-import ERFPACHT_DOSSIERINFO_DETAILS from '../../../mocks-server/fixtures/erfpacht/erfpacht-v2-dossierinfo-bsn.json' with { type: 'json' };
+import { forTesting } from './erfpacht-dossiers.ts';
+import { fetchErfpacht } from './erfpacht.ts';
 import ERFPACHT_DOSSIERS from '../../../mocks-server/fixtures/erfpacht/erfpacht-v2-dossierinfo-bsn.json' with { type: 'json' };
 import ERFPACHT_ERFPACHTER from '../../../mocks-server/fixtures/erfpacht/erfpacht-v2-erfpachter.json' with { type: 'json' };
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
@@ -31,7 +27,7 @@ describe('erfpacht', () => {
     `);
   });
 
-  test('fetchErfpacht: dossiers', async () => {
+  test('fetchErfpacht', async () => {
     remoteApi
       .get('/erfpacht/vernise/api/erfpachter')
       .reply(200, { erfpachter: true, relationCode: '123-abc' });
@@ -40,18 +36,6 @@ describe('erfpacht', () => {
       .reply(200, ERFPACHT_DOSSIERS);
 
     const responseContent = await fetchErfpacht(authProfileAndToken);
-    expect(responseContent).toMatchSnapshot();
-  });
-
-  test('fetchErfpacht: dossier detail', async () => {
-    remoteApi
-      .get('/erfpacht/vernise/api/dossierinfo/E.477.46')
-      .reply(200, ERFPACHT_DOSSIERINFO_DETAILS);
-
-    const responseContent = await fetchErfpachtDossiersDetail(
-      authProfileAndToken,
-      'E.477.46'
-    );
     expect(responseContent).toMatchSnapshot();
   });
 

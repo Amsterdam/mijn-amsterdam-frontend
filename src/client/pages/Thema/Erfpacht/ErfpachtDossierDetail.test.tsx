@@ -13,7 +13,7 @@ import type {
 import {
   transformDossierResponse,
   transformErfpachtDossierProperties,
-} from '../../../../server/services/erfpacht/erfpacht.ts';
+} from '../../../../server/services/erfpacht/erfpacht-dossiers.ts';
 import { bffApi } from '../../../../testing/utils.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
 import { MockApp } from '../../MockApp.tsx';

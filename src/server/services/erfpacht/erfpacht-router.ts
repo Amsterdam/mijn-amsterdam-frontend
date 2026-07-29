@@ -6,7 +6,7 @@ import type { ErfpachtZaakExcerptFrontend } from './erfpacht-zaken-types.ts';
 import {
   fetchErfpachtDossiersDetail,
   fetchErfpachtZaakDetail,
-} from './erfpacht.ts';
+} from './erfpacht-dossiers.ts';
 import {
   createBFFRouter,
   type ResponseAuthenticated,

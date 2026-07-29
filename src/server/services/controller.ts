@@ -26,7 +26,7 @@ import { fetchLoodmetingen } from './bodem/loodmetingen.ts';
 import { fetchBrp } from './brp/brp.ts';
 import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content.ts';
 import { fetchActiveMaintenanceNotifications } from './cms/cms-maintenance-notifications.ts';
-import { fetchErfpacht } from './erfpacht/erfpacht.ts';
+import { fetchErfpacht } from './erfpacht/erfpacht-dossiers.ts';
 import { fetchHLI } from './hli/hli.ts';
 import { fetchHorecaVergunningen } from './horeca/horeca.ts';
 import { fetchKVK } from './hr-kvk/hr-kvk.ts';
