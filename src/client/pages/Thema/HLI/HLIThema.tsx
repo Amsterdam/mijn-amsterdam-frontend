@@ -37,7 +37,11 @@ function Stadspassen({
   const passen = stadspassen.map((pas) => {
     return {
       owner: (
-        <MaRouterLink maVariant="fatNoUnderline" href={pas.link?.to}>
+        <MaRouterLink
+          maVariant="fatNoUnderline"
+          href={pas.link?.to}
+          title={`Overzicht en uitgaven van Stadspas van ${pas.owner.firstname}`}
+        >
           <span
             className={styles.Stadspas_owner}
           >{`Stadspas van ${pas.owner.firstname}`}</span>
