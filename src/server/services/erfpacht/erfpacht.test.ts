@@ -34,9 +34,17 @@ describe('erfpacht', () => {
     remoteApi
       .get('/erfpacht/vernise/api/dossierinfo')
       .reply(200, ERFPACHT_DOSSIERS);
+    remoteApi.get('/erfpacht/vernise/api/zaakinfo').query(true).reply(200, []);
 
     const responseContent = await fetchErfpacht(authProfileAndToken);
-    expect(responseContent).toMatchSnapshot();
+    expect(responseContent).toMatchInlineSnapshot(`
+      {
+        "content": {
+          "zaken": [],
+        },
+        "status": "OK",
+      }
+    `);
   });
 
   test('fetchErfpacht zakelijk', async () => {
