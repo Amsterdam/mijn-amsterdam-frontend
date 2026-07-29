@@ -9,9 +9,10 @@ import type { BezwaarFrontend } from '../../../server/services/bezwaren/types.ts
 import type { LoodMetingFrontend } from '../../../server/services/bodem/types.ts';
 import type { BrpFrontend } from '../../../server/services/brp/brp-types.ts';
 import type {
-  ErfpachtDossiersResponse,
   ErfpachtDossierFrontend,
+  ErfpachtResponseFrontend,
 } from '../../../server/services/erfpacht/erfpacht-types.ts';
+import type { ErfpachtZaakExcerptFrontend } from '../../../server/services/erfpacht/erfpacht-zaken-types.ts';
 import type { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types.ts';
 import type { HorecaVergunningFrontend } from '../../../server/services/horeca/decos-zaken.ts';
 import type { WMOVoorzieningFrontend } from '../../../server/services/jzd/wmo/wmo-types.ts';
@@ -276,13 +277,25 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     stateKey: 'ERFPACHT',
     getApiBaseItems: (
-      erfpachtDossiersResponse: ErfpachtDossiersResponse
+      erfpachtResponse: ErfpachtResponseFrontend
     ): ErfpachtDossierFrontend[] => {
-      return erfpachtDossiersResponse?.dossiers?.dossiers ?? [];
+      return erfpachtResponse?.dossiers?.dossiers ?? [];
     },
     displayTitle: (dossier: ErfpachtDossierFrontend) => (term: string) => {
       return displayLinkToSearchResult(term, [dossier.title]);
     },
+  },
+  {
+    stateKey: 'ERFPACHT',
+    getApiBaseItems: (
+      erfpachtResponse: ErfpachtResponseFrontend
+    ): ErfpachtZaakExcerptFrontend[] => {
+      return erfpachtResponse.zaken;
+    },
+    displayTitle: (zaak: ErfpachtZaakExcerptFrontend) => (term: string) => {
+      return displayLinkToSearchResult(term, [zaak.zaakNummer]);
+    },
+    keywordsGeneratedFromProps: ['zaakNummer', 'zaakDossiers'],
   },
   {
     stateKey: 'TOERISTISCHE_VERHUUR',
