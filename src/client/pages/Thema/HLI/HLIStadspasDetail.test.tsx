@@ -227,7 +227,7 @@ describe('Stadspas detail page', () => {
       screen.getByRole('heading', { name: 'Tegoeden', level: 2 })
     ).toBeInTheDocument();
     expect(
-      screen.queryByRole('columnheader', { name: 'Bedrag' })
+      screen.getByRole('columnheader', { name: 'Bedrag' })
     ).toBeInTheDocument();
   });
 
@@ -272,7 +272,7 @@ describe('Stadspas detail page', () => {
     const screen = render(<Component />);
 
     expect(
-      screen.queryByText(
+      screen.getByText(
         'U mag het PC-tegoed 1 keer gebruiken. Geld dat overblijft na een aankoop kunt u niet meer uitgeven.'
       )
     ).toBeInTheDocument();
