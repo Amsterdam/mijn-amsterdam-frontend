@@ -13,7 +13,6 @@ import {
   type ApiResponse,
   apiErrorResult,
   apiSuccessResult,
-  getFailedDependencies,
 } from '../../../universal/helpers/api.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getFromEnv } from '../../helpers/env.ts';
@@ -109,10 +108,7 @@ export async function fetchErfpacht(
         };
       }),
     };
-    return apiSuccessResult(
-      responseContent,
-      getFailedDependencies(responseContent)
-    );
+    return apiSuccessResult(responseContent);
   }
 
   return erfpachterResponse;
