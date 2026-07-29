@@ -37,7 +37,7 @@ export type ZaakInfoSource = {
   statusOmschrijving: ZaakStatusTypeSource;
   formattedStatusDatum: string;
   zaakUrl: string;
-  zaakDossiers?: ErfpachtDossiersDetailSource['dossierId'][];
+  zaakDossiers?: ErfpachtDossiersDetailSource['dossierNummer'][];
   titelZaakNummer: string;
   titelZaakOmschrijving: string;
   titelStatusOmschrijving: string;
