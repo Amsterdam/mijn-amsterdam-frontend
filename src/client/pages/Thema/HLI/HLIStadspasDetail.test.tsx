@@ -34,7 +34,7 @@ const pasKindTypeState = createHLIState({
 
 const pasVolwasseneTypeState = createHLIState({
   stadspas: [
-    createStadspas({ type: 'volwassen', passNumber }, { firstname: 'Piet' }),
+    createStadspas({ type: 'volwassene', passNumber }, { firstname: 'Piet' }),
   ],
 });
 
@@ -316,7 +316,10 @@ describe('Stadspas detail page', () => {
 
 describe('Displayed description of uw uitgaven text', () => {
   test('Without budget or expenses', () => {
-    const result = forTesting.determineUwUitgavenDescription(createStadspas());
+    const result = forTesting.determineUwUitgavenDescription(
+      createStadspas(),
+      false
+    );
     expect(result).toMatchInlineSnapshot(`
       <React.Fragment>
         U heeft nog geen uitgaven.
@@ -339,7 +342,8 @@ describe('Displayed description of uw uitgaven text', () => {
     };
 
     const result = forTesting.determineUwUitgavenDescription(
-      createStadspas({ budgets: [budget], balance: 5 })
+      createStadspas({ budgets: [budget], balance: 5 }),
+      false
     );
     // prettier-ignore
     expect(result).toMatchInlineSnapshot(`
