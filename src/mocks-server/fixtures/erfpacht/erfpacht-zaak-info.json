@@ -33,7 +33,7 @@
       "zaakNummer": "ZAAK-2025-0000011488",
       "zaakUuid": "1234-5678-9012-9999",
       "zaakOmschrijving": "Wijzigen Erfpachtrecht",
-      "statusOmschrijving": "Aanvraag beoordelen",
+      "statusOmschrijving": "Informatie opgevraagd",
       "formattedStatusDatum": "15-07-2025",
       "zaakDossiers": ["EW123/456", "AB/345/678"],
       "titelZaakNummer": "Zaak nummer",
