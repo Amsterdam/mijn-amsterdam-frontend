@@ -106,7 +106,7 @@ export function HLIStadspasDetail() {
   };
 
   const CATEGORIE: Row = {
-    label: 'Type',
+    label: 'Pastype',
     content: capitalizeFirstLetter(stadspas?.type || ''),
   };
 

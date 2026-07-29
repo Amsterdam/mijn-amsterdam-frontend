@@ -196,7 +196,9 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                   </td>
                   <td
                     class="ams-table__cell"
-                  />
+                  >
+                    Nee
+                  </td>
                   <td
                     class="ams-table__cell"
                   >
@@ -225,7 +227,9 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                   </td>
                   <td
                     class="ams-table__cell"
-                  />
+                  >
+                    Nee
+                  </td>
                   <td
                     class="ams-table__cell"
                   >

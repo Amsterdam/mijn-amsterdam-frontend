@@ -43,7 +43,7 @@ function Stadspassen({
           >{`Stadspas van ${pas.owner.firstname}`}</span>
         </MaRouterLink>
       ),
-      heeftTegoed: pas.budgets.length ? 'Ja' : '',
+      heeftTegoed: pas.budgets.length ? 'Ja' : 'Nee',
       actief: (
         <span className={styles.StatusValue}>
           {pas.actief ? 'Actief' : 'Geblokkeerd'}

@@ -103,7 +103,7 @@ exports[`Stadspas detail page > Matches snapshot 1`] = `
             <dt
               class="_Datalist__title_240c86"
             >
-              Type
+              Pastype
             </dt>
             <dd
               class="_Datalist__description_240c86"
@@ -196,16 +196,22 @@ exports[`Stadspas detail page > Matches snapshot 1`] = `
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
-          <h3
-            class="ams-heading ams-heading--3 ams-mb-m"
+          <h2
+            class="ams-heading ams-heading--2 ams-mb-s"
           >
             Tegoeden
-          </h3>
-          <p
-            class="ams-paragraph"
+          </h2>
+          <div
+            class="ams-table"
           >
-            U heeft (nog) geen tegoed gekregen.
-          </p>
+            <table
+              class="ams-table__table _TableV2_1fc147 _Table_budgets_d6b013"
+            >
+              <tbody
+                class="ams-table__body"
+              />
+            </table>
+          </div>
         </div>
       </div>
     </main>

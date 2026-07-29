@@ -109,7 +109,7 @@ describe('Stadspas detail page', () => {
     const HLIStadspas = createHLIStadspasComponent(pasKindTypeState);
     const screen = render(<HLIStadspas />);
 
-    expect(screen.getByText('Type').nextElementSibling).toHaveTextContent(
+    expect(screen.getByText('Pastype').nextElementSibling).toHaveTextContent(
       'Kind'
     );
   });
@@ -118,7 +118,7 @@ describe('Stadspas detail page', () => {
     const HLIStadspas = createHLIStadspasComponent(pasVolwasseneTypeState);
     const screen = render(<HLIStadspas />);
 
-    expect(screen.getByText('Type').nextElementSibling).toHaveTextContent(
+    expect(screen.getByText('Pastype').nextElementSibling).toHaveTextContent(
       'Volwassen'
     );
   });
@@ -127,7 +127,7 @@ describe('Stadspas detail page', () => {
     const HLIStadspas = createHLIStadspasComponent(pasUnknownTypeState);
     const screen = render(<HLIStadspas />);
 
-    expect(screen.getByText('Type').nextElementSibling).toHaveTextContent(
+    expect(screen.getByText('Pastype').nextElementSibling).toHaveTextContent(
       'Onbekend'
     );
   });
@@ -224,7 +224,7 @@ describe('Stadspas detail page', () => {
     const screen = render(<Component />);
 
     expect(
-      screen.getByRole('heading', { name: 'Tegoeden', level: 3 })
+      screen.getByRole('heading', { name: 'Tegoeden', level: 2 })
     ).toBeInTheDocument();
     expect(
       screen.queryByRole('columnheader', { name: 'Bedrag' })
