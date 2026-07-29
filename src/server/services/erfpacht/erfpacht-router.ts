@@ -35,7 +35,6 @@ erfpachtRouterProtected.get(
   routes.protected.ERFPACHT_ZAAK_DETAILS,
   async (
     req: Request<{
-      zaakUrl: ErfpachtZaakExcerptFrontend['zaakUrl'];
       uuid: ErfpachtZaakExcerptFrontend['zaakUuid'];
     }>,
     res: ResponseAuthenticated
