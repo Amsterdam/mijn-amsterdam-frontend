@@ -169,7 +169,7 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                   </th>
                   <th
                     class="ams-table__header-cell"
-                    style="width: 20%;"
+                    style="width: 40%;"
                   >
                     Status
                   </th>
@@ -186,6 +186,7 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                   >
                     <a
                       class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
+                      title="Overzicht en uitgaven van Stadspas van Kerub"
                     >
                       <span
                         class="_Stadspas_owner_b80084"
@@ -217,6 +218,7 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                   >
                     <a
                       class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
+                      title="Overzicht en uitgaven van Stadspas van Lou"
                     >
                       <span
                         class="_Stadspas_owner_b80084"
