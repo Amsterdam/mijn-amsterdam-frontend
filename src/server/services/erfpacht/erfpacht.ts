@@ -16,7 +16,10 @@ import type {
   ErfpachtResponseFrontend,
 } from './erfpacht-types.ts';
 import { type ErfpachtDossiersResponseSource } from './erfpacht-types.ts';
-import { getStatus } from './erfpacht-zaken-config.ts';
+import {
+  getDisplayStatus,
+  ZAAK_STATUS_FRONTEND,
+} from './erfpacht-zaken-config.ts';
 import type {
   ErfpachtZaakDetailFrontend,
   ErfpachtZaakExcerptFrontend,
@@ -304,7 +307,7 @@ function transformErfpachtZakenResponse(
         title: zaakInfo.zaakOmschrijving,
       },
       dossierLinks: zaakInfo.zaakDossiers ?? [],
-      displayStatus: getStatus(zaakInfo.statusOmschrijving),
+      displayStatus: getDisplayStatus(zaakInfo.statusOmschrijving),
     };
     return zaak;
   });
@@ -348,32 +351,35 @@ function transformErfpachtZaakDetailResponse(
   zaakStatussenResponseSource: ZaakStatussenResponseSource
 ): ZaakStatusResponseFrontend {
   const stepStatusFixed: ZaakStatusFrontend[] = [
-    'Aanvraag',
-    'Meer informatie nodig',
-    'In behandeling',
-    'Afgehandeld',
+    ZAAK_STATUS_FRONTEND.AANVRAAG,
+    ZAAK_STATUS_FRONTEND.MEER_INFORMATIE_NODIG,
+    ZAAK_STATUS_FRONTEND.IN_BEHANDELING,
+    ZAAK_STATUS_FRONTEND.AFGEHANDELD,
   ];
 
   const stepsFixed: StatusLineItem<ZaakStatusFrontend, ZaakStatusTypeSource>[] =
     stepStatusFixed.map((statusFixed) => {
       const substeps = zaakStatussenResponseSource.zaakStatussen.filter(
         (statusSource) =>
-          getStatus(statusSource.statustoelichting) === statusFixed
+          getDisplayStatus(statusSource.statustoelichting) === statusFixed
       );
-      const isMeerInformatieStep = statusFixed === 'Meer informatie nodig';
+      const isMeerInformatieStep =
+        statusFixed === ZAAK_STATUS_FRONTEND.MEER_INFORMATIE_NODIG;
       const isOptionalStep = isMeerInformatieStep;
       const hasMatchingSubsteps = !!substeps?.length;
 
       let description = '';
 
       switch (true) {
-        case isMeerInformatieStep:
-          description = `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen. U ontvangt van ons bericht met meer details.`;
+        case isMeerInformatieStep && hasMatchingSubsteps:
+          description = `Er is meer informatie en tijd nodig om uw aanvraag te beoordelen.`;
           break;
-        case statusFixed === 'In behandeling':
+        case statusFixed === ZAAK_STATUS_FRONTEND.IN_BEHANDELING &&
+          hasMatchingSubsteps:
           description = `Wij hebben uw aanvraag in behandeling genomen.`;
           break;
-        case statusFixed === 'Afgehandeld':
+        case statusFixed === ZAAK_STATUS_FRONTEND.AFGEHANDELD &&
+          hasMatchingSubsteps:
           description = `Wij hebben uw aanvraag afgerond en hebben u hierover bericht gestuurd.`;
           break;
       }

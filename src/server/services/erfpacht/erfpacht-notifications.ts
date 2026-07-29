@@ -1,4 +1,4 @@
-import { ZAAK_FRONTEND_STATUS } from './erfpacht-zaken-config.ts';
+import { ZAAK_STATUS_FRONTEND } from './erfpacht-zaken-config.ts';
 import type { ErfpachtZaakExcerptFrontend } from './erfpacht-zaken-types.ts';
 import { fetchErfpachtZaakInfo } from './erfpacht.ts';
 import { themaConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
@@ -17,22 +17,22 @@ function getTitleAndDescriptionForNotification(
   const description = `Status: ${zaakExcerpt.displayStatus}`;
 
   switch (zaakExcerpt.displayStatus) {
-    case ZAAK_FRONTEND_STATUS.AANVRAAG:
+    case ZAAK_STATUS_FRONTEND.AANVRAAG:
       return {
         title: `${title} - ontvangen`,
         description: `Uw aanvraag is ingediend en wordt beoordeeld. Het nummer van uw aanvraag is ${zaakExcerpt.zaakNummer}.`,
       };
-    case ZAAK_FRONTEND_STATUS.MEER_INFORMATIE_NODIG:
+    case ZAAK_STATUS_FRONTEND.MEER_INFORMATIE_NODIG:
       return {
         title: `${title} - Meer informatie nodig`,
         description: `Er is meer informatie en tijd nodig om uw aanvraag met nummer ${zaakExcerpt.zaakNummer} te kunnen beoordelen.`,
       };
-    case ZAAK_FRONTEND_STATUS.IN_BEHANDELING:
+    case ZAAK_STATUS_FRONTEND.IN_BEHANDELING:
       return {
         title: `${title} - In behandeling`,
         description: `Uw aanvraag met nummer ${zaakExcerpt.zaakNummer} is in behandeling.`,
       };
-    case ZAAK_FRONTEND_STATUS.AFGEHANDELD:
+    case ZAAK_STATUS_FRONTEND.AFGEHANDELD:
       return {
         title: `${title} - Afgehandeld`,
         description: `Uw aanvraag met nummer ${zaakExcerpt.zaakNummer} is afgehandeld.`,
@@ -55,7 +55,7 @@ export async function fetchErfpachtNotifications(
     .filter(
       (zaakExcerpt) =>
         zaakExcerpt.datePublished
-          ? zaakExcerpt.displayStatus !== ZAAK_FRONTEND_STATUS.AFGEHANDELD ||
+          ? zaakExcerpt.displayStatus !== ZAAK_STATUS_FRONTEND.AFGEHANDELD ||
             isRecentNotification(zaakExcerpt.datePublished, new Date())
           : false // Do not include notifications without a datePublished.
     )
