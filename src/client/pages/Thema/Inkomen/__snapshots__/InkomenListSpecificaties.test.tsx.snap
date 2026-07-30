@@ -13,13 +13,13 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
-          aria-labelledby=":r2:"
+          aria-labelledby=":r6:"
           class="ams-breadcrumb"
         >
           <h2
             aria-hidden="true"
             class="ams-visually-hidden"
-            id=":r2:"
+            id=":r6:"
           >
             Kruimelpad
           </h2>
@@ -180,10 +180,10 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -230,60 +230,10 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
-                              />
-                            </svg>
-                          </span>
-                        </span>
-                        PDF
-                      </a>
-                    </span>
-                  </td>
-                </tr>
-                <tr
-                  class="ams-table__row"
-                >
-                  <td
-                    class="ams-table__cell"
-                  >
-                    Jaaropgave
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    28 januari 2011
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    <span
-                      class="_DocumentLinkWrap_4ce874"
-                    >
-                      <a
-                        class="ams-link _DocumentLink_4ce874 _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
-                        href="http://bff-api-host/api/v1/services/wpi/document?id=test-encrypted-id&isBulk=false&isDms=false"
-                      >
-                        <span
-                          class="_DocumentLinkIcon_4ce874"
-                        >
-                          <span
-                            class="ams-icon ams-icon--heading-5"
-                            hidden=""
-                          >
-                            <svg
-                              aria-hidden="true"
-                              focusable="false"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
-                              />
-                              <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -330,10 +280,60 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                        PDF
+                      </a>
+                    </span>
+                  </td>
+                </tr>
+                <tr
+                  class="ams-table__row"
+                >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Jaaropgave
+                  </td>
+                  <td
+                    class="ams-table__cell"
+                  >
+                    28 januari 2011
+                  </td>
+                  <td
+                    class="ams-table__cell"
+                  >
+                    <span
+                      class="_DocumentLinkWrap_4ce874"
+                    >
+                      <a
+                        class="ams-link _DocumentLink_4ce874 _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
+                        href="http://bff-api-host/api/v1/services/wpi/document?id=test-encrypted-id&isBulk=false&isDms=false"
+                      >
+                        <span
+                          class="_DocumentLinkIcon_4ce874"
+                        >
+                          <span
+                            class="ams-icon ams-icon--heading-5"
+                            hidden=""
+                          >
+                            <svg
+                              aria-hidden="true"
+                              focusable="false"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
+                              />
+                              <path
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -462,12 +462,12 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
           <nav
-            aria-labelledby="ams-pagination-a11y-label"
+            aria-labelledby=":r1:"
             class="ams-pagination"
           >
             <span
               class="ams-visually-hidden"
-              id="ams-pagination-a11y-label"
+              id=":r1:"
             >
               Paginering
             </span>
@@ -503,7 +503,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               </li>
             </ol>
             <a
-              class="ams-pagination__link"
+              class="ams-pagination__link ams-pagination__relative-link"
               href="/inkomen/lijst/specificaties/uitkering/2"
               rel="next"
             >
@@ -610,10 +610,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -660,10 +660,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -710,10 +710,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -760,10 +760,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -810,10 +810,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -860,10 +860,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -910,10 +910,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -960,10 +960,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -1010,10 +1010,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -1060,10 +1060,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -1110,10 +1110,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -1160,10 +1160,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -1210,10 +1210,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -1260,10 +1260,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -1310,10 +1310,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -1360,10 +1360,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -1410,10 +1410,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -1460,10 +1460,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -1510,10 +1510,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -1560,10 +1560,10 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.212 9.293l-1.415 1.414 5.207 5.207 5.208-5.207z"
+                                d="m15.797 9.293-2.793 2.793V2.5h-2v9.586L8.213 9.293l-1.415 1.414 5.208 5.207 5.207-5.207z"
                               />
                               <path
-                                d="m21.502 17.207-3.708 3.707a2 2 0 0 1-1.414.586H7.536c-.43 0-1.056-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
+                                d="m21.502 17.207-3.707 3.707a2 2 0 0 1-1.415.586H7.536c-.43 0-1.055-.218-1.432-.604l-3.606-3.698 1.432-1.396L7.536 19.5h8.844l3.707-3.707z"
                               />
                             </svg>
                           </span>
@@ -1577,12 +1577,12 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
             </table>
           </div>
           <nav
-            aria-labelledby="ams-pagination-a11y-label"
+            aria-labelledby=":r2:"
             class="ams-pagination"
           >
             <span
               class="ams-visually-hidden"
-              id="ams-pagination-a11y-label"
+              id=":r2:"
             >
               Paginering
             </span>
@@ -1618,7 +1618,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               </li>
             </ol>
             <a
-              class="ams-pagination__link"
+              class="ams-pagination__link ams-pagination__relative-link"
               href="/inkomen/lijst/specificaties/uitkering/2"
               rel="next"
             >
