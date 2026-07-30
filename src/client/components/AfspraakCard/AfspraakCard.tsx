@@ -1,4 +1,5 @@
 import {
+  ActionGroup,
   Column,
   Heading,
   Icon,
@@ -9,7 +10,8 @@ import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 import QRCode from 'react-qr-code';
 
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
-import { useSmallScreen } from '../../hooks/media.hook.ts';
+import { Breakpoints } from '../../config/app.ts';
+import { useMediaLayout } from '../../hooks/media.hook.ts';
 import { LocationModal } from '../LocationModal/LocationModal.tsx';
 import { MaLink } from '../MaLink/MaLink.tsx';
 import { ModalAndButton } from '../Modal/Modal.tsx';
@@ -98,9 +100,11 @@ export function AfspraakCard({
             )}
           </div>
         </Row>
-        <MaLink rel="noopener noreferrer" href={afspraak.cancellationLink}>
-          Annuleren
-        </MaLink>
+        {!compact && (
+          <MaLink rel="noopener noreferrer" href={afspraak.cancellationLink}>
+            Annuleren
+          </MaLink>
+        )}
       </Row>
     </article>
   );
@@ -111,11 +115,13 @@ export function ResponsiveActionGroup({
 }: {
   children: React.ReactNode;
 }) {
-  const isSmallScreen = useSmallScreen();
+  const isSmallOrMediumScreen = useMediaLayout({
+    minWidth: Breakpoints.medium,
+  });
 
-  if (isSmallScreen) {
-    return <Column>{children}</Column>;
+  if (isSmallOrMediumScreen) {
+    return <ActionGroup>{children}</ActionGroup>;
   }
 
-  return <Row>{children}</Row>;
+  return <Column alignHorizontal="start">{children}</Column>;
 }
