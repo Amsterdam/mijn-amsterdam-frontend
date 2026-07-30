@@ -80,16 +80,33 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
           <p
             class="ams-paragraph"
           >
-            U ziet hier alle bezwaren die zijn ingediend via ons 
-            <a
+            Hier staan de bezwaren die u via het<a
               class="ams-link"
               href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/BezwaarEnBeroep.aspx"
               rel="noopener noreferrer"
             >
-              bezwaarformulier.
+        >
+              bezwaarformulier
             </a>
-             
+      hebt ingediend. Als u vanuit dit formulier naar een ander formulier bent
+      doorgestuurd vindt u die bezwaren hier niet.
+</p>
+
+  <p
+            class="ams-paragraph"
+          >
+             Bezwaren over de WOZ-waarde en gemeentelijke belastingen vindt onder het
+      thema
+            <a
+              class="ams-link"
+              href="https://belastingbalie.amsterdam.nl"
+              rel="noreferrer"
+            >
+              Belastingen
+            </a>
+             .
           </p>
+
         </div>
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PullUp_125440"
@@ -260,16 +277,33 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
           <p
             class="ams-paragraph"
           >
-            U ziet hier alle bezwaren die zijn ingediend via ons 
-            <a
+            Hier staan de bezwaren die u via het<a
               class="ams-link"
               href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/BezwaarEnBeroep.aspx"
               rel="noopener noreferrer"
             >
-              bezwaarformulier.
+        >
+              bezwaarformulier
             </a>
-             
+      hebt ingediend. Als u vanuit dit formulier naar een ander formulier bent
+      doorgestuurd vindt u die bezwaren hier niet.
+</p>
+
+  <p
+            class="ams-paragraph"
+          >
+             Bezwaren over de WOZ-waarde en gemeentelijke belastingen vindt onder het
+      thema
+            <a
+              class="ams-link"
+              href="https://belastingbalie.amsterdam.nl"
+              rel="noreferrer"
+            >
+              Belastingen
+            </a>
+             .
           </p>
+
         </div>
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PullUp_125440"
@@ -441,16 +475,33 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
           <p
             class="ams-paragraph"
           >
-            U ziet hier alle bezwaren die zijn ingediend via ons 
-            <a
+            Hier staan de bezwaren die u via het<a
               class="ams-link"
               href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/BezwaarEnBeroep.aspx"
               rel="noopener noreferrer"
             >
-              bezwaarformulier.
+        >
+              bezwaarformulier
             </a>
-             
+      hebt ingediend. Als u vanuit dit formulier naar een ander formulier bent
+      doorgestuurd vindt u die bezwaren hier niet.
+</p>
+
+  <p
+            class="ams-paragraph"
+          >
+             Bezwaren over de WOZ-waarde en gemeentelijke belastingen vindt onder het
+      thema
+            <a
+              class="ams-link"
+              href="https://belastingbalie.amsterdam.nl"
+              rel="noreferrer"
+            >
+              Belastingen
+            </a>
+             .
           </p>
+
         </div>
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PullUp_125440"

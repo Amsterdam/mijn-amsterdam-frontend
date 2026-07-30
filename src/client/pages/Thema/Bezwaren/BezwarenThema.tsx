@@ -7,14 +7,26 @@ import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { themaConfig as belastingenThemaConfig } from '../Belastingen/Belastingen-thema-config.ts';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>
     <Paragraph>
-      U ziet hier alle bezwaren die zijn ingediend via ons{' '}
+      Hier staan de bezwaren die u via het{' '}
       <Link href={links.BEZWAREN_FORMULIER} rel="noopener noreferrer">
-        bezwaarformulier.
+        bezwaarformulier
       </Link>{' '}
+      hebt ingediend. Als u vanuit dit formulier naar een ander formulier bent
+      doorgestuurd vindt u die bezwaren hier niet.
+    </Paragraph>
+
+    <Paragraph>
+      Bezwaren over de WOZ-waarde en gemeentelijke belastingen vindt onder het
+      thema{' '}
+      <Link href={belastingenThemaConfig.route.path} rel="noreferrer">
+        Belastingen
+      </Link>
+      .
     </Paragraph>
   </PageContentCell>
 );
