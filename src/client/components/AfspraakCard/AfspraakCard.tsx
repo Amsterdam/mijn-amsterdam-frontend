@@ -1,5 +1,5 @@
 import {
-  ActionGroup,
+  Column,
   Heading,
   Icon,
   Paragraph,
@@ -9,6 +9,7 @@ import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 import QRCode from 'react-qr-code';
 
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
+import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { LocationModal } from '../LocationModal/LocationModal.tsx';
 import { MaButtonLink } from '../MaLink/MaLink.tsx';
 import { ModalAndButton } from '../Modal/Modal.tsx';
@@ -44,7 +45,7 @@ export function AfspraakCard({
           </Paragraph>
           {!compact && (
             <>
-              <ActionGroup className="ams-mb-l">
+              <ResponsiveActionGroup>
                 <ModalAndButton
                   modal={{
                     title: `QR code - Stadsloket ${afspraak.location.name}`,
@@ -77,7 +78,7 @@ export function AfspraakCard({
                   rel="noopener noreferrer"
                   type="text/calendar"
                 >
-                  Voeg toe aan uw agenda
+                  Voeg toe aan agenda
                 </MaButtonLink>
                 <MaButtonLink
                   variant="tertiary"
@@ -86,11 +87,25 @@ export function AfspraakCard({
                 >
                   Afspraak annuleren
                 </MaButtonLink>
-              </ActionGroup>
+              </ResponsiveActionGroup>
             </>
           )}
         </div>
       </Row>
     </article>
   );
+}
+
+export function ResponsiveActionGroup({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const isSmallScreen = useSmallScreen();
+
+  if (isSmallScreen) {
+    return <Column>{children}</Column>;
+  }
+
+  return <Row>{children}</Row>;
 }
