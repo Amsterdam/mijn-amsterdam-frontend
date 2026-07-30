@@ -85,6 +85,32 @@ describe('Renders afspraak data', () => {
     expect(screen.asFragment()).toMatchSnapshot();
   });
 
+  it('Displays the subject as heading for a single product', () => {
+    const screen = renderAfspraakCard(afspraak);
+
+    expect(
+      screen.getByRole('heading', { name: afspraak.subject })
+    ).toBeInTheDocument();
+  });
+
+  it('Displays three products as a Dutch heading list', () => {
+    const afspraakWithThreeProducts: AfspraakFrontend = {
+      ...afspraak,
+      subject: 'Niet zichtbaar als heading',
+      products: [
+        { name: 'Product A' },
+        { name: 'Product B' },
+        { name: 'Product C' },
+      ],
+    };
+
+    const screen = renderAfspraakCard(afspraakWithThreeProducts);
+
+    expect(
+      screen.getByRole('heading', { name: 'Product A, Product B en Product C' })
+    ).toBeInTheDocument();
+  });
+
   test('Opens QR code modal', async () => {
     const screen = renderAfspraakCard(afspraak);
     const user = userEvent.setup();
