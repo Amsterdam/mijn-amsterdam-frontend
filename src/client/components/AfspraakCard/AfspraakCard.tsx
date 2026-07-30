@@ -4,7 +4,6 @@ import {
   Icon,
   Paragraph,
   Row,
-  Column,
 } from '@amsterdam/design-system-react';
 import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 import QRCode from 'react-qr-code';
@@ -29,7 +28,7 @@ export function AfspraakCard({
     <article className={className}>
       <Row>
         {!compact && <Icon svg={PersonAtDeskIcon} hidden size="heading-2" />}
-        <Column>
+        <div className="ams-prose">
           <Heading level={3} size="level-3">
             {afspraak.subject}
           </Heading>
@@ -90,7 +89,7 @@ export function AfspraakCard({
               </ActionGroup>
             </>
           )}
-        </Column>
+        </div>
       </Row>
     </article>
   );
