@@ -143,6 +143,11 @@ test('should transform the data correctly', async () => {
           "postalCode": null,
           "street": null,
         },
+        "products": [
+          {
+            "name": "Vaarvignet",
+          },
+        ],
         "qrCode": "xxxxxxxxxxxxxxxxxxxx",
         "status": "New",
         "subject": "Vaarvignet",

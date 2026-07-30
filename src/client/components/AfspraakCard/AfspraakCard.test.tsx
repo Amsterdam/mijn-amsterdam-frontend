@@ -11,6 +11,11 @@ const address = { street: 'Amstel', houseNumber: 1 };
 
 const afspraak: AfspraakFrontend = {
   subject: 'Varen',
+  products: [
+    {
+      name: 'Varen',
+    },
+  ],
   dateStart: '2020-01-17T17:50:00Z',
   dateEnd: '2020-01-17T18:20:00Z',
   dateStartFormatted: 'maandag 01 januari 2025',

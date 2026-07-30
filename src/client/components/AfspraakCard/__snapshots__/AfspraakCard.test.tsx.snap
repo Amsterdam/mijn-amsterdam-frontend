@@ -7,7 +7,7 @@ exports[`Renders afspraak data > Compact variant 1`] = `
       class="ams-row"
     >
       <div
-        class="ams-column"
+        class="ams-prose"
       >
         <h3
           class="ams-heading ams-heading--3"
@@ -64,7 +64,7 @@ exports[`Renders afspraak data > Regular variant 1`] = `
         </svg>
       </span>
       <div
-        class="ams-column"
+        class="ams-prose"
       >
         <h3
           class="ams-heading ams-heading--3"
@@ -87,8 +87,7 @@ exports[`Renders afspraak data > Regular variant 1`] = `
           Locatie: Stadsloket Centrum, Amstel 1
         </p>
         <div
-          class="ams-action-group ams-mb-l"
-          role="group"
+          class="ams-row"
         >
           <button
             class="ams-button ams-button--secondary"
@@ -109,7 +108,7 @@ exports[`Renders afspraak data > Regular variant 1`] = `
             rel="noopener noreferrer"
             type="text/calendar"
           >
-            Voeg toe aan uw agenda
+            Voeg toe aan agenda
           </a>
           <a
             aria-disabled="false"

@@ -8,6 +8,11 @@ function createAfspraak(index: number): AfspraakFrontend {
   return {
     cancellationLink: `https://example.org/cancel/${index}`,
     caseReference: `ref-${index}`,
+    products: [
+      {
+        name: `Product ${index}`,
+      },
+    ],
     dateStartFormatted: '26 februari 2026',
     dateEndFormatted: '26 februari 2026',
     dateStart: `2026-02-26T0${index}:00:00Z`,
