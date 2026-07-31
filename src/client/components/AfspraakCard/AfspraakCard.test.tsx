@@ -117,6 +117,7 @@ describe('Renders afspraak data', () => {
     const button = screen.getByRole('button', {
       name: /Toon QR code/i,
     });
+
     await user.click(button);
     expect(
       screen.getByText(/QR code - Stadsloket Centrum/i)
@@ -128,7 +129,7 @@ describe('Renders afspraak data', () => {
     const screen = renderAfspraakCard(afspraak);
     const user = userEvent.setup();
     const button = screen.getByRole('button', {
-      name: /Toon op kaart/i,
+      name: /Stadsloket Centrum, Amstel 1/i,
     });
     await user.click(button);
     expect(
@@ -146,9 +147,8 @@ describe('Renders afspraak data', () => {
     };
     const screen = renderAfspraakCard(afspraakWithoutStreet);
     const button = screen.queryByRole('button', {
-      name: /Toon op kaart/i,
+      name: /Stadsloket Centrum, Amstel 1/i,
     });
     expect(button).not.toBeInTheDocument();
-    expect(screen.getByText(`Locatie: Stadsloket Centrum`)).toBeInTheDocument();
   });
 });

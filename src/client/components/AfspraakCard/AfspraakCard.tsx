@@ -1,6 +1,6 @@
 import {
-  ActionGroup,
   Column,
+  DescriptionList,
   Heading,
   Icon,
   Paragraph,
@@ -10,12 +10,7 @@ import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 import QRCode from 'react-qr-code';
 
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
-import { Breakpoints } from '../../config/app.ts';
-import {
-  useMediaLayout,
-  useMediumScreen,
-  useSmallScreen,
-} from '../../hooks/media.hook.ts';
+import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { LocationModal } from '../LocationModal/LocationModal.tsx';
 import { MaLink } from '../MaLink/MaLink.tsx';
 import { ModalAndButton } from '../Modal/Modal.tsx';
@@ -44,10 +39,6 @@ export function AfspraakCard({
   className,
   compact,
 }: AfspraakCardProps) {
-  const isMedium = useMediaLayout({
-    minWidth: Breakpoints.medium,
-  });
-
   const isPhoneScreen = useSmallScreen();
 
   return (
@@ -56,69 +47,16 @@ export function AfspraakCard({
         <Row>
           {!compact && <Icon svg={PersonAtDeskIcon} hidden size="heading-2" />}
           <div className="ams-prose">
-            <Heading level={3} size="level-3">
+            <Heading
+              level={3}
+              size="level-3"
+              className={!compact ? 'ams-mb-l' : ''}
+            >
               {createHeading(afspraak)}
             </Heading>
-            <Paragraph>
-              Datum:{' '}
-              <time dateTime={afspraak.dateStart}>
-                {afspraak.displayDateTime}
-              </time>
-            </Paragraph>
-            <Paragraph className="ams-mb-s">
-              Locatie: Stadsloket {afspraak.location.name}
-              {afspraak.location.street && `, ${afspraak.location.street}`}
-            </Paragraph>
+            {compact && <CompactContent afspraak={afspraak} />}
             {!compact && (
-              <>
-                <ResponsiveActionGroup>
-                  {isPhoneScreen && (
-                    <ModalAndButton
-                      modal={{
-                        title: `QR code - Stadsloket ${afspraak.location.name}`,
-                      }}
-                      buttonVariant="secondary"
-                      buttonLabel="Toon QR code"
-                    >
-                      <>
-                        <QRCode
-                          size={256}
-                          value={afspraak.qrCode}
-                          className="ams-mb-s"
-                        />
-                        <Paragraph className="ams-mb-l">
-                          Scan deze QR code op het stadsloket zodat de
-                          medewerker weet dat u op het stadsloket aanwezig bent.
-                        </Paragraph>
-                      </>
-                    </ModalAndButton>
-                  )}
-                  {afspraak.location.street && (
-                    <LocationModal
-                      modalTitle={`Stadsloket ${afspraak.location.name} - ${afspraak.location.street}`}
-                      address={afspraak.location.street}
-                      buttonLabel="Toon op kaart"
-                    />
-                  )}
-                  <MaLink
-                    href={afspraak.icsLink.to}
-                    rel="noopener noreferrer"
-                    type="text/calendar"
-                    maVariant="noDefaultUnderline"
-                  >
-                    Voeg toe aan uw agenda
-                  </MaLink>
-                  {isPhoneScreen && (
-                    <MaLink
-                      rel="noopener noreferrer"
-                      href={afspraak.cancellationLink}
-                      maVariant="noDefaultUnderline"
-                    >
-                      Annuleren
-                    </MaLink>
-                  )}
-                </ResponsiveActionGroup>
-              </>
+              <FullContent afspraak={afspraak} isPhoneScreen={isPhoneScreen} />
             )}
           </div>
         </Row>
@@ -136,26 +74,82 @@ export function AfspraakCard({
   );
 }
 
-export function ResponsiveActionGroup({
-  children,
+function FullContent({
+  afspraak,
+  isPhoneScreen,
 }: {
-  children: React.ReactNode;
+  afspraak: AfspraakFrontend;
+  isPhoneScreen: boolean;
 }) {
-  const isMedium = useMediaLayout({
-    minWidth: Breakpoints.medium,
-  });
+  return (
+    <>
+      <DescriptionList className={isPhoneScreen ? 'ams-mb-xl' : 'ams-mb-m'}>
+        <DescriptionList.Term>Datum</DescriptionList.Term>
+        <DescriptionList.Description>
+          <MaLink
+            href={afspraak.icsLink.to}
+            rel="noopener noreferrer"
+            type="text/calendar"
+          >
+            <time dateTime={afspraak.dateStart}>
+              {afspraak.displayDateTime}
+            </time>
+          </MaLink>
+        </DescriptionList.Description>
+        <DescriptionList.Term>Locatie</DescriptionList.Term>
+        <DescriptionList.Description>
+          <LocationModal
+            modalTitle={`Stadsloket ${afspraak.location.name} - ${afspraak.location.street}`}
+            address={afspraak.location.street}
+            buttonLabel={`Stadsloket ${afspraak.location.name}${
+              afspraak.location.street ? `, ${afspraak.location.street}` : ''
+            }`}
+            buttonVariant="ma-link-like"
+          />
+        </DescriptionList.Description>
+      </DescriptionList>
 
-  const isSmallScreen = useSmallScreen();
-  const isMediumScreen = useMediumScreen();
+      <Column alignHorizontal="start" className="ams-mb-xl">
+        <ModalAndButton
+          modal={{
+            title: `QR code - Stadsloket ${afspraak.location.name}`,
+          }}
+          buttonVariant="secondary"
+          buttonLabel="Toon QR code"
+        >
+          <>
+            <QRCode size={256} value={afspraak.qrCode} className="ams-mb-s" />
+            <Paragraph className="ams-mb-l">
+              Scan deze QR code op het stadsloket zodat de medewerker weet dat u
+              op het stadsloket aanwezig bent.
+            </Paragraph>
+          </>
+        </ModalAndButton>
+        {isPhoneScreen && (
+          <MaLink
+            rel="noopener noreferrer"
+            href={afspraak.cancellationLink}
+            maVariant="noDefaultUnderline"
+          >
+            Afspraak annuleren
+          </MaLink>
+        )}
+      </Column>
+    </>
+  );
+}
 
-  // return <ActionGroup>{children}</ActionGroup>;
-
-  // if (isMedium) {
-  //   return <Row alignVertical="baseline">{children}</Row>;
-  // }
-  if (isMedium) {
-    return <ActionGroup>{children}</ActionGroup>;
-  }
-
-  return <Column>{children}</Column>;
+function CompactContent({ afspraak }: { afspraak: AfspraakFrontend }) {
+  return (
+    <>
+      <Paragraph>
+        Datum:{' '}
+        <time dateTime={afspraak.dateStart}>{afspraak.displayDateTime}</time>
+      </Paragraph>
+      <Paragraph className="ams-mb-s">
+        Locatie: Stadsloket {afspraak.location.name}
+        {afspraak.location.street && `, ${afspraak.location.street}`}
+      </Paragraph>
+    </>
+  );
 }

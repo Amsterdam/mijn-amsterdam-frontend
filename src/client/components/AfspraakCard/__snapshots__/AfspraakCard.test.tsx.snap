@@ -4,31 +4,35 @@ exports[`Renders afspraak data > Compact variant 1`] = `
 <DocumentFragment>
   <article>
     <div
-      class="ams-row"
+      class="ams-row ams-row--align-between"
     >
       <div
-        class="ams-prose"
+        class="ams-row"
       >
-        <h3
-          class="ams-heading ams-heading--3"
+        <div
+          class="ams-prose"
         >
-          Varen
-        </h3>
-        <p
-          class="ams-paragraph"
-        >
-          Datum: 
-          <time
-            datetime="2020-01-17T17:50:00Z"
+          <h3
+            class="ams-heading ams-heading--3"
           >
-            maandag 01 januari 2025 van 17:50 tot 18:20
-          </time>
-        </p>
-        <p
-          class="ams-paragraph ams-mb-s"
-        >
-          Locatie: Stadsloket Centrum, Amstel 1
-        </p>
+            Varen
+          </h3>
+          <p
+            class="ams-paragraph"
+          >
+            Datum: 
+            <time
+              datetime="2020-01-17T17:50:00Z"
+            >
+              maandag 01 januari 2025 van 17:50 tot 18:20
+            </time>
+          </p>
+          <p
+            class="ams-paragraph ams-mb-s"
+          >
+            Locatie: Stadsloket Centrum, Amstel 1
+          </p>
+        </div>
       </div>
     </div>
   </article>
@@ -39,87 +43,100 @@ exports[`Renders afspraak data > Regular variant 1`] = `
 <DocumentFragment>
   <article>
     <div
-      class="ams-row"
+      class="ams-row ams-row--align-between"
     >
-      <span
-        class="ams-icon ams-icon--heading-2"
-        hidden=""
-      >
-        <svg
-          aria-hidden="true"
-          focusable="false"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            clip-rule="evenodd"
-            d="M23 13h-4v1h4v2h-1.5v4h-2v-4h-15v4h-2v-4H1v-2h1.72l.593-2.374a2 2 0 0 1 1.94-1.515h4.662a2 2 0 0 1 1.94 1.515L12.448 14H17v-1h-4V6h10zM4.782 14h5.605l-.472-1.889H5.254zM15 11h2v-1h2v1h2V8h-6z"
-            fill-rule="evenodd"
-          />
-          <path
-            clip-rule="evenodd"
-            d="M7.857 4.014a2.67 2.67 0 0 1 2.394 2.653l-.014.272a2.667 2.667 0 0 1-2.652 2.394l-.273-.014a2.67 2.67 0 0 1-2.38-2.38l-.014-.272A2.667 2.667 0 0 1 7.585 4zM7.585 6a.667.667 0 1 0 0 1.334.667.667 0 0 0 0-1.334"
-            fill-rule="evenodd"
-          />
-        </svg>
-      </span>
       <div
-        class="ams-prose"
+        class="ams-row"
       >
-        <h3
-          class="ams-heading ams-heading--3"
+        <span
+          class="ams-icon ams-icon--heading-2"
+          hidden=""
         >
-          Varen
-        </h3>
-        <p
-          class="ams-paragraph"
-        >
-          Datum: 
-          <time
-            datetime="2020-01-17T17:50:00Z"
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            maandag 01 januari 2025 van 17:50 tot 18:20
-          </time>
-        </p>
-        <p
-          class="ams-paragraph ams-mb-s"
-        >
-          Locatie: Stadsloket Centrum, Amstel 1
-        </p>
+            <path
+              clip-rule="evenodd"
+              d="M23 13h-4v1h4v2h-1.5v4h-2v-4h-15v4h-2v-4H1v-2h1.72l.593-2.374a2 2 0 0 1 1.94-1.515h4.662a2 2 0 0 1 1.94 1.515L12.448 14H17v-1h-4V6h10zM4.782 14h5.605l-.472-1.889H5.254zM15 11h2v-1h2v1h2V8h-6z"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M7.857 4.014a2.67 2.67 0 0 1 2.394 2.653l-.014.272a2.667 2.667 0 0 1-2.652 2.394l-.273-.014a2.67 2.67 0 0 1-2.38-2.38l-.014-.272A2.667 2.667 0 0 1 7.585 4zM7.585 6a.667.667 0 1 0 0 1.334.667.667 0 0 0 0-1.334"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </span>
         <div
-          class="ams-row"
+          class="ams-prose"
         >
-          <button
-            class="ams-button ams-button--secondary"
-            type="button"
+          <h3
+            class="ams-heading ams-heading--3 ams-mb-l"
           >
-            Toon QR code
-          </button>
-          <button
-            class="ams-button ams-button--secondary _LocationModalLink_fa327b"
-            type="button"
+            Varen
+          </h3>
+          <dl
+            class="ams-description-list ams-mb-m"
           >
-            Toon op kaart
-          </button>
-          <a
-            aria-disabled="false"
-            class="_MaButtonLink_10c0a4 ams-button ams-button--tertiary"
-            href="data:text/calendar;base64,abc123"
-            rel="noopener noreferrer"
-            type="text/calendar"
+            <dt
+              class="ams-description-list__term"
+            >
+              Datum
+            </dt>
+            <dd
+              class="ams-description-list__description"
+            >
+              <a
+                class="ams-link _MaLink_10c0a4"
+                href="data:text/calendar;base64,abc123"
+                rel="noopener noreferrer"
+                type="text/calendar"
+              >
+                <time
+                  datetime="2020-01-17T17:50:00Z"
+                >
+                  maandag 01 januari 2025 van 17:50 tot 18:20
+                </time>
+              </a>
+            </dd>
+            <dt
+              class="ams-description-list__term"
+            >
+              Locatie
+            </dt>
+            <dd
+              class="ams-description-list__description"
+            >
+              <button
+                class="ams-link _InlineButton_10c0a4 _LocationModalLink_fa327b"
+                type="button"
+              >
+                Stadsloket Centrum, Amstel 1
+              </button>
+            </dd>
+          </dl>
+          <div
+            class="ams-column ams-column--align-horizontal-start ams-mb-xl"
           >
-            Voeg toe aan agenda
-          </a>
-          <a
-            aria-disabled="false"
-            class="_MaButtonLink_10c0a4 ams-button ams-button--tertiary"
-            href="https://cancel.com"
-            rel="noopener noreferrer"
-          >
-            Afspraak annuleren
-          </a>
+            <button
+              class="ams-button ams-button--secondary"
+              type="button"
+            >
+              Toon QR code
+            </button>
+          </div>
         </div>
       </div>
+      <a
+        class="ams-link _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
+        href="https://cancel.com"
+        rel="noopener noreferrer"
+      >
+        Annuleren
+      </a>
     </div>
   </article>
 </DocumentFragment>
