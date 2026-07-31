@@ -54,6 +54,7 @@ export function Afspraken({
         route={themaConfig.listPageAfspraken.route.path}
         threshold={compact ? 0 : maxItems}
         label={`Bekijk uw ${afspraken.length} ${afspraken.length === 1 ? 'afspraak' : 'afspraken'}`}
+        maVariant="default"
       />
     </AfsprakenBase>
   );
