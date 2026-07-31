@@ -119,7 +119,7 @@ exports[`Renders afspraak data > Regular variant 1`] = `
             </dd>
           </dl>
           <div
-            class="ams-column ams-column--align-horizontal-start ams-mb-m"
+            class="ams-column ams-column--align-horizontal-start ams-mb-l"
           >
             <button
               class="ams-button ams-button--secondary"

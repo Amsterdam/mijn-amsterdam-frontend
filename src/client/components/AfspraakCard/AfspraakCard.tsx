@@ -114,7 +114,7 @@ function FullContent({
 
       <Column
         alignHorizontal="start"
-        className={isPhoneScreen ? 'ams-mb-xl' : 'ams-mb-m'}
+        className={isPhoneScreen ? 'ams-mb-xl' : 'ams-mb-l'}
       >
         <ModalAndButton
           modal={{
