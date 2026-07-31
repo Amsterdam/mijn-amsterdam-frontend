@@ -10,6 +10,7 @@ import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 import QRCode from 'react-qr-code';
 
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { LocationModal } from '../LocationModal/LocationModal.tsx';
 import { MaLink } from '../MaLink/MaLink.tsx';
@@ -61,13 +62,15 @@ export function AfspraakCard({
           </div>
         </Row>
         {!compact && !isPhoneScreen && (
-          <MaLink
-            rel="noopener noreferrer"
-            maVariant="noDefaultUnderline"
-            href={afspraak.cancellationLink}
-          >
-            Annuleren
-          </MaLink>
+          <Column>
+            <MaLink
+              rel="noopener noreferrer"
+              maVariant="noDefaultUnderline"
+              href={afspraak.cancellationLink}
+            >
+              Annuleren
+            </MaLink>
+          </Column>
         )}
       </Row>
     </article>
@@ -92,7 +95,7 @@ function FullContent({
             type="text/calendar"
           >
             <time dateTime={afspraak.dateStart}>
-              {afspraak.displayDateTime}
+              {capitalizeFirstLetter(afspraak.displayDateTime)}
             </time>
           </MaLink>
         </DescriptionList.Description>
@@ -109,7 +112,10 @@ function FullContent({
         </DescriptionList.Description>
       </DescriptionList>
 
-      <Column alignHorizontal="start" className="ams-mb-xl">
+      <Column
+        alignHorizontal="start"
+        className={isPhoneScreen ? 'ams-mb-xl' : 'ams-mb-m'}
+      >
         <ModalAndButton
           modal={{
             title: `QR code - Stadsloket ${afspraak.location.name}`,

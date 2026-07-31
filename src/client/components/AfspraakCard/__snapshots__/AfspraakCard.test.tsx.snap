@@ -98,7 +98,7 @@ exports[`Renders afspraak data > Regular variant 1`] = `
                 <time
                   datetime="2020-01-17T17:50:00Z"
                 >
-                  maandag 01 januari 2025 van 17:50 tot 18:20
+                  Maandag 01 januari 2025 van 17:50 tot 18:20
                 </time>
               </a>
             </dd>
@@ -119,7 +119,7 @@ exports[`Renders afspraak data > Regular variant 1`] = `
             </dd>
           </dl>
           <div
-            class="ams-column ams-column--align-horizontal-start ams-mb-xl"
+            class="ams-column ams-column--align-horizontal-start ams-mb-m"
           >
             <button
               class="ams-button ams-button--secondary"
@@ -130,13 +130,17 @@ exports[`Renders afspraak data > Regular variant 1`] = `
           </div>
         </div>
       </div>
-      <a
-        class="ams-link _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
-        href="https://cancel.com"
-        rel="noopener noreferrer"
+      <div
+        class="ams-column"
       >
-        Annuleren
-      </a>
+        <a
+          class="ams-link _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
+          href="https://cancel.com"
+          rel="noopener noreferrer"
+        >
+          Annuleren
+        </a>
+      </div>
     </div>
   </article>
 </DocumentFragment>
