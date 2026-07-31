@@ -93,6 +93,7 @@ function FullContent({
             href={afspraak.icsLink.to}
             rel="noopener noreferrer"
             type="text/calendar"
+            download={afspraak.icsLink.download}
           >
             <time dateTime={afspraak.dateStart}>
               {capitalizeFirstLetter(afspraak.displayDateTime)}

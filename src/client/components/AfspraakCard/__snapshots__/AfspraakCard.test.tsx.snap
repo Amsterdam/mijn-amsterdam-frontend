@@ -93,6 +93,7 @@ exports[`Renders afspraak data > Regular variant 1`] = `
             >
               <a
                 class="ams-link _MaLink_10c0a4"
+                download="afspraak-unique-123.ics"
                 href="data:text/calendar;base64,abc123"
                 rel="noopener noreferrer"
                 type="text/calendar"
