@@ -2,15 +2,15 @@ import {
   Column,
   DescriptionList,
   Heading,
-  Icon,
   Paragraph,
   Row,
+  Icon,
 } from '@amsterdam/design-system-react';
-import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 import QRCode from 'react-qr-code';
 
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
+import { IconAfspraak } from '../../assets/icons/index.tsx';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { LocationModal } from '../LocationModal/LocationModal.tsx';
 import { MaLink } from '../MaLink/MaLink.tsx';
@@ -46,7 +46,7 @@ export function AfspraakCard({
     <article className={className}>
       <Row align="between">
         <Row>
-          {!compact && <Icon svg={PersonAtDeskIcon} hidden size="heading-2" />}
+          {!compact && <Icon svg={<IconAfspraak />} hidden size="heading-2" />}
           <div className="ams-prose">
             <Heading
               level={3}
