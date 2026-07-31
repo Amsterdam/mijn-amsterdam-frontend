@@ -11,7 +11,11 @@ import QRCode from 'react-qr-code';
 
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
 import { Breakpoints } from '../../config/app.ts';
-import { useMediaLayout } from '../../hooks/media.hook.ts';
+import {
+  useMediaLayout,
+  useMediumScreen,
+  useSmallScreen,
+} from '../../hooks/media.hook.ts';
 import { LocationModal } from '../LocationModal/LocationModal.tsx';
 import { MaLink } from '../MaLink/MaLink.tsx';
 import { ModalAndButton } from '../Modal/Modal.tsx';
@@ -40,6 +44,12 @@ export function AfspraakCard({
   className,
   compact,
 }: AfspraakCardProps) {
+  const isMedium = useMediaLayout({
+    minWidth: Breakpoints.medium,
+  });
+
+  const isPhoneScreen = useSmallScreen();
+
   return (
     <article className={className}>
       <Row align="between">
@@ -62,25 +72,27 @@ export function AfspraakCard({
             {!compact && (
               <>
                 <ResponsiveActionGroup>
-                  <ModalAndButton
-                    modal={{
-                      title: `QR code - Stadsloket ${afspraak.location.name}`,
-                    }}
-                    buttonVariant="secondary"
-                    buttonLabel="Toon QR code"
-                  >
-                    <>
-                      <QRCode
-                        size={256}
-                        value={afspraak.qrCode}
-                        className="ams-mb-s"
-                      />
-                      <Paragraph className="ams-mb-l">
-                        Scan deze QR code op het stadsloket zodat de medewerker
-                        weet dat u op het stadsloket aanwezig bent.
-                      </Paragraph>
-                    </>
-                  </ModalAndButton>
+                  {isPhoneScreen && (
+                    <ModalAndButton
+                      modal={{
+                        title: `QR code - Stadsloket ${afspraak.location.name}`,
+                      }}
+                      buttonVariant="secondary"
+                      buttonLabel="Toon QR code"
+                    >
+                      <>
+                        <QRCode
+                          size={256}
+                          value={afspraak.qrCode}
+                          className="ams-mb-s"
+                        />
+                        <Paragraph className="ams-mb-l">
+                          Scan deze QR code op het stadsloket zodat de
+                          medewerker weet dat u op het stadsloket aanwezig bent.
+                        </Paragraph>
+                      </>
+                    </ModalAndButton>
+                  )}
                   {afspraak.location.street && (
                     <LocationModal
                       modalTitle={`Stadsloket ${afspraak.location.name} - ${afspraak.location.street}`}
@@ -92,16 +104,30 @@ export function AfspraakCard({
                     href={afspraak.icsLink.to}
                     rel="noopener noreferrer"
                     type="text/calendar"
+                    maVariant="noDefaultUnderline"
                   >
                     Voeg toe aan uw agenda
                   </MaLink>
+                  {isPhoneScreen && (
+                    <MaLink
+                      rel="noopener noreferrer"
+                      href={afspraak.cancellationLink}
+                      maVariant="noDefaultUnderline"
+                    >
+                      Annuleren
+                    </MaLink>
+                  )}
                 </ResponsiveActionGroup>
               </>
             )}
           </div>
         </Row>
-        {!compact && (
-          <MaLink rel="noopener noreferrer" href={afspraak.cancellationLink}>
+        {!compact && !isPhoneScreen && (
+          <MaLink
+            rel="noopener noreferrer"
+            maVariant="noDefaultUnderline"
+            href={afspraak.cancellationLink}
+          >
             Annuleren
           </MaLink>
         )}
@@ -115,13 +141,21 @@ export function ResponsiveActionGroup({
 }: {
   children: React.ReactNode;
 }) {
-  const isSmallOrMediumScreen = useMediaLayout({
+  const isMedium = useMediaLayout({
     minWidth: Breakpoints.medium,
   });
 
-  if (isSmallOrMediumScreen) {
+  const isSmallScreen = useSmallScreen();
+  const isMediumScreen = useMediumScreen();
+
+  // return <ActionGroup>{children}</ActionGroup>;
+
+  // if (isMedium) {
+  //   return <Row alignVertical="baseline">{children}</Row>;
+  // }
+  if (isMedium) {
     return <ActionGroup>{children}</ActionGroup>;
   }
 
-  return <Column alignHorizontal="start">{children}</Column>;
+  return <Column>{children}</Column>;
 }
