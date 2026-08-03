@@ -208,6 +208,7 @@ function transformErfpachtZaakDetailResponse(
         lastSubstep.isActive = true;
       }
     }
+  }
 
   const lastCheckedStep = stepsFixed.findLast((step) => step.isChecked);
   if (lastCheckedStep) {
