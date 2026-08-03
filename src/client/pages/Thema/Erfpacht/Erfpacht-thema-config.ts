@@ -203,12 +203,12 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
   // Erfpachtrechten table on themapagina
   const displayPropsDossiers: DisplayPropsDossiers = {
     props: {
-      dossierNummer: dossiersBase?.titelDossiernummer,
       voorkeursadres: dossiersBase?.titelVoorkeursAdres,
+      dossierNummer: dossiersBase?.titelDossiernummer,
     },
     colWidths: {
       large: ['50%', '50%'],
-      small: ['30%', '70%'],
+      small: ['70%', '30%'],
     },
   };
 
