@@ -18,7 +18,10 @@ import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 
-export function getDossierNummerUrlParam(dossierNummer: string): string {
+// Transforms numbers like EW/123/456 into EW.123.456, E/567/22 into E.567.22 for use in URL paths.
+export function deriveDossierIdFromDossierNummer(
+  dossierNummer: string
+): string {
   return dossierNummer
     ? (dossierNummer.match(/[a-zA-Z]+|[0-9]+/g)?.join('.') ?? dossierNummer)
     : dossierNummer;
@@ -36,7 +39,8 @@ export function transformErfpachtDossierProperties<
   const dossier: D = jsonCopy(dossierSource);
 
   const dossierId =
-    dossier.dossierId || getDossierNummerUrlParam(dossier.dossierNummer);
+    dossier.dossierId ||
+    deriveDossierIdFromDossierNummer(dossier.dossierNummer);
   const title = `${dossier.dossierNummer}: ${dossier.voorkeursadres}`;
 
   // Filter out relaties that we don't want to show in the frontend.
@@ -150,7 +154,7 @@ export async function fetchErfpachtDossiersDetail(
 }
 
 export const forTesting = {
-  getDossierNummerUrlParam,
+  getDossierNummerUrlParam: deriveDossierIdFromDossierNummer,
   transformErfpachtDossierProperties,
   transformDossierResponse,
 };

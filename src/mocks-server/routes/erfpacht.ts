@@ -38,6 +38,7 @@ export const routes: MockRouteDefinition[] = [
         const dossierNummer = `${type}${rest.join('/')}`;
         return res.send({
           ...ERFPACHT_V2_DOSSIER_INFO_DETAILS,
+          dossierId: req.params.dossierId,
           dossierNummer,
         });
       },

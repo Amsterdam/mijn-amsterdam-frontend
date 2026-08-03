@@ -1,5 +1,3 @@
-import { generatePath } from 'react-router';
-
 import { fetchErfpachtDossierInfo } from './erfpacht-dossiers.ts';
 import { dataRequestConfig } from './erfpacht-service-config.ts';
 import type {
@@ -7,8 +5,7 @@ import type {
   ErfpachtErpachterResponse,
   ErfpachtErpachterResponseSource,
 } from './erfpacht-types.ts';
-import { fetchErfpachtZaakInfo } from './erfpacht-zaken.ts';
-import { themaConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
+import { fetchErfpachtZaakInfo, getDossierLinks } from './erfpacht-zaken.ts';
 import {
   type ApiResponse,
   apiErrorResult,
@@ -89,23 +86,7 @@ export async function fetchErfpacht(
       zaken: (zaakInfoResponse.content ?? []).map((zaak) => {
         return {
           ...zaak,
-          dossierLinks:
-            zaak.zaakDossiers?.map((dossierNummer) => {
-              const dossier =
-                dossierInfoResponse.content?.dossiers.dossiers.find(
-                  (dossier) => dossier.dossierNummer === dossierNummer
-                );
-              if (!dossier) {
-                return dossierNummer;
-              }
-              const dossierId = dossier?.dossierId;
-              return {
-                to: generatePath(themaConfig.detailPageDossier.route.path, {
-                  dossierId,
-                }),
-                title: dossierNummer,
-              };
-            }) ?? [],
+          dossierLinks: getDossierLinks(zaak),
         };
       }),
     };

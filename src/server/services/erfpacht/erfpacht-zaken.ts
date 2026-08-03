@@ -1,5 +1,6 @@
 import { generatePath } from 'react-router';
 
+import { deriveDossierIdFromDossierNummer } from './erfpacht-dossiers.ts';
 import {
   dataRequestConfig,
   featureToggle,
@@ -16,6 +17,7 @@ import type {
   ErfpachtZaakDetailFrontend,
   ErfpachtZaakExcerptFrontend,
   ZaakInfoResponseSource,
+  ZaakInfoSource,
   ZaakStatusFrontend,
   ZaakStatussenResponseSource,
   ZaakStatusSource,
@@ -33,11 +35,28 @@ import {
   toISOString,
 } from '../../../universal/helpers/date.ts';
 import { hash } from '../../../universal/helpers/utils.ts';
-import type { StatusLineItem } from '../../../universal/types/App.types.ts';
+import type {
+  LinkProps,
+  StatusLineItem,
+} from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+
+export function getDossierLinks(zaak: ZaakInfoSource): LinkProps[] {
+  return (
+    zaak.zaakDossiers?.map((dossierNummer) => {
+      const dossierId = deriveDossierIdFromDossierNummer(dossierNummer);
+      return {
+        to: generatePath(themaConfig.detailPageDossier.route.path, {
+          dossierId,
+        }),
+        title: dossierNummer,
+      };
+    }) ?? []
+  );
+}
 
 function transformErfpachtZakenResponse(
   zakenResponseSource: ZaakInfoResponseSource
@@ -66,7 +85,7 @@ function transformErfpachtZakenResponse(
         }),
         title: zaakInfo.zaakOmschrijving,
       },
-      dossierLinks: zaakInfo.zaakDossiers ?? [],
+      dossierLinks: getDossierLinks(zaakInfo),
       displayStatus: getParentStatus(zaakInfo.statusOmschrijving),
     };
     return zaak;
