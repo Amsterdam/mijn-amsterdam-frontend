@@ -59,7 +59,7 @@ function Step({
   return (
     <StepComponent
       key={item.id}
-      heading={item.status}
+      heading={item.status} // Not used in substeps.
       status={
         item.isActive ? 'current' : item.isChecked ? 'completed' : undefined
       }
@@ -71,12 +71,22 @@ function Step({
             ? 'Huidige status'
             : 'Toekomstige status'
       }
+      hasSubsteps={!!item.substeps?.length}
     >
-      {!item.substeps?.length && (
-        <time className={styles.StepStatusDate} dateTime={item.datePublished}>
-          {defaultDateFormat(item.datePublished)}
-        </time>
+      {isSubstep && (
+        <>
+          <Heading
+            level={4}
+            size="level-4"
+            className={styles.StepSubstepStatus}
+          >
+            {item.status}
+          </Heading>
+        </>
       )}
+      <time className={styles.StepStatusDate} dateTime={item.datePublished}>
+        {defaultDateFormat(item.datePublished)}
+      </time>
       {item.description && (
         <div>
           {parseHTML(item.description)}
