@@ -1,34 +1,10 @@
 import type { ErfpachtDossiersDetailSource } from './erfpacht-types.ts';
+import type { ZaakStatusTypeSource } from './erfpacht-zaken-config.ts';
 import type { SomeOtherString } from '../../../universal/helpers/types.ts';
 import type {
   LinkProps,
   ZaakAanvraagDetail,
 } from '../../../universal/types/App.types.ts';
-
-export type ZaakStatusTypeSource =
-  | 'Aanvraag'
-
-  // Meer informatie nodig
-  | 'Informatie opgevraagd'
-  | 'Informatie aangeleverd'
-
-  // In behandeling
-  | 'Aanvraag Beoordelen'
-  | 'Aanvraag gereed voor behandeling'
-  | 'Behandeling'
-  | 'Indicatie verstuurd'
-  | 'Aanbieding'
-  | 'Acceptatie ontvangen'
-
-  // Bij Notaris
-  | 'Besluit verstuurd'
-  | 'Akte gepasseerd'
-
-  // Afgehandeld
-  | 'Aanvraag afgerond'
-
-  // Onbekend
-  | 'Onbekend';
 
 export type ZaakInfoSource = {
   zaakNummer: string;
