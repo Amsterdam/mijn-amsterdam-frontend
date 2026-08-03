@@ -6,8 +6,11 @@ import {
   routes,
 } from './erfpacht-service-config.ts';
 import {
-  getDisplayStatus,
+  getParentStatus,
+  translateSourceStatus,
   ZAAK_STATUS_FRONTEND,
+  ZAAK_STATUS_SOURCE,
+  type ZaakStatusTypeSource,
 } from './erfpacht-zaken-config.ts';
 import type {
   ErfpachtZaakDetailFrontend,
@@ -15,7 +18,7 @@ import type {
   ZaakInfoResponseSource,
   ZaakStatusFrontend,
   ZaakStatussenResponseSource,
-  ZaakStatusTypeSource,
+  ZaakStatusSource,
 } from './erfpacht-zaken-types.ts';
 import { themaConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
 import {
@@ -64,7 +67,7 @@ function transformErfpachtZakenResponse(
         title: zaakInfo.zaakOmschrijving,
       },
       dossierLinks: zaakInfo.zaakDossiers ?? [],
-      displayStatus: getDisplayStatus(zaakInfo.statusOmschrijving),
+      displayStatus: getParentStatus(zaakInfo.statusOmschrijving),
     };
     return zaak;
   });
@@ -99,6 +102,51 @@ export async function fetchErfpachtZaakInfo(
   return zaakInfoResponse;
 }
 
+function getSubStepDescription(substep: ZaakStatusSource): string {
+  switch (substep.statustoelichting.toLowerCase()) {
+    case ZAAK_STATUS_SOURCE.AANVRAAG:
+      return 'Wij hebben uw aanvraag ontvangen en gaan deze beoordelen.';
+    case ZAAK_STATUS_SOURCE.AANVRAAG_BEOORDELEN:
+      return 'Wij zijn bezig met het beoordelen van uw aanvraag.';
+    case ZAAK_STATUS_SOURCE.INFORMATIE_OPGEVRAAGD:
+      return 'Wij hebben aanvullende informatie nodig om uw aanvraag te kunnen beoordelen.';
+    case ZAAK_STATUS_SOURCE.INFORMATIE_AANGELEVERD:
+      return 'Wij hebben de aanvullende informatie ontvangen en gaan uw aanvraag verder beoordelen.';
+    case ZAAK_STATUS_SOURCE.AANVRAAG_GEREED_VOOR_BEHANDELING:
+      return 'Uw aanvraag is gereed voor behandeling.';
+    case ZAAK_STATUS_SOURCE.INDICATIE_VERSTUURD:
+      return 'Wij hebben u een indicatie gestuurd over de uitkomst van uw aanvraag.';
+    case ZAAK_STATUS_SOURCE.AANBIEDING:
+      return 'Wij hebben u een aanbieding gestuurd over de uitkomst van uw aanvraag.';
+    case ZAAK_STATUS_SOURCE.ACCEPTATIE_ONTVANGEN:
+      return 'Wij hebben uw acceptatie ontvangen en gaan uw aanvraag verder behandelen.';
+    case ZAAK_STATUS_SOURCE.BESLUIT_VERSTUURD:
+      return 'Wij hebben het besluit naar de notaris gestuurd. U ontvangt van de notaris een uitnodiging om de akte te passeren.';
+    case ZAAK_STATUS_SOURCE.AKTE_GEPASSEERD:
+      return 'Wij hebben de akte gepasseerd en uw aanvraag is afgerond.';
+    case ZAAK_STATUS_SOURCE.BEHANDELING:
+      return 'Wij zijn bezig met het behandelen van uw aanvraag.';
+    case ZAAK_STATUS_SOURCE.AANVRAAG_AFGEROND:
+      return 'Uw aanvraag is afgerond.';
+  }
+  return '';
+}
+
+function getMainStepDescription(
+  statusFixed: ZaakStatusFrontend,
+  substeps: StatusLineItem<string>[]
+): string {
+  switch (true) {
+    case statusFixed === ZAAK_STATUS_FRONTEND.AFGEHANDELD && !substeps?.length:
+      return 'Zodra uw aanvraag is afgerond, ontvangt u van ons een bericht.';
+    case statusFixed === ZAAK_STATUS_FRONTEND.IN_BEHANDELING &&
+      !substeps?.length:
+      return 'Uw aanvraag wordt eerst beoordeeld. Zodra wij hier mee klaar zijn nemen we uw zaak in behandeling.';
+    default:
+      return '';
+  }
+}
+
 type ZaakStatusResponseFrontend = {
   steps: StatusLineItem<ZaakStatusFrontend, ZaakStatusTypeSource>[];
   result: string;
@@ -107,62 +155,67 @@ type ZaakStatusResponseFrontend = {
 function transformErfpachtZaakDetailResponse(
   zaakStatussenResponseSource: ZaakStatussenResponseSource
 ): ZaakStatusResponseFrontend {
-  const stepStatusFixed: ZaakStatusFrontend[] = [
+  const parentStatusses: ZaakStatusFrontend[] = [
     ZAAK_STATUS_FRONTEND.AANVRAAG,
-    ZAAK_STATUS_FRONTEND.MEER_INFORMATIE_NODIG,
     ZAAK_STATUS_FRONTEND.IN_BEHANDELING,
     ZAAK_STATUS_FRONTEND.AFGEHANDELD,
   ];
 
   const stepsFixed: StatusLineItem<ZaakStatusFrontend, ZaakStatusTypeSource>[] =
-    stepStatusFixed.map((statusFixed) => {
+    parentStatusses.map((statusFixed) => {
       const substeps = zaakStatussenResponseSource.zaakStatussen
         .filter(
           (statusSource) =>
-            getDisplayStatus(statusSource.statustoelichting) === statusFixed
+            getParentStatus(statusSource.statustoelichting) === statusFixed
         )
-        .toSorted(dateSort('datumStatusGezet', 'asc'));
-      const isMeerInformatieStep =
-        statusFixed === ZAAK_STATUS_FRONTEND.MEER_INFORMATIE_NODIG;
-      const isOptionalStep = isMeerInformatieStep;
+        .map((substep) => {
+          const substepItem: StatusLineItem<string> = {
+            id: hash(substep.statustoelichting + substep.datumStatusGezet),
+            status: translateSourceStatus(substep.statustoelichting),
+            datePublished: substep.datumStatusGezet,
+            description: getSubStepDescription(substep),
+            isActive: false,
+            isChecked: true,
+          };
+          return substepItem;
+        })
+        .toSorted(dateSort('datePublished', 'asc'));
+
       const hasMatchingSubsteps = !!substeps?.length;
+      const [firstSubstep, ...othersubsteps] = substeps ?? [];
 
-      let description = '';
-
-      switch (true) {
-        case isMeerInformatieStep && hasMatchingSubsteps:
-          description = `Er is meer informatie en tijd nodig om uw aanvraag te beoordelen.`;
-          break;
-        case statusFixed === ZAAK_STATUS_FRONTEND.IN_BEHANDELING &&
-          hasMatchingSubsteps:
-          description = `Wij hebben uw aanvraag in behandeling genomen.`;
-          break;
-        case statusFixed === ZAAK_STATUS_FRONTEND.AFGEHANDELD &&
-          hasMatchingSubsteps:
-          description = `Wij hebben uw aanvraag afgerond en hebben u hierover bericht gestuurd.`;
-          break;
-      }
-
-      const step: StatusLineItem<ZaakStatusFrontend, ZaakStatusTypeSource> = {
+      const step: StatusLineItem<ZaakStatusFrontend, string> = {
         id: hash(statusFixed),
         status: statusFixed,
-        datePublished: substeps?.at(-1)?.datumStatusGezet ?? '',
+        datePublished: firstSubstep?.datePublished ?? '',
+        description:
+          getMainStepDescription(statusFixed, substeps) ||
+          firstSubstep?.description ||
+          '',
         isActive: false,
         isChecked: hasMatchingSubsteps,
-        description,
-        isVisible: isOptionalStep ? hasMatchingSubsteps : true,
+        substeps: othersubsteps,
       };
 
       return step;
     });
 
+  function setActiveStep(step: StatusLineItem<string, string>) {
+    step.isActive = true;
+    if (step.substeps?.length) {
+      const lastSubstep = step.substeps.at(-1);
+      if (lastSubstep) {
+        lastSubstep.isActive = true;
+      }
+    }
+
   const lastCheckedStep = stepsFixed.findLast((step) => step.isChecked);
   if (lastCheckedStep) {
-    lastCheckedStep.isActive = true;
+    setActiveStep(lastCheckedStep);
   } else {
     const firstStep = stepsFixed.at(0);
     if (firstStep) {
-      firstStep.isActive = true;
+      setActiveStep(firstStep);
     }
   }
 
