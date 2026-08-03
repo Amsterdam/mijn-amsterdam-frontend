@@ -7,6 +7,7 @@ import {
 import { ErfpachtDossierDetail } from './ErfpachtDossierDetail.tsx';
 import { default as ErfpachtIcon } from './ErfpachtIcon.svg?react';
 import { ErfpachtDossiersList } from './ErfpachtListDossiers.tsx';
+import { ErfpachtDossierZakenList } from './ErfpachtListDossierZaken.tsx';
 import { ErfpachtZakenList } from './ErfpachtListZaken.tsx';
 import { ErfpachtThema } from './ErfpachtThema.tsx';
 import { ErfpachtZaakDetail } from './ErfpachtZaakDetail.tsx';
@@ -74,6 +75,11 @@ export const ErfpachtRoutes = [
         }}
       />
     ),
+    isActive: themaConfig.featureToggle.active,
+  },
+  {
+    route: themaConfig.listPageDossierZaken.route.path,
+    Component: ErfpachtDossierZakenList,
     isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];

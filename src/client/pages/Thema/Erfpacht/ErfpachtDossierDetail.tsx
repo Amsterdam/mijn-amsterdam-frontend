@@ -1,14 +1,14 @@
-import { Paragraph } from '@amsterdam/design-system-react';
+import { generatePath } from 'react-router';
 
 import { DataTableBijzondereBepalingen } from './DossierDetail/DatalistBijzondereBepalingen.tsx';
 import { DatalistGeneral } from './DossierDetail/DatalistGeneral.tsx';
 import { DatalistJuridisch } from './DossierDetail/DatalistJuridisch.tsx';
 import { DatalistsFinancieel } from './DossierDetail/DatalistsFinancieel.tsx';
-import { useDossierData as useDossierDetailData } from './DossierDetail/useErfpachtDossierData.hook.ts';
+import { useDossierDetailData as useDossierDetailData } from './DossierDetail/useErfpachtDossierDetailData.hook.ts';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
-import { TableV2 } from '../../../components/Table/TableV2.tsx';
 import { ThemaDetailPagina } from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { useAfisThemaData } from '../Afis/useAfisThemaData.hook.tsx';
 
@@ -78,17 +78,15 @@ export function ErfpachtDossierDetail() {
 
               <PageContentCell>
                 <CollapsiblePanel title="Wijzigingen">
-                  {zaken.length ? (
-                    <TableV2
-                      showTHead
-                      items={zaken}
-                      displayProps={tableConfigZaken.displayProps}
-                    />
-                  ) : (
-                    <Paragraph>
-                      Er zijn geen wijzigingen bekend voor dit erfpachtdossier.
-                    </Paragraph>
-                  )}
+                  <ThemaPaginaTable
+                    zaken={zaken}
+                    maxItems={2}
+                    listPageRoute={generatePath(
+                      themaConfig.listPageDossierZaken.route.path,
+                      { dossierId: dossier.dossierId }
+                    )}
+                    displayProps={tableConfigZaken.displayProps}
+                  />
                 </CollapsiblePanel>
               </PageContentCell>
             </>

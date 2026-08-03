@@ -44,6 +44,7 @@ type WithListPageZaken = PageConfig<'listPageZaken'>;
 type WithListPageDossiers = PageConfig<'listPageDossiers'>;
 type WithDetailPageZaak = PageConfig<'detailPageZaak'>;
 type WithDetailPageDossier = PageConfig<'detailPageDossier'>;
+type WithListPageDossierZaken = PageConfig<'listPageDossierZaken'>;
 
 type ThemaConfigErfpacht = ThemaConfigBase &
   WithDetailPageDossier &
@@ -53,7 +54,8 @@ type ThemaConfigErfpacht = ThemaConfigBase &
   WithListPageFacturen &
   WithDetailPageFactuur &
   WithListPageFacturen &
-  WithListPageZaken;
+  WithListPageZaken &
+  WithListPageDossierZaken;
 
 export const themaConfig = {
   id: THEMA_ID,
@@ -114,7 +116,14 @@ export const themaConfig = {
   listPageZaken: {
     route: {
       path: '/erfpacht/zaken/:page?',
-      documentTitle: `Lijst met zaken | ${THEMA_TITLE}`,
+      documentTitle: `Lijst met wijzigingsaanvragen | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
+  listPageDossierZaken: {
+    route: {
+      path: '/erfpacht/dossier/:dossierId/zaken/:page?',
+      documentTitle: `Lijst wijzigingsaanvragen dossier | ${THEMA_TITLE}`,
       trackingUrl: null,
     },
   },
@@ -226,9 +235,7 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
     [listPageParamKind.erfpachtDossierDetailZaken]: {
       title: 'Wijzigingsaanvragen',
       displayProps: displayPropsDossierDetailZaken,
-      listPageRoute: generatePath(themaConfig.listPageZaken.route.path, {
-        page: null,
-      }),
+      listPageRoute: '', // This will be set dynamically in the dossier data hook based on the dossierId param,
       maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS,
     },
     [listPageParamKind.erfpachtDossiers]: {
