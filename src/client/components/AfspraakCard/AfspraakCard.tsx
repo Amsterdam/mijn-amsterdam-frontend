@@ -102,14 +102,18 @@ function FullContent({
         </DescriptionList.Description>
         <DescriptionList.Term>Locatie</DescriptionList.Term>
         <DescriptionList.Description>
-          <LocationModal
-            modalTitle={`Stadsloket ${afspraak.location.name} - ${afspraak.location.street}`}
-            address={afspraak.location.street}
-            buttonLabel={`Stadsloket ${afspraak.location.name}${
-              afspraak.location.street ? `, ${afspraak.location.street}` : ''
-            }`}
-            buttonVariant="ma-link-like"
-          />
+          {afspraak.location.street ? (
+            <LocationModal
+              modalTitle={`Stadsloket ${afspraak.location.name} - ${afspraak.location.street}`}
+              address={afspraak.location.street}
+              buttonLabel={`Stadsloket ${afspraak.location.name}${
+                afspraak.location.street ? `, ${afspraak.location.street}` : ''
+              }`}
+              buttonVariant="ma-link-like"
+            />
+          ) : (
+            <>Stadsloket {afspraak.location.name}</>
+          )}
         </DescriptionList.Description>
       </DescriptionList>
 
