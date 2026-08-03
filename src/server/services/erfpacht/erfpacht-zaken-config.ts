@@ -1,8 +1,3 @@
-import type {
-  ZaakStatusTypeSource,
-  ZaakStatusFrontend,
-} from './erfpacht-zaken-types.ts';
-
 export const ZAAK_STATUS_SOURCE = {
   AANVRAAG: 'aanvraag',
   AANVRAAG_BEOORDELEN: 'aanvraag beoordelen',
@@ -18,36 +13,48 @@ export const ZAAK_STATUS_SOURCE = {
   AANVRAAG_AFGEROND: 'aanvraag afgerond',
 } as const;
 
+export type ZaakStatusTypeSource =
+  (typeof ZAAK_STATUS_SOURCE)[keyof typeof ZAAK_STATUS_SOURCE];
+
 export const ZAAK_STATUS_FRONTEND = {
   AANVRAAG: 'Aanvraag',
-  MEER_INFORMATIE_NODIG: 'Meer informatie nodig',
   IN_BEHANDELING: 'In behandeling',
   AFGEHANDELD: 'Afgehandeld',
-} as const satisfies Record<string, ZaakStatusFrontend>;
+} as const;
 
-export function getDisplayStatus(
-  statustekst: ZaakStatusTypeSource
-): ZaakStatusFrontend {
+export type ZaakStatusTypeFrontend =
+  (typeof ZAAK_STATUS_FRONTEND)[keyof typeof ZAAK_STATUS_FRONTEND];
+
+export function getParentStatus(statustekst: ZaakStatusTypeSource): string {
   switch (statustekst.toLowerCase()) {
     case ZAAK_STATUS_SOURCE.AANVRAAG:
     case ZAAK_STATUS_SOURCE.AANVRAAG_BEOORDELEN:
+    case ZAAK_STATUS_SOURCE.INFORMATIE_OPGEVRAAGD:
+    case ZAAK_STATUS_SOURCE.INFORMATIE_AANGELEVERD:
     case ZAAK_STATUS_SOURCE.AANVRAAG_GEREED_VOOR_BEHANDELING:
       return ZAAK_STATUS_FRONTEND.AANVRAAG;
 
-    case ZAAK_STATUS_SOURCE.INFORMATIE_OPGEVRAAGD:
-    case ZAAK_STATUS_SOURCE.INFORMATIE_AANGELEVERD:
-      return ZAAK_STATUS_FRONTEND.MEER_INFORMATIE_NODIG;
-
     case ZAAK_STATUS_SOURCE.BEHANDELING:
-    case ZAAK_STATUS_SOURCE.INDICATIE_VERSTUURD:
     case ZAAK_STATUS_SOURCE.AANBIEDING:
     case ZAAK_STATUS_SOURCE.ACCEPTATIE_ONTVANGEN:
     case ZAAK_STATUS_SOURCE.BESLUIT_VERSTUURD:
+    case ZAAK_STATUS_SOURCE.INDICATIE_VERSTUURD:
       return ZAAK_STATUS_FRONTEND.IN_BEHANDELING;
 
     case ZAAK_STATUS_SOURCE.AANVRAAG_AFGEROND:
       return ZAAK_STATUS_FRONTEND.AFGEHANDELD;
 
+    default:
+      return `${statustekst}`;
+  }
+}
+
+export function translateSourceStatus(
+  statustekst: ZaakStatusTypeSource
+): string {
+  switch (statustekst.toLowerCase()) {
+    case ZAAK_STATUS_SOURCE.AANVRAAG:
+      return 'Ontvangen';
     default:
       return `${statustekst}`;
   }
