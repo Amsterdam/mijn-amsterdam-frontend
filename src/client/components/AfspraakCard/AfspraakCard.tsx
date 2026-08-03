@@ -89,16 +89,9 @@ function FullContent({
       <DescriptionList className={isPhoneScreen ? 'ams-mb-xl' : 'ams-mb-m'}>
         <DescriptionList.Term>Datum</DescriptionList.Term>
         <DescriptionList.Description>
-          <MaLink
-            href={afspraak.icsLink.to}
-            rel="noopener noreferrer"
-            type="text/calendar"
-            download={afspraak.icsLink.download}
-          >
-            <time dateTime={afspraak.dateStart}>
-              {capitalizeFirstLetter(afspraak.displayDateTime)}
-            </time>
-          </MaLink>
+          <time dateTime={afspraak.dateStart}>
+            {capitalizeFirstLetter(afspraak.displayDateTime)}
+          </time>
         </DescriptionList.Description>
         <DescriptionList.Term>Locatie</DescriptionList.Term>
         <DescriptionList.Description>

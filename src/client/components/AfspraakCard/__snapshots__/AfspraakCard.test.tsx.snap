@@ -91,19 +91,11 @@ exports[`Renders afspraak data > Regular variant 1`] = `
             <dd
               class="ams-description-list__description"
             >
-              <a
-                class="ams-link _MaLink_10c0a4"
-                download="afspraak-unique-123.ics"
-                href="data:text/calendar;base64,abc123"
-                rel="noopener noreferrer"
-                type="text/calendar"
+              <time
+                datetime="2020-01-17T17:50:00Z"
               >
-                <time
-                  datetime="2020-01-17T17:50:00Z"
-                >
-                  Maandag 01 januari 2025 van 17:50 tot 18:20
-                </time>
-              </a>
+                Maandag 01 januari 2025 van 17:50 tot 18:20
+              </time>
             </dd>
             <dt
               class="ams-description-list__term"
