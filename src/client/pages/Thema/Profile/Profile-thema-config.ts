@@ -60,7 +60,7 @@ export const themaConfig = {
     featureToggle: {
       active: true,
     },
-    profileTypes: ['private', 'commercial'],
+    profileTypes: ['commercial'], // 'private' tonen we nu niet wanneer het werkt moet dit worden toegevoegd
     redactedScope: 'content',
     pageLinks: [
       {
@@ -71,7 +71,7 @@ export const themaConfig = {
     uitlegPageSections: [
       {
         title: THEMA_TITLE_KVK,
-        listItems: ['Uw inschrijving het handelsregister'],
+        listItems: ['Uw inschrijving het in handelsregister'],
       },
     ],
     route: {
