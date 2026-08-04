@@ -24,6 +24,32 @@ interface StatusStepDocumentsProps {
   altDocumentContent?: ReactNode;
 }
 
+function getStepAriaLabel(item: StatusLineItem): string {
+  if (item.isChecked && !item.isActive) {
+    return 'Status Afgerond';
+  }
+
+  if (item.isActive) {
+    return 'Huidige status';
+  }
+
+  return 'Toekomstige status';
+}
+
+function getStepStatus(
+  item: StatusLineItem
+): 'current' | 'completed' | undefined {
+  if (item.isActive) {
+    return 'current';
+  }
+
+  if (item.isChecked) {
+    return 'completed';
+  }
+
+  return undefined;
+}
+
 export function StatusStepDocuments({
   documents = [],
   altDocumentContent,
@@ -60,17 +86,9 @@ function Step({
     <StepComponent
       key={item.id}
       heading={item.status} // Not used in substeps.
-      status={
-        item.isActive ? 'current' : item.isChecked ? 'completed' : undefined
-      }
+      status={getStepStatus(item)}
       className={styles.Step}
-      aria-label={
-        item.isChecked && !item.isActive
-          ? 'Status Afgerond'
-          : item.isActive
-            ? 'Huidige status'
-            : 'Toekomstige status'
-      }
+      aria-label={getStepAriaLabel(item)}
       hasSubsteps={!!item.substeps?.length}
     >
       {isSubstep && (
