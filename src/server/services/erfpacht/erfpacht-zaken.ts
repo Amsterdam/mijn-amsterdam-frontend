@@ -7,6 +7,7 @@ import {
   routes,
 } from './erfpacht-service-config.ts';
 import {
+  getMainStepDescription,
   getParentStatus,
   getSubStepDescription,
   translateSourceStatus,
@@ -118,21 +119,6 @@ export async function fetchErfpachtZaakInfo(
   );
 
   return zaakInfoResponse;
-}
-
-function getMainStepDescription(
-  statusFixed: ZaakStatusFrontend,
-  substeps: StatusLineItem<string>[]
-): string {
-  switch (true) {
-    case statusFixed === ZAAK_STATUS_FRONTEND.AFGEHANDELD && !substeps?.length:
-      return 'Zodra uw aanvraag is afgerond, ontvangt u van ons een bericht.';
-    case statusFixed === ZAAK_STATUS_FRONTEND.IN_BEHANDELING &&
-      !substeps?.length:
-      return 'Uw aanvraag wordt eerst beoordeeld. Zodra wij hier mee klaar zijn nemen we uw zaak in behandeling.';
-    default:
-      return '';
-  }
 }
 
 type ZaakStatusResponseFrontend = {

@@ -1,4 +1,8 @@
-import type { ZaakStatusSource } from './erfpacht-zaken-types.ts';
+import type {
+  ZaakStatusFrontend,
+  ZaakStatusSource,
+} from './erfpacht-zaken-types.ts';
+import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 
 const ZAAK_STATUS_SOURCE_ = {
   AANVRAAG: 'Aanvraag',
@@ -100,4 +104,18 @@ export function getSubStepDescription(substep: ZaakStatusSource): string {
       return 'Uw aanvraag is afgerond.';
   }
   return '';
+}
+export function getMainStepDescription(
+  statusFixed: ZaakStatusFrontend,
+  substeps: StatusLineItem<string>[]
+): string {
+  switch (true) {
+    case statusFixed === ZAAK_STATUS_FRONTEND.AFGEHANDELD && !substeps?.length:
+      return 'Zodra uw aanvraag is afgerond, ontvangt u van ons een bericht.';
+    case statusFixed === ZAAK_STATUS_FRONTEND.IN_BEHANDELING &&
+      !substeps?.length:
+      return 'Uw aanvraag wordt eerst beoordeeld. Zodra wij hier mee klaar zijn nemen we uw zaak in behandeling.';
+    default:
+      return '';
+  }
 }
