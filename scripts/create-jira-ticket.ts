@@ -68,8 +68,11 @@ Opties:
   --help           Toon deze help
 
 Verwachte input velden:
-  projectKey, issueTypeName (alleen Story), parentIssueKey, summary,
+  projectKey, summary,
   description, acceptanceCriteria, comment
+
+Optioneel input velden:
+  parentIssueKey
 `);
 }
 
