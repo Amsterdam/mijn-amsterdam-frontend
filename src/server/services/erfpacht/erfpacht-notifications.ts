@@ -17,11 +17,12 @@ import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 function getTitleAndDescriptionForNotification(
   zaakExcerpt: ErfpachtZaakExcerptFrontend
 ): { title: string; description: string } {
-  const title = `Aanvraag wijziging erfpachtdossier`;
+  const title = `${zaakExcerpt.zaakNummer}: ${zaakExcerpt.statusOmschrijving}`;
   const description = getSubStepDescription({
     statustoelichting: zaakExcerpt.statusOmschrijving,
     datumStatusGezet: zaakExcerpt.formattedStatusDatum,
   });
+  // const description = `De status van uw aanvraag met zaaknummer ${zaakExcerpt.zaakNummer} is gewijzigd. ${description_}`;
 
   // We only want to show a notification for the parent status, not for the specific status.
   // The specific status per zaak are fetched via an additional API call.
@@ -29,17 +30,17 @@ function getTitleAndDescriptionForNotification(
   switch (getParentStatus(zaakExcerpt.statusOmschrijving)) {
     case ZAAK_STATUS_FRONTEND.AANVRAAG:
       return {
-        title: `${title}: ${zaakExcerpt.statusOmschrijving}`,
+        title,
         description,
       };
     case ZAAK_STATUS_FRONTEND.IN_BEHANDELING:
       return {
-        title: `${title}: ${zaakExcerpt.statusOmschrijving}`,
+        title,
         description,
       };
     case ZAAK_STATUS_FRONTEND.AFGEHANDELD:
       return {
-        title: `${title}: ${zaakExcerpt.statusOmschrijving}`,
+        title,
         description,
       };
   }

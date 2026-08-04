@@ -81,10 +81,12 @@ describe('erfpacht-notifications', () => {
             zaakNummer: 'ZAAK-1',
           })
         )
-      ).toEqual({
-        title: 'Aanvraag wijziging erfpachtdossier: Aanvraag Beoordelen',
-        description: 'Wij zijn bezig met het beoordelen van uw aanvraag.',
-      });
+      ).toMatchInlineSnapshot(`
+        {
+          "description": "Wij zijn bezig met het beoordelen van uw aanvraag.",
+          "title": "ZAAK-1: Aanvraag Beoordelen",
+        }
+      `);
 
       expect(
         getTitleAndDescriptionForNotification(
@@ -93,10 +95,12 @@ describe('erfpacht-notifications', () => {
             zaakNummer: 'ZAAK-3',
           })
         )
-      ).toEqual({
-        description: 'Wij zijn bezig met het beoordelen van uw aanvraag.',
-        title: 'Aanvraag wijziging erfpachtdossier: Aanvraag Beoordelen',
-      });
+      ).toMatchInlineSnapshot(`
+        {
+          "description": "Wij zijn bezig met het beoordelen van uw aanvraag.",
+          "title": "ZAAK-3: Aanvraag Beoordelen",
+        }
+      `);
 
       expect(
         getTitleAndDescriptionForNotification(
@@ -105,10 +109,12 @@ describe('erfpacht-notifications', () => {
             zaakNummer: 'ZAAK-4',
           })
         )
-      ).toEqual({
-        description: 'Wij zijn bezig met het beoordelen van uw aanvraag.',
-        title: 'Aanvraag wijziging erfpachtdossier: Aanvraag Beoordelen',
-      });
+      ).toMatchInlineSnapshot(`
+        {
+          "description": "Wij zijn bezig met het beoordelen van uw aanvraag.",
+          "title": "ZAAK-4: Aanvraag Beoordelen",
+        }
+      `);
     });
 
     test('falls back to default title/description for unknown status', () => {
@@ -118,10 +124,12 @@ describe('erfpacht-notifications', () => {
         createZaakExcerpt({ displayStatus: 'Onbekend' })
       );
 
-      expect(result).toEqual({
-        description: 'Wij zijn bezig met het beoordelen van uw aanvraag.',
-        title: 'Aanvraag wijziging erfpachtdossier: Aanvraag Beoordelen',
-      });
+      expect(result).toMatchInlineSnapshot(`
+        {
+          "description": "Wij zijn bezig met het beoordelen van uw aanvraag.",
+          "title": "ZAAK-2025-0000011488: Aanvraag Beoordelen",
+        }
+      `);
     });
   });
 
@@ -168,10 +176,12 @@ describe('erfpacht-notifications', () => {
       'erfpacht-ongoing-1-notification',
       'erfpacht-done-recent-notification',
     ]);
-    expect(result.content?.notifications[0].link).toEqual({
-      to: '/erfpacht/zaak/1234-5678-9012-9999',
-      title: 'Bekijk uw aanvraag',
-    });
+    expect(result.content?.notifications[0].link).toMatchInlineSnapshot(`
+      {
+        "title": "Bekijk uw aanvraag",
+        "to": "/erfpacht/zaak/1234-5678-9012-9999",
+      }
+    `);
   });
 
   test('fetchErfpachtNotifications: builds themed notifications', async () => {
@@ -205,7 +215,7 @@ describe('erfpacht-notifications', () => {
               },
               "themaID": "ERFPACHT",
               "themaTitle": "Erfpacht",
-              "title": "Aanvraag wijziging erfpachtdossier: Aanvraag Beoordelen",
+              "title": "ZAAK-2025-0000011488: Aanvraag Beoordelen",
             },
           ],
         },
