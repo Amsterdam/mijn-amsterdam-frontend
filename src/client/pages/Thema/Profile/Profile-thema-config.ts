@@ -68,7 +68,12 @@ export const themaConfig = {
         title: 'Geef wijzigingen door aan de Kamer van Koophandel',
       },
     ],
-    uitlegPageSections: [],
+    uitlegPageSections: [
+      {
+        title: THEMA_TITLE_KVK,
+        listItems: ['Uw inschrijving het handelsregister'],
+      },
+    ],
     route: {
       path: '/gegevens-handelsregister',
       documentTitle: `${THEMA_TITLE_KVK} | Mijn Amsterdam`,
