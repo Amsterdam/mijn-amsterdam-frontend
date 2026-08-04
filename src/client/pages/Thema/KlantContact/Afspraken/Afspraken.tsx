@@ -11,7 +11,7 @@ import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../../config/app.ts';
 import { themaConfig } from '../KlantContact-thema-config.ts';
 
 type AfsprakenProps = {
-  compact?: boolean;
+  dashboard?: boolean;
   afspraken: AfspraakFrontend[];
   className?: string;
   maxItems?: number;
@@ -19,7 +19,7 @@ type AfsprakenProps = {
 };
 
 export function Afspraken({
-  compact = false,
+  dashboard = false,
   afspraken = [],
   maxItems = MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   className,
@@ -29,24 +29,24 @@ export function Afspraken({
 
   if (isLoading)
     return (
-      <AfsprakenBase className={className} compact={compact}>
+      <AfsprakenBase className={className} dashboard={dashboard}>
         <LoadingContent />
       </AfsprakenBase>
     );
 
   if (!hasAfspraken)
     return (
-      <AfsprakenBase className={className} compact={compact}>
+      <AfsprakenBase className={className} dashboard={dashboard}>
         <Paragraph>Er zijn geen afspraken bij het Stadsloket.</Paragraph>
       </AfsprakenBase>
     );
 
   return (
-    <AfsprakenBase className={className} compact={compact}>
-      <Column gap="large" className={!compact ? 'ams-mb-l' : ''}>
+    <AfsprakenBase className={className} dashboard={dashboard}>
+      <Column gap="large" className={!dashboard ? 'ams-mb-l' : ''}>
         {afspraken.slice(0, maxItems).map((afspraak) => (
           <AfspraakCard
-            compact={compact}
+            dashboard={dashboard}
             key={afspraak.caseReference}
             afspraak={afspraak}
           />
@@ -55,7 +55,7 @@ export function Afspraken({
       <LinkToListPage
         count={afspraken.length}
         route={themaConfig.listPageAfspraken.route.path}
-        threshold={compact ? 0 : maxItems}
+        threshold={dashboard ? 0 : maxItems}
         label={`Bekijk uw ${afspraken.length} ${afspraken.length === 1 ? 'afspraak' : 'afspraken'}`}
         maVariant="default"
       />
@@ -66,20 +66,20 @@ export function Afspraken({
 type AfsprakenBaseProps = {
   className?: string;
   children: ReactNode;
-  compact: boolean;
+  dashboard: boolean;
 };
 
 export function AfsprakenBase({
   className,
   children,
-  compact,
+  dashboard,
 }: AfsprakenBaseProps) {
   return (
     <div className={className}>
       <Heading level={2} className="ams-mb-m">
         Afspraken bij een Stadsloket
       </Heading>
-      {!compact && (
+      {!dashboard && (
         <Paragraph className="ams-mb-m">
           Hier ziet u niet al uw afspraken. In het overzicht ziet u alleen de
           afspraken waarbij we uw persoonsgegevens nodig hebben om uw vraag te

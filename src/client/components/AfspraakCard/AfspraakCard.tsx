@@ -19,17 +19,17 @@ import { ModalAndButton } from '../Modal/Modal.tsx';
 type AfspraakCardProps = {
   afspraak: AfspraakFrontend;
   className?: string;
-  compact?: boolean;
+  dashboard?: boolean;
 };
 
 export function AfspraakCard({
   afspraak,
   className,
-  compact,
+  dashboard = false,
 }: AfspraakCardProps) {
   const isPhoneScreen = useSmallScreen();
 
-  if (compact)
+  if (dashboard)
     return <AfspraakCardDashboard afspraak={afspraak} className={className} />;
 
   return (

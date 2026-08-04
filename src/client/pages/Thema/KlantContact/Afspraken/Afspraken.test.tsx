@@ -130,7 +130,7 @@ describe('Afspraken', () => {
         afspraken={afspraken}
         maxItems={1}
         isLoading={false}
-        compact={true}
+        dashboard={true}
       />,
       {
         wrapper: BrowserRouter,

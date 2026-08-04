@@ -10,12 +10,6 @@ import type { AfspraakFrontend } from '../../../server/services/klantcontact/kla
 const address = { street: 'Amstel', houseNumber: 1 };
 
 const afspraak: AfspraakFrontend = {
-  subject: 'Varen',
-  products: [
-    {
-      name: 'Varen',
-    },
-  ],
   heading: 'Varen Afspraak',
   dateStart: '2020-01-17T17:50:00Z',
   dateEnd: '2020-01-17T18:20:00Z',
@@ -46,10 +40,10 @@ const afspraak: AfspraakFrontend = {
 
 function renderAfspraakCard(
   afspraak: AfspraakFrontend,
-  compact: boolean = false
+  dashboard: boolean = false
 ) {
   return render(
-    <AfspraakCard afspraak={afspraak} compact={compact}></AfspraakCard>,
+    <AfspraakCard afspraak={afspraak} dashboard={dashboard}></AfspraakCard>,
     {
       wrapper: BrowserRouter,
     }
