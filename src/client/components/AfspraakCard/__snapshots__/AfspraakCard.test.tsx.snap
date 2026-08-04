@@ -3,38 +3,26 @@
 exports[`Renders afspraak data > Compact variant 1`] = `
 <DocumentFragment>
   <article>
-    <div
-      class="ams-row ams-row--align-between"
+    <h3
+      class="ams-heading ams-heading--3"
     >
-      <div
-        class="ams-row"
+      Varen Afspraak
+    </h3>
+    <p
+      class="ams-paragraph"
+    >
+      Datum: 
+      <time
+        datetime="2020-01-17T17:50:00Z"
       >
-        <div
-          class="ams-prose"
-        >
-          <h3
-            class="ams-heading ams-heading--3"
-          >
-            Varen Afspraak
-          </h3>
-          <p
-            class="ams-paragraph"
-          >
-            Datum: 
-            <time
-              datetime="2020-01-17T17:50:00Z"
-            >
-              maandag 01 januari 2025 van 17:50 tot 18:20
-            </time>
-          </p>
-          <p
-            class="ams-paragraph ams-mb-s"
-          >
-            Locatie: Stadsloket Centrum, Amstel 1
-          </p>
-        </div>
-      </div>
-    </div>
+        maandag 01 januari 2025 van 17:50 tot 18:20
+      </time>
+    </p>
+    <p
+      class="ams-paragraph ams-mb-s"
+    >
+      Locatie: Stadsloket Centrum, Amstel 1
+    </p>
   </article>
 </DocumentFragment>
 `;
@@ -49,7 +37,7 @@ exports[`Renders afspraak data > Regular variant 1`] = `
         class="ams-row"
       >
         <span
-          class="ams-icon ams-icon--heading-2"
+          class="ams-icon ams-icon--heading-3"
           hidden=""
         >
           <svg
@@ -73,15 +61,15 @@ exports[`Renders afspraak data > Regular variant 1`] = `
           </svg>
         </span>
         <div
-          class="ams-prose"
+          class="ams-column ams-column--align-horizontal-start"
         >
           <h3
-            class="ams-heading ams-heading--3 ams-mb-l"
+            class="ams-heading ams-heading--3"
           >
             Varen Afspraak
           </h3>
           <dl
-            class="ams-description-list ams-mb-m"
+            class="ams-description-list"
           >
             <dt
               class="ams-description-list__term"
@@ -113,16 +101,12 @@ exports[`Renders afspraak data > Regular variant 1`] = `
               </button>
             </dd>
           </dl>
-          <div
-            class="ams-column ams-column--align-horizontal-start ams-mb-l"
+          <button
+            class="ams-button ams-button--secondary"
+            type="button"
           >
-            <button
-              class="ams-button ams-button--secondary"
-              type="button"
-            >
-              Toon QR code
-            </button>
-          </div>
+            Toon QR code
+          </button>
         </div>
       </div>
       <div

@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
+import { Column } from '@amsterdam/design-system-react';
 
 import type { AfspraakFrontend } from '../../../../../server/services/klantcontact/klantcontact.types.ts';
 import { AfspraakCard } from '../../../../components/AfspraakCard/AfspraakCard.tsx';
@@ -42,13 +43,15 @@ export function Afspraken({
 
   return (
     <AfsprakenBase className={className} compact={compact}>
-      {afspraken.slice(0, maxItems).map((afspraak) => (
-        <AfspraakCard
-          compact={compact}
-          key={afspraak.caseReference}
-          afspraak={afspraak}
-        />
-      ))}
+      <Column gap="large" className={!compact ? 'ams-mb-l' : ''}>
+        {afspraken.slice(0, maxItems).map((afspraak) => (
+          <AfspraakCard
+            compact={compact}
+            key={afspraak.caseReference}
+            afspraak={afspraak}
+          />
+        ))}
+      </Column>
       <LinkToListPage
         count={afspraken.length}
         route={themaConfig.listPageAfspraken.route.path}

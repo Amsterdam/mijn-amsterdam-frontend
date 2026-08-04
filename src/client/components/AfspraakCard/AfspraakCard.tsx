@@ -29,26 +29,74 @@ export function AfspraakCard({
 }: AfspraakCardProps) {
   const isPhoneScreen = useSmallScreen();
 
+  if (compact)
+    return <AfspraakCardDashboard afspraak={afspraak} className={className} />;
+
   return (
     <article className={className}>
       <Row align="between">
         <Row>
-          {!compact && <Icon svg={<IconAfspraak />} hidden size="heading-2" />}
-          <div className="ams-prose">
-            <Heading
-              level={3}
-              size="level-3"
-              className={!compact ? 'ams-mb-l' : ''}
+          <Icon svg={<IconAfspraak />} hidden size="heading-3" />
+          <Column alignHorizontal="start">
+            <AfspraakHeading>{afspraak.heading}</AfspraakHeading>
+            <DescriptionList className={isPhoneScreen ? 'ams-mb-m' : ''}>
+              <DescriptionList.Term>Datum</DescriptionList.Term>
+              <DescriptionList.Description>
+                <time dateTime={afspraak.dateStart}>
+                  {capitalizeFirstLetter(afspraak.displayDateTime)}
+                </time>
+              </DescriptionList.Description>
+              <DescriptionList.Term>Locatie</DescriptionList.Term>
+              <DescriptionList.Description>
+                {afspraak.location.street ? (
+                  <LocationModal
+                    modalTitle={`Stadsloket ${afspraak.location.name} - ${afspraak.location.street}`}
+                    address={afspraak.location.street}
+                    buttonLabel={`Stadsloket ${afspraak.location.name}${
+                      afspraak.location.street
+                        ? `, ${afspraak.location.street}`
+                        : ''
+                    }`}
+                    buttonVariant="ma-link-like"
+                  />
+                ) : (
+                  <>Stadsloket {afspraak.location.name}</>
+                )}
+              </DescriptionList.Description>
+            </DescriptionList>
+
+            <ModalAndButton
+              modal={{
+                title: `QR code - Stadsloket ${afspraak.location.name}`,
+              }}
+              buttonVariant="secondary"
+              buttonLabel="Toon QR code"
             >
-              {afspraak.heading}
-            </Heading>
-            {compact && <CompactContent afspraak={afspraak} />}
-            {!compact && (
-              <FullContent afspraak={afspraak} isPhoneScreen={isPhoneScreen} />
+              <>
+                <QRCode
+                  size={256}
+                  value={afspraak.qrCode}
+                  className="ams-mb-s"
+                />
+                <Paragraph className="ams-mb-l">
+                  Scan deze QR code op het stadsloket zodat de medewerker weet
+                  dat u op het stadsloket aanwezig bent.
+                </Paragraph>
+              </>
+            </ModalAndButton>
+            {isPhoneScreen && (
+              <MaLink
+                rel="noopener noreferrer"
+                href={afspraak.cancellationLink}
+                maVariant="noDefaultUnderline"
+                className="ams-mb-m"
+              >
+                Afspraak annuleren
+              </MaLink>
             )}
-          </div>
+          </Column>
         </Row>
-        {!compact && !isPhoneScreen && (
+        {!isPhoneScreen && (
           <Column>
             <MaLink
               rel="noopener noreferrer"
@@ -64,75 +112,13 @@ export function AfspraakCard({
   );
 }
 
-function FullContent({
+function AfspraakCardDashboard({
   afspraak,
-  isPhoneScreen,
-}: {
-  afspraak: AfspraakFrontend;
-  isPhoneScreen: boolean;
-}) {
+  className,
+}: Omit<AfspraakCardProps, 'compact'>) {
   return (
-    <>
-      <DescriptionList className={isPhoneScreen ? 'ams-mb-xl' : 'ams-mb-m'}>
-        <DescriptionList.Term>Datum</DescriptionList.Term>
-        <DescriptionList.Description>
-          <time dateTime={afspraak.dateStart}>
-            {capitalizeFirstLetter(afspraak.displayDateTime)}
-          </time>
-        </DescriptionList.Description>
-        <DescriptionList.Term>Locatie</DescriptionList.Term>
-        <DescriptionList.Description>
-          {afspraak.location.street ? (
-            <LocationModal
-              modalTitle={`Stadsloket ${afspraak.location.name} - ${afspraak.location.street}`}
-              address={afspraak.location.street}
-              buttonLabel={`Stadsloket ${afspraak.location.name}${
-                afspraak.location.street ? `, ${afspraak.location.street}` : ''
-              }`}
-              buttonVariant="ma-link-like"
-            />
-          ) : (
-            <>Stadsloket {afspraak.location.name}</>
-          )}
-        </DescriptionList.Description>
-      </DescriptionList>
-
-      <Column
-        alignHorizontal="start"
-        className={isPhoneScreen ? 'ams-mb-xl' : 'ams-mb-l'}
-      >
-        <ModalAndButton
-          modal={{
-            title: `QR code - Stadsloket ${afspraak.location.name}`,
-          }}
-          buttonVariant="secondary"
-          buttonLabel="Toon QR code"
-        >
-          <>
-            <QRCode size={256} value={afspraak.qrCode} className="ams-mb-s" />
-            <Paragraph className="ams-mb-l">
-              Scan deze QR code op het stadsloket zodat de medewerker weet dat u
-              op het stadsloket aanwezig bent.
-            </Paragraph>
-          </>
-        </ModalAndButton>
-        {isPhoneScreen && (
-          <MaLink
-            rel="noopener noreferrer"
-            href={afspraak.cancellationLink}
-            maVariant="noDefaultUnderline"
-          >
-            Afspraak annuleren
-          </MaLink>
-        )}
-      </Column>
-    </>
-  );
-}
-
-function CompactContent({ afspraak }: { afspraak: AfspraakFrontend }) {
-  return (
-    <>
+    <article className={className}>
+      <AfspraakHeading>{afspraak.heading}</AfspraakHeading>
       <Paragraph>
         Datum:{' '}
         <time dateTime={afspraak.dateStart}>{afspraak.displayDateTime}</time>
@@ -141,6 +127,14 @@ function CompactContent({ afspraak }: { afspraak: AfspraakFrontend }) {
         Locatie: Stadsloket {afspraak.location.name}
         {afspraak.location.street && `, ${afspraak.location.street}`}
       </Paragraph>
-    </>
+    </article>
+  );
+}
+
+function AfspraakHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <Heading level={3} size="level-3">
+      {children}
+    </Heading>
   );
 }
