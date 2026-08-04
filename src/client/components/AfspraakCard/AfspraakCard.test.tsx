@@ -75,7 +75,7 @@ describe('Renders afspraak data', () => {
     expect(screen.asFragment()).toMatchSnapshot();
   });
 
-  test('Compact variant', () => {
+  test('Dashboard variant', () => {
     const screen = renderAfspraakCard(afspraak, true);
     expect(screen.asFragment()).toMatchSnapshot();
   });

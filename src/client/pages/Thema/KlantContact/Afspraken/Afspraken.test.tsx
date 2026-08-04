@@ -123,7 +123,7 @@ describe('Afspraken', () => {
     ).not.toBeInTheDocument();
   });
 
-  test('does show link to list page when count is not above threshold, but compactmodus is true', () => {
+  test('does show link to list page when count is not above threshold, but dashboardMode is true', () => {
     const afspraken = [createAfspraak(1)];
     const screen = render(
       <Afspraken

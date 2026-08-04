@@ -75,7 +75,7 @@ export function Dashboard() {
             <Afspraken
               className="ams-mb-l"
               afspraken={afspraken}
-              compact={true}
+              dashboard={true}
               maxItems={1}
             />
           )}
