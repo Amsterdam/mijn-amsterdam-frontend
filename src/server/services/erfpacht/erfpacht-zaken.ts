@@ -10,7 +10,6 @@ import {
   getMainStepDescription,
   getParentStatus,
   getSubStepDescription,
-  translateSourceStatus,
   ZAAK_STATUS_FRONTEND,
   type ZaakStatusTypeSource,
 } from './erfpacht-zaken-config.ts';
@@ -122,7 +121,7 @@ export async function fetchErfpachtZaakInfo(
 }
 
 type ZaakStatusResponseFrontend = {
-  steps: StatusLineItem<ZaakStatusFrontend, ZaakStatusTypeSource>[];
+  steps: StatusLineItem<ZaakStatusFrontend, string>[];
   result: string;
 };
 
@@ -145,7 +144,7 @@ function transformErfpachtZaakDetailResponse(
         .map((substep) => {
           const substepItem: StatusLineItem<string> = {
             id: hash(substep.statustoelichting + substep.datumStatusGezet),
-            status: translateSourceStatus(substep.statustoelichting),
+            status: substep.statustoelichting,
             datePublished: substep.datumStatusGezet,
             description: getSubStepDescription(substep),
             isActive: false,

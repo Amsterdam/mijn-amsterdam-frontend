@@ -64,18 +64,6 @@ export function getParentStatus(statustekst: ZaakStatusTypeSource): string {
   }
 }
 
-export function translateSourceStatus(
-  statustekst: ZaakStatusTypeSource
-): string {
-  const statustekst_ = statustekst.toLowerCase();
-  switch (statustekst_) {
-    case ZAAK_STATUS_SOURCE.AANVRAAG:
-      return 'Ontvangen';
-    default:
-      return `${statustekst}`;
-  }
-}
-
 export function getSubStepDescription(substep: ZaakStatusSource): string {
   switch (substep.statustoelichting.toLowerCase()) {
     case ZAAK_STATUS_SOURCE.AANVRAAG:
