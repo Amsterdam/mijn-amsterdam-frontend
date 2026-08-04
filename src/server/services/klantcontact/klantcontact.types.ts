@@ -57,7 +57,10 @@ export type AfspraakResponseSource = {
   count: number;
 };
 
-export type AfspraakFrontend = Omit<AfspraakSource, 'startDate' | 'endDate'> & {
+export type AfspraakFrontend = Omit<
+  AfspraakSource,
+  'startDate' | 'endDate' | 'subject' | 'products'
+> & {
   dateStart: string;
   dateStartFormatted: string;
   dateEnd: string;

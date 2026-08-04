@@ -34,13 +34,7 @@ const afspraak: AfspraakFrontend = {
   },
   qrCode: 'xxxxxxxxxxxxxxxxxxxx',
   status: 'New',
-  subject: 'Varen',
   heading: 'Varen Afspraak',
-  products: [
-    {
-      name: 'Varen',
-    },
-  ],
   link: {
     to: '/afspraak/00157784',
     title: 'Bekijk afspraak',
