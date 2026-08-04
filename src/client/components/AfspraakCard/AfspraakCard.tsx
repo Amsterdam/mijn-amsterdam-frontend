@@ -16,19 +16,6 @@ import { LocationModal } from '../LocationModal/LocationModal.tsx';
 import { MaLink } from '../MaLink/MaLink.tsx';
 import { ModalAndButton } from '../Modal/Modal.tsx';
 
-function createHeading(afspraak: AfspraakFrontend): string {
-  if (afspraak.products.length > 1) {
-    const productNames = afspraak.products.map((product) => product.name);
-
-    return new Intl.ListFormat('nl', {
-      style: 'long',
-      type: 'conjunction',
-    }).format(productNames);
-  }
-
-  return afspraak.subject;
-}
-
 type AfspraakCardProps = {
   afspraak: AfspraakFrontend;
   className?: string;
@@ -53,7 +40,7 @@ export function AfspraakCard({
               size="level-3"
               className={!compact ? 'ams-mb-l' : ''}
             >
-              {createHeading(afspraak)}
+              {afspraak.heading}
             </Heading>
             {compact && <CompactContent afspraak={afspraak} />}
             {!compact && (

@@ -15,7 +15,7 @@ exports[`Renders afspraak data > Compact variant 1`] = `
           <h3
             class="ams-heading ams-heading--3"
           >
-            Varen
+            Varen Afspraak
           </h3>
           <p
             class="ams-paragraph"
@@ -78,7 +78,7 @@ exports[`Renders afspraak data > Regular variant 1`] = `
           <h3
             class="ams-heading ams-heading--3 ams-mb-l"
           >
-            Varen
+            Varen Afspraak
           </h3>
           <dl
             class="ams-description-list ams-mb-m"

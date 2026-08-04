@@ -34,10 +34,11 @@ const afspraak: AfspraakFrontend = {
   },
   qrCode: 'xxxxxxxxxxxxxxxxxxxx',
   status: 'New',
-  subject: 'Varen Afspraak',
+  subject: 'Varen',
+  heading: 'Varen Afspraak',
   products: [
     {
-      name: 'Varen Afspraak',
+      name: 'Varen',
     },
   ],
   link: {

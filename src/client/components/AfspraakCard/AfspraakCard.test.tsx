@@ -16,6 +16,7 @@ const afspraak: AfspraakFrontend = {
       name: 'Varen',
     },
   ],
+  heading: 'Varen Afspraak',
   dateStart: '2020-01-17T17:50:00Z',
   dateEnd: '2020-01-17T18:20:00Z',
   dateStartFormatted: 'maandag 01 januari 2025',
@@ -85,29 +86,11 @@ describe('Renders afspraak data', () => {
     expect(screen.asFragment()).toMatchSnapshot();
   });
 
-  it('Displays the subject as heading for a single product', () => {
+  it('Displays the heading', () => {
     const screen = renderAfspraakCard(afspraak);
 
     expect(
-      screen.getByRole('heading', { name: afspraak.subject })
-    ).toBeInTheDocument();
-  });
-
-  it('Displays three products as a Dutch heading list', () => {
-    const afspraakWithThreeProducts: AfspraakFrontend = {
-      ...afspraak,
-      subject: 'Niet zichtbaar als heading',
-      products: [
-        { name: 'Product A' },
-        { name: 'Product B' },
-        { name: 'Product C' },
-      ],
-    };
-
-    const screen = renderAfspraakCard(afspraakWithThreeProducts);
-
-    expect(
-      screen.getByRole('heading', { name: 'Product A, Product B en Product C' })
+      screen.getByRole('heading', { name: afspraak.heading })
     ).toBeInTheDocument();
   });
 

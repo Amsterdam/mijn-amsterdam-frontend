@@ -127,6 +127,7 @@ test('should transform the data correctly', async () => {
         "dateStart": "2025-01-01T08:00:00.000Z",
         "dateStartFormatted": "01 januari 2025",
         "displayDateTime": "woensdag 01 januari 2025 van 09:00 tot 09:30 uur",
+        "heading": "Vaarvignet",
         "icsLink": {
           "download": "afspraak-00157784.ics",
           "title": "Voeg toe aan uw privé-agenda",

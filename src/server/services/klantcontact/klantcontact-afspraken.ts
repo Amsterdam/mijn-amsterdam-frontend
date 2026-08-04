@@ -1,6 +1,7 @@
 import { fetchSalesforceApi } from './klantcontact-salesforce.ts';
 import type {
   AfspraakFrontend,
+  AfspraakSource,
   AfspraakResponseSource as AfsprakenResponseSource,
 } from './klantcontact.types.ts';
 import { themaConfig } from '../../../client/pages/Thema/KlantContact/KlantContact-thema-config.ts';
@@ -55,12 +56,29 @@ function transformAfsprakenResponse(
       location: `Stadsloket ${result.location.name}, ${result.location.street ?? 'onbekend'}, ${result.location.postalCode} ${result.location.city}, Nederland`,
     });
 
+    function createHeading(
+      products: AfspraakSource['products'],
+      subject: AfspraakSource['subject']
+    ): string {
+      if (products.length > 1) {
+        const productNames = products.map((product) => product.name);
+
+        return new Intl.ListFormat('nl', {
+          style: 'long',
+          type: 'conjunction',
+        }).format(productNames);
+      }
+
+      return subject;
+    }
+
     return {
       dateStart: dateStartISO,
       dateStartFormatted: defaultDateFormat(dateStart),
       dateEnd: dateEndISO,
       dateEndFormatted: defaultDateFormat(dateEnd),
       displayDateTime: `${defaultDateFormatWithDayName(dateStart)} van ${startTime_} tot ${endTime_} uur`,
+      heading: createHeading(result.products, result.subject),
       subject: result.subject,
       products: result.products,
       status: result.status,

@@ -28,6 +28,7 @@ function createAfspraak(index: number): AfspraakFrontend {
     qrCode: `qr-${index}`,
     status: 'New',
     subject: `Afspraak ${index}`,
+    heading: `Afspraak ${index}`,
     link: {
       to: `/afspraak/ref-${index}`,
       title: 'Bekijk afspraak',

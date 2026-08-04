@@ -65,6 +65,7 @@ export type AfspraakFrontend = Omit<AfspraakSource, 'startDate' | 'endDate'> & {
   displayDateTime: string;
   link: LinkProps;
   icsLink: LinkProps;
+  heading: string;
 };
 
 export type KlantcontactResponseData = {
