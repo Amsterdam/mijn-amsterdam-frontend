@@ -95,7 +95,7 @@ export function getSubStepDescription(substep: ZaakStatusSource): string {
 }
 export function getMainStepDescription(
   statusFixed: ZaakStatusFrontend,
-  substeps: StatusLineItem<string>[]
+  substeps: StatusLineItem<ZaakStatusTypeSource>[]
 ): string {
   switch (true) {
     case statusFixed === ZAAK_STATUS_FRONTEND.AFGEHANDELD && !substeps?.length:

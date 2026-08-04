@@ -142,7 +142,7 @@ function transformErfpachtZaakDetailResponse(
             getParentStatus(statusSource.statustoelichting) === statusFixed
         )
         .map((substep) => {
-          const substepItem: StatusLineItem<string> = {
+          const substepItem: StatusLineItem<ZaakStatusTypeSource> = {
             id: hash(substep.statustoelichting + substep.datumStatusGezet),
             status: substep.statustoelichting,
             datePublished: substep.datumStatusGezet,
@@ -157,7 +157,7 @@ function transformErfpachtZaakDetailResponse(
       const hasMatchingSubsteps = !!substeps?.length;
       const [firstSubstep, ...othersubsteps] = substeps ?? [];
 
-      const step: StatusLineItem<ZaakStatusFrontend, string> = {
+      const step: StatusLineItem<ZaakStatusFrontend, ZaakStatusTypeSource> = {
         id: hash(statusFixed),
         status: statusFixed,
         datePublished: firstSubstep?.datePublished ?? '',
@@ -173,7 +173,9 @@ function transformErfpachtZaakDetailResponse(
       return step;
     });
 
-  function setActiveStep(step: StatusLineItem<string, string>) {
+  function setActiveStep(
+    step: StatusLineItem<ZaakStatusFrontend, ZaakStatusTypeSource>
+  ) {
     step.isActive = true;
     if (step.substeps?.length) {
       const lastSubstep = step.substeps.at(-1);
