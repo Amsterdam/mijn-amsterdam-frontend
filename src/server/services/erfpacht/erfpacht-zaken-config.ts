@@ -1,20 +1,22 @@
-export const ZAAK_STATUS_SOURCE = {
-  AANVRAAG: 'aanvraag',
-  AANVRAAG_BEOORDELEN: 'aanvraag beoordelen',
-  AANVRAAG_GEREED_VOOR_BEHANDELING: 'aanvraag gereed voor behandeling',
-  INFORMATIE_OPGEVRAAGD: 'informatie opgevraagd',
-  INFORMATIE_AANGELEVERD: 'informatie aangeleverd',
-  BEHANDELING: 'behandeling',
-  INDICATIE_VERSTUURD: 'indicatie verstuurd',
-  AANBIEDING: 'aanbieding',
-  ACCEPTATIE_ONTVANGEN: 'acceptatie ontvangen',
-  BESLUIT_VERSTUURD: 'besluit verstuurd',
-  AKTE_GEPASSEERD: 'akte gepasseerd',
-  AANVRAAG_AFGEROND: 'aanvraag afgerond',
+import type { ZaakStatusSource } from './erfpacht-zaken-types.ts';
+
+const ZAAK_STATUS_SOURCE_ = {
+  AANVRAAG: 'Aanvraag',
+  AANVRAAG_BEOORDELEN: 'Aanvraag Beoordelen',
+  AANVRAAG_GEREED_VOOR_BEHANDELING: 'Aanvraag gereed voor behandeling',
+  INFORMATIE_OPGEVRAAGD: 'Informatie opgevraagd',
+  INFORMATIE_AANGELEVERD: 'Informatie aangeleverd',
+  BEHANDELING: 'Behandeling',
+  INDICATIE_VERSTUURD: 'Indicatie verstuurd',
+  AANBIEDING: 'Aanbieding',
+  ACCEPTATIE_ONTVANGEN: 'Acceptatie ontvangen',
+  BESLUIT_VERSTUURD: 'Besluit verstuurd',
+  AKTE_GEPASSEERD: 'Akte gepasseerd',
+  AANVRAAG_AFGEROND: 'Aanvraag afgerond',
 } as const;
 
 export type ZaakStatusTypeSource =
-  (typeof ZAAK_STATUS_SOURCE)[keyof typeof ZAAK_STATUS_SOURCE];
+  (typeof ZAAK_STATUS_SOURCE_)[keyof typeof ZAAK_STATUS_SOURCE_];
 
 export const ZAAK_STATUS_FRONTEND = {
   AANVRAAG: 'Aanvraag',
@@ -25,8 +27,17 @@ export const ZAAK_STATUS_FRONTEND = {
 export type ZaakStatusTypeFrontend =
   (typeof ZAAK_STATUS_FRONTEND)[keyof typeof ZAAK_STATUS_FRONTEND];
 
+export const ZAAK_STATUS_SOURCE = Object.fromEntries(
+  Object.entries(ZAAK_STATUS_SOURCE_).map(([key, value]) => [
+    key,
+    value.toLowerCase(),
+  ])
+) as Record<keyof typeof ZAAK_STATUS_SOURCE_, string>;
+
 export function getParentStatus(statustekst: ZaakStatusTypeSource): string {
-  switch (statustekst.toLowerCase()) {
+  const statustekst_ = statustekst.toLowerCase();
+
+  switch (statustekst_) {
     case ZAAK_STATUS_SOURCE.AANVRAAG:
     case ZAAK_STATUS_SOURCE.AANVRAAG_BEOORDELEN:
     case ZAAK_STATUS_SOURCE.INFORMATIE_OPGEVRAAGD:
@@ -52,10 +63,41 @@ export function getParentStatus(statustekst: ZaakStatusTypeSource): string {
 export function translateSourceStatus(
   statustekst: ZaakStatusTypeSource
 ): string {
-  switch (statustekst.toLowerCase()) {
+  const statustekst_ = statustekst.toLowerCase();
+  switch (statustekst_) {
     case ZAAK_STATUS_SOURCE.AANVRAAG:
       return 'Ontvangen';
     default:
       return `${statustekst}`;
   }
+}
+
+export function getSubStepDescription(substep: ZaakStatusSource): string {
+  switch (substep.statustoelichting.toLowerCase()) {
+    case ZAAK_STATUS_SOURCE.AANVRAAG:
+      return 'Wij hebben uw aanvraag ontvangen en gaan deze beoordelen.';
+    case ZAAK_STATUS_SOURCE.AANVRAAG_BEOORDELEN:
+      return 'Wij zijn bezig met het beoordelen van uw aanvraag.';
+    case ZAAK_STATUS_SOURCE.INFORMATIE_OPGEVRAAGD:
+      return 'Wij hebben aanvullende informatie nodig om uw aanvraag te kunnen beoordelen.';
+    case ZAAK_STATUS_SOURCE.INFORMATIE_AANGELEVERD:
+      return 'Wij hebben de aanvullende informatie ontvangen en gaan uw aanvraag verder beoordelen.';
+    case ZAAK_STATUS_SOURCE.AANVRAAG_GEREED_VOOR_BEHANDELING:
+      return 'Uw aanvraag is gereed voor behandeling.';
+    case ZAAK_STATUS_SOURCE.INDICATIE_VERSTUURD:
+      return 'Wij hebben u een indicatie gestuurd over de uitkomst van uw aanvraag.';
+    case ZAAK_STATUS_SOURCE.AANBIEDING:
+      return 'Wij hebben u een aanbieding gestuurd over de uitkomst van uw aanvraag.';
+    case ZAAK_STATUS_SOURCE.ACCEPTATIE_ONTVANGEN:
+      return 'Wij hebben uw acceptatie ontvangen en gaan uw aanvraag verder behandelen.';
+    case ZAAK_STATUS_SOURCE.BESLUIT_VERSTUURD:
+      return 'Wij hebben het besluit naar de notaris gestuurd. U ontvangt van de notaris een uitnodiging om de akte te passeren.';
+    case ZAAK_STATUS_SOURCE.AKTE_GEPASSEERD:
+      return 'Wij hebben de akte gepasseerd en uw aanvraag is afgerond.';
+    case ZAAK_STATUS_SOURCE.BEHANDELING:
+      return 'Wij zijn bezig met het behandelen van uw aanvraag.';
+    case ZAAK_STATUS_SOURCE.AANVRAAG_AFGEROND:
+      return 'Uw aanvraag is afgerond.';
+  }
+  return '';
 }

@@ -1,4 +1,8 @@
-import { ZAAK_STATUS_FRONTEND } from './erfpacht-zaken-config.ts';
+import {
+  getParentStatus,
+  getSubStepDescription,
+  ZAAK_STATUS_FRONTEND,
+} from './erfpacht-zaken-config.ts';
 import type { ErfpachtZaakExcerptFrontend } from './erfpacht-zaken-types.ts';
 import { fetchErfpachtZaakInfo } from './erfpacht-zaken.ts';
 import { themaConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
@@ -14,28 +18,29 @@ function getTitleAndDescriptionForNotification(
   zaakExcerpt: ErfpachtZaakExcerptFrontend
 ): { title: string; description: string } {
   const title = `Aanvraag wijziging erfpachtdossier`;
-  const description = `Status: ${zaakExcerpt.displayStatus}`;
+  const description = getSubStepDescription({
+    statustoelichting: zaakExcerpt.statusOmschrijving,
+    datumStatusGezet: zaakExcerpt.formattedStatusDatum,
+  });
 
-  switch (zaakExcerpt.displayStatus) {
+  // We only want to show a notification for the parent status, not for the specific status.
+  // The specific status per zaak are fetched via an additional API call.
+  // It's too request-heavy to do this for all notifications, so we only show the parent status in the notification.
+  switch (getParentStatus(zaakExcerpt.statusOmschrijving)) {
     case ZAAK_STATUS_FRONTEND.AANVRAAG:
       return {
-        title: `${title} - ontvangen`,
-        description: `Uw aanvraag is ingediend en wordt beoordeeld. Het nummer van uw aanvraag is ${zaakExcerpt.zaakNummer}.`,
-      };
-    case ZAAK_STATUS_FRONTEND.MEER_INFORMATIE_NODIG:
-      return {
-        title: `${title} - Meer informatie nodig`,
-        description: `Er is meer informatie en tijd nodig om uw aanvraag met nummer ${zaakExcerpt.zaakNummer} te kunnen beoordelen.`,
+        title: `${title}: ${zaakExcerpt.statusOmschrijving}`,
+        description,
       };
     case ZAAK_STATUS_FRONTEND.IN_BEHANDELING:
       return {
-        title: `${title} - In behandeling`,
-        description: `Uw aanvraag met nummer ${zaakExcerpt.zaakNummer} is in behandeling.`,
+        title: `${title}: ${zaakExcerpt.statusOmschrijving}`,
+        description,
       };
     case ZAAK_STATUS_FRONTEND.AFGEHANDELD:
       return {
-        title: `${title} - Afgehandeld`,
-        description: `Uw aanvraag met nummer ${zaakExcerpt.zaakNummer} is afgehandeld.`,
+        title: `${title}: ${zaakExcerpt.statusOmschrijving}`,
+        description,
       };
   }
 

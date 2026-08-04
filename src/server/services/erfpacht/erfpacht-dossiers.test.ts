@@ -32,11 +32,11 @@ describe('erfpacht-dossiers', () => {
     const transformed =
       forTesting.transformErfpachtDossierProperties(dossierSource);
 
-    expect(transformed?.id).toBe('A.B.C.D');
-    expect(transformed?.title).toBe('E6470/243: Valutaboulevard 51');
+    expect(transformed?.id).toBe('A.B.C.D.2');
+    expect(transformed?.title).toBe('E6470/243-2: Valutaboulevard 51');
     expect(transformed?.link).toEqual({
-      title: 'E6470/243: Valutaboulevard 51',
-      to: '/erfpacht/dossier/A.B.C.D',
+      title: 'E6470/243-2: Valutaboulevard 51',
+      to: '/erfpacht/dossier/A.B.C.D.2',
     });
   });
 
@@ -106,13 +106,23 @@ describe('erfpacht-dossiers', () => {
 
     expect(transformed?.isKnown).toBe(true);
     expect(transformed?.relatieCode).toBe('123-abc');
-    expect(transformed?.dossiers.dossiers).toHaveLength(5);
+    expect(transformed?.dossiers.dossiers).toHaveLength(15);
     expect(transformed?.dossiers.dossiers.map((d) => d.voorkeursadres)).toEqual(
       [
         '(behorende bij) Dit en dat plein 22 H',
+        '(behorende bij) Dit en dat plein 22 H',
+        '(behorende bij) Dit en dat plein 22 H',
+        'Cycladenlaan 14',
+        'Cycladenlaan 14',
         'Cycladenlaan 14',
         'Dit en dat plein 20 H',
+        'Dit en dat plein 20 H',
+        'Dit en dat plein 20 H',
         'Dit en dat plein 22 H',
+        'Dit en dat plein 22 H',
+        'Dit en dat plein 22 H',
+        'Valutaboulevard 51',
+        'Valutaboulevard 51',
         'Valutaboulevard 51',
       ]
     );
@@ -147,7 +157,7 @@ describe('erfpacht-dossiers', () => {
     expect(response.status).toBe('OK');
     expect(response.content?.relatieCode).toBe('123-abc');
     expect(response.content?.isKnown).toBe(true);
-    expect(response.content?.dossiers.dossiers).toHaveLength(5);
+    expect(response.content?.dossiers.dossiers).toHaveLength(15);
   });
 
   test('fetchErfpachtDossierInfo: error', async () => {

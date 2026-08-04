@@ -82,22 +82,8 @@ describe('erfpacht-notifications', () => {
           })
         )
       ).toEqual({
-        title: 'Aanvraag wijziging erfpachtdossier - ontvangen',
-        description:
-          'Uw aanvraag is ingediend en wordt beoordeeld. Het nummer van uw aanvraag is ZAAK-1.',
-      });
-
-      expect(
-        getTitleAndDescriptionForNotification(
-          createZaakExcerpt({
-            displayStatus: ZAAK_STATUS_FRONTEND.MEER_INFORMATIE_NODIG,
-            zaakNummer: 'ZAAK-2',
-          })
-        )
-      ).toEqual({
-        title: 'Aanvraag wijziging erfpachtdossier - Meer informatie nodig',
-        description:
-          'Er is meer informatie en tijd nodig om uw aanvraag met nummer ZAAK-2 te kunnen beoordelen.',
+        title: 'Aanvraag wijziging erfpachtdossier: Aanvraag Beoordelen',
+        description: 'Wij zijn bezig met het beoordelen van uw aanvraag.',
       });
 
       expect(
@@ -108,8 +94,8 @@ describe('erfpacht-notifications', () => {
           })
         )
       ).toEqual({
-        title: 'Aanvraag wijziging erfpachtdossier - In behandeling',
-        description: 'Uw aanvraag met nummer ZAAK-3 is in behandeling.',
+        description: 'Wij zijn bezig met het beoordelen van uw aanvraag.',
+        title: 'Aanvraag wijziging erfpachtdossier: Aanvraag Beoordelen',
       });
 
       expect(
@@ -120,8 +106,8 @@ describe('erfpacht-notifications', () => {
           })
         )
       ).toEqual({
-        title: 'Aanvraag wijziging erfpachtdossier - Afgehandeld',
-        description: 'Uw aanvraag met nummer ZAAK-4 is afgehandeld.',
+        description: 'Wij zijn bezig met het beoordelen van uw aanvraag.',
+        title: 'Aanvraag wijziging erfpachtdossier: Aanvraag Beoordelen',
       });
     });
 
@@ -133,8 +119,8 @@ describe('erfpacht-notifications', () => {
       );
 
       expect(result).toEqual({
-        title: 'Aanvraag wijziging erfpachtdossier',
-        description: 'Status: Onbekend',
+        description: 'Wij zijn bezig met het beoordelen van uw aanvraag.',
+        title: 'Aanvraag wijziging erfpachtdossier: Aanvraag Beoordelen',
       });
     });
   });
@@ -211,7 +197,7 @@ describe('erfpacht-notifications', () => {
           "notifications": [
             {
               "datePublished": "2026-07-15T00:00:00.000Z",
-              "description": "Uw aanvraag is ingediend en wordt beoordeeld. Het nummer van uw aanvraag is ZAAK-2025-0000011488.",
+              "description": "Wij zijn bezig met het beoordelen van uw aanvraag.",
               "id": "erfpacht-1234-5678-9012-9999-notification",
               "link": {
                 "title": "Bekijk uw aanvraag",
@@ -219,7 +205,7 @@ describe('erfpacht-notifications', () => {
               },
               "themaID": "ERFPACHT",
               "themaTitle": "Erfpacht",
-              "title": "Aanvraag wijziging erfpachtdossier - ontvangen",
+              "title": "Aanvraag wijziging erfpachtdossier: Aanvraag Beoordelen",
             },
           ],
         },

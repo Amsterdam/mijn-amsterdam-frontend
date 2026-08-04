@@ -145,11 +145,8 @@ describe('<Erfpacht />', () => {
     expect(
       screen.queryByText('U heeft geen erfpachtrechten.')
     ).not.toBeInTheDocument();
-
-    expect(screen.getByText('E477/48')).toBeInTheDocument();
-    expect(screen.getByText('E7418/35')).toBeInTheDocument();
-    expect(screen.getByText('E900/33')).toBeInTheDocument();
-    expect(screen.getByText('EW123/456')).toBeInTheDocument();
-    expect(screen.getByText('E6470/243')).toBeInTheDocument();
+    expect(screen.getByText('E477/48-3')).toBeInTheDocument();
+    expect(screen.getByText('E477/48-2')).toBeInTheDocument();
+    expect(screen.getByText('E7418/35-3')).toBeInTheDocument();
   });
 });

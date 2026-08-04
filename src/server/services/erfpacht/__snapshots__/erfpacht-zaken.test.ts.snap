@@ -8,8 +8,14 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "datePublishedFormatted": "15 juli 2026",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
-        "EW123/456",
-        "AB/345/678",
+        {
+          "title": "EW123/456",
+          "to": "/erfpacht/dossier/EW.123.456",
+        },
+        {
+          "title": "AB/345/678",
+          "to": "/erfpacht/dossier/AB.345.678",
+        },
       ],
       "fetchZaakDetailUrl": "http://bff-api-host/api/v1/services/erfpacht/zaak/1234-5678-9012-9999",
       "formattedStatusDatum": "15-07-2026",
@@ -35,7 +41,10 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "datePublishedFormatted": "30 juni 2026",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
-        "E477/48",
+        {
+          "title": "E477/48",
+          "to": "/erfpacht/dossier/E.477.48",
+        },
       ],
       "fetchZaakDetailUrl": "http://bff-api-host/api/v1/services/erfpacht/zaak/1234-5678-9012-8888",
       "formattedStatusDatum": "30-06-2026",
@@ -58,10 +67,16 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
     {
       "datePublished": "2026-07-15T00:00:00.000Z",
       "datePublishedFormatted": "15 juli 2026",
-      "displayStatus": "Meer informatie nodig",
+      "displayStatus": "Aanvraag",
       "dossierLinks": [
-        "EW123/456",
-        "AB/345/678",
+        {
+          "title": "EW123/456",
+          "to": "/erfpacht/dossier/EW.123.456",
+        },
+        {
+          "title": "AB/345/678",
+          "to": "/erfpacht/dossier/AB.345.678",
+        },
       ],
       "fetchZaakDetailUrl": "http://bff-api-host/api/v1/services/erfpacht/zaak/1234-5678-9012-9999",
       "formattedStatusDatum": "15-07-2026",
@@ -87,7 +102,10 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "datePublishedFormatted": "30 juni 2026",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
-        "E477/48",
+        {
+          "title": "E477/48",
+          "to": "/erfpacht/dossier/E.477.48",
+        },
       ],
       "fetchZaakDetailUrl": "http://bff-api-host/api/v1/services/erfpacht/zaak/1234-5678-9012-8888",
       "formattedStatusDatum": "30-06-2026",
@@ -112,8 +130,14 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "datePublishedFormatted": "15 juli 2026",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
-        "EW123/456",
-        "AB/345/678",
+        {
+          "title": "EW123/456",
+          "to": "/erfpacht/dossier/EW.123.456",
+        },
+        {
+          "title": "AB/345/678",
+          "to": "/erfpacht/dossier/AB.345.678",
+        },
       ],
       "fetchZaakDetailUrl": "http://bff-api-host/api/v1/services/erfpacht/zaak/1234-5678-9012-9999",
       "formattedStatusDatum": "15-07-2026",
@@ -139,7 +163,10 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "datePublishedFormatted": "30 juni 2026",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
-        "E477/48",
+        {
+          "title": "E477/48",
+          "to": "/erfpacht/dossier/E.477.48",
+        },
       ],
       "fetchZaakDetailUrl": "http://bff-api-host/api/v1/services/erfpacht/zaak/1234-5678-9012-8888",
       "formattedStatusDatum": "30-06-2026",
@@ -164,8 +191,14 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "datePublishedFormatted": "15 juli 2026",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
-        "EW123/456",
-        "AB/345/678",
+        {
+          "title": "EW123/456",
+          "to": "/erfpacht/dossier/EW.123.456",
+        },
+        {
+          "title": "AB/345/678",
+          "to": "/erfpacht/dossier/AB.345.678",
+        },
       ],
       "fetchZaakDetailUrl": "http://bff-api-host/api/v1/services/erfpacht/zaak/1234-5678-9012-9999",
       "formattedStatusDatum": "15-07-2026",
@@ -191,7 +224,10 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "datePublishedFormatted": "30 juni 2026",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
-        "E477/48",
+        {
+          "title": "E477/48",
+          "to": "/erfpacht/dossier/E.477.48",
+        },
       ],
       "fetchZaakDetailUrl": "http://bff-api-host/api/v1/services/erfpacht/zaak/1234-5678-9012-8888",
       "formattedStatusDatum": "30-06-2026",
