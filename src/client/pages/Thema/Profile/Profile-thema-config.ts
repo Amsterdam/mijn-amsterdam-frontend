@@ -71,7 +71,7 @@ export const themaConfig = {
     uitlegPageSections: [
       {
         title: THEMA_TITLE_KVK,
-        listItems: ['Uw inschrijving het in handelsregister'],
+        listItems: ['Uw inschrijving in het handelsregister'],
       },
     ],
     route: {
