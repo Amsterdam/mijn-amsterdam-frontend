@@ -60,7 +60,7 @@ export const themaConfig = {
     featureToggle: {
       active: true,
     },
-    profileTypes: ['private', 'commercial'],
+    profileTypes: ['commercial'], //TODO MIJN-13416: 'private' kunnen we nu niet tonen omdat we geen kvk gegevens voor particulieren ontvangen. 'private' kan weer worden toegevoegd als deze toegang hersteld is.
     redactedScope: 'content',
     pageLinks: [
       {
@@ -68,7 +68,12 @@ export const themaConfig = {
         title: 'Geef wijzigingen door aan de Kamer van Koophandel',
       },
     ],
-    uitlegPageSections: [],
+    uitlegPageSections: [
+      {
+        title: THEMA_TITLE_KVK,
+        listItems: ['Uw inschrijving in het handelsregister'],
+      },
+    ],
     route: {
       path: '/gegevens-handelsregister',
       documentTitle: `${THEMA_TITLE_KVK} | Mijn Amsterdam`,
