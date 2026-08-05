@@ -80,7 +80,6 @@ export function ErfpachtDossierDetail() {
                 <CollapsiblePanel title="Wijzigingen">
                   <ThemaPaginaTable
                     zaken={zaken}
-                    maxItems={2}
                     listPageRoute={generatePath(
                       themaConfig.listPageDossierZaken.route.path,
                       { dossierId: dossier.dossierId }
