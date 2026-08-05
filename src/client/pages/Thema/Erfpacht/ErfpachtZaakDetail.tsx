@@ -56,6 +56,7 @@ export function ErfpachtZaakDetail() {
         )
       }
       breadcrumbs={breadcrumbs}
+      showStatusStepsSubstepHeading={false}
     />
   );
 }

@@ -75,11 +75,13 @@ export function StatusStepDocuments({
 function Step({
   step: item,
   isSubstep,
+  showSubstepHeading = true,
   children,
 }: {
   step: StatusLineItem;
   isSubstep?: boolean;
   children?: ReactNode;
+  showSubstepHeading?: boolean;
 }) {
   const StepComponent = isSubstep ? ProgressList.Substep : ProgressList.Step;
   return (
@@ -91,7 +93,7 @@ function Step({
       aria-label={getStepAriaLabel(item)}
       hasSubsteps={!!item.substeps?.length}
     >
-      {isSubstep && (
+      {isSubstep && showSubstepHeading && (
         <>
           <Heading
             level={4}
@@ -134,9 +136,10 @@ function Step({
 type StepsProps = {
   steps: StatusLineItem[];
   title?: string;
+  showSubstepHeading?: boolean;
 };
 
-export function Steps({ steps, title }: StepsProps) {
+export function Steps({ steps, title, showSubstepHeading = true }: StepsProps) {
   return (
     <section>
       {title && (
@@ -154,7 +157,12 @@ export function Steps({ steps, title }: StepsProps) {
                   {item.substeps
                     ?.filter((step) => step.isVisible !== false)
                     .map((substep) => (
-                      <Step key={substep.id} step={substep} isSubstep />
+                      <Step
+                        key={substep.id}
+                        step={substep}
+                        isSubstep
+                        showSubstepHeading={showSubstepHeading}
+                      />
                     ))}
                 </ProgressList.Substeps>
               )}
