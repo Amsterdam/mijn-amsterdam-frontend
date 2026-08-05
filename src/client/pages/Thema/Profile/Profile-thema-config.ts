@@ -60,7 +60,7 @@ export const themaConfig = {
     featureToggle: {
       active: true,
     },
-    profileTypes: ['commercial'], // 'private' tonen we nu niet wanneer het werkt moet dit worden toegevoegd
+    profileTypes: ['commercial'], //TODO MIJN-13416: 'private' kunnen we nu niet tonen omdat we geen kvk gegevens voor particulieren ontvangen. 'private' kan weer worden toegevoegd als deze toegang hersteld is.
     redactedScope: 'content',
     pageLinks: [
       {
