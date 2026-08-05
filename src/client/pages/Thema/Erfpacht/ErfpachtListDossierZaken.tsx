@@ -51,7 +51,6 @@ export function ErfpachtDossierZakenList() {
       displayProps={displayPropsZaken}
       isLoading={isLoading}
       isError={isError}
-      pageSize={2}
     />
   );
 }
