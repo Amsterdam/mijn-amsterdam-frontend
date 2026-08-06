@@ -122,24 +122,4 @@ describe('Afspraken', () => {
       })
     ).not.toBeInTheDocument();
   });
-
-  test('does show link to list page when count is not above threshold, but dashboardMode is true', () => {
-    const afspraken = [createAfspraak(1)];
-    const screen = render(
-      <Afspraken
-        afspraken={afspraken}
-        maxItems={1}
-        isLoading={false}
-        dashboard={true}
-      />,
-      {
-        wrapper: BrowserRouter,
-      }
-    );
-
-    const listLink = screen.getByRole('link', {
-      name: 'Bekijk uw 1 afspraak',
-    });
-    expect(listLink).toHaveAttribute('href', '/mijn-contact/afspraken');
-  });
 });

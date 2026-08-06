@@ -21,7 +21,7 @@ import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 import { useAppStateNotifications } from '../../hooks/useNotifications.ts';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
-import { Afspraken } from '../Thema/KlantContact/Afspraken/Afspraken.tsx';
+import { AfsprakenDashboard } from '../Thema/KlantContact/Afspraken/Afspraken.tsx';
 import { useKlantcontactData } from '../Thema/KlantContact/useKlantcontactData.hook.tsx';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
@@ -72,12 +72,7 @@ export function Dashboard() {
         >
           {isKlantcontactLoading && <LoadingContent className="ams-mb-l" />}
           {!isKlantcontactLoading && hasAfspraken && (
-            <Afspraken
-              className="ams-mb-l"
-              afspraken={afspraken}
-              dashboard={true}
-              maxItems={1}
-            />
+            <AfsprakenDashboard afspraken={afspraken} className="ams-mb-l" />
           )}
 
           <Heading level={2} className="ams-mb-m">

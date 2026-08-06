@@ -1,32 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Renders afspraak data > Compact variant 1`] = `
-<DocumentFragment>
-  <article>
-    <h3
-      class="ams-heading ams-heading--3"
-    >
-      Varen Afspraak
-    </h3>
-    <p
-      class="ams-paragraph"
-    >
-      Datum: 
-      <time
-        datetime="2020-01-17T17:50:00Z"
-      >
-        maandag 01 januari 2025 van 17:50 tot 18:20
-      </time>
-    </p>
-    <p
-      class="ams-paragraph ams-mb-s"
-    >
-      Locatie: Stadsloket Centrum, Amstel 1
-    </p>
-  </article>
-</DocumentFragment>
-`;
-
 exports[`Renders afspraak data > Dashboard variant 1`] = `
 <DocumentFragment>
   <article>
@@ -46,7 +19,7 @@ exports[`Renders afspraak data > Dashboard variant 1`] = `
       </time>
     </p>
     <p
-      class="ams-paragraph ams-mb-s"
+      class="ams-paragraph"
     >
       Locatie: Stadsloket Centrum, Amstel 1
     </p>

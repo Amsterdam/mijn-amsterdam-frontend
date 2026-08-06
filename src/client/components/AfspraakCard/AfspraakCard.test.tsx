@@ -4,7 +4,7 @@ import mockdate from 'mockdate';
 import nock from 'nock';
 import { BrowserRouter } from 'react-router';
 
-import { AfspraakCard } from './AfspraakCard.tsx';
+import { AfspraakCard, AfspraakCardDashboard } from './AfspraakCard.tsx';
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
 
 const address = { street: 'Amstel', houseNumber: 1 };
@@ -38,16 +38,15 @@ const afspraak: AfspraakFrontend = {
   },
 };
 
-function renderAfspraakCard(
-  afspraak: AfspraakFrontend,
-  dashboard: boolean = false
-) {
-  return render(
-    <AfspraakCard afspraak={afspraak} dashboard={dashboard}></AfspraakCard>,
-    {
-      wrapper: BrowserRouter,
-    }
-  );
+function renderAfspraakCard(afspraak: AfspraakFrontend) {
+  return render(<AfspraakCard afspraak={afspraak} />, {
+    wrapper: BrowserRouter,
+  });
+}
+function renderAfspraakCardDashboard(afspraak: AfspraakFrontend) {
+  return render(<AfspraakCardDashboard afspraak={afspraak} />, {
+    wrapper: BrowserRouter,
+  });
 }
 
 function setupNockForLocationModal() {
@@ -76,7 +75,7 @@ describe('Renders afspraak data', () => {
   });
 
   test('Dashboard variant', () => {
-    const screen = renderAfspraakCard(afspraak, true);
+    const screen = renderAfspraakCardDashboard(afspraak);
     expect(screen.asFragment()).toMatchSnapshot();
   });
 

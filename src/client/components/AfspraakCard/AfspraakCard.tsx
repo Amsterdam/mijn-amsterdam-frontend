@@ -19,18 +19,10 @@ import { ModalAndButton } from '../Modal/Modal.tsx';
 type AfspraakCardProps = {
   afspraak: AfspraakFrontend;
   className?: string;
-  dashboard?: boolean;
 };
 
-export function AfspraakCard({
-  afspraak,
-  className,
-  dashboard = false,
-}: AfspraakCardProps) {
+export function AfspraakCard({ afspraak, className }: AfspraakCardProps) {
   const isPhoneScreen = useSmallScreen();
-
-  if (dashboard)
-    return <AfspraakCardDashboard afspraak={afspraak} className={className} />;
 
   return (
     <article className={className}>
@@ -112,7 +104,7 @@ export function AfspraakCard({
   );
 }
 
-function AfspraakCardDashboard({
+export function AfspraakCardDashboard({
   afspraak,
   className,
 }: Omit<AfspraakCardProps, 'compact'>) {
@@ -123,7 +115,7 @@ function AfspraakCardDashboard({
         Datum:{' '}
         <time dateTime={afspraak.dateStart}>{afspraak.displayDateTime}</time>
       </Paragraph>
-      <Paragraph className="ams-mb-s">
+      <Paragraph>
         Locatie: Stadsloket {afspraak.location.name}
         {afspraak.location.street && `, ${afspraak.location.street}`}
       </Paragraph>
