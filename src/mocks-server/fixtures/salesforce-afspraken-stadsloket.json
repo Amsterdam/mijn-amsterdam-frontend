@@ -9,6 +9,12 @@
       "products": [
         {
           "name": "Overheidsloket"
+        },
+        {
+          "name": "Bijstandsaanvraag"
+        },
+        {
+          "name": "BK aanvraag"
         }
       ],
       "location": {

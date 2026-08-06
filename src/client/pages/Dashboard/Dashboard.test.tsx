@@ -12,7 +12,6 @@ import type { AfspraakFrontend } from '../../../server/services/klantcontact/kla
 import { remoteApiHost } from '../../../testing/setup.ts';
 import { bffApi } from '../../../testing/utils.ts';
 import { toDateFormatted } from '../../../universal/helpers/date.ts';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app.ts';
 
 const DATE_NOW = '2021-09-22T09:00:00';
 
@@ -34,7 +33,7 @@ const afspraak: AfspraakFrontend = {
   },
   qrCode: 'xxxxxxxxxxxxxxxxxxxx',
   status: 'New',
-  subject: 'Varen Afspraak',
+  heading: 'Varen Afspraak',
   link: {
     to: '/afspraak/00157784',
     title: 'Bekijk afspraak',
@@ -131,8 +130,12 @@ describe('<Dashboard />', () => {
       const Component = createDashboardComponent(state);
       const screen = render(<Component />);
 
-      screen.getByRole('heading', { name: 'Afspraken bij een Stadsloket' });
-      screen.getByRole('heading', { name: 'Varen Afspraak' });
+      expect(
+        screen.getByRole('heading', { name: 'Afspraken bij een Stadsloket' })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('heading', { name: 'Varen Afspraak' })
+      ).toBeInTheDocument();
     });
 
     it('Does not display Panel when there are no afspraken', () => {
@@ -148,18 +151,15 @@ describe('<Dashboard />', () => {
       const Component = createDashboardComponent(state);
       const screen = render(<Component />);
 
-      expect(screen.getByRole('heading', { name: 'Goedemorgen' }));
+      expect(
+        screen.getByRole('heading', { name: 'Goedemorgen' })
+      ).toBeInTheDocument();
       expect(
         screen.queryByRole('heading', { name: 'Aankomende afspraken' })
       ).not.toBeInTheDocument();
     });
 
     it('Displays no afspraken component, if there are 0 afspraken', () => {
-      const afspraken = new Array(MAX_TABLE_ROWS_ON_THEMA_PAGINA)
-        .fill(afspraak)
-        // caseReference is used as key in react, so it must be unique from other items.
-        .map((a, i) => ({ ...a, caseReference: i }));
-
       const state = {
         KLANT_CONTACT: {
           status: 'OK',

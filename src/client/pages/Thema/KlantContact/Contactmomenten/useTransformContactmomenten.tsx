@@ -3,7 +3,6 @@ import {
   SpeechBalloonEllipsisIcon,
   MailIcon,
   PhoneIcon,
-  PersonAtDeskIcon,
 } from '@amsterdam/design-system-react-icons';
 
 import type {
@@ -26,6 +25,7 @@ import {
 import { themaConfig as themaZorg } from '../../Zorg/Zorg-thema-config.ts';
 import type { ContactmomentFrontendFinal } from '../KlantContact-thema-config.ts';
 import styles from './Contactmomenten.module.scss';
+import { IconAfspraak } from '../../../../assets/icons/index.tsx';
 
 // TODO: Use all the individual thema ID's imported from the Thema Config files.
 const SVWIv1ORv2 = featureToggleSvwi.svwiActive ? themaIdSvwi : themaInkomen.id;
@@ -77,7 +77,7 @@ function addIcon(type: Kanaal) {
     Telefoon: PhoneIcon,
     Chat: SpeechBalloonEllipsisIcon,
     Contactformulier: MailIcon,
-    Stadsloket: PersonAtDeskIcon,
+    Stadsloket: <IconAfspraak />,
   } as const;
   if (icons[type]) {
     return (

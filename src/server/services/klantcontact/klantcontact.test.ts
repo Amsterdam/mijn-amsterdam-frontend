@@ -78,7 +78,7 @@ test('should transform the data correctly', async () => {
     afsprakenResponse: {
       results: [
         {
-          subject: 'Vaarvignet',
+          subject: 'Varen',
           status: 'New',
           startDate: upcomingStartDate,
           endDate: upcomingEndDate,
@@ -86,6 +86,12 @@ test('should transform the data correctly', async () => {
           products: [
             {
               name: 'Vaarvignet',
+            },
+            {
+              name: 'Vaarvergunning',
+            },
+            {
+              name: 'Betaling vaarbewijs',
             },
           ],
           location: {
@@ -127,10 +133,11 @@ test('should transform the data correctly', async () => {
         "dateStart": "2025-01-01T08:00:00.000Z",
         "dateStartFormatted": "01 januari 2025",
         "displayDateTime": "woensdag 01 januari 2025 van 09:00 tot 09:30 uur",
+        "heading": "Vaarvignet, Vaarvergunning en Betaling vaarbewijs",
         "icsLink": {
           "download": "afspraak-00157784.ics",
           "title": "Voeg toe aan uw privé-agenda",
-          "to": "data:text/calendar;charset=utf-8;base64,QkVHSU4lM0FWQ0FMRU5EQVIlMEQlMEFWRVJTSU9OJTNBMi4wJTBEJTBBUFJPRElEJTNBLSUyRiUyRkFtc3RlcmRhbSUyRiUyRk5PTlNHTUwlMjB2MS4wJTJGJTJGRU4lMEQlMEFCRUdJTiUzQVZFVkVOVCUwRCUwQVVJRCUzQWFmc3ByYWFrLXN0YWRzbG9rZXQtMDAxNTc3ODQlMEQlMEFEVFNUQU1QJTNBMjAyNTAxMDFUMDAwMDAwWiUwRCUwQURUU1RBUlQlM0EyMDI1MDEwMVQwODAwMDBaJTBEJTBBRFRFTkQlM0EyMDI1MDEwMVQwODMwMDBaJTBEJTBBU1VNTUFSWSUzQUFmc3ByYWFrJTIwdm9vciUyMFZhYXJ2aWduZXQlMEQlMEFERVNDUklQVElPTiUzQVJlZmVyZW50aWVudW1tZXIlM0ElMjAwMDE1Nzc4NCUwRCUwQUxPQ0FUSU9OJTNBU3RhZHNsb2tldCUyMFp1aWRvb3N0JTVDJTJDJTIwb25iZWtlbmQlNUMlMkMlMjBudWxsJTIwbnVsbCU1QyUyQyUyME5lZGVybGFuZCUwRCUwQUVORCUzQVZFVkVOVCUwRCUwQUVORCUzQVZDQUxFTkRBUg==",
+          "to": "data:text/calendar;charset=utf-8;base64,QkVHSU4lM0FWQ0FMRU5EQVIlMEQlMEFWRVJTSU9OJTNBMi4wJTBEJTBBUFJPRElEJTNBLSUyRiUyRkFtc3RlcmRhbSUyRiUyRk5PTlNHTUwlMjB2MS4wJTJGJTJGRU4lMEQlMEFCRUdJTiUzQVZFVkVOVCUwRCUwQVVJRCUzQWFmc3ByYWFrLXN0YWRzbG9rZXQtMDAxNTc3ODQlMEQlMEFEVFNUQU1QJTNBMjAyNTAxMDFUMDAwMDAwWiUwRCUwQURUU1RBUlQlM0EyMDI1MDEwMVQwODAwMDBaJTBEJTBBRFRFTkQlM0EyMDI1MDEwMVQwODMwMDBaJTBEJTBBU1VNTUFSWSUzQUFmc3ByYWFrJTIwdm9vciUyMFZhcmVuJTBEJTBBREVTQ1JJUFRJT04lM0FSZWZlcmVudGllbnVtbWVyJTNBJTIwMDAxNTc3ODQlMEQlMEFMT0NBVElPTiUzQVN0YWRzbG9rZXQlMjBadWlkb29zdCU1QyUyQyUyMG9uYmVrZW5kJTVDJTJDJTIwbnVsbCUyMG51bGwlNUMlMkMlMjBOZWRlcmxhbmQlMEQlMEFFTkQlM0FWRVZFTlQlMEQlMEFFTkQlM0FWQ0FMRU5EQVI=",
         },
         "link": {
           "title": "Bekijk afspraak",
@@ -145,7 +152,6 @@ test('should transform the data correctly', async () => {
         },
         "qrCode": "xxxxxxxxxxxxxxxxxxxx",
         "status": "New",
-        "subject": "Vaarvignet",
       },
     ]
   `);
