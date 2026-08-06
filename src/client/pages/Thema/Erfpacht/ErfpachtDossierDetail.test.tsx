@@ -3,9 +3,9 @@ import { userEvent } from '@testing-library/user-event';
 import { generatePath } from 'react-router';
 
 import { themaConfig } from './Erfpacht-thema-config.ts';
-import { ErfpachtDetail } from './ErfpachtDetail.tsx';
-import ERFPACHT_DOSSIER_DETAIL from '../../../../mocks-server/fixtures/erfpacht-v2-dossierinfo-bsn.json' with { type: 'json' };
-import ERFPACHT_DOSSIERS from '../../../../mocks-server/fixtures/erfpacht-v2-dossiers.json' with { type: 'json' };
+import { ErfpachtDossierDetail } from './ErfpachtDossierDetail.tsx';
+import ERFPACHT_DOSSIER_DETAIL from '../../../../mocks-server/fixtures/erfpacht/erfpacht-v2-dossierinfo-bsn.json' with { type: 'json' };
+import ERFPACHT_DOSSIERS from '../../../../mocks-server/fixtures/erfpacht/erfpacht-v2-dossiers.json' with { type: 'json' };
 import type {
   ErfpachtDossiersDetailSource,
   ErfpachtDossiersResponseSource,
@@ -13,7 +13,7 @@ import type {
 import {
   transformDossierResponse,
   transformErfpachtDossierProperties,
-} from '../../../../server/services/erfpacht/erfpacht.ts';
+} from '../../../../server/services/erfpacht/erfpacht-dossiers.ts';
 import { bffApi } from '../../../../testing/utils.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
 import { MockApp } from '../../MockApp.tsx';
@@ -31,17 +31,17 @@ function mockDetailFetch(
 }
 
 describe('<Erfpacht/DossierDetail />', () => {
-  const routeEntry = generatePath(themaConfig.detailPage.route.path, {
+  const routeEntry = generatePath(themaConfig.detailPageDossier.route.path, {
     dossierId: 'E.123.123',
   });
-  const routePath = themaConfig.detailPage.route.path;
+  const routePath = themaConfig.detailPageDossier.route.path;
 
   function Component({ state }: { state: Partial<AppState> }) {
     return (
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={ErfpachtDetail}
+        component={ErfpachtDossierDetail}
         state={state}
       />
     );

@@ -35,9 +35,6 @@ export const BffEndpoints = {
   LEGACY_LOGIN_API_LOGIN: '/api/login',
   LEGACY_LOGIN_API1_LOGIN: '/api1/login',
 
-  // ErfpachtV2
-  ERFPACHT_DOSSIER_DETAILS: '/services/erfpacht/dossier/:dossierId',
-
   // Powerbrowser (ToeristischeVerhuur->Bed&Breakfast)
   POWERBROWSER_DOCUMENT_DOWNLOAD: `/services/${hash('powerbrowser')}/documents/download`,
 

@@ -20,7 +20,7 @@ export function HLIRegelingenList() {
     breadcrumbs,
     themaConfig,
   } = useHliThemaData();
-  useHTMLDocumentTitle(themaConfig.regelingenListPage.route);
+  useHTMLDocumentTitle(themaConfig.listPageRegelingen.route);
 
   const { filter, sort, title, displayProps, listPageRoute } =
     tableConfig[kind];

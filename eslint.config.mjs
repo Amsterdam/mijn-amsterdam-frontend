@@ -28,6 +28,7 @@ export default [
       'react/prop-types': 'off',
       'no-console': 'warn',
       'dot-notation': 'error',
+      'no-nested-ternary': 'warn',
       'no-else-return': 'error',
       'object-shorthand': 'error',
       'react/react-in-jsx-scope': 'off',

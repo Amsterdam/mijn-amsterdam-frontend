@@ -1,6 +1,8 @@
 import { type ReactNode } from 'react';
 
+import merge from 'lodash.merge';
 import { generatePath, type Params } from 'react-router';
+import type { PartialDeep } from 'type-fest';
 
 import type {
   AfisBusinessPartnerDetailsTransformed,
@@ -27,8 +29,8 @@ import type {
 const THEMA_ID = 'AFIS';
 const THEMA_TITLE = 'Facturen en betalen';
 
-type WithBetaalVoorkeurenPage = PageConfig<'betaalVoorkeurenPage'>;
-type WithEmandatenPage = PageConfig<'detailEMandatePage'>;
+type WithBetaalVoorkeurenPage = PageConfig<'detailPageBetaalvoorkeuren'>;
+type WithEmandatenPage = PageConfig<'detailPageEMandate'>;
 
 type AfisThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
   WithListPage &
@@ -77,14 +79,14 @@ export const themaConfig = {
       trackingUrl: null,
     },
   },
-  betaalVoorkeurenPage: {
+  detailPageBetaalvoorkeuren: {
     route: {
       path: '/facturen-en-betalen/betaalvoorkeuren',
       documentTitle: `Betaalvoorkeuren | ${THEMA_TITLE}`,
       trackingUrl: null,
     },
   },
-  detailEMandatePage: {
+  detailPageEMandate: {
     route: {
       path: '/facturen-en-betalen/betaalvoorkeuren/emandate/:id',
       documentTitle: `Incassomachtiging | ${THEMA_TITLE}`,
@@ -171,7 +173,7 @@ export type AfisFacturenByStateFrontend = {
 type FacturenTableConfigParams = {
   listPagePath?: string;
   mergeConfig?: {
-    [key in AfisFactuurStateFrontend]?: Partial<{
+    [key in AfisFactuurStateFrontend]?: PartialDeep<{
       title: string;
       displayProps: DisplayProps<AfisFactuurFrontend>;
       maxItems: number;
@@ -185,40 +187,49 @@ export function getFacturenTableConfig(params?: FacturenTableConfigParams) {
   const { listPagePath = themaConfig.listPage.route.path, mergeConfig } =
     params || {};
   return {
-    open: {
-      title: listPageTitle.open,
-      displayProps: displayPropsFacturenOpen,
-      maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN,
-      listPageLinkLabel: 'Alle openstaande facturen',
-      listPageRoute: generatePath(listPagePath, {
-        state: 'open',
-        page: null,
-      }),
-      ...mergeConfig?.open,
-    },
-    overgedragen: {
-      title: listPageTitle.overgedragen,
-      displayProps: displayPropsFacturenAfgehandeldOfOvergedragen,
-      maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED,
-      listPageLinkLabel:
-        'Alle facturen in het incasso- en invorderingstraject van directie Belastingen',
-      listPageRoute: generatePath(listPagePath, {
-        state: 'overgedragen',
-        page: null,
-      }),
-      ...mergeConfig?.overgedragen,
-    },
-    afgehandeld: {
-      title: listPageTitle.afgehandeld,
-      displayProps: displayPropsFacturenAfgehandeldOfOvergedragen,
-      maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED,
-      listPageLinkLabel: 'Alle afgehandelde facturen',
-      listPageRoute: generatePath(listPagePath, {
-        state: 'afgehandeld',
-        page: null,
-      }),
-      ...mergeConfig?.afgehandeld,
-    },
+    open: merge(
+      {},
+      {
+        title: listPageTitle.open,
+        displayProps: displayPropsFacturenOpen,
+        maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN,
+        listPageLinkLabel: 'Alle openstaande facturen',
+        listPageRoute: generatePath(listPagePath, {
+          state: 'open',
+          page: null,
+        }),
+      },
+      mergeConfig?.open
+    ),
+    overgedragen: merge(
+      {},
+      {
+        title: listPageTitle.overgedragen,
+        displayProps: displayPropsFacturenAfgehandeldOfOvergedragen,
+        maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED,
+        listPageLinkLabel:
+          'Alle facturen in het incasso- en invorderingstraject van directie Belastingen',
+        listPageRoute: generatePath(listPagePath, {
+          state: 'overgedragen',
+          page: null,
+        }),
+      },
+      mergeConfig?.overgedragen
+    ),
+    afgehandeld: merge(
+      {},
+      {
+        title: listPageTitle.afgehandeld,
+        displayProps: displayPropsFacturenAfgehandeldOfOvergedragen,
+        maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED,
+        listPageLinkLabel: 'Alle afgehandelde facturen',
+        listPageRoute: generatePath(listPagePath, {
+          state: 'afgehandeld',
+          page: null,
+        }),
+      },
+      mergeConfig?.afgehandeld
+    ),
   } as const;
 }
 

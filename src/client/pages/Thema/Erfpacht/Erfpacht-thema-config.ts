@@ -1,17 +1,21 @@
+import type { ReactNode } from 'react';
+
 import { generatePath } from 'react-router';
 
 import type {
   ErfpachtDossierFrontend,
-  ErfpachtDossiersResponse,
+  ErfpachtResponseFrontend,
 } from '../../../../server/services/erfpacht/erfpacht-types.ts';
+import type { ErfpachtZaakExcerptFrontend } from '../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
 import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
-import { propagateFeatureToggles } from '../../../config/feature-toggles.ts';
+import {
+  isEnabled,
+  propagateFeatureToggles,
+} from '../../../config/feature-toggles.ts';
 import type {
   PageConfig,
   ThemaConfigBase,
-  WithDetailPage,
-  WithListPage,
 } from '../../../config/thema-types.ts';
 import {
   getAfisListPageDocumentTitle,
@@ -36,16 +40,24 @@ export const LINKS = {
 
 type WithDetailPageFactuur = PageConfig<'detailPageFactuur'>;
 type WithListPageFacturen = PageConfig<'listPageFacturen'>;
+type WithListPageZaken = PageConfig<'listPageZaken'>;
+type WithListPageDossiers = PageConfig<'listPageDossiers'>;
+type WithDetailPageZaak = PageConfig<'detailPageZaak'>;
+type WithDetailPageDossier = PageConfig<'detailPageDossier'>;
+type WithListPageDossierZaken = PageConfig<'listPageDossierZaken'>;
 
 type ThemaConfigErfpacht = ThemaConfigBase &
-  WithDetailPage &
-  WithListPage &
+  WithDetailPageDossier &
+  WithDetailPageZaak &
+  WithListPageDossiers &
   WithDetailPageFactuur &
   WithListPageFacturen &
   WithDetailPageFactuur &
-  WithListPageFacturen;
+  WithListPageFacturen &
+  WithListPageZaken &
+  WithListPageDossierZaken;
 
-export const themaConfig: ThemaConfigErfpacht = {
+export const themaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
   redactedScope: 'none',
@@ -53,6 +65,7 @@ export const themaConfig: ThemaConfigErfpacht = {
   featureToggle: propagateFeatureToggles({
     active: true,
     canonmatigingLinkActive: true,
+    wijzigingsaanvragenActive: isEnabled('ERFPACHT.wijzigingsaanvragen'),
   }),
   pageLinks: [
     {
@@ -79,17 +92,38 @@ export const themaConfig: ThemaConfigErfpacht = {
     documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
   },
-  detailPage: {
+  detailPageDossier: {
     route: {
       path: '/erfpacht/dossier/:dossierId',
       trackingUrl: '/erfpacht/dossier',
       documentTitle: `Erfpachtdossier | ${THEMA_TITLE}`,
     },
   },
-  listPage: {
+  detailPageZaak: {
+    route: {
+      path: '/erfpacht/zaak/:uuid',
+      trackingUrl: '/erfpacht/zaak',
+      documentTitle: `Erfpacht wijzigingsaanvraag | ${THEMA_TITLE}`,
+    },
+  },
+  listPageDossiers: {
     route: {
       path: '/erfpacht/dossiers/:page?',
       documentTitle: `Lijst met dossiers | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
+  listPageZaken: {
+    route: {
+      path: '/erfpacht/zaken/:page?',
+      documentTitle: `Lijst met wijzigingsaanvragen | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
+  listPageDossierZaken: {
+    route: {
+      path: '/erfpacht/dossier/:dossierId/zaken/:page?',
+      documentTitle: `Lijst wijzigingsaanvragen dossier | ${THEMA_TITLE}`,
       trackingUrl: null,
     },
   },
@@ -107,10 +141,12 @@ export const themaConfig: ThemaConfigErfpacht = {
       trackingUrl: null,
     },
   },
-};
+} as const satisfies ThemaConfigErfpacht;
 
 export const listPageParamKind = {
   erfpachtDossiers: 'erfpacht-dossiers',
+  erfpachtZaken: 'erfpacht-zaken',
+  erfpachtDossierDetailZaken: 'erfpacht-dossier-detail-zaken',
 } as const;
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
@@ -121,6 +157,12 @@ export const erfpachtFacturenTableConfig = getFacturenTableConfig({
   mergeConfig: {
     open: {
       title: 'Openstaande erfpachtfacturen',
+      displayProps: {
+        colWidths: {
+          large: ['25%', '25%', '25%', '25%'],
+          small: ['100%', '0', '0', '0'],
+        },
+      },
     },
     overgedragen: {
       title: 'Overgedragen erfpachtfacturen',
@@ -132,21 +174,74 @@ export const erfpachtFacturenTableConfig = getFacturenTableConfig({
 });
 
 type DisplayPropsDossiers = DisplayProps<ErfpachtDossierFrontend>;
+type DisplayPropsWijzigingsaanvragen = DisplayProps<
+  ErfpachtZaakExcerptFrontend & { dossierLinks: ReactNode[] }
+>;
 
-export function getTableConfig(erfpachtData: ErfpachtDossiersResponse | null) {
+export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
   const dossiersBase = erfpachtData?.dossiers;
+  const [firstZaak] = erfpachtData?.zaken ?? [];
 
+  // Wijzigingsaanvragen table on themapagina
+  const displayPropsWijzigingsaanvragen: DisplayPropsWijzigingsaanvragen = {
+    props: {
+      zaakNummer: firstZaak?.titelZaakNummer,
+      dossierLinks: 'Erfpachtdossier',
+      displayStatus: 'Status',
+      datePublishedFormatted: firstZaak?.titelFormattedStatusDatum,
+    },
+    colWidths: {
+      large: ['25%', '25%', '25%', '25%'],
+      small: ['100%', '0', '0', '0'],
+    },
+  };
+
+  // Wijzigingsaanvragen table on Dossier detail page
+  const displayPropsDossierDetailZaken: DisplayProps<ErfpachtZaakExcerptFrontend> =
+    {
+      props: {
+        zaakNummer: firstZaak?.titelZaakNummer,
+        displayStatus: 'Status',
+        datePublishedFormatted: firstZaak?.titelFormattedStatusDatum,
+      },
+      colWidths: {
+        large: ['33%', '33%', '34%'],
+        small: ['50%', '50%', '0'],
+      },
+    };
+
+  // Erfpachtrechten table on themapagina
   const displayPropsDossiers: DisplayPropsDossiers = {
-    voorkeursadres: dossiersBase?.titelVoorkeursAdres,
-    dossierNummer: dossiersBase?.titelDossiernummer,
+    props: {
+      voorkeursadres: dossiersBase?.titelVoorkeursAdres,
+      dossierNummer: dossiersBase?.titelDossiernummer,
+    },
+    colWidths: {
+      large: ['50%', '50%'],
+      small: ['50%', '50%'],
+    },
   };
 
   const titleDossiers = erfpachtData?.titelDossiersKop;
 
   const tableConfig = {
+    [listPageParamKind.erfpachtZaken]: {
+      title: 'Wijzigingsaanvragen',
+      displayProps: displayPropsWijzigingsaanvragen,
+      listPageRoute: generatePath(themaConfig.listPageZaken.route.path, {
+        page: null,
+      }),
+      maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS,
+    },
+    [listPageParamKind.erfpachtDossierDetailZaken]: {
+      title: 'Wijzigingsaanvragen',
+      displayProps: displayPropsDossierDetailZaken,
+      listPageRoute: '', // This will be set dynamically in the dossier data hook based on the dossierId param,
+      maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS,
+    },
     [listPageParamKind.erfpachtDossiers]: {
       title: titleDossiers ?? 'Erfpachtrechten',
-      listPageRoute: generatePath(themaConfig.listPage.route.path, {
+      listPageRoute: generatePath(themaConfig.listPageDossiers.route.path, {
         page: null,
       }),
       displayProps: displayPropsDossiers,

@@ -1,9 +1,9 @@
 import { listPageParamKind } from './Erfpacht-thema-config.ts';
-import { useErfpachtThemaData } from './useErfpachtThemaData.hook.ts';
+import { useErfpachtThemaData } from './useErfpachtThemaData.hook.tsx';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
-export function ErfpachtList() {
+export function ErfpachtDossiersList() {
   const {
     themaId,
     isLoading,
@@ -13,7 +13,7 @@ export function ErfpachtList() {
     breadcrumbs,
     themaConfig,
   } = useErfpachtThemaData();
-  useHTMLDocumentTitle(themaConfig.listPage.route);
+  useHTMLDocumentTitle(themaConfig.listPageDossiers.route);
 
   const tableConfigDossiers = tableConfig?.[listPageParamKind.erfpachtDossiers];
   const displayPropsDossiers = tableConfigDossiers?.displayProps ?? {};
