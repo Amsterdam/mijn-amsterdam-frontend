@@ -275,7 +275,7 @@ describe('stadspas-gpass-service', () => {
             readMoreLink: {
               title:
                 'Lees meer over de pctegoed 25/26 PC Tegoed regeling op amsterdam.nl.',
-              to: 'https://www.amsterdam.nl/stadspas/pc-tegoed/',
+              to: 'https://stadspas.amsterdam.nl/tegoed-en-meer/pc-tegoed',
             },
           }),
           expect.objectContaining({
@@ -283,7 +283,7 @@ describe('stadspas-gpass-service', () => {
             readMoreLink: {
               title:
                 'Lees meer over de kindtegoed 25/26 Kindtegoed 12 tm 14 jaar regeling op amsterdam.nl.',
-              to: 'https://www.amsterdam.nl/stadspas/kindtegoed/',
+              to: 'https://stadspas.amsterdam.nl/tegoed-en-meer/kindtegoed#',
             },
           }),
         ],
