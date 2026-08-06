@@ -17,13 +17,11 @@ type AfsprakenProps = {
   dashboard?: boolean;
   afspraken: AfspraakFrontend[];
   className?: string;
-  maxItems?: number;
   isLoading?: boolean;
 };
 
 export function Afspraken({
   afspraken = [],
-  maxItems = MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   className,
   isLoading = false,
 }: AfsprakenProps) {
@@ -46,14 +44,14 @@ export function Afspraken({
   return (
     <AfsprakenBase className={className}>
       <Column gap="large" className="ams-mb-l">
-        {afspraken.slice(0, maxItems).map((afspraak) => (
+        {afspraken.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA).map((afspraak) => (
           <AfspraakCard key={afspraak.caseReference} afspraak={afspraak} />
         ))}
       </Column>
       <LinkToListPage
         count={afspraken.length}
         route={themaConfig.listPageAfspraken.route.path}
-        threshold={maxItems}
+        threshold={MAX_TABLE_ROWS_ON_THEMA_PAGINA}
         label={`Bekijk uw ${afspraken.length} ${afspraken.length === 1 ? 'afspraak' : 'afspraken'}`}
         maVariant="default"
       />
