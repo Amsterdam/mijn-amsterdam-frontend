@@ -22,7 +22,6 @@ function getTitleAndDescriptionForNotification(
     statustoelichting: zaakExcerpt.statusOmschrijving,
     datumStatusGezet: zaakExcerpt.formattedStatusDatum,
   });
-  // const description = `De status van uw aanvraag met zaaknummer ${zaakExcerpt.zaakNummer} is gewijzigd. ${description_}`;
 
   // We only want to show a notification for the parent status, not for the specific status.
   // The specific status per zaak are fetched via an additional API call.
