@@ -37,7 +37,7 @@ export function MyArePanelContentAfval({
             <br />{' '}
             <Link
               rel="noopener noreferrer"
-              href="https://www.amsterdam.nl/veelgevraagd/ondergrondse-afvalcontainer-adopteren-a188d"
+              href="https://www.amsterdam.nl/veelgevraagd/ondergrondse-afvalcontainer-adopteren-12123"
             >
               Lees hier hoe
             </Link>
