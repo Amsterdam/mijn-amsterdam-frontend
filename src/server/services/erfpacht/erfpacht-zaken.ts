@@ -10,6 +10,7 @@ import {
   getMainStepDescription,
   getParentStatus,
   getSubStepDescription,
+  translateResultaat,
   ZAAK_STATUS_FRONTEND,
   type ZaakStatusTypeSource,
 } from './erfpacht-zaken-config.ts';
@@ -18,6 +19,7 @@ import type {
   ErfpachtZaakExcerptFrontend,
   ZaakInfoResponseSource,
   ZaakInfoSource,
+  ZaakResultaatFrontend,
   ZaakStatusFrontend,
   ZaakStatussenResponseSource,
 } from './erfpacht-zaken-types.ts';
@@ -33,6 +35,7 @@ import {
   toDateFormatted,
   toISOString,
 } from '../../../universal/helpers/date.ts';
+import type { SomeOtherString } from '../../../universal/helpers/types.ts';
 import { hash } from '../../../universal/helpers/utils.ts';
 import type {
   LinkProps,
@@ -122,7 +125,7 @@ export async function fetchErfpachtZaakInfo(
 
 type ZaakStatusResponseFrontend = {
   steps: StatusLineItem<ZaakStatusFrontend, string>[];
-  result: string;
+  resultaat: ZaakResultaatFrontend | SomeOtherString | null;
 };
 
 function transformErfpachtZaakDetailResponse(
@@ -197,7 +200,7 @@ function transformErfpachtZaakDetailResponse(
 
   return {
     steps: stepsFixed,
-    result: zaakStatussenResponseSource.zaakResultaat,
+    resultaat: translateResultaat(zaakStatussenResponseSource.zaakResultaat),
   };
 }
 
@@ -251,7 +254,7 @@ export async function fetchErfpachtZaakDetail(
     return apiErrorResult('Zaak not found', null);
   }
 
-  const resultaat = zaakStatussenResponse.content.result || null;
+  const resultaat = zaakStatussenResponse.content.resultaat;
   const steps = zaakStatussenResponse.content.steps ?? [];
 
   const zaakDetail: ErfpachtZaakDetailFrontend = {

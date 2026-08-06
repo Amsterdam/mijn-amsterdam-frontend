@@ -1,7 +1,10 @@
 import type {
+  ZaakResultaatFrontend,
+  ZaakResultaatSource,
   ZaakStatusFrontend,
   ZaakStatusSource,
 } from './erfpacht-zaken-types.ts';
+import type { SomeOtherString } from '../../../universal/helpers/types.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 
 const ZAAK_STATUS_SOURCE_ = {
@@ -39,9 +42,7 @@ export const ZAAK_STATUS_SOURCE = Object.fromEntries(
 ) as Record<keyof typeof ZAAK_STATUS_SOURCE_, string>;
 
 export function getParentStatus(statustekst: ZaakStatusTypeSource): string {
-  const statustekst_ = statustekst.toLowerCase();
-
-  switch (statustekst_) {
+  switch (statustekst.toLowerCase()) {
     case ZAAK_STATUS_SOURCE.AANVRAAG:
     case ZAAK_STATUS_SOURCE.AANVRAAG_BEOORDELEN:
     case ZAAK_STATUS_SOURCE.INFORMATIE_OPGEVRAAGD:
@@ -93,6 +94,7 @@ export function getSubStepDescription(substep: ZaakStatusSource): string {
   }
   return '';
 }
+
 export function getMainStepDescription(
   statusFixed: ZaakStatusFrontend,
   substeps: StatusLineItem<ZaakStatusTypeSource>[]
@@ -106,4 +108,23 @@ export function getMainStepDescription(
     default:
       return '';
   }
+}
+
+const AANGEGAAN = 'Aangegaan' as const;
+const NIET_DOORGEGAAN = 'Niet doorgegaan' as const;
+
+export const ZAAK_RESULTAAT_TRANSLATION = {
+  [AANGEGAAN]: 'Overeenkomst/indicatie',
+  [NIET_DOORGEGAAN]: 'Niet doorgegaan',
+} as const satisfies Record<ZaakResultaatSource, ZaakResultaatFrontend>;
+
+export function translateResultaat(
+  resultaat: ZaakResultaatSource | null
+): ZaakResultaatFrontend | SomeOtherString | null {
+  if (!resultaat) {
+    return null;
+  }
+  return resultaat in ZAAK_RESULTAAT_TRANSLATION
+    ? ZAAK_RESULTAAT_TRANSLATION[resultaat]
+    : resultaat;
 }

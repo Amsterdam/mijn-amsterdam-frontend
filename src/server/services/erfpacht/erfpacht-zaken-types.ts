@@ -54,9 +54,15 @@ export type ZaakStatusSource = {
   statustoelichting: ZaakStatusTypeSource;
 };
 
+export type ZaakResultaatSource = 'Aangegaan' | 'Niet doorgegaan';
+
+export type ZaakResultaatFrontend =
+  | 'Overeenkomst/indicatie'
+  | 'Niet doorgegaan';
+
 export type ZaakStatussenResponseSource = {
   zaakStatussen: ZaakStatusSource[];
-  zaakResultaat: string;
+  zaakResultaat: ZaakResultaatSource;
 };
 
 export type ZaakStatusFrontend =
@@ -80,5 +86,7 @@ export type ErfpachtZaakExcerptFrontend = Prettify<
 
 export type ErfpachtZaakDetailFrontend = Prettify<
   ErfpachtZaakExcerptFrontend &
-    ZaakAanvraagDetail & { resultaat: string | null }
+    ZaakAanvraagDetail & {
+      resultaat: ZaakResultaatFrontend | SomeOtherString | null;
+    }
 >;
