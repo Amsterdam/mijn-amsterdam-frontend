@@ -198,6 +198,16 @@ function transformErfpachtZaakDetailResponse(
     }
   }
 
+  if (lastCheckedStep?.status === ZAAK_STATUS_FRONTEND.AFGEHANDELD) {
+    // Disabled intermediate steps if Zaak is afgehandeld.
+    // This is a situation where the zaak was still in aanvraag fase but was never taken into behandeling, and then was closed.
+    stepsFixed.forEach((step) => {
+      if (!step.isChecked && !step.isActive) {
+        step.isVisible = false;
+      }
+    });
+  }
+
   return {
     steps: stepsFixed,
     resultaat: translateResultaat(zaakStatussenResponseSource.zaakResultaat),

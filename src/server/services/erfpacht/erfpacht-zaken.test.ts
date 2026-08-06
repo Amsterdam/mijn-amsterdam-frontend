@@ -1,5 +1,9 @@
 import { describe, expect, test } from 'vitest';
 
+import {
+  getParentStatus,
+  ZAAK_STATUS_FRONTEND,
+} from './erfpacht-zaken-config.ts';
 import type {
   ZaakInfoResponseSource,
   ZaakStatussenResponseSource,
@@ -214,6 +218,86 @@ describe('erfpacht-zaken', () => {
             },
           ],
         }
+      `);
+    });
+
+    test('should hide intermediate unchecked step when zaak is afgehandeld', () => {
+      const transformedResponse =
+        forTesting.transformErfpachtZaakDetailResponse({
+          ...(ERFPACHT_ZAAK_DETAIL as ZaakStatussenResponseSource),
+          zaakStatussen: (
+            ERFPACHT_ZAAK_DETAIL as ZaakStatussenResponseSource
+          ).zaakStatussen.filter(
+            (status) =>
+              getParentStatus(status.statustoelichting) !==
+              ZAAK_STATUS_FRONTEND.IN_BEHANDELING
+          ),
+        });
+
+      expect(transformedResponse.steps).toMatchInlineSnapshot(`
+        [
+          {
+            "datePublished": "2026-01-25T14:22:42.057Z",
+            "description": "Wij hebben uw aanvraag ontvangen en gaan deze beoordelen.",
+            "id": "392366984",
+            "isActive": false,
+            "isChecked": true,
+            "status": "Aanvraag",
+            "substeps": [
+              {
+                "datePublished": "2026-01-26T14:22:42.057Z",
+                "description": "Wij hebben aanvullende informatie nodig om uw aanvraag te kunnen beoordelen.",
+                "id": "2638528549",
+                "isActive": false,
+                "isChecked": true,
+                "status": "Informatie opgevraagd",
+              },
+              {
+                "datePublished": "2026-01-27T14:22:42.057Z",
+                "description": "Wij hebben de aanvullende informatie ontvangen en gaan uw aanvraag verder beoordelen.",
+                "id": "3426337054",
+                "isActive": false,
+                "isChecked": true,
+                "status": "Informatie aangeleverd",
+              },
+              {
+                "datePublished": "2026-01-28T14:22:42.057Z",
+                "description": "Wij zijn bezig met het beoordelen van uw aanvraag.",
+                "id": "2833700359",
+                "isActive": false,
+                "isChecked": true,
+                "status": "Aanvraag beoordelen",
+              },
+              {
+                "datePublished": "2026-01-29T14:22:42.057Z",
+                "description": "Uw aanvraag is gereed voor behandeling.",
+                "id": "1514717256",
+                "isActive": false,
+                "isChecked": true,
+                "status": "Aanvraag gereed voor behandeling",
+              },
+            ],
+          },
+          {
+            "datePublished": "",
+            "description": "Wij beoordelen uw aanvraag eerst. Zodra wij hier mee klaar zijn nemen we uw zaak in behandeling.",
+            "id": "1078733647",
+            "isActive": false,
+            "isChecked": false,
+            "isVisible": false,
+            "status": "In behandeling",
+            "substeps": [],
+          },
+          {
+            "datePublished": "2026-02-05T14:22:42.057Z",
+            "description": "Uw aanvraag is afgerond.",
+            "id": "508338350",
+            "isActive": true,
+            "isChecked": true,
+            "status": "Afgehandeld",
+            "substeps": [],
+          },
+        ]
       `);
     });
   });
