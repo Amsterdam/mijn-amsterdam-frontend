@@ -160,6 +160,7 @@ export const erfpachtFacturenTableConfig = getFacturenTableConfig({
       displayProps: {
         colWidths: {
           large: ['25%', '25%', '25%', '25%'],
+          small: ['100%', '0', '0', '0'],
         },
       },
     },
@@ -217,7 +218,7 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
     },
     colWidths: {
       large: ['50%', '50%'],
-      small: ['70%', '30%'],
+      small: ['50%', '50%'],
     },
   };
 
