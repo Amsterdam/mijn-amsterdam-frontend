@@ -78,15 +78,15 @@ export function getSubStepDescription(substep: ZaakStatusSource): string {
     case ZAAK_STATUS_SOURCE.AANVRAAG_GEREED_VOOR_BEHANDELING:
       return 'Uw aanvraag is gereed voor behandeling.';
     case ZAAK_STATUS_SOURCE.INDICATIE_VERSTUURD:
-      return 'Wij hebben u een indicatie gestuurd over de uitkomst van uw aanvraag.';
+      return 'Wij hebben u een indicatie gestuurd naar aanleiding van uw aanvraag.';
     case ZAAK_STATUS_SOURCE.AANBIEDING:
-      return 'Wij hebben u een aanbieding gestuurd over de uitkomst van uw aanvraag.';
+      return 'Wij hebben u een aanbieding gestuurd naar aanleiding van uw aanvraag.';
     case ZAAK_STATUS_SOURCE.ACCEPTATIE_ONTVANGEN:
       return 'Wij hebben uw acceptatie ontvangen en gaan uw aanvraag verder behandelen.';
     case ZAAK_STATUS_SOURCE.BESLUIT_VERSTUURD:
-      return 'Wij hebben het besluit naar de notaris gestuurd. U ontvangt van de notaris een uitnodiging om de akte te passeren.';
+      return 'Wij hebben het besluit naar de notaris gestuurd. U krijgt van de notaris een uitnodiging om de akte te tekenen.';
     case ZAAK_STATUS_SOURCE.AKTE_GEPASSEERD:
-      return 'Wij hebben de akte gepasseerd en uw aanvraag is afgerond.';
+      return 'De akte is ondertekend.';
     case ZAAK_STATUS_SOURCE.BEHANDELING:
       return 'Wij zijn bezig met het behandelen van uw aanvraag.';
     case ZAAK_STATUS_SOURCE.AANVRAAG_AFGEROND:
@@ -104,7 +104,7 @@ export function getMainStepDescription(
       return 'Zodra uw aanvraag is afgerond, ontvangt u van ons een bericht.';
     case statusFixed === ZAAK_STATUS_FRONTEND.IN_BEHANDELING &&
       !substeps?.length:
-      return 'Uw aanvraag wordt eerst beoordeeld. Zodra wij hier mee klaar zijn nemen we uw zaak in behandeling.';
+      return 'Wij beoordelen uw aanvraag eerst. Zodra wij hier mee klaar zijn nemen we uw zaak in behandeling.';
     default:
       return '';
   }
