@@ -4,6 +4,8 @@ import {
   format,
   formatDistanceToNow,
   isThisYear,
+  isValid,
+  parse,
   parseISO,
 } from 'date-fns';
 import { nl } from 'date-fns/locale/nl';
@@ -222,28 +224,29 @@ export function asEnum<T extends readonly string[]>(values: T) {
 }
 
 export function parseDutchDateString(dateString: string): Date | null {
-  const match = /^(\d{2})-(\d{2})-(\d{4})$/.exec(dateString);
-  if (!match) {
+  if (!/^\d{2}-\d{2}-\d{4}$/.test(dateString)) {
     return null;
   }
 
-  const [day, month, year] = match.slice(1, 4).map(Number);
+  try {
+    const parsed = parse(dateString, 'dd-MM-yyyy', new Date());
 
-  if (!year || month < 1 || month > 12 || day < 1 || day > 31) {
+    if (!isValid(parsed)) {
+      return null;
+    }
+
+    return new Date(
+      Date.UTC(
+        parsed.getFullYear(),
+        parsed.getMonth(),
+        parsed.getDate(),
+        0,
+        0,
+        0,
+        0
+      )
+    );
+  } catch (_error) {
     return null;
   }
-
-  // Construct in UTC so callers get a stable midnight date independent of local timezone.
-  const parsedDate = new Date(Date.UTC(year, month - 1, day));
-
-  // Reject impossible dates such as 32-01-2024 or 31-02-2024.
-  if (
-    parsedDate.getUTCFullYear() !== year ||
-    parsedDate.getUTCMonth() !== month - 1 ||
-    parsedDate.getUTCDate() !== day
-  ) {
-    return null;
-  }
-
-  return parsedDate;
 }
