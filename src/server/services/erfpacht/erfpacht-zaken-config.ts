@@ -4,7 +4,6 @@ import type {
   ZaakStatusFrontend,
   ZaakStatusSource,
 } from './erfpacht-zaken-types.ts';
-import type { SomeOtherString } from '../../../universal/helpers/types.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 
 const ZAAK_STATUS_SOURCE_ = {
@@ -113,18 +112,19 @@ export function getMainStepDescription(
 const AANGEGAAN = 'Aangegaan' as const;
 const NIET_DOORGEGAAN = 'Niet doorgegaan' as const;
 
-export const ZAAK_RESULTAAT_TRANSLATION = {
+export const ZAAK_RESULTAAT_TRANSLATION: Record<
+  ZaakResultaatSource,
+  ZaakResultaatFrontend
+> = {
   [AANGEGAAN]: 'Overeenkomst/indicatie',
   [NIET_DOORGEGAAN]: 'Niet doorgegaan',
-} as const satisfies Record<ZaakResultaatSource, ZaakResultaatFrontend>;
+} as const;
 
 export function translateResultaat(
   resultaat: ZaakResultaatSource | null
-): ZaakResultaatFrontend | SomeOtherString | null {
+): ZaakResultaatFrontend | null {
   if (!resultaat) {
     return null;
   }
-  return resultaat in ZAAK_RESULTAAT_TRANSLATION
-    ? ZAAK_RESULTAAT_TRANSLATION[resultaat]
-    : resultaat;
+  return ZAAK_RESULTAAT_TRANSLATION[resultaat];
 }

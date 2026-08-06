@@ -82,7 +82,7 @@ describe('erfpacht-zaken', () => {
         );
       expect(transformedResponse).toMatchInlineSnapshot(`
         {
-          "result": "Aangegaan",
+          "resultaat": "Overeenkomst/indicatie",
           "steps": [
             {
               "datePublished": "2026-01-25T14:22:42.057Z",
@@ -136,7 +136,7 @@ describe('erfpacht-zaken', () => {
               "substeps": [
                 {
                   "datePublished": "2026-02-01T14:22:42.057Z",
-                  "description": "Wij hebben u een aanbieding gestuurd over de uitkomst van uw aanvraag.",
+                  "description": "Wij hebben u een aanbieding gestuurd naar aanleiding van uw aanvraag.",
                   "id": "1450199029",
                   "isActive": false,
                   "isChecked": true,
@@ -152,7 +152,7 @@ describe('erfpacht-zaken', () => {
                 },
                 {
                   "datePublished": "2026-02-03T14:22:42.057Z",
-                  "description": "Wij hebben het besluit naar de notaris gestuurd. U ontvangt van de notaris een uitnodiging om de akte te passeren.",
+                  "description": "Wij hebben het besluit naar de notaris gestuurd. U krijgt van de notaris een uitnodiging om de akte te tekenen.",
                   "id": "3290200915",
                   "isActive": false,
                   "isChecked": true,
@@ -183,7 +183,7 @@ describe('erfpacht-zaken', () => {
 
       expect(transformedResponse).toMatchInlineSnapshot(`
         {
-          "result": "",
+          "resultaat": null,
           "steps": [
             {
               "datePublished": "",
@@ -196,7 +196,7 @@ describe('erfpacht-zaken', () => {
             },
             {
               "datePublished": "",
-              "description": "Uw aanvraag wordt eerst beoordeeld. Zodra wij hier mee klaar zijn nemen we uw zaak in behandeling.",
+              "description": "Wij beoordelen uw aanvraag eerst. Zodra wij hier mee klaar zijn nemen we uw zaak in behandeling.",
               "id": "1078733647",
               "isActive": false,
               "isChecked": false,
@@ -244,7 +244,7 @@ describe('erfpacht-zaken', () => {
     expect(response).toMatchInlineSnapshot(`
       {
         "content": {
-          "result": "Aangegaan",
+          "resultaat": "Overeenkomst/indicatie",
           "steps": [
             {
               "datePublished": "2026-01-25T14:22:42.057Z",
@@ -298,7 +298,7 @@ describe('erfpacht-zaken', () => {
               "substeps": [
                 {
                   "datePublished": "2026-02-01T14:22:42.057Z",
-                  "description": "Wij hebben u een aanbieding gestuurd over de uitkomst van uw aanvraag.",
+                  "description": "Wij hebben u een aanbieding gestuurd naar aanleiding van uw aanvraag.",
                   "id": "1450199029",
                   "isActive": false,
                   "isChecked": true,
@@ -314,7 +314,7 @@ describe('erfpacht-zaken', () => {
                 },
                 {
                   "datePublished": "2026-02-03T14:22:42.057Z",
-                  "description": "Wij hebben het besluit naar de notaris gestuurd. U ontvangt van de notaris een uitnodiging om de akte te passeren.",
+                  "description": "Wij hebben het besluit naar de notaris gestuurd. U krijgt van de notaris een uitnodiging om de akte te tekenen.",
                   "id": "3290200915",
                   "isActive": false,
                   "isChecked": true,
@@ -415,7 +415,7 @@ describe('erfpacht-zaken', () => {
           "substeps": [
             {
               "datePublished": "2026-02-01T14:22:42.057Z",
-              "description": "Wij hebben u een aanbieding gestuurd over de uitkomst van uw aanvraag.",
+              "description": "Wij hebben u een aanbieding gestuurd naar aanleiding van uw aanvraag.",
               "id": "1450199029",
               "isActive": false,
               "isChecked": true,
@@ -431,7 +431,7 @@ describe('erfpacht-zaken', () => {
             },
             {
               "datePublished": "2026-02-03T14:22:42.057Z",
-              "description": "Wij hebben het besluit naar de notaris gestuurd. U ontvangt van de notaris een uitnodiging om de akte te passeren.",
+              "description": "Wij hebben het besluit naar de notaris gestuurd. U krijgt van de notaris een uitnodiging om de akte te tekenen.",
               "id": "3290200915",
               "isActive": false,
               "isChecked": true,
@@ -450,8 +450,8 @@ describe('erfpacht-zaken', () => {
         },
       ]
     `);
-    expect(response.content?.resultaat).toEqual('Aangegaan');
-    expect(response.content?.displayStatus).toEqual('Aangegaan');
+    expect(response.content?.resultaat).toEqual('Overeenkomst/indicatie');
+    expect(response.content?.displayStatus).toEqual('Overeenkomst/indicatie');
   });
 
   test('fetchErfpachtZaakDetail: zaak not found', async () => {

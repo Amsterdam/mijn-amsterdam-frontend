@@ -54,11 +54,15 @@ export type ZaakStatusSource = {
   statustoelichting: ZaakStatusTypeSource;
 };
 
-export type ZaakResultaatSource = 'Aangegaan' | 'Niet doorgegaan';
+export type ZaakResultaatSource =
+  | 'Aangegaan'
+  | 'Niet doorgegaan'
+  | SomeOtherString;
 
 export type ZaakResultaatFrontend =
   | 'Overeenkomst/indicatie'
-  | 'Niet doorgegaan';
+  | 'Niet doorgegaan'
+  | SomeOtherString;
 
 export type ZaakStatussenResponseSource = {
   zaakStatussen: ZaakStatusSource[];
