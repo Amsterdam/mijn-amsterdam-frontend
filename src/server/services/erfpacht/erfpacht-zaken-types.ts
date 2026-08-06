@@ -8,7 +8,7 @@ import type {
 
 export type ZaakInfoSource = {
   zaakNummer: string;
-  zaakUuid: string; // TODO: Must be added to the ZaakInfo response. Delegate to Vernise Team.
+  zaakUuid: string;
   zaakOmschrijving: string;
   statusOmschrijving: ZaakStatusTypeSource;
   formattedStatusDatum: string;
@@ -78,7 +78,6 @@ export type ErfpachtZaakExcerptFrontend = Prettify<
   }
 >;
 
-// TODO: Welke gegevens zijn nodig?
 export type ErfpachtZaakDetailFrontend = Prettify<
   ErfpachtZaakExcerptFrontend &
     ZaakAanvraagDetail & { resultaat: string | null }
