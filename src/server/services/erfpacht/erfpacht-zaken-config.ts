@@ -109,12 +109,11 @@ export function getMainStepDescription(
   }
 }
 
-const AANGEGAAN = 'Aangegaan' as const;
-const NIET_DOORGEGAAN = 'Niet doorgegaan' as const;
+const AANGEGAAN = 'Aangegaan';
+const NIET_DOORGEGAAN = 'Niet doorgegaan';
 
-export const ZAAK_RESULTAAT_TRANSLATION: Record<
-  ZaakResultaatSource,
-  ZaakResultaatFrontend
+export const ZAAK_RESULTAAT_TRANSLATION: Prettify<
+  Record<ZaakResultaatSource, ZaakResultaatFrontend>
 > = {
   [AANGEGAAN]: 'Overeenkomst/indicatie',
   [NIET_DOORGEGAAN]: 'Niet doorgegaan',
