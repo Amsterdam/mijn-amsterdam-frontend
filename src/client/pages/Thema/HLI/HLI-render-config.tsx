@@ -4,6 +4,7 @@ import { getThemaTitleWithAppState } from './helpers.ts';
 import { themaConfig } from './HLI-thema-config.ts';
 import { default as HLIIcon } from './HLIIcon.svg?react';
 import { HLIRegelingenDetail as HLIRegelingenDetail } from './HLIRegelingenDetail.tsx';
+import { HLIRegelingenDetailRedirect } from './HLIRegelingenDetailRedirect.tsx';
 import { HLIRegelingenList } from './HLIRegelingenList.tsx';
 import { HLISpecificatieList } from './HLISpecificatieList.tsx';
 import { HLIStadspasDetail } from './HLIStadspasDetail.tsx';
@@ -25,6 +26,11 @@ export const HLIRoutes = [
     route: themaConfig.detailPageRegeling.route.path,
     Component: HLIRegelingenDetail,
     isActive: themaConfig.featureToggle.regelingen.active,
+  },
+  {
+    route: themaConfig.redirectPage.route.path,
+    Component: HLIRegelingenDetailRedirect,
+    isActive: themaConfig.featureToggle.active,
   },
   {
     route: themaConfig.listPageSpecificaties.route.path,

@@ -8,6 +8,7 @@ import { dateSort } from '../../../../universal/helpers/date.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import { propagateFeatureToggles } from '../../../config/feature-toggles.ts';
+import type { WithRedirectPage } from '../../../config/thema-types.ts';
 import type {
   PageConfig,
   ThemaConfigBase,
@@ -21,7 +22,8 @@ type HLIThemaConfig = ThemaConfigBase &
   PageConfig<'detailPageRegeling'> &
   PageConfig<'detailPageStadspas'> &
   PageConfig<'listPageSpecificaties'> &
-  PageConfig<'listPageRegelingen'>;
+  PageConfig<'listPageRegelingen'> &
+  WithRedirectPage;
 
 export const themaConfig = {
   id: 'HLI' as const,
@@ -77,6 +79,13 @@ export const themaConfig = {
       trackingUrl: (params) =>
         `/regelingen-bij-laag-inkomen/regeling/${params?.regeling ?? ''}`,
       documentTitle: `Regeling | ${THEMA_TITLE}`,
+    },
+  },
+  redirectPage: {
+    route: {
+      path: '/regelingen-bij-laag-inkomen/regeling/:id',
+      documentTitle: `Regeling | ${THEMA_TITLE}`,
+      trackingUrl: null,
     },
   },
   detailPageStadspas: {
