@@ -10,6 +10,7 @@ const BASE_ROUTE = '/services/klantcontact';
 
 export const routes = {
   BASE: BASE_ROUTE,
+  AGENDA_ICS: `${BASE_ROUTE}/agenda.ics`,
   CONTACTGEGEVEN_VERIFY: `${BASE_ROUTE}/contactgegeven/verify`,
   CONTACTGEGEVEN_CREATE: `${BASE_ROUTE}/contactgegeven/create`,
   CONTACTGEGEVEN_DELETE: `${BASE_ROUTE}/contactgegeven/delete`,

@@ -46,7 +46,7 @@ function toICALDateTimeString(date: string | Date): string {
   return `${year}${month}${day}T${hours}${minutes}${seconds}Z`;
 }
 
-function createICS({
+export function createICS({
   uid,
   start,
   end,

@@ -12,6 +12,7 @@ import {
   fetchDienstverlener,
   verifyContactgegeven,
 } from './klantcontact-profieldienst.ts';
+import { createICS } from '../../helpers/ics.ts';
 import {
   sendBadRequest,
   sendBadRequestInvalidInput,
@@ -42,6 +43,27 @@ export async function handleVerifyContactgegeven(
   });
 
   return sendResponse(res, response);
+}
+
+export async function handleGetAgendaIcs(
+  _req: Request,
+  res: ResponseAuthenticated
+) {
+  const ics = createICS({
+    uid: 'afspraak-stadsloket-06157415',
+    start: '2050-01-01T09:30:00Z',
+    end: '2050-01-01T10:00:00Z',
+    summary: 'Afspraak Stadsloket',
+    description: 'Afspraak bij Stadsloket',
+    location: 'Stadsloket Centrum, Amstel 1, 1011 PN Amsterdam',
+  });
+
+  res
+    .status(200)
+    .setHeader('Content-Type', 'text/calendar; charset=utf-8')
+    .setHeader('Content-Disposition', 'inline; filename="afspraak.ics"')
+    .setHeader('X-Content-Type-Options', 'nosniff')
+    .send(ics.endsWith('\r\n') ? ics : `${ics}\r\n`);
 }
 
 export async function handleFetchCommunicatievoorkeuren(

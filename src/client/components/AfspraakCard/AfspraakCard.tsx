@@ -10,8 +10,9 @@ import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 import QRCode from 'react-qr-code';
 
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
+import { BFF_API_BASE_URL } from '../../config/api.ts';
 import { LocationModal } from '../LocationModal/LocationModal.tsx';
-import { MaButtonLink } from '../MaLink/MaLink.tsx';
+import { MaButtonLink, MaLink } from '../MaLink/MaLink.tsx';
 import { ModalAndButton } from '../Modal/Modal.tsx';
 
 type AfspraakCardProps = {
@@ -72,14 +73,14 @@ export function AfspraakCard({
                     buttonLabel="Toon op kaart"
                   />
                 )}
-                <MaButtonLink
-                  variant="tertiary"
-                  href={afspraak.icsLink.to}
-                  rel="noopener noreferrer"
+                <MaLink
+                  href={`${BFF_API_BASE_URL}/services/klantcontact/agenda.ics`}
                   type="text/calendar"
+                  rel="noopener noreferrer"
+                  target="_blank"
                 >
                   Voeg toe aan uw agenda
-                </MaButtonLink>
+                </MaLink>
                 <MaButtonLink
                   variant="tertiary"
                   rel="noopener noreferrer"
