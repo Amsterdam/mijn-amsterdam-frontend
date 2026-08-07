@@ -53,7 +53,7 @@ export const themaConfig = {
     },
     {
       title: 'Meer informatie over Stadspas',
-      to: 'https://www.amsterdam.nl/stadspas',
+      to: 'https://stadspas.amsterdam.nl/',
     },
   ],
   listPageSpecificaties: {
@@ -117,7 +117,7 @@ export const themaConfig = {
 
 export const kindTegoedPageLinkItem = {
   title: 'Meer informatie over Kindtegoed declareren',
-  to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
+  to: 'https://stadspas.amsterdam.nl/tegoed-en-meer/kindtegoed/kosten-declareren',
 } as const;
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;

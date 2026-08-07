@@ -265,7 +265,7 @@ export function isWorkshopNietGevolgd(
         parseISO(regeling.datumIngangGeldigheid)
       )
     ) &&
-    regeling.resultaat == 'toegewezen'
+    regeling.resultaat === 'toegewezen'
   );
 }
 
@@ -281,7 +281,7 @@ function descriptionDefinitief(
 const READ_MORE_LINK_PARAGRAPH = `
         <p>
           <a
-            href="https://www.amsterdam.nl/stadspas/pc-tegoed/"
+            href="https://stadspas.amsterdam.nl/tegoed-en-meer/pc-tegoed"
             rel="external noopener noreferrer"
             title="Lees meer over PC Tegoed op Amsterdam.nl."
           >
