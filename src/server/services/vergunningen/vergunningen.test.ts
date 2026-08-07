@@ -2,6 +2,7 @@ import { describe, it, expect, vi, type Mock } from 'vitest';
 
 import type { DecosVergunning } from './config-and-types.ts';
 import { getStatusStepsDecos } from './decos-status-steps.ts';
+import { routes } from './vergunningen-service-config.ts';
 import { fetchVergunningen } from './vergunningen.ts';
 import { themaConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 import { getAuthProfileAndToken } from '../../../testing/utils.ts';
@@ -76,6 +77,8 @@ describe('vergunningen', () => {
         {
           detailPageRoute: themaConfig.detailPage.route.path,
           includeFetchDocumentsUrl: true,
+          fetchDocumentsListRoute:
+            routes.protected.VERGUNNINGEN_DECOS_DOCUMENTS_LIST,
           getStepsFN: getStatusStepsDecos,
         }
       );
@@ -92,7 +95,7 @@ describe('vergunningen', () => {
         decision: null,
         displayStatus: 'FooBar',
         fetchDocumentsUrl:
-          'http://bff-api-host/api/v1/services/decos/documents?id=xxx',
+          'http://bff-api-host/api/v1/services/vergunningen/decos/documents?id=xxx',
         fetchSourceRaw:
           'http://bff-api-host/api/v1/services/decos/zaak-raw?key=x1',
         id: '1',
@@ -123,6 +126,11 @@ describe('vergunningen', () => {
     (fetchPBZaken as Mock).mockResolvedValue(mockPBResponse);
 
     const result = await fetchVergunningen(authProfileAndToken);
+
+    expect(fetchPBZaken).toHaveBeenCalledWith(
+      authProfileAndToken.profile,
+      expect.any(Array)
+    );
 
     expect(result.status).toBe('OK');
     expect(result.content).toStrictEqual([

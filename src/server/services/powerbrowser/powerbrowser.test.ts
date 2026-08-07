@@ -8,6 +8,7 @@ import {
   fetchPBZaken,
   fetchDocument,
   forTesting,
+  transformPBZaakFrontend,
 } from './powerbrowser-service.ts';
 import type {
   PowerBrowserZaakTransformer,
@@ -1026,5 +1027,44 @@ describe('getZaakStatus', () => {
 
     const result = forTesting.getDisplayStatus(zaak, steps);
     expect(result).toBe('In behandeling');
+  });
+});
+
+describe('transformPBZaakFrontend', () => {
+  test('should apply custom document download route to documents', () => {
+    const result = transformPBZaakFrontend(
+      {
+        id: 'zaak-1',
+        caseType: 'Vergunning PB',
+        identifier: 'Z/1/1',
+        title: 'Vergunning',
+        dateRequest: '2024-01-01',
+        dateDecision: null,
+        dateStart: '',
+        dateEnd: null,
+        decision: null,
+        isVerleend: false,
+        documents: [
+          {
+            id: 'encrypted-doc-id',
+            title: 'Document',
+            url: 'http://bff-api-host/api/v1/services/3448915414/documents/download?id=encrypted-doc-id',
+            datePublished: '2024-01-01',
+          },
+        ],
+        statusDates: [],
+        processed: false,
+        isExpired: false,
+      },
+      {
+        detailPageRoute: '/vergunningen/:caseType/:id',
+        documentDownloadRoute:
+          '/services/vergunningen/powerbrowser/documents/download',
+      }
+    );
+
+    expect(result.documents[0].url).toBe(
+      'http://bff-api-host/api/v1/services/vergunningen/powerbrowser/documents/download?id=encrypted-doc-id'
+    );
   });
 });

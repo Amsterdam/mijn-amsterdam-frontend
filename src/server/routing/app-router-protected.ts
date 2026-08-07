@@ -38,6 +38,7 @@ import { klantcontactRouter } from '../services/klantcontact/klantcontact-router
 import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service.ts';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler.ts';
 import { userFeedbackRouter } from '../services/user-feedback/user-feedback.router.ts';
+import { vergunningenRouter } from '../services/vergunningen/vergunningen-router.ts';
 import { fetchWpiDocument } from '../services/wpi/api-service.ts';
 
 export const router = createBFFRouter({ id: 'router-protected' });
@@ -74,7 +75,7 @@ router.get(
     req: RequestWithQueryParams<{
       [key in keyof typeof streamEndpointQueryParamKeys]: string;
     }>,
-    res: Response,
+    _res: Response,
     next: NextFunction
   ) => {
     if (
@@ -124,6 +125,7 @@ router.use(
   bezwarenRouter.protected,
   userFeedbackRouter.protected,
   horecaRouter.protected,
+  vergunningenRouter.protected,
   erfpachtRouter.protected,
   klantcontactRouter.protected
 );
