@@ -484,6 +484,31 @@ describe('decos-service', () => {
       });
     });
 
+    test('With valid pdf docs and custom download route', async () => {
+      remoteApi
+        .get(/\/decos\/items\/zaak-id-2\/documents/)
+        .reply(200, documents);
+      remoteApi.get(/\/decos\/items\/doc-key\/blob/).reply(200, blob);
+
+      const responseData = await fetchDecosDocumentList(
+        'xx',
+        'zaak-id-2',
+        '/services/horeca/documents/download'
+      );
+      expect(responseData).toStrictEqual({
+        content: [
+          {
+            datePublished: '2024-06-06',
+            id: 'D/4379600',
+            key: 'blob-key',
+            title: 'Systeem - Factuurregel Stadsloket automatisch',
+            url: 'http://bff-api-host/api/v1/services/horeca/documents/download?id=test-encrypted-id',
+          },
+        ],
+        status: 'OK',
+      });
+    });
+
     test('Without valid PDF docs', async () => {
       remoteApi
         .get(/\/decos\/items\/zaak-id-2\/documents/)
@@ -811,6 +836,34 @@ describe('decos-service', () => {
           url: 'http://bff-api-host/api/v1/services/decos/documents/download?id=test-encrypted-id',
         },
       ]);
+    });
+  });
+
+  describe('transformDecosZaakFrontend', () => {
+    test('Uses custom fetchDocumentsListRoute when provided', () => {
+      const transformed = forTesting.transformDecosZaakFrontend('session-id', {
+        id: '1',
+        itemType: 'folders',
+        key: 'zaak-key-1',
+        title: 'Horeca vergunning',
+        statusDates: [],
+        termijnDates: [],
+        dateDecision: null,
+        dateRequest: '2026-01-01',
+        decision: null,
+        processed: false,
+        isVerleend: false,
+        identifier: 'Z/1/1',
+        caseType: 'Horeca zaak',
+      }, {
+        detailPageRoute: '/horeca/:caseType/:id',
+        includeFetchDocumentsUrl: true,
+        fetchDocumentsListRoute: '/services/horeca/documents',
+      });
+
+      expect(transformed.fetchDocumentsUrl).toBe(
+        'http://bff-api-host/api/v1/services/horeca/documents?id=test-encrypted-id'
+      );
     });
   });
 

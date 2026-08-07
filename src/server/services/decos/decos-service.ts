@@ -784,7 +784,7 @@ export async function fetchDecosLinkedField(
   return requestData(apiConfigLinkedField);
 }
 
-async function fetchIsPdfDocument(documentKey: DecosZaakDocument['key']) {
+async function fetchDocumentProperties(documentKey: DecosZaakDocument['key']) {
   // items / { document_id } / blob ? select = bol10
   const apiConfigDocuments = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
@@ -803,9 +803,7 @@ async function fetchIsPdfDocument(documentKey: DecosZaakDocument['key']) {
   return documentTransformed;
 }
 
-function filterValidDocument({
-  fields: documentMetadata,
-}: DecosDocumentSource) {
+function isValidDocument({ fields: documentMetadata }: DecosDocumentSource) {
   const isDefinitief = documentMetadata.text39?.toLowerCase() === 'definitief';
   const isOpenbaar = ['openbaar', 'beperkt openbaar'].includes(
     documentMetadata.text40?.toLowerCase()
@@ -816,46 +814,51 @@ function filterValidDocument({
 
 async function transformDecosDocumentListResponse(
   sessionID: SessionID,
-  decosDocumentsListResponse: DecosZakenResponse<DecosDocumentSource[]>
+  decosDocumentsListResponse: DecosZakenResponse<DecosDocumentSource[]>,
+  documentDownloadRoute: string = BffEndpoints.DECOS_DOCUMENT_DOWNLOAD
 ) {
-  if (Array.isArray(decosDocumentsListResponse.content)) {
-    const documentsSourceFiltered = decosDocumentsListResponse.content
-      .filter(filterValidDocument)
-      .map(async ({ fields: documentMetadata, key }) => {
-        const isPdfResponse = await fetchIsPdfDocument(key);
-        if (isPdfResponse.status === 'OK' && isPdfResponse.content.isPDF) {
-          const decosZaakDocument: DecosZaakDocument = {
-            id: documentMetadata.mark,
-            key: isPdfResponse.content.key,
-            title: documentMetadata.text41 || 'Document',
-            datePublished: documentMetadata.received_date,
-            url: generateFullApiUrlBFF(BffEndpoints.DECOS_DOCUMENT_DOWNLOAD, [
-              {
-                id: encryptSessionIdWithRouteIdParam(
-                  sessionID,
-                  isPdfResponse.content.key
-                ),
-              },
-            ]),
-          };
-          return decosZaakDocument;
-        }
-        return null;
-      });
-
-    const documents = (await Promise.all(documentsSourceFiltered)).filter(
-      (document: DecosZaakDocument | null): document is DecosZaakDocument =>
-        document !== null
-    );
-    return documents;
+  if (!Array.isArray(decosDocumentsListResponse.content)) {
+    return [];
   }
 
-  return [];
+  const documentsSourceFiltered = decosDocumentsListResponse.content
+    .filter(isValidDocument)
+    .map(async ({ fields: documentMetadata, key }) => {
+      const documentProperties = await fetchDocumentProperties(key);
+      if (documentProperties.status !== 'OK') {
+        return null;
+      }
+      if (!documentProperties.content.isPDF) {
+        return null;
+      }
+
+      return {
+        id: documentMetadata.mark,
+        key: documentProperties.content.key,
+        title: documentMetadata.text41 || 'Document',
+        datePublished: documentMetadata.received_date,
+        url: generateFullApiUrlBFF(documentDownloadRoute, [
+          {
+            id: encryptSessionIdWithRouteIdParam(
+              sessionID,
+              documentProperties.content.key
+            ),
+          },
+        ]),
+      } as DecosZaakDocument;
+    });
+
+  const documents = (await Promise.all(documentsSourceFiltered)).filter(
+    (document: DecosZaakDocument | null): document is DecosZaakDocument =>
+      document !== null
+  );
+  return documents;
 }
 
 export async function fetchDecosDocumentList(
   sessionID: SessionID,
-  zaakID: DecosZaakBase['key']
+  zaakID: DecosZaakBase['key'],
+  documentDownloadRoute: string = BffEndpoints.DECOS_DOCUMENT_DOWNLOAD
 ) {
   const apiConfigDocuments = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
@@ -874,7 +877,8 @@ export async function fetchDecosDocumentList(
   if (documentsSource.status === 'OK') {
     const documentsTransformed = await transformDecosDocumentListResponse(
       sessionID,
-      documentsSource.content
+      documentsSource.content,
+      documentDownloadRoute
     );
     return apiSuccessResult(documentsTransformed);
   }
@@ -931,6 +935,7 @@ export async function fetchDecosDocument(
 export type DecosZaakFrontendTransformOptions<T> = {
   detailPageRoute: string;
   includeFetchDocumentsUrl?: boolean;
+  fetchDocumentsListRoute?: string;
   getStepsFN?: (zaak: T) => StatusLineItem[];
 };
 
@@ -964,9 +969,11 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
 
   if (options.includeFetchDocumentsUrl) {
     const idEncrypted = encryptSessionIdWithRouteIdParam(sessionID, zaak.key);
+    const fetchDocumentsListRoute =
+      options.fetchDocumentsListRoute ?? BffEndpoints.DECOS_DOCUMENTS_LIST;
     // Adds an url with encrypted id to the BFF Detail page api for zaken.
     zaakFrontend.fetchDocumentsUrl = generateFullApiUrlBFF(
-      BffEndpoints.DECOS_DOCUMENTS_LIST,
+      fetchDocumentsListRoute,
       [{ id: idEncrypted }]
     );
   }
@@ -975,7 +982,7 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
 }
 
 export const forTesting = {
-  filterValidDocument,
+  filterValidDocument: isValidDocument,
   getUserKeys: fetchUserKeys,
   getSelectFields,
   fetchZakenByUserKey,

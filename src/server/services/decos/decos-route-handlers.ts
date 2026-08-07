@@ -15,6 +15,7 @@ import {
   getTestAccountsBaseFromEnv,
   type TestUserData,
 } from '../../helpers/test-accounts.ts';
+import { BffEndpoints } from '../../routing/bff-routes.ts';
 import type { RequestWithQueryParams } from '../../routing/route-helpers.ts';
 import {
   sendBadRequest,
@@ -23,27 +24,35 @@ import {
 } from '../../routing/route-helpers.ts';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param.ts';
 
-export async function handleFetchDecosDocumentsList(
-  req: RequestWithQueryParams<{ id: string }>,
-  res: ResponseAuthenticated
+export function createHandleFetchDecosDocumentsList(
+  documentDownloadRoute: string = BffEndpoints.DECOS_DOCUMENT_DOWNLOAD
 ) {
-  const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
-    req.query.id,
-    res.locals.authProfileAndToken
-  );
+  return async function handleFetchDecosDocumentsList(
+    req: RequestWithQueryParams<{ id: string }>,
+    res: ResponseAuthenticated
+  ) {
+    const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
+      req.query.id,
+      res.locals.authProfileAndToken
+    );
 
-  if (decryptResult.status === 'ERROR') {
-    return sendResponse(res, decryptResult);
-  }
+    if (decryptResult.status === 'ERROR') {
+      return sendResponse(res, decryptResult);
+    }
 
-  const zaakKey: DecosZaakBase['key'] = decryptResult.content;
-  const response = await fetchDecosDocumentList(
-    res.locals.authProfileAndToken.profile.sid,
-    zaakKey
-  );
+    const zaakKey: DecosZaakBase['key'] = decryptResult.content;
+    const response = await fetchDecosDocumentList(
+      res.locals.authProfileAndToken.profile.sid,
+      zaakKey,
+      documentDownloadRoute
+    );
 
-  return sendResponse(res, response);
+    return sendResponse(res, response);
+  };
 }
+
+export const handleFetchDecosDocumentsList =
+  createHandleFetchDecosDocumentsList();
 
 function getUserIds(testUserData: TestUserData | null, username?: string) {
   return testUserData
