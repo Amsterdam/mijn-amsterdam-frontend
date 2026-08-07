@@ -9,8 +9,8 @@ import {
 import { PersonAtDeskIcon } from '@amsterdam/design-system-react-icons';
 import QRCode from 'react-qr-code';
 
-import { BFF_API_BASE_URL } from '../../../server/config/app.ts';
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
+import { BFF_API_BASE_URL } from '../../config/api.ts';
 import { LocationModal } from '../LocationModal/LocationModal.tsx';
 import { MaButtonLink, MaLink } from '../MaLink/MaLink.tsx';
 import { ModalAndButton } from '../Modal/Modal.tsx';
