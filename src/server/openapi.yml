@@ -6,10 +6,9 @@ info:
   contact:
     name: Mijn Amsterdam
     url: https://mijn.amsterdam.nl/
-    email: mijnAmsterdam@amsterdam.nl
 servers:
   - url: https://mijn.amsterdam.nl/api/v1
-  - url: https://acc.mijn.amsterdam.nl/api/v1
+  - url: https://az-acc.mijn.amsterdam.nl/api/v1
   - url: http://localhost:5000/api/v1
 paths:
   /auth/digid/login:

@@ -8,7 +8,6 @@ info:
   contact:
     name: Mijn Amsterdam
     url: https://mijn.amsterdam.nl/
-    email: mijnAmsterdam@amsterdam.nl
 paths:
   /api/v1/status/health:
     get:
