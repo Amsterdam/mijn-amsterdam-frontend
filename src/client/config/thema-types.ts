@@ -29,6 +29,7 @@ export type ThemaConfigBase<ID = string> = {
 
 export type WithDetailPage = PageConfig<'detailPage'>;
 export type WithListPage = PageConfig<'listPage'>;
+export type WithRedirectPage = PageConfig<'redirectPage'>;
 
 export type ThemaFeatureToggle<T = boolean> = {
   active: boolean;
@@ -37,7 +38,11 @@ export type ThemaFeatureToggle<T = boolean> = {
 type RedactedScope = 'full' | 'content' | 'none';
 
 export type PageConfig<
-  T extends `themaPage${string}` | `listPage${string}` | `detailPage${string}`,
+  T extends
+    | `themaPage${string}`
+    | `listPage${string}`
+    | `detailPage${string}`
+    | `redirectPage${string}`,
 > = {
   [key in T]: {
     title?: string;

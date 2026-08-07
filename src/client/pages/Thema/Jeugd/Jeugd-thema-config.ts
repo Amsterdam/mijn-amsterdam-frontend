@@ -6,6 +6,7 @@ import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
+  WithRedirectPage,
 } from '../../../config/thema-types.ts';
 
 const THEMA_TITLE = 'Onderwijs en Jeugd';
@@ -13,7 +14,10 @@ const THEMA_ID = 'JEUGD';
 
 const detailRouteBase = '/jeugd/voorziening';
 
-type ThemaConfigJeugd = ThemaConfigBase & WithListPage & WithDetailPage;
+type ThemaConfigJeugd = ThemaConfigBase &
+  WithListPage &
+  WithDetailPage &
+  WithRedirectPage;
 
 export const themaConfig: ThemaConfigJeugd = {
   id: THEMA_ID,
@@ -60,6 +64,13 @@ export const themaConfig: ThemaConfigJeugd = {
       documentTitle: `Voorziening | ${THEMA_TITLE}`,
       trackingUrl: (params) =>
         `${detailRouteBase}/${params?.voorziening ?? ''}`,
+    },
+  },
+  redirectPage: {
+    route: {
+      path: `${detailRouteBase}/:id`,
+      documentTitle: `Voorziening | ${THEMA_TITLE}`,
+      trackingUrl: null,
     },
   },
 } as const;

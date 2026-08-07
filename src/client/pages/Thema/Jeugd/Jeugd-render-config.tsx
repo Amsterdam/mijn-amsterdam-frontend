@@ -1,5 +1,6 @@
 import { themaConfig } from './Jeugd-thema-config.ts';
 import { JeugdDetail } from './JeugdDetail.tsx';
+import { JeugdDetailRedirect } from './JeugdDetailRedirect.tsx';
 import { default as JeugdIcon } from './JeugdIcon.svg?react';
 import { JeugdList } from './JeugdList.tsx';
 import { JeugdThemaPagina } from './JeugdThema.tsx';
@@ -15,6 +16,11 @@ export const JeugdRoutes = [
   {
     route: themaConfig.detailPage.route.path,
     Component: JeugdDetail,
+    isActive: themaConfig.featureToggle.active,
+  },
+  {
+    route: themaConfig.redirectPage.route.path,
+    Component: JeugdDetailRedirect,
     isActive: themaConfig.featureToggle.active,
   },
   {
