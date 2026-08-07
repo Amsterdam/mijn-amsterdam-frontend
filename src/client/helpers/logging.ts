@@ -9,7 +9,9 @@ function format(level: LogLevel, message: unknown, ...args: unknown[]) {
 }
 
 function log(level: LogLevel, message: unknown, ...args: unknown[]) {
-  if (!isDev && level === 'debug') return;
+  if (!isDev && level === 'debug') {
+    return;
+  }
 
   const formatted = format(level, message, ...args);
 
