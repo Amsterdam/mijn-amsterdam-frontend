@@ -726,6 +726,7 @@ export async function fetchPBZaken<T extends PowerBrowserZaakTransformer>(
 
 export type PBZaakFrontendTransformOptions<T> = {
   detailPageRoute: string;
+  documentDownloadRoute?: string;
   getStepsFN?: (zaak: T) => StatusLineItem[];
 };
 
@@ -750,6 +751,16 @@ export function transformPBZaakFrontend<T extends PowerBrowserZaakBase>(
       title: `Bekijk hoe het met uw aanvraag staat`,
     },
   };
+
+  if (options.documentDownloadRoute) {
+    const documentDownloadRoute = options.documentDownloadRoute;
+    const documents = zaakFrontend.documents ?? [];
+    zaakFrontend.documents = documents.map((document) => ({
+      ...document,
+      url: generateFullApiUrlBFF(documentDownloadRoute, [{ id: document.id }]),
+    }));
+  }
+
   return zaakFrontend;
 }
 

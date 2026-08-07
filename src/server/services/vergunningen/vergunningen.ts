@@ -9,6 +9,7 @@ import { getStatusStepsDecos as getStatusStepsDefault } from './decos-status-ste
 import { decosZaakTransformers } from './decos-zaken.ts';
 import { getStatusStepsPB } from './pb-status-steps.ts';
 import { pbZaakTransformers } from './pb-zaken.ts';
+import { routes } from './vergunningen-service-config.ts';
 import { themaConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
@@ -111,6 +112,8 @@ export async function fetchVergunningen(
         {
           detailPageRoute: appRouteDetailPage,
           includeFetchDocumentsUrl: true,
+          fetchDocumentsListRoute:
+            routes.protected.VERGUNNINGEN_DECOS_DOCUMENTS_LIST,
           getStepsFN: getStatusSteps,
         }
       )
@@ -121,6 +124,8 @@ export async function fetchVergunningen(
     vergunningenPB = responsePB.content.map((pbZaak) =>
       transformPBZaakFrontend<PBVergunning>(pbZaak, {
         detailPageRoute: appRouteDetailPage,
+        documentDownloadRoute:
+          routes.protected.VERGUNNINGEN_PB_DOCUMENT_DOWNLOAD,
         getStepsFN: getStatusStepsPB,
       })
     );
