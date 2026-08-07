@@ -103,10 +103,10 @@ exports[`Renders afspraak data > Regular variant 1`] = `
             Toon op kaart
           </button>
           <a
-            aria-disabled="false"
-            class="_MaButtonLink_10c0a4 ams-button ams-button--tertiary"
-            href="data:text/calendar;base64,abc123"
+            class="ams-link _MaLink_10c0a4"
+            href="http://bff-api-host/services/klantcontact/agenda.ics"
             rel="noopener noreferrer"
+            target="_blank"
             type="text/calendar"
           >
             Voeg toe aan uw agenda
