@@ -32,6 +32,7 @@ import {
 } from '../services/decos/decos-service.ts';
 import { erfpachtRouter } from '../services/erfpacht/erfpacht-router.ts';
 import { hliRouter } from '../services/hli/hli-router.ts';
+import { horecaRouter } from '../services/horeca/horeca-router.ts';
 import { jzdRouter } from '../services/jzd/jzd-router.ts';
 import { klantcontactRouter } from '../services/klantcontact/klantcontact-router.ts';
 import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service.ts';
@@ -122,6 +123,7 @@ router.use(
   afisRouter.protected,
   bezwarenRouter.protected,
   userFeedbackRouter.protected,
+  horecaRouter.protected,
   erfpachtRouter.protected,
   klantcontactRouter.protected
 );

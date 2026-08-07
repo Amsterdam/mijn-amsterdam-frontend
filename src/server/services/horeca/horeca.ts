@@ -1,5 +1,6 @@
 import type { HorecaVergunningFrontend } from './decos-zaken.ts';
 import { decosZaakTransformers } from './decos-zaken.ts';
+import { routes } from './horeca-service-config.ts';
 import { themaConfig } from '../../../client/pages/Thema/Horeca/Horeca-thema-config.ts';
 import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
@@ -31,6 +32,7 @@ export async function fetchHorecaVergunningen(
         {
           detailPageRoute: themaConfig.detailPage.route.path,
           includeFetchDocumentsUrl: true,
+          fetchDocumentsListRoute: routes.protected.HORECA_DOCUMENTS_LIST,
           getStepsFN: getStatusStepsDecos,
         }
       );

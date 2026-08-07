@@ -1,12 +1,16 @@
 import type { Mock } from 'vitest';
 import { describe, it, expect, vi } from 'vitest';
 
-import { handleFetchDecosDocumentsList } from './decos-route-handlers.ts';
+import {
+  createHandleFetchDecosDocumentsList,
+  handleFetchDecosDocumentsList,
+} from './decos-route-handlers.ts';
 import { fetchDecosDocumentList } from './decos-service.ts';
 import {
   RequestMock,
   ResponseAuthenticatedMock,
 } from '../../../testing/utils.ts';
+import { BffEndpoints } from '../../routing/bff-routes.ts';
 import type { RequestWithQueryParams } from '../../routing/route-helpers.ts';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param.ts';
 
@@ -62,7 +66,32 @@ describe('fetchVergunningDocumentsList', () => {
 
     expect(fetchDecosDocumentList).toHaveBeenCalledWith(
       res.locals.authProfileAndToken.profile.sid,
-      mockValues.id
+      mockValues.id,
+      BffEndpoints.DECOS_DOCUMENT_DOWNLOAD
+    );
+    expect(res.send).toHaveBeenCalledWith(mockDocumentsResponse);
+  });
+
+  it('should support a custom document download route', async () => {
+    const customDocumentDownloadRoute = '/services/horeca/documents/download';
+    const handleFetchDocumentsList = createHandleFetchDecosDocumentsList(
+      customDocumentDownloadRoute
+    );
+
+    (decryptEncryptedRouteParamAndValidateSessionID as Mock).mockReturnValue({
+      content: mockValues.id,
+      status: 'OK',
+    });
+    (fetchDecosDocumentList as Mock).mockResolvedValue(mockDocumentsResponse);
+
+    const res = ResponseAuthenticatedMock.new();
+
+    await handleFetchDocumentsList(req, res);
+
+    expect(fetchDecosDocumentList).toHaveBeenCalledWith(
+      res.locals.authProfileAndToken.profile.sid,
+      mockValues.id,
+      customDocumentDownloadRoute
     );
     expect(res.send).toHaveBeenCalledWith(mockDocumentsResponse);
   });
