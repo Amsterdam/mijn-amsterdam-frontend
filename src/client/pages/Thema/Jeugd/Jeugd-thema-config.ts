@@ -68,10 +68,9 @@ const displayProps: DisplayProps<JzdVoorzieningFrontend> = {
   props: {
     detailLinkComponent: 'Voorziening',
     displayStatus: 'Status',
-    statusDateFormatted: 'Datum',
   },
   colWidths: {
-    large: ['50%', '25%', '25%'],
+    large: ['50%', '50%'],
     small: ['100%', '0', '0'],
   },
 };
@@ -86,7 +85,7 @@ type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const listPageTitle = {
-  [listPageParamKind.lopend]: 'Lopende aanvragen',
+  [listPageParamKind.lopend]: 'Lopende meldingen',
   [listPageParamKind.actual]: 'Huidige voorzieningen',
   [listPageParamKind.historic]: 'Eerdere en afgewezen voorzieningen',
 } as const;
@@ -95,8 +94,8 @@ export const tableConfig = {
   [listPageParamKind.lopend]: {
     title: listPageTitle[listPageParamKind.lopend],
     filter: (regeling: JzdVoorzieningFrontend) =>
-      regeling.steps.some(
-        (step) => step.status === 'Besluit' && !step.isChecked
+      !regeling.steps.some(
+        (step) => step.status === 'Besluit' && step.isChecked
       ),
     displayProps,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {

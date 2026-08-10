@@ -237,7 +237,7 @@ export function decisionParagraph(aanvraag: ZorgnedAanvraagTransformed) {
 }
 
 export const AANVRAAG: ZorgnedStatusLineItemTransformerConfig = {
-  status: 'Aanvraag ontvangen',
+  status: 'Melding ontvangen',
   datePublished: (aanvraag) => {
     return isActiesBasedAanvraag(aanvraag)
       ? getActieBasedAanvraagStepDatum(aanvraag)
@@ -253,7 +253,7 @@ export const AANVRAAG: ZorgnedStatusLineItemTransformerConfig = {
     return false;
   },
   description: () => {
-    return '<p>Uw aanvraag is ontvangen.</p>';
+    return '<p>Wij hebben uw melding ontvangen.</p>';
   },
 };
 
@@ -437,11 +437,6 @@ export function isDeliveredStatusActive(
 }
 
 export function isDecisionStatusActive(aanvraag: ZorgnedAanvraagTransformed) {
-  if (isActiesBasedAanvraag(aanvraag)) {
-    return hasActieBasedInBehandelingStep(aanvraag)
-      ? !isActieBasedInBehandelingStepActive(aanvraag)
-      : false;
-  }
   if (aanvraag.resultaat === 'toegewezen') {
     return (
       hasDecision(aanvraag) &&

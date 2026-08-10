@@ -74,17 +74,16 @@ const displayProps: DisplayProps<JzdVoorzieningFrontend> = {
   props: {
     detailLinkComponent: 'Naam',
     displayStatus: 'Status',
-    statusDateFormatted: 'Datum',
   },
   colWidths: {
-    large: ['50%', '25%', '25%'],
+    large: ['50%', '50%'],
     small: ['100%', '0', '0'],
   },
 };
 
 export const listPageTitle = {
+  [listPageParamKind.lopend]: 'Lopende meldingen',
   [listPageParamKind.actual]: 'Huidige voorzieningen',
-  [listPageParamKind.lopend]: 'Lopende aanvragen',
   [listPageParamKind.historic]: 'Eerdere en afgewezen voorzieningen',
 } as const;
 
