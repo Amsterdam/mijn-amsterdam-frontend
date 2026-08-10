@@ -10,7 +10,6 @@ import {
 } from './app.ts';
 import { themaConfig as themaConfigAfis } from '../../client/pages/Thema/Afis/Afis-thema-config.ts';
 import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config.ts';
-import { themaConfig as themaConfigErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
 import { themaConfig as themaConfigToeristischeVerhuur } from '../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
 import { FeatureToggle } from '../../universal/config/feature-toggles.ts';

@@ -9,7 +9,7 @@ import type {
 import { type FetchWmoVoorzieningenApiOptions } from './jzd-voorzieningen-api-config.ts';
 import {
   PICK_VOORZIENING_KEYS,
-  wmoVoorzieningenApiConfig,
+  jzdVoorzieningenApiConfig,
 } from './jzd-voorzieningen-api-config.ts';
 import { fetchZorgnedAanvragenJZD } from './jzd-zorgned-service.ts';
 import {
@@ -111,7 +111,7 @@ function serviceErrorResult(
 export async function fetchMaApiVoorzieningen(
   bsn: BSN,
   options?: FetchWmoVoorzieningenApiOptions,
-  maVoorzieningenApiConfig: JzdApiConfig[] = wmoVoorzieningenApiConfig
+  maVoorzieningenApiConfig: JzdApiConfig[] = jzdVoorzieningenApiConfig
 ): Promise<ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps[]>> {
   const wmoVoorzieningenResponse = await fetchZorgnedAanvragenJZD(
     bsn,
@@ -175,7 +175,7 @@ export async function fetchMaApiVoorzieningen(
 export async function fetchMaApiVoorzieningById(
   bsn: BSN,
   id: ZorgnedAanvraagTransformedWithMaApiProps['id'],
-  maVoorzieningenApiConfig: JzdApiConfig[] = wmoVoorzieningenApiConfig
+  maVoorzieningenApiConfig: JzdApiConfig[] = jzdVoorzieningenApiConfig
 ): Promise<ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps>> {
   const wmoVoorzieningenResponse = await fetchZorgnedAanvragenJZD(
     bsn,

@@ -1,14 +1,11 @@
-import z from 'zod';
-
-import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import https from 'node:https';
 
 import z from 'zod';
 
-import { IS_PRODUCTION } from '../../../universal/config/env.ts';
+import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import {
   type DataRequestConfig,
-  httpsAgentConfigBFF,
+  httpsAgentBFF,
 } from '../../config/source-api.ts';
 import { getCert } from '../../helpers/cert.ts';
 import { getFromEnv } from '../../helpers/env.ts';
@@ -94,7 +91,7 @@ const apiRequestConfigWMO: DataRequestConfig = {
     'Content-type': 'application/json; charset=utf-8',
     'x-cache-key-supplement': 'WMO',
   },
-  httpsAgent: new https.Agent(httpsAgentConfigBFF),
+  httpsAgent: httpsAgentBFF,
 };
 
 const apiRequestConfigLLV: DataRequestConfig = {
