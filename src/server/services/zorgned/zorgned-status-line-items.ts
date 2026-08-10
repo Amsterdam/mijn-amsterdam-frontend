@@ -29,7 +29,8 @@ export function isStatusLineItemTransformerMatch<
       : PASS_MATCH_DEFAULT;
 
   const hasProductIdentificatieMatch =
-    typeof config.productIdentificatie !== 'undefined'
+    typeof config.productIdentificatie !== 'undefined' &&
+    typeof aanvraagTransformed.productIdentificatie !== 'undefined'
       ? config.productIdentificatie.includes(
           aanvraagTransformed.productIdentificatie
         )

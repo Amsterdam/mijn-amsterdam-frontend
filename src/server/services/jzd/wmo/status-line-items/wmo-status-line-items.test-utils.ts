@@ -26,7 +26,7 @@ export const DOC_MEER_INFORMATIE = {
 export function getAanvraagTransformed(
   overrides: Partial<ZorgnedAanvraagTransformed> = {}
 ): ZorgnedAanvraagTransformed {
-  return {
+  const transformed = {
     betrokkenen: [],
     datumAanvraag: '2024-01-01',
     datumBeginLevering: null,
@@ -53,6 +53,7 @@ export function getAanvraagTransformed(
     titel: 'woonaanpassing',
     ...overrides,
   };
+  return transformed as ZorgnedAanvraagTransformed;
 }
 
 export function getVisibleStatusLineItems(

@@ -203,27 +203,21 @@ export type ZorgnedAanvraagTransformed = {
   datumIngangGeldigheid: string | null;
   datumOpdrachtLevering: string | null;
   datumToewijzing: string | null;
-  procesAanvraagOmschrijving: string | null;
   documenten: GenericDocument[];
   id: string;
   isActueel: boolean;
   leverancier: string | null;
   leverancierIdentificatie: string | null;
-  leveringsVorm: LeveringsVorm | null;
+  leveringsVorm: LeveringsVormTransformed | null;
   prettyID: string;
   procesAanvraag: ZorgnedProcesAanvraagTransformed | null;
+  procesAanvraagOmschrijving: string | null;
   procesIdentificatie: string;
   procesMeldingIdentificatie: string | null;
-  isActueel: boolean;
-  leverancier: string;
-  leverancierIdentificatie: string;
-  leveringsVorm: LeveringsVormTransformed;
-  productsoortCode: ProductSoortCode | null;
   productIdentificatie?: ProductIdentificatie | null;
-  beschiktProductIdentificatie: BeschiktProduct['identificatie'];
-  beschikkingNummer: number | null;
+  productsoortCode: ProductSoortCode | null;
   resultaat: BeschikkingsResultaat | null;
-  titel: string | null;
+  titel: string;
 };
 
 export interface ZorgnedAanvraagWithRelatedPersonsTransformed extends ZorgnedAanvraagTransformed {

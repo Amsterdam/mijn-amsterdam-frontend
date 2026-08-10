@@ -167,6 +167,7 @@ function transformZorgnedAanvraag(
     resultaat: null,
     titel: `Melding gedaan op ${defaultDateFormat(aanvraag.datumAanvraag)}`,
     betrokkenen: [],
+    procesAanvraagOmschrijving: null,
   };
 
   return aanvraagTransformed;
@@ -233,6 +234,7 @@ function transformZorgnedVoorziening(
     resultaat: beschiktProduct.resultaat,
     titel: beschiktProduct.product.omschrijving ?? '',
     betrokkenen: toegewezenProduct?.betrokkenen ?? [],
+    procesAanvraagOmschrijving: null,
   };
 
   return aanvraagTransformed;
