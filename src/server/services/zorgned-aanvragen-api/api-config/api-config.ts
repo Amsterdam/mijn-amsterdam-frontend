@@ -2,6 +2,7 @@ import { jzdAanvragenApiConfig } from './jzd-api-config.ts';
 import { fetchZorgnedAanvragenHLI } from '../../hli/hli-zorgned-service.ts';
 import { fetchZorgnedAanvragenJeugd } from '../../jzd/jeugd/jeugd.ts';
 import { fetchZorgnedAanvragenWMO } from '../../jzd/wmo/wmo-zorgned-service.ts';
+import { hliAanvragenApiConfig } from '../hli-api-config.ts';
 
 export const clientToServiceMap = {
   WMO: {
@@ -14,6 +15,6 @@ export const clientToServiceMap = {
   },
   HLI: {
     fetch: fetchZorgnedAanvragenHLI,
-    apiConfig: jzdAanvragenApiConfig,
+    apiConfig: hliAanvragenApiConfig,
   },
 } as const;
