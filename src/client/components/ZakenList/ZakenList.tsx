@@ -16,7 +16,7 @@ import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 import type { DisplayProps } from '../Table/TableV2.tsx';
 import { useDisplayPropsEntries } from '../Table/useDisplayPropEntries.hook.ts';
 
-function LinkOrFragment({
+export function LinkOrFragment({
   children,
   link,
 }: {
@@ -39,9 +39,9 @@ function LinkOrFragment({
   return <>{children}</>;
 }
 
-function getTitleAttribute<T extends { link?: LinkProps; title: string }>(
-  zaken: T[]
-) {
+export function getTitleAttribute<
+  T extends { link?: LinkProps; title: string },
+>(zaken: T[]) {
   const firstZaak = zaken[0] ?? ({} as T);
   if (firstZaak.title) {
     return 'title' as keyof T;
@@ -52,7 +52,7 @@ function getTitleAttribute<T extends { link?: LinkProps; title: string }>(
   )[0] as keyof T;
 }
 
-function getLabelValue(value: unknown) {
+export function getLabelValue(value: unknown) {
   if (isValidElement(value)) {
     return value;
   }
