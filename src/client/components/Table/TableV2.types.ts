@@ -12,6 +12,8 @@ export type DisplayPropsBase<
   [Property in keyof T2]+?: string | number | ReactNode;
 }>;
 
+export type DisplayPropsViewConfig = Record<ScreenSize, (string | boolean)[]>;
+
 export type DisplayProps<T> =
   | DisplayPropsBase<T>
   | {

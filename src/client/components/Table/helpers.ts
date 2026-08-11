@@ -1,7 +1,9 @@
 import type {
   DisplayProps,
   DisplayPropsBase,
+  ScreenSize,
   TableV2ColWidths,
+  DisplayPropsViewConfig,
 } from './TableV2.types.ts';
 
 export function getDisplayProps<T extends DisplayProps<object>>(
@@ -16,4 +18,14 @@ export function getDisplayPropsColWidths<T extends DisplayProps<object>>(
   displayProps: T
 ): TableV2ColWidths | undefined {
   return 'colWidths' in displayProps ? displayProps.colWidths : undefined;
+}
+
+export function getColWidth(
+  config: DisplayPropsViewConfig,
+  size: ScreenSize,
+  index: number
+) {
+  return config[size]?.filter((value) =>
+    typeof value === 'boolean' ? value : parseInt(value, 10) !== 0
+  )[index];
 }
