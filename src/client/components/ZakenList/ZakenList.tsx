@@ -39,6 +39,31 @@ function LinkOrFragment({
   return <>{children}</>;
 }
 
+function getTitleAttribute<T extends { link?: LinkProps; title: string }>(
+  zaken: T[]
+) {
+  const firstZaak = zaken[0] ?? ({} as T);
+  if (firstZaak.title) {
+    return 'title' as keyof T;
+  }
+  return Object.keys(firstZaak).filter(
+    (key) =>
+      firstZaak[key as keyof T] && typeof firstZaak[key as keyof T] !== 'object'
+  )[0] as keyof T;
+}
+
+function getLabelValue(value: unknown) {
+  if (isValidElement(value)) {
+    return value;
+  }
+
+  if (typeof value === 'object') {
+    return JSON.stringify(value);
+  }
+
+  return String(value);
+}
+
 type ZakenListProps<T> = {
   zaken: T[];
   className?: string;
@@ -51,18 +76,8 @@ export function ZakenList<T extends { link?: LinkProps; title: string }>({
   displayProps,
 }: ZakenListProps<T>) {
   const displayPropEntries = useDisplayPropsEntries(displayProps);
-  const firstZaak = zaken[0] ?? ({} as T);
-  const titleAttribute = (
-    firstZaak[displayPropEntries[0][0] as keyof T]
-      ? displayPropEntries[0][0]
-      : typeof firstZaak.title === 'string'
-        ? 'title'
-        : Object.keys(firstZaak).filter(
-            (key) =>
-              firstZaak[key as keyof T] &&
-              typeof firstZaak[key as keyof T] !== 'object'
-          )[0]
-  ) as keyof T;
+
+  const titleAttribute = getTitleAttribute(zaken);
 
   return (
     <UnorderedList
@@ -82,21 +97,14 @@ export function ZakenList<T extends { link?: LinkProps; title: string }>({
                 </Heading>
 
                 <Paragraph>
-                  {displayPropEntries
-                    .slice(1)
-                    .map(([propKey, { label }], i) => {
-                      const value = zaak[propKey as keyof T];
-                      return (
-                        <span key={propKey} className={styles.ListViewProp}>
-                          <strong>{label}:</strong>{' '}
-                          {isValidElement(value)
-                            ? value
-                            : typeof value === 'object'
-                              ? JSON.stringify(value)
-                              : String(value)}
-                        </span>
-                      );
-                    })}
+                  {displayPropEntries.slice(1).map(([propKey, { label }]) => {
+                    const value = zaak[propKey as keyof T];
+                    return (
+                      <span key={propKey} className={styles.ListViewProp}>
+                        <strong>{label}:</strong> {getLabelValue(value)}
+                      </span>
+                    );
+                  })}
                 </Paragraph>
               </article>
             </LinkOrFragment>
