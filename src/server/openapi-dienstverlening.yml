@@ -73,11 +73,18 @@ paths:
           application/json:
             schema:
               type: object
-              required: [bsn]
+              required: [bsn, client]
               properties:
                 bsn:
                   type: string
                   description: The BSN of the user to fetch the JZD voorzieningen for.
+                client:
+                  type: string
+                  description: The client to fetch the JZD voorzieningen for. Must be one of the following
+                  enum:
+                    - WMO
+                    - HLI
+                    - JZD
                 maActies:
                   type: array
                   items:
