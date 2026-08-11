@@ -11,10 +11,12 @@ import { entries } from '../../../../universal/helpers/utils.ts';
 import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
 
 type FacturenTablesProps = {
+  themaId: string;
   themaContextParams?: AfisFacturenThemaContextParams;
 };
 
 export function AfisFacturenTables({
+  themaId,
   themaContextParams,
 }: FacturenTablesProps) {
   const { facturenByState, tableConfig } =
@@ -67,6 +69,7 @@ export function AfisFacturenTables({
             totalItems={totalItems}
             listPageLinkLabel={listPageLinkLabel}
             listPageRoute={listPageRoute}
+            themaId={themaId}
           />
         );
       }

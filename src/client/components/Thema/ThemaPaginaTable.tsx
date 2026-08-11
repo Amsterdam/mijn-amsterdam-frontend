@@ -31,10 +31,12 @@ interface ThemaPaginaTableProps<T> {
   listPageLinkLabel?: string;
   listPageLinkTitle?: string;
   zaken: T[];
+  themaId?: string;
 }
 
 export function ThemaPaginaTable<
-  T extends { title: string; link?: LinkProps } = ZaakAanvraagDetail,
+  T extends { title: string; link?: LinkProps; themaId?: string } =
+    ZaakAanvraagDetail,
 >({
   title = '',
   contentAfterTheTitle = '',
@@ -47,13 +49,14 @@ export function ThemaPaginaTable<
   totalItems,
   listPageLinkLabel = 'Toon meer',
   listPageLinkTitle,
+  themaId = '',
 }: ThemaPaginaTableProps<T>) {
   const textNoContentDefault = title
     ? `U heeft (nog) geen ${title.toLowerCase()}`
     : TEXT_NO_CONTENT_DEFAULT;
 
   const isSmallScreen = useSmallScreen();
-  const isZakenListEnabledInTheme = true;
+  const isZakenListEnabledInTheme = themaId === 'AFIS';
 
   const hasListPage = !!listPageRoute && maxItems !== -1;
 
@@ -71,7 +74,7 @@ export function ThemaPaginaTable<
           showTHead={!!zaken.length}
           caption={title}
           contentAfterTheCaption={contentAfterTheTitle}
-          items={hasListPage ? zaken.slice(0, maxItems) : zaken}
+          items={zaken_}
           displayProps={displayProps}
           className={className}
         />

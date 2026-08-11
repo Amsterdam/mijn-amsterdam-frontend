@@ -157,7 +157,7 @@ export function AfisThema() {
       pageContentMain={
         <>
           {pageContentSecondary}
-          <AfisFacturenTables />
+          <AfisFacturenTables themaId={themaId} />
         </>
       }
       maintenanceNotificationsPageSlug="afis"
