@@ -2,15 +2,15 @@ import type { Entries } from 'type-fest';
 
 import {
   PICK_VOORZIENING_KEYS,
-  jzdVoorzieningenApiConfig,
+  jzdAanvragenApiConfig,
 } from './api-config/jzd-api-config.ts';
-import type { VoorzieningenRequestInputFilters } from './api-config/request-input.ts';
+import type { AanvragenRequestInputFilters } from './api-config/request-input.ts';
 import type {
   WithMaApiProps,
-  VoorzieningenApiConfig,
+  AanvragenApiConfig,
   ZorgnedAanvraagTransformedWithMaApiProps,
   WithMaApiPropsAssignments,
-} from './zorgned-voorzieningen-api-types.ts';
+} from './zorgned-aanvragen-api-types.ts';
 import {
   apiErrorResult,
   type ApiResponse,
@@ -21,8 +21,8 @@ import { entries, pick } from '../../../universal/helpers/utils.ts';
 import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 
 function isMaApiPropertyConfigMatch<T extends ZorgnedAanvraagTransformed>(
-  voorziening: T,
-  actionConfig: VoorzieningenApiConfig<T>,
+  aanvraag: T,
+  actionConfig: AanvragenApiConfig<T>,
   matchType: 'include' | 'exclude' = 'include'
 ): boolean {
   const IS_DEFAULT_MATCH = matchType !== 'exclude'; // If there are no matchers, we don't want to exclude any items, but we do want to include all items.
@@ -38,29 +38,29 @@ function isMaApiPropertyConfigMatch<T extends ZorgnedAanvraagTransformed>(
     return IS_DEFAULT_MATCH;
   }
 
-  return matchers.every(([voorzieningKey, valueMatch]) => {
+  return matchers.every(([aanvraagKey, valueMatch]) => {
     if (typeof valueMatch === 'function') {
-      return valueMatch(voorziening);
+      return valueMatch(aanvraag);
     }
 
     if (Array.isArray(valueMatch)) {
-      return valueMatch.includes(voorziening[voorzieningKey]);
+      return valueMatch.includes(aanvraag[aanvraagKey]);
     }
 
-    return voorziening[voorzieningKey] === valueMatch;
+    return aanvraag[aanvraagKey] === valueMatch;
   });
 }
 
-function addMaApiPropsToVoorziening<T extends ZorgnedAanvraagTransformed>(
-  apiPropsConfig: VoorzieningenApiConfig<T>[],
-  voorziening: T
+function addMaApiPropsToAanvraag<T extends ZorgnedAanvraagTransformed>(
+  apiPropsConfig: AanvragenApiConfig<T>[],
+  aanvraag: T
 ): T & Partial<WithMaApiProps> {
   const applyAssignments: Partial<WithMaApiProps> = {};
 
   apiPropsConfig.forEach((actionConfig) => {
     if (
-      isMaApiPropertyConfigMatch(voorziening, actionConfig, 'include') &&
-      !isMaApiPropertyConfigMatch(voorziening, actionConfig, 'exclude')
+      isMaApiPropertyConfigMatch(aanvraag, actionConfig, 'include') &&
+      !isMaApiPropertyConfigMatch(aanvraag, actionConfig, 'exclude')
     ) {
       type _Entries = Entries<
         WithMaApiPropsAssignments<ZorgnedAanvraagTransformed>
@@ -69,7 +69,7 @@ function addMaApiPropsToVoorziening<T extends ZorgnedAanvraagTransformed>(
         ([key, value]) => {
           let value_ = value;
           if (typeof value === 'function') {
-            value_ = value(voorziening, key as never); // The "as never" is needed to satisfy the type checker, because the type of key is a string, but we know that it will always be a valid key of WithMaApiProps.
+            value_ = value(aanvraag, key as never); // The "as never" is needed to satisfy the type checker, because the type of key is a string, but we know that it will always be a valid key of WithMaApiProps.
           }
           if (Array.isArray(value_)) {
             // Merge and deduplicate array values if the key already exists in the new assignments, otherwise just assign the value.
@@ -86,103 +86,103 @@ function addMaApiPropsToVoorziening<T extends ZorgnedAanvraagTransformed>(
     }
   });
 
-  return { ...voorziening, ...applyAssignments };
+  return { ...aanvraag, ...applyAssignments };
 }
 
 function serviceErrorResult(
-  voorzieningenResponses: ApiResponse<ZorgnedAanvraagTransformed[]>[]
+  aanvragenResponses: ApiResponse<ZorgnedAanvraagTransformed[]>[]
 ) {
-  const firstErrorResponse = voorzieningenResponses.find(
+  const firstErrorResponse = aanvragenResponses.find(
     (response) => response.status === 'ERROR'
   );
 
   return apiErrorResult(
-    'Error fetching voorzieningen',
+    'Error fetching aanvragen',
     null,
     firstErrorResponse?.code
   );
 }
 
-export function transformVoorzieningForFrontendWithMaApiProps(
+export function transformAanvraagForFrontendWithMaApiProps(
   serviceResponse: ApiResponse<ZorgnedAanvraagTransformed[]>,
-  apiConfig: VoorzieningenApiConfig[],
-  filters?: VoorzieningenRequestInputFilters
+  apiConfig: AanvragenApiConfig[],
+  filters?: AanvragenRequestInputFilters
 ): ZorgnedAanvraagTransformedWithMaApiProps[] {
-  const voorzieningen_ = (serviceResponse.content ?? [])
-    .map((voorziening) => addMaApiPropsToVoorziening(apiConfig, voorziening))
-    .filter((voorziening) => {
+  const aanvragen_ = (serviceResponse.content ?? [])
+    .map((aanvraag) => addMaApiPropsToAanvraag(apiConfig, aanvraag))
+    .filter((aanvraag) => {
       // If no actions are specified in the options, we want to include all items, otherwise we filter based on the specified actions.
       if (!filters?.maActies || filters.maActies.length === 0) {
         return true;
       }
 
-      return voorziening?.maActies?.some((action) =>
+      return aanvraag?.maActies?.some((action) =>
         filters.maActies?.includes(action as (typeof filters.maActies)[number])
       );
     })
-    .filter((voorziening) => {
+    .filter((aanvraag) => {
       // If no product groups are specified in the options, we want to include all items, otherwise we filter based on the specified product groups.
       if (!filters?.maProductgroep || filters.maProductgroep.length === 0) {
         return true;
       }
 
-      return voorziening?.maProductgroep
+      return aanvraag?.maProductgroep
         ? !!filters.maProductgroep?.includes(
-            voorziening.maProductgroep as (typeof filters.maProductgroep)[number]
+            aanvraag.maProductgroep as (typeof filters.maProductgroep)[number]
           )
         : false;
     })
     .toSorted(dateSort('datumBesluit', 'desc'));
 
-  return voorzieningen_;
+  return aanvragen_;
 }
 
-export function fetchMaApiVoorzieningen(
+export function fetchMaApiAanvragen(
   serviceResponse: ApiResponse<ZorgnedAanvraagTransformed[]>,
-  apiConfig: VoorzieningenApiConfig[],
-  filters?: VoorzieningenRequestInputFilters
+  apiConfig: AanvragenApiConfig[],
+  filters?: AanvragenRequestInputFilters
 ): ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps[]> {
   if (serviceResponse.status !== 'OK') {
     return serviceErrorResult([serviceResponse]);
   }
 
-  const voorzieningen = transformVoorzieningForFrontendWithMaApiProps(
+  const aanvragen = transformAanvraagForFrontendWithMaApiProps(
     serviceResponse,
     apiConfig,
     filters
   );
 
   return apiSuccessResult(
-    voorzieningen.map((voorziening) => {
-      return pick(voorziening, PICK_VOORZIENING_KEYS);
+    aanvragen.map((aanvraag) => {
+      return pick(aanvraag, PICK_VOORZIENING_KEYS);
     })
   );
 }
 
-export function fetchMaApiVoorzieningById(
-  voorzieningenResponses: ApiResponse<ZorgnedAanvraagTransformed[]>[],
+export function fetchMaApiAanvraagById(
+  aanvragenResponses: ApiResponse<ZorgnedAanvraagTransformed[]>[],
   id: ZorgnedAanvraagTransformedWithMaApiProps['id'],
-  maVoorzieningenApiConfig: VoorzieningenApiConfig[] = jzdVoorzieningenApiConfig
+  maAanvragenApiConfig: AanvragenApiConfig[] = jzdAanvragenApiConfig
 ): ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps> {
-  if (voorzieningenResponses.some((response) => response.status !== 'OK')) {
-    return serviceErrorResult(voorzieningenResponses);
+  if (aanvragenResponses.some((response) => response.status !== 'OK')) {
+    return serviceErrorResult(aanvragenResponses);
   }
 
-  const responseContentCombined = voorzieningenResponses.flatMap(
+  const responseContentCombined = aanvragenResponses.flatMap(
     (response) => response.content ?? []
   );
 
-  const voorziening = responseContentCombined.find(
-    (voorziening) => voorziening.id === id
+  const aanvraag = responseContentCombined.find(
+    (aanvraag) => aanvraag.id === id
   );
 
-  if (!voorziening) {
-    return apiErrorResult(`No voorziening found with id ${id}`, null, 404);
+  if (!aanvraag) {
+    return apiErrorResult(`No aanvraag found with id ${id}`, null, 404);
   }
 
   return apiSuccessResult(
     pick(
-      addMaApiPropsToVoorziening(maVoorzieningenApiConfig, voorziening),
+      addMaApiPropsToAanvraag(maAanvragenApiConfig, aanvraag),
       PICK_VOORZIENING_KEYS
     )
   );
@@ -190,6 +190,6 @@ export function fetchMaApiVoorzieningById(
 
 export const forTesting = {
   isMaApiPropertyConfigMatch,
-  addMaApiPropsToVoorziening,
-  fetchMaApiVoorzieningById,
+  addMaApiPropsToAanvraag,
+  fetchMaApiAanvraagById,
 };

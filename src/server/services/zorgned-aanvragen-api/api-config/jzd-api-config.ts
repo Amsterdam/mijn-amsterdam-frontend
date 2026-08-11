@@ -8,9 +8,9 @@ import {
 } from '../../jzd/wmo/wmo-status-line-items.ts';
 import type { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
 import type {
-  VoorzieningenApiConfig,
+  AanvragenApiConfig,
   ZorgnedAanvraagTransformedWithMaApiProps,
-} from '../zorgned-voorzieningen-api-types.ts';
+} from '../zorgned-aanvragen-api-types.ts';
 
 // This list should be kept in sync with the list of productIdentificaties given to us by JZD - Zorgned FB
 const PRODUCT_IDS_EXCLUDED_FROM_REPARATIEVERZOEK_ACTION = [
@@ -55,15 +55,15 @@ function maActieUrlsReparatieverzoek(
   };
 }
 
-const REPARATIEVERZOEK_ACTIE_CONFIG: VoorzieningenApiConfig = {
+const REPARATIEVERZOEK_ACTIE_CONFIG: AanvragenApiConfig = {
   include: {
     isActueel: true,
     productsoortCode: ['WRA', 'WRA1', 'WRA2', 'WRA3', 'WRA4', 'WRA5'],
-    datumBeginLevering: (voorziening) => {
+    datumBeginLevering: (aanvraag) => {
       // Only show the reparatieverzoek action for WRA products that have a datumBeginLevering in the past (i.e. the product has been delivered).
       return (
-        voorziening.datumBeginLevering !== null &&
-        parseISO(voorziening.datumBeginLevering) <= new Date()
+        aanvraag.datumBeginLevering !== null &&
+        parseISO(aanvraag.datumBeginLevering) <= new Date()
       );
     },
   },
@@ -78,7 +78,7 @@ const REPARATIEVERZOEK_ACTIE_CONFIG: VoorzieningenApiConfig = {
   },
 };
 
-const REPARATIEVERZOEK_ACTIE_CONFIG_PGB: VoorzieningenApiConfig = {
+const REPARATIEVERZOEK_ACTIE_CONFIG_PGB: AanvragenApiConfig = {
   include: {
     productsoortCode: REPARATIEVERZOEK_ACTIE_CONFIG.include.productsoortCode,
     leveringsVorm: ['PGB'],
@@ -90,7 +90,7 @@ const REPARATIEVERZOEK_ACTIE_CONFIG_PGB: VoorzieningenApiConfig = {
   },
 };
 
-export const jzdVoorzieningenApiConfig: VoorzieningenApiConfig[] = [
+export const jzdAanvragenApiConfig: AanvragenApiConfig[] = [
   // // // // // // // // // // // // // // // // // //
   // Reparatieverzoek action for WRA products  // // //
   // // // // // // // // // // // // // // // // // //
@@ -129,7 +129,7 @@ export const jzdVoorzieningenApiConfig: VoorzieningenApiConfig[] = [
       maActies: ['stopzetten-niet-via-formulier'],
     },
     include: {
-      leveringsVorm: (voorziening) => voorziening.leveringsVorm !== 'PGB',
+      leveringsVorm: (aanvraag) => aanvraag.leveringsVorm !== 'PGB',
       isActueel: true,
       productsoortCode: [
         'AO1',
@@ -363,7 +363,7 @@ export const jzdVoorzieningenApiConfig: VoorzieningenApiConfig[] = [
       return {
         include: Object.fromEntries(
           entries(match).filter(([_, value]) => typeof value !== 'undefined')
-        ) as VoorzieningenApiConfig['include'],
+        ) as AanvragenApiConfig['include'],
         assign: {
           maProductgroep: lineItemConfig.productgroep,
         },

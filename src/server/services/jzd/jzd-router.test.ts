@@ -2,12 +2,12 @@ import type { Request, Response } from 'express';
 import type { MockInstance } from 'vitest';
 import { describe, expect, vi, beforeEach } from 'vitest';
 
-import { forTesting } from '../zorgned-voorzieningen-api/zorgned-voorzieningen-api-route-handlers.ts';
-import * as voorzieningenApiService from '../zorgned-voorzieningen-api/zorgned-voorzieningen-api-service.ts';
+import { forTesting } from '../zorgned-aanvragen-api/zorgned-aanvragen-api-route-handlers.ts';
+import * as voorzieningenApiService from '../zorgned-aanvragen-api/zorgned-aanvragen-api-service.ts';
 import * as jeugdService from './jeugd/jeugd.ts';
 import * as wmoService from './wmo/wmo-zorgned-service.ts';
-import * as hliService from '../hli/hli-zorgned-service.ts';
 import { apiErrorResult } from '../../../universal/helpers/api.ts';
+import * as hliService from '../hli/hli-zorgned-service.ts';
 
 const { handleVoorzieningenRequest } = forTesting;
 

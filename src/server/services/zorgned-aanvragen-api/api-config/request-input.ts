@@ -12,7 +12,7 @@ const requestInputBase_ = {
 
 export const requestInputBase = z.object(requestInputBase_);
 
-const voorzieningenRequestInput = z.object({
+const aanvragenRequestInput = z.object({
   maActies: z
     .array(
       z.enum([
@@ -38,17 +38,17 @@ const voorzieningenRequestInput = z.object({
     .optional(),
 });
 
-export type VoorzieningenRequestInputFilters = z.infer<
-  typeof voorzieningenRequestInput
+export type AanvragenRequestInputFilters = z.infer<
+  typeof aanvragenRequestInput
 >;
 
 export const requestInputByClient = {
-  WMO: voorzieningenRequestInput,
+  WMO: aanvragenRequestInput,
   LLV: z.object({}),
   HLI: z.object({}),
 } as const;
 
-export const voorzieningDetailRequestInput = z.object({
+export const aanvraagDetailRequestInput = z.object({
   bsn: bsnInput,
   id: z.string().nonoptional(),
 });

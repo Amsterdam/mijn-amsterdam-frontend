@@ -1,18 +1,18 @@
-import type { VoorzieningenApiConfig } from './zorgned-voorzieningen-api-types.ts';
+import type { AanvragenApiConfig } from './zorgned-aanvragen-api-types.ts';
 import {
-  fetchMaApiVoorzieningen,
+  fetchMaApiAanvragen,
   forTesting,
-} from './zorgned-voorzieningen-api-service.ts';
+} from './zorgned-aanvragen-api-service.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
 import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 
-describe('zorgned-voorzieningen-api-service', () => {
+describe('zorgned-aanvragen-api-service', () => {
   describe('isMaApiPropertyConfigMatch', () => {
-    it('should return true when all matchers match the voorziening', () => {
-      const voorziening = {
+    it('should return true when all matchers match the aanvraag', () => {
+      const aanvraag = {
         type: 'example',
         status: 'active',
       };
@@ -26,12 +26,12 @@ describe('zorgned-voorzieningen-api-service', () => {
       };
 
       expect(
-        forTesting.isMaApiPropertyConfigMatch(voorziening, actionConfig)
+        forTesting.isMaApiPropertyConfigMatch(aanvraag, actionConfig)
       ).toBe(true);
     });
 
-    it('should return false when at least one matcher does not match the voorziening', () => {
-      const voorziening = {
+    it('should return false when at least one matcher does not match the aanvraag', () => {
+      const aanvraag = {
         type: 'example',
         status: 'inactive',
       };
@@ -45,12 +45,12 @@ describe('zorgned-voorzieningen-api-service', () => {
       };
 
       expect(
-        forTesting.isMaApiPropertyConfigMatch(voorziening, actionConfig)
+        forTesting.isMaApiPropertyConfigMatch(aanvraag, actionConfig)
       ).toBe(false);
     });
 
     it('should return true if there are no matchers', () => {
-      const voorziening = {
+      const aanvraag = {
         type: 'example',
         status: 'active',
       };
@@ -61,12 +61,12 @@ describe('zorgned-voorzieningen-api-service', () => {
       };
 
       expect(
-        forTesting.isMaApiPropertyConfigMatch(voorziening, actionConfig)
+        forTesting.isMaApiPropertyConfigMatch(aanvraag, actionConfig)
       ).toBe(true);
     });
 
     it('should return false if there are no exclude matchers', () => {
-      const voorziening = {
+      const aanvraag = {
         type: 'example',
         status: 'active',
       };
@@ -78,16 +78,12 @@ describe('zorgned-voorzieningen-api-service', () => {
       };
 
       expect(
-        forTesting.isMaApiPropertyConfigMatch(
-          voorziening,
-          actionConfig,
-          'exclude'
-        )
+        forTesting.isMaApiPropertyConfigMatch(aanvraag, actionConfig, 'exclude')
       ).toBe(false);
     });
 
-    it('should return false if there are no exclude matchers that match the voorziening', () => {
-      const voorziening = {
+    it('should return false if there are no exclude matchers that match the aanvraag', () => {
+      const aanvraag = {
         type: 'example',
         status: 'active',
       };
@@ -102,16 +98,12 @@ describe('zorgned-voorzieningen-api-service', () => {
       };
 
       expect(
-        forTesting.isMaApiPropertyConfigMatch(
-          voorziening,
-          actionConfig,
-          'exclude'
-        )
+        forTesting.isMaApiPropertyConfigMatch(aanvraag, actionConfig, 'exclude')
       ).toBe(false);
     });
 
-    it('should return true when all exclude matchers match the voorziening', () => {
-      const voorziening = {
+    it('should return true when all exclude matchers match the aanvraag', () => {
+      const aanvraag = {
         type: 'example',
         status: 'active',
       };
@@ -126,21 +118,17 @@ describe('zorgned-voorzieningen-api-service', () => {
       };
 
       expect(
-        forTesting.isMaApiPropertyConfigMatch(
-          voorziening,
-          actionConfig,
-          'exclude'
-        )
+        forTesting.isMaApiPropertyConfigMatch(aanvraag, actionConfig, 'exclude')
       ).toBe(true);
     });
 
-    it('should include 2 voorzieningen based on productsoortCode and exclude 1 based on productIdentificatie', () => {
-      const voorziening1 = {
+    it('should include 2 aanvragen based on productsoortCode and exclude 1 based on productIdentificatie', () => {
+      const aanvraag1 = {
         productsoortCode: 'WRA',
         productIdentificatie: 'not-excluded-id',
       } as unknown as ZorgnedAanvraagTransformed;
 
-      const voorziening2 = {
+      const aanvraag2 = {
         productsoortCode: 'WRA',
         productIdentificatie: 'excluded-id',
       } as unknown as ZorgnedAanvraagTransformed;
@@ -157,28 +145,28 @@ describe('zorgned-voorzieningen-api-service', () => {
 
       expect(
         forTesting.isMaApiPropertyConfigMatch(
-          voorziening1,
+          aanvraag1,
           actionConfig,
           'include'
         )
       ).toBe(true);
       expect(
         forTesting.isMaApiPropertyConfigMatch(
-          voorziening1,
+          aanvraag1,
           actionConfig,
           'exclude'
         )
       ).toBe(false);
       expect(
         forTesting.isMaApiPropertyConfigMatch(
-          voorziening2,
+          aanvraag2,
           actionConfig,
           'include'
         )
       ).toBe(true);
       expect(
         forTesting.isMaApiPropertyConfigMatch(
-          voorziening2,
+          aanvraag2,
           actionConfig,
           'exclude'
         )
@@ -225,30 +213,30 @@ describe('zorgned-voorzieningen-api-service', () => {
     });
 
     it('should handle function matchers correctly', () => {
-      const voorziening = {
+      const aanvraag = {
         type: 'example',
         status: 'active',
         date: new Date('2023-01-01'),
       };
 
-      const actionConfig: VoorzieningenApiConfig<typeof voorziening> = {
+      const actionConfig: AanvragenApiConfig<typeof aanvraag> = {
         include: {
           type: 'example',
           status: 'active',
-          date: (voorziening) => voorziening.date < new Date('2024-01-01'),
+          date: (aanvraag) => aanvraag.date < new Date('2024-01-01'),
         },
         assign: {},
       };
 
       expect(
-        forTesting.isMaApiPropertyConfigMatch(voorziening, actionConfig)
+        forTesting.isMaApiPropertyConfigMatch(aanvraag, actionConfig)
       ).toBe(true);
     });
   });
 
-  describe('addMaApiPropsToVoorziening', () => {
+  describe('addMaApiPropsToAanvraag', () => {
     it('should add properties from matching action configs', () => {
-      const voorziening = {
+      const aanvraag = {
         type: 'example',
         status: 'active',
       } as unknown as ZorgnedAanvraagTransformed;
@@ -262,26 +250,26 @@ describe('zorgned-voorzieningen-api-service', () => {
           maActies: ['reparatieverzoek'],
           maProductgroep: 'WRA',
         },
-      } as VoorzieningenApiConfig<ZorgnedAanvraagTransformed>;
+      } as AanvragenApiConfig<ZorgnedAanvraagTransformed>;
 
-      const result = forTesting.addMaApiPropsToVoorziening(
+      const result = forTesting.addMaApiPropsToAanvraag(
         [apiPropsConfig],
-        voorziening
+        aanvraag
       );
 
       expect(result).toEqual({
-        ...voorziening,
+        ...aanvraag,
         maActies: ['reparatieverzoek'],
         maProductgroep: 'WRA',
       });
     });
 
-    it('should include / exclude voorzieningen based on multiple configs and their include and exclude matchers', () => {
-      const voorziening = {
+    it('should include / exclude aanvragen based on multiple configs and their include and exclude matchers', () => {
+      const aanvraag = {
         type: 'example',
         status: 'active',
       } as unknown as ZorgnedAanvraagTransformed;
-      const voorziening2 = {
+      const aanvraag2 = {
         type: 'example',
         status: 'active',
         id: 'excluded-id',
@@ -298,27 +286,27 @@ describe('zorgned-voorzieningen-api-service', () => {
         assign: {
           maActies: ['assign-foo-bar'],
         },
-      } as VoorzieningenApiConfig<ZorgnedAanvraagTransformed>;
+      } as AanvragenApiConfig<ZorgnedAanvraagTransformed>;
 
-      const voorzieningTransformed1 = forTesting.addMaApiPropsToVoorziening(
+      const aanvraagTransformed1 = forTesting.addMaApiPropsToAanvraag(
         [apiPropsConfig],
-        voorziening
+        aanvraag
       );
 
-      expect(voorzieningTransformed1).toHaveProperty('maActies', [
+      expect(aanvraagTransformed1).toHaveProperty('maActies', [
         'assign-foo-bar',
       ]);
 
-      const voorzieningTransformed2 = forTesting.addMaApiPropsToVoorziening(
+      const aanvraagTransformed2 = forTesting.addMaApiPropsToAanvraag(
         [apiPropsConfig],
-        voorziening2
+        aanvraag2
       );
 
-      expect(voorzieningTransformed2).not.toHaveProperty('maActies');
+      expect(aanvraagTransformed2).not.toHaveProperty('maActies');
     });
 
     it('should merge and deduplicate array properties if they already exist', () => {
-      const voorziening = {
+      const aanvraag = {
         type: 'example',
         status: 'active',
       } as unknown as ZorgnedAanvraagTransformed;
@@ -331,7 +319,7 @@ describe('zorgned-voorzieningen-api-service', () => {
         assign: {
           maActies: ['reparatieverzoek'],
         },
-      } as VoorzieningenApiConfig<ZorgnedAanvraagTransformed>;
+      } as AanvragenApiConfig<ZorgnedAanvraagTransformed>;
 
       const apiPropsConfig2 = {
         include: {
@@ -341,26 +329,26 @@ describe('zorgned-voorzieningen-api-service', () => {
         assign: {
           maActies: ['stopzetten'],
         },
-      } as VoorzieningenApiConfig<ZorgnedAanvraagTransformed>;
+      } as AanvragenApiConfig<ZorgnedAanvraagTransformed>;
 
-      const result = forTesting.addMaApiPropsToVoorziening(
+      const result = forTesting.addMaApiPropsToAanvraag(
         [apiPropsConfig1, apiPropsConfig2],
-        voorziening
+        aanvraag
       );
 
       expect(result).toEqual({
-        ...voorziening,
+        ...aanvraag,
         maActies: ['reparatieverzoek', 'stopzetten'],
       });
     });
 
-    it('should not modify the voorziening if no configs match', () => {
-      const voorziening = {
+    it('should not modify the aanvraag if no configs match', () => {
+      const aanvraag = {
         type: 'example',
         status: 'active',
       } as unknown as ZorgnedAanvraagTransformed;
 
-      const apiPropsConfig: VoorzieningenApiConfig<typeof voorziening> = {
+      const apiPropsConfig: AanvragenApiConfig<typeof aanvraag> = {
         include: {
           type: 'differentExample',
           status: 'inactive',
@@ -368,23 +356,23 @@ describe('zorgned-voorzieningen-api-service', () => {
         assign: {
           maActies: ['reparatieverzoek'],
         },
-      } as VoorzieningenApiConfig<ZorgnedAanvraagTransformed>;
+      } as AanvragenApiConfig<ZorgnedAanvraagTransformed>;
 
-      const result = forTesting.addMaApiPropsToVoorziening(
+      const result = forTesting.addMaApiPropsToAanvraag(
         [apiPropsConfig],
-        voorziening
+        aanvraag
       );
 
-      expect(result).toEqual(voorziening);
+      expect(result).toEqual(aanvraag);
     });
 
-    it('should not modify the voorziening if assign values are undefined', () => {
-      const voorziening = {
+    it('should not modify the aanvraag if assign values are undefined', () => {
+      const aanvraag = {
         type: 'example',
         status: 'active',
       } as unknown as ZorgnedAanvraagTransformed;
 
-      const apiPropsConfig: VoorzieningenApiConfig<typeof voorziening> = {
+      const apiPropsConfig: AanvragenApiConfig<typeof aanvraag> = {
         include: {
           type: 'example',
           status: 'active',
@@ -393,18 +381,18 @@ describe('zorgned-voorzieningen-api-service', () => {
           maActies: undefined,
           maProductgroep: undefined,
         },
-      } as VoorzieningenApiConfig<ZorgnedAanvraagTransformed>;
+      } as AanvragenApiConfig<ZorgnedAanvraagTransformed>;
 
-      const result = forTesting.addMaApiPropsToVoorziening(
+      const result = forTesting.addMaApiPropsToAanvraag(
         [apiPropsConfig],
-        voorziening
+        aanvraag
       );
 
-      expect(result).toEqual(voorziening);
+      expect(result).toEqual(aanvraag);
     });
 
-    it('should not mutate the input voorziening', () => {
-      const voorziening = {
+    it('should not mutate the input aanvraag', () => {
+      const aanvraag = {
         type: 'example',
         status: 'active',
         maActies: ['reparatieverzoek'],
@@ -418,7 +406,7 @@ describe('zorgned-voorzieningen-api-service', () => {
         assign: {
           maActies: ['stopzetten'],
         },
-      } as VoorzieningenApiConfig<ZorgnedAanvraagTransformed>;
+      } as AanvragenApiConfig<ZorgnedAanvraagTransformed>;
 
       const apiPropsConfig2 = {
         include: {
@@ -428,28 +416,28 @@ describe('zorgned-voorzieningen-api-service', () => {
         assign: {
           maActies: ['reparatieverzoek'],
         },
-      } as VoorzieningenApiConfig<ZorgnedAanvraagTransformed>;
+      } as AanvragenApiConfig<ZorgnedAanvraagTransformed>;
 
-      const originalSnapshot = structuredClone(voorziening);
+      const originalSnapshot = structuredClone(aanvraag);
 
-      const r1 = forTesting.addMaApiPropsToVoorziening(
+      const r1 = forTesting.addMaApiPropsToAanvraag(
         [apiPropsConfig1, apiPropsConfig2],
-        voorziening
+        aanvraag
       );
       const r1Snapshot = structuredClone(r1);
-      const r2 = forTesting.addMaApiPropsToVoorziening(
+      const r2 = forTesting.addMaApiPropsToAanvraag(
         [apiPropsConfig1, apiPropsConfig2],
-        voorziening
+        aanvraag
       );
 
-      expect(voorziening).toEqual(originalSnapshot);
+      expect(aanvraag).toEqual(originalSnapshot);
       expect(r1).toEqual(r2);
       expect(r2).toEqual(r1Snapshot);
     });
   });
 
-  describe('fetch voorzieningen', () => {
-    function createVoorziening(
+  describe('fetch aanvragen', () => {
+    function createAanvraag(
       overrides: Partial<ZorgnedAanvraagTransformed> = {}
     ): ZorgnedAanvraagTransformed {
       return {
@@ -464,8 +452,8 @@ describe('zorgned-voorzieningen-api-service', () => {
         datumToewijzing: null,
         procesAanvraagOmschrijving: null,
         documenten: [],
-        id: 'voorziening-1',
-        prettyID: 'voorziening-1',
+        id: 'aanvraag-1',
+        prettyID: 'aanvraag-1',
         procesIdentificatie: 'proces-1',
         procesMeldingIdentificatie: null,
         isActueel: true,
@@ -477,17 +465,17 @@ describe('zorgned-voorzieningen-api-service', () => {
         beschiktProductIdentificatie: 'beschikt-1',
         beschikkingNummer: 300111429,
         resultaat: 'toegewezen',
-        titel: 'Voorziening',
+        titel: 'Aanvraag',
         ...overrides,
       } as ZorgnedAanvraagTransformed;
     }
 
-    describe('fetchMaApiVoorzieningen', () => {
+    describe('fetchMaApiAanvragen', () => {
       test('should combine fetched service responses and add MA API props based on config', () => {
-        const response = fetchMaApiVoorzieningen(
+        const response = fetchMaApiAanvragen(
           [
             apiSuccessResult([
-              createVoorziening({
+              createAanvraag({
                 id: 'wmo-1',
                 productsoortCode: 'LLV',
                 productIdentificatie: 'LLVAVG',
@@ -522,12 +510,12 @@ describe('zorgned-voorzieningen-api-service', () => {
         });
       });
 
-      test('should filter voorzieningen based on options', () => {
-        const response = fetchMaApiVoorzieningen(
+      test('should filter aanvragen based on options', () => {
+        const response = fetchMaApiAanvragen(
           [
             apiSuccessResult([
-              createVoorziening({ id: 'wmo-1', productsoortCode: 'WRA' }),
-              createVoorziening({ id: 'wmo-2', productsoortCode: 'ABC' }),
+              createAanvraag({ id: 'wmo-1', productsoortCode: 'WRA' }),
+              createAanvraag({ id: 'wmo-2', productsoortCode: 'ABC' }),
             ]),
             apiSuccessResult([]),
             apiSuccessResult([]),
@@ -557,7 +545,7 @@ describe('zorgned-voorzieningen-api-service', () => {
       });
 
       test('should handle API errors gracefully', () => {
-        const response = fetchMaApiVoorzieningen([
+        const response = fetchMaApiAanvragen([
           apiSuccessResult([]),
           apiErrorResult('Something went wrong', null, 500),
           apiSuccessResult([]),
@@ -568,12 +556,12 @@ describe('zorgned-voorzieningen-api-service', () => {
       });
     });
 
-    describe('fetchMaApiVoorzieningById', () => {
-      test('should fetch a single voorziening by ID and add MA API props based on config', () => {
-        const response = forTesting.fetchMaApiVoorzieningById(
+    describe('fetchMaApiAanvraagById', () => {
+      test('should fetch a single aanvraag by ID and add MA API props based on config', () => {
+        const response = forTesting.fetchMaApiAanvraagById(
           [
             apiSuccessResult([
-              createVoorziening({
+              createAanvraag({
                 id: 'target-id',
                 productsoortCode: 'WRA',
               }),
@@ -605,15 +593,15 @@ describe('zorgned-voorzieningen-api-service', () => {
         });
       });
 
-      test('should return an error if the voorziening with the specified ID is not found', () => {
-        const response = forTesting.fetchMaApiVoorzieningById(
+      test('should return an error if the aanvraag with the specified ID is not found', () => {
+        const response = forTesting.fetchMaApiAanvraagById(
           [apiSuccessResult([]), apiSuccessResult([]), apiSuccessResult([])],
           'non-existing-id'
         );
 
         expect(response.status).toBe('ERROR');
         expect(response.status === 'ERROR' && response.message).toBe(
-          'No voorziening found with id non-existing-id'
+          'No aanvraag found with id non-existing-id'
         );
         expect(response.status === 'ERROR' && response.code).toBe(404);
       });

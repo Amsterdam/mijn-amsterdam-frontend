@@ -34,8 +34,9 @@ import {
 import { generateFullApiUrlBFF } from '../../../routing/route-helpers.ts';
 import { getStatusLineItems } from '../../zorgned/zorgned-status-line-items.ts';
 import { type ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
-import type { ZorgnedAanvraagTransformedWithMaApiProps } from '../../zorgned-voorzieningen-api/zorgned-voorzieningen-api-types.ts';
-import { transformVoorzieningForFrontendWithMaApiProps } from '../../zorgned-voorzieningen-api/zorgned-voorzieningen-api-service.ts';
+import { jzdAanvragenApiConfig } from '../../zorgned-aanvragen-api/api-config/jzd-api-config.ts';
+import { transformAanvraagForFrontendWithMaApiProps } from '../../zorgned-aanvragen-api/zorgned-aanvragen-api-service.ts';
+import type { ZorgnedAanvraagTransformedWithMaApiProps } from '../../zorgned-aanvragen-api/zorgned-aanvragen-api-types.ts';
 
 export function getDocuments(
   sessionID: SessionID,
@@ -144,10 +145,9 @@ export async function fetchWmo(
 
   if (featureToggle.service.fetchWmo.addMaVoorzieningenApiProps) {
     const voorzieningenWithMaApiProps =
-      transformVoorzieningForFrontendWithMaApiProps(
-        voorzieningenResponse.content,
-        undefined,
-        undefined
+      transformAanvraagForFrontendWithMaApiProps(
+        voorzieningenResponse,
+        jzdAanvragenApiConfig
       );
     voorzieningen = voorzieningenWithMaApiProps;
   }

@@ -4,12 +4,12 @@ import { clientToServiceMap } from './api-config/api-config.ts';
 import {
   requestInputBase,
   requestInputByClient,
-  voorzieningDetailRequestInput,
+  aanvraagDetailRequestInput,
 } from './api-config/request-input.ts';
 import {
-  fetchMaApiVoorzieningById,
-  fetchMaApiVoorzieningen,
-} from './zorgned-voorzieningen-api-service.ts';
+  fetchMaApiAanvraagById,
+  fetchMaApiAanvragen,
+} from './zorgned-aanvragen-api-service.ts';
 import {
   sendResponse,
   sendBadRequestInvalidInput,
@@ -18,7 +18,7 @@ import { fetchZorgnedAanvragenHLI } from '../hli/hli-zorgned-service.ts';
 import { fetchZorgnedAanvragenJeugd } from '../jzd/jeugd/jeugd.ts';
 import { fetchZorgnedAanvragenWMO } from '../jzd/wmo/wmo-zorgned-service.ts';
 
-export async function handleVoorzieningenRequest(req: Request, res: Response) {
+export async function handleAanvragenRequest(req: Request, res: Response) {
   let baseRequestBody;
   let optionsRequestBodyByClient;
 
@@ -43,7 +43,7 @@ export async function handleVoorzieningenRequest(req: Request, res: Response) {
 
   const { fetch: serviceFunction, apiConfig } = clientToServiceMap[client];
 
-  const response = fetchMaApiVoorzieningen(
+  const response = fetchMaApiAanvragen(
     await serviceFunction(bsn),
     apiConfig,
     filters
@@ -52,36 +52,26 @@ export async function handleVoorzieningenRequest(req: Request, res: Response) {
   return sendResponse(res, response);
 }
 
-export async function handleVoorzieningDetailRequest(
-  req: Request,
-  res: Response
-) {
+export async function handleAanvraagDetailRequest(req: Request, res: Response) {
   // Validate the request body so we can be sure it has the correct shape and values.
   let validatedRequestBody;
   try {
-    validatedRequestBody = voorzieningDetailRequestInput.parse(req.body);
+    validatedRequestBody = aanvraagDetailRequestInput.parse(req.body);
   } catch (error) {
     return sendBadRequestInvalidInput(res, error);
   }
 
   const bsn = validatedRequestBody.bsn;
 
-  const [
-    wmoVoorzieningenResponse,
-    jeugdVoorzieningenResponse,
-    hliVoorzieningenResponse,
-  ] = await Promise.all([
-    fetchZorgnedAanvragenWMO(bsn),
-    fetchZorgnedAanvragenJeugd(bsn),
-    fetchZorgnedAanvragenHLI(bsn),
-  ]);
+  const [wmoAanvragenResponse, jeugdAanvragenResponse, hliAanvragenResponse] =
+    await Promise.all([
+      fetchZorgnedAanvragenWMO(bsn),
+      fetchZorgnedAanvragenJeugd(bsn),
+      fetchZorgnedAanvragenHLI(bsn),
+    ]);
 
-  const response = fetchMaApiVoorzieningById(
-    [
-      wmoVoorzieningenResponse,
-      jeugdVoorzieningenResponse,
-      hliVoorzieningenResponse,
-    ],
+  const response = fetchMaApiAanvraagById(
+    [wmoAanvragenResponse, jeugdAanvragenResponse, hliAanvragenResponse],
     validatedRequestBody.id
   );
 
@@ -89,6 +79,6 @@ export async function handleVoorzieningDetailRequest(
 }
 
 export const forTesting = {
-  handleVoorzieningenRequest,
-  handleVoorzieningDetailRequest,
+  handleAanvragenRequest,
+  handleAanvraagDetailRequest,
 };
