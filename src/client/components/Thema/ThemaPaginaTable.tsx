@@ -2,12 +2,17 @@ import type { ReactNode } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import type { ZaakAanvraagDetail } from '../../../universal/types/App.types.ts';
+import type {
+  LinkProps,
+  ZaakAanvraagDetail,
+} from '../../../universal/types/App.types.ts';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app.ts';
+import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { LinkToListPage } from '../LinkToListPage/LinkToListPage.tsx';
 import { PageContentCell } from '../Page/Page.tsx';
 import type { DisplayProps } from '../Table/TableV2.tsx';
 import { TableV2 } from '../Table/TableV2.tsx';
+import { ZakenList } from '../ZakenList/ZakenList.tsx';
 
 const DISPLAY_PROPS_DEFAULT: DisplayProps<{ title: string }> = {
   title: 'Titel',
@@ -28,7 +33,9 @@ interface ThemaPaginaTableProps<T> {
   zaken: T[];
 }
 
-export function ThemaPaginaTable<T extends object = ZaakAanvraagDetail>({
+export function ThemaPaginaTable<
+  T extends { title: string; link?: LinkProps } = ZaakAanvraagDetail,
+>({
   title = '',
   contentAfterTheTitle = '',
   zaken,
@@ -45,18 +52,30 @@ export function ThemaPaginaTable<T extends object = ZaakAanvraagDetail>({
     ? `U heeft (nog) geen ${title.toLowerCase()}`
     : TEXT_NO_CONTENT_DEFAULT;
 
+  const isSmallScreen = useSmallScreen();
+  const isZakenListEnabledInTheme = true;
+
   const hasListPage = !!listPageRoute && maxItems !== -1;
+
+  const zaken_ = hasListPage ? zaken.slice(0, maxItems) : zaken;
 
   return (
     <PageContentCell>
-      <TableV2
-        showTHead={!!zaken.length}
-        caption={title}
-        contentAfterTheCaption={contentAfterTheTitle}
-        items={hasListPage ? zaken.slice(0, maxItems) : zaken}
-        displayProps={displayProps}
-        className={className}
-      />
+      {isSmallScreen && isZakenListEnabledInTheme && (
+        <>
+          <ZakenList<T> displayProps={displayProps} zaken={zaken_} />
+        </>
+      )}
+      {!isSmallScreen && (
+        <TableV2
+          showTHead={!!zaken.length}
+          caption={title}
+          contentAfterTheCaption={contentAfterTheTitle}
+          items={hasListPage ? zaken.slice(0, maxItems) : zaken}
+          displayProps={displayProps}
+          className={className}
+        />
+      )}
 
       {!zaken.length && (
         <Paragraph>{textNoContent ?? textNoContentDefault}</Paragraph>
