@@ -96,7 +96,7 @@ export const tableConfig = {
       ),
     displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
-    textNoContent: 'U heeft geen lopende aanvragen.',
+    textNoContent: 'U heeft geen lopende meldingen.',
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.lopend,
       page: null,

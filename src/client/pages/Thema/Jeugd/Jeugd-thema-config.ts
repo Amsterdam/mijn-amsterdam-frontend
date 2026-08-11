@@ -103,7 +103,7 @@ export const tableConfig = {
       page: null,
     }),
     maxItems: 5,
-    textNoContent: 'U heeft geen lopende aanvragen.',
+    textNoContent: 'U heeft geen lopende meldingen.',
   },
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
