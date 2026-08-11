@@ -2,15 +2,15 @@ import { parseISO } from 'date-fns/parseISO';
 import type z from 'zod';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-import { voorzieningenRequestInput } from './jzd-service-config.ts';
+import { voorzieningenRequestInput } from './zorgned-voorzieningen-api-service-config.ts';
 import type {
   JzdApiConfig,
   ZorgnedAanvraagTransformedWithMaApiProps,
-} from './jzd-types.ts';
+} from './zorgned-voorzieningen-api-types.ts';
 import {
   productGroep,
   wmoStatusLineItemsConfig,
-} from './wmo/wmo-status-line-items.ts';
+} from '../jzd/wmo/wmo-status-line-items.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { entries } from '../../../universal/helpers/utils.ts';
 import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';

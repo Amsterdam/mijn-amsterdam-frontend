@@ -34,8 +34,8 @@ import {
 import { generateFullApiUrlBFF } from '../../../routing/route-helpers.ts';
 import { getStatusLineItems } from '../../zorgned/zorgned-status-line-items.ts';
 import { type ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
-import type { ZorgnedAanvraagTransformedWithMaApiProps } from '../jzd-types.ts';
-import { transformVoorzieningForFrontendWithMaApiProps } from '../jzd-voorzieningen-api-service.ts';
+import type { ZorgnedAanvraagTransformedWithMaApiProps } from '../../zorgned-voorzieningen-api/zorgned-voorzieningen-api-types.ts';
+import { transformVoorzieningForFrontendWithMaApiProps } from '../../zorgned-voorzieningen-api/zorgned-voorzieningen-api-service.ts';
 
 export function getDocuments(
   sessionID: SessionID,

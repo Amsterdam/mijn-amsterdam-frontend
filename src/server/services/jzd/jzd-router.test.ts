@@ -2,8 +2,11 @@ import type { Request, Response } from 'express';
 import type { MockInstance } from 'vitest';
 import { describe, expect, vi, beforeEach } from 'vitest';
 
-import { forTesting } from './jzd-route-handlers.ts';
-import * as wmoApiService from './jzd-voorzieningen-api-service.ts';
+import { forTesting } from '../zorgned-voorzieningen-api/zorgned-voorzieningen-api-route-handlers.ts';
+import * as voorzieningenApiService from '../zorgned-voorzieningen-api/zorgned-voorzieningen-api-service.ts';
+import * as jeugdService from './jeugd/jeugd.ts';
+import * as wmoService from './wmo/wmo-zorgned-service.ts';
+import * as hliService from '../hli/hli-zorgned-service.ts';
 import { apiErrorResult } from '../../../universal/helpers/api.ts';
 
 const { handleVoorzieningenRequest } = forTesting;
@@ -12,6 +15,9 @@ describe('handleVoorzieningenRequest', () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let fetchMaApiVoorzieningen: MockInstance;
+  let fetchZorgnedAanvragenWMO: MockInstance;
+  let fetchZorgnedAanvragenJeugd: MockInstance;
+  let fetchZorgnedAanvragenHLI: MockInstance;
 
   beforeEach(() => {
     req = { body: {} };
@@ -22,9 +28,19 @@ describe('handleVoorzieningenRequest', () => {
     };
 
     fetchMaApiVoorzieningen = vi.spyOn(
-      wmoApiService,
+      voorzieningenApiService,
       'fetchMaApiVoorzieningen'
     );
+    fetchZorgnedAanvragenWMO = vi.spyOn(wmoService, 'fetchZorgnedAanvragenWMO');
+    fetchZorgnedAanvragenJeugd = vi.spyOn(
+      jeugdService,
+      'fetchZorgnedAanvragenJeugd'
+    );
+    fetchZorgnedAanvragenHLI = vi.spyOn(hliService, 'fetchZorgnedAanvragenHLI');
+
+    fetchZorgnedAanvragenWMO.mockResolvedValue({ status: 'OK', content: [] });
+    fetchZorgnedAanvragenJeugd.mockResolvedValue({ status: 'OK', content: [] });
+    fetchZorgnedAanvragenHLI.mockResolvedValue({ status: 'OK', content: [] });
   });
 
   afterEach(() => {
@@ -47,12 +63,20 @@ describe('handleVoorzieningenRequest', () => {
   test('should call fetchMaApiVoorzieningen with correct parameters for valid input', async () => {
     req.body = { bsn: '123456782' };
     const mockResponse = { data: 'mocked data' };
-    fetchMaApiVoorzieningen.mockResolvedValue(mockResponse);
+    fetchMaApiVoorzieningen.mockReturnValue(mockResponse);
 
     await handleVoorzieningenRequest(req as Request, res as Response);
 
+    expect(fetchZorgnedAanvragenWMO).toHaveBeenCalledWith('123456782');
+    expect(fetchZorgnedAanvragenJeugd).toHaveBeenCalledWith('123456782');
+    expect(fetchZorgnedAanvragenHLI).toHaveBeenCalledWith('123456782');
+
     expect(fetchMaApiVoorzieningen).toHaveBeenCalledWith(
-      '123456782',
+      [
+        { status: 'OK', content: [] },
+        { status: 'OK', content: [] },
+        { status: 'OK', content: [] },
+      ],
       undefined
     );
 
@@ -66,7 +90,7 @@ describe('handleVoorzieningenRequest', () => {
       maProductgroep: ['een-naam'],
     };
     const mockResponse = { data: 'mocked data' };
-    fetchMaApiVoorzieningen.mockResolvedValueOnce(mockResponse);
+    fetchMaApiVoorzieningen.mockReturnValueOnce(mockResponse);
 
     await handleVoorzieningenRequest(req as Request, res as Response);
     expect(res.send).toHaveBeenCalledWith({
@@ -85,18 +109,25 @@ describe('handleVoorzieningenRequest', () => {
       maActies: ['reparatieverzoek'],
     };
     const mockResponse = { data: 'mocked data' };
-    fetchMaApiVoorzieningen.mockResolvedValueOnce(mockResponse);
+    fetchMaApiVoorzieningen.mockReturnValueOnce(mockResponse);
 
     await handleVoorzieningenRequest(req as Request, res as Response);
 
-    expect(fetchMaApiVoorzieningen).toHaveBeenCalledWith('123456782', {
-      maActies: ['reparatieverzoek'],
-    });
+    expect(fetchMaApiVoorzieningen).toHaveBeenCalledWith(
+      [
+        { status: 'OK', content: [] },
+        { status: 'OK', content: [] },
+        { status: 'OK', content: [] },
+      ],
+      {
+        maActies: ['reparatieverzoek'],
+      }
+    );
   });
 
   test('should return error response if fetchMaApiVoorzieningen responds with an error', async () => {
     req.body = { bsn: '123456782' };
-    fetchMaApiVoorzieningen.mockResolvedValueOnce(
+    fetchMaApiVoorzieningen.mockReturnValueOnce(
       apiErrorResult('Something went wrong', null, 500)
     );
 

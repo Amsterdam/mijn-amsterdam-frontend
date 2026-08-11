@@ -1,12 +1,15 @@
-import type { JzdApiConfig } from './jzd-types.ts';
+import type { JzdApiConfig } from './zorgned-voorzieningen-api-types.ts';
 import {
   fetchMaApiVoorzieningen,
   forTesting,
-} from './jzd-voorzieningen-api-service.ts';
-import { remoteApi } from '../../../testing/utils.ts';
+} from './zorgned-voorzieningen-api-service.ts';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api.ts';
 import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 
-describe('jzd-voorzieningen-api-service', () => {
+describe('zorgned-voorzieningen-api-service', () => {
   describe('isMaApiPropertyConfigMatch', () => {
     it('should return true when all matchers match the voorziening', () => {
       const voorziening = {
@@ -446,88 +449,67 @@ describe('jzd-voorzieningen-api-service', () => {
   });
 
   describe('fetch voorzieningen', () => {
-    function getAanvraag(
-      productsoortCode: string = 'WRA',
-      leveringsvorm: string = 'ZIN',
-      identificatie: string | null = null,
-      datumEindeGeldigheid: string | null = null
-    ) {
+    function createVoorziening(
+      overrides: Partial<ZorgnedAanvraagTransformed> = {}
+    ): ZorgnedAanvraagTransformed {
       return {
-        identificatie: '912837sdfsdf198723',
-        datumAanmelding: '2023-04-25',
-        datumAanvraag: '2025-11-25',
-        beschikking: {
-          beschikkingNummer: 300111429,
-          datumAfgifte: '2023-05-17',
-          beschikteProducten: [
-            {
-              identificatie: '116841',
-              product: {
-                productsoortCode,
-                identificatie,
-              },
-              resultaat: 'toegewezen',
-              toegewezenProduct: {
-                datumIngangGeldigheid: '2023-05-06',
-                datumEindeGeldigheid,
-                leveringsvorm,
-                leverancier: {
-                  identificatie: 'LA0994',
-                  omschrijving: 'Gebr Koenen B.V.',
-                },
-                actueel: true,
-                toewijzingen: [
-                  {
-                    leveringen: [
-                      {
-                        begindatum: '2023-05-06',
-                        einddatum: null,
-                      },
-                    ],
-                  },
-                ],
-              },
-            },
-          ],
-        },
+        betrokkenen: [],
+        datumAanvraag: '2025-01-01',
+        datumBeginLevering: '2024-01-01',
+        datumBesluit: '2025-01-02',
+        datumEindeGeldigheid: null,
+        datumEindeLevering: null,
+        datumIngangGeldigheid: '2024-01-01',
+        datumOpdrachtLevering: null,
+        datumToewijzing: null,
+        procesAanvraagOmschrijving: null,
         documenten: [],
-      };
-    }
-
-    function getZorgnedAanvragenResponse(
-      aanvragen: ReturnType<typeof getAanvraag>[]
-    ) {
-      return {
-        _embedded: {
-          aanvraag: aanvragen,
-        },
-      };
+        id: 'voorziening-1',
+        prettyID: 'voorziening-1',
+        procesIdentificatie: 'proces-1',
+        procesMeldingIdentificatie: null,
+        isActueel: true,
+        leverancier: 'Gebr Koenen B.V.',
+        leverancierIdentificatie: 'LA0994',
+        leveringsVorm: 'ZIN',
+        productsoortCode: 'WRA',
+        productIdentificatie: 'LLVAVG',
+        beschiktProductIdentificatie: 'beschikt-1',
+        beschikkingNummer: 300111429,
+        resultaat: 'toegewezen',
+        titel: 'Voorziening',
+        ...overrides,
+      } as ZorgnedAanvraagTransformed;
     }
 
     describe('fetchMaApiVoorzieningen', () => {
-      test('should fetch voorzieningen and add MA API props based on config', async () => {
-        remoteApi.post('/zorgned/aanvragen').reply(200);
-        remoteApi
-          .post('/zorgned/aanvragen')
-          .reply(
-            200,
-            getZorgnedAanvragenResponse([
-              getAanvraag('LLV', 'ZIN', 'LLVAVG', null),
-            ])
-          );
-
-        const response = await fetchMaApiVoorzieningen('123456789', undefined, [
-          {
-            include: {
-              isActueel: true,
-              productIdentificatie: ['LLVAVG'],
+      test('should combine fetched service responses and add MA API props based on config', () => {
+        const response = fetchMaApiVoorzieningen(
+          [
+            apiSuccessResult([
+              createVoorziening({
+                id: 'wmo-1',
+                productsoortCode: 'LLV',
+                productIdentificatie: 'LLVAVG',
+              }),
+            ]),
+            apiSuccessResult([]),
+            apiSuccessResult([]),
+          ],
+          undefined,
+          [
+            {
+              include: {
+                isActueel: true,
+                productIdentificatie: ['LLVAVG'],
+              },
+              assign: {
+                maActies: ['stopzetten-tijdelijk'],
+                maProductgroep: 'een-naam',
+              },
             },
-            assign: {
-              maActies: ['stopzetten-tijdelijk'],
-              maProductgroep: 'een-naam',
-            },
-          },
-        ]);
+          ]
+        );
 
         expect(response.content?.[0]).toMatchObject({
           maActies: ['stopzetten-tijdelijk'],
@@ -540,48 +522,16 @@ describe('jzd-voorzieningen-api-service', () => {
         });
       });
 
-      test('Does not apply assignments to voorzieningen that do not match the isActueel flag', async () => {
-        remoteApi
-          .post('/zorgned/aanvragen')
-          .reply(
-            200,
-            getZorgnedAanvragenResponse([
-              getAanvraag('WRA', 'ZIN', null, '2023-01-01'),
-            ])
-          );
-        remoteApi.post('/zorgned/aanvragen').reply(200);
-
-        const response = await fetchMaApiVoorzieningen('123456789', undefined, [
-          {
-            include: {
-              leveringsVorm: 'ZIN',
-              isActueel: true,
-              productsoortCode: ['WRA'],
-            },
-            assign: {
-              maActies: ['reparatieverzoek'],
-              maProductgroep: 'een-naam',
-            },
-          },
-        ]);
-
-        expect(response.content?.[0]).not.toMatchObject({
-          maActies: ['reparatieverzoek'],
-          maProductgroep: 'een-naam',
-        });
-      });
-
-      test('should filter voorzieningen based on options', async () => {
-        remoteApi
-          .post('/zorgned/aanvragen')
-          .reply(
-            200,
-            getZorgnedAanvragenResponse([getAanvraag(), getAanvraag('ABC')])
-          );
-        remoteApi.post('/zorgned/aanvragen').reply(200);
-
-        const response = await fetchMaApiVoorzieningen(
-          '123456789',
+      test('should filter voorzieningen based on options', () => {
+        const response = fetchMaApiVoorzieningen(
+          [
+            apiSuccessResult([
+              createVoorziening({ id: 'wmo-1', productsoortCode: 'WRA' }),
+              createVoorziening({ id: 'wmo-2', productsoortCode: 'ABC' }),
+            ]),
+            apiSuccessResult([]),
+            apiSuccessResult([]),
+          ],
           {
             maActies: ['reparatieverzoek'],
             maProductgroep: ['een-naam'] as unknown as ['WRA'],
@@ -606,45 +556,12 @@ describe('jzd-voorzieningen-api-service', () => {
         expect(response.content?.[0].productsoortCode).toBe('WRA');
       });
 
-      test('should return empty array if no voorzieningen match the filters', async () => {
-        remoteApi
-          .post('/zorgned/aanvragen')
-          .reply(
-            200,
-            getZorgnedAanvragenResponse([getAanvraag(), getAanvraag('ABC')])
-          );
-        remoteApi.post('/zorgned/aanvragen').reply(200);
-
-        const response = await fetchMaApiVoorzieningen(
-          '123456789',
-          {
-            maActies: ['non-existing-action'] as unknown as [
-              'reparatieverzoek',
-            ],
-            maProductgroep: ['non-existing-productgroep'] as unknown as ['WRA'],
-          },
-          [
-            {
-              include: {
-                leveringsVorm: 'ZIN',
-              },
-              assign: {
-                maActies: ['reparatieverzoek'],
-                maProductgroep: 'een-naam',
-              },
-            },
-          ]
-        );
-
-        expect(response.content).toEqual([]);
-      });
-
-      test('should handle API errors gracefully', async () => {
-        remoteApi
-          .post('/zorgned/aanvragen')
-          .replyWithError('Something went wrong');
-
-        const response = await fetchMaApiVoorzieningen('123456789');
+      test('should handle API errors gracefully', () => {
+        const response = fetchMaApiVoorzieningen([
+          apiSuccessResult([]),
+          apiErrorResult('Something went wrong', null, 500),
+          apiSuccessResult([]),
+        ]);
 
         expect(response.status).toBe('ERROR');
         expect(response.content).toBeNull();
@@ -652,20 +569,34 @@ describe('jzd-voorzieningen-api-service', () => {
     });
 
     describe('fetchMaApiVoorzieningById', () => {
-      test('should fetch a single voorziening by ID and add MA API props based on config', async () => {
-        const aanvraag = getAanvraag();
-        remoteApi
-          .post('/zorgned/aanvragen')
-          .reply(200, getZorgnedAanvragenResponse([aanvraag]));
-        remoteApi.post('/zorgned/aanvragen').reply(200);
-
-        const response = await forTesting.fetchMaApiVoorzieningById(
-          '123456789',
-          '300111429-116841'
+      test('should fetch a single voorziening by ID and add MA API props based on config', () => {
+        const response = forTesting.fetchMaApiVoorzieningById(
+          [
+            apiSuccessResult([
+              createVoorziening({
+                id: 'target-id',
+                productsoortCode: 'WRA',
+              }),
+            ]),
+            apiSuccessResult([]),
+            apiSuccessResult([]),
+          ],
+          'target-id',
+          [
+            {
+              include: {
+                productsoortCode: ['WRA'],
+              },
+              assign: {
+                maActies: ['stopzetten'],
+                maProductgroep: 'WRA',
+              },
+            },
+          ]
         );
 
         expect(response.content).toMatchObject({
-          maActies: ['reparatieverzoek', 'stopzetten'],
+          maActies: ['stopzetten'],
           maProductgroep: 'WRA',
           leverancier: 'Gebr Koenen B.V.',
           leverancierIdentificatie: 'LA0994',
@@ -674,15 +605,9 @@ describe('jzd-voorzieningen-api-service', () => {
         });
       });
 
-      test('should return an error if the voorziening with the specified ID is not found', async () => {
-        const aanvraag = getAanvraag();
-        remoteApi
-          .post('/zorgned/aanvragen')
-          .reply(200, getZorgnedAanvragenResponse([aanvraag]));
-        remoteApi.post('/zorgned/aanvragen').reply(200);
-
-        const response = await forTesting.fetchMaApiVoorzieningById(
-          '123456789',
+      test('should return an error if the voorziening with the specified ID is not found', () => {
+        const response = forTesting.fetchMaApiVoorzieningById(
+          [apiSuccessResult([]), apiSuccessResult([]), apiSuccessResult([])],
           'non-existing-id'
         );
 

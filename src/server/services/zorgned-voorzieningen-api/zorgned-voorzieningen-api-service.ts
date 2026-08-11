@@ -1,18 +1,16 @@
 import type { Entries } from 'type-fest';
 
-import { fetchZorgnedAanvragenJeugd } from './jeugd/jeugd.ts';
 import type {
   WithMaApiProps,
   JzdApiConfig,
   ZorgnedAanvraagTransformedWithMaApiProps,
   WithMaApiPropsAssignments,
-} from './jzd-types.ts';
-import { type FetchWmoVoorzieningenApiOptions } from './jzd-voorzieningen-api-config.ts';
+} from './zorgned-voorzieningen-api-types.ts';
+import { type FetchWmoVoorzieningenApiOptions } from './zorgned-voorzieningen-api-config.ts';
 import {
   PICK_VOORZIENING_KEYS,
   jzdVoorzieningenApiConfig,
-} from './jzd-voorzieningen-api-config.ts';
-import { fetchZorgnedAanvragenWMO } from './wmo/wmo-zorgned-service.ts';
+} from './zorgned-voorzieningen-api-config.ts';
 import {
   apiErrorResult,
   type ApiResponse,
@@ -20,10 +18,7 @@ import {
 } from '../../../universal/helpers/api.ts';
 import { dateSort } from '../../../universal/helpers/date.ts';
 import { entries, pick } from '../../../universal/helpers/utils.ts';
-import type {
-  BSN,
-  ZorgnedAanvraagTransformed,
-} from '../zorgned/zorgned-types.ts';
+import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 
 function isMaApiPropertyConfigMatch<T extends ZorgnedAanvraagTransformed>(
   voorziening: T,
@@ -95,17 +90,16 @@ function addMaApiPropsToVoorziening<T extends ZorgnedAanvraagTransformed>(
 }
 
 function serviceErrorResult(
-  wmoVoorzieningenResponse: ApiResponse<ZorgnedAanvraagTransformed[]>,
-  jeugdVoorzieningenResponse: ApiResponse<ZorgnedAanvraagTransformed[]>
+  voorzieningenResponses: ApiResponse<ZorgnedAanvraagTransformed[]>[]
 ) {
+  const firstErrorResponse = voorzieningenResponses.find(
+    (response) => response.status === 'ERROR'
+  );
+
   return apiErrorResult(
     'Error fetching voorzieningen',
     null,
-    wmoVoorzieningenResponse.status === 'ERROR'
-      ? wmoVoorzieningenResponse.code
-      : jeugdVoorzieningenResponse.status === 'ERROR'
-        ? jeugdVoorzieningenResponse.code
-        : undefined
+    firstErrorResponse?.code
   );
 }
 
@@ -145,28 +139,18 @@ export function transformVoorzieningForFrontendWithMaApiProps(
   return voorzieningen_;
 }
 
-export async function fetchMaApiVoorzieningen(
-  bsn: BSN,
+export function fetchMaApiVoorzieningen(
+  voorzieningenResponses: ApiResponse<ZorgnedAanvraagTransformed[]>[],
   options?: FetchWmoVoorzieningenApiOptions,
   maVoorzieningenApiConfig: JzdApiConfig[] = jzdVoorzieningenApiConfig
-): Promise<ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps[]>> {
-  const wmoVoorzieningenResponse = await fetchZorgnedAanvragenWMO(bsn);
-  const jeugdVoorzieningenResponse = await fetchZorgnedAanvragenJeugd(bsn);
-
-  if (
-    wmoVoorzieningenResponse.status !== 'OK' ||
-    jeugdVoorzieningenResponse.status !== 'OK'
-  ) {
-    return serviceErrorResult(
-      wmoVoorzieningenResponse,
-      jeugdVoorzieningenResponse
-    );
+): ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps[]> {
+  if (voorzieningenResponses.some((response) => response.status !== 'OK')) {
+    return serviceErrorResult(voorzieningenResponses);
   }
 
-  const responseContentCombined = [
-    ...(wmoVoorzieningenResponse.content ?? []),
-    ...(jeugdVoorzieningenResponse.content ?? []),
-  ];
+  const responseContentCombined = voorzieningenResponses.flatMap(
+    (response) => response.content ?? []
+  );
 
   const voorzieningen = transformVoorzieningForFrontendWithMaApiProps(
     responseContentCombined,
@@ -181,28 +165,18 @@ export async function fetchMaApiVoorzieningen(
   );
 }
 
-export async function fetchMaApiVoorzieningById(
-  bsn: BSN,
+export function fetchMaApiVoorzieningById(
+  voorzieningenResponses: ApiResponse<ZorgnedAanvraagTransformed[]>[],
   id: ZorgnedAanvraagTransformedWithMaApiProps['id'],
   maVoorzieningenApiConfig: JzdApiConfig[] = jzdVoorzieningenApiConfig
-): Promise<ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps>> {
-  const wmoVoorzieningenResponse = await fetchZorgnedAanvragenWMO(bsn);
-  const jeugdVoorzieningenResponse = await fetchZorgnedAanvragenJeugd(bsn);
-
-  if (
-    wmoVoorzieningenResponse.status !== 'OK' ||
-    jeugdVoorzieningenResponse.status !== 'OK'
-  ) {
-    return serviceErrorResult(
-      wmoVoorzieningenResponse,
-      jeugdVoorzieningenResponse
-    );
+): ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps> {
+  if (voorzieningenResponses.some((response) => response.status !== 'OK')) {
+    return serviceErrorResult(voorzieningenResponses);
   }
 
-  const responseContentCombined = [
-    ...(wmoVoorzieningenResponse.content ?? []),
-    ...(jeugdVoorzieningenResponse.content ?? []),
-  ];
+  const responseContentCombined = voorzieningenResponses.flatMap(
+    (response) => response.content ?? []
+  );
 
   const voorziening = responseContentCombined.find(
     (voorziening) => voorziening.id === id

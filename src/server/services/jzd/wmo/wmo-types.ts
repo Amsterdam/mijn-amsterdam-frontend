@@ -3,7 +3,7 @@ import type {
   ZaakAanvraagDetail,
 } from '../../../../universal/types/App.types.ts';
 import type { ProductSoortCode } from '../../zorgned/zorgned-types.ts';
-import type { WithMaApiProps } from '../jzd-types.ts';
+import type { WithMaApiProps } from '../../zorgned-voorzieningen-api/zorgned-voorzieningen-api-types.ts';
 
 export type WMOVoorzieningFrontend = ZaakAanvraagDetail & {
   dateDecision: string;
