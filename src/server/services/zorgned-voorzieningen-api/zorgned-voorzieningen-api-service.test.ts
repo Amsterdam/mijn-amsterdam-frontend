@@ -1,4 +1,4 @@
-import type { JzdApiConfig } from './zorgned-voorzieningen-api-types.ts';
+import type { VoorzieningenApiConfig } from './zorgned-voorzieningen-api-types.ts';
 import {
   fetchMaApiVoorzieningen,
   forTesting,
@@ -231,7 +231,7 @@ describe('zorgned-voorzieningen-api-service', () => {
         date: new Date('2023-01-01'),
       };
 
-      const actionConfig: JzdApiConfig<typeof voorziening> = {
+      const actionConfig: VoorzieningenApiConfig<typeof voorziening> = {
         include: {
           type: 'example',
           status: 'active',
@@ -262,7 +262,7 @@ describe('zorgned-voorzieningen-api-service', () => {
           maActies: ['reparatieverzoek'],
           maProductgroep: 'WRA',
         },
-      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
+      } as VoorzieningenApiConfig<ZorgnedAanvraagTransformed>;
 
       const result = forTesting.addMaApiPropsToVoorziening(
         [apiPropsConfig],
@@ -298,7 +298,7 @@ describe('zorgned-voorzieningen-api-service', () => {
         assign: {
           maActies: ['assign-foo-bar'],
         },
-      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
+      } as VoorzieningenApiConfig<ZorgnedAanvraagTransformed>;
 
       const voorzieningTransformed1 = forTesting.addMaApiPropsToVoorziening(
         [apiPropsConfig],
@@ -331,7 +331,7 @@ describe('zorgned-voorzieningen-api-service', () => {
         assign: {
           maActies: ['reparatieverzoek'],
         },
-      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
+      } as VoorzieningenApiConfig<ZorgnedAanvraagTransformed>;
 
       const apiPropsConfig2 = {
         include: {
@@ -341,7 +341,7 @@ describe('zorgned-voorzieningen-api-service', () => {
         assign: {
           maActies: ['stopzetten'],
         },
-      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
+      } as VoorzieningenApiConfig<ZorgnedAanvraagTransformed>;
 
       const result = forTesting.addMaApiPropsToVoorziening(
         [apiPropsConfig1, apiPropsConfig2],
@@ -360,7 +360,7 @@ describe('zorgned-voorzieningen-api-service', () => {
         status: 'active',
       } as unknown as ZorgnedAanvraagTransformed;
 
-      const apiPropsConfig: JzdApiConfig<typeof voorziening> = {
+      const apiPropsConfig: VoorzieningenApiConfig<typeof voorziening> = {
         include: {
           type: 'differentExample',
           status: 'inactive',
@@ -368,7 +368,7 @@ describe('zorgned-voorzieningen-api-service', () => {
         assign: {
           maActies: ['reparatieverzoek'],
         },
-      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
+      } as VoorzieningenApiConfig<ZorgnedAanvraagTransformed>;
 
       const result = forTesting.addMaApiPropsToVoorziening(
         [apiPropsConfig],
@@ -384,7 +384,7 @@ describe('zorgned-voorzieningen-api-service', () => {
         status: 'active',
       } as unknown as ZorgnedAanvraagTransformed;
 
-      const apiPropsConfig: JzdApiConfig<typeof voorziening> = {
+      const apiPropsConfig: VoorzieningenApiConfig<typeof voorziening> = {
         include: {
           type: 'example',
           status: 'active',
@@ -393,7 +393,7 @@ describe('zorgned-voorzieningen-api-service', () => {
           maActies: undefined,
           maProductgroep: undefined,
         },
-      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
+      } as VoorzieningenApiConfig<ZorgnedAanvraagTransformed>;
 
       const result = forTesting.addMaApiPropsToVoorziening(
         [apiPropsConfig],
@@ -418,7 +418,7 @@ describe('zorgned-voorzieningen-api-service', () => {
         assign: {
           maActies: ['stopzetten'],
         },
-      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
+      } as VoorzieningenApiConfig<ZorgnedAanvraagTransformed>;
 
       const apiPropsConfig2 = {
         include: {
@@ -428,7 +428,7 @@ describe('zorgned-voorzieningen-api-service', () => {
         assign: {
           maActies: ['reparatieverzoek'],
         },
-      } as JzdApiConfig<ZorgnedAanvraagTransformed>;
+      } as VoorzieningenApiConfig<ZorgnedAanvraagTransformed>;
 
       const originalSnapshot = structuredClone(voorziening);
 

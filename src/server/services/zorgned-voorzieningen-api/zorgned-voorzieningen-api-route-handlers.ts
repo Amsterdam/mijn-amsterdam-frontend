@@ -1,14 +1,15 @@
 import type { Request, Response } from 'express';
 
+import { clientToServiceMap } from './api-config/api-config.ts';
 import {
+  requestInputBase,
+  requestInputByClient,
   voorzieningDetailRequestInput,
-  voorzieningenRequestInput,
-} from './zorgned-voorzieningen-api-service-config.ts';
+} from './api-config/request-input.ts';
 import {
   fetchMaApiVoorzieningById,
   fetchMaApiVoorzieningen,
 } from './zorgned-voorzieningen-api-service.ts';
-import { omit } from '../../../universal/helpers/utils.ts';
 import {
   sendResponse,
   sendBadRequestInvalidInput,
@@ -18,34 +19,33 @@ import { fetchZorgnedAanvragenJeugd } from '../jzd/jeugd/jeugd.ts';
 import { fetchZorgnedAanvragenWMO } from '../jzd/wmo/wmo-zorgned-service.ts';
 
 export async function handleVoorzieningenRequest(req: Request, res: Response) {
-  // Validate the request body so we can be sure it has the correct shape and values.
-  let validatedRequestBody;
+  let baseRequestBody;
+  let optionsRequestBodyByClient;
+
   try {
-    validatedRequestBody = voorzieningenRequestInput.parse(req.body);
+    baseRequestBody = requestInputBase.parse(req.body);
   } catch (error) {
     return sendBadRequestInvalidInput(res, error);
   }
 
-  const bsn = validatedRequestBody.bsn;
-  const options = omit(validatedRequestBody, ['bsn']);
-  const filters = Object.keys(options).length ? options : undefined;
+  const bsn = baseRequestBody.bsn;
+  const client = baseRequestBody.client ?? 'WMO'; // Default to WMO if no clients are specified. This api was originally only for WMO, so we keep that behavior for backwards compatibility.
 
-  const [
-    wmoVoorzieningenResponse,
-    jeugdVoorzieningenResponse,
-    hliVoorzieningenResponse,
-  ] = await Promise.all([
-    fetchZorgnedAanvragenWMO(bsn),
-    fetchZorgnedAanvragenJeugd(bsn),
-    fetchZorgnedAanvragenHLI(bsn),
-  ]);
+  try {
+    optionsRequestBodyByClient = requestInputByClient[client].parse(req.body);
+  } catch (error) {
+    return sendBadRequestInvalidInput(res, error);
+  }
+
+  const filters = Object.keys(optionsRequestBodyByClient).length
+    ? optionsRequestBodyByClient
+    : undefined;
+
+  const { fetch: serviceFunction, apiConfig } = clientToServiceMap[client];
 
   const response = fetchMaApiVoorzieningen(
-    [
-      wmoVoorzieningenResponse,
-      jeugdVoorzieningenResponse,
-      hliVoorzieningenResponse,
-    ],
+    await serviceFunction(bsn),
+    apiConfig,
     filters
   );
 

@@ -30,7 +30,9 @@ type MatchConfig<T> = Partial<
   >
 >;
 
-export type JzdApiConfig<T extends object = ZorgnedAanvraagTransformed> = {
+export type VoorzieningenApiConfig<
+  T extends object = ZorgnedAanvraagTransformed,
+> = {
   assign: Prettify<Partial<WithMaApiPropsAssignments<T>>>;
   include: MatchConfig<T>;
   exclude?: MatchConfig<T>;

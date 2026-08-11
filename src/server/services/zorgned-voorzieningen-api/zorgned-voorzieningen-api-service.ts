@@ -1,16 +1,16 @@
 import type { Entries } from 'type-fest';
 
-import type {
-  WithMaApiProps,
-  JzdApiConfig,
-  ZorgnedAanvraagTransformedWithMaApiProps,
-  WithMaApiPropsAssignments,
-} from './zorgned-voorzieningen-api-types.ts';
-import { type FetchWmoVoorzieningenApiOptions } from './zorgned-voorzieningen-api-config.ts';
 import {
   PICK_VOORZIENING_KEYS,
   jzdVoorzieningenApiConfig,
-} from './zorgned-voorzieningen-api-config.ts';
+} from './api-config/jzd-api-config.ts';
+import type { VoorzieningenRequestInputFilters } from './api-config/request-input.ts';
+import type {
+  WithMaApiProps,
+  VoorzieningenApiConfig,
+  ZorgnedAanvraagTransformedWithMaApiProps,
+  WithMaApiPropsAssignments,
+} from './zorgned-voorzieningen-api-types.ts';
 import {
   apiErrorResult,
   type ApiResponse,
@@ -22,7 +22,7 @@ import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 
 function isMaApiPropertyConfigMatch<T extends ZorgnedAanvraagTransformed>(
   voorziening: T,
-  actionConfig: JzdApiConfig<T>,
+  actionConfig: VoorzieningenApiConfig<T>,
   matchType: 'include' | 'exclude' = 'include'
 ): boolean {
   const IS_DEFAULT_MATCH = matchType !== 'exclude'; // If there are no matchers, we don't want to exclude any items, but we do want to include all items.
@@ -52,7 +52,7 @@ function isMaApiPropertyConfigMatch<T extends ZorgnedAanvraagTransformed>(
 }
 
 function addMaApiPropsToVoorziening<T extends ZorgnedAanvraagTransformed>(
-  apiPropsConfig: JzdApiConfig<T>[],
+  apiPropsConfig: VoorzieningenApiConfig<T>[],
   voorziening: T
 ): T & Partial<WithMaApiProps> {
   const applyAssignments: Partial<WithMaApiProps> = {};
@@ -104,33 +104,31 @@ function serviceErrorResult(
 }
 
 export function transformVoorzieningForFrontendWithMaApiProps(
-  voorzieningen: ZorgnedAanvraagTransformed[],
-  options?: FetchWmoVoorzieningenApiOptions,
-  maVoorzieningenApiConfig: JzdApiConfig[] = jzdVoorzieningenApiConfig
+  serviceResponse: ApiResponse<ZorgnedAanvraagTransformed[]>,
+  apiConfig: VoorzieningenApiConfig[],
+  filters?: VoorzieningenRequestInputFilters
 ): ZorgnedAanvraagTransformedWithMaApiProps[] {
-  const voorzieningen_ = voorzieningen
-    .map((voorziening) => {
-      return addMaApiPropsToVoorziening(maVoorzieningenApiConfig, voorziening);
-    })
+  const voorzieningen_ = (serviceResponse.content ?? [])
+    .map((voorziening) => addMaApiPropsToVoorziening(apiConfig, voorziening))
     .filter((voorziening) => {
       // If no actions are specified in the options, we want to include all items, otherwise we filter based on the specified actions.
-      if (!options?.maActies || options.maActies.length === 0) {
+      if (!filters?.maActies || filters.maActies.length === 0) {
         return true;
       }
 
       return voorziening?.maActies?.some((action) =>
-        options.maActies?.includes(action as (typeof options.maActies)[number])
+        filters.maActies?.includes(action as (typeof filters.maActies)[number])
       );
     })
     .filter((voorziening) => {
       // If no product groups are specified in the options, we want to include all items, otherwise we filter based on the specified product groups.
-      if (!options?.maProductgroep || options.maProductgroep.length === 0) {
+      if (!filters?.maProductgroep || filters.maProductgroep.length === 0) {
         return true;
       }
 
       return voorziening?.maProductgroep
-        ? options.maProductgroep?.includes(
-            voorziening.maProductgroep as (typeof options.maProductgroep)[number]
+        ? !!filters.maProductgroep?.includes(
+            voorziening.maProductgroep as (typeof filters.maProductgroep)[number]
           )
         : false;
     })
@@ -140,22 +138,18 @@ export function transformVoorzieningForFrontendWithMaApiProps(
 }
 
 export function fetchMaApiVoorzieningen(
-  voorzieningenResponses: ApiResponse<ZorgnedAanvraagTransformed[]>[],
-  options?: FetchWmoVoorzieningenApiOptions,
-  maVoorzieningenApiConfig: JzdApiConfig[] = jzdVoorzieningenApiConfig
+  serviceResponse: ApiResponse<ZorgnedAanvraagTransformed[]>,
+  apiConfig: VoorzieningenApiConfig[],
+  filters?: VoorzieningenRequestInputFilters
 ): ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps[]> {
-  if (voorzieningenResponses.some((response) => response.status !== 'OK')) {
-    return serviceErrorResult(voorzieningenResponses);
+  if (serviceResponse.status !== 'OK') {
+    return serviceErrorResult([serviceResponse]);
   }
 
-  const responseContentCombined = voorzieningenResponses.flatMap(
-    (response) => response.content ?? []
-  );
-
   const voorzieningen = transformVoorzieningForFrontendWithMaApiProps(
-    responseContentCombined,
-    options,
-    maVoorzieningenApiConfig
+    serviceResponse,
+    apiConfig,
+    filters
   );
 
   return apiSuccessResult(
@@ -168,7 +162,7 @@ export function fetchMaApiVoorzieningen(
 export function fetchMaApiVoorzieningById(
   voorzieningenResponses: ApiResponse<ZorgnedAanvraagTransformed[]>[],
   id: ZorgnedAanvraagTransformedWithMaApiProps['id'],
-  maVoorzieningenApiConfig: JzdApiConfig[] = jzdVoorzieningenApiConfig
+  maVoorzieningenApiConfig: VoorzieningenApiConfig[] = jzdVoorzieningenApiConfig
 ): ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps> {
   if (voorzieningenResponses.some((response) => response.status !== 'OK')) {
     return serviceErrorResult(voorzieningenResponses);

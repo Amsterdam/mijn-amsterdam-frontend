@@ -1,24 +1,16 @@
 import { parseISO } from 'date-fns/parseISO';
-import type z from 'zod';
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
-import { voorzieningenRequestInput } from './zorgned-voorzieningen-api-service-config.ts';
-import type {
-  JzdApiConfig,
-  ZorgnedAanvraagTransformedWithMaApiProps,
-} from './zorgned-voorzieningen-api-types.ts';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
 import {
   productGroep,
   wmoStatusLineItemsConfig,
-} from '../jzd/wmo/wmo-status-line-items.ts';
-import { IS_PRODUCTION } from '../../../universal/config/env.ts';
-import { entries } from '../../../universal/helpers/utils.ts';
-import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
-
-export type FetchWmoVoorzieningenApiOptions = Omit<
-  z.infer<typeof voorzieningenRequestInput>,
-  'bsn'
->;
+} from '../../jzd/wmo/wmo-status-line-items.ts';
+import type { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
+import type {
+  VoorzieningenApiConfig,
+  ZorgnedAanvraagTransformedWithMaApiProps,
+} from '../zorgned-voorzieningen-api-types.ts';
 
 // This list should be kept in sync with the list of productIdentificaties given to us by JZD - Zorgned FB
 const PRODUCT_IDS_EXCLUDED_FROM_REPARATIEVERZOEK_ACTION = [
@@ -63,7 +55,7 @@ function maActieUrlsReparatieverzoek(
   };
 }
 
-const REPARATIEVERZOEK_ACTIE_CONFIG: JzdApiConfig = {
+const REPARATIEVERZOEK_ACTIE_CONFIG: VoorzieningenApiConfig = {
   include: {
     isActueel: true,
     productsoortCode: ['WRA', 'WRA1', 'WRA2', 'WRA3', 'WRA4', 'WRA5'],
@@ -86,7 +78,7 @@ const REPARATIEVERZOEK_ACTIE_CONFIG: JzdApiConfig = {
   },
 };
 
-const REPARATIEVERZOEK_ACTIE_CONFIG_PGB: JzdApiConfig = {
+const REPARATIEVERZOEK_ACTIE_CONFIG_PGB: VoorzieningenApiConfig = {
   include: {
     productsoortCode: REPARATIEVERZOEK_ACTIE_CONFIG.include.productsoortCode,
     leveringsVorm: ['PGB'],
@@ -98,7 +90,7 @@ const REPARATIEVERZOEK_ACTIE_CONFIG_PGB: JzdApiConfig = {
   },
 };
 
-export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
+export const jzdVoorzieningenApiConfig: VoorzieningenApiConfig[] = [
   // // // // // // // // // // // // // // // // // //
   // Reparatieverzoek action for WRA products  // // //
   // // // // // // // // // // // // // // // // // //
@@ -371,7 +363,7 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       return {
         include: Object.fromEntries(
           entries(match).filter(([_, value]) => typeof value !== 'undefined')
-        ) as JzdApiConfig['include'],
+        ) as VoorzieningenApiConfig['include'],
         assign: {
           maProductgroep: lineItemConfig.productgroep,
         },

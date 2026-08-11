@@ -1,7 +1,4 @@
-import z from 'zod';
-
 import { isEnabled } from '../../config/azure-appconfiguration.ts';
-import { ZodValidators } from '../../helpers/validation.ts';
 
 export const featureToggle = {
   router: {
@@ -18,43 +15,12 @@ export const featureToggle = {
   },
 } as const;
 
+// The role is generic and not specific to WMO, because the same role is used for all ZorgNed voorzieningen clients (WMO, LLV, HLI).
 export const OAUTH_ROLE_ZORGNED_VOORZIENINGEN = 'wmo.voorzieningen' as const;
 
 export const routes = {
   private: {
-    VOORZIENINGEN: `/services/jzd/voorzieningen`,
-    VOORZIENING_DETAIL: `/services/jzd/voorziening`,
+    VOORZIENINGEN: `/services/zorgned/voorzieningen`,
+    VOORZIENING_DETAIL: `/services/zorgned/voorziening`,
   },
 } as const;
-
-export const voorzieningenRequestInput = z.object({
-  bsn: ZodValidators.BSN.nonoptional(),
-  maActies: z
-    .array(
-      z.enum([
-        'reparatieverzoek',
-        'stopzetten',
-        'stopzetten-tijdelijk',
-        'stopzetten-niet-via-formulier',
-      ])
-    )
-    .optional(),
-  maProductgroep: z
-    .array(
-      z.enum([
-        'WRA',
-        'hulpmiddelen',
-        'diensten',
-        'PGB',
-        'vergoeding',
-        'AOV',
-        'Alle afgewezen',
-      ])
-    )
-    .optional(),
-});
-
-export const voorzieningDetailRequestInput = z.object({
-  bsn: ZodValidators.BSN.nonoptional(),
-  id: z.string().nonoptional(),
-});
