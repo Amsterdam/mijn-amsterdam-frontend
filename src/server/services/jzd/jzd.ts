@@ -127,8 +127,7 @@ async function fetchJzd(
   zorgnedApiConfigKey: ZorgnedApiConfigKey,
   documentDownloadRoute: string,
   frontendDetailPageRoute: string,
-  statusLineItemsConfig: ZorgnedStatusLineItemsConfig[],
-  serviceName: 'WMO' | 'LLV'
+  statusLineItemsConfig: ZorgnedStatusLineItemsConfig[]
 ) {
   const voorzieningenResponse = await fetchZorgnedAanvragenJZD(
     authProfileAndToken.profile.id,
@@ -137,6 +136,7 @@ async function fetchJzd(
 
   if (voorzieningenResponse.status === 'OK') {
     const today = new Date();
+    const serviceName = zorgnedApiConfigKey === 'ZORGNED_WMO' ? 'WMO' : 'LLV';
 
     const voorzieningenFrontend: JzdVoorzieningFrontend[] =
       voorzieningenResponse.content
@@ -179,8 +179,7 @@ export async function fetchWmo(
     'ZORGNED_WMO',
     routes.protected.WMO_DOCUMENT_DOWNLOAD,
     themaConfigZorg.detailPage.route.path,
-    wmoStatusLineItemsConfig,
-    'WMO'
+    wmoStatusLineItemsConfig
   );
 }
 
@@ -192,8 +191,7 @@ export async function fetchLeerlingenvervoer(
     'ZORGNED_LEERLINGENVERVOER',
     routes.protected.LLV_DOCUMENT_DOWNLOAD,
     themaConfigJeugd.detailPage.route.path,
-    llvStatusLineItemsConfig,
-    'LLV'
+    llvStatusLineItemsConfig
   );
   return x;
 }

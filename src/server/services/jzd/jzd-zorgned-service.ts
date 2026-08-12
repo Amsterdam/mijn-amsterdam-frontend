@@ -120,7 +120,7 @@ export async function fetchZorgnedAanvragenJZD(
 ): Promise<ApiResponse<ZorgnedAanvraagTransformed[]>> {
   const requestBodyParams = {
     maxeinddatum: DATE_END_NOT_OLDER_THAN,
-    regeling,
+    // regeling,
   };
 
   const fetchZorgnedAanvragen =
