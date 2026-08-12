@@ -21,6 +21,10 @@ export const BffEndpoints = {
 
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
 
+  // Shared document endpoints (provider is selected through encrypted payload)
+  SHARED_DOCUMENTS_LIST: '/services/documents/list',
+  SHARED_DOCUMENTS_DOWNLOAD: '/services/documents/download',
+
   // Decos (Vergunningen, Horeca, Parkeren en Toeristische verhuur)
   DECOS_DOCUMENTS_LIST: `/services/decos/documents`,
   DECOS_DOCUMENT_DOWNLOAD: '/services/decos/documents/download',
