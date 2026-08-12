@@ -15,7 +15,6 @@ import {
   DATE_END_NOT_OLDER_THAN,
   DOCUMENT_TITLE_BESLUIT_STARTS_WITH,
   ZORGNED_WMO_API_CONFIG_KEY,
-  ZORGNED_WMO_REGELING_IDENTIFICATIE,
 } from './wmo/wmo-config.ts';
 import { PRODUCTS_WITH_DELIVERY } from './wmo/wmo-status-line-items.ts';
 import {
@@ -115,12 +114,10 @@ export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
 
 export async function fetchZorgnedAanvragenJZD(
   bsn: BSN,
-  zorgnedApiConfigKey: ZorgnedApiConfigKey = ZORGNED_WMO_API_CONFIG_KEY,
-  regeling: string = ZORGNED_WMO_REGELING_IDENTIFICATIE
+  zorgnedApiConfigKey: ZorgnedApiConfigKey = ZORGNED_WMO_API_CONFIG_KEY
 ): Promise<ApiResponse<ZorgnedAanvraagTransformed[]>> {
   const requestBodyParams = {
     maxeinddatum: DATE_END_NOT_OLDER_THAN,
-    // regeling,
   };
 
   const fetchZorgnedAanvragen =

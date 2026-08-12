@@ -10,7 +10,6 @@ export const DOCUMENT_UPLOAD_LINK_MEER_INFORMATIE =
 export const DOCUMENT_PGB_BESLUIT =
   'https://www.amsterdam.nl/zorg-ondersteuning/hulp-zorg-betalen/persoonsgebonden/?vkurl=pgb';
 
-export const ZORGNED_WMO_REGELING_IDENTIFICATIE = 'wmo' as const;
 export const BESCHIKTPRODUCT_RESULTAAT: BeschikkingsResultaat[] = [
   'toegewezen',
 ] as const;
