@@ -126,11 +126,13 @@ function transformZorgnedProcesAanvraag(
         datumStart: aanvraag.procesAanvraag.datumStart,
         datumAfsluiten: aanvraag.procesAanvraag.datumAfsluiten,
         acties:
-          aanvraag.procesAanvraag.acties?.map((actie) => ({
-            omschrijving: actie.omschrijving,
-            datum: actie.datum,
-            status: actie.status.omschrijving,
-          })) ?? [],
+          (
+            aanvraag.procesAanvraag.acties?.map((actie) => ({
+              omschrijving: actie.omschrijving,
+              datum: actie.datum,
+              status: actie.status.omschrijving,
+            })) ?? []
+          ).toSorted(dateSort('datum', 'asc')) || [],
       }
     : null;
 }

@@ -21,16 +21,15 @@ import {
   MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
 } from '../wmo-config.ts';
 
-type ActieOmschrijving =
-  (typeof jzdStatusStepActies)[keyof typeof jzdStatusStepActies];
+export type ActieOmschrijving = Readonly<string[]>;
 
 function getActieStepByOmschrijving(
   aanvraag: ZorgnedAanvraagTransformed,
   omschrijving: ActieOmschrijving
 ): ZorgnedProcesAanvraagActieTransformed | null {
   return (
-    aanvraag?.procesAanvraag?.acties.find(
-      (actie) => actie.omschrijving === omschrijving
+    aanvraag?.procesAanvraag?.acties.findLast((actie) =>
+      omschrijving.length ? omschrijving.includes(actie.omschrijving) : false
     ) ?? null
   );
 }
@@ -83,21 +82,27 @@ function getActieBasedInBehandelingStepDatum(
   );
 }
 
-function hasActieBasedInBehandelingStep(aanvraag: ZorgnedAanvraagTransformed) {
+export function hasActieBasedInBehandelingStep(
+  aanvraag: ZorgnedAanvraagTransformed
+) {
   return hasActieStepByOmschrijving(
     aanvraag,
     jzdStatusStepActies.IN_BEHANDELING
   );
 }
 
-function getActieBasedMeerInformatieStep(aanvraag: ZorgnedAanvraagTransformed) {
+export function getActieBasedMeerInformatieStep(
+  aanvraag: ZorgnedAanvraagTransformed
+) {
   return getActieStepByOmschrijving(
     aanvraag,
     jzdStatusStepActies.MEER_INFORMATIE
   );
 }
 
-function hasActieBasedMeerInformatieStep(aanvraag: ZorgnedAanvraagTransformed) {
+export function hasActieBasedMeerInformatieStep(
+  aanvraag: ZorgnedAanvraagTransformed
+) {
   return hasActieStepByOmschrijving(
     aanvraag,
     jzdStatusStepActies.MEER_INFORMATIE
@@ -321,7 +326,7 @@ export const IN_BEHANDELING: ZorgnedStatusLineItemTransformerConfig = {
 
 export function getTransformerConfigBesluit(
   isActive: ZorgnedStatusLineItemTransformerConfig['isActive'],
-  useAsProduct: boolean
+  useVoorzetsel: boolean // NOTE: This is used to determine if we should use "een" or not in the description. For example: "U krijgt een WMO-voorziening" vs "U krijgt WMO-voorziening".
 ): ZorgnedStatusLineItemTransformerConfig {
   return {
     status: DECISION_STEP_STATUS,
@@ -351,7 +356,7 @@ export function getTransformerConfigBesluit(
         ? `<p>${
             aanvraag.resultaat === 'toegewezen'
               ? `U krijgt ${
-                  useAsProduct ? 'een ' : ''
+                  useVoorzetsel ? 'een ' : ''
                 }${aanvraag.titel} ${aanvraag.datumIngangGeldigheid ? `per ${defaultDateFormat(aanvraag.datumIngangGeldigheid)}` : ''}`
               : `U krijgt geen ${aanvraag.titel}`
           }.</p>
@@ -367,9 +372,7 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
   datePublished: (aanvraag) =>
     (aanvraag.isActueel ? '' : aanvraag.datumEindeGeldigheid) || '',
   isVisible: (aanvraag) => {
-    return hasDecision(aanvraag)
-      ? aanvraag.resultaat !== 'afgewezen'
-      : !!aanvraag.datumEindeGeldigheid;
+    return hasDecision(aanvraag) && aanvraag.resultaat !== 'afgewezen';
   },
   isChecked: (aanvraag) => aanvraag.isActueel === false,
   isActive: (aanvraag) => aanvraag.isActueel === false,

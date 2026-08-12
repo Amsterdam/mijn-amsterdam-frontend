@@ -19,7 +19,6 @@ export async function fetchSalesforceApi<T>(
     Buffer.from(base64encodedPK, 'base64')
   );
   const dataRequestConfigBase = getCustomApiConfigWithCacheKey(
-    'SALESFORCE',
     salesforceDataRequestConfig,
     dataRequestConfigSpecific,
     {

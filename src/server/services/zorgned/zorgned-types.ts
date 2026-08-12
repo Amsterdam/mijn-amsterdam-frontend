@@ -178,7 +178,7 @@ export interface ZorgnedResponseDataSource {
 }
 
 export type ZorgnedProcesAanvraagActieTransformed = {
-  omschrijving: ZorgnedProcesAanvraagActieSource['omschrijving'];
+  omschrijving: string;
   status: ZorgnedProcesAanvraagActieSource['status']['omschrijving'];
   datum: ZorgnedProcesAanvraagActieSource['datum'];
 };

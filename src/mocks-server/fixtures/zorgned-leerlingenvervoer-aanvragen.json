@@ -587,7 +587,6 @@
         "datumAanmelding": "2026-05-11",
         "datumAanvraag": "2026-05-11"
       },
-
       {
         "identificatie": "3695757",
         "procesIdentificatie": "3695757",
@@ -659,6 +658,262 @@
             "omschrijving": "aanvraagformulier",
             "omschrijvingclientportaal": "Aanvraagformulier",
             "datumDefinitief": "2026-05-19T13:35:59.42"
+          }
+        ]
+      },
+      {
+        "identificatie": "3695754",
+        "procesIdentificatie": "3695754",
+        "casusIdentificatie": "2115594",
+        "regeling": {
+          "identificatie": "LLV",
+          "omschrijving": "Leerlingenvervoer"
+        },
+        "hulpvraag": { "datumRegistratie": "2026-05-11" },
+        "datumAanmelding": "2026-05-11",
+        "datumAanvraag": "2026-05-11",
+        "procesAanvraag": {
+          "identificatie": "3695754",
+          "omschrijving": "Leerlingenvervoer",
+          "datumStart": "2026-05-11",
+          "acties": [
+            {
+              "omschrijving": "In behandeling bij gemeente",
+              "status": { "identificatie": "4", "omschrijving": "Klaar" },
+              "datum": "2026-06-02"
+            },
+            {
+              "omschrijving": "Melding ontvangen",
+              "status": { "identificatie": "4", "omschrijving": "Klaar" },
+              "datum": "2026-05-11"
+            }
+          ]
+        },
+        "beschikking": {
+          "beschikkingNummer": 301264136,
+          "datumAfgifte": "2026-05-11",
+          "beschikteProducten": [
+            {
+              "identificatie": "1772949",
+              "product": {
+                "identificatie": "LLVAVG",
+                "productsoortCode": "LLV",
+                "omschrijving": "aangepast groepsvervoer"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2026-01-01",
+                "datumEindeGeldigheid": "2027-07-01",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "frequentie": { "code": "2", "omschrijving": "Per week" },
+                  "omschrijving": "1 stuks (output) per week"
+                },
+                "leverancier": {
+                  "identificatie": "85960830",
+                  "agbcode": "85960830",
+                  "kvk": "30795147",
+                  "omschrijving": "Munckhof"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["123457348"]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "identificatie": "3695757",
+        "procesIdentificatie": "3695757",
+        "casusIdentificatie": "2115594",
+        "regeling": {
+          "identificatie": "LLV",
+          "omschrijving": "Leerlingenvervoer"
+        },
+        "hulpvraag": { "datumRegistratie": "2026-05-11" },
+        "datumAanmelding": "2026-05-11",
+        "datumAanvraag": "2026-05-11"
+      },
+      {
+        "identificatie": "3695853",
+        "procesIdentificatie": "3695853",
+        "casusIdentificatie": "2115664",
+        "regeling": {
+          "identificatie": "LLV",
+          "omschrijving": "Leerlingenvervoer"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-05-19",
+          "aanmeldwijze": { "omschrijving": "Digitaal/Online" },
+          "verwijzer": {
+            "soort": { "identificatie": "4", "omschrijving": "Familielid" },
+            "naam": "Klaasse",
+            "voorletters": "D.",
+            "email": "test@amsterdam.nl",
+            "telefoon": "0612345678"
+          }
+        },
+        "datumAanmelding": "2026-05-19",
+        "datumAanvraag": "2026-05-19",
+        "procesAanvraag": {
+          "identificatie": "3695853",
+          "omschrijving": "Leerlingenvervoer",
+          "datumStart": "2026-05-19",
+          "acties": [
+            {
+              "omschrijving": "Verzoek om meer informatie",
+              "status": { "identificatie": "4", "omschrijving": "Klaar" },
+              "datum": "2026-08-10"
+            },
+            {
+              "omschrijving": "In behandeling bij gemeente",
+              "status": { "identificatie": "4", "omschrijving": "Klaar" },
+              "datum": "2026-08-11"
+            },
+            {
+              "omschrijving": "In behandeling bij gemeente",
+              "status": { "identificatie": "4", "omschrijving": "Klaar" },
+              "datum": "2026-08-10"
+            },
+            {
+              "omschrijving": "Melding ontvangen",
+              "status": { "identificatie": "4", "omschrijving": "Klaar" },
+              "datum": "2026-05-19"
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "E1533139",
+            "procesIdentificatie": "3695853",
+            "casusIdentificatie": "2115664",
+            "omschrijving": "aanvraagformulier",
+            "omschrijvingclientportaal": "Aanvraagformulier",
+            "datumDefinitief": "2026-05-19T13:35:59.42"
+          },
+          {
+            "documentidentificatie": "B4092578",
+            "procesIdentificatie": "3695853",
+            "casusIdentificatie": "2115664",
+            "omschrijving": "NV, V.o.i Afstand te kort of i.c.m DTS",
+            "omschrijvingclientportaal": "Verzoek: extra info voor beoordelen aanvraag LLV",
+            "datumDefinitief": "2026-08-10T15:56:15.467",
+            "bestandsnaam": "BR4092578.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "3697627",
+        "procesIdentificatie": "3697627",
+        "casusIdentificatie": "2117286",
+        "regeling": {
+          "identificatie": "LLV",
+          "omschrijving": "Leerlingenvervoer"
+        },
+        "hulpvraag": { "datumRegistratie": "2026-06-23" },
+        "datumAanmelding": "2026-06-23",
+        "datumAanvraag": "2026-06-23",
+        "procesAanvraag": {
+          "identificatie": "3697627",
+          "omschrijving": "Leerlingenvervoer",
+          "datumStart": "2026-06-23",
+          "acties": [
+            {
+              "omschrijving": "Melding ontvangen",
+              "status": { "identificatie": "4", "omschrijving": "Klaar" },
+              "datum": "2026-06-23"
+            },
+            {
+              "omschrijving": "Verzoek om meer informatie",
+              "status": { "identificatie": "4", "omschrijving": "Klaar" },
+              "datum": "2026-08-11"
+            },
+            {
+              "omschrijving": "In behandeling bij gemeente",
+              "status": { "identificatie": "4", "omschrijving": "Klaar" },
+              "datum": "2026-08-10"
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B4092413",
+            "procesIdentificatie": "3697627",
+            "casusIdentificatie": "2117286",
+            "omschrijving": "NV, V.o.i FV, EV of OV alleen begeleider",
+            "omschrijvingclientportaal": "Verzoek: extra info voor beoordelen aanvraag LLV",
+            "datumDefinitief": "2026-06-23T12:05:59.24",
+            "bestandsnaam": "BR4092413.pdf"
+          },
+          {
+            "documentidentificatie": "B4092576",
+            "procesIdentificatie": "3697627",
+            "casusIdentificatie": "2117286",
+            "omschrijving": "NV, V.o.i DTS met kmgrens",
+            "omschrijvingclientportaal": "Verzoek: extra info voor beoordelen aanvraag LLV",
+            "datumDefinitief": "2026-08-10T15:49:26.203",
+            "bestandsnaam": "BR4092576.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "3697912",
+        "procesIdentificatie": "3697912",
+        "casusIdentificatie": "2117461",
+        "regeling": {
+          "identificatie": "LLV",
+          "omschrijving": "Leerlingenvervoer"
+        },
+        "hulpvraag": { "datumRegistratie": "2026-08-10" },
+        "datumAanmelding": "2026-08-10",
+        "datumAanvraag": "2026-08-10",
+        "procesAanvraag": {
+          "identificatie": "3697912",
+          "omschrijving": "Leerlingenvervoer",
+          "datumStart": "2026-08-10",
+          "acties": [
+            {
+              "omschrijving": "Melding ontvangen",
+              "status": { "identificatie": "4", "omschrijving": "Klaar" },
+              "datum": "2026-08-10"
+            },
+            {
+              "omschrijving": "In behandeling bij gemeente",
+              "status": { "identificatie": "4", "omschrijving": "Klaar" },
+              "datum": "2026-08-10"
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "E1533648",
+            "procesIdentificatie": "3697912",
+            "casusIdentificatie": "2117461",
+            "omschrijving": "aanvraagformulier",
+            "omschrijvingclientportaal": "Aanvraagformulier",
+            "datumDefinitief": "2026-08-10T10:13:05",
+            "bestandsnaam": "Leeg bestand.pdf"
+          },
+          {
+            "documentidentificatie": "E1533660",
+            "procesIdentificatie": "3697912",
+            "casusIdentificatie": "2117461",
+            "omschrijving": "kopie bankpas",
+            "omschrijvingclientportaal": "Informatie over uw bankrekening",
+            "datumDefinitief": "2026-08-10T10:15:05",
+            "bestandsnaam": "OIP-1969399552.jpg"
+          },
+          {
+            "documentidentificatie": "E1533661",
+            "procesIdentificatie": "3697912",
+            "casusIdentificatie": "2117461",
+            "omschrijving": "kopie bankpas",
+            "omschrijvingclientportaal": "Informatie over uw bankrekening",
+            "datumDefinitief": "2026-08-10T10:15:05",
+            "bestandsnaam": "jpg-vs-jpeg-1024x576-1492575651.webp"
           }
         ]
       }

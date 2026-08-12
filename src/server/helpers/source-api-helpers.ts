@@ -31,7 +31,6 @@ export function getCustomApiConfig(
 }
 
 export function getCustomApiConfigWithCacheKey(
-  apiName: string,
   ...configs: DataRequestConfig[]
 ) {
   if (!configs.some((c) => 'cacheKey_UNSAFE' in c)) {
@@ -39,7 +38,7 @@ export function getCustomApiConfigWithCacheKey(
       'getCustomApiConfigWithCacheKey requires at least one config to have cacheKey_UNSAFE'
     );
   }
-  return getApiConfig(apiName, ...configs);
+  return getApiConfig('CUSTOM_API', ...configs);
 }
 
 export function getApiConfig(

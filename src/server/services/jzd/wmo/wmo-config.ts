@@ -20,10 +20,13 @@ export const MINIMUM_REQUEST_DATE_FOR_DOCUMENTS = parseISO('2022-01-01'); // Aft
 export const FAKE_DECISION_DOCUMENT_ID = 'besluit-document-mist';
 
 export const jzdStatusStepActies = {
-  AANVRAAG: 'Melding ontvangen',
-  IN_BEHANDELING: 'In behandeling bij de gemeente',
-  MEER_INFORMATIE: 'Meer informatie opgevraagd',
-  MEER_AANGELEVERD: 'Meer informatie aangeleverd',
+  AANVRAAG: ['Melding ontvangen'],
+  IN_BEHANDELING: [
+    'In behandeling bij de gemeente',
+    'In behandeling bij gemeente',
+  ],
+  MEER_INFORMATIE: ['Meer informatie opgevraagd', 'Verzoek om meer informatie'],
+  MEER_AANGELEVERD: ['Meer informatie aangeleverd'],
 } as const;
 
 export const DECISION_STEP_STATUS = 'Besluit';
