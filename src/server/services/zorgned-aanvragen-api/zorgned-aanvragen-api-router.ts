@@ -12,6 +12,7 @@ import { conditional } from '../../helpers/middleware.ts';
 import { OAuthVerificationHandler } from '../../routing/route-handlers.ts';
 import { createBFFRouter } from '../../routing/route-helpers.ts';
 
+// Enabled by default, but can be disabled by setting the environment variable to false.
 const IS_OAUTH_VERIFICATION_ENABLED =
   getFromEnv('BFF_IS_VOORZIENINGEN_API_OAUTH_ENABLED', false) !== 'false';
 
