@@ -118,7 +118,7 @@ export function transformAanvraagForFrontendWithMaApiProps(
         return true;
       }
 
-      return aanvraag?.maActies?.some((action) =>
+      return aanvraag?.maActies?.some((action: string) =>
         filters.maActies?.includes(action as (typeof filters.maActies)[number])
       );
     })

@@ -43,9 +43,10 @@ const hliInputFilters = z.object({
   maProductgroep: z.array(z.enum(['stadspas'])).optional(),
 });
 
-export type AanvragenRequestInputFilters = z.infer<
-  typeof wmoInputFilters | typeof hliInputFilters
->;
+export type AanvragenRequestInputFilters = {
+  maActies?: string[];
+  maProductgroep?: string[];
+};
 
 export const requestInputByClient = {
   WMO: wmoInputFilters,
