@@ -38,7 +38,7 @@ function isMaApiPropertyConfigMatch<T extends ZorgnedAanvraagTransformed>(
     return IS_DEFAULT_MATCH;
   }
 
-  return matchers.every(([aanvraagKey, valueMatch]) => {
+  const isMatch = matchers.every(([aanvraagKey, valueMatch]) => {
     if (typeof valueMatch === 'function') {
       return valueMatch(aanvraag);
     }
@@ -49,15 +49,17 @@ function isMaApiPropertyConfigMatch<T extends ZorgnedAanvraagTransformed>(
 
     return aanvraag[aanvraagKey] === valueMatch;
   });
+
+  return isMatch;
 }
 
 function addMaApiPropsToAanvraag<T extends ZorgnedAanvraagTransformed>(
-  apiPropsConfig: AanvragenApiConfig<T>[],
+  apiConfig: AanvragenApiConfig<T>[],
   aanvraag: T
 ): T & Partial<WithMaApiProps> {
   const applyAssignments: Partial<WithMaApiProps> = {};
 
-  apiPropsConfig.forEach((actionConfig) => {
+  apiConfig.forEach((actionConfig) => {
     if (
       isMaApiPropertyConfigMatch(aanvraag, actionConfig, 'include') &&
       !isMaApiPropertyConfigMatch(aanvraag, actionConfig, 'exclude')

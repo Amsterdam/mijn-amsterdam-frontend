@@ -12,7 +12,7 @@ const requestInputBase_ = {
 
 export const requestInputBase = z.object(requestInputBase_);
 
-const aanvragenRequestInput = z.object({
+const wmoInputFilters = z.object({
   maActies: z
     .array(
       z.enum([
@@ -38,14 +38,19 @@ const aanvragenRequestInput = z.object({
     .optional(),
 });
 
+const hliInputFilters = z.object({
+  maActies: z.array(z.enum(['stadspas-verlengen'])).optional(),
+  maProductgroep: z.array(z.enum(['stadspas'])).optional(),
+});
+
 export type AanvragenRequestInputFilters = z.infer<
-  typeof aanvragenRequestInput
+  typeof wmoInputFilters | typeof hliInputFilters
 >;
 
 export const requestInputByClient = {
-  WMO: aanvragenRequestInput,
+  WMO: wmoInputFilters,
   LLV: z.object({}),
-  HLI: z.object({}),
+  HLI: hliInputFilters,
 } as const;
 
 export const aanvraagDetailRequestInput = z.object({
