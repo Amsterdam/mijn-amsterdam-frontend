@@ -35,6 +35,7 @@ export default [
       '@typescript-eslint/no-explicit-any': 'error',
       'react/jsx-curly-brace-presence': 'error',
       '@typescript-eslint/consistent-type-imports': 'error',
+      curly: ['error', 'all'],
       'react/function-component-definition': [
         'warn',
         {

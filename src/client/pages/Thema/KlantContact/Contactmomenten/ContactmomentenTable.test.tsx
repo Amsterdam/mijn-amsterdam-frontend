@@ -2,8 +2,8 @@ import { render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 import { ContactMomenten } from './ContactmomentenTable.tsx';
-import type { ContactmomentFrontendFinal } from '../KlantContact-thema-config.ts';
 import { MockApp } from '../../../MockApp.tsx';
+import type { ContactmomentFrontendFinal } from '../KlantContact-thema-config.ts';
 
 describe('ContactMomenten', () => {
   it('matches snapshot', () => {

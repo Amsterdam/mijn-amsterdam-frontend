@@ -27,19 +27,21 @@ export function Afspraken({
 }: AfsprakenProps) {
   const hasAfspraken = afspraken.length > 0;
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <AfsprakenBase className={className}>
         <LoadingContent />
       </AfsprakenBase>
     );
+  }
 
-  if (!hasAfspraken)
+  if (!hasAfspraken) {
     return (
       <AfsprakenBase className={className}>
         <Paragraph>Er zijn geen afspraken bij het Stadsloket.</Paragraph>
       </AfsprakenBase>
     );
+  }
 
   return (
     <AfsprakenBase className={className}>
