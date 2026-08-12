@@ -176,6 +176,48 @@ export function sendResponseHTML(
   return sendResponse(res, apiResponse, viewName);
 }
 
+type DocumentDownloadApiResponse = ApiResponse<{
+  data: unknown;
+  mimetype?: string;
+  filename?: string;
+}>;
+
+function hasPipeMethod(
+  data: unknown
+): data is { pipe: (res: Response) => unknown } {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    'pipe' in data &&
+    typeof data.pipe === 'function'
+  );
+}
+
+export function sendDocumentDownloadResponse(
+  res: Response,
+  documentResponse: DocumentDownloadApiResponse
+) {
+  if (documentResponse.status !== 'OK') {
+    return sendResponse(res, documentResponse);
+  }
+
+  if (
+    'mimetype' in documentResponse.content &&
+    documentResponse.content.mimetype
+  ) {
+    res.type(documentResponse.content.mimetype);
+  }
+
+  res.header(
+    'Content-Disposition',
+    `attachment${documentResponse.content.filename ? `; filename*="${encodeURIComponent(documentResponse.content.filename)}"` : ''}`
+  );
+
+  return hasPipeMethod(documentResponse.content.data)
+    ? documentResponse.content.data.pipe(res)
+    : res.send(documentResponse.content.data);
+}
+
 export function sendBadRequest(res: Response, reason: string) {
   return sendResponse(
     res,

@@ -220,7 +220,7 @@ export async function ensureOpsFlagsExist(
     appConfigurationClient,
     opsFeatureFlagsToProvision
   ).catch((error) => {
-    logger.warn(
+    logger.debug(
       error,
       `Failed to auto-provision ${Object.keys(opsFeatureFlagsToProvision).length} OPS feature toggle(s)`
     );

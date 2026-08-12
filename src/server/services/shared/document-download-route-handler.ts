@@ -10,6 +10,7 @@ import type {
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import type { RequestWithRouteAndQueryParams } from '../../routing/route-helpers.ts';
 import {
+  sendDocumentDownloadResponse,
   sendResponse,
   type RecordStr2,
   type ResponseAuthenticated,
@@ -65,26 +66,7 @@ export function downloadDocumentRouteHandler(
         req.query as RecordStr2
       );
 
-      if (documentResponse.status !== 'OK') {
-        return sendResponse(res, documentResponse);
-      }
-
-      if (
-        'mimetype' in documentResponse.content &&
-        documentResponse.content.mimetype
-      ) {
-        res.type(documentResponse.content.mimetype);
-      }
-
-      res.header(
-        'Content-Disposition',
-        `attachment${documentResponse.content.filename ? `; filename*="${encodeURIComponent(documentResponse.content.filename)}"` : ''}`
-      );
-
-      return 'pipe' in documentResponse.content.data &&
-        typeof documentResponse.content.data.pipe === 'function'
-        ? documentResponse.content.data.pipe(res)
-        : res.send(documentResponse.content.data);
+      return sendDocumentDownloadResponse(res, documentResponse);
     }
 
     return sendResponse(res, decryptResult);

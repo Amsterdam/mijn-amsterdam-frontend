@@ -36,6 +36,10 @@ import { jzdRouter } from '../services/jzd/jzd-router.ts';
 import { klantcontactRouter } from '../services/klantcontact/klantcontact-router.ts';
 import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service.ts';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler.ts';
+import {
+  handleFetchDocumentDownload,
+  handleFetchDocumentsList,
+} from '../services/shared/documents-route-handlers.ts';
 import { userFeedbackRouter } from '../services/user-feedback/user-feedback.router.ts';
 import { fetchWpiDocument } from '../services/wpi/api-service.ts';
 
@@ -73,7 +77,7 @@ router.get(
     req: RequestWithQueryParams<{
       [key in keyof typeof streamEndpointQueryParamKeys]: string;
     }>,
-    res: Response,
+    _res: Response,
     next: NextFunction
   ) => {
     if (
@@ -114,6 +118,9 @@ router.get(
 ////////////////////////////////////////////////////
 //// BFF Service Api Endpoints /////////////////////
 ////////////////////////////////////////////////////
+
+router.get(BffEndpoints.SHARED_DOCUMENTS_LIST, handleFetchDocumentsList);
+router.get(BffEndpoints.SHARED_DOCUMENTS_DOWNLOAD, handleFetchDocumentDownload);
 
 router.use(
   jzdRouter.protected,
