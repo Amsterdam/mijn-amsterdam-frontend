@@ -85,9 +85,9 @@ export function ZakenList<T extends { link?: LinkProps; title: string }>({
       className={classNames(styles.ListView, className)}
     >
       {zaken.map((zaak, index) => {
-        const key = String(
-          ('id' in zaak ? zaak.id : `item-${index}`) ?? `article-${index}`
-        );
+        const key =
+          'id' in zaak && zaak.id != null ? String(zaak.id) : `item-${index}`;
+
         return (
           <OrderedList.Item key={key} className={styles.ListViewItem}>
             <LinkOrFragment link={zaak.link}>
