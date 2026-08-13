@@ -1,10 +1,12 @@
 import { isValidElement } from 'react';
 
 import {
+  Column,
   Heading,
   Icon,
   OrderedList,
   Paragraph,
+  Row,
   UnorderedList,
 } from '@amsterdam/design-system-react';
 import { ChevronForwardIcon } from '@amsterdam/design-system-react-icons';
@@ -26,13 +28,13 @@ export function LinkOrFragment({
   if (link?.to) {
     const LinkComponent = link.to.startsWith('http') ? MaLink : MaRouterLink;
     return (
-      <LinkComponent
-        href={link.to}
-        maVariant="fatNoUnderline"
-        className={styles.ZakenListLink}
-      >
-        {children}
-        <Icon svg={ChevronForwardIcon} className={styles.IconFW} aria-hidden />
+      <LinkComponent href={link.to} maVariant="fatNoUnderline">
+        <Row>
+          <Column>{children}</Column>
+          <Column align="center">
+            <Icon svg={ChevronForwardIcon} aria-hidden />
+          </Column>
+        </Row>
       </LinkComponent>
     );
   }
@@ -89,7 +91,7 @@ export function ZakenList<T extends { link?: LinkProps; title: string }>({
           'id' in zaak && zaak.id != null ? String(zaak.id) : `item-${index}`;
 
         return (
-          <OrderedList.Item key={key} className={styles.ListViewItem}>
+          <OrderedList.Item key={key}>
             <LinkOrFragment link={zaak.link}>
               <article className={styles.ListViewArticle}>
                 <Heading level={4} size="level-4">
