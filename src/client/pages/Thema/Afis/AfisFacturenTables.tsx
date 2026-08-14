@@ -19,7 +19,6 @@ export function AfisFacturenTables({
 }: FacturenTablesProps) {
   const { facturenByState, tableConfig } =
     useAfisFacturenData(themaContextParams);
-
   return entries(tableConfig)
     .filter(([state]) => themaContextParams?.states?.includes(state) ?? true)
     .map(
