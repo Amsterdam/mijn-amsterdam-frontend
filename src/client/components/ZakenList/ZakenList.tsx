@@ -29,7 +29,7 @@ export function LinkOrFragment({
     const LinkComponent = link.to.startsWith('http') ? MaLink : MaRouterLink;
     return (
       <LinkComponent href={link.to} maVariant="fatNoUnderline">
-        <Row>
+        <Row align="between">
           <Column>{children}</Column>
           <Column align="center">
             <Icon svg={ChevronForwardIcon} aria-hidden />
@@ -103,7 +103,7 @@ export function ZakenList<T extends { link?: LinkProps; title: string }>({
                     {displayPropEntries.slice(1).map(([propKey, { label }]) => {
                       const value = zaak[propKey as keyof T];
                       return (
-                        <span key={propKey} className={styles.ListViewProp}>
+                        <span key={propKey}>
                           <strong>{label}:</strong> {getLabelValue(value)}
                         </span>
                       );
