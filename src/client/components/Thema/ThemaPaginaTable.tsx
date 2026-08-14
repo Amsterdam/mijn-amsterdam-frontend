@@ -66,7 +66,12 @@ export function ThemaPaginaTable<
     <PageContentCell>
       {isSmallScreen && isZakenListEnabledInTheme && (
         <>
-          <ZakenList<T> displayProps={displayProps} zaken={zaken_} />
+          <ZakenList<T>
+            displayProps={displayProps}
+            items={zaken_}
+            caption={title}
+            contentAfterTheCaption={contentAfterTheTitle}
+          />
         </>
       )}
       {!isSmallScreen && (
