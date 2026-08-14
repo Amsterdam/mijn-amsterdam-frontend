@@ -118,6 +118,7 @@ const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
     large: ['15%', '25%', '25%', '35%'],
     small: ['25%', '0', '0', '75%'],
   },
+  enableMobileListView: true,
 };
 
 const displayPropsFacturenAfgehandeldOfOvergedragen: DisplayProps<AfisFactuurFrontend> =
@@ -131,6 +132,7 @@ const displayPropsFacturenAfgehandeldOfOvergedragen: DisplayProps<AfisFactuurFro
       large: ['25%', '25%', '50%'],
       small: ['100%', '0', '0'],
     },
+    enableMobileListView: true,
   };
 
 export const displayPropsTermijnenTable: DisplayProps<AfisFactuurTermijn> = {
@@ -145,6 +147,7 @@ export const displayPropsTermijnenTable: DisplayProps<AfisFactuurTermijn> = {
     large: ['10%', '25%', '20%', '45%', '0'],
     small: ['0', '0', '0', '0', '100%'],
   },
+  enableMobileListView: true,
 };
 
 export const listPageTitle: Record<AfisFactuurStateFrontend, string> = {

@@ -31,7 +31,6 @@ interface ThemaPaginaTableProps<T> {
   listPageLinkLabel?: string;
   listPageLinkTitle?: string;
   zaken: T[];
-  themaId?: string;
 }
 
 export function ThemaPaginaTable<
@@ -49,14 +48,16 @@ export function ThemaPaginaTable<
   totalItems,
   listPageLinkLabel = 'Toon meer',
   listPageLinkTitle,
-  themaId = '',
 }: ThemaPaginaTableProps<T>) {
   const textNoContentDefault = title
     ? `U heeft (nog) geen ${title.toLowerCase()}`
     : TEXT_NO_CONTENT_DEFAULT;
 
   const isSmallScreen = useSmallScreen();
-  const isMobileListEnabledInTheme = themaId === 'AFIS';
+  const isMobileListEnabledInTheme =
+    'enableMobileListView' in displayProps
+      ? displayProps.enableMobileListView
+      : false;
 
   const hasListPage = !!listPageRoute && maxItems !== -1;
 
