@@ -91,28 +91,43 @@ export function ZakenList<T extends { link?: LinkProps; title: string }>({
           'id' in zaak && zaak.id != null ? String(zaak.id) : `item-${index}`;
 
         return (
-          <OrderedList.Item key={key}>
-            <LinkOrFragment link={zaak.link}>
-              <article className={styles.ListViewArticle}>
-                <Heading level={4} size="level-4">
-                  {zaak[titleAttribute] as React.ReactNode}
-                </Heading>
+          <>
+            <OrderedList.Item key={key}>
+              <LinkOrFragment link={zaak.link}>
+                <article className={styles.ListViewArticle}>
+                  <Heading level={4} size="level-4">
+                    {zaak[titleAttribute] as React.ReactNode}
+                  </Heading>
 
-                <Paragraph>
-                  {displayPropEntries.slice(1).map(([propKey, { label }]) => {
-                    const value = zaak[propKey as keyof T];
-                    return (
-                      <span key={propKey} className={styles.ListViewProp}>
-                        <strong>{label}:</strong> {getLabelValue(value)}
-                      </span>
-                    );
-                  })}
-                </Paragraph>
-              </article>
-            </LinkOrFragment>
-          </OrderedList.Item>
+                  <Paragraph>
+                    {displayPropEntries.slice(1).map(([propKey, { label }]) => {
+                      const value = zaak[propKey as keyof T];
+                      return (
+                        <span key={propKey} className={styles.ListViewProp}>
+                          <strong>{label}:</strong> {getLabelValue(value)}
+                        </span>
+                      );
+                    })}
+                  </Paragraph>
+                </article>
+              </LinkOrFragment>
+            </OrderedList.Item>
+            <ListDivider listLength={zaken.length} index={index} />
+          </>
         );
       })}
     </UnorderedList>
   );
+}
+
+type ListDividerProps = {
+  listLength: number;
+  index: number;
+};
+
+export function ListDivider({ listLength, index }: ListDividerProps) {
+  if (index < listLength - 1) {
+    return <hr className={styles.ListDivider} />;
+  }
+  return null;
 }

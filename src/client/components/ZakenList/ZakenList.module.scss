@@ -1,9 +1,13 @@
 .ListViewArticle {
   --ams-heading-color: var(--ams-link-color);
-  border-block-end: var(--ams-table-cell-border-block-end);
-  padding-bottom: var(--ams-space-m);
 }
 
 .ListView {
   gap: var(--ams-space-m);
+}
+
+.ListDivider {
+  border-top: var(--ams-table-cell-border-block-end);
+  width: 100%;
+  margin: 0;
 }
