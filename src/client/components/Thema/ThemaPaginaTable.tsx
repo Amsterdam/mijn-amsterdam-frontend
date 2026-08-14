@@ -56,7 +56,7 @@ export function ThemaPaginaTable<
     : TEXT_NO_CONTENT_DEFAULT;
 
   const isSmallScreen = useSmallScreen();
-  const isZakenListEnabledInTheme = themaId === 'AFIS';
+  const isMobileListEnabledInTheme = themaId === 'AFIS';
 
   const hasListPage = !!listPageRoute && maxItems !== -1;
 
@@ -64,16 +64,14 @@ export function ThemaPaginaTable<
 
   return (
     <PageContentCell>
-      {isSmallScreen && isZakenListEnabledInTheme ? (
-        <>
-          <MobileList<T>
-            displayProps={displayProps}
-            items={zaken_}
-            caption={title}
-            contentAfterTheCaption={contentAfterTheTitle}
-            className={className}
-          />
-        </>
+      {isSmallScreen && isMobileListEnabledInTheme ? (
+        <MobileList<T>
+          displayProps={displayProps}
+          items={zaken_}
+          caption={title}
+          contentAfterTheCaption={contentAfterTheTitle}
+          className={className}
+        />
       ) : (
         <TableV2
           showTHead={!!zaken.length}
