@@ -1,7 +1,7 @@
 import {
   getDisplayPropsColWidths,
   getDisplayProps,
-  getColWidth,
+  getVisibleColumnConfigValue,
 } from './helpers.ts';
 import type { DisplayProps } from './TableV2.types.ts';
 import { entries } from '../../../universal/helpers/utils.ts';
@@ -31,7 +31,11 @@ export function useDisplayPropsEntries<T extends DisplayProps<object>>(
 
   const mappedVisibleEntries = visibleEntries.map(([key, value], index) => {
     const width = config
-      ? getColWidth(config, isSmallScreen ? 'small' : 'large', index)
+      ? getVisibleColumnConfigValue(
+          config,
+          isSmallScreen ? 'small' : 'large',
+          index
+        )
       : undefined;
     return [
       key,

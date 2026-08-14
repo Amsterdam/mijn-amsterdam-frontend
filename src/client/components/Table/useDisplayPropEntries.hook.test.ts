@@ -6,7 +6,7 @@ import { useDisplayPropsEntries } from './useDisplayPropEntries.hook.ts';
 const mockUseSmallScreen = vi.fn();
 const mockGetDisplayPropsColWidths = vi.fn();
 const mockGetDisplayProps = vi.fn();
-const mockGetColWidth = vi.fn();
+const mockVisibleColumnConfigValue = vi.fn();
 
 vi.mock('../../hooks/media.hook.ts', () => ({
   useSmallScreen: () => mockUseSmallScreen(),
@@ -16,7 +16,8 @@ vi.mock('./helpers.ts', () => ({
   getDisplayPropsColWidths: (...args: unknown[]) =>
     mockGetDisplayPropsColWidths(...args),
   getDisplayProps: (...args: unknown[]) => mockGetDisplayProps(...args),
-  getColWidth: (...args: unknown[]) => mockGetColWidth(...args),
+  getVisibleColumnConfigValue: (...args: unknown[]) =>
+    mockVisibleColumnConfigValue(...args),
 }));
 
 describe('useDisplayPropsEntries', () => {
@@ -51,7 +52,7 @@ describe('useDisplayPropsEntries', () => {
       small: ['1fr', '0', true],
       large: ['2fr', '1fr', '1fr'],
     });
-    mockGetColWidth.mockImplementation(
+    mockVisibleColumnConfigValue.mockImplementation(
       (
         config: { small: unknown[]; large: unknown[] },
         screen: 'small' | 'large',

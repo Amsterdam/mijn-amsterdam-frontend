@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { getColWidth } from './helpers.ts';
+import { getVisibleColumnConfigValue } from './helpers.ts';
 import type { DisplayPropsViewConfig } from './TableV2.types.ts';
 
 describe('getColWidth', () => {
@@ -10,8 +10,8 @@ describe('getColWidth', () => {
       large: ['3fr', '4fr', '5fr'],
     } as unknown as DisplayPropsViewConfig;
 
-    expect(getColWidth(config, 'small', 0)).toBe('1fr');
-    expect(getColWidth(config, 'small', 1)).toBe('2fr');
+    expect(getVisibleColumnConfigValue(config, 'small', 0)).toBe('1fr');
+    expect(getVisibleColumnConfigValue(config, 'small', 1)).toBe('2fr');
   });
 
   it('keeps true values, filters false values', () => {
@@ -20,9 +20,9 @@ describe('getColWidth', () => {
       large: ['3fr', '4fr', '5fr', '6fr'],
     } as unknown as DisplayPropsViewConfig;
 
-    expect(getColWidth(config, 'small', 0)).toBe(true);
-    expect(getColWidth(config, 'small', 1)).toBe('1fr');
-    expect(getColWidth(config, 'small', 2)).toBe('2fr');
+    expect(getVisibleColumnConfigValue(config, 'small', 0)).toBe(true);
+    expect(getVisibleColumnConfigValue(config, 'small', 1)).toBe('1fr');
+    expect(getVisibleColumnConfigValue(config, 'small', 2)).toBe('2fr');
   });
 
   it('returns undefined when index is out of range', () => {
@@ -31,6 +31,6 @@ describe('getColWidth', () => {
       large: ['2fr', '3fr'],
     } as unknown as DisplayPropsViewConfig;
 
-    expect(getColWidth(config, 'small', 5)).toBeUndefined();
+    expect(getVisibleColumnConfigValue(config, 'small', 5)).toBeUndefined();
   });
 });

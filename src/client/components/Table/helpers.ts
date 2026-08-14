@@ -20,7 +20,7 @@ export function getDisplayPropsColWidths<T extends DisplayProps<object>>(
   return 'colWidths' in displayProps ? displayProps.colWidths : undefined;
 }
 
-export function getColWidth(
+export function getVisibleColumnConfigValue(
   config: DisplayPropsViewConfig,
   size: ScreenSize,
   index: number
