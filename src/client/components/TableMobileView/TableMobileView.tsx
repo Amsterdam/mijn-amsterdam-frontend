@@ -12,7 +12,7 @@ import {
 import { ChevronForwardIcon } from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
 
-import styles from './MobileList.module.scss';
+import styles from './TableMobileView.module.scss';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 import type { TableV2Props } from '../Table/TableV2.types.ts';
@@ -65,7 +65,9 @@ export function getLabelValue(value: unknown) {
 
   return String(value);
 }
-export function MobileList<T extends { link?: LinkProps; title?: string }>({
+export function TableMobileView<
+  T extends { link?: LinkProps; title?: string },
+>({
   caption,
   items,
   className,

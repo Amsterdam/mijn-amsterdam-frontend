@@ -9,10 +9,10 @@ import type {
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { LinkToListPage } from '../LinkToListPage/LinkToListPage.tsx';
-import { MobileList } from '../MobileList/MobileList.tsx';
 import { PageContentCell } from '../Page/Page.tsx';
 import type { DisplayProps } from '../Table/TableV2.tsx';
 import { TableV2 } from '../Table/TableV2.tsx';
+import { TableMobileView } from '../TableMobileView/TableMobileView.tsx';
 
 const DISPLAY_PROPS_DEFAULT: DisplayProps<{ title: string }> = {
   title: 'Titel',
@@ -65,7 +65,7 @@ export function ThemaPaginaTable<
   return (
     <PageContentCell>
       {isSmallScreen && isMobileListEnabledInTheme ? (
-        <MobileList<T>
+        <TableMobileView<T>
           displayProps={displayProps}
           items={zaken_}
           caption={title}
