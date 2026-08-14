@@ -25,7 +25,18 @@ export function getColWidth(
   size: ScreenSize,
   index: number
 ) {
-  return config[size]?.filter((value) =>
-    typeof value === 'boolean' ? value : parseInt(value, 10) !== 0
-  )[index];
+  const widthsForSize = config[size];
+  if (!widthsForSize) {
+    return undefined;
+  }
+
+  const visibleWidths = widthsForSize.filter((value) => {
+    if (typeof value === 'boolean') {
+      return value;
+    }
+
+    return parseInt(value, 10) !== 0;
+  });
+
+  return visibleWidths[index];
 }
