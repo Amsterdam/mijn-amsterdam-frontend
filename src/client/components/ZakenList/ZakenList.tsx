@@ -83,7 +83,9 @@ export function ZakenList<T extends { link?: LinkProps; title: string }>({
           {caption}
         </Heading>
       )}
-      {contentAfterTheCaption}
+      {!!contentAfterTheCaption && (
+        <div className="ams-mb-s">{contentAfterTheCaption}</div>
+      )}
       <UnorderedList
         markers={false}
         className={classNames(styles.ListView, className)}
