@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios';
 import type { Request, Response } from 'express';
 
 import type { ApiResponse_DEPRECATED } from '../../universal/helpers/api.ts';
@@ -62,6 +63,7 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi/api-service.ts';
+import { isOpsEnabled } from '../config/azure-appconfiguration.ts';
 
 // Default service call just passing query params as arguments
 function callAuthenticatedService<T>(
@@ -195,7 +197,6 @@ export const NOTIFICATIONS = async (req: Request) => {
 };
 
 // Store all services for type derivation
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SERVICES_INDEX = {
   AFIS,
   AFVAL,
@@ -234,6 +235,10 @@ const SERVICES_INDEX = {
   WPI_TOZO,
   KTO,
 };
+
+export const SERVICES_INDEX_LIST = Object.freeze(
+  Object.keys(SERVICES_INDEX) as Array<keyof typeof SERVICES_INDEX>
+);
 
 export type ServicesType = Prettify<typeof SERVICES_INDEX>;
 export type ServiceID = keyof ServicesType;
@@ -401,6 +406,16 @@ export function loadServices(
     // Return service result as Object like { SERVICE_ID: result }
     return fetchService(req)
       .then((result) => {
+        if (!isOpsEnabled(serviceID) && result?.status === 'OK') {
+          return {
+            [serviceID]: apiErrorResult(
+              'Service Unavailable',
+              null,
+              HttpStatusCode.ServiceUnavailable
+            ),
+          };
+        }
+
         if (trackDurationTelemetry && result?.status === 'OK') {
           trackEvent('services-duration', {
             serviceId: serviceID,
@@ -452,7 +467,7 @@ export async function loadServicesSSE(req: Request, res: Response) {
   });
 }
 
-export async function loadServicesAll(req: Request, res: Response) {
+export async function loadServicesAll(req: Request, _res: Response) {
   const authProfileAndToken = getAuth(req);
 
   if (!authProfileAndToken) {
