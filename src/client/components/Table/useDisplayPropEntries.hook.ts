@@ -16,15 +16,20 @@ export function useDisplayPropsEntries<T extends DisplayProps<object>>(
   const displayPropEntries = entries(getDisplayProps(displayProps));
 
   // Filter out display properties that are not defined for the current screen size
-  return (
-    Array.isArray(propsDisplayConfig)
-      ? displayPropEntries.filter((_entry, index) =>
-          typeof propsDisplayConfig[index] !== 'boolean'
-            ? parseInt(propsDisplayConfig[index], 10) !== 0
-            : propsDisplayConfig[index]
-        )
-      : displayPropEntries
-  ).map(([key, value], index) => {
+
+  const visibleEntries = Array.isArray(propsDisplayConfig)
+    ? displayPropEntries.filter((_entry, index) => {
+        const columnConfig = propsDisplayConfig[index];
+
+        if (typeof columnConfig === 'boolean') {
+          return columnConfig;
+        }
+
+        return parseInt(columnConfig, 10) !== 0;
+      })
+    : displayPropEntries;
+
+  const mappedVisibleEntries = visibleEntries.map(([key, value], index) => {
     const width = config
       ? getColWidth(config, isSmallScreen ? 'small' : 'large', index)
       : undefined;
@@ -33,4 +38,5 @@ export function useDisplayPropsEntries<T extends DisplayProps<object>>(
       { label: value, width: typeof width === 'string' ? width : undefined },
     ] as const;
   });
+  return mappedVisibleEntries;
 }
