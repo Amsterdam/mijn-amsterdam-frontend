@@ -71,6 +71,7 @@ export function ThemaPaginaTable<
             items={zaken_}
             caption={title}
             contentAfterTheCaption={contentAfterTheTitle}
+            className={className}
           />
         </>
       )}
