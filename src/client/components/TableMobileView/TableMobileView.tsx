@@ -104,19 +104,14 @@ export function TableMobileView<
                     <Heading level={4} size="level-4">
                       {zaak[titleAttribute] as React.ReactNode}
                     </Heading>
-
-                    <Paragraph>
-                      {displayPropEntries
-                        .slice(1)
-                        .map(([propKey, { label }]) => {
-                          const value = zaak[propKey as keyof T];
-                          return (
-                            <span key={propKey}>
-                              <strong>{label}:</strong> {getLabelValue(value)}
-                            </span>
-                          );
-                        })}
-                    </Paragraph>
+                    {displayPropEntries.slice(1).map(([propKey, { label }]) => {
+                      const value = zaak[propKey as keyof T];
+                      return (
+                        <Paragraph key={propKey}>
+                          <strong>{label}:</strong> {getLabelValue(value)}
+                        </Paragraph>
+                      );
+                    })}
                   </article>
                 </LinkOrFragment>
                 <ListDivider listLength={items.length} index={index} />
