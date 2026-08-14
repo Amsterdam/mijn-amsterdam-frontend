@@ -64,7 +64,7 @@ export function ThemaPaginaTable<
 
   return (
     <PageContentCell>
-      {isSmallScreen && isZakenListEnabledInTheme && (
+      {isSmallScreen && isZakenListEnabledInTheme ? (
         <>
           <ZakenList<T>
             displayProps={displayProps}
@@ -74,8 +74,7 @@ export function ThemaPaginaTable<
             className={className}
           />
         </>
-      )}
-      {!isSmallScreen && (
+      ) : (
         <TableV2
           showTHead={!!zaken.length}
           caption={title}
