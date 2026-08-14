@@ -8,7 +8,15 @@ import {
   getLabelValue,
   getTitleAttribute,
   ListDivider,
+  ZakenList,
 } from './ZakenList.tsx';
+
+const mockUseDisplayPropsEntries = vi.fn();
+
+vi.mock('../Table/useDisplayPropEntries.hook.ts', () => ({
+  useDisplayPropsEntries: (...args: unknown[]) =>
+    mockUseDisplayPropsEntries(...args),
+}));
 
 vi.mock('../MaLink/MaLink.tsx', () => ({
   MaLink: ({
@@ -109,5 +117,63 @@ describe('ListDivider', () => {
     render(<ListDivider listLength={3} index={2} />);
 
     expect(screen.queryByRole('separator')).not.toBeInTheDocument();
+  });
+});
+
+describe('ZakenList', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    mockUseDisplayPropsEntries.mockReturnValue([
+      ['title', { label: 'Titel', width: undefined }],
+      ['status', { label: 'Status', width: undefined }],
+    ]);
+  });
+
+  it('renders caption, optional content and items', () => {
+    render(
+      <ZakenList
+        caption="Mijn zaken"
+        contentAfterTheCaption={<span>Extra info</span>}
+        items={[
+          {
+            id: 1,
+            title: 'Zaak A',
+            status: 'Open',
+            link: { title: 'Zaak A', to: '/zaken/1' },
+          },
+          { id: 2, title: 'Zaak B', status: 'Gesloten' },
+        ]}
+        className="custom-class"
+        displayProps={{} as never}
+      />
+    );
+
+    expect(screen.getByText('Mijn zaken')).toBeInTheDocument();
+    expect(screen.getByText('Extra info')).toBeInTheDocument();
+    expect(screen.getByText('Zaak A')).toBeInTheDocument();
+    expect(screen.getByText('Zaak B')).toBeInTheDocument();
+    expect(screen.getAllByText('Status:')).toHaveLength(2);
+    expect(screen.getByText('Open')).toBeInTheDocument();
+    expect(screen.getByText('Gesloten')).toBeInTheDocument();
+  });
+
+  it('uses router link for internal links and no link when link is missing', () => {
+    render(
+      <ZakenList
+        caption="Lijst"
+        items={[
+          {
+            id: 1,
+            title: 'Zaak A',
+            status: 'Open',
+            link: { title: 'Zaak A', to: '/zaken/1' },
+          },
+          { id: 2, title: 'Zaak B', status: 'Gesloten' },
+        ]}
+        displayProps={{} as never}
+      />
+    );
+
+    expect(screen.getAllByTestId('internal-link')).toHaveLength(1);
   });
 });
