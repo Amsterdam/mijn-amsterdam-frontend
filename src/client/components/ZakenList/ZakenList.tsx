@@ -117,8 +117,8 @@ export function ZakenList<T extends { link?: LinkProps; title: string }>({
                     </Paragraph>
                   </article>
                 </LinkOrFragment>
+                <ListDivider listLength={items.length} index={index} />
               </OrderedList.Item>
-              <ListDivider listLength={items.length} index={index} />
             </Fragment>
           );
         })}
@@ -137,5 +137,5 @@ export function ListDivider({ listLength, index }: ListDividerProps) {
     return <hr className={styles.ListDivider} />;
   }
 
-  return <div className="ams-mb-sm" />;
+  return <div className="ams-mb-m" />;
 }
