@@ -16,7 +16,6 @@ type FacturenTablesProps = {
 };
 
 export function AfisFacturenTables({
-  themaId,
   themaContextParams,
 }: FacturenTablesProps) {
   const { facturenByState, tableConfig } =
@@ -70,7 +69,6 @@ export function AfisFacturenTables({
             totalItems={totalItems}
             listPageLinkLabel={listPageLinkLabel}
             listPageRoute={listPageRoute}
-            themaId={themaId}
           />
         );
       }
