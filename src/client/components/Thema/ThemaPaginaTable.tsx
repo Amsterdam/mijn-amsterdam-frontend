@@ -35,7 +35,7 @@ interface ThemaPaginaTableProps<T> {
 }
 
 export function ThemaPaginaTable<
-  T extends { title: string; link?: LinkProps; themaId?: string } =
+  T extends { title?: string; link?: LinkProps; themaId?: string } =
     ZaakAanvraagDetail,
 >({
   title = '',

@@ -42,7 +42,7 @@ export function LinkOrFragment({
 }
 
 export function getTitleAttribute<
-  T extends { link?: LinkProps; title: string },
+  T extends { link?: LinkProps; title?: string },
 >(zaken: T[]) {
   const firstZaak = zaken[0] ?? ({} as T);
   if (firstZaak.title) {
@@ -65,7 +65,7 @@ export function getLabelValue(value: unknown) {
 
   return String(value);
 }
-export function ZakenList<T extends { link?: LinkProps; title: string }>({
+export function ZakenList<T extends { link?: LinkProps; title?: string }>({
   caption,
   items,
   className,
