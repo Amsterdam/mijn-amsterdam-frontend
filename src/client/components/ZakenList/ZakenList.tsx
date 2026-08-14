@@ -1,4 +1,4 @@
-import { isValidElement } from 'react';
+import { Fragment, isValidElement } from 'react';
 
 import {
   Column,
@@ -93,8 +93,8 @@ export function ZakenList<T extends { link?: LinkProps; title: string }>({
             'id' in zaak && zaak.id != null ? String(zaak.id) : `item-${index}`;
 
           return (
-            <>
-              <OrderedList.Item key={key}>
+            <Fragment key={key}>
+              <OrderedList.Item>
                 <LinkOrFragment link={zaak.link}>
                   <article className={styles.ListViewArticle}>
                     <Heading level={4} size="level-4">
@@ -117,7 +117,7 @@ export function ZakenList<T extends { link?: LinkProps; title: string }>({
                 </LinkOrFragment>
               </OrderedList.Item>
               <ListDivider listLength={items.length} index={index} />
-            </>
+            </Fragment>
           );
         })}
       </UnorderedList>
