@@ -16,7 +16,6 @@ export function useDisplayPropsEntries<T extends DisplayProps<object>>(
   const displayPropEntries = entries(getDisplayProps(displayProps));
 
   // Filter out display properties that are not defined for the current screen size
-
   const visibleEntries = Array.isArray(propsDisplayConfig)
     ? displayPropEntries.filter((_entry, index) => {
         const columnConfig = propsDisplayConfig[index];
