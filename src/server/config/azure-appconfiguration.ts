@@ -17,15 +17,15 @@ import { entries } from '../../universal/helpers/utils.ts';
 import { logger } from '../logging.ts';
 
 const skipAppConfiguration = process.env.BFF_SKIP_APPCONFIG === 'true';
-let client: Client | null | undefined;
+let appConfigClient: AppConfigClient | null | undefined;
 
-type Client = Pick<
+type AppConfigClient = Pick<
   AppConfigurationClient,
   'addConfigurationSetting' | 'listConfigurationSettings'
 >;
 
 async function fetchBooleanFeatureFlags(
-  appConfigurationClient: Client
+  appConfigurationClient: AppConfigClient
 ): Promise<Record<string, boolean>> {
   const featureFlags: Record<string, boolean> = {};
 
@@ -60,7 +60,7 @@ function isConflictError(error: unknown): boolean {
 }
 
 async function provisionFeatureFlags(
-  appConfigurationClient: Client,
+  appConfigurationClient: AppConfigClient,
   featureFlags: Record<string, boolean>
 ): Promise<Record<string, boolean>> {
   const provisionedFeatureFlags: Record<string, boolean> = {};
@@ -94,14 +94,14 @@ async function provisionFeatureFlags(
   return provisionedFeatureFlags;
 }
 
-function getAppConfigClient(): Client | null {
-  if (client !== undefined) {
-    return client;
+function getAppConfigClient(): AppConfigClient | null {
+  if (appConfigClient !== undefined) {
+    return appConfigClient;
   }
 
   if (skipAppConfiguration) {
-    client = null;
-    return client;
+    appConfigClient = null;
+    return appConfigClient;
   }
 
   const connectionString = process.env.APPCONFIGURATION_CONNECTION_STRING;
@@ -111,12 +111,12 @@ function getAppConfigClient(): Client | null {
         'Environment variable APPCONFIGURATION_CONNECTION_STRING is not defined'
       );
     }
-    client = null;
-    return client;
+    appConfigClient = null;
+    return appConfigClient;
   }
 
-  client = new AppConfigurationClient(connectionString);
-  return client;
+  appConfigClient = new AppConfigurationClient(connectionString);
+  return appConfigClient;
 }
 
 export function getAllFeatureToggles(): Readonly<FeatureToggles> {
