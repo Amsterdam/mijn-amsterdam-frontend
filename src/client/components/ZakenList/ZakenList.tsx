@@ -136,5 +136,6 @@ export function ListDivider({ listLength, index }: ListDividerProps) {
   if (index < listLength - 1) {
     return <hr className={styles.ListDivider} />;
   }
-  return null;
+
+  return <div className="ams-mb-sm" />;
 }
