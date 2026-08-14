@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios';
 import Mockdate from 'mockdate';
 import {
   afterAll,
@@ -41,6 +42,17 @@ const mocks = vi.hoisted(() => {
     storeNotificationsResponses: vi.fn().mockResolvedValue(undefined),
     captureException: vi.fn(),
     trackEvent: vi.fn(),
+    isOpsEnabled: vi.fn<(serviceId: string) => boolean>(() => true),
+    ensureOpsFlagExists: vi.fn(),
+  };
+});
+
+vi.mock('../config/azure-appconfiguration.ts', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    isOpsEnabled: mocks.isOpsEnabled,
+    ensureOpsFlagExists: mocks.ensureOpsFlagExists,
   };
 });
 
@@ -94,6 +106,9 @@ describe('controller', () => {
 
   beforeEach(() => {
     mocks.storeNotificationsResponses.mockClear();
+    mocks.ensureOpsFlagExists.mockReset();
+    mocks.isOpsEnabled.mockReset();
+    mocks.isOpsEnabled.mockReturnValue(true);
 
     servicesTipsByProfileType.private = {
       BRP: async () => {
@@ -224,6 +239,32 @@ describe('controller', () => {
     await Promise.all(servicePromises);
 
     expect(mocks.trackEvent).toHaveBeenCalledTimes(1);
+  });
+
+  test('loadServices returns a 503 service unavailable when OPS service is disabled', async () => {
+    const reqMock = {} as never;
+    const fetchAfvalMock = vi
+      .fn()
+      .mockResolvedValue(apiSuccessResult(['actual-content']));
+
+    mocks.isOpsEnabled.mockImplementation((serviceId: string) => {
+      return serviceId !== 'AFVAL';
+    });
+
+    const [result] = await Promise.all(
+      loadServices(reqMock, {
+        AFVAL: fetchAfvalMock,
+      } as never)
+    );
+
+    expect(fetchAfvalMock).toHaveBeenCalledTimes(1);
+    expect(result).toEqual({
+      AFVAL: apiErrorResult(
+        'Service Unavailable',
+        null,
+        HttpStatusCode.ServiceUnavailable
+      ),
+    });
   });
 
   test('storeNotificationsForAmsAppUsers omits maintenance notifications', async () => {

@@ -183,7 +183,6 @@ export function isOpsEnabled(toggleKey: string): boolean {
 
   const resolvedOpsToggle = opsFeatureToggle[opsToggleKey];
 
-  // Temporary compatibility during OPS key migration.
   if (typeof resolvedOpsToggle !== 'boolean') {
     logger.debug(
       `OPS feature toggle "${opsToggleKey}" is not a boolean or does not exist.`
@@ -194,26 +193,42 @@ export function isOpsEnabled(toggleKey: string): boolean {
   return resolvedOpsToggle;
 }
 
-export function ensureOpsFlagExists(toggleKey: string): void {
-  const opsToggleKey = ensureOpsPrefix(toggleKey);
+export async function ensureOpsFlagsExist(
+  toggleKeys: ReadonlyArray<string>
+): Promise<void> {
+  const opsFeatureFlagsToProvision: Record<string, boolean> = {};
 
-  if (typeof opsFeatureToggle[opsToggleKey] !== 'boolean') {
-    opsFeatureToggle[opsToggleKey] = true;
+  for (const toggleKey of toggleKeys) {
+    const opsToggleKey = ensureOpsPrefix(toggleKey);
+
+    if (typeof opsFeatureToggle[opsToggleKey] !== 'boolean') {
+      opsFeatureToggle[opsToggleKey] = true;
+    }
+
+    opsFeatureFlagsToProvision[opsToggleKey] = true;
   }
 
   const appConfigurationClient = getAppConfigClient();
-  if (!appConfigurationClient) {
+  if (
+    !appConfigurationClient ||
+    Object.keys(opsFeatureFlagsToProvision).length === 0
+  ) {
     return;
   }
 
-  void provisionFeatureFlags(appConfigurationClient, {
-    [opsToggleKey]: true,
-  }).catch((error) => {
+  await provisionFeatureFlags(
+    appConfigurationClient,
+    opsFeatureFlagsToProvision
+  ).catch((error) => {
     logger.warn(
       error,
-      `Failed to auto-provision OPS feature toggle "${opsToggleKey}"`
+      `Failed to auto-provision ${Object.keys(opsFeatureFlagsToProvision).length} OPS feature toggle(s)`
     );
   });
+}
+
+export async function ensureOpsFlagExists(toggleKey: string): Promise<void> {
+  await ensureOpsFlagsExist([toggleKey]);
 }
 
 export const isEnabled = isFeatureEnabled;
