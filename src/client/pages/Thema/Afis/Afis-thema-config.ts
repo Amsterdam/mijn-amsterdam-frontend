@@ -130,7 +130,7 @@ const displayPropsFacturenAfgehandeldOfOvergedragen: DisplayProps<AfisFactuurFro
     },
     colWidths: {
       large: ['25%', '25%', '50%'],
-      small: ['100%', '0', '0'],
+      small: ['true', '0', 'true'],
     },
     enableMobileListView: true,
   };
@@ -147,7 +147,6 @@ export const displayPropsTermijnenTable: DisplayProps<AfisFactuurTermijn> = {
     large: ['10%', '25%', '20%', '45%', '0'],
     small: ['0', '0', '0', '0', '100%'],
   },
-  enableMobileListView: true,
 };
 
 export const listPageTitle: Record<AfisFactuurStateFrontend, string> = {
