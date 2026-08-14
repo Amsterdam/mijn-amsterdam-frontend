@@ -11,7 +11,7 @@ import { entries } from '../../../../universal/helpers/utils.ts';
 import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
 
 type FacturenTablesProps = {
-  themaId: string;
+  themaId?: string;
   themaContextParams?: AfisFacturenThemaContextParams;
 };
 
@@ -21,6 +21,7 @@ export function AfisFacturenTables({
 }: FacturenTablesProps) {
   const { facturenByState, tableConfig } =
     useAfisFacturenData(themaContextParams);
+
   return entries(tableConfig)
     .filter(([state]) => themaContextParams?.states?.includes(state) ?? true)
     .map(
