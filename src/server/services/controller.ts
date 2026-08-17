@@ -279,7 +279,6 @@ export type ServiceMap = Prettify<
 >;
 
 export type ServiceID = Extract<keyof ServiceMap, string>;
-// tussenlaag eruit
 export type ServicesType = ServiceMap;
 
 const tipsOmit = [
