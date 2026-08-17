@@ -4,7 +4,7 @@ import {
   ensureOpsFlagsExist,
   startAppConfiguration,
 } from './config/azure-appconfiguration.ts';
-import { SERVICES_INDEX_LIST } from './services/controller.ts';
+import { SERVICES_INDEX_LIST } from './services/service-ids.ts';
 
 (async function startApp() {
   // Updates/starts appconfiguration and featuretoggles, this should happen before server start so that -
