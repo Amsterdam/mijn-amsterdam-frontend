@@ -1,10 +1,9 @@
-import { Fragment, isValidElement } from 'react';
+import { isValidElement } from 'react';
 
 import {
   Column,
   Heading,
   Icon,
-  OrderedList,
   Paragraph,
   Row,
   UnorderedList,
@@ -106,7 +105,7 @@ export function TableMobileView<
             'id' in zaak && zaak.id != null ? String(zaak.id) : `item-${index}`;
 
           return (
-            <OrderedList.Item key={key}>
+            <UnorderedList.Item key={key}>
               <LinkOrFragment link={zaak.link}>
                 <article className={styles.ListViewArticle}>
                   <Heading level={4} size="level-4">
@@ -123,7 +122,7 @@ export function TableMobileView<
                 </article>
               </LinkOrFragment>
               <ListDivider listLength={items.length} index={index} />
-            </OrderedList.Item>
+            </UnorderedList.Item>
           );
         })}
       </UnorderedList>
