@@ -56,7 +56,7 @@ function isConflictError(error: unknown): boolean {
     return false;
   }
 
-  return (error as { statusCode?: number }).statusCode === 409;
+  return (error.statusCode === 409 || error.statusCode === 412) as boolean;
 }
 
 async function provisionFeatureFlags(
@@ -123,7 +123,7 @@ export function getAllFeatureToggles(): Readonly<FeatureToggles> {
   return featureToggle;
 }
 
-function getNonRemoteFeatureToggles(
+function filterLocalFeatureToggles(
   remote: Record<string, boolean>,
   local: Record<string, boolean>
 ): Record<string, boolean> {
@@ -149,7 +149,7 @@ export async function startAppConfiguration() {
     appConfigurationClient
   );
 
-  const localOnlyFeatureFlags = getNonRemoteFeatureToggles(
+  const localOnlyFeatureFlags = filterLocalFeatureToggles(
     remoteFeatureFlags,
     featureToggle
   );
@@ -172,7 +172,7 @@ export async function startAppConfiguration() {
 }
 
 export function isFeatureEnabled(featureToggleKey: FeatureToggleKey): boolean {
-  return featureToggle[featureToggleKey];
+  return featureToggle[featureToggleKey] ?? false;
 }
 
 function ensureOpsPrefix(toggleKey: string): string {
