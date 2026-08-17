@@ -43,9 +43,18 @@ export function LinkOrFragment({
 
 export function getTitleAttribute<
   T extends { link?: LinkProps; title?: string },
->(zaken: T[]) {
+>(
+  zaken: T[],
+  displayPropEntries: ReadonlyArray<readonly [string, unknown]>
+): keyof T {
   const firstZaak = zaken[0] ?? ({} as T);
-  if (firstZaak.title) {
+  const firstDisplayPropKey = displayPropEntries[0]?.[0];
+
+  if (firstDisplayPropKey && firstZaak[firstDisplayPropKey as keyof T]) {
+    return firstDisplayPropKey as keyof T;
+  }
+
+  if (typeof firstZaak.title === 'string') {
     return 'title' as keyof T;
   }
   return Object.keys(firstZaak).filter(
@@ -76,7 +85,7 @@ export function TableMobileView<
 }: TableV2Props<T>) {
   const displayPropEntries = useDisplayPropsEntries(displayProps);
 
-  const titleAttribute = getTitleAttribute(items);
+  const titleAttribute = getTitleAttribute(items, displayPropEntries);
 
   return (
     <>

@@ -92,17 +92,28 @@ describe('TableMobileView helpers', () => {
     expect(getLabelValue(null)).toBe('null');
   });
 
-  test('getTitleAttribute prefers title and falls back to the first truthy primitive field', () => {
-    expect(getTitleAttribute([{ title: 'Zaaknaam', id: 1 }])).toBe('title');
+  test('getTitleAttribute prefers first displayProp key, then title, then first truthy primitive field', () => {
     expect(
-      getTitleAttribute([
-        {
-          title: '',
-          name: 'Zaaknaam',
-          status: 'Open',
-        },
-      ])
+      getTitleAttribute(
+        [{ title: 'Zaaknaam', id: 1, name: 'Andere naam' }],
+        [['name', { label: 'Naam' }]]
+      )
     ).toBe('name');
+
+    expect(getTitleAttribute([{ title: 'Zaaknaam', id: 1 }], [])).toBe('title');
+
+    expect(
+      getTitleAttribute(
+        [
+          {
+            title: '',
+            name: 'Zaaknaam',
+            status: 'Open',
+          },
+        ],
+        []
+      )
+    ).toBe('title');
   });
 });
 
