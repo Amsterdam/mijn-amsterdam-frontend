@@ -1,7 +1,10 @@
 import { HttpStatusCode } from 'axios';
 import type { Request, Response } from 'express';
 
-import type { ApiResponse_DEPRECATED } from '../../universal/helpers/api.ts';
+import type {
+  ApiResponse,
+  ApiResponse_DEPRECATED,
+} from '../../universal/helpers/api.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -43,6 +46,7 @@ import { fetchBelasting } from './patroon-c/belasting.ts';
 import { fetchMilieuzone, fetchOvertredingen } from './patroon-c/cleopatra.ts';
 import { fetchSubsidie } from './patroon-c/subsidie.ts';
 import { fetchSVWI } from './patroon-c/svwi.ts';
+import type { ServiceID_ } from './service-ids.ts';
 import {
   combineNotificationsWithTipsAndSort,
   fetchNotificationsAndTipsFromServices,
@@ -196,92 +200,12 @@ export const NOTIFICATIONS = async (req: Request) => {
   return apiSuccessResult(notificationsWithTipsInserted);
 };
 
-// Store all services for type derivation
-const SERVICES_INDEX = {
-  AFIS,
-  AFVAL,
-  AFVALPUNTEN,
-  AVG,
-  BELASTINGEN,
-  BEZWAREN,
-  BODEM,
-  BRP,
-  CMS_CONTENT,
-  CMS_MAINTENANCE_NOTIFICATIONS,
-  ERFPACHT,
-  HLI,
-  HORECA,
-  KLACHTEN,
-  KREFIA,
-  KVK,
-  MILIEUZONE,
-  MY_LOCATION,
-  NOTIFICATIONS,
-  OVERTREDINGEN,
-  PARKEREN,
-  SUBSIDIES,
-  SVWI,
-  KLANT_CONTACT,
-  TOERISTISCHE_VERHUUR,
-  VAREN,
-  VERGUNNINGEN,
-  WMO,
-  JEUGD,
-  WONEN,
-  WPI_AANVRAGEN,
-  WPI_BBZ,
-  WPI_SPECIFICATIES,
-  WPI_TONK,
-  WPI_TOZO,
-  KTO,
-};
-
-export const SERVICES_INDEX_LIST = Object.freeze(
-  Object.keys(SERVICES_INDEX) as Array<keyof typeof SERVICES_INDEX>
-);
-
-export type ServicesType = Prettify<typeof SERVICES_INDEX>;
-export type ServiceID = keyof ServicesType;
-export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
-
-type PrivateServices = Omit<ServicesType, 'VAREN'>;
-
-type PrivateServicesAttributeBased = Pick<
-  ServiceMap,
-  'CMS_CONTENT' | 'CMS_MAINTENANCE_NOTIFICATIONS' | 'NOTIFICATIONS'
+type ServicesByProfileType = Record<
+  ProfileType,
+  Partial<Record<ServiceID_, unknown>>
 >;
 
-type CommercialServices = Pick<
-  ServiceMap,
-  | 'AFIS'
-  | 'AFVAL'
-  | 'AFVALPUNTEN'
-  | 'BEZWAREN'
-  | 'BODEM'
-  | 'CMS_CONTENT'
-  | 'CMS_MAINTENANCE_NOTIFICATIONS'
-  | 'ERFPACHT'
-  | 'HORECA'
-  | 'KVK'
-  | 'MILIEUZONE'
-  | 'MY_LOCATION'
-  | 'NOTIFICATIONS'
-  | 'OVERTREDINGEN'
-  | 'PARKEREN'
-  | 'SUBSIDIES'
-  | 'TOERISTISCHE_VERHUUR'
-  | 'VAREN'
-  | 'VERGUNNINGEN'
-  | 'KTO'
->;
-
-type ServicesByProfileType = {
-  private: PrivateServices;
-  'private-attributes': PrivateServicesAttributeBased;
-  commercial: CommercialServices;
-};
-
-export const servicesByProfileType: ServicesByProfileType = {
+export const servicesByProfileType = {
   private: {
     AFIS,
     AFVAL,
@@ -346,7 +270,17 @@ export const servicesByProfileType: ServicesByProfileType = {
     VERGUNNINGEN,
     KTO,
   },
-};
+} satisfies ServicesByProfileType;
+
+export type ServiceMap = Prettify<
+  typeof servicesByProfileType.private &
+    typeof servicesByProfileType.commercial &
+    (typeof servicesByProfileType)['private-attributes']
+>;
+
+export type ServiceID = Extract<keyof ServiceMap, string>;
+// tussenlaag eruit
+export type ServicesType = ServiceMap;
 
 const tipsOmit = [
   'AFVAL',
@@ -359,12 +293,12 @@ const tipsOmit = [
 export const servicesTipsByProfileType = {
   private: omit(
     servicesByProfileType.private,
-    tipsOmit as Array<keyof PrivateServices>
+    tipsOmit as Array<keyof typeof servicesByProfileType.private>
   ),
   'private-attributes': {},
   commercial: omit(
     servicesByProfileType.commercial,
-    tipsOmit as Array<keyof CommercialServices>
+    tipsOmit as Array<keyof typeof servicesByProfileType.commercial>
   ),
 };
 
@@ -395,39 +329,38 @@ async function storeNotificationsForAmsAppUsers(
 
 export function loadServices(
   req: Request,
-  serviceMap:
-    | Partial<PrivateServices>
-    | Partial<CommercialServices>
-    | Partial<PrivateServicesAttributeBased>,
+  serviceMap: Partial<ServiceMap>,
   trackDurationTelemetry: boolean = false
 ) {
   const startTimeMs = Date.now();
   return Object.entries(serviceMap).map(([serviceID, fetchService]) => {
     // Return service result as Object like { SERVICE_ID: result }
     return fetchService(req)
-      .then((result) => {
-        if (!isOpsEnabled(serviceID) && result?.status === 'OK') {
+      .then(
+        (result: ApiResponse<unknown> | ApiResponse_DEPRECATED<unknown>) => {
+          if (!isOpsEnabled(serviceID) && result?.status === 'OK') {
+            return {
+              [serviceID]: apiErrorResult(
+                'Service Unavailable',
+                null,
+                HttpStatusCode.ServiceUnavailable
+              ),
+            };
+          }
+
+          if (trackDurationTelemetry && result?.status === 'OK') {
+            trackEvent('services-duration', {
+              serviceId: serviceID,
+              durationMs: Date.now() - startTimeMs,
+              status: result.status,
+            });
+          }
+
           return {
-            [serviceID]: apiErrorResult(
-              'Service Unavailable',
-              null,
-              HttpStatusCode.ServiceUnavailable
-            ),
+            [serviceID]: result,
           };
         }
-
-        if (trackDurationTelemetry && result?.status === 'OK') {
-          trackEvent('services-duration', {
-            serviceId: serviceID,
-            durationMs: Date.now() - startTimeMs,
-            status: result.status,
-          });
-        }
-
-        return {
-          [serviceID]: result,
-        };
-      })
+      )
       .catch((error: Error) => {
         captureException(error);
         return {
