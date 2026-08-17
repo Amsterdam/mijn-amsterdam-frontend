@@ -28,12 +28,14 @@ export default [
       'react/prop-types': 'off',
       'no-console': 'warn',
       'dot-notation': 'error',
+      'no-nested-ternary': 'warn',
       'no-else-return': 'error',
       'object-shorthand': 'error',
       'react/react-in-jsx-scope': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
       'react/jsx-curly-brace-presence': 'error',
       '@typescript-eslint/consistent-type-imports': 'error',
+      curly: ['error', 'all'],
       'react/function-component-definition': [
         'warn',
         {

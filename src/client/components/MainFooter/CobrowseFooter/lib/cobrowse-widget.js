@@ -47,7 +47,9 @@ export class CobrowseWidget {
   }
 
   async loadCobrowseSDK() {
-    if (window.CobrowseIO) return window.CobrowseIO;
+    if (window.CobrowseIO) {
+      return window.CobrowseIO;
+    }
     try {
       const script = document.createElement('script');
       script.src = 'https://js.cobrowse.io/CobrowseIO.js';
@@ -144,7 +146,9 @@ export class CobrowseWidget {
   }
 
   createCobrowseFrame() {
-    if (document.getElementById('cobrowse-frame')) return;
+    if (document.getElementById('cobrowse-frame')) {
+      return;
+    }
     this.setIsScreensharing(true);
 
     const frame = document.createElement('div');

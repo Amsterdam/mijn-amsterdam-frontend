@@ -1,17 +1,21 @@
+import { generatePath } from 'react-router';
+
 import { DataTableBijzondereBepalingen } from './DossierDetail/DatalistBijzondereBepalingen.tsx';
 import { DatalistGeneral } from './DossierDetail/DatalistGeneral.tsx';
 import { DatalistJuridisch } from './DossierDetail/DatalistJuridisch.tsx';
 import { DatalistsFinancieel } from './DossierDetail/DatalistsFinancieel.tsx';
-import { useDossierData as useDossierDetailData } from './DossierDetail/useErfpachtDossierData.hook.ts';
+import { useDossierDetailData as useDossierDetailData } from './DossierDetail/useErfpachtDossierDetailData.hook.ts';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaDetailPagina } from '../../../components/Thema/ThemaDetailPagina.tsx';
+import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { useAfisThemaData } from '../Afis/useAfisThemaData.hook.tsx';
 
-export function ErfpachtDetail() {
+export function ErfpachtDossierDetail() {
   const {
     dossier,
+    zaken,
     isError,
     isLoading,
     isErrorThemaData,
@@ -21,9 +25,11 @@ export function ErfpachtDetail() {
     themaId,
     title,
     themaConfig,
+    tableConfigZaken,
   } = useDossierDetailData();
+  useHTMLDocumentTitle(themaConfig.detailPageDossier.route);
+
   const afis = useAfisThemaData();
-  useHTMLDocumentTitle(themaConfig.detailPage.route);
   return (
     <ThemaDetailPagina
       themaId={themaId}
@@ -66,6 +72,19 @@ export function ErfpachtDetail() {
                   <DatalistsFinancieel
                     dossier={dossier}
                     debiteurNummer={afis.businessPartnerId}
+                  />
+                </CollapsiblePanel>
+              </PageContentCell>
+
+              <PageContentCell>
+                <CollapsiblePanel title="Wijzigingen">
+                  <ThemaPaginaTable
+                    zaken={zaken}
+                    listPageRoute={generatePath(
+                      themaConfig.listPageDossierZaken.route.path,
+                      { dossierId: dossier.dossierId }
+                    )}
+                    displayProps={tableConfigZaken.displayProps}
                   />
                 </CollapsiblePanel>
               </PageContentCell>

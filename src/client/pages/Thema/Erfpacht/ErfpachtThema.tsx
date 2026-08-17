@@ -4,9 +4,9 @@ import {
   filterErfpachtFacturen,
   mapErfpachtFacturen,
 } from './Erfpacht-helpers.tsx';
-import { useErfpachtThemaData } from './useErfpachtThemaData.hook.ts';
+import { useErfpachtThemaData } from './useErfpachtThemaData.hook.tsx';
 import type { ErfpachtDossierFrontend } from '../../../../server/services/erfpacht/erfpacht-types.ts';
-import { entries } from '../../../../universal/helpers/utils.ts';
+import type { ErfpachtZaakExcerptFrontend } from '../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
@@ -23,28 +23,33 @@ export function ErfpachtThema() {
     isLoading,
     tableConfig,
     dossiers,
+    zaken,
     erfpachtFacturenTableConfig,
     themaConfig,
   } = useErfpachtThemaData();
 
   useHTMLDocumentTitle(themaConfig.route);
 
-  const pageContentTables = tableConfig
-    ? entries(tableConfig).map(
-        ([kind, { title, displayProps, listPageRoute, maxItems }]) => {
-          return (
-            <ThemaPaginaTable<ErfpachtDossierFrontend>
-              key={kind}
-              title={title}
-              zaken={dossiers}
-              displayProps={displayProps}
-              maxItems={maxItems}
-              listPageRoute={listPageRoute}
-            />
-          );
-        }
-      )
-    : [];
+  const zakenTableConfig = tableConfig['erfpacht-zaken'];
+  const zakenTable = (
+    <ThemaPaginaTable<ErfpachtDossierFrontend | ErfpachtZaakExcerptFrontend>
+      title={zakenTableConfig.title}
+      zaken={zaken}
+      displayProps={zakenTableConfig.displayProps}
+      maxItems={zakenTableConfig.maxItems}
+      listPageRoute={zakenTableConfig.listPageRoute}
+    />
+  );
+  const dossiersTableConfig = tableConfig['erfpacht-dossiers'];
+  const dossiersTable = (
+    <ThemaPaginaTable<ErfpachtDossierFrontend | ErfpachtZaakExcerptFrontend>
+      title={dossiersTableConfig.title}
+      zaken={dossiers}
+      displayProps={dossiersTableConfig.displayProps}
+      maxItems={dossiersTableConfig.maxItems}
+      listPageRoute={dossiersTableConfig.listPageRoute}
+    />
+  );
 
   return (
     <ThemaPagina
@@ -56,25 +61,32 @@ export function ErfpachtThema() {
       maintenanceNotificationsPageSlug="erfpacht"
       pageContentTop={
         <>
-          <PageContentCell spanWide={8}>
-            <Paragraph>
-              Hieronder ziet u de gegevens van uw erfpachtrechten. Wij
-              vernieuwen dit portaal. Daarom kunt u op dit moment de status van
-              uw wijzigingsaanvraag helaas niet inzien. Als u een
-              ontvangstbevestiging van ons heeft gehad, kunt u ervan uitgaan dat
-              wij uw aanvraag hebben ontvangen. Heeft u een toch nog een vraag,
-              stuur dan een e-mail naar{' '}
-              <Link rel="noreferrer" href="mailto:erfpacht@amsterdam.nl">
-                erfpacht@amsterdam.nl
-              </Link>
-              .
-            </Paragraph>
-          </PageContentCell>
+          {themaConfig.featureToggle.wijzigingsaanvragenActive && (
+            <PageContentCell spanWide={8}>
+              <Heading size="level-4" level={4}>
+                Status aanvraag erfpachtwijziging
+              </Heading>
+              <Paragraph className="ams-mb-m">
+                Heeft u na 12 januari 2026 een wijziging voor uw erfpachtrecht
+                aangevraagd via het online formulier? Dan ziet u hieronder de
+                status van uw aanvraag. Aanvragen van vóór 12 januari 2026 of
+                aanvragen die via e-mail zijn ingediend, staan hier niet bij.
+              </Paragraph>
+              <Paragraph>
+                Als u een ontvangstbevestiging heeft gehad, is uw aanvraag door
+                ons ontvangen. Heeft u nog een vraag, stuur dan een e-mail naar{' '}
+                <Link rel="noreferrer" href="mailto:erfpacht@amsterdam.nl">
+                  erfpacht@amsterdam.nl
+                </Link>
+              </Paragraph>
+            </PageContentCell>
+          )}
         </>
       }
       pageContentMain={
         <>
-          {pageContentTables}
+          {themaConfig.featureToggle.wijzigingsaanvragenActive && zakenTable}
+          {dossiersTable}
           <AfisFacturenTables
             themaContextParams={{
               tableConfig: erfpachtFacturenTableConfig,

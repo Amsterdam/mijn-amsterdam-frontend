@@ -35,6 +35,7 @@ interface ThemaDetailPaginaProps<T> {
   title?: string;
   className?: string;
   showStatusSteps?: boolean;
+  showStatusStepsSubstepHeading?: boolean;
 }
 
 export function ThemaDetailPagina<T extends Partial<ZaakAanvraagDetail>>({
@@ -51,6 +52,7 @@ export function ThemaDetailPagina<T extends Partial<ZaakAanvraagDetail>>({
   reverseSteps = false,
   statusLabel = 'Status',
   showStatusSteps = true,
+  showStatusStepsSubstepHeading = true,
 }: ThemaDetailPaginaProps<T>) {
   let statusItemSteps = zaak?.steps ?? [];
 
@@ -89,7 +91,11 @@ export function ThemaDetailPagina<T extends Partial<ZaakAanvraagDetail>>({
 
       {showStatusSteps && zaak && !!statusItemSteps.length && (
         <PageContentCell startWide={1} spanWide={12}>
-          <Steps title={statusLabel} steps={statusItemSteps} />
+          <Steps
+            title={statusLabel}
+            steps={statusItemSteps}
+            showSubstepHeading={showStatusStepsSubstepHeading}
+          />
         </PageContentCell>
       )}
       {pageContentBottom}

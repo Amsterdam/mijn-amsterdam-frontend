@@ -46,8 +46,8 @@ const pasUnknownTypeState = createHLIState({
 
 const createHLIStadspasComponent = componentCreator({
   component: HLIStadspasDetail,
-  routePath: themaConfig.stadspasDetailPage.route.path,
-  routeEntry: generatePath(themaConfig.stadspasDetailPage.route.path, {
+  routePath: themaConfig.detailPageStadspas.route.path,
+  routeEntry: generatePath(themaConfig.detailPageStadspas.route.path, {
     passNumber: `${passNumber}`,
   }),
 });
@@ -176,7 +176,7 @@ describe('Stadspas detail page', () => {
                 dateEnd: '2080-08-31T21:59:59.000Z',
                 dateEndFormatted: '31 augustus 2080',
                 readMoreLink: {
-                  to: 'https://www.amsterdam.nl/stadspas/kindtegoed/',
+                  to: 'https://stadspas.amsterdam.nl/tegoed-en-meer/kindtegoed#',
                   title:
                     'Lees meer over de kindtegoed Kindtegoed 10-14 regeling op amsterdam.nl.',
                 },
@@ -191,7 +191,7 @@ describe('Stadspas detail page', () => {
     const link = screen.getByRole('link', { name: /Meer informatie/ });
     expect(link).toHaveAttribute(
       'href',
-      'https://www.amsterdam.nl/stadspas/kindtegoed/'
+      'https://stadspas.amsterdam.nl/tegoed-en-meer/kindtegoed#'
     );
   });
 

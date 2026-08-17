@@ -10,7 +10,6 @@ import {
 } from './app.ts';
 import { themaConfig as themaConfigAfis } from '../../client/pages/Thema/Afis/Afis-thema-config.ts';
 import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config.ts';
-import { themaConfig as themaConfigErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
 import { themaConfig as themaConfigJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
 import { themaConfig as themaConfigToeristischeVerhuur } from '../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
@@ -137,6 +136,7 @@ const httpsAgentConfigBFF = {
   cert: getCert('BFF_SERVER_CLIENT_CERT'),
   key: getCert('BFF_SERVER_CLIENT_KEY'),
 };
+export const httpsAgentBFF = new https.Agent(httpsAgentConfigBFF);
 
 export const wpiAuthHeader = {
   'x-api-key': getFromEnv('BFF_WPI_API_KEY', true),
@@ -162,7 +162,7 @@ const ApiConfig_ = {
       'Content-type': 'application/json; charset=utf-8',
       'x-cache-key-supplement': 'JZD',
     },
-    httpsAgent: new https.Agent(httpsAgentConfigBFF),
+    httpsAgent: httpsAgentBFF,
   },
   ZORGNED_AV: {
     method: 'post',
@@ -243,7 +243,7 @@ const ApiConfig_ = {
     url: `${getFromEnv('BFF_CLEOPATRA_API_ENDPOINT')}`,
     postponeFetch: !FeatureToggle.cleopatraApiActive,
     method: 'POST',
-    httpsAgent: new https.Agent(httpsAgentConfigBFF),
+    httpsAgent: httpsAgentBFF,
   },
   DECOS_API: {
     url: `${getFromEnv('BFF_DECOS_API_BASE_URL')}`,
@@ -301,18 +301,6 @@ const ApiConfig_ = {
   BAG: {
     url: `${getFromEnv('BFF_BAG_API_BASE_URL')}`,
     cacheTimeout: 24 * ONE_HOUR_MS, // 24 hours
-  },
-  ERFPACHT: {
-    url: getFromEnv('BFF_ERFPACHT_API_URL'),
-    passthroughOIDCToken: true,
-    httpsAgent: new https.Agent(httpsAgentConfigBFF),
-    postponeFetch:
-      !themaConfigErfpacht.featureToggle.active ||
-      !getFromEnv('BFF_ERFPACHT_API_URL'),
-    headers: {
-      'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',
-      apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
-    },
   },
   AFVAL: {
     url: `https://api.data.amsterdam.nl/v1/afvalwijzer/afvalwijzer/`,
