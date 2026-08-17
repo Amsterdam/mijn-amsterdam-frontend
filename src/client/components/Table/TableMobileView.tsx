@@ -97,26 +97,24 @@ export function TableMobileView<
             'id' in zaak && zaak.id != null ? String(zaak.id) : `item-${index}`;
 
           return (
-            <Fragment key={key}>
-              <OrderedList.Item>
-                <LinkOrFragment link={zaak.link}>
-                  <article className={styles.ListViewArticle}>
-                    <Heading level={4} size="level-4">
-                      {zaak[titleAttribute] as React.ReactNode}
-                    </Heading>
-                    {displayPropEntries.slice(1).map(([propKey, { label }]) => {
-                      const value = zaak[propKey as keyof T];
-                      return (
-                        <Paragraph key={propKey}>
-                          <strong>{label}:</strong> {getLabelValue(value)}
-                        </Paragraph>
-                      );
-                    })}
-                  </article>
-                </LinkOrFragment>
-                <ListDivider listLength={items.length} index={index} />
-              </OrderedList.Item>
-            </Fragment>
+            <OrderedList.Item key={key}>
+              <LinkOrFragment link={zaak.link}>
+                <article className={styles.ListViewArticle}>
+                  <Heading level={4} size="level-4">
+                    {zaak[titleAttribute] as React.ReactNode}
+                  </Heading>
+                  {displayPropEntries.slice(1).map(([propKey, { label }]) => {
+                    const value = zaak[propKey as keyof T];
+                    return (
+                      <Paragraph key={propKey}>
+                        <strong>{label}:</strong> {getLabelValue(value)}
+                      </Paragraph>
+                    );
+                  })}
+                </article>
+              </LinkOrFragment>
+              <ListDivider listLength={items.length} index={index} />
+            </OrderedList.Item>
           );
         })}
       </UnorderedList>
