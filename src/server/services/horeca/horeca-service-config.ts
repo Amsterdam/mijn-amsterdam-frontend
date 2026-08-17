@@ -4,7 +4,7 @@ import {
 } from '../decos/decos-service.ts';
 import { registerWithDocumentsProvider } from '../shared/document-provider-registry.ts';
 
-const horecDocuments = registerWithDocumentsProvider({
+const horecaDocuments = registerWithDocumentsProvider({
   domainService: 'horeca',
   source: 'decos',
   async listDocuments(authProfileAndToken, payload, helpers) {
@@ -19,4 +19,4 @@ const horecDocuments = registerWithDocumentsProvider({
   },
 });
 
-export const createFetchDocumentsListUrl = horecDocuments.createListUrl;
+export const createFetchDocumentsListUrl = horecaDocuments.createListUrl;
