@@ -4,6 +4,8 @@ import {
   format,
   formatDistanceToNow,
   isThisYear,
+  isValid,
+  parse,
   parseISO,
 } from 'date-fns';
 import { nl } from 'date-fns/locale/nl';
@@ -219,4 +221,32 @@ export function asEnum<T extends readonly string[]>(values: T) {
       [K in T[number]]: K;
     }
   );
+}
+
+export function parseDutchDateString(dateString: string): Date | null {
+  if (!/^\d{2}-\d{2}-\d{4}$/.test(dateString)) {
+    return null;
+  }
+
+  try {
+    const parsed = parse(dateString, 'dd-MM-yyyy', new Date());
+
+    if (!isValid(parsed)) {
+      return null;
+    }
+
+    return new Date(
+      Date.UTC(
+        parsed.getFullYear(),
+        parsed.getMonth(),
+        parsed.getDate(),
+        0,
+        0,
+        0,
+        0
+      )
+    );
+  } catch (_error) {
+    return null;
+  }
 }

@@ -1,11 +1,10 @@
-import { ConnectedCirclesIcon } from '@amsterdam/design-system-react-icons';
-
 import { AfspraakListPage } from './Afspraken/AfspraakListPage.tsx';
 import { ContactgegevenInstellen } from './Communicatievoorkeuren/ContactgegevenInstellen.tsx';
 import { ContactmomentenListPage } from './Contactmomenten/ContactmomentenListPage.tsx';
 import { themaConfig } from './KlantContact-thema-config.ts';
 import { KlantContactThema } from './KlantContactThema.tsx';
 import { isLoading } from '../../../../universal/helpers/api.ts';
+import { IconAfspraak } from '../../../assets/icons/index.tsx';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
@@ -52,5 +51,5 @@ export const menuItem: ThemaMenuItem = {
         klantContactContent?.afspraken?.length)
     );
   },
-  IconSVG: ConnectedCirclesIcon,
+  IconSVG: IconAfspraak,
 };

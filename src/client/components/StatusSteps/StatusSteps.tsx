@@ -24,6 +24,32 @@ interface StatusStepDocumentsProps {
   altDocumentContent?: ReactNode;
 }
 
+function getStepAriaLabel(item: StatusLineItem): string {
+  if (item.isChecked && !item.isActive) {
+    return 'Status Afgerond';
+  }
+
+  if (item.isActive) {
+    return 'Huidige status';
+  }
+
+  return 'Toekomstige status';
+}
+
+function getStepStatus(
+  item: StatusLineItem
+): 'current' | 'completed' | undefined {
+  if (item.isActive) {
+    return 'current';
+  }
+
+  if (item.isChecked) {
+    return 'completed';
+  }
+
+  return undefined;
+}
+
 export function StatusStepDocuments({
   documents = [],
   altDocumentContent,
@@ -46,12 +72,74 @@ export function StatusStepDocuments({
   );
 }
 
+function Step({
+  step: item,
+  isSubstep,
+  showSubstepHeading = true,
+  children,
+}: {
+  step: StatusLineItem;
+  isSubstep?: boolean;
+  children?: ReactNode;
+  showSubstepHeading?: boolean;
+}) {
+  const StepComponent = isSubstep ? ProgressList.Substep : ProgressList.Step;
+  return (
+    <StepComponent
+      key={item.id}
+      heading={item.status} // Not used in substeps.
+      status={getStepStatus(item)}
+      className={styles.Step}
+      aria-label={getStepAriaLabel(item)}
+      hasSubsteps={!!item.substeps?.length}
+    >
+      {isSubstep && showSubstepHeading && (
+        <>
+          <Heading
+            level={4}
+            size="level-4"
+            className={styles.StepSubstepStatus}
+          >
+            {item.status}
+          </Heading>
+        </>
+      )}
+      <time className={styles.StepStatusDate} dateTime={item.datePublished}>
+        {defaultDateFormat(item.datePublished)}
+      </time>
+      {item.description && (
+        <div>
+          {parseHTML(item.description)}
+          {!!item.actionButtonItems?.length && (
+            <ActionGroup className={styles.PanelActionGroup}>
+              {item.actionButtonItems.map(({ to, title }) => (
+                <MaButtonLink key={to} href={to} variant="secondary">
+                  {title}
+                  <Icon svg={LinkExternalIcon} size="heading-5" />
+                </MaButtonLink>
+              ))}
+            </ActionGroup>
+          )}
+        </div>
+      )}
+      {!!(item.altDocumentContent || item.documents?.length) && (
+        <StatusStepDocuments
+          documents={item.documents}
+          altDocumentContent={item.altDocumentContent}
+        />
+      )}
+      {children}
+    </StepComponent>
+  );
+}
+
 type StepsProps = {
   steps: StatusLineItem[];
   title?: string;
+  showSubstepHeading?: boolean;
 };
 
-export function Steps({ steps, title }: StepsProps) {
+export function Steps({ steps, title, showSubstepHeading = true }: StepsProps) {
   return (
     <section>
       {title && (
@@ -59,57 +147,27 @@ export function Steps({ steps, title }: StepsProps) {
           {title}
         </Heading>
       )}
-
       <ProgressList headingLevel={3} collapsible={false}>
-        {steps.map((item) => (
-          <ProgressList.Step
-            key={item.id}
-            heading={item.status}
-            status={
-              item.isActive
-                ? 'current'
-                : item.isChecked
-                  ? 'completed'
-                  : undefined
-            }
-            className={styles.Step}
-            aria-label={
-              item.isChecked && !item.isActive
-                ? 'Status Afgerond'
-                : item.isActive
-                  ? 'Huidige status'
-                  : 'Toekomstige status'
-            }
-          >
-            <time
-              className={styles.StepStatusDate}
-              dateTime={item.datePublished}
-            >
-              {defaultDateFormat(item.datePublished)}
-            </time>
-            {item.description && (
-              <div>
-                {parseHTML(item.description)}
-                {!!item.actionButtonItems?.length && (
-                  <ActionGroup className={styles.PanelActionGroup}>
-                    {item.actionButtonItems.map(({ to, title }) => (
-                      <MaButtonLink key={to} href={to} variant="secondary">
-                        {title}
-                        <Icon svg={LinkExternalIcon} size="heading-5" />
-                      </MaButtonLink>
+        {steps
+          .filter((step) => step.isVisible !== false)
+          .map((item) => (
+            <Step key={item.id} step={item}>
+              {!!item.substeps?.length && (
+                <ProgressList.Substeps>
+                  {item.substeps
+                    ?.filter((step) => step.isVisible !== false)
+                    .map((substep) => (
+                      <Step
+                        key={substep.id}
+                        step={substep}
+                        isSubstep
+                        showSubstepHeading={showSubstepHeading}
+                      />
                     ))}
-                  </ActionGroup>
-                )}
-              </div>
-            )}
-            {!!(item.altDocumentContent || item.documents?.length) && (
-              <StatusStepDocuments
-                documents={item.documents}
-                altDocumentContent={item.altDocumentContent}
-              />
-            )}
-          </ProgressList.Step>
-        ))}
+                </ProgressList.Substeps>
+              )}
+            </Step>
+          ))}
       </ProgressList>
     </section>
   );

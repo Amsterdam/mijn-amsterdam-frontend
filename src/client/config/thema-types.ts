@@ -36,7 +36,9 @@ export type ThemaFeatureToggle<T = boolean> = {
 };
 type RedactedScope = 'full' | 'content' | 'none';
 
-export type PageConfig<T extends string> = {
+export type PageConfig<
+  T extends `themaPage${string}` | `listPage${string}` | `detailPage${string}`,
+> = {
   [key in T]: {
     title?: string;
     documentTitle?: string;

@@ -42,6 +42,7 @@ import { streamEndpointQueryParamKeys } from '../../universal/config/app.ts';
 import { entries } from '../../universal/helpers/utils.ts';
 import { getFromEnv } from '../helpers/env.ts';
 import { fetchAdoptableTrashContainerTips } from './afval/adoptable-trash-containers.ts';
+import { fetchErfpachtNotifications } from './erfpacht/erfpacht-notifications.ts';
 
 // Every 3rd notification will be a tip if one is available.
 const INSERT_TIP_AT_EVERY_NTH_INDEX = 3;
@@ -109,6 +110,7 @@ export const notificationServices = {
     toeristischeVerhuur: fetchToeristischeVerhuurNotifications,
     vergunningen: fetchVergunningenNotifications,
     parkeren: fetchParkeerVergunningenNotifications,
+    erfpacht: fetchErfpachtNotifications,
   },
 } as const satisfies NotificationServicesListByProfileType;
 
@@ -119,6 +121,7 @@ export function getTipsAndNotificationsFromApiResults(
   const tips: MyNotification[] = [];
 
   // Collect the success response data from the service results and send to the tips Api.
+  // Exclude any error responses (responding automatically with null as content).
   for (const { content } of responses) {
     if (content === null || typeof content !== 'object') {
       continue;

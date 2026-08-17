@@ -12,11 +12,12 @@ import { useLocation, useNavigate } from 'react-router';
 import styles from './MaLink.module.scss';
 import { usePageTypeSettingValue } from '../../hooks/usePageTypeSetting.ts';
 
-type MaClassNameVariant =
+export type MaClassNameVariant =
   | 'fatNoUnderline'
   | 'noDefaultUnderline'
   | 'noUnderline'
-  | 'fatNoDefaultUnderline';
+  | 'fatNoDefaultUnderline'
+  | 'default';
 
 type MaLinkProps = LinkProps & {
   maVariant?: MaClassNameVariant;
@@ -27,6 +28,7 @@ const maClassName: Record<MaClassNameVariant, string> = {
   noDefaultUnderline: 'MaRouterLink__no-default-underline',
   fatNoDefaultUnderline: 'MaRouterLink__no-default-underline-fat',
   noUnderline: 'MaRouterLink__no-underline',
+  default: '',
 };
 
 export function MaLink({

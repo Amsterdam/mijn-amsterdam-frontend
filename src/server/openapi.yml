@@ -4,12 +4,11 @@ info:
   title: Mijn Amsterdam BFF api definition
   description: The BFF api is used to do data fetching, data transformations, short-lived request/response caching, error handling and response formatting.
   contact:
-    name: Datapunt Support
+    name: Mijn Amsterdam
     url: https://mijn.amsterdam.nl/
-    email: datapunt@amsterdam.nl
 servers:
-  - url: https://mijn.amsterdam.n/api/v1
-  - url: https://acc.mijn.amsterdam.n/api/v1
+  - url: https://mijn.amsterdam.nl/api/v1
+  - url: https://az-acc.mijn.amsterdam.nl/api/v1
   - url: http://localhost:5000/api/v1
 paths:
   /auth/digid/login:
