@@ -5,13 +5,17 @@ import {
   getDocumentsProvider,
   type DocumentsProvider,
 } from './document-provider-registry.ts';
+import {
+  apiSuccessResult,
+  type ApiResponse,
+} from '../../../universal/helpers/api.ts';
 import { isOpsEnabled } from '../../config/azure-appconfiguration.ts';
 import type { RequestWithQueryParams } from '../../routing/route-helpers.ts';
+import { serviceUnavailableResponse } from '../../routing/route-helpers.ts';
 import {
-  sendBadRequest,
+  badRequestResponse,
   sendDocumentDownloadResponse,
   sendResponse,
-  sendServiceUnavailable,
   type ResponseAuthenticated,
 } from '../../routing/route-helpers.ts';
 
@@ -20,34 +24,28 @@ type DocumentsPayloadBase = {
   source: string;
 };
 
-type DocumentsResolvedContext<
-  TPayload extends DocumentsPayloadBase,
-> = {
+type DocumentsResolvedContext<TPayload extends DocumentsPayloadBase> = {
   payload: TPayload;
   provider: DocumentsProvider;
 };
 
-function resolveDocumentsContext<
-  TPayload extends DocumentsPayloadBase,
->(
+function resolveDocumentContext<TPayload extends DocumentsPayloadBase>(
   req: RequestWithQueryParams<{ id: string }>,
   res: ResponseAuthenticated,
   payloadSchema: z.ZodType<TPayload>
-): DocumentsResolvedContext<TPayload> | null {
+): ApiResponse<DocumentsResolvedContext<TPayload>> {
   const decryptResult = decryptPayloadAndValidateSessionID<
     Record<string, unknown>
   >(req.query.id, res.locals.authProfileAndToken);
 
   if (decryptResult.status === 'ERROR') {
-    sendResponse(res, decryptResult);
-    return null;
+    return decryptResult;
   }
 
   const payloadResult = payloadSchema.safeParse(decryptResult.content.payload);
 
   if (!payloadResult.success) {
-    sendBadRequest(res, 'Invalid shared documents payload');
-    return null;
+    return badRequestResponse('Invalid shared documents payload');
   }
 
   const provider = getDocumentsProvider(
@@ -56,22 +54,19 @@ function resolveDocumentsContext<
   );
 
   if (!provider) {
-    sendBadRequest(
-      res,
+    return badRequestResponse(
       `No shared documents provider for ${payloadResult.data.domainService}/${payloadResult.data.source}`
     );
-    return null;
   }
 
   if (!isOpsEnabled(provider.opsToggleKey)) {
-    sendServiceUnavailable(res, `${provider.opsToggleKey} is disabled`);
-    return null;
+    return serviceUnavailableResponse(`${provider.opsToggleKey} is disabled`);
   }
 
-  return {
+  return apiSuccessResult({
     payload: payloadResult.data,
     provider,
-  };
+  });
 }
 
 const DocumentsListPayloadSchema = z.object({
@@ -84,15 +79,17 @@ export async function handleFetchDocumentsList(
   req: RequestWithQueryParams<{ id: string }>,
   res: ResponseAuthenticated
 ) {
-  const context = resolveDocumentsContext(
+  const documentContextResponse = resolveDocumentContext(
     req,
     res,
     DocumentsListPayloadSchema
   );
 
-  if (!context) {
-    return;
+  if (documentContextResponse.status !== 'OK') {
+    return sendResponse(res, documentContextResponse);
   }
+
+  const context = documentContextResponse.content;
 
   const response = await context.provider.listDocuments(
     res.locals.authProfileAndToken,
@@ -112,15 +109,17 @@ export async function handleFetchDocumentDownload(
   req: RequestWithQueryParams<{ id: string }>,
   res: ResponseAuthenticated
 ) {
-  const context = resolveDocumentsContext(
+  const documentContextResponse = resolveDocumentContext(
     req,
     res,
     DocumentsDownloadPayloadSchema
   );
 
-  if (!context) {
-    return;
+  if (documentContextResponse.status !== 'OK') {
+    return sendResponse(res, documentContextResponse);
   }
+
+  const context = documentContextResponse.content;
 
   const response = await context.provider.downloadDocument(
     res.locals.authProfileAndToken,

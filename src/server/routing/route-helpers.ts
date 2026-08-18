@@ -218,11 +218,15 @@ export function sendDocumentDownloadResponse(
     : res.send(documentResponse.content.data);
 }
 
-export function sendBadRequest(res: Response, reason: string) {
-  return sendResponse(
-    res,
-    apiErrorResult(`Bad request: ${reason}`, null, HttpStatusCode.BadRequest)
+export function badRequestResponse(reason: string) {
+  return apiErrorResult(
+    `Bad request: ${reason}`,
+    null,
+    HttpStatusCode.BadRequest
   );
+}
+export function sendBadRequest(res: Response, reason: string) {
+  return sendResponse(res, badRequestResponse(reason));
 }
 
 export function sendInternalServerError(res: Response, reason: string) {
@@ -285,15 +289,15 @@ export function send404(res: Response) {
   );
 }
 
-export function sendServiceUnavailable(res: Response, messageDetails?: string) {
-  return sendResponse(
-    res,
-    apiErrorResult(
-      appendConditionalDetail('Service Unavailable', messageDetails),
-      null,
-      HttpStatusCode.ServiceUnavailable
-    )
+export function serviceUnavailableResponse(messageDetails?: string) {
+  return apiErrorResult(
+    appendConditionalDetail('Service Unavailable', messageDetails),
+    null,
+    HttpStatusCode.ServiceUnavailable
   );
+}
+export function sendServiceUnavailable(res: Response, messageDetails?: string) {
+  return sendResponse(res, serviceUnavailableResponse(messageDetails));
 }
 
 export function sendMessage(
