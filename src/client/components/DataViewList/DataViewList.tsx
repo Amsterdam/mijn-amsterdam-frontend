@@ -11,11 +11,11 @@ import {
 import { ChevronForwardIcon } from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
 
-import styles from './TableMobileView.module.scss';
-import type { TableV2Props } from './TableV2.types.ts';
-import { useDisplayPropsEntries } from './useDisplayPropEntries.hook.ts';
+import styles from './DataView.module.scss';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
+import type { TableV2Props } from '../Table/TableV2.types.ts';
+import { useDisplayPropsEntries } from '../Table/useDisplayPropEntries.hook.ts';
 
 export function LinkOrFragment({
   children,
@@ -73,9 +73,7 @@ export function getLabelValue(value: unknown) {
 
   return String(value);
 }
-export function TableMobileView<
-  T extends { link?: LinkProps; title?: string },
->({
+export function DataViewList<T extends { link?: LinkProps; title?: string }>({
   caption,
   items,
   className,

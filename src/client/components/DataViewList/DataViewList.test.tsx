@@ -8,8 +8,8 @@ import {
   getLabelValue,
   getTitleAttribute,
   ListDivider,
-  TableMobileView,
-} from './TableMobileView.tsx';
+  DataViewList,
+} from './DataViewList.tsx';
 
 const mockUseDisplayPropsEntries = vi.fn();
 
@@ -47,7 +47,7 @@ vi.mock('../MaLink/MaLink.tsx', () => ({
   ),
 }));
 
-describe('TableMobileView helpers', () => {
+describe('DataView helpers', () => {
   test('LinkOrFragment renders plain children when no link is provided', () => {
     render(<LinkOrFragment>Alleen tekst</LinkOrFragment>);
 
@@ -131,7 +131,7 @@ describe('ListDivider', () => {
   });
 });
 
-describe('TableMobileView', () => {
+describe('DataViewList', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockUseDisplayPropsEntries.mockReturnValue([
@@ -142,7 +142,7 @@ describe('TableMobileView', () => {
 
   it('renders caption, optional content and items', () => {
     render(
-      <TableMobileView
+      <DataViewList
         caption="Mijn zaken"
         contentAfterTheCaption={<span>Extra info</span>}
         items={[
@@ -170,7 +170,7 @@ describe('TableMobileView', () => {
 
   it('uses router link for internal links and no link when link is missing', () => {
     render(
-      <TableMobileView
+      <DataViewList
         caption="Lijst"
         items={[
           {

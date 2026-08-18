@@ -1,4 +1,3 @@
-import { TableMobileView } from './TableMobileView.tsx';
 import { TableV2 } from './TableV2.tsx';
 import type { TableV2Props } from './TableV2.types.ts';
 import type {
@@ -6,6 +5,7 @@ import type {
   ZaakAanvraagDetail,
 } from '../../../universal/types/App.types.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
+import { DataViewList } from '../DataViewList/DataViewList.tsx';
 
 export function ResponsiveTable<
   T extends { title?: string; link?: LinkProps; themaId?: string } =
@@ -26,7 +26,7 @@ export function ResponsiveTable<
   return (
     <>
       {isSmallScreen && isMobileListEnabledInTheme ? (
-        <TableMobileView<T>
+        <DataViewList<T>
           displayProps={displayProps}
           items={items}
           caption={caption}
