@@ -25,6 +25,9 @@ import type {
   ZorgnedAanvraagTransformed,
 } from '../zorgned/zorgned-types.ts';
 
+const DEFAULT_INCLUDE_MATCH = true;
+const DEFAULT_EXCLUDE_MATCH = false;
+
 function isMaApiPropertyConfigMatch<T extends ZorgnedAanvraagTransformed>(
   voorziening: T,
   actionConfig: JzdApiConfig<T>,
@@ -34,17 +37,19 @@ function isMaApiPropertyConfigMatch<T extends ZorgnedAanvraagTransformed>(
     | 'exclude.every'
     | 'include.some' = 'include.every'
 ): boolean {
-  const IS_DEFAULT_MATCH = matchType !== 'exclude.some'; // If there are no matchers, we don't want to exclude any items, but we do want to include all items.
+  const defaultMatch = matchType.startsWith('include')
+    ? DEFAULT_INCLUDE_MATCH
+    : DEFAULT_EXCLUDE_MATCH; // If there are no matchers, we don't want to exclude any items, but we do want to include all items.
   const matchConfig = actionConfig[matchType];
 
   if (!matchConfig) {
-    return IS_DEFAULT_MATCH;
+    return defaultMatch;
   }
 
   const matchers = entries(matchConfig);
 
   if (!matchers.length) {
-    return IS_DEFAULT_MATCH;
+    return defaultMatch;
   }
 
   const fn = matchType.split('.')[1] as 'every' | 'some';
