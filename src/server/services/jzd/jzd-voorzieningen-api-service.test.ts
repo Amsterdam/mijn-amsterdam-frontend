@@ -15,7 +15,7 @@ describe('jzd-voorzieningen-api-service', () => {
       };
 
       const actionConfig = {
-        include: {
+        'include.every': {
           type: 'example',
           status: 'active',
         },
@@ -34,7 +34,7 @@ describe('jzd-voorzieningen-api-service', () => {
       };
 
       const actionConfig = {
-        include: {
+        'include.every': {
           type: 'example',
           status: 'active',
         },
@@ -53,7 +53,7 @@ describe('jzd-voorzieningen-api-service', () => {
       };
 
       const actionConfig = {
-        include: {},
+        'include.every': {},
         assign: {},
       };
 
@@ -69,8 +69,8 @@ describe('jzd-voorzieningen-api-service', () => {
       };
 
       const actionConfig = {
-        include: {},
-        exclude: {},
+        'include.every': {},
+        'exclude.some': {},
         assign: {},
       };
 
@@ -78,7 +78,7 @@ describe('jzd-voorzieningen-api-service', () => {
         forTesting.isMaApiPropertyConfigMatch(
           voorziening,
           actionConfig,
-          'exclude'
+          'exclude.some'
         )
       ).toBe(false);
     });
@@ -90,8 +90,8 @@ describe('jzd-voorzieningen-api-service', () => {
       };
 
       const actionConfig = {
-        include: {},
-        exclude: {
+        'include.every': {},
+        'exclude.some': {
           type: 'differentExample',
           status: 'inactive',
         },
@@ -102,7 +102,7 @@ describe('jzd-voorzieningen-api-service', () => {
         forTesting.isMaApiPropertyConfigMatch(
           voorziening,
           actionConfig,
-          'exclude'
+          'exclude.some'
         )
       ).toBe(false);
     });
@@ -114,8 +114,8 @@ describe('jzd-voorzieningen-api-service', () => {
       };
 
       const actionConfig = {
-        include: {},
-        exclude: {
+        'include.every': {},
+        'exclude.some': {
           type: 'example',
           status: 'active',
         },
@@ -126,7 +126,7 @@ describe('jzd-voorzieningen-api-service', () => {
         forTesting.isMaApiPropertyConfigMatch(
           voorziening,
           actionConfig,
-          'exclude'
+          'exclude.some'
         )
       ).toBe(true);
     });
@@ -143,10 +143,10 @@ describe('jzd-voorzieningen-api-service', () => {
       } as unknown as ZorgnedAanvraagTransformed;
 
       const actionConfig = {
-        include: {
+        'include.every': {
           productsoortCode: 'WRA',
         },
-        exclude: {
+        'exclude.some': {
           productIdentificatie: 'excluded-id',
         },
         assign: {},
@@ -156,30 +156,100 @@ describe('jzd-voorzieningen-api-service', () => {
         forTesting.isMaApiPropertyConfigMatch(
           voorziening1,
           actionConfig,
-          'include'
+          'include.every'
         )
       ).toBe(true);
       expect(
         forTesting.isMaApiPropertyConfigMatch(
           voorziening1,
           actionConfig,
-          'exclude'
+          'exclude.some'
         )
       ).toBe(false);
       expect(
         forTesting.isMaApiPropertyConfigMatch(
           voorziening2,
           actionConfig,
-          'include'
+          'include.every'
         )
       ).toBe(true);
       expect(
         forTesting.isMaApiPropertyConfigMatch(
           voorziening2,
           actionConfig,
-          'exclude'
+          'exclude.some'
         )
       ).toBe(true);
+    });
+
+    describe('should exclude (or not) voorziening based on every exclude', () => {
+      const voorziening1 = {
+        productsoortCode: 'WRA',
+        productIdentificatie: 'excluded-id',
+        foo: 'bar',
+      } as unknown as ZorgnedAanvraagTransformed;
+
+      const actionConfig1 = {
+        'include.every': {
+          productsoortCode: 'WRA',
+        },
+        'exclude.every': {
+          productIdentificatie: 'excluded-id',
+          foo: 'bar',
+        },
+        assign: {},
+      };
+
+      const actionConfig2 = {
+        'include.every': {
+          productsoortCode: 'WRA',
+        },
+        'exclude.every': {
+          productIdentificatie: 'excluded-id',
+          baz: 'qux',
+        },
+        assign: {},
+      };
+
+      test('Should exlude voorziening that matches every property defined in the exclude.every config', () => {
+        expect(
+          forTesting.isMaApiPropertyConfigMatch(
+            voorziening1,
+            actionConfig1,
+            'exclude.every'
+          )
+        ).toBe(true);
+      });
+
+      test('Should not exclude voorziening that does not match every property defined in the exclude.every config', () => {
+        expect(
+          forTesting.isMaApiPropertyConfigMatch(
+            voorziening1,
+            actionConfig2,
+            'exclude.every'
+          )
+        ).toBe(false);
+      });
+
+      test('Should exclude voorziening that matches some property defined in the exclude.some config', () => {
+        const actionConfig3 = {
+          'include.every': {
+            productsoortCode: 'WRA',
+          },
+          'exclude.some': {
+            productIdentificatie: 'excluded-id',
+            baz: 'qux',
+          },
+          assign: {},
+        };
+        expect(
+          forTesting.isMaApiPropertyConfigMatch(
+            voorziening1,
+            actionConfig3,
+            'exclude.some'
+          )
+        ).toBe(true);
+      });
     });
 
     it('should match different configurations based on property values', () => {
@@ -188,7 +258,7 @@ describe('jzd-voorzieningen-api-service', () => {
         leveringsVorm: 'ZIN',
       };
       const actionConfig1 = {
-        include: {
+        'include.every': {
           productsoortCode: 'ABC',
           leveringsVorm: 'ZIN',
         },
@@ -200,7 +270,7 @@ describe('jzd-voorzieningen-api-service', () => {
         leveringsVorm: '',
       };
       const actionConfig2 = {
-        include: {
+        'include.every': {
           productsoortCode: 'ABC',
           leveringsVorm: '',
         },
@@ -229,7 +299,7 @@ describe('jzd-voorzieningen-api-service', () => {
       };
 
       const actionConfig: JzdApiConfig<typeof voorziening> = {
-        include: {
+        'include.every': {
           type: 'example',
           status: 'active',
           date: (voorziening) => voorziening.date < new Date('2024-01-01'),
@@ -251,7 +321,7 @@ describe('jzd-voorzieningen-api-service', () => {
       } as unknown as ZorgnedAanvraagTransformed;
 
       const apiPropsConfig = {
-        include: {
+        'include.every': {
           type: 'example',
           status: 'active',
         },
@@ -285,11 +355,11 @@ describe('jzd-voorzieningen-api-service', () => {
       } as unknown as ZorgnedAanvraagTransformed;
 
       const apiPropsConfig = {
-        include: {
+        'include.every': {
           type: 'example',
           status: 'active',
         },
-        exclude: {
+        'exclude.some': {
           id: 'excluded-id',
         },
         assign: {
@@ -321,7 +391,7 @@ describe('jzd-voorzieningen-api-service', () => {
       } as unknown as ZorgnedAanvraagTransformed;
 
       const apiPropsConfig1 = {
-        include: {
+        'include.every': {
           type: 'example',
           status: 'active',
         },
@@ -331,7 +401,7 @@ describe('jzd-voorzieningen-api-service', () => {
       } as JzdApiConfig<ZorgnedAanvraagTransformed>;
 
       const apiPropsConfig2 = {
-        include: {
+        'include.every': {
           type: 'example',
           status: 'active',
         },
@@ -358,7 +428,7 @@ describe('jzd-voorzieningen-api-service', () => {
       } as unknown as ZorgnedAanvraagTransformed;
 
       const apiPropsConfig: JzdApiConfig<typeof voorziening> = {
-        include: {
+        'include.every': {
           type: 'differentExample',
           status: 'inactive',
         },
@@ -382,7 +452,7 @@ describe('jzd-voorzieningen-api-service', () => {
       } as unknown as ZorgnedAanvraagTransformed;
 
       const apiPropsConfig: JzdApiConfig<typeof voorziening> = {
-        include: {
+        'include.every': {
           type: 'example',
           status: 'active',
         },
@@ -408,7 +478,7 @@ describe('jzd-voorzieningen-api-service', () => {
       } as unknown as ZorgnedAanvraagTransformed;
 
       const apiPropsConfig1 = {
-        include: {
+        'include.every': {
           type: 'example',
           status: 'active',
         },
@@ -418,7 +488,7 @@ describe('jzd-voorzieningen-api-service', () => {
       } as JzdApiConfig<ZorgnedAanvraagTransformed>;
 
       const apiPropsConfig2 = {
-        include: {
+        'include.every': {
           type: 'example',
           status: 'active',
         },
@@ -518,7 +588,7 @@ describe('jzd-voorzieningen-api-service', () => {
 
         const response = await fetchMaApiVoorzieningen('123456789', undefined, [
           {
-            include: {
+            'include.every': {
               isActueel: true,
               productIdentificatie: ['LLVAVG'],
             },
@@ -553,7 +623,7 @@ describe('jzd-voorzieningen-api-service', () => {
 
         const response = await fetchMaApiVoorzieningen('123456789', undefined, [
           {
-            include: {
+            'include.every': {
               leveringsVorm: 'ZIN',
               isActueel: true,
               productsoortCode: ['WRA'],
@@ -588,7 +658,7 @@ describe('jzd-voorzieningen-api-service', () => {
           },
           [
             {
-              include: {
+              'include.every': {
                 leveringsVorm: 'ZIN',
                 isActueel: true,
                 productsoortCode: ['WRA'],
@@ -625,7 +695,7 @@ describe('jzd-voorzieningen-api-service', () => {
           },
           [
             {
-              include: {
+              'include.every': {
                 leveringsVorm: 'ZIN',
               },
               assign: {

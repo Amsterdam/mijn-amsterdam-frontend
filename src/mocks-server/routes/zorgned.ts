@@ -50,7 +50,7 @@ export const routes: MockRouteDefinition[] = [
 
             return res.status(HttpStatusCode.Ok).send(aanvragen);
           }
-          case 'WMO':
+          case 'JZD':
             return res
               .status(HttpStatusCode.Ok)
               .send(ZORGNED_WMO_AANVRAGEN_RESPONSE);
@@ -59,7 +59,7 @@ export const routes: MockRouteDefinition[] = [
               .status(HttpStatusCode.Ok)
               .send(ZORGNED_LLV_AANVRAGEN_RESPONSE);
           default: {
-            const message = `No fixture response found for ${apiUser}`;
+            const message = `"No fixture response found for ${apiUser}"`;
             core.logger.error(message);
             return res.status(HttpStatusCode.NotFound).send(message);
           }
