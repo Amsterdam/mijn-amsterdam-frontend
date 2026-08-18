@@ -21,7 +21,7 @@ export type FetchWmoVoorzieningenApiOptions = Omit<
 >;
 
 // This list should be kept in sync with the list of productIdentificaties given to us by JZD - Zorgned FB
-const PRODUCT_IDS_EXCLUDED_FROM_REPARATIEVERZOEK_ACTION = [
+const PRODUCT_IDS_EXCLUDED_FROM_ACTIONS = [
   '13W13',
   '13XW15',
   '13W15',
@@ -76,7 +76,7 @@ const REPARATIEVERZOEK_ACTIE_CONFIG: JzdApiConfig = {
     },
   },
   exclude: {
-    productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_REPARATIEVERZOEK_ACTION,
+    productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
     leveringsVorm: ['PGB'], // Exclude PGB products from the reparatieverzoek action, as these are not handled by the Gemeente.
   },
   assign: {
@@ -127,6 +127,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
         'LLVAVG',
       ],
     },
+    exclude: {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
+    },
   },
   //////////////////////////////////////////////////////
   // Stopzetten via content pagina verwijzingen ////////
@@ -161,6 +164,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
         'WMH',
       ],
     },
+    exclude: {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
+    },
   },
   /////////////////////////////
   // PGB HBH //////////////////
@@ -174,6 +180,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       leveringsVorm: 'PGB',
       isActueel: true,
       productsoortCode: ['WMH'],
+    },
+    exclude: {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
     },
   },
   /////////////////////////////
@@ -208,6 +217,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
         'MAO',
       ],
     },
+    exclude: {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
+    },
   },
   /////////////////////////////////////////
   // PGB Vervoer naar dagbesteding ////////
@@ -221,6 +233,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       leveringsVorm: 'PGB',
       isActueel: true,
       productsoortCode: ['VVD'],
+    },
+    exclude: {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
     },
   },
   /////////////////////////////
@@ -246,6 +261,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
         'RWT',
       ],
     },
+    exclude: {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
+    },
   },
   /////////////////////////////
   // Hulpmiddelen (PGB) ///////
@@ -259,6 +277,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       leveringsVorm: 'PGB',
       isActueel: true,
       productsoortCode: ['AAN', 'FIE', 'ROL', 'SCO', 'OVE', 'RWD', 'RWT'],
+    },
+    exclude: {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
     },
   },
   ////////////////////////////////////////
@@ -274,6 +295,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       isActueel: true,
       productsoortCode: ['WGW', 'WRA', 'WRA2', 'WRA3', 'WRA5', 'OVW'],
     },
+    exclude: {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
+    },
   },
   //////////////////////////////////////////////////////
   // Woonruimte aanpassingen en trapliften (PGB) ///////
@@ -288,6 +312,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       isActueel: true,
       productsoortCode: ['WGW', 'WRA', 'WRA2', 'WRA3', 'WRA5', 'OVW', 'WRA1'],
     },
+    exclude: {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
+    },
   },
   /////////////////////
   // Trapliften ///////
@@ -300,6 +327,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
     include: {
       isActueel: true,
       productsoortCode: ['WRA1'],
+    },
+    exclude: {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
     },
   },
   /////////////////////////
@@ -314,6 +344,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       isActueel: true,
       productsoortCode: ['FIN', 'MVV', 'VVK'],
     },
+    exclude: {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
+    },
   },
   //////////////////////////////////
   // Verhuiskostenvergoeding ///////
@@ -326,6 +359,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
     include: {
       isActueel: true,
       productsoortCode: ['VHK'],
+    },
+    exclude: {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
     },
   },
   /////////////////////
@@ -340,6 +376,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       isActueel: true,
       productsoortCode: ['WRA4'],
     },
+    exclude: {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
+    },
   },
   //////////////////////////////////////////
   // AOV aanvullend openbaar vervoer ///////
@@ -352,6 +391,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
     include: {
       isActueel: true,
       productsoortCode: ['AOV'],
+    },
+    exclude: {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
     },
   },
   // // // // // // // // // // // // // // // // // // // // // // // // //
@@ -374,6 +416,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
         ) as JzdApiConfig['include'],
         assign: {
           maProductgroep: lineItemConfig.productgroep,
+        },
+        exclude: {
+          productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
         },
       };
     }),
