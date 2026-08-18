@@ -34,7 +34,7 @@ function EmandateHistorySectionSmallScreen({
   return (
     <section>
       <Heading id="eerdere-emandaten" level={3} className="ams-mb-m">
-        Eerdere E-Mandaten
+        Eerdere incassomachtiging{eMandateHistory.length > 0 && 'en'}
       </Heading>
       {eMandateHistory.map((historyItem) => {
         return (
