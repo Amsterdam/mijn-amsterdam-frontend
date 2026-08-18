@@ -205,6 +205,10 @@ function ApiDeactivateButton({
       title: 'Stopzetten incassomachtiging',
       confirmationText: (
         <>
+          <Paragraph className="ams-mb-s">
+            Het kan tot 24 uur duren voordat de stopzetting is verwerkt.
+            Gedurende deze tijd kan er nog een incasso plaatsvinden.
+          </Paragraph>
           {!!facturenByEmandateId.length && (
             <Alert
               headingLevel={4}
@@ -244,12 +248,16 @@ function ApiDeactivateButton({
               </Table>
             </Alert>
           )}
-          <Paragraph className="ams-mb-s">
-            Weet je zeker dat je deze incassomachtiging wilt stopzetten?
-          </Paragraph>
-          <Paragraph className="ams-mb-s">
-            De incassomachtiging wordt dan niet meer gebruikt.
-          </Paragraph>
+          {!facturenByEmandateId.length && (
+            <>
+              <Paragraph className="ams-mb-s">
+                Weet je zeker dat je deze incassomachtiging wilt stopzetten?
+              </Paragraph>
+              <Paragraph className="ams-mb-s">
+                De incassomachtiging wordt dan niet meer gebruikt.
+              </Paragraph>
+            </>
+          )}
           <Paragraph className="ams-mb-s">
             Je kunt de incassomachtiging later opnieuw activeren voor nieuwe
             facturen.
