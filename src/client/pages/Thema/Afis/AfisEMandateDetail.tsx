@@ -195,7 +195,7 @@ function EMandate({ eMandate }: EMandateProps) {
                 </Paragraph>
                 <Paragraph>
                   Zodra de bevestiging is ontvangen, zal de incassomachtiging
-                  actief worden.{' '}
+                  voor <strong>toekomstige facturen</strong> actief worden.{' '}
                 </Paragraph>
                 {signRequestStatusCheckApi.isTakingLong && (
                   <Paragraph>
