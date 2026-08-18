@@ -20,8 +20,8 @@ export type VoorzieningKey<T> = Exclude<keyof T, 'link' | 'documenten'>;
 export type VoorzieningValue<T> = T[VoorzieningKey<T>];
 
 /**
- * The MatchConfig MUST return true for all defined keys.
- * There is no "OR" logic between keys, only "AND" logic. If you want to have "OR" logic, you can use a function for the value of a key, and implement your own logic there.
+ * The MatchConfig MUST return true for all defined keys when using include.every or exclude.every.
+ * The MatchConfig MUST return true for at least one defined key when using include.some or exclude.some.
  */
 export type MatchConfig<T> = Partial<
   Record<

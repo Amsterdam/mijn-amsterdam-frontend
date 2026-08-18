@@ -211,7 +211,7 @@ describe('jzd-voorzieningen-api-service', () => {
         assign: {},
       };
 
-      test('Should exlude voorziening that matches every property defined in the exclude.every config', () => {
+      test('Should exclude voorziening that matches every property defined in the exclude.every config', () => {
         expect(
           forTesting.isMaApiPropertyConfigMatch(
             voorziening1,
