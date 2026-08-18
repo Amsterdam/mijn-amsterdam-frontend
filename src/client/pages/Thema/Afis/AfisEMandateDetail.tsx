@@ -179,38 +179,43 @@ function EMandate({ eMandate }: EMandateProps) {
         ]}
       />
       <div className="ams-mb-xl">
-        {signRequestStatusCheckApi.isRequestingStatusCheck ? (
+        {signRequestStatusCheckApi.isRequestingStatusCheck && (
           <Paragraph>
             <Spinner /> Mijn Amsterdam controleert de status van de
             incassomachtiging...
           </Paragraph>
-        ) : signRequestStatusCheckApi.isPendingActivation ? (
-          <Alert headingLevel={4} heading="Status">
-            <Paragraph>
-              Wachten op bevestiging van de incassomachtiging voor{' '}
-              {eMandate.creditorName}. Dit kan enkele minuten duren.
-            </Paragraph>
-            <Paragraph>
-              Zodra de bevestiging is ontvangen, zal de incassomachtiging actief
-              worden.{' '}
-            </Paragraph>
-            {signRequestStatusCheckApi.isTakingLong && (
-              <Paragraph>
-                <Button
-                  variant="secondary"
-                  onClick={() => signRequestStatusCheckApi.cancel()}
-                >
-                  Duurt het erg lang? Probeer het opnieuw.
-                </Button>
-              </Paragraph>
+        )}
+        {!signRequestStatusCheckApi.isRequestingStatusCheck && (
+          <>
+            {signRequestStatusCheckApi.isPendingActivation ? (
+              <Alert headingLevel={4} heading="Status">
+                <Paragraph>
+                  Wachten op bevestiging van de incassomachtiging voor{' '}
+                  {eMandate.creditorName}. Dit kan enkele minuten duren.
+                </Paragraph>
+                <Paragraph>
+                  Zodra de bevestiging is ontvangen, zal de incassomachtiging
+                  actief worden.{' '}
+                </Paragraph>
+                {signRequestStatusCheckApi.isTakingLong && (
+                  <Paragraph>
+                    <Button
+                      variant="secondary"
+                      onClick={() => signRequestStatusCheckApi.cancel()}
+                    >
+                      Duurt het erg lang? Probeer het opnieuw.
+                    </Button>
+                  </Paragraph>
+                )}
+              </Alert>
+            ) : (
+              <AfisEMandateActionButtons
+                redirectUrlApi={redirectUrlApi}
+                deactivateApi={deactivateApi}
+                eMandate={eMandate}
+              />
             )}
-          </Alert>
-        ) : (
-          <AfisEMandateActionButtons
-            redirectUrlApi={redirectUrlApi}
-            deactivateApi={deactivateApi}
-            eMandate={eMandate}
-          />
+          </>
         )}
       </div>
       {!!eMandate.history.length &&
