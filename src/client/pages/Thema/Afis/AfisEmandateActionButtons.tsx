@@ -156,7 +156,7 @@ export function AfisEMandateActionButtons({
         trackLinkClick(
           'AfisEMandateActionButtons',
           eMandate.signRequestUrl,
-          isActive ? 'Rekening wijzigen' : 'Activeren',
+          'Activeren',
           profileType
         );
         await delay(300); // Add slight delay to ensure the analytics event is sent before the redirect happens
@@ -167,16 +167,18 @@ export function AfisEMandateActionButtons({
   })();
   return (
     <>
-      {eMandate.signRequestUrl && (
-        <ApiActionButton
-          api={redirectUrlApi}
-          fetch={fetchAndRedirect}
-          label={isActive ? 'Rekening wijzigen' : 'Activeren'}
-          doConfirm={false}
-        />
+      {eMandate.signRequestUrl && !isActive && (
+        <>
+          <ApiActionButton
+            api={redirectUrlApi}
+            fetch={fetchAndRedirect}
+            label="Activeren"
+            doConfirm={false}
+          />
+          &nbsp;
+        </>
       )}
-      &nbsp;
-      {eMandate.deactivateUrl && eMandate.status === EMANDATE_STATUS_ACTIVE && (
+      {eMandate.deactivateUrl && isActive && (
         <ApiDeactivateButton
           deactivateApi={deactivateApi}
           eMandate={eMandate}
