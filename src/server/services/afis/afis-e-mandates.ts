@@ -532,6 +532,7 @@ export async function fetchEmandateIdsByCreditorRefId(
   return requestData<AfisEMandateSource['IMandateId'][]>(config);
 }
 
+// Does not include deactivated E-Mandates (status other than active).
 export async function fetchEMandates(
   payload: BusinessPartnerIdPayload,
   sessionID: SessionID
