@@ -141,9 +141,11 @@ export function generateSearchIndexPageEntries(
       return [];
     }
 
-    return apiConfig
-      .getApiBaseItems(apiContent)
-      .map((item) => generateSearchIndexPageEntry(item, apiConfig));
+    const apiBaseItems = apiConfig.getApiBaseItems(apiContent);
+    const apiBaseItems_ = Array.isArray(apiBaseItems) ? apiBaseItems : [];
+    return apiBaseItems_.map((item) =>
+      generateSearchIndexPageEntry(item, apiConfig)
+    );
   });
 }
 

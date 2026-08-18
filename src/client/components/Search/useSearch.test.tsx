@@ -222,6 +222,23 @@ describe('Search hooks and helpers', () => {
     `);
   });
 
+  test('generateSearchIndexPageEntries with no content for getApiBaseItems', () => {
+    const pageEntries = generateSearchIndexPageEntries(
+      'private',
+      {
+        VERGUNNINGEN: { content: { zaken: undefined }, status: 'OK' },
+      } as unknown as AppState,
+      [
+        {
+          ...API_SEARCH_CONFIG_DEFAULT,
+          stateKey: 'VERGUNNINGEN',
+          getApiBaseItems: (x) => x.zaken,
+        },
+      ]
+    );
+    expect(pageEntries).toMatchInlineSnapshot('[]');
+  });
+
   test('generateSearchIndexPageEntries with disabled/enabled feature', () => {
     const config = apiSearchConfigs.find(
       (config) => config.stateKey === 'KREFIA'

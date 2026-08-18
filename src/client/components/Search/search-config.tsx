@@ -290,7 +290,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     getApiBaseItems: (
       erfpachtResponse: ErfpachtResponseFrontend
     ): ErfpachtZaakExcerptFrontend[] => {
-      return erfpachtResponse.zaken;
+      return erfpachtResponse.zaken ?? [];
     },
     displayTitle: (zaak: ErfpachtZaakExcerptFrontend) => (term: string) => {
       return displayLinkToSearchResult(term, [zaak.zaakNummer]);
