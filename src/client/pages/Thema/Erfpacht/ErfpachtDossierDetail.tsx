@@ -77,9 +77,10 @@ export function ErfpachtDossierDetail() {
               </PageContentCell>
 
               <PageContentCell>
-                <CollapsiblePanel title="Wijzigingen">
+                <CollapsiblePanel title="Wijzigsaanvragen">
                   <ThemaPaginaTable
                     zaken={zaken}
+                    textNoContent="U heeft (nog) geen wijzigingsaanvragen."
                     listPageRoute={generatePath(
                       themaConfig.listPageDossierZaken.route.path,
                       { dossierId: dossier.dossierId }
