@@ -270,7 +270,7 @@ export async function fetchErfpachtZaakDetail(
   const zaakDetail: ErfpachtZaakDetailFrontend = {
     ...zaakBase,
     id: zaakBase.zaakUuid,
-    title: zaakBase.zaakOmschrijving || 'Wijzigingsaanvraag erfpachtrecht',
+    title: zaakBase.zaakOmschrijving,
     steps,
     displayStatus:
       resultaat ??
