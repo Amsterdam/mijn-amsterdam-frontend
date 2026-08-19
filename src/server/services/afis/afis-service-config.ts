@@ -37,6 +37,7 @@ export const routes = {
     AFIS_EMANDATES_SIGN_REQUEST_STATUS_NOTIFICATION:
       '/services/afis/e-mandates/sign-request-notification',
     AFIS_FACTUREN: '/services/afis/facturen/:state',
+    AFIS_FACTUREN_OVERVIEW: '/services/afis/facturen-overview',
     AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document',
   },
 } as const;

@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 
-import merge from 'lodash.merge';
+import merge from 'lodash.mergewith';
 import { generatePath, type Params } from 'react-router';
 import type { PartialDeep } from 'type-fest';
 

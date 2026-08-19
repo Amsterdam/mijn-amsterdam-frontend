@@ -9,7 +9,10 @@ import {
   fetchEmandateSignRequestStatusFromPaymentProvider,
   updateAfisEMandate,
 } from './afis-e-mandates.ts';
-import { fetchAfisFacturenByState } from './afis-facturen.ts';
+import {
+  fetchAfisFacturenByState,
+  fetchAfisFacturenOverview,
+} from './afis-facturen.ts';
 import {
   debugEmandates,
   getEmandateValidityDateFormatted,
@@ -92,6 +95,15 @@ export async function handleFetchAfisFacturen(
     state: req.params.state,
     businessPartnerID: payload.businessPartnerId,
     top,
+  });
+}
+
+export async function handleFetchAfisFacturenOverview(
+  payload: BusinessPartnerIdPayload,
+  sessionID: SessionID
+) {
+  return fetchAfisFacturenOverview(sessionID, {
+    businessPartnerID: payload.businessPartnerId,
   });
 }
 

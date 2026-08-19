@@ -35,6 +35,20 @@ export type AfisFacturenThemaContextParams = {
   ) => AfisFactuurFrontend;
 };
 
+export function useAfisBusinessPartner() {
+  const { AFIS } = useAppStateGetter();
+  const businessPartnerIdEncrypted =
+    AFIS.content?.businessPartnerIdEncrypted ?? null;
+  const businessPartnerId = AFIS.content?.businessPartnerId ?? null;
+  const businessPartners = AFIS.content?.businessPartners ?? null;
+
+  return {
+    businessPartnerIdEncrypted,
+    businessPartnerId,
+    businessPartners,
+  };
+}
+
 export function useAfisFacturenData(
   themaContextParams?: AfisFacturenThemaContextParams
 ) {
@@ -45,9 +59,9 @@ export function useAfisFacturenData(
     routeConfigListPage = themaConfig.listPage.route,
   } = themaContextParams || {};
   const { AFIS } = useAppStateGetter();
-  const businessPartnerIdEncrypted =
-    AFIS.content?.businessPartnerIdEncrypted ?? null;
   const facturenByState = useTransformFacturen(AFIS.content?.facturen ?? null);
+  const { businessPartnerIdEncrypted, businessPartnerId } =
+    useAfisBusinessPartner();
 
   return {
     isThemaPaginaError: isError(AFIS, false),
@@ -58,7 +72,7 @@ export function useAfisFacturenData(
     routeConfigDetailPage,
     routeConfigListPage,
     businessPartnerIdEncrypted,
-    businessPartnerId: AFIS.content?.businessPartnerId || null,
+    businessPartnerId,
     dependencyErrors: {
       open: hasFailedDependency(AFIS, 'open'),
       afgehandeld: hasFailedDependency(AFIS, 'afgehandeld'),
@@ -68,9 +82,8 @@ export function useAfisFacturenData(
 }
 
 export function useAfisThemaData() {
-  const menuItem = useThemaMenuItemByThemaID(themaBelastingen.id);
-  const urlNaarBelastingen = menuItem?.to;
-
+  const menuItemBelastingen = useThemaMenuItemByThemaID(themaBelastingen.id);
+  const urlNaarBelastingen = menuItemBelastingen?.to;
   const belastingenLinkListItem: LinkProps = {
     title: 'Belastingen op Mijn Amsterdam',
     to: urlNaarBelastingen || themaBelastingen.route.path,
@@ -81,13 +94,14 @@ export function useAfisThemaData() {
   const {
     facturenByState,
     tableConfig,
-    businessPartnerIdEncrypted,
-    businessPartnerId,
     isThemaPaginaError,
     isThemaPaginaLoading,
     dependencyErrors,
     themaId,
   } = useAfisFacturenData();
+
+  const { businessPartnerIdEncrypted, businessPartnerId, businessPartners } =
+    useAfisBusinessPartner();
 
   return {
     themaId,
@@ -95,6 +109,7 @@ export function useAfisThemaData() {
     belastingenLinkListItem,
     businessPartnerIdEncrypted,
     businessPartnerId,
+    businessPartners,
     facturenByState,
     facturenTableConfig: tableConfig,
     isThemaPaginaError,

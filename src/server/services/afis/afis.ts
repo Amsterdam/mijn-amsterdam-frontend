@@ -4,6 +4,7 @@ import type {
   AfisBusinessPartnerCommercialResponseSource,
   AfisThemaResponse,
   AfisBusinessPartnerPrivateResponseSource,
+  AfisKnownBusinessPartner,
 } from './afis-types.ts';
 import {
   apiSuccessResult,
@@ -21,7 +22,9 @@ import {
   createSessionBasedCacheKey,
 } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
+import { fetchVestigingen } from '../hr-kvk/hr-kvk.ts';
 import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token.ts';
+import { captureMessage } from '../monitoring.ts';
 
 export async function fetchAfisTokenHeader() {
   const tokenHeaderResponse = await fetchAuthTokenHeader(
@@ -55,23 +58,45 @@ function transformBusinessPartnerisKnownResponse(
     return null;
   }
 
+  console.log(response);
+
   let isKnown: boolean = false;
   let businessPartnerId: string | null = null;
   let businessPartnerIdEncrypted: string | null = null;
+  let businessPartners: AfisKnownBusinessPartner[] | null = null;
+
+  const isPrivateBusinessPartner = 'BSN' in response;
 
   if ('Record' in response) {
     // Responses can include multiple records or just one, for clarity we treat the response as always having an array of Records here.
-    const records = !Array.isArray(response.Record)
-      ? [response.Record]
-      : response.Record;
+    const records = (
+      !Array.isArray(response.Record) ? [response.Record] : response.Record
+    ).filter((record) => record.Gevonden === 'Ja' && record.Blokkade !== 'Ja');
 
-    const record = records.find((record) => record.Gevonden === 'Ja');
-
-    if (record) {
+    if (records.length > 0) {
       isKnown = true;
-      businessPartnerId = record.Zakenpartnernummer ?? null;
     }
-  } else if ('BSN' in response) {
+
+    if (records.length === 1) {
+      businessPartnerId = records[0].Zakenpartnernummer;
+    } else if (records.length > 1) {
+      const recordsWithVestigingsnummer = records.filter(
+        (record) => !!record.Vestigingsnummer
+      );
+
+      if (recordsWithVestigingsnummer.length > 0) {
+        businessPartners = recordsWithVestigingsnummer.map((record) => ({
+          kvkVestigingsnummer: record.Vestigingsnummer!,
+          businessPartnerId: record.Zakenpartnernummer,
+          vestigingsNaam: `Vestiging ${record.Vestigingsnummer}`,
+        }));
+      } else {
+        captureMessage(
+          `AFIS: Multiple business partners found for KVK ${records[0].KVK}, but none have a Vestigingsnummer.`
+        );
+      }
+    }
+  } else if (isPrivateBusinessPartner) {
     isKnown = response.Gevonden === 'Ja';
     businessPartnerId = response.Zakenpartnernummer ?? null;
   }
@@ -91,8 +116,10 @@ function transformBusinessPartnerisKnownResponse(
     businessPartnerIdEncrypted,
   };
 
-  if (isKnown) {
+  if (isKnown && businessPartnerId) {
     themaResponseContent.businessPartnerId = businessPartnerId;
+  } else if (isKnown && businessPartners?.length) {
+    themaResponseContent.businessPartners = businessPartners;
   }
 
   return themaResponseContent;
@@ -134,10 +161,40 @@ export async function fetchIsKnownInAFIS(
   if (
     response.status !== 'OK' ||
     !response.content ||
-    !response.content.isKnown ||
-    !response.content.businessPartnerId
+    !response.content.isKnown
   ) {
     return response;
+  }
+
+  if (!response.content.businessPartnerId) {
+    if (!response.content.businessPartners?.length) {
+      return response;
+    }
+
+    const kvkVestigingen = await fetchVestigingen(authProfileAndToken);
+    if (kvkVestigingen.status !== 'OK') {
+      return response;
+    }
+    return apiSuccessResult({
+      isKnown: response.content.isKnown,
+      businessPartnerIdEncrypted: null,
+      businessPartners: response.content.businessPartners.map((bp) => {
+        const vestiging = kvkVestigingen.content.find(
+          (v) => v.vestigingsNummer === bp.kvkVestigingsnummer
+        );
+        return {
+          ...bp,
+          vestigingsNaam: `${vestiging?.naam ?? bp.vestigingsNaam} ${bp.businessPartnerId}`,
+          businessPartnerIdEncrypted: encryptPayloadAndSessionID(
+            authProfileAndToken.profile.sid,
+            {
+              businessPartnerId: bp.businessPartnerId,
+            }
+          ),
+        };
+      }),
+      facturen: null,
+    });
   }
 
   const facturenResponse = await fetchAfisFacturenOverview(

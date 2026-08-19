@@ -1,20 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   Alert,
   Heading,
   Link,
   Paragraph,
+  Select,
   UnorderedList,
 } from '@amsterdam/design-system-react';
 
 import { AfisFacturenTables } from './AfisFacturenTables.tsx';
 import { getVragenOverFactuurText } from './AfisVragenOverFactuurLink.tsx';
 import { useAfisThemaData } from './useAfisThemaData.hook.tsx';
+import type {
+  AfisFacturenOverviewResponse,
+  AfisKnownBusinessPartner,
+} from '../../../../server/services/afis/afis-types.ts';
 import { entries } from '../../../../universal/helpers/utils.ts';
 import { MaButtonRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
+import { Spinner } from '../../../components/Spinner/Spinner.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
+import { sendFetchRequest, useBffApi } from '../../../hooks/api/useBffApi.ts';
+import { useAppStateStore } from '../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 function PageContentTop({
@@ -101,6 +109,8 @@ export function AfisThema() {
     title,
     themaId,
     themaConfig,
+    facturenByState,
+    businessPartners,
   } = useAfisThemaData();
 
   useHTMLDocumentTitle(themaConfig.route);
@@ -156,11 +166,104 @@ export function AfisThema() {
       }
       pageContentMain={
         <>
-          {pageContentSecondary}
-          <AfisFacturenTables />
+          {!!businessPartners?.length && (
+            <BusinessPartnerSelect businessPartners={businessPartners} />
+          )}
+          {facturenByState !== null && (
+            <>
+              {pageContentSecondary}
+              <AfisFacturenTables />
+            </>
+          )}
         </>
       }
       maintenanceNotificationsPageSlug="afis"
     />
+  );
+}
+
+function BusinessPartnerSelect({
+  businessPartners,
+}: {
+  businessPartners: AfisKnownBusinessPartner[];
+}) {
+  const appState = useAppStateStore();
+  const [businessPartnerIdEncrypted, setBusinessPartnerIdEncrypted] = useState(
+    appState.AFIS?.content?.businessPartnerIdEncrypted || '-'
+  );
+
+  const { data, fetch, isLoading, isError } = useBffApi(
+    'selected-business-partner',
+    {
+      fetchImmediately: false,
+      sendRequest: async (url, { payload }) => {
+        return sendFetchRequest<AfisFacturenOverviewResponse>(url).then(
+          (response) => {
+            appState.mergeAppState('AFIS', {
+              content: {
+                businessPartnerIdEncrypted: payload.businessPartnerIdEncrypted,
+                facturen: response.content,
+              },
+            });
+            return response;
+          }
+        );
+      },
+    }
+  );
+
+  console.log(data);
+
+  useEffect(() => {
+    if (businessPartnerIdEncrypted && businessPartnerIdEncrypted !== '-') {
+      fetch(
+        `http://localhost:5000/api/v1/services/afis/facturen-overview?id=${businessPartnerIdEncrypted}`,
+        {
+          payload: {
+            businessPartnerIdEncrypted,
+          },
+        }
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- We only want to fetch the overview when the selected business partner changes, not when the fetch function changes.
+  }, [businessPartnerIdEncrypted]);
+
+  return (
+    <PageContentCell spanWide={8}>
+      <Heading level={2}>Vestiging selecteren</Heading>
+      <Paragraph className="ams-mb-s">
+        U heeft meerdere vestigingen. Selecteer hieronder de vestiging waarvan u
+        de gegevens wilt bekijken.
+      </Paragraph>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
+        <Select
+          disabled={isLoading || isError}
+          onChange={(e) => {
+            setBusinessPartnerIdEncrypted(e.target.value);
+          }}
+          value={businessPartnerIdEncrypted}
+        >
+          <Select.Option value="-">- Selecteer een vestiging -</Select.Option>
+          {businessPartners.map((bp) => (
+            <Select.Option
+              key={bp.kvkVestigingsnummer}
+              value={bp.businessPartnerIdEncrypted}
+            >
+              {bp.vestigingsNaam}
+            </Select.Option>
+          ))}
+        </Select>
+        {isLoading && (
+          <span>
+            &nbsp;
+            <Spinner /> Gegevens ophalen...
+          </span>
+        )}
+      </form>
+    </PageContentCell>
   );
 }

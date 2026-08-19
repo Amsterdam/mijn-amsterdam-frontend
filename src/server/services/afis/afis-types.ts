@@ -31,7 +31,7 @@ export type AfisBusinessPartnerPrivateResponseSource = {
  *
  *  Record.KVK - Is a string when there is a leading zero present, otherwise a number.
  */
-type AfisBusinessPartnerRecordCommercial = {
+export type AfisBusinessPartnerRecordCommercial = {
   KVK: number | string;
   Zakenpartnernummer: string;
   Vestigingsnummer?: string;
@@ -53,10 +53,18 @@ export type AfisFacturenOverviewResponse = {
   [key in AfisFactuurStateFrontend]: AfisFacturenResponse | null;
 };
 
+export type AfisKnownBusinessPartner = {
+  businessPartnerId: string;
+  businessPartnerIdEncrypted: string;
+  kvkVestigingsnummer: string;
+  vestigingsNaam: string;
+};
+
 export type AfisThemaResponse = {
   isKnown: boolean;
   businessPartnerIdEncrypted: string | null;
   businessPartnerId?: string | null;
+  businessPartners?: AfisKnownBusinessPartner[];
   facturen: AfisFacturenOverviewResponse | null;
 };
 

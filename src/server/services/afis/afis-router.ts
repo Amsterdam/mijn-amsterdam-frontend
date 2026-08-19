@@ -10,6 +10,7 @@ import {
 import {
   handleAfisEMandateSignRequestStatus,
   handleEmandateLifetimeUpdate,
+  handleFetchAfisFacturenOverview,
 } from './afis-route-handlers.ts';
 import {
   handleAfisEMandateSignRequestStatusNotification,
@@ -79,6 +80,22 @@ const PAYLOAD_QUERY_PARAM_NAME = 'id';
       ServiceReturnType,
       AfisFacturenRouteParams
     >(handleFetchAfisFacturen, PAYLOAD_QUERY_PARAM_NAME)
+  );
+}
+
+{
+  /**
+   * Fetches Afis Facturen overview for a given business partner ID.
+   */
+  type QueryPayload = BusinessPartnerIdPayload;
+  type ServiceReturnType = ReturnType<typeof handleFetchAfisFacturenOverview>;
+
+  routerProtected.get(
+    routes.protected.AFIS_FACTUREN_OVERVIEW,
+    handleAfisRequestWithEncryptedPayloadQueryParam<
+      QueryPayload,
+      ServiceReturnType
+    >(handleFetchAfisFacturenOverview, PAYLOAD_QUERY_PARAM_NAME)
   );
 }
 

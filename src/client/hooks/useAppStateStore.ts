@@ -1,4 +1,4 @@
-import merge from 'lodash.merge';
+import mergeWith from 'lodash.mergewith';
 import type { PartialDeep } from 'type-fest';
 import { create, type StateCreator } from 'zustand';
 
@@ -32,11 +32,19 @@ export const appStateStoreCreator: StateCreator<AppStateStore> = (set) => ({
   setIsAppStateReady: (isReady) => set({ isReady }),
   mergeAppState: (appStateKey, appStatePartial) => {
     set((state) => ({
-      ...merge(
+      // Only merges objects, arrays are replaced. This is to avoid merging arrays.
+      // If merging arrays is needed, be careful because it can lead to unexpected behavior.
+      // For example empty arrays of a previous state will be merged with the new state, resulting in a non-empty array.
+      ...mergeWith(
         {},
         { [appStateKey]: state[appStateKey] },
         {
           [appStateKey]: appStatePartial,
+        },
+        (objValue, srcValue) => {
+          if (Array.isArray(objValue)) {
+            return srcValue;
+          }
         }
       ),
     }));

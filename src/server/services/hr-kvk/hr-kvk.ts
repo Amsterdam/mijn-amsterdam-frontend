@@ -297,7 +297,7 @@ function transformVestigingen(
   );
 }
 
-async function fetchVestigingen(
+export async function fetchVestigingen(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<Vestiging[]>> {
   const params = {
