@@ -77,7 +77,7 @@ export function ErfpachtDossierDetail() {
               </PageContentCell>
 
               <PageContentCell>
-                <CollapsiblePanel title="Wijzigsaanvragen">
+                <CollapsiblePanel title="Wijzigingsaanvragen">
                   <ThemaPaginaTable
                     zaken={zaken}
                     textNoContent="U heeft (nog) geen wijzigingsaanvragen."
