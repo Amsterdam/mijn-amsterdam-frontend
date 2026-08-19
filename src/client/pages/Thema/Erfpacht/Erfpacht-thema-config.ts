@@ -185,7 +185,7 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
   const displayPropsWijzigingsaanvragen: DisplayPropsWijzigingsaanvragen = {
     props: {
       zaakNummer: firstZaak?.titelZaakNummer,
-      dossierLinks: 'Erfpachtdossier',
+      dossierLinks: 'Erfpachtdossier(s)',
       displayStatus: 'Status',
       datePublishedFormatted: firstZaak?.titelFormattedStatusDatum,
     },
