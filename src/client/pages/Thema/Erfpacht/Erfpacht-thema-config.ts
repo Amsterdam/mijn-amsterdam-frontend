@@ -7,7 +7,6 @@ import type {
   ErfpachtResponseFrontend,
 } from '../../../../server/services/erfpacht/erfpacht-types.ts';
 import type { ErfpachtZaakExcerptFrontend } from '../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
-import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import {
   isEnabled,
@@ -35,7 +34,7 @@ export const LINKS = {
     'https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/wat-is-erfpacht/algemene-bepalingen/',
   overstappenEewigdurendeErfpacht:
     'https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/overstappen-eeuwigdurende-erfpacht/',
-  erfpachtWijzigenForm: `https://formulieren${IS_PRODUCTION ? '' : '.acc'}.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/ErfpachtWijzigen.aspx`,
+  erfpachtWijzigenForm: `https://www.amsterdam.nl/wonen-bouwen-verbouwen/erfpacht/erfpacht-wijzigen/`,
 };
 
 type WithDetailPageFactuur = PageConfig<'detailPageFactuur'>;
