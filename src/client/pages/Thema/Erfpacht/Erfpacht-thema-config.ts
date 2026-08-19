@@ -34,7 +34,8 @@ export const LINKS = {
     'https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/wat-is-erfpacht/algemene-bepalingen/',
   overstappenEewigdurendeErfpacht:
     'https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/overstappen-eeuwigdurende-erfpacht/',
-  erfpachtWijzigenForm: `https://www.amsterdam.nl/wonen-bouwen-verbouwen/erfpacht/erfpacht-wijzigen/`,
+  erfpachtWijzigenForm:
+    'https://www.amsterdam.nl/wonen-bouwen-verbouwen/erfpacht/erfpacht-wijzigen/',
 };
 
 type WithDetailPageFactuur = PageConfig<'detailPageFactuur'>;
