@@ -13,7 +13,10 @@ export const featureToggle = {
 
 export const routes = {
   private: {
-    VOORZIENINGEN_JZD: `/services/jzd/voorzieningen`, // Legacy route definition. Used by Forms team.
+    // Legacy route definition. Used by Forms team.
+    VOORZIENINGEN_JZD: `/services/jzd/voorzieningen`,
+    VOORZIENING_JZD: `/services/jzd/voorziening`,
+    // Universal routes
     AANVRAGEN: `/services/zorgned/aanvragen`,
     AANVRAAG_DETAIL: `/services/zorgned/aanvraag`,
   },

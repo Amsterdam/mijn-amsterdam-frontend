@@ -32,7 +32,7 @@ zorgnedAanvragenApiRouterPrivateNetwork.post(
 );
 
 zorgnedAanvragenApiRouterPrivateNetwork.post(
-  routes.private.AANVRAAG_DETAIL,
+  [routes.private.AANVRAAG_DETAIL, routes.private.VOORZIENING_JZD],
   conditional(IS_OAUTH_VERIFICATION_ENABLED, zorgnedAanvragenOauthMiddleware),
   handleAanvraagDetailRequest
 );

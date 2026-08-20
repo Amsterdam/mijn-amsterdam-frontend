@@ -164,19 +164,15 @@ export function fetchMaApiAanvragen(
 }
 
 export function fetchMaApiAanvraagById(
-  aanvragenResponses: ApiResponse<ZorgnedAanvraagTransformed[]>[],
+  aanvragenResponse: ApiResponse<ZorgnedAanvraagTransformed[]>,
   id: ZorgnedAanvraagTransformedWithMaApiProps['id'],
   maAanvragenApiConfig: AanvragenApiConfig[] = jzdAanvragenApiConfig
 ): ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps> {
-  if (aanvragenResponses.some((response) => response.status !== 'OK')) {
-    return serviceErrorResult(aanvragenResponses);
+  if (aanvragenResponse.status !== 'OK') {
+    return serviceErrorResult([aanvragenResponse]);
   }
 
-  const responseContentCombined = aanvragenResponses.flatMap(
-    (response) => response.content ?? []
-  );
-
-  const aanvraag = responseContentCombined.find(
+  const aanvraag = aanvragenResponse.content?.find(
     (aanvraag) => aanvraag.id === id
   );
 

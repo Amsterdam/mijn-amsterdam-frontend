@@ -14,9 +14,13 @@ import {
   sendResponse,
   sendBadRequestInvalidInput,
 } from '../../routing/route-helpers.ts';
-import { fetchZorgnedAanvragenHLI } from '../hli/hli-zorgned-service.ts';
-import { fetchZorgnedAanvragenJeugd } from '../jzd/jeugd/jeugd.ts';
-import { fetchZorgnedAanvragenWMO } from '../jzd/wmo/wmo-zorgned-service.ts';
+
+type SupportedClient = keyof typeof clientToServiceMap;
+
+function getClientOrDefault(client?: SupportedClient): SupportedClient {
+  // Keep backwards compatibility: this API originally defaulted to WMO.
+  return client ?? 'WMO';
+}
 
 export async function handleAanvragenRequest(req: Request, res: Response) {
   let baseRequestBody;
@@ -29,7 +33,7 @@ export async function handleAanvragenRequest(req: Request, res: Response) {
   }
 
   const bsn = baseRequestBody.bsn;
-  const client = baseRequestBody.client ?? 'WMO'; // Default to WMO if no clients are specified. This api was originally only for WMO, so we keep that behavior for backwards compatibility.
+  const client = getClientOrDefault(baseRequestBody.client);
 
   try {
     optionsRequestBodyByClient = requestInputByClient[client].parse(req.body);
@@ -62,17 +66,13 @@ export async function handleAanvraagDetailRequest(req: Request, res: Response) {
   }
 
   const bsn = validatedRequestBody.bsn;
-
-  const [wmoAanvragenResponse, jeugdAanvragenResponse, hliAanvragenResponse] =
-    await Promise.all([
-      fetchZorgnedAanvragenWMO(bsn),
-      fetchZorgnedAanvragenJeugd(bsn),
-      fetchZorgnedAanvragenHLI(bsn),
-    ]);
+  const client = getClientOrDefault(validatedRequestBody.client);
+  const serviceResponse = await clientToServiceMap[client].fetch(bsn);
 
   const response = fetchMaApiAanvraagById(
-    [wmoAanvragenResponse, jeugdAanvragenResponse, hliAanvragenResponse],
-    validatedRequestBody.id
+    serviceResponse,
+    validatedRequestBody.id,
+    clientToServiceMap[client].apiConfig
   );
 
   return sendResponse(res, response);
