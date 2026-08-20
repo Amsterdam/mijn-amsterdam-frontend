@@ -130,7 +130,7 @@ const displayPropsFacturenAfgehandeldOfOvergedragen: DisplayProps<AfisFactuurFro
     },
     colWidths: {
       large: ['25%', '25%', '50%'],
-      small: ['auto', '0', 'auto'],
+      small: ['100%', '0', '0'],
     },
     enableMobileListView: true,
   };
