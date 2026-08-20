@@ -168,15 +168,12 @@ export function AfisEMandateActionButtons({
   return (
     <>
       {eMandate.signRequestUrl && !isActive && (
-        <>
-          <ApiActionButton
-            api={redirectUrlApi}
-            fetch={fetchAndRedirect}
-            label="Activeren"
-            doConfirm={false}
-          />
-          &nbsp;
-        </>
+        <ApiActionButton
+          api={redirectUrlApi}
+          fetch={fetchAndRedirect}
+          label="Activeren"
+          doConfirm={false}
+        />
       )}
       {eMandate.deactivateUrl && isActive && (
         <ApiDeactivateButton
