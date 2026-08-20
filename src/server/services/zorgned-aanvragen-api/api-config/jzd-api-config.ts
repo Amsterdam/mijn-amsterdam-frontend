@@ -7,10 +7,7 @@ import {
   wmoStatusLineItemsConfig,
 } from '../../jzd/wmo/wmo-status-line-items.ts';
 import type { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
-import type {
-  AanvragenApiConfig,
-  ZorgnedAanvraagTransformedWithMaApiProps,
-} from '../zorgned-aanvragen-api-types.ts';
+import type { AanvragenApiConfig } from '../zorgned-aanvragen-api-types.ts';
 
 // This list should be kept in sync with the list of productIdentificaties given to us by JZD - Zorgned FB
 const PRODUCT_IDS_EXCLUDED_FROM_REPARATIEVERZOEK_ACTION = [
@@ -370,29 +367,3 @@ export const jzdAanvragenApiConfig: AanvragenApiConfig[] = [
       };
     }),
 ] as const;
-
-export const PICK_VOORZIENING_KEYS = [
-  'id',
-  'titel',
-  'procesIdentificatie',
-  'procesMeldingIdentificatie',
-  'beschikkingNummer',
-  'productIdentificatie',
-  'productsoortCode',
-  'beschiktProductIdentificatie',
-  'datumAanvraag',
-  'datumBesluit',
-  'datumBeginLevering',
-  'datumEindeLevering',
-  'datumIngangGeldigheid',
-  'datumEindeGeldigheid',
-  'datumOpdrachtLevering',
-  'leverancier',
-  'leverancierIdentificatie',
-  'leveringsVorm',
-  'resultaat',
-  'maActies',
-  'maCategorie',
-  'maProductgroep',
-  'maActieUrls',
-] as (keyof ZorgnedAanvraagTransformedWithMaApiProps)[];

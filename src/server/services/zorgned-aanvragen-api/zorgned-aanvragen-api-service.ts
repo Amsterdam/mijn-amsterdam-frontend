@@ -1,9 +1,6 @@
 import type { Entries } from 'type-fest';
 
-import {
-  PICK_VOORZIENING_KEYS,
-  jzdAanvragenApiConfig,
-} from './api-config/jzd-api-config.ts';
+import { jzdAanvragenApiConfig } from './api-config/jzd-api-config.ts';
 import type { AanvragenRequestInputFilters } from './api-config/request-input.ts';
 import type {
   WithMaApiProps,
@@ -17,7 +14,7 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
 import { dateSort } from '../../../universal/helpers/date.ts';
-import { entries, pick } from '../../../universal/helpers/utils.ts';
+import { entries } from '../../../universal/helpers/utils.ts';
 import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 
 function isMaApiPropertyConfigMatch<T extends ZorgnedAanvraagTransformed>(
@@ -163,11 +160,7 @@ export function fetchMaApiAanvragen(
     filters
   );
 
-  return apiSuccessResult(
-    aanvragen.map((aanvraag) => {
-      return pick(aanvraag, PICK_VOORZIENING_KEYS);
-    })
-  );
+  return apiSuccessResult(aanvragen);
 }
 
 export function fetchMaApiAanvraagById(
@@ -192,10 +185,7 @@ export function fetchMaApiAanvraagById(
   }
 
   return apiSuccessResult(
-    pick(
-      addMaApiPropsToAanvraag(maAanvragenApiConfig, aanvraag),
-      PICK_VOORZIENING_KEYS
-    )
+    addMaApiPropsToAanvraag(maAanvragenApiConfig, aanvraag)
   );
 }
 
