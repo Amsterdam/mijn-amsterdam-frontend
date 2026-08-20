@@ -1,7 +1,10 @@
 import type { Entries } from 'type-fest';
 
-import { jzdAanvragenApiConfig } from './api-config/jzd-api-config.ts';
-import type { AanvragenRequestInputFilters } from './api-config/request-input.ts';
+import type { ClientToServiceMap } from './api-config/api-config.ts';
+import type {
+  AanvragenRequestInputFilters,
+  ZorgnedApiClient,
+} from './api-config/request-input.ts';
 import type {
   WithMaApiProps,
   AanvragenApiConfig,
@@ -11,11 +14,15 @@ import type {
 import {
   apiErrorResult,
   type ApiResponse,
+  type ApiResponsePromise,
   apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
 import { dateSort } from '../../../universal/helpers/date.ts';
 import { entries } from '../../../universal/helpers/utils.ts';
-import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
+import type {
+  BSN,
+  ZorgnedAanvraagTransformed,
+} from '../zorgned/zorgned-types.ts';
 
 function isMaApiPropertyConfigMatch<T extends ZorgnedAanvraagTransformed>(
   aanvraag: T,
@@ -145,44 +152,71 @@ export function transformAanvraagForFrontendWithMaApiProps(
   return aanvragen_;
 }
 
-export function fetchMaApiAanvragen(
-  serviceResponse: ApiResponse<ZorgnedAanvraagTransformed[]>,
-  apiConfig: AanvragenApiConfig[],
-  filters?: AanvragenRequestInputFilters
-): ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps[]> {
-  if (serviceResponse.status !== 'OK') {
-    return serviceErrorResult([serviceResponse]);
+export async function fetchMaApiAanvragen(
+  clientsService: ClientToServiceMap,
+  bsn: BSN,
+  filters?: Record<ZorgnedApiClient, AanvragenRequestInputFilters>
+): ApiResponsePromise<ZorgnedAanvraagTransformedWithMaApiProps[]> {
+  const responsesWithApiConfig = await Promise.all(
+    Object.entries(clientsService).map(([client, service]) =>
+      service
+        .fetch(bsn)
+        .then((response) => [response, service.apiConfig] as const)
+        .then(([response, apiConfig]) => [response, apiConfig, client] as const)
+    )
+  );
+
+  const responses = responsesWithApiConfig.map(([response]) => response);
+  if (responses.some((response) => response.status === 'ERROR')) {
+    return serviceErrorResult(responses);
   }
 
-  const aanvragen = transformAanvraagForFrontendWithMaApiProps(
-    serviceResponse,
-    apiConfig,
-    filters
+  // Consolidate all the aanvragen from the different clients into a single array, and add the maApiProps to each aanvraag.
+  const aanvragen = responsesWithApiConfig.flatMap(
+    ([serviceResponse, apiConfig, client]) =>
+      transformAanvraagForFrontendWithMaApiProps(
+        serviceResponse,
+        apiConfig,
+        filters?.[client as ZorgnedApiClient]
+      )
   );
 
   return apiSuccessResult(aanvragen);
 }
 
-export function fetchMaApiAanvraagById(
-  aanvragenResponse: ApiResponse<ZorgnedAanvraagTransformed[]>,
-  id: ZorgnedAanvraagTransformedWithMaApiProps['id'],
-  maAanvragenApiConfig: AanvragenApiConfig[] = jzdAanvragenApiConfig
-): ApiResponse<ZorgnedAanvraagTransformedWithMaApiProps> {
-  if (aanvragenResponse.status !== 'OK') {
-    return serviceErrorResult([aanvragenResponse]);
-  }
-
-  const aanvraag = aanvragenResponse.content?.find(
-    (aanvraag) => aanvraag.id === id
+export async function fetchMaApiAanvraagById(
+  clientsService: ClientToServiceMap,
+  bsn: BSN,
+  id: ZorgnedAanvraagTransformedWithMaApiProps['id']
+): ApiResponsePromise<ZorgnedAanvraagTransformedWithMaApiProps> {
+  const responsesWithApiConfig = await Promise.all(
+    Object.values(clientsService).map((service) =>
+      service
+        .fetch(bsn)
+        .then((response) => [response, service.apiConfig] as const)
+    )
   );
 
-  if (!aanvraag) {
+  const responses = responsesWithApiConfig.map(([response]) => response);
+  if (responses.some((response) => response.status === 'ERROR')) {
+    return serviceErrorResult(responses);
+  }
+
+  // Find the response and apiConfig for this particular aanvraag ID.
+  // We need both the response and the apiConfig to be able to add the maApiProps to the aanvraag.
+  const [response, apiConfig] =
+    responsesWithApiConfig.find(
+      ([response]) =>
+        response.content?.some((aanvraag) => aanvraag.id === id) ?? false
+    ) ?? [];
+
+  const aanvraag = response?.content?.find((aanvraag) => aanvraag.id === id);
+
+  if (!aanvraag || !apiConfig) {
     return apiErrorResult(`No aanvraag found with id ${id}`, null, 404);
   }
 
-  return apiSuccessResult(
-    addMaApiPropsToAanvraag(maAanvragenApiConfig, aanvraag)
-  );
+  return apiSuccessResult(addMaApiPropsToAanvraag(apiConfig, aanvraag));
 }
 
 export const forTesting = {

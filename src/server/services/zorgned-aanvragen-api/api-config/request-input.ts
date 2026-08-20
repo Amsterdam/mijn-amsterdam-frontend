@@ -4,13 +4,13 @@ import { ZodValidators } from '../../../helpers/validation.ts';
 
 const bsnInput = ZodValidators.BSN.nonoptional();
 const zorgnedApiClients = z.enum(['WMO', 'LLV', 'HLI']);
-const clientInput = zorgnedApiClients.optional();
+const clientsInput = z.array(zorgnedApiClients).optional();
 
 export type ZorgnedApiClient = z.infer<typeof zorgnedApiClients>;
 
 const requestInputBase_ = {
   bsn: bsnInput,
-  client: clientInput,
+  clients: clientsInput,
 };
 
 export const requestInputBase = z.object(requestInputBase_);
@@ -60,5 +60,5 @@ export const requestInputByClient = {
 export const aanvraagDetailRequestInput = z.object({
   bsn: bsnInput,
   id: z.string().nonoptional(),
-  client: clientInput,
+  clients: clientsInput,
 });

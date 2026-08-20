@@ -87,36 +87,17 @@ const REPARATIEVERZOEK_ACTIE_CONFIG_PGB: AanvragenApiConfig = {
   },
 };
 
-export const jzdAanvragenApiConfig: AanvragenApiConfig[] = [
+export const wmoAanvragenApiConfig: AanvragenApiConfig[] = [
   // // // // // // // // // // // // // // // // // //
   // Reparatieverzoek action for WRA products  // // //
   // // // // // // // // // // // // // // // // // //
   REPARATIEVERZOEK_ACTIE_CONFIG,
   REPARATIEVERZOEK_ACTIE_CONFIG_PGB,
+
   // // // // // // // // // //
   // Stopzetten actions // // //
   // // // // // // // // // //
 
-  /////////////////////////////
-  // Leerlingenvervoer ////////
-  /////////////////////////////
-  {
-    assign: {
-      maCategorie: ['A-LLV'],
-      maActies: ['stopzetten', 'stopzetten-tijdelijk'],
-    },
-    include: {
-      isActueel: true,
-      productIdentificatie: [
-        'LLVFV',
-        'LLVOVA',
-        'LLVOVV',
-        'LLVEV',
-        'LLVAV',
-        'LLVAVG',
-      ],
-    },
-  },
   //////////////////////////////////////////////////////
   // Stopzetten via content pagina verwijzingen ////////
   //////////////////////////////////////////////////////
