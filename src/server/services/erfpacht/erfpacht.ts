@@ -58,7 +58,7 @@ async function fetchErfpachter(
 
 export async function fetchErfpacht(
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<ErfpachtResponseFrontend | ErfpachtErpachterResponse>> {
+): Promise<ApiResponse<ErfpachtResponseFrontend>> {
   // Commerciële gebruikers (EHerkenning) maken gebruik van een eigen portaal (Patroon C)
   // Het is niet nodig om voor deze gebruikers dossiers op te halen, omdat zij deze ook niet in het portaal kunnen inzien.
   const isNotCommercial =
