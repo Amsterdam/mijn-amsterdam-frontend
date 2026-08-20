@@ -25,25 +25,36 @@ import type {
   ZorgnedAanvraagTransformed,
 } from '../zorgned/zorgned-types.ts';
 
+const DEFAULT_INCLUDE_MATCH = true;
+const DEFAULT_EXCLUDE_MATCH = false;
+
 function isMaApiPropertyConfigMatch<T extends ZorgnedAanvraagTransformed>(
   voorziening: T,
   actionConfig: JzdApiConfig<T>,
-  matchType: 'include' | 'exclude' = 'include'
+  matchType:
+    | 'include.every'
+    | 'exclude.some'
+    | 'exclude.every'
+    | 'include.some' = 'include.every'
 ): boolean {
-  const IS_DEFAULT_MATCH = matchType !== 'exclude'; // If there are no matchers, we don't want to exclude any items, but we do want to include all items.
+  const defaultMatch = matchType.startsWith('include')
+    ? DEFAULT_INCLUDE_MATCH
+    : DEFAULT_EXCLUDE_MATCH; // If there are no matchers, we don't want to exclude any items, but we do want to include all items.
   const matchConfig = actionConfig[matchType];
 
   if (!matchConfig) {
-    return IS_DEFAULT_MATCH;
+    return defaultMatch;
   }
 
   const matchers = entries(matchConfig);
 
   if (!matchers.length) {
-    return IS_DEFAULT_MATCH;
+    return defaultMatch;
   }
 
-  return matchers.every(([voorzieningKey, valueMatch]) => {
+  const fn = matchType.split('.')[1] as 'every' | 'some';
+
+  return matchers[fn](([voorzieningKey, valueMatch]) => {
     if (typeof valueMatch === 'function') {
       return valueMatch(voorziening);
     }
@@ -63,10 +74,23 @@ function addMaApiPropsToVoorziening<T extends ZorgnedAanvraagTransformed>(
   const applyAssignments: Partial<WithMaApiProps> = {};
 
   apiPropsConfig.forEach((actionConfig) => {
-    if (
-      isMaApiPropertyConfigMatch(voorziening, actionConfig, 'include') &&
-      !isMaApiPropertyConfigMatch(voorziening, actionConfig, 'exclude')
-    ) {
+    const includeType = actionConfig['include.every']
+      ? 'include.every'
+      : 'include.some';
+    const isMatchedForInclusion = isMaApiPropertyConfigMatch(
+      voorziening,
+      actionConfig,
+      includeType
+    );
+    const excludeType = actionConfig['exclude.every']
+      ? 'exclude.every'
+      : 'exclude.some';
+    const isMatchedForExclusion = isMaApiPropertyConfigMatch(
+      voorziening,
+      actionConfig,
+      excludeType
+    );
+    if (isMatchedForInclusion && !isMatchedForExclusion) {
       type _Entries = Entries<
         WithMaApiPropsAssignments<ZorgnedAanvraagTransformed>
       >;
@@ -98,15 +122,13 @@ function serviceErrorResult(
   wmoVoorzieningenResponse: ApiResponse<ZorgnedAanvraagTransformed[]>,
   jeugdVoorzieningenResponse: ApiResponse<ZorgnedAanvraagTransformed[]>
 ) {
-  return apiErrorResult(
-    'Error fetching voorzieningen',
-    null,
-    wmoVoorzieningenResponse.status === 'ERROR'
-      ? wmoVoorzieningenResponse.code
-      : jeugdVoorzieningenResponse.status === 'ERROR'
-        ? jeugdVoorzieningenResponse.code
-        : undefined
-  );
+  let code = undefined;
+  if (wmoVoorzieningenResponse.status === 'ERROR') {
+    code = wmoVoorzieningenResponse.code;
+  } else if (jeugdVoorzieningenResponse.status === 'ERROR') {
+    code = jeugdVoorzieningenResponse.code;
+  }
+  return apiErrorResult('Error fetching voorzieningen', null, code);
 }
 
 export function transformVoorzieningForFrontendWithMaApiProps(
