@@ -1,13 +1,13 @@
-import { TableV2 } from './TableV2.tsx';
-import type { TableV2Props } from './TableV2.types.ts';
+import { DataViewList } from './DataViewList.tsx';
 import type {
   LinkProps,
   ZaakAanvraagDetail,
 } from '../../../universal/types/App.types.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
-import { DataViewList } from '../DataViewList/DataViewList.tsx';
+import { TableV2 } from '../Table/TableV2.tsx';
+import type { TableV2Props } from '../Table/TableV2.types.ts';
 
-export function ResponsiveTable<
+export function DataView<
   T extends { title?: string; link?: LinkProps; themaId?: string } =
     ZaakAanvraagDetail,
 >({

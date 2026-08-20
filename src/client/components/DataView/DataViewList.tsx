@@ -11,7 +11,7 @@ import {
 import { ChevronForwardIcon } from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
 
-import styles from './DataView.module.scss';
+import styles from './DataViewList.module.scss';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 import type { TableV2Props } from '../Table/TableV2.types.ts';

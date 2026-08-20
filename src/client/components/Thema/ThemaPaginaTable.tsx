@@ -7,9 +7,9 @@ import type {
   ZaakAanvraagDetail,
 } from '../../../universal/types/App.types.ts';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app.ts';
+import { DataView } from '../DataView/DataView.tsx';
 import { LinkToListPage } from '../LinkToListPage/LinkToListPage.tsx';
 import { PageContentCell } from '../Page/Page.tsx';
-import { ResponsiveTable } from '../Table/ResponsiveTable.tsx';
 import type { DisplayProps } from '../Table/TableV2.tsx';
 
 const DISPLAY_PROPS_DEFAULT: DisplayProps<{ title: string }> = {
@@ -57,7 +57,7 @@ export function ThemaPaginaTable<
 
   return (
     <PageContentCell>
-      <ResponsiveTable
+      <DataView
         items={zaken_}
         caption={title}
         contentAfterTheCaption={contentAfterTheTitle}
