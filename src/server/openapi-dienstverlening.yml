@@ -20,13 +20,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/HealthyResponse'
 
-  /private/api/v1/services/jzd/voorziening:
+  /private/api/v1/services/zorgned/voorziening:
     post:
       security:
         - bearerAuth: []
         - apimSubscriptionKey: []
       description: |
-        Gets a single JZD voorziening by id.
+        Gets a single Zorgned voorziening by id.
       requestBody:
         required: true
         content:
@@ -37,18 +37,18 @@ paths:
               properties:
                 bsn:
                   type: string
-                  description: The BSN of the user to fetch the JZD voorziening for.
+                  description: The BSN of the user to fetch the Zorgned voorziening for.
                 id:
                   type: string
                   description: Id of the voorziening.
       responses:
         '200':
           description: |
-            The requested JZD voorziening
+            The requested Zorgned voorziening
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/JzdVoorzieningResponse'
+                $ref: '#/components/schemas/ZorgnedAanvraagResponse'
         '500':
           $ref: '#/components/responses/ApplicationErrorResponse'
         '503':
@@ -60,13 +60,13 @@ paths:
         '401':
           $ref: '#/components/responses/UnauthorizedResponse'
 
-  /private/api/v1/services/jzd/voorzieningen:
+  /private/api/v1/services/zorgned/aanvragen:
     post:
       security:
         - bearerAuth: []
         - apimSubscriptionKey: []
       description: |
-        Gets a list of JZD voorzieningen.
+        Gets a list of Zorgned aanvragen.
       requestBody:
         required: true
         content:
@@ -77,36 +77,36 @@ paths:
               properties:
                 bsn:
                   type: string
-                  description: The BSN of the user to fetch the JZD voorzieningen for.
+                  description: The BSN of the user to fetch the Zorgned aanvragen for.
                 client:
                   type: string
-                  description: The client to fetch the JZD voorzieningen for. Must be one of the following
+                  description: The client to fetch the Zorgned aanvragen for. Must be one of the following
                   enum:
                     - WMO
                     - HLI
-                    - JZD
+                    - LLV
                 maActies:
                   type: array
                   items:
-                    $ref: '#/components/schemas/JzdVoorziening/properties/maActies'
+                    $ref: '#/components/schemas/ZorgnedAanvraag/properties/maActies'
                   description:
-                    Optional list of maActies to filter the voorzieningen on.
-                    Only voorzieningen that have at least one of the specified maActies will be included in the response.
+                    Optional list of maActies to filter the aanvragen on.
+                    Only aanvragen that have at least one of the specified maActies will be included in the response.
                 maProductgroep:
                   type: array
                   items:
-                    $ref: '#/components/schemas/JzdVoorziening/properties/maProductgroep'
+                    $ref: '#/components/schemas/ZorgnedAanvraag/properties/maProductgroep'
                   description:
-                    Optional list of maProductgroepen to filter the voorzieningen on.
-                    Only voorzieningen that have at least one of the specified maProductgroepen will be included in the response.
+                    Optional list of maProductgroepen to filter the aanvragen on.
+                    Only aanvragen that have at least one of the specified maProductgroepen will be included in the response.
       responses:
         '200':
           description: |
-            A list of huidige toegewezen JZD voorzieningen sorted by datumBesluit desc.
+            A list of huidige toegewezen Zorgned aanvragen sorted by datumBesluit desc.
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/JzdVoorzieningenResponse'
+                $ref: '#/components/schemas/ZorgnedAanvragenResponse'
         '500':
           $ref: '#/components/responses/ApplicationErrorResponse'
         '503':
@@ -206,27 +206,27 @@ components:
           type: string
           enum:
             - OK
-    JzdVoorzieningenResponse:
+    ZorgnedAanvragenResponse:
       type: object
       properties:
         content:
           type: array
           items:
-            $ref: '#/components/schemas/JzdVoorziening'
+            $ref: '#/components/schemas/ZorgnedAanvraag'
         status:
           type: string
           enum:
             - 'SUCCESS'
-    JzdVoorzieningResponse:
+    ZorgnedAanvraagResponse:
       type: object
       properties:
         content:
-          $ref: '#/components/schemas/JzdVoorziening'
+          $ref: '#/components/schemas/ZorgnedAanvraag'
         status:
           type: string
           enum:
             - 'SUCCESS'
-    JzdVoorziening:
+    ZorgnedAanvraag:
       type: object
       properties:
         id:

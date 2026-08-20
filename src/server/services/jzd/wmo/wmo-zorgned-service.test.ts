@@ -119,7 +119,7 @@ describe('wmo-zorgned-service', () => {
       headers: {
         Token: process.env.BFF_ZORGNED_API_TOKEN,
         'Content-type': 'application/json; charset=utf-8',
-        'x-cache-key-supplement': 'JZD',
+        'x-cache-key-supplement': 'WMO',
       },
       httpsAgent: expect.any(Object),
     });
