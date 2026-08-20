@@ -20,7 +20,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/HealthyResponse'
 
-  /private/api/v1/services/zorgned/voorziening:
+  /private/api/v1/services/zorgned/aanvraag:
     post:
       security:
         - bearerAuth: []
@@ -28,27 +28,33 @@ paths:
       description: |
         Gets a single Zorgned voorziening by id.
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required: [bsn, id]
-              properties:
-                bsn:
-                  type: string
-                  description: The BSN of the user to fetch the Zorgned voorziening for.
-                id:
-                  type: string
-                  description: Id of the voorziening.
+        $ref: '#/components/requestBodies/ZorgnedAanvraagDetailRequestBody'
       responses:
         '200':
-          description: |
-            The requested Zorgned voorziening
-          content:
-            'application/json':
-              schema:
-                $ref: '#/components/schemas/ZorgnedAanvraagResponse'
+          $ref: '#/components/responses/ZorgnedAanvraagDetailResponse'
+        '500':
+          $ref: '#/components/responses/ApplicationErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+
+  /private/api/v1/services/jzd/voorziening:
+    post:
+      security:
+        - bearerAuth: []
+        - apimSubscriptionKey: []
+      description: |
+        Gets a single JZD voorziening by id.
+      requestBody:
+        $ref: '#/components/requestBodies/ZorgnedAanvraagDetailRequestBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/ZorgnedAanvraagDetailResponse'
         '500':
           $ref: '#/components/responses/ApplicationErrorResponse'
         '503':
@@ -68,41 +74,37 @@ paths:
       description: |
         Gets a list of Zorgned aanvragen.
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required: [bsn, client]
-              properties:
-                bsn:
-                  type: string
-                  description: The BSN of the user to fetch the Zorgned aanvragen for.
-                client:
-                  type: string
-                  description: The client to fetch the Zorgned aanvragen for. Must be one of the following
-                  enum:
-                    - WMO
-                    - HLI
-                    - LLV
-                maActies:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/ZorgnedAanvraag/properties/maActies'
-                  description:
-                    Optional list of maActies to filter the aanvragen on.
-                    Only aanvragen that have at least one of the specified maActies will be included in the response.
-                maProductgroep:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/ZorgnedAanvraag/properties/maProductgroep'
-                  description:
-                    Optional list of maProductgroepen to filter the aanvragen on.
-                    Only aanvragen that have at least one of the specified maProductgroepen will be included in the response.
+        $ref: '#/components/requestBodies/ZorgnedAanvragenRequestBody'
       responses:
         '200':
           description: |
             A list of huidige toegewezen Zorgned aanvragen sorted by datumBesluit desc.
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ZorgnedAanvragenResponse'
+        '500':
+          $ref: '#/components/responses/ApplicationErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+
+  /private/api/v1/services/jzd/aanvragen:
+    post:
+      security:
+        - bearerAuth: []
+        - apimSubscriptionKey: []
+      description: |
+        Gets a list of JZD aanvragen.
+      requestBody:
+        $ref: '#/components/requestBodies/ZorgnedAanvragenRequestBody'
+      responses:
+        '200':
+          description: |
+            A list of huidige toegewezen JZD aanvragen sorted by datumBesluit desc.
           content:
             'application/json':
               schema:
@@ -162,7 +164,68 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+  requestBodies:
+    ZorgnedAanvraagDetailRequestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [bsn, id]
+            properties:
+              bsn:
+                type: string
+                description: The BSN of the user to fetch the Zorgned voorziening for.
+              id:
+                type: string
+                description: Id of the voorziening.
+              client:
+                type: string
+                description: The client to fetch the Zorgned aanvragen for. Must be one of the following
+                enum:
+                  - WMO
+                  - HLI
+                  - LLV
+    ZorgnedAanvragenRequestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [bsn]
+            properties:
+              bsn:
+                type: string
+                description: The BSN of the user to fetch the Zorgned aanvragen for.
+              client:
+                type: string
+                description: The client to fetch the Zorgned aanvragen for. Must be one of the following
+                enum:
+                  - WMO
+                  - HLI
+                  - LLV
+              maActies:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ZorgnedAanvraag/properties/maActies'
+                description:
+                  Optional list of maActies to filter the aanvragen on.
+                  Only aanvragen that have at least one of the specified maActies will be included in the response.
+              maProductgroep:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ZorgnedAanvraag/properties/maProductgroep'
+                description:
+                  Optional list of maProductgroepen to filter the aanvragen on.
+                  Only aanvragen that have at least one of the specified maProductgroepen will be included in the response.
   responses:
+    ZorgnedAanvraagDetailResponse:
+      description: |
+        The requested Zorgned voorziening
+      content:
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/ZorgnedAanvraagResponse'
     BadRequestResponse:
       description: Returns bad request error
       content:
