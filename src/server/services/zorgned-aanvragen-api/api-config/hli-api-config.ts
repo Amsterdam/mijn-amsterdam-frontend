@@ -1,5 +1,6 @@
 import type { AanvragenApiConfig } from '../zorgned-aanvragen-api-types.ts';
 
+// Sample configuration for HLI ZorgNed aanvragen API.
 const STADSPAS_REGELING: AanvragenApiConfig = {
   include: {
     productIdentificatie: 'AV-SPM',
