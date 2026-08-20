@@ -4,7 +4,7 @@ import { useKlachtenThemaData } from './useKlachtenThemaData.hook.ts';
 import type { KlachtFrontend } from '../../../../server/services/klachten/types.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 const pageContentTop = (

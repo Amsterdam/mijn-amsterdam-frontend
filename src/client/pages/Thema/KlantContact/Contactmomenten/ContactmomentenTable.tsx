@@ -1,6 +1,6 @@
 import { Paragraph, UnorderedList } from '@amsterdam/design-system-react';
 
-import { ThemaPaginaTable } from '../../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaTable } from '../../../../components/Thema/ThemaPaginaDataView.tsx';
 import {
   type ContactmomentFrontendFinal,
   tableConfigs,

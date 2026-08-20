@@ -5,7 +5,7 @@ import { type ZaakFrontendCombined } from '../../../../server/services/vergunnin
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { themaConfig } from '../Parkeren/Parkeren-thema-config.ts';
 
