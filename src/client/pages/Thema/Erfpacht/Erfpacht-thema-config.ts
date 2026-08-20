@@ -179,8 +179,12 @@ type DisplayPropsWijzigingsaanvragen = DisplayProps<
 >;
 
 export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
-  const dossiersBase = erfpachtData?.dossiers;
-  const [firstZaak] = erfpachtData?.zaken ?? [];
+  const dossiersBase =
+    erfpachtData !== null && 'dossiers' in erfpachtData
+      ? erfpachtData?.dossiers
+      : null;
+  const [firstZaak] =
+    erfpachtData !== null && 'zaken' in erfpachtData ? erfpachtData.zaken : [];
 
   // Wijzigingsaanvragen table on themapagina
   const displayPropsWijzigingsaanvragen: DisplayPropsWijzigingsaanvragen = {
@@ -222,7 +226,10 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
     },
   };
 
-  const titleDossiers = erfpachtData?.titelDossiersKop;
+  const titleDossiers =
+    erfpachtData !== null && 'titelDossiersKop' in erfpachtData
+      ? erfpachtData.titelDossiersKop
+      : null;
 
   const tableConfig = {
     [listPageParamKind.erfpachtZaken]: {
