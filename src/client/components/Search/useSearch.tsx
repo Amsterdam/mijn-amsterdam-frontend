@@ -141,9 +141,12 @@ export function generateSearchIndexPageEntries(
       return [];
     }
 
-    return apiConfig
-      .getApiBaseItems(apiContent)
-      .map((item) => generateSearchIndexPageEntry(item, apiConfig));
+    const apiBaseItems = apiConfig.getApiBaseItems(apiContent);
+    // Final runtime guard to ensure that apiBaseItems is an array before mapping over it.
+    const apiBaseItems_ = Array.isArray(apiBaseItems) ? apiBaseItems : [];
+    return apiBaseItems_.map((item) =>
+      generateSearchIndexPageEntry(item, apiConfig)
+    );
   });
 }
 
