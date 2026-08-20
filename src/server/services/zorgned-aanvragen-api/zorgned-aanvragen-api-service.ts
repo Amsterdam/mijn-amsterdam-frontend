@@ -60,10 +60,19 @@ function addMaApiPropsToAanvraag<T extends ZorgnedAanvraagTransformed>(
   const applyAssignments: Partial<WithMaApiProps> = {};
 
   apiConfig.forEach((actionConfig) => {
-    if (
-      isMaApiPropertyConfigMatch(aanvraag, actionConfig, 'include') &&
-      !isMaApiPropertyConfigMatch(aanvraag, actionConfig, 'exclude')
-    ) {
+    const isMatchedForInclusion = isMaApiPropertyConfigMatch(
+      aanvraag,
+      actionConfig,
+      'include'
+    );
+
+    const isMatchedForExclusion = isMaApiPropertyConfigMatch(
+      aanvraag,
+      actionConfig,
+      'exclude'
+    );
+
+    if (isMatchedForInclusion && !isMatchedForExclusion) {
       type _Entries = Entries<
         WithMaApiPropsAssignments<ZorgnedAanvraagTransformed>
       >;
