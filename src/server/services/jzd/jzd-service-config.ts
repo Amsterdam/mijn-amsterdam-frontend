@@ -6,6 +6,7 @@ export const featureToggle = {
       isEnabled: true,
     },
     fetchWmo: {
+      // Add Zorgned aanvragen api props to the MA frontend output.
       addMaVoorzieningenApiProps: isEnabled(
         'WMO.fetchWmo.addMaVoorzieningenApiProps'
       ),
