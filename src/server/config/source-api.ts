@@ -160,7 +160,7 @@ const ApiConfig_ = {
     headers: {
       Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
       'Content-type': 'application/json; charset=utf-8',
-      'x-cache-key-supplement': 'JZD',
+      'x-cache-key-supplement': 'WMO',
     },
     httpsAgent: httpsAgentBFF,
   },

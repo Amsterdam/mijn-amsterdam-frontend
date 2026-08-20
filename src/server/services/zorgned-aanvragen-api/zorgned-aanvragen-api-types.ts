@@ -14,10 +14,10 @@ export type WithMaApiPropsAssignments<T> = {
 export type ZorgnedAanvraagTransformedWithMaApiProps =
   ZorgnedAanvraagTransformed & Partial<WithMaApiProps>;
 
-export type MaApiPropAssignFN<T, K, V> = (voorziening: T, key: K) => V;
-export type MaApiPropMatchFN<T> = (voorziening: T) => boolean;
-export type VoorzieningKey<T> = Exclude<keyof T, 'link' | 'documenten'>;
-export type VoorzieningValue<T> = T[VoorzieningKey<T>];
+export type MaApiPropAssignFN<T, K, V> = (aanvraag: T, key: K) => V;
+export type MaApiPropMatchFN<T> = (aanvraag: T) => boolean;
+export type AanvraagKey<T> = Exclude<keyof T, 'link' | 'documenten'>;
+export type AanvraagValue<T> = T[AanvraagKey<T>];
 
 /**
  * The MatchConfig MUST return true for all defined keys.
@@ -25,13 +25,14 @@ export type VoorzieningValue<T> = T[VoorzieningKey<T>];
  */
 type MatchConfig<T> = Partial<
   Record<
-    VoorzieningKey<T>,
-    VoorzieningValue<T> | VoorzieningValue<T>[] | MaApiPropMatchFN<T>
+    AanvraagKey<T>,
+    AanvraagValue<T> | AanvraagValue<T>[] | MaApiPropMatchFN<T>
   >
 >;
 
-export type JzdApiConfig<T extends object = ZorgnedAanvraagTransformed> = {
-  assign: Prettify<Partial<WithMaApiPropsAssignments<T>>>;
-  include: MatchConfig<T>;
-  exclude?: MatchConfig<T>;
-};
+export type AanvragenApiConfig<T extends object = ZorgnedAanvraagTransformed> =
+  {
+    assign: Prettify<Partial<WithMaApiPropsAssignments<T>>>;
+    include: MatchConfig<T>;
+    exclude?: MatchConfig<T>;
+  };

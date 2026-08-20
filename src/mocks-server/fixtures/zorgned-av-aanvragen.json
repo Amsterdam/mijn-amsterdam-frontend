@@ -194,7 +194,7 @@
               "resultaat": "toegewezen",
               "toegewezenProduct": {
                 "datumIngangGeldigheid": "2024-08-01",
-                "datumEindeGeldigheid": "2025-07-31",
+                "datumEindeGeldigheid": "2027-07-31",
                 "actueel": true,
                 "omvang": {
                   "volume": 1,
@@ -264,7 +264,7 @@
               "resultaat": "toegewezen",
               "toegewezenProduct": {
                 "datumIngangGeldigheid": "2025-08-01",
-                "datumEindeGeldigheid": "2026-07-31",
+                "datumEindeGeldigheid": "2027-07-31",
                 "actueel": true,
                 "omvang": {
                   "volume": 1,
@@ -324,7 +324,7 @@
               "resultaat": "toegewezen",
               "toegewezenProduct": {
                 "datumIngangGeldigheid": "2023-08-01",
-                "datumEindeGeldigheid": "2024-07-31",
+                "datumEindeGeldigheid": "2027-07-31",
                 "actueel": true,
                 "omvang": {
                   "volume": 1,
@@ -592,7 +592,7 @@
               "resultaat": "toegewezen",
               "toegewezenProduct": {
                 "datumIngangGeldigheid": "2023-08-01",
-                "datumEindeGeldigheid": "2024-07-31",
+                "datumEindeGeldigheid": "2027-07-31",
                 "actueel": true,
                 "omvang": {
                   "volume": 1,

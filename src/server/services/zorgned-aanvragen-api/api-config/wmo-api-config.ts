@@ -1,24 +1,13 @@
 import { parseISO } from 'date-fns/parseISO';
-import type z from 'zod';
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
-import { voorzieningenRequestInput } from './jzd-service-config.ts';
-import type {
-  JzdApiConfig,
-  ZorgnedAanvraagTransformedWithMaApiProps,
-} from './jzd-types.ts';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
+import { entries } from '../../../../universal/helpers/utils.ts';
 import {
   productGroep,
   wmoStatusLineItemsConfig,
-} from './wmo/wmo-status-line-items.ts';
-import { IS_PRODUCTION } from '../../../universal/config/env.ts';
-import { entries } from '../../../universal/helpers/utils.ts';
-import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
-
-export type FetchWmoVoorzieningenApiOptions = Omit<
-  z.infer<typeof voorzieningenRequestInput>,
-  'bsn'
->;
+} from '../../jzd/wmo/wmo-status-line-items.ts';
+import type { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
+import type { AanvragenApiConfig } from '../zorgned-aanvragen-api-types.ts';
 
 // This list should be kept in sync with the list of productIdentificaties given to us by JZD - Zorgned FB
 const PRODUCT_IDS_EXCLUDED_FROM_REPARATIEVERZOEK_ACTION = [
@@ -63,15 +52,15 @@ function maActieUrlsReparatieverzoek(
   };
 }
 
-const REPARATIEVERZOEK_ACTIE_CONFIG: JzdApiConfig = {
+const REPARATIEVERZOEK_ACTIE_CONFIG: AanvragenApiConfig = {
   include: {
     isActueel: true,
     productsoortCode: ['WRA', 'WRA1', 'WRA2', 'WRA3', 'WRA4', 'WRA5'],
-    datumBeginLevering: (voorziening) => {
+    datumBeginLevering: (aanvraag) => {
       // Only show the reparatieverzoek action for WRA products that have a datumBeginLevering in the past (i.e. the product has been delivered).
       return (
-        voorziening.datumBeginLevering !== null &&
-        parseISO(voorziening.datumBeginLevering) <= new Date()
+        aanvraag.datumBeginLevering !== null &&
+        parseISO(aanvraag.datumBeginLevering) <= new Date()
       );
     },
   },
@@ -86,7 +75,7 @@ const REPARATIEVERZOEK_ACTIE_CONFIG: JzdApiConfig = {
   },
 };
 
-const REPARATIEVERZOEK_ACTIE_CONFIG_PGB: JzdApiConfig = {
+const REPARATIEVERZOEK_ACTIE_CONFIG_PGB: AanvragenApiConfig = {
   include: {
     productsoortCode: REPARATIEVERZOEK_ACTIE_CONFIG.include.productsoortCode,
     leveringsVorm: ['PGB'],
@@ -98,36 +87,17 @@ const REPARATIEVERZOEK_ACTIE_CONFIG_PGB: JzdApiConfig = {
   },
 };
 
-export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
+export const wmoAanvragenApiConfig: AanvragenApiConfig[] = [
   // // // // // // // // // // // // // // // // // //
   // Reparatieverzoek action for WRA products  // // //
   // // // // // // // // // // // // // // // // // //
   REPARATIEVERZOEK_ACTIE_CONFIG,
   REPARATIEVERZOEK_ACTIE_CONFIG_PGB,
+
   // // // // // // // // // //
   // Stopzetten actions // // //
   // // // // // // // // // //
 
-  /////////////////////////////
-  // Leerlingenvervoer ////////
-  /////////////////////////////
-  {
-    assign: {
-      maCategorie: ['A-LLV'],
-      maActies: ['stopzetten', 'stopzetten-tijdelijk'],
-    },
-    include: {
-      isActueel: true,
-      productIdentificatie: [
-        'LLVFV',
-        'LLVOVA',
-        'LLVOVV',
-        'LLVEV',
-        'LLVAV',
-        'LLVAVG',
-      ],
-    },
-  },
   //////////////////////////////////////////////////////
   // Stopzetten via content pagina verwijzingen ////////
   //////////////////////////////////////////////////////
@@ -137,7 +107,7 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       maActies: ['stopzetten-niet-via-formulier'],
     },
     include: {
-      leveringsVorm: (voorziening) => voorziening.leveringsVorm !== 'PGB',
+      leveringsVorm: (aanvraag) => aanvraag.leveringsVorm !== 'PGB',
       isActueel: true,
       productsoortCode: [
         'AO1',
@@ -371,36 +341,10 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       return {
         include: Object.fromEntries(
           entries(match).filter(([_, value]) => typeof value !== 'undefined')
-        ) as JzdApiConfig['include'],
+        ) as AanvragenApiConfig['include'],
         assign: {
           maProductgroep: lineItemConfig.productgroep,
         },
       };
     }),
 ] as const;
-
-export const PICK_VOORZIENING_KEYS = [
-  'id',
-  'titel',
-  'procesIdentificatie',
-  'procesMeldingIdentificatie',
-  'beschikkingNummer',
-  'productIdentificatie',
-  'productsoortCode',
-  'beschiktProductIdentificatie',
-  'datumAanvraag',
-  'datumBesluit',
-  'datumBeginLevering',
-  'datumEindeLevering',
-  'datumIngangGeldigheid',
-  'datumEindeGeldigheid',
-  'datumOpdrachtLevering',
-  'leverancier',
-  'leverancierIdentificatie',
-  'leveringsVorm',
-  'resultaat',
-  'maActies',
-  'maCategorie',
-  'maProductgroep',
-  'maActieUrls',
-] as (keyof ZorgnedAanvraagTransformedWithMaApiProps)[];
