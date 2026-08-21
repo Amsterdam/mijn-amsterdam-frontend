@@ -23,7 +23,7 @@ app.use(express.json({ strict: false }));
 app.use(express.urlencoded({ extended: true }));
 
 app.use((req: Request, _res: Response, next: NextFunction) => {
-  logger.info(
+  logger.debug(
     {
       method: req.method,
       url: req.originalUrl,
