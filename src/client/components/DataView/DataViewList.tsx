@@ -1,7 +1,6 @@
 import { isValidElement } from 'react';
 
 import {
-  Column,
   Heading,
   Icon,
   Paragraph,
@@ -28,11 +27,13 @@ export function LinkOrFragment({
     const LinkComponent = link.to.startsWith('http') ? MaLink : MaRouterLink;
     return (
       <LinkComponent href={link.to} maVariant="fatNoUnderline">
-        <Row align="between">
-          <Column>{children}</Column>
-          <Column align="center">
-            <Icon svg={ChevronForwardIcon} aria-hidden />
-          </Column>
+        <Row align="between" alignVertical="center">
+          {children}
+          <Icon
+            svg={ChevronForwardIcon}
+            aria-hidden
+            className={styles.ListViewIcon}
+          />
         </Row>
       </LinkComponent>
     );
@@ -94,6 +95,7 @@ export function DataViewList<T extends { link?: LinkProps; title?: string }>({
       {!!contentAfterTheCaption && (
         <div className="ams-mb-s">{contentAfterTheCaption}</div>
       )}
+
       <UnorderedList
         markers={false}
         className={classNames(styles.ListView, className)}
