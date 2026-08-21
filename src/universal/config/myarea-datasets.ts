@@ -284,6 +284,9 @@ export const DATASETS: DatasetCategories = {
           duur: {
             title: 'Duur',
           },
+          isoDatumStartUitvoering: {
+            title: 'Datum (ISO) start uitvoering',
+          },
         },
       },
     },

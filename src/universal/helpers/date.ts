@@ -250,3 +250,31 @@ export function parseDutchDateString(dateString: string): Date | null {
     return null;
   }
 }
+
+export function parseYYYYMMDDDateString(dateString: string): Date | null {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+    return null;
+  }
+
+  try {
+    const parsed = parse(dateString, 'yyyy-MM-dd', new Date());
+
+    if (!isValid(parsed)) {
+      return null;
+    }
+
+    return new Date(
+      Date.UTC(
+        parsed.getFullYear(),
+        parsed.getMonth(),
+        parsed.getDate(),
+        0,
+        0,
+        0,
+        0
+      )
+    );
+  } catch (_error) {
+    return null;
+  }
+}

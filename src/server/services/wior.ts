@@ -19,22 +19,30 @@ import {
   themaId,
   themaTitle,
 } from '../../client/components/MyArea/MyArea-thema-config.ts';
+import type { MyNotification } from '../../universal/types/App.types.ts';
 
 const WITHIN_RADIUS_KM = 1;
 
-function getNotification(bbox: LatLngBoundsLiteral) {
+const sortLatestToFirst = (a: string, b: string) =>
+  a && b ? b.localeCompare(a) : 0;
+
+function getNotification(
+  bbox: LatLngBoundsLiteral,
+  dateStartExecution: string
+) {
   return {
     id: `wior-meldingen-notification`,
-    datePublished: new Date().toISOString(),
+    datePublished: dateStartExecution,
     themaTitle,
     themaID: themaId,
+    hideDatePublished: true,
     title: `Werkzaamheden gepland`,
     description: `Bij u in de buurt zijn binnen enkele maanden meerdaagsewerkzaamheden gepland`,
     link: {
       to: `${routeConfig.themaPage.path}?datasetIds=["wior"]&filters={"wior":{"datumStartUitvoering":{"values":{"Binnen enkele maanden":1}},"duur":{"values":{"Meerdaags":1}}}}&bbox=[[${bbox[0]}],[${bbox[1]}]]`,
       title: 'Bekijk de werkzaamheden op kaart',
     },
-  };
+  } as MyNotification;
 }
 
 export async function fetchWiorNotifications(
@@ -84,7 +92,13 @@ export async function fetchWiorNotifications(
       filters
     );
     const bbox = getBboxFromFeatures(filteredFeatures, latlng);
-    const notification = getNotification(bbox);
+
+    const startingDates = filteredFeatures
+      .map((f) => f.properties.isoDatumStartUitvoering as string)
+      .filter(Boolean)
+      .toSorted(sortLatestToFirst);
+    const latestStartingDate = startingDates[0] ?? new Date(0).toISOString();
+    const notification = getNotification(bbox, latestStartingDate);
 
     return apiSuccessResult({
       notifications:
