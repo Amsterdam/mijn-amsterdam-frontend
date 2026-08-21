@@ -81,15 +81,48 @@ describe('DataView helpers', () => {
   });
 
   test('getLabelValue returns React elements unchanged', () => {
-    const element = <span>Label</span>;
+    function Label() {
+      return <span>Label</span>;
+    }
+    const element = <Label />;
 
-    expect(getLabelValue(element)).toBe(element);
+    expect(getLabelValue<typeof element>(element)).toBe(element);
   });
 
-  test('getLabelValue stringifies objects and primitives', () => {
-    expect(getLabelValue({ foo: 'bar' })).toBe('{"foo":"bar"}');
-    expect(getLabelValue(42)).toBe('42');
-    expect(getLabelValue(null)).toBe('null');
+  test('getLabelValue stringifies objects', () => {
+    const testObject = { label: 'value' };
+    const testElementObject = { label: testObject };
+
+    expect(
+      getLabelValue<typeof testElementObject>(testElementObject.label)
+    ).toBe('{"label":"value"}');
+  });
+
+  test('getLabelValue stringifies primitives', () => {
+    const testNumber = 42;
+    const testElementNumber = { label: testNumber };
+
+    expect(
+      getLabelValue<typeof testElementNumber>(testElementNumber.label)
+    ).toBe('42');
+
+    const testBoolean = true;
+    const testElementBoolean = { label: testBoolean };
+
+    expect(
+      getLabelValue<typeof testElementBoolean>(testElementBoolean.label)
+    ).toBe('true');
+  });
+
+  test('getLabelValue returns fallback for undefined and null', () => {
+    const testElement = { label: null };
+
+    expect(getLabelValue<typeof testElement>(testElement.label)).toBe(
+      'Onbekende label'
+    );
+    expect(getLabelValue<{ value?: string }>(undefined)).toBe(
+      'Onbekende label'
+    );
   });
 
   test('getTitleAttribute prefers first displayProp key, then title, then first truthy primitive field', () => {

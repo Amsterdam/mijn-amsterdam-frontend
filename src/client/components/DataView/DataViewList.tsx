@@ -63,13 +63,19 @@ export function getTitleAttribute<
   )[0] as keyof T;
 }
 
-export function getLabelValue(value: unknown) {
+export function getLabelValue<T>(value: T[keyof T]) {
+  const FALLBACK_VALUE = 'Onbekende label';
+
   if (isValidElement(value)) {
     return value;
   }
 
-  if (typeof value === 'object') {
+  if (typeof value === 'object' && value !== null) {
     return JSON.stringify(value);
+  }
+
+  if (value === undefined || value === null) {
+    return FALLBACK_VALUE;
   }
 
   return String(value);
