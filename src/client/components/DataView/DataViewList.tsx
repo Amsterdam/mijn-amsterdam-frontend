@@ -114,7 +114,13 @@ export function DataViewList<T extends { link?: LinkProps; title?: string }>({
             'id' in zaak && zaak.id != null ? String(zaak.id) : `item-${index}`;
 
           return (
-            <UnorderedList.Item key={key}>
+            <UnorderedList.Item
+              key={key}
+              className={classNames(
+                styles.ListViewItem,
+                index < items.length - 1 && styles.ListViewItemWithDivider
+              )}
+            >
               <LinkOrFragment link={zaak.link}>
                 <article className={styles.ListViewArticle}>
                   <Heading level={4} size="level-4">
@@ -131,24 +137,10 @@ export function DataViewList<T extends { link?: LinkProps; title?: string }>({
                   })}
                 </article>
               </LinkOrFragment>
-              <ListDivider listLength={items.length} index={index} />
             </UnorderedList.Item>
           );
         })}
       </UnorderedList>
     </>
   );
-}
-
-type ListDividerProps = {
-  listLength: number;
-  index: number;
-};
-
-export function ListDivider({ listLength, index }: ListDividerProps) {
-  if (index < listLength - 1) {
-    return <hr className={styles.ListDivider} />;
-  }
-
-  return <div className="ams-mb-m" />;
 }

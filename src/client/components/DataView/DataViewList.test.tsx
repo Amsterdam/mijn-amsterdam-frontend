@@ -7,7 +7,6 @@ import {
   LinkOrFragment,
   formatPropValueForDisplay,
   getTitleAttribute,
-  ListDivider,
   DataViewList,
 } from './DataViewList.tsx';
 
@@ -154,20 +153,6 @@ describe('DataView helpers', () => {
         []
       )
     ).toBe('title');
-  });
-});
-
-describe('ListDivider', () => {
-  it('renders a divider when the item is not the last in the list', () => {
-    render(<ListDivider listLength={3} index={1} />);
-
-    expect(screen.getByRole('separator')).toBeInTheDocument();
-  });
-
-  it('does not render a divider for the last item in the list', () => {
-    render(<ListDivider listLength={3} index={2} />);
-
-    expect(screen.queryByRole('separator')).not.toBeInTheDocument();
   });
 });
 
