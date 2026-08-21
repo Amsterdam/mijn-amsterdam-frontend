@@ -9,13 +9,13 @@ import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 
 export type DocumentsListPayload = {
   domainService: string;
-  source: string;
+  source?: string;
   zaakKey: string;
 };
 
 export type DocumentsDownloadPayload = {
   domainService: string;
-  source: string;
+  source?: string;
   documentKey: string;
 };
 
@@ -55,7 +55,14 @@ export type DocumentsProvider = {
 const providers = new Map<string, DocumentsProvider>();
 
 function providerKey(domainService: string, source?: string) {
-  return [domainService, source].join(':');
+  return [domainService, source].filter(Boolean).join(':');
+}
+
+function opsKey(domainService: string, source?: string) {
+  return (
+    [domainService, source].filter(Boolean).join('.').toUpperCase() +
+    '.documents'
+  );
 }
 
 function createDocumentsUrlHelpers(
@@ -99,11 +106,7 @@ export function registerWithDocumentsProvider(
   const provider: DocumentsProvider = {
     domainService: registration.domainService,
     source: registration.source,
-    opsToggleKey:
-      [registration.domainService, registration.source]
-        .filter(Boolean)
-        .join('.')
-        .toUpperCase() + '.documents',
+    opsToggleKey: opsKey(registration.domainService, registration.source),
     listDocuments: (authProfileAndToken, payload) => {
       return registration.listDocuments(authProfileAndToken, payload, helpers);
     },
@@ -123,7 +126,7 @@ export function resetDocumentsProvidersForTesting() {
 
 export function getDocumentsProvider(
   domainService: string,
-  source: string
+  source?: string
 ): DocumentsProvider | undefined {
   return providers.get(providerKey(domainService, source));
 }
