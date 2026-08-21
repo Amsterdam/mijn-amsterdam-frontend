@@ -21,7 +21,7 @@ import {
 
 type DocumentsPayloadBase = {
   domainService: string;
-  source: string;
+  source?: string;
 };
 
 type DocumentsResolvedContext<TPayload extends DocumentsPayloadBase> = {
@@ -71,7 +71,7 @@ function resolveDocumentContext<TPayload extends DocumentsPayloadBase>(
 
 const DocumentsListPayloadSchema = z.object({
   domainService: z.string(),
-  source: z.string(),
+  source: z.string().optional(),
   zaakKey: z.string(),
 });
 
@@ -101,7 +101,7 @@ export async function handleFetchDocumentsList(
 
 const DocumentsDownloadPayloadSchema = z.object({
   domainService: z.string(),
-  source: z.string(),
+  source: z.string().optional(),
   documentKey: z.string(),
 });
 
