@@ -7,7 +7,6 @@ import {
   RequestMock,
   ResponseAuthenticatedMock,
 } from '../../../testing/utils.ts';
-import { sendResponse } from '../../routing/route-helpers.ts';
 
 vi.mock('../../auth/auth-helpers', () => ({
   getAuth: vi.fn(),
@@ -19,7 +18,6 @@ vi.mock('./decrypt-route-param', () => ({
 
 vi.mock('../../routing/route-helpers', async (importOriginal) => ({
   ...(await importOriginal()),
-  sendResponse: vi.fn(),
   sendUnauthorized: vi.fn(),
 }));
 
@@ -151,7 +149,8 @@ describe('document-download-route-handler', () => {
       'decrypted-id',
       req.query
     );
-    expect(sendResponse).toHaveBeenCalledWith(res, {
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.send).toHaveBeenCalledWith({
       status: 'ERROR',
       content: null,
     });
