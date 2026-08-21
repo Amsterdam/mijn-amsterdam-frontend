@@ -1,23 +1,25 @@
 import { renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import type { DisplayProps } from './TableV2.types.ts';
 import { useDisplayPropsEntries } from './useDisplayPropEntries.hook.ts';
+import type { AfisFactuurFrontend } from '../../pages/Thema/Afis/Afis-thema-config.ts';
 
 const mockUseSmallScreen = vi.fn();
-const mockGetDisplayPropsColWidths = vi.fn();
-const mockGetDisplayProps = vi.fn();
-const mockVisibleColumnConfigValue = vi.fn();
+
+const displayFixture: DisplayProps<AfisFactuurFrontend> = {
+  props: {
+    factuurNummerEl: 'Factuurnummer',
+    statusDescription: 'Status',
+  },
+  colWidths: {
+    large: ['75%', '25%'],
+    small: ['100%', '0'],
+  },
+};
 
 vi.mock('../../hooks/media.hook.ts', () => ({
   useSmallScreen: () => mockUseSmallScreen(),
-}));
-
-vi.mock('./helpers.ts', () => ({
-  getDisplayPropsColWidths: (...args: unknown[]) =>
-    mockGetDisplayPropsColWidths(...args),
-  getDisplayProps: (...args: unknown[]) => mockGetDisplayProps(...args),
-  getVisibleColumnConfigValue: (...args: unknown[]) =>
-    mockVisibleColumnConfigValue(...args),
 }));
 
 describe('useDisplayPropsEntries', () => {
@@ -26,45 +28,25 @@ describe('useDisplayPropsEntries', () => {
   });
 
   it('returns all display prop entries when no screen-size config is present', () => {
-    mockUseSmallScreen.mockReturnValue(false);
-    mockGetDisplayPropsColWidths.mockReturnValue(undefined);
-    mockGetDisplayProps.mockReturnValue({
-      title: 'Titel',
-      status: 'Status',
-    });
-
-    const { result } = renderHook(() => useDisplayPropsEntries({} as never));
+    const { result } = renderHook(() =>
+      useDisplayPropsEntries<DisplayProps<AfisFactuurFrontend>>(displayFixture)
+    );
 
     expect(result.current).toEqual([
-      ['title', { label: 'Titel', width: undefined }],
-      ['status', { label: 'Status', width: undefined }],
+      ['factuurNummerEl', { label: 'Factuurnummer', width: '75%' }],
+      ['statusDescription', { label: 'Status', width: '25%' }],
     ]);
   });
 
   it('filters hidden props for small screens and keeps string widths', () => {
     mockUseSmallScreen.mockReturnValue(true);
-    mockGetDisplayProps.mockReturnValue({
-      title: 'Titel',
-      status: 'Status',
-      date: 'Datum',
-    });
-    mockGetDisplayPropsColWidths.mockReturnValue({
-      small: ['1fr', '0', true],
-      large: ['2fr', '1fr', '1fr'],
-    });
-    mockVisibleColumnConfigValue.mockImplementation(
-      (
-        config: { small: unknown[]; large: unknown[] },
-        screen: 'small' | 'large',
-        index: number
-      ) => config[screen][index]
+
+    const { result } = renderHook(() =>
+      useDisplayPropsEntries<DisplayProps<AfisFactuurFrontend>>(displayFixture)
     );
 
-    const { result } = renderHook(() => useDisplayPropsEntries({} as never));
-
     expect(result.current).toEqual([
-      ['title', { label: 'Titel', width: '1fr' }],
-      ['date', { label: 'Datum', width: '0' }],
+      ['factuurNummerEl', { label: 'Factuurnummer', width: '100%' }],
     ]);
   });
 });
