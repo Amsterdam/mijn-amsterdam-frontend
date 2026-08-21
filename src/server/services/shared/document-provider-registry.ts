@@ -112,7 +112,6 @@ export function registerWithDocumentsProvider(
 
   ensureOpsFlagExists(provider.opsToggleKey);
 
-  // Keep registration idempotent so test/runtime re-imports are harmless.
   providers.set(providerKey(provider.domainService, provider.source), provider);
 
   return helpers;
