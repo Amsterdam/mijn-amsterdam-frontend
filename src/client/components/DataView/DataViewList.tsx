@@ -92,9 +92,7 @@ export function DataViewList<T extends { link?: LinkProps; title?: string }>({
           {caption}
         </Heading>
       )}
-      {!!contentAfterTheCaption && (
-        <div className="ams-mb-s">{contentAfterTheCaption}</div>
-      )}
+      {!!contentAfterTheCaption && <>{contentAfterTheCaption}</>}
 
       <UnorderedList
         markers={false}
