@@ -32,6 +32,7 @@ import {
   apiSuccessResult,
   type ApiResponse,
 } from '../../../universal/helpers/api.ts';
+import { parseYYYYMMDDDateString } from '../../../universal/helpers/date.ts';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
 import { DAYS_IN_YEAR, ONE_SECOND_MS } from '../../config/app.ts';
 import type {
@@ -874,9 +875,13 @@ export function transformWiorApiListResponse(
   for (const feature of features) {
     const start = feature.datumStartUitvoering;
     const eind = feature.datumEindeUitvoering;
+    const dutchDate = parseYYYYMMDDDateString(start as string);
+    if (dutchDate) {
+      feature.isoDatumStartUitvoeringISO = dutchDate.toISOString();
+    }
     if (typeof start === 'string' && typeof eind === 'string') {
       if (new Date(eind) > new Date(start)) {
-        feature.duur = 'meerdaags';
+        feature.duur = 'meerdaags2';
       } else {
         feature.duur = 'enkel';
       }
