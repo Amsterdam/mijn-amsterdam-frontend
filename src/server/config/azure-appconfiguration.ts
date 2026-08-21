@@ -178,19 +178,32 @@ export function isFeatureEnabled(featureToggleKey: FeatureToggleKey): boolean {
 function ensureOpsPrefix(toggleKey: string): string {
   return toggleKey.startsWith('OPS.') ? toggleKey : `OPS.${toggleKey}`;
 }
-export function isOpsEnabled(toggleKey: string): boolean {
+
+function getOpsKeyHierarchy(toggleKey: string): string[] {
   const opsToggleKey = ensureOpsPrefix(toggleKey);
 
-  const resolvedOpsToggle = opsFeatureToggle[opsToggleKey];
+  return opsToggleKey
+    .split('.')
+    .reduce((acc: string[], part) => {
+      const prev = acc[0];
+      return [prev ? `${prev}.${part}` : part, ...acc];
+    }, [])
+    .slice(0, -1); // drop the lone root ('OPS')
+}
 
-  if (typeof resolvedOpsToggle !== 'boolean') {
-    logger.debug(
-      `OPS feature toggle "${opsToggleKey}" is not a boolean or does not exist.`
-    );
-    return true;
-  }
+function isOpsEnabled_(
+  toggleKey: string,
+  opsFeatureToggle_: Record<string, boolean>
+): boolean {
+  const keysToCheck = getOpsKeyHierarchy(toggleKey);
 
-  return resolvedOpsToggle;
+  return keysToCheck
+    .map((key) => opsFeatureToggle_[key] ?? true)
+    .every((value) => value === true);
+}
+
+export function isOpsEnabled(toggleKey: string): boolean {
+  return isOpsEnabled_(toggleKey, opsFeatureToggle);
 }
 
 export async function ensureOpsFlagsExist(
@@ -232,3 +245,7 @@ export async function ensureOpsFlagExists(toggleKey: string): Promise<void> {
 }
 
 export const isEnabled = isFeatureEnabled;
+
+export const forTesting = {
+  isOpsEnabled_,
+};
