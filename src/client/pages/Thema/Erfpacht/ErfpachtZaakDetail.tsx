@@ -25,7 +25,7 @@ export function ErfpachtZaakDetail() {
   const rows: Row[] = [
     { label: 'Zaaknummer', content: zaak?.zaakNummer ?? '-' },
     {
-      label: 'Dossiers',
+      label: 'Erfpachtdossier(s)',
       content: (
         <TableV2
           items={dossiers}

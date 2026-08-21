@@ -198,6 +198,7 @@ export const routes: MockRouteDefinition[] = [
       body: {
         content: [
           {
+            key: '1',
             fields: {
               bol10: true,
             },

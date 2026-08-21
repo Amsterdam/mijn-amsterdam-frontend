@@ -176,11 +176,57 @@ export function sendResponseHTML(
   return sendResponse(res, apiResponse, viewName);
 }
 
-export function sendBadRequest(res: Response, reason: string) {
-  return sendResponse(
-    res,
-    apiErrorResult(`Bad request: ${reason}`, null, HttpStatusCode.BadRequest)
+type DocumentDownloadApiResponse = ApiResponse<{
+  data: unknown;
+  mimetype?: string;
+  filename?: string;
+}>;
+
+function hasPipeMethod(
+  data: unknown
+): data is { pipe: (res: Response) => unknown } {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    'pipe' in data &&
+    typeof data.pipe === 'function'
   );
+}
+
+export function sendDocumentDownloadResponse(
+  res: Response,
+  documentResponse: DocumentDownloadApiResponse
+) {
+  if (documentResponse.status !== 'OK') {
+    return sendResponse(res, documentResponse);
+  }
+
+  if (
+    'mimetype' in documentResponse.content &&
+    documentResponse.content.mimetype
+  ) {
+    res.type(documentResponse.content.mimetype);
+  }
+
+  res.header(
+    'Content-Disposition',
+    `attachment${documentResponse.content.filename ? `; filename*="${encodeURIComponent(documentResponse.content.filename)}"` : ''}`
+  );
+
+  return hasPipeMethod(documentResponse.content.data)
+    ? documentResponse.content.data.pipe(res)
+    : res.send(documentResponse.content.data);
+}
+
+export function badRequestResponse(reason: string) {
+  return apiErrorResult(
+    `Bad request: ${reason}`,
+    null,
+    HttpStatusCode.BadRequest
+  );
+}
+export function sendBadRequest(res: Response, reason: string) {
+  return sendResponse(res, badRequestResponse(reason));
 }
 
 export function sendInternalServerError(res: Response, reason: string) {
@@ -243,15 +289,15 @@ export function send404(res: Response) {
   );
 }
 
-export function sendServiceUnavailable(res: Response, messageDetails?: string) {
-  return sendResponse(
-    res,
-    apiErrorResult(
-      appendConditionalDetail('Service Unavailable', messageDetails),
-      null,
-      HttpStatusCode.ServiceUnavailable
-    )
+export function serviceUnavailableResponse(messageDetails?: string) {
+  return apiErrorResult(
+    appendConditionalDetail('Service Unavailable', messageDetails),
+    null,
+    HttpStatusCode.ServiceUnavailable
   );
+}
+export function sendServiceUnavailable(res: Response, messageDetails?: string) {
+  return sendResponse(res, serviceUnavailableResponse(messageDetails));
 }
 
 export function sendMessage(
