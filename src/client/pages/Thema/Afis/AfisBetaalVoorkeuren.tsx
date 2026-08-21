@@ -22,7 +22,7 @@ import { LoadingContent } from '../../../components/LoadingContent/LoadingConten
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 type AfisBusinessPartnerProps = {

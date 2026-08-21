@@ -10,7 +10,7 @@ import type { ErfpachtZaakExcerptFrontend } from '../../../../server/services/er
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import * as afis from '../Afis/Afis-thema-config.ts';
 import { AfisFacturenTables } from '../Afis/AfisFacturenTables.tsx';

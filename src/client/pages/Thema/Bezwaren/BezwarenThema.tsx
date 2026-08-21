@@ -5,7 +5,7 @@ import { useBezwarenThemaData } from './useBezwarenThemaData.hook.ts';
 import type { BezwaarFrontend } from '../../../../server/services/bezwaren/types.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { themaConfig as belastingenThemaConfig } from '../Belastingen/Belastingen-thema-config.ts';
 
