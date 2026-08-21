@@ -122,7 +122,10 @@ export async function storeNotificationsResponses(
   const now = toISOString(nowDate);
   const lastLoginDate = options?.updateLastLoginDate ? nowDate : null;
 
-  const temporaryExcludedServices: ServiceId[] = ['belasting'] as const; // MIJN-12971: Temporary filter to not push notifications repeatedly for notifications that have a datePublished set to today everyday
+  const temporaryExcludedServices: ServiceId[] = [
+    'belasting',
+    'fetchWior',
+  ] as const; // MIJN-12971: Temporary filter to not push notifications repeatedly for notifications that have a datePublished set to today everyday
   const responses = entries(serviceResponses)
     .filter(
       // Unsuccessful responses do not contain new notifications
