@@ -129,7 +129,10 @@ describe('DataView helpers', () => {
     expect(
       getTitleAttribute(
         [{ title: 'Zaaknaam', id: 1, name: 'Andere naam' }],
-        [['name', { label: 'Naam' }]]
+        [
+          ['name', { label: 'Naam' }],
+          ['foo', { label: 'Foo' }],
+        ]
       )
     ).toBe('name');
 

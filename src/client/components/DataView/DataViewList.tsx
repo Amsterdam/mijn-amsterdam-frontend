@@ -57,10 +57,15 @@ export function getTitleAttribute<
   if (typeof firstZaak.title === 'string') {
     return 'title' as keyof T;
   }
-  return Object.keys(firstZaak).filter(
+
+  const firstTruthyPrimitiveKey = Object.keys(firstZaak).filter(
     (key) =>
-      firstZaak[key as keyof T] && typeof firstZaak[key as keyof T] !== 'object'
+      firstZaak[key as keyof T] &&
+      typeof firstZaak[key as keyof T] !== 'object' &&
+      key !== null
   )[0] as keyof T;
+
+  return firstTruthyPrimitiveKey;
 }
 
 export function getLabelValue<T>(value: T[keyof T]) {
