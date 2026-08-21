@@ -101,6 +101,7 @@ export function registerWithDocumentsProvider(
     source: registration.source,
     opsToggleKey:
       [registration.domainService, registration.source]
+        .filter(Boolean)
         .join('.')
         .toUpperCase() + '.documents',
     listDocuments: (authProfileAndToken, payload) => {
