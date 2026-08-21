@@ -68,8 +68,8 @@ export function getTitleAttribute<
   return firstTruthyPrimitiveKey;
 }
 
-export function getLabelValue<T>(value: T[keyof T]) {
-  const FALLBACK_VALUE = 'Onbekende label';
+export function formatPropValueForDisplay<T>(value: T[keyof T]) {
+  const FALLBACK_VALUE = '';
 
   if (isValidElement(value)) {
     return value;
@@ -124,7 +124,8 @@ export function DataViewList<T extends { link?: LinkProps; title?: string }>({
                     const value = zaak[propKey as keyof T];
                     return (
                       <Paragraph key={propKey}>
-                        <strong>{label}:</strong> {getLabelValue(value)}
+                        <strong>{label}:</strong>{' '}
+                        {formatPropValueForDisplay(value)}
                       </Paragraph>
                     );
                   })}

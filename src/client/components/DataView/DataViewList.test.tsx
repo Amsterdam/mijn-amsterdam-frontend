@@ -5,7 +5,7 @@ import { describe, expect, test, vi } from 'vitest';
 
 import {
   LinkOrFragment,
-  getLabelValue,
+  formatPropValueForDisplay,
   getTitleAttribute,
   ListDivider,
   DataViewList,
@@ -80,49 +80,53 @@ describe('DataView helpers', () => {
     expect(screen.getByText('Intern')).toBeInTheDocument();
   });
 
-  test('getLabelValue returns React elements unchanged', () => {
+  test('formatPropValueForDisplay returns React elements unchanged', () => {
     function Label() {
       return <span>Label</span>;
     }
     const element = <Label />;
 
-    expect(getLabelValue<typeof element>(element)).toBe(element);
+    expect(formatPropValueForDisplay<typeof element>(element)).toBe(element);
   });
 
-  test('getLabelValue stringifies objects', () => {
+  test('formatPropValueForDisplay stringifies objects', () => {
     const testObject = { label: 'value' };
     const testElementObject = { label: testObject };
 
     expect(
-      getLabelValue<typeof testElementObject>(testElementObject.label)
+      formatPropValueForDisplay<typeof testElementObject>(
+        testElementObject.label
+      )
     ).toBe('{"label":"value"}');
   });
 
-  test('getLabelValue stringifies primitives', () => {
+  test('formatPropValueForDisplay stringifies primitives', () => {
     const testNumber = 42;
     const testElementNumber = { label: testNumber };
 
     expect(
-      getLabelValue<typeof testElementNumber>(testElementNumber.label)
+      formatPropValueForDisplay<typeof testElementNumber>(
+        testElementNumber.label
+      )
     ).toBe('42');
 
     const testBoolean = true;
     const testElementBoolean = { label: testBoolean };
 
     expect(
-      getLabelValue<typeof testElementBoolean>(testElementBoolean.label)
+      formatPropValueForDisplay<typeof testElementBoolean>(
+        testElementBoolean.label
+      )
     ).toBe('true');
   });
 
-  test('getLabelValue returns fallback for undefined and null', () => {
+  test('formatPropValueForDisplay returns fallback for undefined and null', () => {
     const testElement = { label: null };
 
-    expect(getLabelValue<typeof testElement>(testElement.label)).toBe(
-      'Onbekende label'
-    );
-    expect(getLabelValue<{ value?: string }>(undefined)).toBe(
-      'Onbekende label'
-    );
+    expect(
+      formatPropValueForDisplay<typeof testElement>(testElement.label)
+    ).toBe('');
+    expect(formatPropValueForDisplay<{ value?: string }>(undefined)).toBe('');
   });
 
   test('getTitleAttribute prefers first displayProp key, then title, then first truthy primitive field', () => {
