@@ -38,7 +38,7 @@ export function LinkOrFragment({
       </LinkComponent>
     );
   }
-  return { children };
+  return <>{children}</>;
 }
 
 export function getTitleAttribute<
