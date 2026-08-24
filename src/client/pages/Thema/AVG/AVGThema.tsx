@@ -4,7 +4,7 @@ import { useAVGData } from './useAVGData.hook.tsx';
 import type { AVGRequestFrontend } from '../../../../server/services/avg/types.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaDataView.tsx';
+import { ThemaPaginaDataView } from '../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 const pageContentTop = (
@@ -31,7 +31,7 @@ export function AVGThema() {
       { title, displayProps, filter, sort, maxItems, listPageRoute },
     ]) => {
       return (
-        <ThemaPaginaTable<AVGRequestFrontend>
+        <ThemaPaginaDataView<AVGRequestFrontend>
           key={kind}
           title={title}
           listPageRoute={listPageRoute}

@@ -17,7 +17,7 @@ const DISPLAY_PROPS_DEFAULT: DisplayProps<{ title: string }> = {
 };
 const TEXT_NO_CONTENT_DEFAULT = 'Er zijn (nog) geen zaken gevonden.';
 
-interface ThemaPaginaTableProps<T> {
+interface ThemaPaginaDataViewProps<T> {
   className?: string;
   displayProps?: DisplayProps<T>;
   listPageRoute?: string;
@@ -31,7 +31,7 @@ interface ThemaPaginaTableProps<T> {
   zaken: T[];
 }
 
-export function ThemaPaginaTable<
+export function ThemaPaginaDataView<
   T extends { title?: string; link?: LinkProps; themaId?: string } =
     ZaakAanvraagDetail,
 >({
@@ -46,7 +46,7 @@ export function ThemaPaginaTable<
   totalItems,
   listPageLinkLabel = 'Toon meer',
   listPageLinkTitle,
-}: ThemaPaginaTableProps<T>) {
+}: ThemaPaginaDataViewProps<T>) {
   const textNoContentDefault = title
     ? `U heeft (nog) geen ${title.toLowerCase()}`
     : TEXT_NO_CONTENT_DEFAULT;

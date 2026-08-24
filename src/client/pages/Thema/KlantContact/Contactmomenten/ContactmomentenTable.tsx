@@ -1,6 +1,6 @@
 import { Paragraph, UnorderedList } from '@amsterdam/design-system-react';
 
-import { ThemaPaginaTable } from '../../../../components/Thema/ThemaPaginaDataView.tsx';
+import { ThemaPaginaDataView } from '../../../../components/Thema/ThemaPaginaDataView.tsx';
 import {
   type ContactmomentFrontendFinal,
   tableConfigs,
@@ -12,7 +12,7 @@ export function ContactMomenten({
   contactmomenten: ContactmomentFrontendFinal[];
 }) {
   return (
-    <ThemaPaginaTable<ContactmomentFrontendFinal>
+    <ThemaPaginaDataView<ContactmomentFrontendFinal>
       contentAfterTheTitle={
         <>
           <Paragraph className="ams-mb-m">

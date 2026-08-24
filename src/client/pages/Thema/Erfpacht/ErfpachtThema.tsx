@@ -10,7 +10,7 @@ import type { ErfpachtZaakExcerptFrontend } from '../../../../server/services/er
 import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaDataView.tsx';
+import { ThemaPaginaDataView } from '../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import * as afis from '../Afis/Afis-thema-config.ts';
 import { AfisFacturenTables } from '../Afis/AfisFacturenTables.tsx';
@@ -32,7 +32,7 @@ export function ErfpachtThema() {
 
   const zakenTableConfig = tableConfig['erfpacht-zaken'];
   const zakenTable = (
-    <ThemaPaginaTable<ErfpachtDossierFrontend | ErfpachtZaakExcerptFrontend>
+    <ThemaPaginaDataView<ErfpachtDossierFrontend | ErfpachtZaakExcerptFrontend>
       title={zakenTableConfig.title}
       zaken={zaken}
       displayProps={zakenTableConfig.displayProps}
@@ -42,7 +42,7 @@ export function ErfpachtThema() {
   );
   const dossiersTableConfig = tableConfig['erfpacht-dossiers'];
   const dossiersTable = (
-    <ThemaPaginaTable<ErfpachtDossierFrontend | ErfpachtZaakExcerptFrontend>
+    <ThemaPaginaDataView<ErfpachtDossierFrontend | ErfpachtZaakExcerptFrontend>
       title={dossiersTableConfig.title}
       zaken={dossiers}
       displayProps={dossiersTableConfig.displayProps}
