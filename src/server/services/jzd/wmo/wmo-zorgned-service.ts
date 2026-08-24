@@ -10,8 +10,8 @@ import {
 import {
   DATE_END_NOT_OLDER_THAN,
   DOCUMENT_TITLE_BESLUIT_STARTS_WITH,
-  ZORGNED_JZD_API_CONFIG_KEY,
-  ZORGNED_JZD_REGELING_IDENTIFICATIE,
+  ZORGNED_WMO_API_CONFIG_KEY,
+  ZORGNED_WMO_REGELING_IDENTIFICATIE,
 } from './wmo-config.ts';
 import { PRODUCTS_WITH_DELIVERY } from './wmo-status-line-items.ts';
 import {
@@ -111,7 +111,7 @@ export async function fetchZorgnedAanvragenWMO(
 ): Promise<ApiResponse<ZorgnedAanvraagTransformed[]>> {
   const requestBodyParams = {
     maxeinddatum: DATE_END_NOT_OLDER_THAN,
-    regeling: ZORGNED_JZD_REGELING_IDENTIFICATIE,
+    regeling: ZORGNED_WMO_REGELING_IDENTIFICATIE,
   };
 
   const fetchZorgnedAanvragen = featureToggle.service.fetchCasusAanvragen
@@ -120,7 +120,7 @@ export async function fetchZorgnedAanvragenWMO(
     : fetchAanvragen;
 
   const aanvragenResponse = await fetchZorgnedAanvragen(bsn, {
-    zorgnedApiConfigKey: ZORGNED_JZD_API_CONFIG_KEY,
+    zorgnedApiConfigKey: ZORGNED_WMO_API_CONFIG_KEY,
     requestBodyParams,
   });
 

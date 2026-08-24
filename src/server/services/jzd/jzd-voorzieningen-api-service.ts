@@ -52,10 +52,10 @@ function isMaApiPropertyConfigMatch<T extends ZorgnedAanvraagTransformed>(
     return defaultMatch;
   }
 
-  const matchMethod = matchType.split('.')[1] as 'every' | 'some';
-  const fn = matchMethod === 'every' ? matchers.every : matchers.some;
+  // pick the function name from the matchType string, which is either 'every' or 'some'.
+  const fn = matchType.split('.')[1] as 'every' | 'some';
 
-  return fn(([voorzieningKey, valueMatch]) => {
+  return matchers[fn](([voorzieningKey, valueMatch]) => {
     if (typeof valueMatch === 'function') {
       return valueMatch(voorziening);
     }
