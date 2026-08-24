@@ -32,12 +32,12 @@ export type MatchConfig<T> = Partial<
 
 export type JzdApiConfig<T extends object = ZorgnedAanvraagTransformed> = {
   assign: Prettify<Partial<WithMaApiPropsAssignments<T>>>;
-  // Includes if every match config returns true. e.g. foo: 'bar' && baz: 'qux'
+  // Includes if every match config returns true. e.g. assert(foo === 'bar' && baz === 'qux')
   'include.every'?: MatchConfig<T>;
-  // Includes if some match config returns true. e.g. foo: 'bar' || baz: 'qux'
+  // Includes if some match config returns true. e.g. assert(foo === 'bar' || baz === 'qux')
   'include.some'?: MatchConfig<T>;
-  // Excludes if every match config returns true. e.g. foo: 'bar' && baz: 'qux'
+  // Excludes if every match config returns true. e.g. assert(foo === 'bar' && baz === 'qux')
   'exclude.every'?: MatchConfig<T>;
-  // Excludes if some match config returns true. e.g. foo: 'bar' || baz: 'qux'
+  // Excludes if some match config returns true. e.g. assert(foo === 'bar' || baz === 'qux')
   'exclude.some'?: MatchConfig<T>;
 };
