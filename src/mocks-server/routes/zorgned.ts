@@ -50,7 +50,7 @@ export const routes: MockRouteDefinition[] = [
 
             return res.status(HttpStatusCode.Ok).send(aanvragen);
           }
-          case 'JZD':
+          case 'WMO':
             return res
               .status(HttpStatusCode.Ok)
               .send(ZORGNED_WMO_AANVRAGEN_RESPONSE);
