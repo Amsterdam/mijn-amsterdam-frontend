@@ -17,7 +17,9 @@ export const keys = Object.keys as <T>(o: T) => (keyof T)[];
 export function range(a: number, b: number) {
   return Array.from(
     (function* (x, y) {
-      while (x <= y) yield x++;
+      while (x <= y) {
+        yield x++;
+      }
     })(a, b)
   );
 }

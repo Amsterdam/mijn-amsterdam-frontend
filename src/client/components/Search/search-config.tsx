@@ -279,7 +279,9 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     getApiBaseItems: (
       erfpachtResponse: ErfpachtResponseFrontend
     ): ErfpachtDossierFrontend[] => {
-      return erfpachtResponse?.dossiers?.dossiers ?? [];
+      return 'dossiers' in erfpachtResponse
+        ? (erfpachtResponse.dossiers.dossiers ?? [])
+        : [];
     },
     displayTitle: (dossier: ErfpachtDossierFrontend) => (term: string) => {
       return displayLinkToSearchResult(term, [dossier.title]);
@@ -290,7 +292,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     getApiBaseItems: (
       erfpachtResponse: ErfpachtResponseFrontend
     ): ErfpachtZaakExcerptFrontend[] => {
-      return erfpachtResponse.zaken;
+      return 'zaken' in erfpachtResponse ? (erfpachtResponse.zaken ?? []) : [];
     },
     displayTitle: (zaak: ErfpachtZaakExcerptFrontend) => (term: string) => {
       return displayLinkToSearchResult(term, [zaak.zaakNummer]);

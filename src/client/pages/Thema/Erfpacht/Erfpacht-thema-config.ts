@@ -7,7 +7,6 @@ import type {
   ErfpachtResponseFrontend,
 } from '../../../../server/services/erfpacht/erfpacht-types.ts';
 import type { ErfpachtZaakExcerptFrontend } from '../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
-import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import {
   isEnabled,
@@ -35,7 +34,8 @@ export const LINKS = {
     'https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/wat-is-erfpacht/algemene-bepalingen/',
   overstappenEewigdurendeErfpacht:
     'https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/overstappen-eeuwigdurende-erfpacht/',
-  erfpachtWijzigenForm: `https://formulieren${IS_PRODUCTION ? '' : '.acc'}.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/ErfpachtWijzigen.aspx`,
+  erfpachtWijzigenForm:
+    'https://www.amsterdam.nl/wonen-bouwen-verbouwen/erfpacht/erfpacht-wijzigen/',
 };
 
 type WithDetailPageFactuur = PageConfig<'detailPageFactuur'>;
@@ -179,14 +179,18 @@ type DisplayPropsWijzigingsaanvragen = DisplayProps<
 >;
 
 export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
-  const dossiersBase = erfpachtData?.dossiers;
-  const [firstZaak] = erfpachtData?.zaken ?? [];
+  const dossiersBase =
+    erfpachtData !== null && 'dossiers' in erfpachtData
+      ? erfpachtData?.dossiers
+      : null;
+  const [firstZaak] =
+    erfpachtData !== null && 'zaken' in erfpachtData ? erfpachtData.zaken : [];
 
   // Wijzigingsaanvragen table on themapagina
   const displayPropsWijzigingsaanvragen: DisplayPropsWijzigingsaanvragen = {
     props: {
       zaakNummer: firstZaak?.titelZaakNummer,
-      dossierLinks: 'Erfpachtdossier',
+      dossierLinks: 'Erfpachtdossier(s)',
       displayStatus: 'Status',
       datePublishedFormatted: firstZaak?.titelFormattedStatusDatum,
     },
@@ -222,7 +226,10 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
     },
   };
 
-  const titleDossiers = erfpachtData?.titelDossiersKop;
+  const titleDossiers =
+    erfpachtData !== null && 'titelDossiersKop' in erfpachtData
+      ? erfpachtData.titelDossiersKop
+      : null;
 
   const tableConfig = {
     [listPageParamKind.erfpachtZaken]: {

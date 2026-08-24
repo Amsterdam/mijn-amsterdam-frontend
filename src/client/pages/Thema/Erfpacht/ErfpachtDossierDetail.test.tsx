@@ -6,14 +6,14 @@ import { themaConfig } from './Erfpacht-thema-config.ts';
 import { ErfpachtDossierDetail } from './ErfpachtDossierDetail.tsx';
 import ERFPACHT_DOSSIER_DETAIL from '../../../../mocks-server/fixtures/erfpacht/erfpacht-v2-dossierinfo-bsn.json' with { type: 'json' };
 import ERFPACHT_DOSSIERS from '../../../../mocks-server/fixtures/erfpacht/erfpacht-v2-dossiers.json' with { type: 'json' };
-import type {
-  ErfpachtDossiersDetailSource,
-  ErfpachtDossiersResponseSource,
-} from '../../../../server/services/erfpacht/erfpacht-types.ts';
 import {
   transformDossierResponse,
   transformErfpachtDossierProperties,
 } from '../../../../server/services/erfpacht/erfpacht-dossiers.ts';
+import type {
+  ErfpachtDossiersDetailSource,
+  ErfpachtDossiersResponseSource,
+} from '../../../../server/services/erfpacht/erfpacht-types.ts';
 import { bffApi } from '../../../../testing/utils.ts';
 import type { AppState } from '../../../../universal/types/App.types.ts';
 import { MockApp } from '../../MockApp.tsx';

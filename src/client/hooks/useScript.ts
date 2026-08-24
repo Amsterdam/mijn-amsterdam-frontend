@@ -65,7 +65,9 @@ export function useScript({
       const onScriptError = () => {
         // Remove from cachedScripts we can try loading again
         const index = cachedScripts.indexOf(src);
-        if (index >= 0) cachedScripts.splice(index, 1);
+        if (index >= 0) {
+          cachedScripts.splice(index, 1);
+        }
 
         if (script.parentNode) {
           script.parentNode.removeChild(script);

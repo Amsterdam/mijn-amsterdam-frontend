@@ -40,7 +40,7 @@ export function useZaakDetailData() {
 
   return {
     themaId,
-    title: zaak?.title ?? 'Wijzigen Erfpachtrecht',
+    title: zaak?.title ?? 'Wijzigingsaanvraag erfpachtrecht',
     zaak,
     dossiers: dossiers_,
     isLoading,

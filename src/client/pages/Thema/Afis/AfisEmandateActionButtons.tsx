@@ -156,7 +156,7 @@ export function AfisEMandateActionButtons({
         trackLinkClick(
           'AfisEMandateActionButtons',
           eMandate.signRequestUrl,
-          isActive ? 'Rekening wijzigen' : 'Activeren',
+          'Activeren',
           profileType
         );
         await delay(300); // Add slight delay to ensure the analytics event is sent before the redirect happens
@@ -167,16 +167,15 @@ export function AfisEMandateActionButtons({
   })();
   return (
     <>
-      {eMandate.signRequestUrl && (
+      {eMandate.signRequestUrl && !isActive && (
         <ApiActionButton
           api={redirectUrlApi}
           fetch={fetchAndRedirect}
-          label={isActive ? 'Rekening wijzigen' : 'Activeren'}
+          label="Activeren"
           doConfirm={false}
         />
       )}
-      &nbsp;
-      {eMandate.deactivateUrl && eMandate.status === EMANDATE_STATUS_ACTIVE && (
+      {eMandate.deactivateUrl && isActive && (
         <ApiDeactivateButton
           deactivateApi={deactivateApi}
           eMandate={eMandate}
@@ -205,6 +204,10 @@ function ApiDeactivateButton({
       title: 'Stopzetten incassomachtiging',
       confirmationText: (
         <>
+          <Paragraph className="ams-mb-s">
+            Het kan tot 24 uur duren voordat de stopzetting is verwerkt.
+            Gedurende deze tijd kan er nog een incasso plaatsvinden.
+          </Paragraph>
           {!!facturenByEmandateId.length && (
             <Alert
               headingLevel={4}
@@ -244,12 +247,16 @@ function ApiDeactivateButton({
               </Table>
             </Alert>
           )}
-          <Paragraph className="ams-mb-s">
-            Weet je zeker dat je deze incassomachtiging wilt stopzetten?
-          </Paragraph>
-          <Paragraph className="ams-mb-s">
-            De incassomachtiging wordt dan niet meer gebruikt.
-          </Paragraph>
+          {!facturenByEmandateId.length && (
+            <>
+              <Paragraph className="ams-mb-s">
+                Weet je zeker dat je deze incassomachtiging wilt stopzetten?
+              </Paragraph>
+              <Paragraph className="ams-mb-s">
+                De incassomachtiging wordt dan niet meer gebruikt.
+              </Paragraph>
+            </>
+          )}
           <Paragraph className="ams-mb-s">
             Je kunt de incassomachtiging later opnieuw activeren voor nieuwe
             facturen.
