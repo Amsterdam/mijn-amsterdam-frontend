@@ -110,14 +110,15 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
   props: {
+    factuurNummer: 'Factuurnummer',
     factuurNummerEl: 'Factuurnummer',
     afzender: 'Afzender',
     paymentDueDateFormatted: 'Vervaldatum',
     statusDescription: 'Status',
   },
   colWidths: {
-    large: ['15%', '25%', '25%', '35%'],
-    small: ['25%', '0', '0', '75%'],
+    large: ['0', '15%', '25%', '25%', '35%'],
+    small: ['25%', '0', '0', '0', '75%'],
   },
   enableMobileListView: !IS_PRODUCTION,
 };
@@ -125,13 +126,14 @@ const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
 const displayPropsFacturenAfgehandeldOfOvergedragen: DisplayProps<AfisFactuurFrontend> =
   {
     props: {
+      factuurNummer: 'Factuurnummer',
       factuurNummerEl: 'Factuurnummer',
       afzender: 'Afzender',
       statusDescription: 'Status',
     },
     colWidths: {
-      large: ['25%', '25%', '50%'],
-      small: ['100%', '0', '0'],
+      large: ['0', '25%', '25%', '50%'],
+      small: ['100%', '0', '0', '0'],
     },
     enableMobileListView: !IS_PRODUCTION,
   };
