@@ -41,11 +41,11 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "@amsterdam/design-system-assets": "^2.6.0",
-    "@amsterdam/design-system-css": "^4.4.0",
-    "@amsterdam/design-system-react": "^4.4.0",
-    "@amsterdam/design-system-react-icons": "^2.2.0",
-    "@amsterdam/design-system-tokens": "^4.3.0",
+    "@amsterdam/design-system-assets": "2.4.0",
+    "@amsterdam/design-system-css": "4.2.0",
+    "@amsterdam/design-system-react": "4.2.0",
+    "@amsterdam/design-system-react-icons": "2.1.0",
+    "@amsterdam/design-system-tokens": "4.1.0",
     "@amsterdam/piwik-tracker-react": "3.0.0",
     "@amsterdam/react-maps": "^1.1.1",
     "@azure/app-configuration": "^1.12.1",
