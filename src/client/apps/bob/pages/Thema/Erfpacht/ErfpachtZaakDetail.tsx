@@ -1,9 +1,12 @@
 import { useZaakDetailData } from './useErfpachtZaakData.hook.ts';
-import { Datalist, type Row } from '../../../components/Datalist/Datalist.tsx';
-import { PageContentCell } from '../../../components/Page/Page.tsx';
-import { TableV2 } from '../../../components/Table/TableV2.tsx';
-import { ThemaDetailPagina } from '../../../components/Thema/ThemaDetailPagina.tsx';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import {
+  type Row,
+  Datalist,
+} from '../../../../../components/Datalist/Datalist.tsx';
+import { PageContentCell } from '../../../../../components/Page/Page.tsx';
+import { TableV2 } from '../../../../../components/Table/TableV2.tsx';
+import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
 
 export function ErfpachtZaakDetail() {
   const {

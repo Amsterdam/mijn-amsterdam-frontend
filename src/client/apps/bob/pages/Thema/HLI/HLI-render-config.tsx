@@ -11,8 +11,8 @@ import { HLIThema } from './HLIThema.tsx';
 import { isLoading } from '../../../../../../universal/helpers/api.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import type {
-  ThemaRenderRouteConfig,
   ThemaMenuItem,
+  ThemaRenderRouteConfig,
 } from '../../../../../../universal/types/thema-types.ts';
 
 export const HLIRoutes = [

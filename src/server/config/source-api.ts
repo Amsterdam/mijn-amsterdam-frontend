@@ -12,7 +12,7 @@ import { themaConfig as themaConfigAfis } from '../../client/apps/bob/pages/Them
 import { themaConfig as themaConfigBodem } from '../../client/apps/bob/pages/Thema/Bodem/Bodem-thema-config.ts';
 import { themaConfig as themaConfigJeugd } from '../../client/apps/bob/pages/Thema/Jeugd/Jeugd-thema-config.ts';
 import { themaConfig as themaConfigToeristischeVerhuur } from '../../client/apps/bob/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
-port { IS_DEVELOPMENT } from '../../universal/config/env.ts';
+import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
 import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
 import { getCert } from '../helpers/cert.ts';
 import { getFromEnv } from '../helpers/env.ts';

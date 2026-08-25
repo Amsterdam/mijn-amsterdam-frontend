@@ -3,35 +3,19 @@ import { userEvent } from '@testing-library/user-event';
 import { generatePath } from 'react-router';
 
 import { themaConfig } from './Erfpacht-thema-config.ts';
-<<<<<<<< HEAD:src/client/apps/bob/pages/Thema/Erfpacht/ErfpachtDetail.test.tsx
-import { ErfpachtDetail } from './ErfpachtDetail.tsx';
-import ERFPACHT_DOSSIER_DETAIL from '../../../../../../mocks-server/fixtures/erfpacht-v2-dossierinfo-bsn.json' with { type: 'json' };
-import ERFPACHT_DOSSIERS from '../../../../../../mocks-server/fixtures/erfpacht-v2-dossiers.json' with { type: 'json' };
+import { ErfpachtDossierDetail } from './ErfpachtDossierDetail.tsx';
+import ERFPACHT_DOSSIER_DETAIL from '../../../../../../mocks-server/fixtures/erfpacht/erfpacht-v2-dossierinfo-bsn.json' with { type: 'json' };
+import ERFPACHT_DOSSIERS from '../../../../../../mocks-server/fixtures/erfpacht/erfpacht-v2-dossiers.json' with { type: 'json' };
+import {
+  transformDossierResponse,
+  transformErfpachtDossierProperties,
+} from '../../../../../../server/services/erfpacht/erfpacht-dossiers.ts';
 import type {
   ErfpachtDossiersDetailSource,
   ErfpachtDossiersResponseSource,
 } from '../../../../../../server/services/erfpacht/erfpacht-types.ts';
-import {
-  transformDossierResponse,
-  transformErfpachtDossierProperties,
-} from '../../../../../../server/services/erfpacht/erfpacht.ts';
 import { bffApi } from '../../../../../../testing/utils.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
-========
-import { ErfpachtDossierDetail } from './ErfpachtDossierDetail.tsx';
-import ERFPACHT_DOSSIER_DETAIL from '../../../../mocks-server/fixtures/erfpacht/erfpacht-v2-dossierinfo-bsn.json' with { type: 'json' };
-import ERFPACHT_DOSSIERS from '../../../../mocks-server/fixtures/erfpacht/erfpacht-v2-dossiers.json' with { type: 'json' };
-import {
-  transformDossierResponse,
-  transformErfpachtDossierProperties,
-} from '../../../../server/services/erfpacht/erfpacht-dossiers.ts';
-import type {
-  ErfpachtDossiersDetailSource,
-  ErfpachtDossiersResponseSource,
-} from '../../../../server/services/erfpacht/erfpacht-types.ts';
-import { bffApi } from '../../../../testing/utils.ts';
-import type { AppState } from '../../../../universal/types/App.types.ts';
->>>>>>>> origin/main:src/client/apps/bob/pages/Thema/Erfpacht/ErfpachtDossierDetail.test.tsx
 import { MockApp } from '../../MockApp.tsx';
 
 function mockDetailFetch(

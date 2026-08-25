@@ -1,13 +1,7 @@
 import { listPageParamKind } from './Erfpacht-thema-config.ts';
-<<<<<<<< HEAD:src/client/apps/bob/pages/Thema/Erfpacht/ErfpachtList.tsx
-import { useErfpachtThemaData } from './useErfpachtThemaData.hook.ts';
+import { useErfpachtThemaData } from './useErfpachtThemaData.hook.tsx';
 import { ListPagePaginated } from '../../../../../components/ListPagePaginated/ListPagePaginated.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
-========
-import { useErfpachtThemaData } from './useErfpachtThemaData.hook.tsx';
-import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated.tsx';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
->>>>>>>> origin/main:src/client/apps/bob/pages/Thema/Erfpacht/ErfpachtListDossiers.tsx
 
 export function ErfpachtDossiersList() {
   const {

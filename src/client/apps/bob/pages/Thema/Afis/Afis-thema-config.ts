@@ -5,27 +5,27 @@ import { generatePath, type Params } from 'react-router';
 import type { PartialDeep } from 'type-fest';
 
 import type {
+  AfisFactuurTermijn,
+  AfisFactuurStateFrontend,
+  AfisFactuur,
+  AfisFacturenResponse,
   AfisBusinessPartnerDetailsTransformed,
   AfisEMandateFrontend,
-  AfisFacturenResponse,
-  AfisFactuur,
-  AfisFactuurStateFrontend,
-  AfisFactuurTermijn,
   EmandateStatusCode,
-} from '../../../../server/services/afis/afis-types.ts';
-import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
-import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+} from '../../../../../../server/services/afis/afis-types.ts';
+import { IS_PRODUCTION } from '../../../../../../universal/config/env.ts';
+import type {
+  PageConfig,
+  ThemaConfigBase,
+  WithListPage,
+  WithDetailPage,
+} from '../../../../../../universal/types/thema-types.ts';
+import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import {
   isEnabled,
   propagateFeatureToggles,
 } from '../../../config/feature-toggles.ts';
-import type {
-  PageConfig,
-  ThemaConfigBase,
-  WithDetailPage,
-  WithListPage,
-} from '../../../config/thema-types.ts';
 
 const THEMA_ID = 'AFIS';
 const THEMA_TITLE = 'Facturen en betalen';

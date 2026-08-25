@@ -4,11 +4,11 @@ import { ContactmomentenListPage } from './Contactmomenten/ContactmomentenListPa
 import { themaConfig } from './KlantContact-thema-config.ts';
 import { KlantContactThema } from './KlantContactThema.tsx';
 import { isLoading } from '../../../../../../universal/helpers/api.ts';
-import { IconAfspraak } from '../../../assets/icons/index.tsx';
-import {
-  type ThemaMenuItem,
-  type ThemaRenderRouteConfig,
+import type {
+  ThemaRenderRouteConfig,
+  ThemaMenuItem,
 } from '../../../../../../universal/types/thema-types.ts';
+import { IconAfspraak } from '../../../../../assets/icons/index.tsx';
 
 export const KlantContactRoutes = [
   {

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import type { AuthProfile } from '../../../server/auth/auth-types.ts';
-import { AUTH_API_URL, LOGOUT_URL } from '../../config/api.ts';
+import { AUTH_API_URL, LOGOUT_URL } from '../../apps/bob/config/api.ts';
 import { clearSessionStorage } from '../storage.hook.ts';
 import { clearDeeplinkEntry } from '../useDeeplink.hook.ts';
 import { useProfileType } from '../useProfileType.ts';

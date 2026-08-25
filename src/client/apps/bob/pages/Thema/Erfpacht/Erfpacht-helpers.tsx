@@ -2,8 +2,8 @@ import { generatePath } from 'react-router';
 
 import { themaConfig } from './Erfpacht-thema-config.ts';
 import type { AfisFactuurState } from '../../../../../../server/services/afis/afis-types.ts';
-import type { LinkProps } from '../../../../universal/types/App.types.ts';
-import { MaRouterLink } from '../../../components/MaLink/MaLink.tsx';
+import type { LinkProps } from '../../../../../../universal/types/App.types.ts';
+import { MaRouterLink } from '../../../../../components/MaLink/MaLink.tsx';
 import { type AfisFactuurFrontend } from '../Afis/Afis-thema-config.ts';
 import { getFactuurNummerLink } from '../Afis/useAfisFacturenApi.tsx';
 

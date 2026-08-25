@@ -5,19 +5,17 @@ import { generatePath } from 'react-router';
 import type {
   ErfpachtDossierFrontend,
   ErfpachtResponseFrontend,
-} from '../../../../server/services/erfpacht/erfpacht-types.ts';
-import type { ErfpachtZaakExcerptFrontend } from '../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
-import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
+} from '../../../../../../server/services/erfpacht/erfpacht-types.ts';
+import type { ErfpachtZaakExcerptFrontend } from '../../../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
+import type {
+  PageConfig,
+  ThemaConfigBase,
+} from '../../../../../../universal/types/thema-types.ts';
+import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
 import {
   isEnabled,
   propagateFeatureToggles,
 } from '../../../config/feature-toggles.ts';
-import type {
-  PageConfig,
-  ThemaConfigBase,
-  WithDetailPage,
-  WithListPage,
-} from '../../../../../../universal/types/thema-types.ts';
 import {
   getAfisListPageDocumentTitle,
   getFacturenTableConfig,

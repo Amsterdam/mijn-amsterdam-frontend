@@ -4,20 +4,12 @@ import { DataTableBijzondereBepalingen } from './DossierDetail/DatalistBijzonder
 import { DatalistGeneral } from './DossierDetail/DatalistGeneral.tsx';
 import { DatalistJuridisch } from './DossierDetail/DatalistJuridisch.tsx';
 import { DatalistsFinancieel } from './DossierDetail/DatalistsFinancieel.tsx';
-<<<<<<<< HEAD:src/client/apps/bob/pages/Thema/Erfpacht/ErfpachtDetail.tsx
-import { useDossierData as useDossierDetailData } from './DossierDetail/useErfpachtDossierData.hook.ts';
+import { useDossierDetailData } from './DossierDetail/useErfpachtDossierData.hook.ts';
 import { CollapsiblePanel } from '../../../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';
+import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
-========
-import { useDossierDetailData as useDossierDetailData } from './DossierDetail/useErfpachtDossierDetailData.hook.ts';
-import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
-import { PageContentCell } from '../../../components/Page/Page.tsx';
-import { ThemaDetailPagina } from '../../../components/Thema/ThemaDetailPagina.tsx';
-import { ThemaPaginaDataView } from '../../../components/Thema/ThemaPaginaDataView.tsx';
-import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
->>>>>>>> origin/main:src/client/apps/bob/pages/Thema/Erfpacht/ErfpachtDossierDetail.tsx
 import { useAfisThemaData } from '../Afis/useAfisThemaData.hook.tsx';
 
 export function ErfpachtDossierDetail() {

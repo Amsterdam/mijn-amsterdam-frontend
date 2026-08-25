@@ -6,7 +6,7 @@ import type { WMOVoorzieningFrontend } from '../../../../../../server/services/j
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
-import { ThemaPaginaTable } from '../../../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
 
 export const WMO_HELPDESK_PHONENUMBER = '0800 0643' as const;

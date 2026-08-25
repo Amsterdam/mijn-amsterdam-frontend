@@ -5,18 +5,10 @@ import {
   listPageParamKind,
   themaConfig,
 } from './Erfpacht-thema-config.ts';
-<<<<<<<< HEAD:src/client/apps/bob/pages/Thema/Erfpacht/useErfpachtThemaData.hook.ts
-import type { ErfpachtDossiersResponse } from '../../../../../../server/services/erfpacht/erfpacht-types.ts';
-import { isError, isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isLoading, isError } from '../../../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
-========
-import { isError, isLoading } from '../../../../universal/helpers/api.ts';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
-import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
->>>>>>>> origin/main:src/client/apps/bob/pages/Thema/Erfpacht/useErfpachtThemaData.hook.tsx
 
 export function useErfpachtThemaData() {
   const { ERFPACHT } = useAppStateGetter();

@@ -1,11 +1,7 @@
 import { type Params } from 'react-router';
 
-import type { SomeOtherString } from '../../universal/helpers/types.ts';
-import type {
-  AppState,
-  LinkProps,
-  SVGComponent,
-} from '../../universal/types/App.types.ts';
+import type { SomeOtherString } from '../helpers/types.ts';
+import type { AppState, LinkProps, SVGComponent } from '../types/App.types.ts';
 
 export type WithPageConfig<K extends string, T extends object = object> = {
   [P in K]: T & { route: ThemaRouteConfig };
@@ -112,4 +108,12 @@ export type ThemaRenderRouteConfig = {
   route: string;
   Component: React.ElementType;
   isActive?: boolean;
+};
+
+export type ApplicationRouteConfig = ThemaRenderRouteConfig & {
+  props?: {
+    index?: boolean;
+  };
+  public?: boolean;
+  private?: boolean;
 };

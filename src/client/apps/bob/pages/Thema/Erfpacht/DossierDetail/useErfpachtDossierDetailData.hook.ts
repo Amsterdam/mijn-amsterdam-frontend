@@ -1,14 +1,9 @@
 import { generatePath, useParams } from 'react-router';
 
 import type { ErfpachtDossiersDetail } from '../../../../../../../server/services/erfpacht/erfpacht-types.ts';
-import { BFFApiUrls } from '../../../../config/api.ts';
-<<<<<<<< HEAD:src/client/apps/bob/pages/Thema/Erfpacht/DossierDetail/useErfpachtDossierData.hook.ts
 import { useBffApi } from '../../../../../../hooks/api/useBffApi.ts';
-import { useErfpachtThemaData } from '../useErfpachtThemaData.hook.ts';
-========
-import { useBffApi } from '../../../../hooks/api/useBffApi.ts';
+import { BFFApiUrls } from '../../../../config/api.ts';
 import { useErfpachtThemaData } from '../useErfpachtThemaData.hook.tsx';
->>>>>>>> origin/main:src/client/apps/bob/pages/Thema/Erfpacht/DossierDetail/useErfpachtDossierDetailData.hook.ts
 
 export function useDossierDetailData() {
   const { dossierId } = useParams<{
