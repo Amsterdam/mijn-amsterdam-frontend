@@ -1,5 +1,6 @@
 import type { HorecaVergunningFrontend } from './decos-zaken.ts';
 import { decosZaakTransformers } from './decos-zaken.ts';
+import { createFetchDocumentsListUrl } from './horeca-service-config.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Horeca/Horeca-thema-config.ts';
 import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
