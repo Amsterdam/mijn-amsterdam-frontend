@@ -10,7 +10,6 @@ import classnames from 'classnames';
 import styles from './DocumentLink.module.scss';
 import type { GenericDocument } from '../../../universal/types/App.types.ts';
 import { captureException } from '../../helpers/monitoring.ts';
-import { trackDownload } from '../../hooks/analytics.hook.ts';
 import { HttpStatusCode } from '../../hooks/api/useBffApi.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import { MaLink } from '../MaLink/MaLink.tsx';
@@ -82,12 +81,12 @@ export function DocumentLink({
           return res.blob();
         })
         .then((blob) => {
-          const trackingUrl = trackPath
-            ? trackPath(document)
-            : `${window.location.pathname}/downloads/${getDownloadName(document)}`;
+          // const trackingUrl = trackPath
+          //   ? trackPath(document)
+          //   : `${window.location.pathname}/downloads/${getDownloadName(document)}`;
 
-          const fileType = trackingUrl.split('.').pop();
-          trackDownload(documentTitle, fileType, trackingUrl, profileType);
+          // const fileType = trackingUrl.split('.').pop();
+          // trackDownload(documentTitle, fileType, trackingUrl, profileType);
 
           if (!blob) {
             downloadFile(document);
@@ -96,12 +95,14 @@ export function DocumentLink({
             window.navigator.msSaveOrOpenBlob(blob, documentTitle);
           } else {
             try {
+              console.log('downloadFile blob', blob);
               const fileUrl = window.URL.createObjectURL(blob);
               downloadFile({
                 ...document,
                 url: fileUrl,
               });
             } catch (_) {
+              console.log('downloadFile fallback', _);
               downloadFile(document);
             }
           }
@@ -148,10 +149,23 @@ export function DocumentLink({
         </span>
         {label || documentTitle}
       </MaLink>
-      {isLoading && <span className={styles.DownloadInfo}>Downloaden...</span>}
-      {isErrorVisible && (
-        <span className={styles.DownloadInfo}>Downloaden mislukt</span>
-      )}
+      <MaLink maVariant="noDefaultUnderline" href={document.url}>
+        2. {label || documentTitle}
+      </MaLink>
+      <MaLink
+        maVariant="noDefaultUnderline"
+        download="some-file"
+        href={document.url}
+      >
+        3. {label || documentTitle}
+      </MaLink>
+      <MaLink
+        maVariant="noDefaultUnderline"
+        target="_blank"
+        href={document.url}
+      >
+        4. {label || documentTitle}
+      </MaLink>
     </span>
   );
 }
