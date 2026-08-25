@@ -1,3 +1,5 @@
+import { isValidElement } from 'react';
+
 /**
  * Sloppy determination if given url points to a page of the application
  * @param url string
@@ -65,4 +67,14 @@ export function getElementOnPageAsync(
       resolve(null);
     },
   };
+}
+
+export function isLinkLikeElement(
+  node: React.ReactNode
+): node is React.ReactElement<{ href: string; children: React.ReactNode }> {
+  return (
+    isValidElement(node) &&
+    typeof node.props.href === 'string' &&
+    node.props.children !== undefined 
+  );
 }
