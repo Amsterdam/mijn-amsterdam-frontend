@@ -220,6 +220,8 @@ export type ErfpachtDossiersResponse = Prettify<
   }
 >;
 
-export type ErfpachtResponseFrontend = ErfpachtDossiersResponse & {
-  zaken: ErfpachtZaakExcerptFrontend[];
-};
+export type ErfpachtResponseFrontend =
+  | ErfpachtErpachterResponse
+  | (ErfpachtDossiersResponse & {
+      zaken: ErfpachtZaakExcerptFrontend[];
+    });

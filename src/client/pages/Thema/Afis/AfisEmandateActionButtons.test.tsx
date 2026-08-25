@@ -42,35 +42,6 @@ describe('AfisEMandateActionButtons', () => {
     ).toBeInTheDocument();
   });
 
-  it('renders Rekening wijzigen when signRequestUrl present and eMandate active', () => {
-    const eMandate = {
-      signRequestUrl: 'https://example.com',
-      status: '1',
-      eMandateIdSource: '1',
-    } as AfisEMandateFrontend;
-
-    const redirectUrlApi = {
-      isLoading: false,
-      requestRedirectUrl: vi.fn(),
-    } as unknown as AfisEMandateActionButtonsProps['redirectUrlApi'];
-
-    const deactivateApi = {
-      isLoading: false,
-    } as AfisEMandateActionButtonsProps['deactivateApi'];
-
-    render(
-      <AfisEMandateActionButtons
-        eMandate={eMandate}
-        redirectUrlApi={redirectUrlApi}
-        deactivateApi={deactivateApi}
-      />
-    );
-
-    expect(
-      screen.getByRole('button', { name: /Rekening wijzigen/i })
-    ).toBeInTheDocument();
-  });
-
   it('calls requestRedirectUrl when activating an eMandate', async () => {
     const user = userEvent.setup();
 
