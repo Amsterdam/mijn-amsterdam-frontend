@@ -25,7 +25,7 @@ import { MaButtonLink } from '../../../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
-import { ThemaPaginaTable } from '../../../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
 
 const pageContentTop = (
@@ -163,7 +163,7 @@ export function VarenThema() {
       kind === 'actieve-vergunningen' ? varenVergunningen : varenZaken;
     const items = varenItems.filter(config.filter).sort(config.sort);
     return (
-      <ThemaPaginaTable
+      <ThemaPaginaDataView
         key={kind}
         title={config.title}
         zaken={items}

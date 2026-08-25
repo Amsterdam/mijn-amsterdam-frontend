@@ -1,0 +1,49 @@
+{
+  "zaakStatussen": [
+    {
+      "datumStatusGezet": "2026-01-25T14:22:42.057Z",
+      "statustoelichting": "Aanvraag"
+    },
+    {
+      "datumStatusGezet": "2026-01-26T14:22:42.057Z",
+      "statustoelichting": "Informatie opgevraagd"
+    },
+    {
+      "datumStatusGezet": "2026-01-27T14:22:42.057Z",
+      "statustoelichting": "Informatie aangeleverd"
+    },
+    {
+      "datumStatusGezet": "2026-01-28T14:22:42.057Z",
+      "statustoelichting": "Aanvraag beoordelen"
+    },
+    {
+      "datumStatusGezet": "2026-01-29T14:22:42.057Z",
+      "statustoelichting": "Aanvraag gereed voor behandeling"
+    },
+    {
+      "datumStatusGezet": "2026-01-30T14:22:42.057Z",
+      "statustoelichting": "Behandeling"
+    },
+    {
+      "datumStatusGezet": "2026-02-01T14:22:42.057Z",
+      "statustoelichting": "Aanbieding"
+    },
+    {
+      "datumStatusGezet": "2026-02-02T14:22:42.057Z",
+      "statustoelichting": "Acceptatie ontvangen"
+    },
+    {
+      "datumStatusGezet": "2026-02-03T14:22:42.057Z",
+      "statustoelichting": "Besluit verstuurd"
+    },
+    {
+      "datumStatusGezet": "2026-02-04T14:22:42.057Z",
+      "statustoelichting": "Akte gepasseerd"
+    },
+    {
+      "datumStatusGezet": "2026-02-05T14:22:42.057Z",
+      "statustoelichting": "Aanvraag afgerond"
+    }
+  ],
+  "zaakResultaat": "Aangegaan"
+}

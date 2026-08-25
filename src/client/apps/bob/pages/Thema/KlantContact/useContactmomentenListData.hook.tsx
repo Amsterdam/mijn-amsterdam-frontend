@@ -3,11 +3,11 @@ import {
   SpeechBalloonEllipsisIcon,
   MailIcon,
   PhoneIcon,
-  PersonAtDeskIcon,
 } from '@amsterdam/design-system-react-icons';
 
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import type { Kanaal } from '../../../../../../server/services/klantcontact/klantcontact.types.ts';
+import { IconAfspraak } from '../../../assets/icons/index.tsx';
 import { MaRouterLink } from '../../../../../components/MaLink/MaLink.tsx';
 import { getRedactedClass } from '../../../../../helpers/cobrowse.ts';
 import { useActiveThemaMenuItems } from '../../../../../hooks/useThemaMenuItems.ts';
@@ -74,7 +74,7 @@ function addIcon(type: Kanaal) {
     Telefoon: PhoneIcon,
     Chat: SpeechBalloonEllipsisIcon,
     Contactformulier: MailIcon,
-    Stadsloket: PersonAtDeskIcon,
+    Stadsloket: <IconAfspraak />,
   } as const;
   if (icons[type]) {
     return (

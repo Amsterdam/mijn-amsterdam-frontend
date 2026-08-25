@@ -57,7 +57,7 @@ export const themaConfig = {
   },
   listPageAfspraken: {
     route: {
-      path: `/${BASE_PATH}/afspraken/:page?`,
+      path: `/${BASE_PATH}/afspraken`,
       documentTitle: `Alle afspraken | ${THEMA_TITLE}`,
       trackingUrl: null,
     },

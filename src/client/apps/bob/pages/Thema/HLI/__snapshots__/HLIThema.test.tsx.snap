@@ -118,7 +118,7 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
             <li>
               <a
                 class="ams-link-list__link"
-                href="https://www.amsterdam.nl/stadspas"
+                href="https://stadspas.amsterdam.nl/"
                 rel="noreferrer"
               >
                 <span

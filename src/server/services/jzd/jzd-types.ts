@@ -20,10 +20,10 @@ export type VoorzieningKey<T> = Exclude<keyof T, 'link' | 'documenten'>;
 export type VoorzieningValue<T> = T[VoorzieningKey<T>];
 
 /**
- * The MatchConfig MUST return true for all defined keys.
- * There is no "OR" logic between keys, only "AND" logic. If you want to have "OR" logic, you can use a function for the value of a key, and implement your own logic there.
+ * The MatchConfig MUST return true for all defined keys when using include.every or exclude.every.
+ * The MatchConfig MUST return true for at least one defined key when using include.some or exclude.some.
  */
-type MatchConfig<T> = Partial<
+export type MatchConfig<T> = Partial<
   Record<
     VoorzieningKey<T>,
     VoorzieningValue<T> | VoorzieningValue<T>[] | MaApiPropMatchFN<T>
@@ -32,6 +32,12 @@ type MatchConfig<T> = Partial<
 
 export type JzdApiConfig<T extends object = ZorgnedAanvraagTransformed> = {
   assign: Prettify<Partial<WithMaApiPropsAssignments<T>>>;
-  include: MatchConfig<T>;
-  exclude?: MatchConfig<T>;
+  // Includes if every match config returns true. e.g. assert(foo === 'bar' && baz === 'qux')
+  'include.every'?: MatchConfig<T>;
+  // Includes if some match config returns true. e.g. assert(foo === 'bar' || baz === 'qux')
+  'include.some'?: MatchConfig<T>;
+  // Excludes if every match config returns true. e.g. assert(foo === 'bar' && baz === 'qux')
+  'exclude.every'?: MatchConfig<T>;
+  // Excludes if some match config returns true. e.g. assert(foo === 'bar' || baz === 'qux')
+  'exclude.some'?: MatchConfig<T>;
 };

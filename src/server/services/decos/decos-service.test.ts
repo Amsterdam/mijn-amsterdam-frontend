@@ -499,6 +499,34 @@ describe('decos-service', () => {
         status: 'OK',
       });
     });
+
+    test('With custom document url factory', async () => {
+      remoteApi
+        .get(/\/decos\/items\/zaak-id-2\/documents/)
+        .reply(200, documents);
+      remoteApi.get(/\/decos\/items\/doc-key\/blob/).reply(200, blob);
+
+      const responseData = await fetchDecosDocumentList(
+        'xx',
+        'zaak-id-2',
+        (_sessionID, documentKey) => {
+          return `http://bff-api-host/api/v1/services/CUSTOM_PATH/download?id=${documentKey}`;
+        }
+      );
+
+      expect(responseData).toStrictEqual({
+        content: [
+          {
+            datePublished: '2024-06-06',
+            id: 'D/4379600',
+            key: 'blob-key',
+            title: 'Systeem - Factuurregel Stadsloket automatisch',
+            url: 'http://bff-api-host/api/v1/services/CUSTOM_PATH/download?id=blob-key',
+          },
+        ],
+        status: 'OK',
+      });
+    });
   });
 
   describe('fetchDecosZaken', async () => {

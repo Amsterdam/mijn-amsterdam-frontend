@@ -8,7 +8,7 @@ import {
   fetchMaApiVoorzieningById,
   fetchMaApiVoorzieningen,
 } from './jzd-voorzieningen-api-service.ts';
-import { ZORGNED_JZD_API_CONFIG_KEY } from './wmo/wmo-config.ts';
+import { ZORGNED_WMO_API_CONFIG_KEY } from './wmo/wmo-config.ts';
 import { omit } from '../../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import {
@@ -28,7 +28,7 @@ export async function fetchZorgnedDocumentWMO(
 ) {
   const response = fetchDocument(
     authProfileAndToken.profile.id,
-    ZORGNED_JZD_API_CONFIG_KEY,
+    ZORGNED_WMO_API_CONFIG_KEY,
     documentId
   );
   return response;
@@ -39,7 +39,7 @@ export async function fetchZorgnedDocumentsWMO(
   res: ResponseAuthenticated
 ) {
   const response = await fetchAllDocumentsRaw(res.locals.userID, {
-    zorgnedApiConfigKey: ZORGNED_JZD_API_CONFIG_KEY,
+    zorgnedApiConfigKey: ZORGNED_WMO_API_CONFIG_KEY,
   });
 
   return sendResponse(res, response);
@@ -50,7 +50,7 @@ export async function fetchZorgnedAanvragenWMO(
   res: ResponseAuthenticated
 ) {
   const response = await fetchAanvragenRaw(res.locals.userID, {
-    zorgnedApiConfigKey: ZORGNED_JZD_API_CONFIG_KEY,
+    zorgnedApiConfigKey: ZORGNED_WMO_API_CONFIG_KEY,
   });
 
   return sendResponse(res, response);

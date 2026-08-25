@@ -1,0 +1,22 @@
+.ListViewArticle {
+  --ams-heading-color: var(--ams-link-color);
+}
+
+.ListView {
+  gap: var(--ams-space-m);
+  margin-top: var(--ams-space-m);
+}
+
+.ListViewItem {
+  gap: var(--ams-space-m);
+  padding-bottom: var(--ams-space-m);
+}
+
+.ListViewItemWithDivider {
+  border-bottom: var(--ams-table-cell-border-block-end);
+  width: 100%;
+}
+
+.ListViewIcon {
+  align-self: center;
+}

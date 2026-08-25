@@ -1,4 +1,4 @@
-import { Paragraph } from '@amsterdam/design-system-react';
+import { Column, Paragraph } from '@amsterdam/design-system-react';
 
 import { AfspraakCard } from '../../../../../../components/AfspraakCard/AfspraakCard.tsx';
 import {
@@ -19,13 +19,11 @@ export function AfspraakListPage() {
           afspraken waarbij we uw persoonsgegevens nodig hebben om uw vraag te
           beantwoorden.
         </Paragraph>
-        {afspraken.map((afspraak) => (
-          <AfspraakCard
-            key={afspraak.caseReference}
-            afspraak={afspraak}
-            className="ams-mb-l"
-          />
-        ))}
+        <Column gap="large">
+          {afspraken.map((afspraak) => (
+            <AfspraakCard key={afspraak.caseReference} afspraak={afspraak} />
+          ))}
+        </Column>
       </PageContentCell>
     </PageV2>
   );

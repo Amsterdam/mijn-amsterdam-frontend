@@ -119,7 +119,7 @@ export function AfisThema() {
         <MaButtonRouterLink
           className="ams-mb-m"
           variant="secondary"
-          href={themaConfig.betaalVoorkeurenPage.route.path}
+          href={themaConfig.detailPageBetaalvoorkeuren.route.path}
         >
           Ga naar betaalvoorkeuren
         </MaButtonRouterLink>

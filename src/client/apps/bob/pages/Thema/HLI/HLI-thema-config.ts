@@ -18,10 +18,10 @@ export const regelingenTitle = 'Regelingen bij laag inkomen' as const;
 export const stadspasTitle = 'Stadspas' as const;
 
 type HLIThemaConfig = ThemaConfigBase &
-  PageConfig<'regelingenDetailPage'> &
-  PageConfig<'stadspasDetailPage'> &
-  PageConfig<'specificatieListPage'> &
-  PageConfig<'regelingenListPage'>;
+  PageConfig<'detailPageRegeling'> &
+  PageConfig<'detailPageStadspas'> &
+  PageConfig<'listPageSpecificaties'> &
+  PageConfig<'listPageRegelingen'>;
 
 export const themaConfig = {
   id: 'HLI' as const,
@@ -53,17 +53,17 @@ export const themaConfig = {
     },
     {
       title: 'Meer informatie over Stadspas',
-      to: 'https://www.amsterdam.nl/stadspas',
+      to: 'https://stadspas.amsterdam.nl/',
     },
   ],
-  specificatieListPage: {
+  listPageSpecificaties: {
     route: {
       path: '/regelingen-bij-laag-inkomen/lijst/specificaties/:page?',
       trackingUrl: null,
       documentTitle: `Specificaties | ${THEMA_TITLE}`,
     },
   },
-  regelingenListPage: {
+  listPageRegelingen: {
     route: {
       path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
       trackingUrl: null,
@@ -71,7 +71,7 @@ export const themaConfig = {
         `${params?.kind === 'eerdere-en-afgewezen-regelingen' ? 'Eerdere' : 'Huidige'} regelingen | ${THEMA_TITLE}`,
     },
   },
-  regelingenDetailPage: {
+  detailPageRegeling: {
     route: {
       path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
       trackingUrl: (params) =>
@@ -79,7 +79,7 @@ export const themaConfig = {
       documentTitle: `Regeling | ${THEMA_TITLE}`,
     },
   },
-  stadspasDetailPage: {
+  detailPageStadspas: {
     route: {
       path: '/regelingen-bij-laag-inkomen/stadspas/:passNumber',
       trackingUrl: '/regelingen-bij-laag-inkomen/stadspas',
@@ -117,7 +117,7 @@ export const themaConfig = {
 
 export const kindTegoedPageLinkItem = {
   title: 'Meer informatie over Kindtegoed declareren',
-  to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
+  to: 'https://stadspas.amsterdam.nl/tegoed-en-meer/kindtegoed/kosten-declareren',
 } as const;
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
@@ -205,7 +205,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(themaConfig.regelingenListPage.route.path, {
+    listPageRoute: generatePath(themaConfig.listPageRegelingen.route.path, {
       kind: listPageParamKind.lopend,
       page: null,
     }),
@@ -217,7 +217,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(themaConfig.regelingenListPage.route.path, {
+    listPageRoute: generatePath(themaConfig.listPageRegelingen.route.path, {
       kind: listPageParamKind.actual,
       page: null,
     }),
@@ -228,7 +228,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
-    listPageRoute: generatePath(themaConfig.regelingenListPage.route.path, {
+    listPageRoute: generatePath(themaConfig.listPageRegelingen.route.path, {
       kind: listPageParamKind.historic,
       page: null,
     }),
@@ -240,7 +240,7 @@ export const specificatieTableConfig = {
   sort: dateSort('datePublished', 'desc'),
   displayProps: specificatieDisplayProps,
   maxItems: 3,
-  listPageRoute: generatePath(themaConfig.specificatieListPage.route.path, {
+  listPageRoute: generatePath(themaConfig.listPageSpecificaties.route.path, {
     page: null,
   }),
 };

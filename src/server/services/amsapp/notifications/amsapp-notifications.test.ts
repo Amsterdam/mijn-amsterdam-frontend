@@ -284,7 +284,7 @@ describe('amsapp-notifications', () => {
     );
   });
 
-  // TODO: MIJN-12971: These are temporary tests and can be deleted when notifications datePublished for these services are not set to todays date everytime anymore
+  // TODO: MIJN-12971 & MIJN-13488: These are temporary tests and can be deleted when notifications datePublished for these services are not set to todays date everytime anymore
   it('storeNotificationsResponses does not store temporary filtered services', async () => {
     mocks.model.storeNotifications.mockResolvedValue(undefined);
 

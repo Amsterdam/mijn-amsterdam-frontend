@@ -21,7 +21,7 @@ export type FetchWmoVoorzieningenApiOptions = Omit<
 >;
 
 // This list should be kept in sync with the list of productIdentificaties given to us by JZD - Zorgned FB
-const PRODUCT_IDS_EXCLUDED_FROM_REPARATIEVERZOEK_ACTION = [
+const PRODUCT_IDS_EXCLUDED_FROM_ACTIONS = [
   '13W13',
   '13XW15',
   '13W15',
@@ -64,7 +64,7 @@ function maActieUrlsReparatieverzoek(
 }
 
 const REPARATIEVERZOEK_ACTIE_CONFIG: JzdApiConfig = {
-  include: {
+  'include.every': {
     isActueel: true,
     productsoortCode: ['WRA', 'WRA1', 'WRA2', 'WRA3', 'WRA4', 'WRA5'],
     datumBeginLevering: (voorziening) => {
@@ -75,8 +75,8 @@ const REPARATIEVERZOEK_ACTIE_CONFIG: JzdApiConfig = {
       );
     },
   },
-  exclude: {
-    productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_REPARATIEVERZOEK_ACTION,
+  'exclude.some': {
+    productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
     leveringsVorm: ['PGB'], // Exclude PGB products from the reparatieverzoek action, as these are not handled by the Gemeente.
   },
   assign: {
@@ -87,8 +87,9 @@ const REPARATIEVERZOEK_ACTIE_CONFIG: JzdApiConfig = {
 };
 
 const REPARATIEVERZOEK_ACTIE_CONFIG_PGB: JzdApiConfig = {
-  include: {
-    productsoortCode: REPARATIEVERZOEK_ACTIE_CONFIG.include.productsoortCode,
+  'include.every': {
+    productsoortCode:
+      REPARATIEVERZOEK_ACTIE_CONFIG['include.every']?.productsoortCode,
     leveringsVorm: ['PGB'],
     isActueel: true,
   },
@@ -116,7 +117,7 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['A-LLV'],
       maActies: ['stopzetten', 'stopzetten-tijdelijk'],
     },
-    include: {
+    'include.every': {
       isActueel: true,
       productIdentificatie: [
         'LLVFV',
@@ -127,6 +128,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
         'LLVAVG',
       ],
     },
+    'exclude.some': {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
+    },
   },
   //////////////////////////////////////////////////////
   // Stopzetten via content pagina verwijzingen ////////
@@ -136,7 +140,7 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['B-WMO'],
       maActies: ['stopzetten-niet-via-formulier'],
     },
-    include: {
+    'include.every': {
       leveringsVorm: (voorziening) => voorziening.leveringsVorm !== 'PGB',
       isActueel: true,
       productsoortCode: [
@@ -161,6 +165,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
         'WMH',
       ],
     },
+    'exclude.some': {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
+    },
   },
   /////////////////////////////
   // PGB HBH //////////////////
@@ -170,10 +177,13 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['C-01'],
       maActies: ['stopzetten'],
     },
-    include: {
+    'include.every': {
       leveringsVorm: 'PGB',
       isActueel: true,
       productsoortCode: ['WMH'],
+    },
+    'exclude.some': {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
     },
   },
   /////////////////////////////
@@ -184,7 +194,7 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['C-02'],
       maActies: ['stopzetten'],
     },
-    include: {
+    'include.every': {
       leveringsVorm: 'PGB',
       isActueel: true,
       productsoortCode: [
@@ -208,6 +218,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
         'MAO',
       ],
     },
+    'exclude.some': {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
+    },
   },
   /////////////////////////////////////////
   // PGB Vervoer naar dagbesteding ////////
@@ -217,10 +230,13 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['C-03'],
       maActies: ['stopzetten', 'stopzetten-tijdelijk'],
     },
-    include: {
+    'include.every': {
       leveringsVorm: 'PGB',
       isActueel: true,
       productsoortCode: ['VVD'],
+    },
+    'exclude.some': {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
     },
   },
   /////////////////////////////
@@ -231,7 +247,7 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['D-01'],
       maActies: ['stopzetten'],
     },
-    include: {
+    'include.every': {
       leveringsVorm: 'ZIN',
       isActueel: true,
       productsoortCode: [
@@ -246,6 +262,9 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
         'RWT',
       ],
     },
+    'exclude.some': {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
+    },
   },
   /////////////////////////////
   // Hulpmiddelen (PGB) ///////
@@ -255,10 +274,13 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['D-02'],
       maActies: ['stopzetten'],
     },
-    include: {
+    'include.every': {
       leveringsVorm: 'PGB',
       isActueel: true,
       productsoortCode: ['AAN', 'FIE', 'ROL', 'SCO', 'OVE', 'RWD', 'RWT'],
+    },
+    'exclude.some': {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
     },
   },
   ////////////////////////////////////////
@@ -269,10 +291,13 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['D-03'],
       maActies: ['stopzetten'],
     },
-    include: {
+    'include.every': {
       leveringsVorm: 'ZIN',
       isActueel: true,
       productsoortCode: ['WGW', 'WRA', 'WRA2', 'WRA3', 'WRA5', 'OVW'],
+    },
+    'exclude.some': {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
     },
   },
   //////////////////////////////////////////////////////
@@ -283,10 +308,13 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['D-04'],
       maActies: ['stopzetten'],
     },
-    include: {
+    'include.every': {
       leveringsVorm: 'PGB',
       isActueel: true,
       productsoortCode: ['WGW', 'WRA', 'WRA2', 'WRA3', 'WRA5', 'OVW', 'WRA1'],
+    },
+    'exclude.some': {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
     },
   },
   /////////////////////
@@ -297,9 +325,12 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['D-05'],
       maActies: ['stopzetten'],
     },
-    include: {
+    'include.every': {
       isActueel: true,
       productsoortCode: ['WRA1'],
+    },
+    'exclude.some': {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
     },
   },
   /////////////////////////
@@ -310,9 +341,12 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['D-06'],
       maActies: ['stopzetten'],
     },
-    include: {
+    'include.every': {
       isActueel: true,
       productsoortCode: ['FIN', 'MVV', 'VVK'],
+    },
+    'exclude.some': {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
     },
   },
   //////////////////////////////////
@@ -323,9 +357,12 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['D-07'],
       maActies: ['stopzetten-niet-via-formulier'],
     },
-    include: {
+    'include.every': {
       isActueel: true,
       productsoortCode: ['VHK'],
+    },
+    'exclude.some': {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
     },
   },
   /////////////////////
@@ -336,9 +373,12 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['D-08'],
       maActies: ['stopzetten'],
     },
-    include: {
+    'include.every': {
       isActueel: true,
       productsoortCode: ['WRA4'],
+    },
+    'exclude.some': {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
     },
   },
   //////////////////////////////////////////
@@ -349,9 +389,12 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       maCategorie: ['E-01'],
       maActies: ['stopzetten'],
     },
-    include: {
+    'include.every': {
       isActueel: true,
       productsoortCode: ['AOV'],
+    },
+    'exclude.some': {
+      productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
     },
   },
   // // // // // // // // // // // // // // // // // // // // // // // // //
@@ -369,11 +412,14 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
       };
 
       return {
-        include: Object.fromEntries(
+        'include.every': Object.fromEntries(
           entries(match).filter(([_, value]) => typeof value !== 'undefined')
-        ) as JzdApiConfig['include'],
+        ) as JzdApiConfig['include.every'],
         assign: {
           maProductgroep: lineItemConfig.productgroep,
+        },
+        'exclude.some': {
+          productIdentificatie: PRODUCT_IDS_EXCLUDED_FROM_ACTIONS,
         },
       };
     }),

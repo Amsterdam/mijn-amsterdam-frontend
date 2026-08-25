@@ -120,13 +120,13 @@ function getReadMoreLink(budget: StadspasDetailBudgetSource): LinkProps | null {
   const naamLower = budget.naam.toLowerCase();
   if (naamLower.includes('kindtegoed')) {
     return {
-      to: 'https://www.amsterdam.nl/stadspas/kindtegoed/',
+      to: 'https://stadspas.amsterdam.nl/tegoed-en-meer/kindtegoed#',
       title: `Lees meer over de kindtegoed ${budget.naam} regeling op amsterdam.nl.`,
     };
   }
   if (naamLower.includes('pc')) {
     return {
-      to: 'https://www.amsterdam.nl/stadspas/pc-tegoed/',
+      to: 'https://stadspas.amsterdam.nl/tegoed-en-meer/pc-tegoed',
       title: `Lees meer over de pctegoed ${budget.naam} regeling op amsterdam.nl.`,
     };
   }

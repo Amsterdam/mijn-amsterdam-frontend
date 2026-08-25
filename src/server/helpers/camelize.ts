@@ -30,16 +30,23 @@ function camelCase(str: string) {
 }
 
 function walk(obj: any, shallow = false): any {
-  if (!obj || typeof obj !== 'object') return obj;
-  if (obj instanceof Date || obj instanceof RegExp) return obj;
-  if (Array.isArray(obj))
+  if (!obj || typeof obj !== 'object') {
+    return obj;
+  }
+  if (obj instanceof Date || obj instanceof RegExp) {
+    return obj;
+  }
+  if (Array.isArray(obj)) {
     return obj.map((v) => {
       if (!shallow) {
         return walk(v);
       }
-      if (typeof v === 'object') return walk(v, shallow);
+      if (typeof v === 'object') {
+        return walk(v, shallow);
+      }
       return v;
     });
+  }
 
   return Object.keys(obj).reduce((res, key) => {
     const camel = camelCase(key);

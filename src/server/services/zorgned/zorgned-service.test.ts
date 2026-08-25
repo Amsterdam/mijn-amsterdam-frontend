@@ -20,14 +20,14 @@ import {
   type ZorgnedAanvraagSource,
   type ZorgnedPersoonSource,
 } from './zorgned-types.ts';
-import ZORGNED_JZD_AANVRAGEN from '../../../mocks-server/fixtures/zorgned-jzd-aanvragen.json' with { type: 'json' };
+import ZORGNED_WMO_AANVRAGEN from '../../../mocks-server/fixtures/zorgned-wmo-aanvragen.json' with { type: 'json' };
 import { remoteApiHost } from '../../../testing/setup.ts';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
 import { apiErrorResult } from '../../../universal/helpers/api.ts';
 import * as request from '../../helpers/source-api-request.ts';
 import { ZORGNED_AV_API_CONFIG_KEY } from '../hli/hli-service-config.ts';
-import { ZORGNED_JZD_API_CONFIG_KEY } from '../jzd/wmo/wmo-config.ts';
+import { ZORGNED_WMO_API_CONFIG_KEY } from '../jzd/wmo/wmo-config.ts';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -123,7 +123,7 @@ describe('zorgned-service', () => {
 
       forTesting
         .transformZorgnedAanvragen(
-          ZORGNED_JZD_AANVRAGEN as unknown as ZorgnedResponseDataSource
+          ZORGNED_WMO_AANVRAGEN as unknown as ZorgnedResponseDataSource
         )
         .every((a) => {
           expect(Object.keys(a).sort().join(',')).toMatchInlineSnapshot(
@@ -135,7 +135,7 @@ describe('zorgned-service', () => {
     test('transforms correctly', () => {
       expect(
         forTesting.transformZorgnedAanvragen(
-          ZORGNED_JZD_AANVRAGEN as unknown as ZorgnedResponseDataSource
+          ZORGNED_WMO_AANVRAGEN as unknown as ZorgnedResponseDataSource
         )[0]
       ).toStrictEqual({
         beschikkingNummer: 300111429,
@@ -217,7 +217,7 @@ describe('zorgned-service', () => {
 
     test('should not mutate source or result arrays', () => {
       const response: ZorgnedResponseDataSource =
-        ZORGNED_JZD_AANVRAGEN as unknown as ZorgnedResponseDataSource;
+        ZORGNED_WMO_AANVRAGEN as unknown as ZorgnedResponseDataSource;
 
       const responseSnapshot = structuredClone(response);
 
@@ -235,7 +235,7 @@ describe('zorgned-service', () => {
 
     const BSN = '123456789';
     const result = await fetchAanvragen(BSN, {
-      zorgnedApiConfigKey: ZORGNED_JZD_API_CONFIG_KEY,
+      zorgnedApiConfigKey: ZORGNED_WMO_API_CONFIG_KEY,
       requestBodyParams: {
         maxeinddatum: '2018-01-01',
         regeling: 'wmo',
@@ -255,7 +255,7 @@ describe('zorgned-service', () => {
       headers: {
         Token: process.env.BFF_ZORGNED_API_TOKEN,
         'Content-type': 'application/json; charset=utf-8',
-        'x-cache-key-supplement': 'JZD',
+        'x-cache-key-supplement': 'WMO',
       },
       httpsAgent: expect.any(Object),
     });
@@ -279,7 +279,7 @@ describe('zorgned-service', () => {
     const BSN = '567890';
     const result = await fetchDocument(
       BSN,
-      ZORGNED_JZD_API_CONFIG_KEY,
+      ZORGNED_WMO_API_CONFIG_KEY,
       mocks.mockDocumentId
     );
 
@@ -305,7 +305,7 @@ describe('zorgned-service', () => {
 
     const result = await fetchDocument(
       BSN,
-      ZORGNED_JZD_API_CONFIG_KEY,
+      ZORGNED_WMO_API_CONFIG_KEY,
       mocks.mockDocumentId
     );
 
@@ -322,7 +322,7 @@ describe('zorgned-service', () => {
       headers: {
         Token: process.env.BFF_ZORGNED_API_TOKEN,
         'Content-type': 'application/json; charset=utf-8',
-        'x-cache-key-supplement': 'JZD',
+        'x-cache-key-supplement': 'WMO',
       },
     });
 

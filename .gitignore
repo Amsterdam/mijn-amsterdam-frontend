@@ -18,6 +18,8 @@ build-bff
 .env.*
 !.env.*.template
 
+/docs/
+
 .eslintcache
 *.flat-cache.json
 *.db

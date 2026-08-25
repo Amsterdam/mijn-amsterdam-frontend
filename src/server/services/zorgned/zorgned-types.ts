@@ -262,7 +262,7 @@ export interface ZorgnedPerson {
 }
 
 export type ZorgnedApiConfigKey =
-  | 'ZORGNED_JZD'
+  | 'ZORGNED_WMO'
   | 'ZORGNED_AV'
   | 'ZORGNED_LEERLINGENVERVOER';
 

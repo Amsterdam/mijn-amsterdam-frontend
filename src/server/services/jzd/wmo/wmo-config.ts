@@ -2,7 +2,7 @@ import { parseISO } from 'date-fns';
 
 import type { BeschikkingsResultaat } from '../../zorgned/zorgned-types.ts';
 
-export const ZORGNED_JZD_API_CONFIG_KEY = 'ZORGNED_JZD' as const;
+export const ZORGNED_WMO_API_CONFIG_KEY = 'ZORGNED_WMO' as const;
 export const DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH = 'Verzoek:' as const; // Documents starting with this token correspond to the 'meer informatie' step.
 export const DOCUMENT_TITLE_BESLUIT_STARTS_WITH = 'Besluit:' as const; // Documents starting with this token correspond to the 'besluit' step.
 export const DOCUMENT_UPLOAD_LINK_MEER_INFORMATIE =
@@ -10,7 +10,7 @@ export const DOCUMENT_UPLOAD_LINK_MEER_INFORMATIE =
 export const DOCUMENT_PGB_BESLUIT =
   'https://www.amsterdam.nl/zorg-ondersteuning/hulp-zorg-betalen/persoonsgebonden/?vkurl=pgb';
 
-export const ZORGNED_JZD_REGELING_IDENTIFICATIE = 'wmo' as const;
+export const ZORGNED_WMO_REGELING_IDENTIFICATIE = 'wmo' as const;
 export const BESCHIKTPRODUCT_RESULTAAT: BeschikkingsResultaat[] = [
   'toegewezen',
 ] as const;

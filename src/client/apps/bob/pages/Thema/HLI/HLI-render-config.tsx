@@ -17,22 +17,22 @@ import type {
 
 export const HLIRoutes = [
   {
-    route: themaConfig.stadspasDetailPage.route.path,
+    route: themaConfig.detailPageStadspas.route.path,
     Component: HLIStadspasDetail,
     isActive: themaConfig.featureToggle.stadspas.active,
   },
   {
-    route: themaConfig.regelingenDetailPage.route.path,
+    route: themaConfig.detailPageRegeling.route.path,
     Component: HLIRegelingenDetail,
     isActive: themaConfig.featureToggle.regelingen.active,
   },
   {
-    route: themaConfig.specificatieListPage.route.path,
+    route: themaConfig.listPageSpecificaties.route.path,
     Component: HLISpecificatieList,
     isActive: themaConfig.featureToggle.regelingen.enabledRTM,
   },
   {
-    route: themaConfig.regelingenListPage.route.path,
+    route: themaConfig.listPageRegelingen.route.path,
     Component: HLIRegelingenList,
     isActive: themaConfig.featureToggle.regelingen.active,
   },

@@ -7,7 +7,6 @@ import {
   sendBadRequest,
   sendResponse,
   type RequestWithQueryParams,
-  type ResponseAuthenticated,
 } from './route-helpers.ts';
 import type { streamEndpointQueryParamKeys } from '../../universal/config/app.ts';
 import { IS_PRODUCTION } from '../../universal/config/env.ts';
@@ -31,12 +30,16 @@ import {
   fetchDecosDocument,
   fetchDecosWorkflows,
 } from '../services/decos/decos-service.ts';
-import { fetchErfpachtDossiersDetail as fetchErfpachtDossiersDetail } from '../services/erfpacht/erfpacht.ts';
+import { erfpachtRouter } from '../services/erfpacht/erfpacht-router.ts';
 import { hliRouter } from '../services/hli/hli-router.ts';
 import { jzdRouter } from '../services/jzd/jzd-router.ts';
 import { klantcontactRouter } from '../services/klantcontact/klantcontact-router.ts';
 import { fetchDocument as fetchBBDocument } from '../services/powerbrowser/powerbrowser-service.ts';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler.ts';
+import {
+  handleFetchDocumentDownload,
+  handleFetchDocumentsList,
+} from '../services/shared/documents-route-handlers.ts';
 import { userFeedbackRouter } from '../services/user-feedback/user-feedback.router.ts';
 import { fetchWpiDocument } from '../services/wpi/api-service.ts';
 
@@ -74,7 +77,7 @@ router.get(
     req: RequestWithQueryParams<{
       [key in keyof typeof streamEndpointQueryParamKeys]: string;
     }>,
-    res: Response,
+    _res: Response,
     next: NextFunction
   ) => {
     if (
@@ -116,6 +119,9 @@ router.get(
 //// BFF Service Api Endpoints /////////////////////
 ////////////////////////////////////////////////////
 
+router.get(BffEndpoints.SHARED_DOCUMENTS_LIST, handleFetchDocumentsList);
+router.get(BffEndpoints.SHARED_DOCUMENTS_DOWNLOAD, handleFetchDocumentDownload);
+
 router.use(
   jzdRouter.protected,
   hliRouter.protected,
@@ -123,6 +129,7 @@ router.use(
   afisRouter.protected,
   bezwarenRouter.protected,
   userFeedbackRouter.protected,
+  erfpachtRouter.protected,
   klantcontactRouter.protected
 );
 
@@ -165,18 +172,6 @@ attachDocumentDownloadRoute(
   BffEndpoints.LOODMETING_DOCUMENT_DOWNLOAD,
   fetchLoodMetingDocument
 );
-router.get(
-  BffEndpoints.ERFPACHT_DOSSIER_DETAILS,
-  async (req: Request<{ dossierId: string }>, res: ResponseAuthenticated) => {
-    const response = await fetchErfpachtDossiersDetail(
-      res.locals.authProfileAndToken,
-      req.params.dossierId
-    );
-
-    return sendResponse(res, response);
-  }
-);
-
 // Toeristische verhuur Bed and Breakfast
 attachDocumentDownloadRoute(
   router,

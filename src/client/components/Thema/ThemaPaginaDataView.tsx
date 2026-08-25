@@ -2,19 +2,22 @@ import type { ReactNode } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import type { ZaakAanvraagDetail } from '../../../universal/types/App.types.ts';
+import type {
+  LinkProps,
+  ZaakAanvraagDetail,
+} from '../../../universal/types/App.types.ts';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../apps/bob/config/app.ts';
+import { DataView } from '../DataView/DataView.tsx';
 import { LinkToListPage } from '../LinkToListPage/LinkToListPage.tsx';
 import { PageContentCell } from '../Page/Page.tsx';
 import type { DisplayProps } from '../Table/TableV2.tsx';
-import { TableV2 } from '../Table/TableV2.tsx';
 
 const DISPLAY_PROPS_DEFAULT: DisplayProps<{ title: string }> = {
   title: 'Titel',
 };
 const TEXT_NO_CONTENT_DEFAULT = 'Er zijn (nog) geen zaken gevonden.';
 
-interface ThemaPaginaTableProps<T> {
+interface ThemaPaginaDataViewProps<T> {
   className?: string;
   displayProps?: DisplayProps<T>;
   listPageRoute?: string;
@@ -28,7 +31,10 @@ interface ThemaPaginaTableProps<T> {
   zaken: T[];
 }
 
-export function ThemaPaginaTable<T extends object = ZaakAanvraagDetail>({
+export function ThemaPaginaDataView<
+  T extends { title?: string; link?: LinkProps; themaId?: string } =
+    ZaakAanvraagDetail,
+>({
   title = '',
   contentAfterTheTitle = '',
   zaken,
@@ -40,24 +46,24 @@ export function ThemaPaginaTable<T extends object = ZaakAanvraagDetail>({
   totalItems,
   listPageLinkLabel = 'Toon meer',
   listPageLinkTitle,
-}: ThemaPaginaTableProps<T>) {
+}: ThemaPaginaDataViewProps<T>) {
   const textNoContentDefault = title
     ? `U heeft (nog) geen ${title.toLowerCase()}`
     : TEXT_NO_CONTENT_DEFAULT;
 
   const hasListPage = !!listPageRoute && maxItems !== -1;
 
+  const zaken_ = hasListPage ? zaken.slice(0, maxItems) : zaken;
+
   return (
     <PageContentCell>
-      <TableV2
-        showTHead={!!zaken.length}
+      <DataView
+        items={zaken_}
         caption={title}
         contentAfterTheCaption={contentAfterTheTitle}
-        items={hasListPage ? zaken.slice(0, maxItems) : zaken}
         displayProps={displayProps}
         className={className}
       />
-
       {!zaken.length && (
         <Paragraph>{textNoContent ?? textNoContentDefault}</Paragraph>
       )}

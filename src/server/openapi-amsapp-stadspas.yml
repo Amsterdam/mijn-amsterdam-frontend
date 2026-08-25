@@ -8,7 +8,6 @@ info:
   contact:
     name: Mijn Amsterdam
     url: https://mijn.amsterdam.nl/
-    email: mijnAmsterdam@amsterdam.nl
 servers:
   - url: https://mijn.amsterdam.nl
   - url: https://az-acc.mijn.amsterdam.nl

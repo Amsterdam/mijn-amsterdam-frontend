@@ -17,6 +17,8 @@ export const featureToggle = {
   ['HLI.stadspas.securityCode']: true,
   ['HLI.stadspas.pcBudgetNormalization']: !IS_PRODUCTION,
   ['WMO.fetchWmo.addMaVoorzieningenApiProps']: !IS_PRODUCTION,
+  ['ERFPACHT.service']: !IS_PRODUCTION,
+  ['ERFPACHT.wijzigingsaanvragen']: !IS_PRODUCTION,
 };
 // globalThis is used to make sure featureToggles imported from frontend *-thema-configs have access.
 globalThis.MA_FEATURETOGGLES = featureToggle;

@@ -4,13 +4,13 @@ import mockdate from 'mockdate';
 import nock from 'nock';
 import { BrowserRouter } from 'react-router';
 
-import { AfspraakCard } from './AfspraakCard.tsx';
+import { AfspraakCard, AfspraakCardDashboard } from './AfspraakCard.tsx';
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
 
 const address = { street: 'Amstel', houseNumber: 1 };
 
 const afspraak: AfspraakFrontend = {
-  subject: 'Varen',
+  heading: 'Varen Afspraak',
   dateStart: '2020-01-17T17:50:00Z',
   dateEnd: '2020-01-17T18:20:00Z',
   dateStartFormatted: 'maandag 01 januari 2025',
@@ -38,16 +38,15 @@ const afspraak: AfspraakFrontend = {
   },
 };
 
-function renderAfspraakCard(
-  afspraak: AfspraakFrontend,
-  compact: boolean = false
-) {
-  return render(
-    <AfspraakCard afspraak={afspraak} compact={compact}></AfspraakCard>,
-    {
-      wrapper: BrowserRouter,
-    }
-  );
+function renderAfspraakCard(afspraak: AfspraakFrontend) {
+  return render(<AfspraakCard afspraak={afspraak} />, {
+    wrapper: BrowserRouter,
+  });
+}
+function renderAfspraakCardDashboard(afspraak: AfspraakFrontend) {
+  return render(<AfspraakCardDashboard afspraak={afspraak} />, {
+    wrapper: BrowserRouter,
+  });
 }
 
 function setupNockForLocationModal() {
@@ -75,9 +74,17 @@ describe('Renders afspraak data', () => {
     expect(screen.asFragment()).toMatchSnapshot();
   });
 
-  test('Compact variant', () => {
-    const screen = renderAfspraakCard(afspraak, true);
+  test('Dashboard variant', () => {
+    const screen = renderAfspraakCardDashboard(afspraak);
     expect(screen.asFragment()).toMatchSnapshot();
+  });
+
+  it('Displays the heading', () => {
+    const screen = renderAfspraakCard(afspraak);
+
+    expect(
+      screen.getByRole('heading', { name: afspraak.heading })
+    ).toBeInTheDocument();
   });
 
   test('Opens QR code modal', async () => {
@@ -86,6 +93,7 @@ describe('Renders afspraak data', () => {
     const button = screen.getByRole('button', {
       name: /Toon QR code/i,
     });
+
     await user.click(button);
     expect(
       screen.getByText(/QR code - Stadsloket Centrum/i)
@@ -97,7 +105,7 @@ describe('Renders afspraak data', () => {
     const screen = renderAfspraakCard(afspraak);
     const user = userEvent.setup();
     const button = screen.getByRole('button', {
-      name: /Toon op kaart/i,
+      name: /Stadsloket Centrum, Amstel 1/i,
     });
     await user.click(button);
     expect(
@@ -115,9 +123,8 @@ describe('Renders afspraak data', () => {
     };
     const screen = renderAfspraakCard(afspraakWithoutStreet);
     const button = screen.queryByRole('button', {
-      name: /Toon op kaart/i,
+      name: /Stadsloket Centrum, Amstel 1/i,
     });
     expect(button).not.toBeInTheDocument();
-    expect(screen.getByText(`Locatie: Stadsloket Centrum`)).toBeInTheDocument();
   });
 });

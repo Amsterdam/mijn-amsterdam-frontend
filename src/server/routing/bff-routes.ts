@@ -21,6 +21,10 @@ export const BffEndpoints = {
 
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
 
+  // Shared document endpoints (provider is selected through encrypted payload)
+  SHARED_DOCUMENTS_LIST: '/services/documents/list',
+  SHARED_DOCUMENTS_DOWNLOAD: '/services/documents/download',
+
   // Decos (Vergunningen, Horeca, Parkeren en Toeristische verhuur)
   DECOS_DOCUMENTS_LIST: `/services/decos/documents`,
   DECOS_DOCUMENT_DOWNLOAD: '/services/decos/documents/download',
@@ -34,9 +38,6 @@ export const BffEndpoints = {
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',
   LEGACY_LOGIN_API1_LOGIN: '/api1/login',
-
-  // ErfpachtV2
-  ERFPACHT_DOSSIER_DETAILS: '/services/erfpacht/dossier/:dossierId',
 
   // Powerbrowser (ToeristischeVerhuur->Bed&Breakfast)
   POWERBROWSER_DOCUMENT_DOWNLOAD: `/services/${hash('powerbrowser')}/documents/download`,

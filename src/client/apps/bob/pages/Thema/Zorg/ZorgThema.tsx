@@ -63,7 +63,7 @@ export function ZorgThema() {
       { title, displayProps, textNoContent, filter, maxItems, listPageRoute },
     ]) => {
       return (
-        <ThemaPaginaTable<WMOVoorzieningFrontend>
+        <ThemaPaginaDataView<WMOVoorzieningFrontend>
           key={kind}
           title={title}
           zaken={voorzieningen.filter(filter)}

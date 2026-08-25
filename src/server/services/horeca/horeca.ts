@@ -25,17 +25,11 @@ export async function fetchHorecaVergunningen(
   if (response.status === 'OK') {
     const decosZaken = response.content;
     const zakenFrontend: HorecaVergunningFrontend[] = decosZaken.map((zaak) => {
-      const zaakTransformed = transformDecosZaakFrontend(
-        authProfileAndToken.profile.sid,
-        zaak,
-        {
-          detailPageRoute: themaConfig.detailPage.route.path,
-          includeFetchDocumentsUrl: true,
-          getStepsFN: getStatusStepsDecos,
-        }
-      );
-
-      return zaakTransformed;
+      return transformDecosZaakFrontend(authProfileAndToken.profile.sid, zaak, {
+        detailPageRoute: themaConfig.detailPage.route.path,
+        createFetchDocumentsListUrl,
+        getStepsFN: getStatusStepsDecos,
+      });
     });
 
     return apiSuccessResult(zakenFrontend);

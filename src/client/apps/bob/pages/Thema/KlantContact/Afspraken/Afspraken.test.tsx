@@ -22,7 +22,7 @@ function createAfspraak(index: number): AfspraakFrontend {
     },
     qrCode: `qr-${index}`,
     status: 'New',
-    subject: `Afspraak ${index}`,
+    heading: `Afspraak ${index}`,
     link: {
       to: `/afspraak/ref-${index}`,
       title: 'Bekijk afspraak',
@@ -63,25 +63,6 @@ describe('Afspraken', () => {
     ).toBeInTheDocument();
   });
 
-  test('renders only maxAmountAfspraakDisplayed afspraken and shows link to list page', () => {
-    const afspraken = [createAfspraak(1), createAfspraak(2), createAfspraak(3)];
-    const screen = render(
-      <Afspraken afspraken={afspraken} maxItems={2} isLoading={false} />,
-      {
-        wrapper: BrowserRouter,
-      }
-    );
-
-    expect(screen.getByText('Afspraak 1')).toBeInTheDocument();
-    expect(screen.getByText('Afspraak 2')).toBeInTheDocument();
-    expect(screen.queryByText('Afspraak 3')).not.toBeInTheDocument();
-
-    const listLink = screen.getByRole('link', {
-      name: 'Bekijk uw 3 afspraken',
-    });
-    expect(listLink).toHaveAttribute('href', '/mijn-contact/afspraken');
-  });
-
   test('renders amount of afspraken based on thema config', () => {
     const afspraken = [
       createAfspraak(1),
@@ -110,7 +91,7 @@ describe('Afspraken', () => {
   test('does not show link to list page when count is not above threshold', () => {
     const afspraken = [createAfspraak(1), createAfspraak(2)];
     const screen = render(
-      <Afspraken afspraken={afspraken} maxItems={2} isLoading={false} />,
+      <Afspraken afspraken={afspraken} isLoading={false} />,
       {
         wrapper: BrowserRouter,
       }
@@ -121,25 +102,5 @@ describe('Afspraken', () => {
         name: 'Bekijk uw 2 afspraken',
       })
     ).not.toBeInTheDocument();
-  });
-
-  test('does show link to list page when count is not above threshold, but compactmodus is true', () => {
-    const afspraken = [createAfspraak(1)];
-    const screen = render(
-      <Afspraken
-        afspraken={afspraken}
-        maxItems={1}
-        isLoading={false}
-        compact={true}
-      />,
-      {
-        wrapper: BrowserRouter,
-      }
-    );
-
-    const listLink = screen.getByRole('link', {
-      name: 'Bekijk uw 1 afspraak',
-    });
-    expect(listLink).toHaveAttribute('href', '/mijn-contact/afspraken');
   });
 });
