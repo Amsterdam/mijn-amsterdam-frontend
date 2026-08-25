@@ -25,7 +25,6 @@ interface DocumentLinkProps {
 function downloadFile(document: GenericDocument) {
   const link = window.document.createElement('a');
   link.href = document.url;
-  link.target = '_blank';
   link.download = getDownloadName(document);
   link.click();
 }
