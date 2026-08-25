@@ -47,7 +47,7 @@ function executeHandler(
   const delayMs = handler.delayMs ?? 0;
   const delayed = delayMs > 0;
 
-  logger.debug(
+  logger.info(
     {
       routeId: route.id,
       method: req.method,
