@@ -1,4 +1,12 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import {
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+} from 'vitest';
 
 const OPS_DECOS_FEATURE_FLAG = 'OPS.DECOS';
 const FEATURE_FLAG_OVERRIDE_KEY = 'AFIS.EMandates';
@@ -171,5 +179,53 @@ describe('startAppConfiguration OPS behavior', () => {
     expect(appConfig.isEnabled(FEATURE_FLAG_DEFAULT_ONLY_KEY as never)).toBe(
       false
     );
+  });
+});
+
+describe('forTesting.isOpsEnabled_', () => {
+  let isOpsEnabledForTesting: (
+    toggleKey: string,
+    toggles: Record<string, boolean>
+  ) => boolean;
+
+  beforeAll(async () => {
+    const { forTesting } = await import('./azure-appconfiguration.ts');
+    isOpsEnabledForTesting = forTesting.isOpsEnabled_;
+  });
+
+  it('returns false when the exact key is disabled', () => {
+    expect(
+      isOpsEnabledForTesting('OPS.HORECA.DECOS.documents', {
+        'OPS.HORECA.DECOS.documents': false,
+      })
+    ).toBe(false);
+  });
+
+  it('returns true when all are enabled', () => {
+    expect(
+      isOpsEnabledForTesting('OPS.HORECA.DECOS.documents', {
+        'OPS.HORECA.DECOS.documents': true,
+        'OPS.HORECA.DECOS': true,
+        'OPS.HORECA': true,
+      })
+    ).toBe(true);
+  });
+
+  it('returns false when a parent key is disabled', () => {
+    expect(
+      isOpsEnabledForTesting('OPS.HORECA.DECOS.documents', {
+        'OPS.HORECA.DECOS.documents': true,
+        'OPS.HORECA.DECOS': true,
+        'OPS.HORECA': false,
+      })
+    ).toBe(false);
+  });
+
+  it('returns true when missing keys are undefined and no checked key is false', () => {
+    expect(
+      isOpsEnabledForTesting('OPS.HORECA.DECOS.documents', {
+        'OPS.HORECA.DECOS.documents': true,
+      })
+    ).toBe(true);
   });
 });
