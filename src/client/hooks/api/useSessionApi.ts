@@ -32,7 +32,12 @@ export function useSessionApi() {
     const checkAway = () => {
       if (document.body.classList.contains('is-away')) {
         document.body.classList.remove('is-away');
-        fetch();
+        // Fetching immediately causes Safari IOS to block the request when coming back (focus) from a download dialog.
+        // This causes the user to appear logged out, even though the session is still valid.
+        // Delaying the fetch with a setTimeout somehow prevents this from happening.
+        setTimeout(() => {
+          fetch();
+        }, 0);
       }
     };
 
