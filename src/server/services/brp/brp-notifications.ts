@@ -1,7 +1,7 @@
 import { ADRES_IN_ONDERZOEK_A } from './brp-config.ts';
 import type { BrpFrontend } from './brp-types.ts';
 import { fetchBrpByBsnTransformed } from './brp.ts';
-import { themaConfig } from '../../../client/pages/Thema/Profile/Profile-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Profile/Profile-thema-config.ts';
 import {
   apiSuccessResult,
   apiDependencyError,

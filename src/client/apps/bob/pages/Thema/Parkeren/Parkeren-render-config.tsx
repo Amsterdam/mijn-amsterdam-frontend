@@ -1,0 +1,53 @@
+import { CarIcon } from '@amsterdam/design-system-react-icons';
+
+import { themaConfig } from './Parkeren-thema-config.ts';
+import { ParkerenDetail } from './ParkerenDetail.tsx';
+import { ParkerenList } from './ParkerenList.tsx';
+import { ParkerenThema } from './ParkerenThema.tsx';
+import { isLoading } from '../../../../../../universal/helpers/api.ts';
+import { type AppState } from '../../../../../../universal/types/App.types.ts';
+import {
+  type ThemaMenuItem,
+  type ThemaRenderRouteConfig,
+} from '../../../../../../universal/types/thema-types.ts';
+
+export const ParkerenRoutes = [
+  {
+    route: themaConfig.detailPage.route.path,
+    Component: ParkerenDetail,
+    isActive: themaConfig.featureToggle.active,
+  },
+  {
+    route: themaConfig.listPage.route.path,
+    Component: ParkerenList,
+    isActive: themaConfig.featureToggle.active,
+  },
+  {
+    route: themaConfig.route.path,
+    Component: ParkerenThema,
+    isActive: themaConfig.featureToggle.active,
+  },
+] as const satisfies readonly ThemaRenderRouteConfig[];
+
+export const menuItem: ThemaMenuItem = {
+  title: themaConfig.title,
+  id: themaConfig.id,
+  to: (appState: AppState) => {
+    const hasDecosParkeerVergunningen =
+      !!appState.PARKEREN?.content?.vergunningen?.length;
+    const urlExternal = appState.PARKEREN?.content?.url ?? '/';
+    return hasDecosParkeerVergunningen ? themaConfig.route.path : urlExternal;
+  },
+  profileTypes: themaConfig.profileTypes,
+  redactedScope: themaConfig.redactedScope,
+  isActive(appState) {
+    const hasDecosParkeerVergunningen =
+      !!appState.PARKEREN?.content?.vergunningen?.length;
+    return (
+      themaConfig.featureToggle.active &&
+      !isLoading(appState.PARKEREN) &&
+      (!!appState.PARKEREN?.content?.isKnown || hasDecosParkeerVergunningen)
+    );
+  },
+  IconSVG: CarIcon,
+};

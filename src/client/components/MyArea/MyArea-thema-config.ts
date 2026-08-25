@@ -1,4 +1,4 @@
-import type { ThemaRoutesConfig } from '../../config/thema-types.ts';
+import type { ThemaRoutesConfig } from '../../../universal/types/thema-types.ts';
 
 export const themaId = 'BUURT' as const;
 

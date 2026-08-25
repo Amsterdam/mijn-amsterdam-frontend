@@ -15,7 +15,7 @@ import {
 } from './status-line-items/regeling-pcvergoeding.ts';
 import { REGELING_PERIODIEK } from './status-line-items/regeling-periodiek.ts';
 import { REGELING } from './status-line-items/regeling.ts';
-import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/HLI/HLI-thema-config.ts';
 
 export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
   ZorgnedHLIRegeling | ZorgnedAanvraagWithRelatedPersonsTransformed

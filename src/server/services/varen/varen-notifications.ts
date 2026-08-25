@@ -7,7 +7,7 @@ import type {
   VarenVergunningFrontend,
 } from './config-and-types.ts';
 import { fetchVaren } from './varen.ts';
-import { themaConfig } from '../../../client/pages/Thema/Varen/Varen-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Varen/Varen-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,

@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router';
 
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app.ts';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../apps/bob/config/app.ts';
 import { MaRouterLink } from '../MaLink/MaLink.tsx';
 
 interface LinkToListPageProps {

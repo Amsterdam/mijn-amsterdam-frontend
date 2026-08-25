@@ -3,7 +3,7 @@ import { afterEach, describe, expect, vi } from 'vitest';
 
 import { fetchAllKlachten, fetchKlachtenNotifications } from './klachten.ts';
 import type { SmileKlacht, SmileKlachtenReponse } from './types.ts';
-import { themaConfig } from '../../../client/pages/Thema/Klachten/Klachten-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Klachten/Klachten-thema-config.ts';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import { ApiConfig } from '../../config/source-api.ts';
 

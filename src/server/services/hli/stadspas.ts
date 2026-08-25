@@ -19,7 +19,7 @@ import {
   type PasblokkadeByPasnummer,
   type StadspasResponseFrontend,
 } from './stadspas-types.ts';
-import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/HLI/HLI-thema-config.ts';
 import {
   apiErrorResult,
   apiSuccessResult,

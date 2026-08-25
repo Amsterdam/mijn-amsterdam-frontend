@@ -1,0 +1,129 @@
+import { Paragraph, Link, Heading } from '@amsterdam/design-system-react';
+
+import {
+  filterErfpachtFacturen,
+  mapErfpachtFacturen,
+} from './Erfpacht-helpers.tsx';
+import { useErfpachtThemaData } from './useErfpachtThemaData.hook.ts';
+import type { ErfpachtDossierFrontend } from '../../../../../../server/services/erfpacht/erfpacht-types.ts';
+import { entries } from '../../../../../../universal/helpers/utils.ts';
+import { MaRouterLink } from '../../../../../components/MaLink/MaLink.tsx';
+import { PageContentCell } from '../../../../../components/Page/Page.tsx';
+import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
+import { ThemaPaginaTable } from '../../../../../components/Thema/ThemaPaginaTable.tsx';
+import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import * as afis from '../Afis/Afis-thema-config.ts';
+import { AfisFacturenTables } from '../Afis/AfisFacturenTables.tsx';
+
+export function ErfpachtThema() {
+  const {
+    themaId,
+    title,
+    isError,
+    isLoading,
+    tableConfig,
+    dossiers,
+    erfpachtFacturenTableConfig,
+    themaConfig,
+  } = useErfpachtThemaData();
+
+  useHTMLDocumentTitle(themaConfig.route);
+
+  const pageContentTables = tableConfig
+    ? entries(tableConfig).map(
+        ([kind, { title, displayProps, listPageRoute, maxItems }]) => {
+          return (
+            <ThemaPaginaTable<ErfpachtDossierFrontend>
+              key={kind}
+              title={title}
+              zaken={dossiers}
+              displayProps={displayProps}
+              maxItems={maxItems}
+              listPageRoute={listPageRoute}
+            />
+          );
+        }
+      )
+    : [];
+
+  return (
+    <ThemaPagina
+      id={themaId}
+      title={title}
+      isLoading={isLoading}
+      isError={isError}
+      pageLinks={themaConfig.pageLinks}
+      maintenanceNotificationsPageSlug="erfpacht"
+      pageContentTop={
+        <>
+          <PageContentCell spanWide={8}>
+            <Paragraph>
+              Hieronder ziet u de gegevens van uw erfpachtrechten. Wij
+              vernieuwen dit portaal. Daarom kunt u op dit moment de status van
+              uw wijzigingsaanvraag helaas niet inzien. Als u een
+              ontvangstbevestiging van ons heeft gehad, kunt u ervan uitgaan dat
+              wij uw aanvraag hebben ontvangen. Heeft u een toch nog een vraag,
+              stuur dan een e-mail naar{' '}
+              <Link rel="noreferrer" href="mailto:erfpacht@amsterdam.nl">
+                erfpacht@amsterdam.nl
+              </Link>
+              .
+            </Paragraph>
+          </PageContentCell>
+        </>
+      }
+      pageContentMain={
+        <>
+          {pageContentTables}
+          <AfisFacturenTables
+            themaContextParams={{
+              tableConfig: erfpachtFacturenTableConfig,
+              routeConfigDetailPage: themaConfig.detailPageFactuur.route,
+              routeConfigListPage: themaConfig.listPageFacturen.route,
+              themaId,
+              states: ['open'],
+              factuurFilterFn: filterErfpachtFacturen,
+              factuurMapFn: mapErfpachtFacturen,
+            }}
+          />
+          <PageContentCell spanWide={8}>
+            <MissingFacturenDescription />
+          </PageContentCell>
+        </>
+      }
+    />
+  );
+}
+
+function MissingFacturenDescription() {
+  return (
+    <>
+      <Heading level={3}>Andere erfpachtfacturen</Heading>
+      <Paragraph className="ams-mb-m">
+        Zoekt u een andere factuur? Kijk dan bij{' '}
+        <MaRouterLink href={afis.themaConfig.route.path}>
+          {afis.themaConfig.title}
+        </MaRouterLink>
+        .
+      </Paragraph>
+      <Heading level={4}>Factuur naar ander adres</Heading>
+      <Paragraph className="ams-mb-m">
+        Facturen sturen wij altijd naar het adres waar u ingeschreven staat in
+        de Basis Registratie Personen (BRP). Het is niet mogelijk dit aan te
+        passen.
+      </Paragraph>
+      <Heading level={4}>U woont of verhuist naar het buitenland</Heading>
+      <Paragraph>
+        Geef bij een verhuizing naar het buitenland altijd uw nieuwe woonadres
+        aan ons door. Stuur daarvoor een e-mail naar{' '}
+        <Link
+          rel="noreferrer"
+          href="mailto:debiteurenadministratie@amsterdam.nl"
+        >
+          debiteurenadministratie@amsterdam.nl
+        </Link>
+        . Zet hierin altijd uw debiteurennummer.
+      </Paragraph>
+    </>
+  );
+}

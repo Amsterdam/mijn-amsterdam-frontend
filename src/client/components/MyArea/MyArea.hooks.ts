@@ -25,8 +25,8 @@ import {
 } from '../../../universal/config/myarea-datasets.ts';
 import type { LatLngWithAddress } from '../../../universal/helpers/bag.ts';
 import { getFullAddress } from '../../../universal/helpers/brp.ts';
-import { BFFApiUrls } from '../../config/api.ts';
-import { DEFAULT_MAP_OPTIONS } from '../../config/map.ts';
+import { BFFApiUrls } from '../../apps/bob/config/api.ts';
+import { DEFAULT_MAP_OPTIONS } from '../../apps/bob/config/map.ts';
 import { captureMessage } from '../../helpers/monitoring.ts';
 import {
   isAborted,

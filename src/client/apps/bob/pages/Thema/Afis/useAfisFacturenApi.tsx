@@ -1,0 +1,172 @@
+import { type ReactNode, useMemo } from 'react';
+
+import {
+  type AfisFacturenByStateFrontend,
+  type AfisFactuurFrontend,
+} from './Afis-thema-config.ts';
+import type {
+  AfisThemaResponse,
+  AfisFactuurState,
+  AfisFacturenResponse,
+  AfisFactuurStateFrontend,
+  AfisFacturenOverviewResponse,
+  AfisFactuur,
+} from '../../../../../../server/services/afis/afis-types.ts';
+import { capitalizeFirstLetter } from '../../../../../../universal/helpers/text.ts';
+import { entries, omit } from '../../../../../../universal/helpers/utils.ts';
+import { DocumentLink } from '../../../../../components/DocumentList/DocumentLink.tsx';
+import {
+  MaLink,
+  MaRouterLink,
+} from '../../../../../components/MaLink/MaLink.tsx';
+import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../../../helpers/api.ts';
+import { parseHTML } from '../../../../../helpers/html-react-parse.tsx';
+import { useBffApi } from '../../../../../hooks/api/useBffApi.ts';
+
+// A very basic helper that performs a simple check to see if the text contains HTML tags.
+// Some of the status descriptions may contain HTML tags that need to be rendered as React components.
+function parseStatusDescriptionIfHtmlEncountered(text: string): ReactNode {
+  if (/<[a-z][\s\S]*>/i.test(text)) {
+    return parseHTML(text);
+  }
+  return text;
+}
+
+function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
+  switch (true) {
+    case factuur.status === 'openstaand' && !!factuur.paylink:
+      return (
+        <>
+          {capitalizeFirstLetter(factuur.status)}:&nbsp;
+          <MaLink
+            maVariant="fatNoUnderline"
+            target="_blank"
+            href={factuur.paylink}
+          >
+            {parseStatusDescriptionIfHtmlEncountered(factuur.statusDescription)}
+          </MaLink>
+        </>
+      );
+    default:
+      return parseStatusDescriptionIfHtmlEncountered(factuur.statusDescription);
+  }
+}
+
+export function getDocumentLink(factuur: AfisFactuurFrontend): ReactNode {
+  if (factuur.documentDownloadLink) {
+    return (
+      <DocumentLink
+        document={{
+          id: factuur.factuurNummer,
+          datePublished: factuur.datePublished ?? '',
+          url: factuur.documentDownloadLink,
+          title: `factuur ${factuur.factuurNummer}`,
+        }}
+      />
+    );
+  }
+  return null;
+}
+
+export function getFactuurNummerLink(
+  factuur: Pick<AfisFactuur, 'factuurNummer' | 'link'>,
+  to?: string
+): ReactNode {
+  return (
+    <MaRouterLink
+      maVariant="fatNoDefaultUnderline"
+      href={to ?? factuur.link.to}
+    >
+      {factuur.factuurNummer}
+    </MaRouterLink>
+  );
+}
+
+function transformFactuur(factuur: AfisFactuur): AfisFactuurFrontend {
+  const factuurNummerEl: ReactNode = getFactuurNummerLink(factuur);
+
+  return {
+    ...factuur,
+    statusDescription: getInvoiceStatusDescriptionFrontend(factuur),
+    factuurNummerEl,
+  };
+}
+
+export function useTransformFacturen(
+  facturenByState: Partial<AfisFacturenOverviewResponse> | null
+): AfisFacturenByStateFrontend | null {
+  const facturenByStateTransformed: AfisFacturenByStateFrontend | null =
+    useMemo(() => {
+      if (facturenByState) {
+        return Object.fromEntries(
+          entries(facturenByState)
+            .filter(
+              (
+                state
+              ): state is [AfisFactuurStateFrontend, AfisFacturenResponse] => {
+                const [_state, _facturenResponse] = state;
+                return _facturenResponse != null;
+              }
+            )
+            .map(([state, facturenResponse]) => [
+              state,
+              {
+                ...omit(facturenResponse, ['facturen']),
+                facturen:
+                  facturenResponse?.facturen?.map((factuur) =>
+                    transformFactuur(factuur)
+                  ) ?? [],
+              },
+            ])
+        );
+      }
+      return null;
+    }, [facturenByState]);
+
+  return facturenByStateTransformed;
+}
+
+/**
+ * Uses /overview endpoint for Open and Overview facturen (All the Open facuren are loaded with this endpoint)
+ * Uses /facturen/(afgehandeld|overgedragen) for the facturen with this state.
+ */
+
+export function useAfisFacturenApi(
+  businessPartnerIdEncrypted:
+    | AfisThemaResponse['businessPartnerIdEncrypted']
+    | undefined,
+  state: AfisFactuurState
+) {
+  const url =
+    businessPartnerIdEncrypted && state && state !== 'open'
+      ? generateBffApiUrlWithEncryptedPayloadQuery(
+          'AFIS_FACTUREN',
+          businessPartnerIdEncrypted,
+          {
+            state,
+          },
+          'id'
+        )
+      : null;
+
+  const { data, isError, isLoading } = useBffApi<AfisFacturenResponse>(url);
+  const facturenResponse = data?.content ?? null;
+  const facturenByStateApiUpdated = useTransformFacturen(
+    facturenResponse
+      ? {
+          [facturenResponse.state]: facturenResponse,
+        }
+      : null
+  );
+
+  return {
+    facturenByState: facturenByStateApiUpdated,
+    isLoading,
+    isError,
+  } as const;
+}
+
+export const forTesting = {
+  getInvoiceStatusDescriptionFrontend,
+  transformFactuur,
+};

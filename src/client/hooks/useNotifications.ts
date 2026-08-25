@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { useAppStateStore } from './useAppStateStore.ts';
 import type { MyNotification } from '../../universal/types/App.types.ts';
-import { WelcomeNotification } from '../config/staticData.tsx';
+import { WelcomeNotification } from '../apps/bob/config/staticData.tsx';
 import { getRedactedClass } from '../helpers/cobrowse.ts';
 
 export function useAppStateNotifications(top?: number) {

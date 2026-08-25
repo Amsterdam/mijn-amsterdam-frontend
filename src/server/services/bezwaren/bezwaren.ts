@@ -17,7 +17,7 @@ import type {
   OctopusApiResponse,
   kenmerkKey,
 } from './types.ts';
-import { themaConfig } from '../../../client/pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,

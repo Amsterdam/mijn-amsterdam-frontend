@@ -52,7 +52,7 @@ import {
   type EMandateUpdatePayload,
   type EMandateSignRequestStatusPayload,
 } from './afis-types.ts';
-import { themaConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
 import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
 import {
   apiErrorResult,

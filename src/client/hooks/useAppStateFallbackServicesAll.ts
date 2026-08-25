@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 
 import type { AppState } from '../../universal/types/App.types.ts';
-import { createAllErrorState } from '../AppState.ts';
+import { createAllErrorState } from '../apps/bob/AppState.ts';
 import { useAppStateStore } from './useAppStateStore.ts';
-import { BFFApiUrls } from '../config/api.ts';
-import { transformSourceData } from '../data-transform/appState.tsx';
+import { BFFApiUrls } from '../apps/bob/config/api.ts';
+import { transformSourceData } from '../apps/bob/data-transform/appState.tsx';
 import { captureMessage } from '../helpers/monitoring.ts';
 import { useBffApi } from './api/useBffApi.ts';
 

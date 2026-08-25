@@ -21,7 +21,7 @@ import type {
 import {
   themaId,
   themaTitle,
-} from '../../../client/pages/MyNotifications/MyNotifications-config.ts';
+} from '../../../client/apps/bob/pages/MyNotifications/MyNotifications-config.ts';
 import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
   apiSuccessResult,

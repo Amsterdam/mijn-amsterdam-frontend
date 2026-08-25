@@ -5,8 +5,8 @@ import classnames from 'classnames';
 
 import styles from './ErrorMessages.module.scss';
 import type { ApiError } from '../../../universal/types/App.types.ts';
-import { ALL_ERROR_STATE_KEY } from '../../AppState.ts';
-import { getApiErrors, LOGOUT_URL } from '../../config/api.ts';
+import { ALL_ERROR_STATE_KEY } from '../../apps/bob/AppState.ts';
+import { getApiErrors, LOGOUT_URL } from '../../apps/bob/config/api.ts';
 import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
 import { Modal } from '../Modal/Modal.tsx';
 

@@ -3,9 +3,9 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 
 import { removeLocalStorageKey, useLocalStorage } from './storage.hook.ts';
-import { isPrivateRoute } from '../App.routes.tsx';
-import { BffErrorRoutes } from '../pages/BffError/BffError-routes.ts';
-import { dashboardMenuItem } from '../pages/Dashboard/Dashboard-routes.ts';
+import { isPrivateRoute } from '../apps/bob/App.routes.tsx';
+import { BffErrorRoutes } from '../apps/bob/pages/BffError/BffError-routes.ts';
+import { dashboardMenuItem } from '../apps/bob/pages/Dashboard/Dashboard-routes.ts';
 
 export const ROUTE_ENTRY_KEY = 'RouteEntry';
 

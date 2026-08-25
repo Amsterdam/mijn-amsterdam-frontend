@@ -7,7 +7,7 @@ import type {
   ActivePermitSourceResponse,
   ClientProductDetailsSourceResponse,
 } from './config-and-types.ts';
-import { themaConfig } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Parkeren/Parkeren-thema-config.ts';
 import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { ONE_HOUR_MS, ONE_SECOND_MS } from '../../config/app.ts';

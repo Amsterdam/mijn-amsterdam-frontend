@@ -3,7 +3,7 @@ import {
   getVergunningCTALinks,
   type CaseType,
 } from './vergunningen-notifications-config.ts';
-import { dateTimeEndFormatted } from '../../../client/pages/Thema/Vergunningen/Vergunningen-helpers.ts';
+import { dateTimeEndFormatted } from '../../../client/apps/bob/pages/Thema/Vergunningen/Vergunningen-helpers.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 import { MA_VERLEEND_DECISIONS_COMMOM } from '../decos/decos-field-transformers.ts';
 import { getWorkflowStatusDate } from '../decos/decos-helpers.ts';

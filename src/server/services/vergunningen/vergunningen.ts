@@ -9,7 +9,7 @@ import { getStatusStepsDecos as getStatusStepsDefault } from './decos-status-ste
 import { decosZaakTransformers } from './decos-zaken.ts';
 import { getStatusStepsPB } from './pb-status-steps.ts';
 import { pbZaakTransformers } from './pb-zaken.ts';
-import { themaConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
   apiErrorResult,

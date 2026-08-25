@@ -3,11 +3,11 @@ import { useMemo } from 'react';
 import { useAppStateReady } from './useAppStateStore.ts';
 import { useProfileTypeValue } from './useProfileType.ts';
 import { sortAlpha } from '../../universal/helpers/utils.ts';
-import { useThemasByProfileType } from '../config/menuItems.ts';
-import type { ThemaMenuItemTransformed } from '../config/thema-types.ts';
-import { myThemasMenuItems } from '../config/thema.ts';
-import { themaConfig as klantContactThemaConfig } from '../pages/Thema/KlantContact/KlantContact-thema-config.ts';
-import { themaConfig as profileThemaConfig } from '../pages/Thema/Profile/Profile-thema-config.ts';
+import { useThemasByProfileType } from '../apps/bob/config/menuItems.ts';
+import type { ThemaMenuItemTransformed } from '../../universal/types/thema-types.ts';
+import { myThemasMenuItems } from '../apps/bob/config/thema.ts';
+import { themaConfig as klantContactThemaConfig } from '../apps/bob/pages/Thema/KlantContact/KlantContact-thema-config.ts';
+import { themaConfig as profileThemaConfig } from '../apps/bob/pages/Thema/Profile/Profile-thema-config.ts';
 export interface ThemasState {
   items: ThemaMenuItemTransformed[];
   isLoading: boolean;

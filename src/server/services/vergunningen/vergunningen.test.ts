@@ -3,7 +3,7 @@ import { describe, it, expect, vi, type Mock } from 'vitest';
 import type { DecosVergunning } from './config-and-types.ts';
 import { getStatusStepsDecos } from './decos-status-steps.ts';
 import { fetchVergunningen } from './vergunningen.ts';
-import { themaConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
 import {

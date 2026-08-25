@@ -6,7 +6,7 @@ import type {
   LVVRegistratie,
   ToeristischeVerhuurVergunning,
 } from './toeristische-verhuur.types.ts';
-import { themaConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import { dateFormat, isDateInPast } from '../../../universal/helpers/date.ts';
 import { isRecentNotification } from '../../../universal/helpers/date.ts';

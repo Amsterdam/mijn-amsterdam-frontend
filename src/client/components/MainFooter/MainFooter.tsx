@@ -14,10 +14,10 @@ import type {
   CMSFooter,
   CMSFooterSection,
 } from '../../../server/services/cms/cms-content.ts';
-import { BFF_API_BASE_URL } from '../../config/api.ts';
+import { BFF_API_BASE_URL } from '../../apps/config.ts';
 import { useBffApi } from '../../hooks/api/useBffApi.ts';
-import { useCanonmatigingFooterLink } from '../../pages/Thema/Erfpacht/Erfpacht-render-config.tsx';
-import { themaConfig } from '../../pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
+import { useCanonmatigingFooterLink } from '../../apps/bob/pages/Thema/Erfpacht/Erfpacht-render-config.tsx';
+import { themaConfig } from '../../apps/bob/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
 
 function useCustomFooterSections(
   sections: CMSFooterSection[],

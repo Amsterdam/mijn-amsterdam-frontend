@@ -8,7 +8,7 @@ import {
   SVWI_ROUTE_DEFAULT,
   themaId,
   themaTitle,
-} from '../../../client/pages/Thema/Svwi/Svwi-thema-config.ts';
+} from '../../../client/apps/bob/pages/Thema/Svwi/Svwi-thema-config.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getFromEnv } from '../../helpers/env.ts';

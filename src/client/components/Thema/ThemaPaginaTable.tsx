@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 
 import type { ZaakAanvraagDetail } from '../../../universal/types/App.types.ts';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app.ts';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../apps/bob/config/app.ts';
 import { LinkToListPage } from '../LinkToListPage/LinkToListPage.tsx';
 import { PageContentCell } from '../Page/Page.tsx';
 import type { DisplayProps } from '../Table/TableV2.tsx';

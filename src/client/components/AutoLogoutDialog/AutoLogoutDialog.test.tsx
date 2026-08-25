@@ -13,8 +13,8 @@ const mocks = vi.hoisted(() => {
 
 vi.mock('../../hooks/api/useSessionApi', async (importOriginal) => ({
   ...(await importOriginal()),
-  useLogout() {
-    return mocks.logout;
+  useLogout(url: string) {
+    return mocks.logout(url);
   },
 }));
 

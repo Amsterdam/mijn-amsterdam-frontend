@@ -2,7 +2,7 @@ import FormData from 'form-data';
 import { generatePath } from 'react-router';
 import UID from 'uid-safe';
 
-import { themaConfig } from '../../../client/pages/Thema/Klachten/Klachten-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Klachten/Klachten-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,

@@ -1,0 +1,286 @@
+import { type ReactNode } from 'react';
+
+import { generatePath, type Params } from 'react-router';
+
+import type {
+  AfisBusinessPartnerDetailsTransformed,
+  AfisEMandateFrontend,
+  AfisFacturenResponse,
+  AfisFactuur,
+  AfisFactuurStateFrontend,
+  AfisFactuurTermijn,
+  EmandateStatusCode,
+} from '../../../../../../server/services/afis/afis-types.ts';
+import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
+import {
+  isEnabled,
+  propagateFeatureToggles,
+} from '../../../config/feature-toggles.ts';
+import type {
+  PageConfig,
+  ThemaConfigBase,
+  WithDetailPage,
+  WithListPage,
+} from '../../../../../../universal/types/thema-types.ts';
+
+const THEMA_ID = 'AFIS';
+const THEMA_TITLE = 'Facturen en betalen';
+
+type WithBetaalVoorkeurenPage = PageConfig<'betaalVoorkeurenPage'>;
+type WithEmandatenPage = PageConfig<'detailEMandatePage'>;
+
+type AfisThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
+  WithListPage &
+  WithDetailPage &
+  WithBetaalVoorkeurenPage &
+  WithEmandatenPage;
+
+export const themaConfig = {
+  id: THEMA_ID,
+  title: THEMA_TITLE,
+  redactedScope: 'full',
+  profileTypes: ['private', 'commercial'],
+  pageLinks: [
+    {
+      to: 'https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa',
+      title: 'Meer over betalen aan de gemeente',
+    },
+  ],
+  route: {
+    path: '/facturen-en-betalen',
+    documentTitle: `${THEMA_TITLE} | overzicht`,
+    trackingUrl: null,
+  },
+  uitlegPageSections: [
+    {
+      title: THEMA_TITLE,
+      listItems: ['Overzicht van facturen', 'Betalen van facturen'],
+    },
+  ],
+  featureToggle: propagateFeatureToggles({
+    active: true,
+    emandates: { active: isEnabled('AFIS.EMandates') },
+  }),
+
+  listPage: {
+    route: {
+      path: '/facturen-en-betalen/facturen/lijst/:state/:page?',
+      documentTitle: getAfisListPageDocumentTitle,
+      trackingUrl: null,
+    },
+  },
+  detailPage: {
+    route: {
+      path: '/facturen-en-betalen/factuur/:state/:factuurNummer',
+      documentTitle: `Factuurgegevens | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
+  betaalVoorkeurenPage: {
+    route: {
+      path: '/facturen-en-betalen/betaalvoorkeuren',
+      documentTitle: `Betaalvoorkeuren | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
+  detailEMandatePage: {
+    route: {
+      path: '/facturen-en-betalen/betaalvoorkeuren/emandate/:id',
+      documentTitle: `Incassomachtiging | ${THEMA_TITLE}`,
+      trackingUrl: null,
+    },
+  },
+} as const satisfies AfisThemaConfig;
+
+// E-Mandates are always recurring and have a default date far in the future!
+export const EMANDATE_ENDDATE_INDICATOR = '9999';
+
+export const titleBetaalvoorkeurenPage = 'Betaalvoorkeuren';
+export const titleEMandaatPage = 'Incassomachtiging';
+
+// Themapagina
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN = 5;
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED =
+  MAX_TABLE_ROWS_ON_THEMA_PAGINA;
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
+
+const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
+  props: {
+    factuurNummerEl: 'Factuurnummer',
+    afzender: 'Afzender',
+    paymentDueDateFormatted: 'Vervaldatum',
+    statusDescription: 'Status',
+  },
+  colWidths: {
+    large: ['15%', '25%', '25%', '35%'],
+    small: ['25%', '0', '0', '75%'],
+  },
+};
+
+const displayPropsFacturenAfgehandeldOfOvergedragen: DisplayProps<AfisFactuurFrontend> =
+  {
+    props: {
+      factuurNummerEl: 'Factuurnummer',
+      afzender: 'Afzender',
+      statusDescription: 'Status',
+    },
+    colWidths: {
+      large: ['25%', '25%', '50%'],
+      small: ['100%', '0', '0'],
+    },
+  };
+
+export const displayPropsTermijnenTable: DisplayProps<AfisFactuurTermijn> = {
+  props: {
+    term: 'Termijn',
+    paymentDueDateFormatted: 'Vervaldatum',
+    amountOriginalFormatted: 'Bedrag',
+    paymentStatus: 'Status',
+    statusDescription: 'Termijn',
+  },
+  colWidths: {
+    large: ['10%', '25%', '20%', '45%', '0'],
+    small: ['0', '0', '0', '0', '100%'],
+  },
+};
+
+export const listPageTitle: Record<AfisFactuurStateFrontend, string> = {
+  open: 'Openstaande facturen',
+  afgehandeld: 'Afgehandelde facturen',
+  overgedragen:
+    'Facturen in het incasso- en invorderingstraject van directie Belastingen',
+};
+
+export type AfisFactuurFrontend = Omit<AfisFactuur, 'statusDescription'> & {
+  factuurNummerEl: ReactNode;
+  statusDescription: ReactNode;
+};
+
+export type AfisFacturenResponseFrontend = Omit<
+  AfisFacturenResponse,
+  'facturen'
+> & {
+  facturen: AfisFactuurFrontend[];
+};
+
+export type AfisFacturenByStateFrontend = {
+  [key in AfisFactuurStateFrontend]?: AfisFacturenResponseFrontend;
+};
+
+type FacturenTableConfigParams = {
+  listPagePath?: string;
+  mergeConfig?: {
+    [key in AfisFactuurStateFrontend]?: Partial<{
+      title: string;
+      displayProps: DisplayProps<AfisFactuurFrontend>;
+      maxItems: number;
+      listPageLinkLabel: string;
+      listPageRoute: string;
+    }>;
+  };
+};
+
+export function getFacturenTableConfig(params?: FacturenTableConfigParams) {
+  const { listPagePath = themaConfig.listPage.route.path, mergeConfig } =
+    params || {};
+  return {
+    open: {
+      title: listPageTitle.open,
+      displayProps: displayPropsFacturenOpen,
+      maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN,
+      listPageLinkLabel: 'Alle openstaande facturen',
+      listPageRoute: generatePath(listPagePath, {
+        state: 'open',
+        page: null,
+      }),
+      ...mergeConfig?.open,
+    },
+    overgedragen: {
+      title: listPageTitle.overgedragen,
+      displayProps: displayPropsFacturenAfgehandeldOfOvergedragen,
+      maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED,
+      listPageLinkLabel:
+        'Alle facturen in het incasso- en invorderingstraject van directie Belastingen',
+      listPageRoute: generatePath(listPagePath, {
+        state: 'overgedragen',
+        page: null,
+      }),
+      ...mergeConfig?.overgedragen,
+    },
+    afgehandeld: {
+      title: listPageTitle.afgehandeld,
+      displayProps: displayPropsFacturenAfgehandeldOfOvergedragen,
+      maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED,
+      listPageLinkLabel: 'Alle afgehandelde facturen',
+      listPageRoute: generatePath(listPagePath, {
+        state: 'afgehandeld',
+        page: null,
+      }),
+      ...mergeConfig?.afgehandeld,
+    },
+  } as const;
+}
+
+export const facturenTableConfig = getFacturenTableConfig();
+
+export const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetailsTransformed> =
+  {
+    fullName: 'Debiteurnaam',
+    businessPartnerId: 'Debiteurnummer',
+    email: 'E-mailadres factuur',
+    phone: 'Telefoonnummer',
+    fullAddress: 'Adres',
+  };
+
+const displayPropsEMandates: DisplayProps<
+  AfisEMandateFrontend & { displayStatusEl: ReactNode }
+> = {
+  detailLinkComponent: 'Afdeling gemeente',
+  displayStatusEl: 'Status',
+};
+
+export const eMandateTableConfig = {
+  title: `Automatische incasso's`,
+  displayProps: displayPropsEMandates,
+} as const;
+
+export function getAfisListPageDocumentTitle<T extends Params<string>>(
+  params: T | null
+) {
+  switch (params?.state) {
+    case 'open':
+      return `Open facturen | ${THEMA_TITLE}`;
+    case 'afgehandeld':
+      return `Afgehandelde facturen | ${THEMA_TITLE}`;
+    case 'overgedragen':
+      return `Overgedragen aan belastingen facturen | ${THEMA_TITLE}`;
+    default:
+      return `Facturen | ${THEMA_TITLE}`;
+  }
+}
+
+export const EMANDATE_STATUS_ACTIVE: EmandateStatusCode = '1';
+export const EMANDATE_SIGN_REQUEST_SUCCESS_STATUSES = [
+  'payment_started',
+  'paid',
+];
+
+const ONE_MINUTE_MS = 60000;
+export const AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS = 10 * ONE_MINUTE_MS;
+
+export const eMandateHistoryDisplayProps: DisplayProps<
+  AfisEMandateFrontend['history'][number]
+> = {
+  props: {
+    eMandateIdSource: 'Kenmerk',
+    dateValidFromFormatted: 'Vanaf',
+    dateValidToFormatted: 'Tot',
+    senderName: 'Naam rekeninghouder',
+    senderIBAN: 'Rekeningnummer',
+  },
+  colWidths: {
+    large: ['15%', '15%', '15%', '25%', '30%'],
+    small: ['50%', '0', '50%'],
+  },
+};

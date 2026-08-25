@@ -5,7 +5,7 @@ import { describe, it, expect } from 'vitest';
 import { InlineKTO } from './InlineKTO.tsx';
 import { bffApi } from '../../../testing/utils.ts';
 import type { AppState } from '../../../universal/types/App.types.ts';
-import { componentCreator } from '../../pages/MockApp.tsx';
+import { componentCreator } from '../../apps/bob/pages/MockApp.tsx';
 
 const questions = [
   {

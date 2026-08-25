@@ -8,7 +8,7 @@ import {
 } from './afis-notifications.ts';
 import type { AfisFactuur, AfisFactuurStatus } from './afis-types.ts';
 import { fetchIsKnownInAFIS } from './afis.ts';
-import { themaConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
 import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import type { ApiErrorResponse } from '../../../universal/helpers/api.ts';
 import {

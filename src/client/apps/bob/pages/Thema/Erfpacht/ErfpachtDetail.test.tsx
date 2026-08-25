@@ -1,0 +1,212 @@
+import { render, waitFor, within } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
+import { generatePath } from 'react-router';
+
+import { themaConfig } from './Erfpacht-thema-config.ts';
+import { ErfpachtDetail } from './ErfpachtDetail.tsx';
+import ERFPACHT_DOSSIER_DETAIL from '../../../../../../mocks-server/fixtures/erfpacht-v2-dossierinfo-bsn.json' with { type: 'json' };
+import ERFPACHT_DOSSIERS from '../../../../../../mocks-server/fixtures/erfpacht-v2-dossiers.json' with { type: 'json' };
+import type {
+  ErfpachtDossiersDetailSource,
+  ErfpachtDossiersResponseSource,
+} from '../../../../../../server/services/erfpacht/erfpacht-types.ts';
+import {
+  transformDossierResponse,
+  transformErfpachtDossierProperties,
+} from '../../../../../../server/services/erfpacht/erfpacht.ts';
+import { bffApi } from '../../../../../../testing/utils.ts';
+import type { AppState } from '../../../../../../universal/types/App.types.ts';
+import { MockApp } from '../../MockApp.tsx';
+
+function mockDetailFetch(
+  content: unknown = transformErfpachtDossierProperties(
+    ERFPACHT_DOSSIER_DETAIL as unknown as ErfpachtDossiersDetailSource
+  ),
+  status: 'OK' | 'ERROR' = 'OK'
+) {
+  bffApi.get('/services/erfpacht/dossier/E.123.123').reply(200, {
+    content,
+    status,
+  });
+}
+
+describe('<Erfpacht/DossierDetail />', () => {
+  const routeEntry = generatePath(themaConfig.detailPage.route.path, {
+    dossierId: 'E.123.123',
+  });
+  const routePath = themaConfig.detailPage.route.path;
+
+  function Component({ state }: { state: Partial<AppState> }) {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={ErfpachtDetail}
+        state={state}
+      />
+    );
+  }
+
+  test('Renders Dossier Detailpage no data', async () => {
+    mockDetailFetch(null);
+
+    const testState = {
+      ERFPACHT: {
+        status: 'OK',
+        content: null,
+      },
+    } as AppState;
+
+    const screen = render(<Component state={testState} />);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', { name: 'Erfpachtdossier' })
+      ).toBeInTheDocument();
+      expect(screen.getByText('Geen gegevens gevonden')).toBeInTheDocument();
+      expect(
+        screen.getByText('We kunnen op dit moment geen gegevens tonen.')
+      ).toBeInTheDocument();
+    });
+  });
+
+  describe('Renders Dossier Detailpage with data', async () => {
+    test('The Page', async () => {
+      mockDetailFetch();
+      const testState = {
+        ERFPACHT: {
+          status: 'OK',
+          content: transformDossierResponse(ERFPACHT_DOSSIERS, '123-abc'),
+        },
+      } as AppState;
+      const screen = render(<Component state={testState} />);
+
+      const dataIsLoadedTarget = 'E123/456';
+      await waitFor(() => screen.getByText(dataIsLoadedTarget));
+      expect(
+        screen.getByRole('heading', {
+          name: 'E123/456: Dit en dat plein 22 H',
+        })
+      ).toBeInTheDocument();
+      expect(screen.getByText('12132/345345/456757/ff')).toBeInTheDocument();
+      expect(screen.getByText('H.J de Gruyter')).toBeInTheDocument();
+      expect(screen.getByText('Persoon Wegan')).toBeInTheDocument();
+      expect(screen.getByText('Juridisch')).toBeInTheDocument();
+      expect(screen.getByText('Financieel')).toBeInTheDocument();
+      expect(screen.getByText('Bijzondere Bepalingen')).toBeInTheDocument();
+      expect(screen.queryByText('Foutmelding')).not.toBeInTheDocument();
+    });
+
+    test('Financien', async () => {
+      mockDetailFetch();
+      const testState = {
+        ERFPACHT: {
+          status: 'OK',
+          content: transformDossierResponse(ERFPACHT_DOSSIERS, '123-abc'),
+        },
+      } as AppState;
+      const screen = render(<Component state={testState} />);
+      const dataIsLoadedTarget = 'E123/456';
+      await waitFor(() => screen.getByText(dataIsLoadedTarget));
+      const container = screen.getByRole('heading', {
+        name: 'Financieel',
+      }).parentElement!;
+      const displayMoreBtns = within(container).queryAllByRole('button', {
+        name: 'Toon',
+      });
+      expect(displayMoreBtns.length).toBe(1);
+      await userEvent.click(displayMoreBtns[0]);
+      expect(screen.getByText('Huidige periode:')).toBeInTheDocument();
+      expect(screen.getByText('24-06-2022 t/m 31-12-2046')).toBeInTheDocument();
+      const descriptiveAmount = '€ 108,90 na indexering 2001';
+      expect(screen.getByText(descriptiveAmount)).toBeInTheDocument();
+      expect(
+        screen.getByText('€ 117,17 na indexering 2006')
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText('€ 120,57 na indexering 2011')
+      ).not.toBeInTheDocument();
+      expect(screen.getByText('Afgekocht')).toBeInTheDocument();
+      expect(screen.getByText('AB1994')).toBeInTheDocument();
+      const hideBtns = within(container).queryAllByRole('button', {
+        name: 'Verberg',
+      });
+      expect(hideBtns.length).toBe(1);
+      await userEvent.click(hideBtns[0]);
+      expect(
+        within(container).queryByText(descriptiveAmount)
+      ).not.toBeInTheDocument();
+    });
+    test('Bijzonder bepalingen', async () => {
+      mockDetailFetch();
+      const testState = {
+        ERFPACHT: {
+          status: 'OK',
+          content: transformDossierResponse(ERFPACHT_DOSSIERS, '123-abc'),
+        },
+      } as AppState;
+      const screen = render(<Component state={testState} />);
+      const dataIsLoadedTarget = 'E123/456';
+      await waitFor(() => screen.getByText(dataIsLoadedTarget));
+      const container = screen.getByRole('heading', {
+        name: 'Bijzondere Bepalingen',
+      }).parentElement!;
+      const collapsiblePanel = within(container);
+      const displayMoreBtns = collapsiblePanel.queryAllByRole('button', {
+        name: 'Toon',
+      });
+      expect(displayMoreBtns.length).toBe(1);
+      await userEvent.click(displayMoreBtns[0]);
+      expect(collapsiblePanel.queryAllByText('Verberg').length).toBe(1);
+      expect(
+        screen.getByText('Bruto vloeroppervlak: 75 m2')
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('Bruto vloeroppervlak: 35 m2')
+      ).toBeInTheDocument();
+      await userEvent.click(collapsiblePanel.queryAllByText('Toon')[0]);
+      expect(collapsiblePanel.queryAllByText('Toon').length).toBe(0);
+      expect(collapsiblePanel.queryAllByText('Verberg').length).toBe(1);
+    });
+  });
+
+  test('Renders Dossier Detailpage with betaler aanpassen link', async () => {
+    mockDetailFetch();
+
+    const testState = {
+      ERFPACHT: {
+        status: 'OK',
+        content: transformDossierResponse(
+          ERFPACHT_DOSSIERS as ErfpachtDossiersResponseSource,
+          'xxxx-abc'
+        ),
+      },
+    } as AppState;
+
+    const screen = render(<Component state={testState} />);
+
+    await waitFor(() =>
+      expect(screen.getByText('Betaler aanpassen')).toBeInTheDocument()
+    );
+  });
+
+  test('Renders Dossier Detailpage with error', async () => {
+    const testState = {
+      ERFPACHT: {
+        status: 'ERROR',
+        content: null,
+      },
+    } as AppState;
+
+    //http://bff-api-host/services/erfpacht/dossier/E.123.123
+    mockDetailFetch(null, 'ERROR');
+
+    const screen = render(<Component state={testState} />);
+    await waitFor(() => {
+      expect(screen.getByText('Foutmelding')).toBeInTheDocument();
+      expect(
+        screen.getByText('We kunnen op dit moment geen gegevens tonen.')
+      ).toBeInTheDocument();
+    });
+  });
+});

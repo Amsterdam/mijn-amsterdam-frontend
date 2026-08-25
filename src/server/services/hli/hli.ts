@@ -25,7 +25,7 @@ import {
   isWorkshopNietGevolgd,
   filterCombineUpcPcvData,
 } from './status-line-items/regeling-pcvergoeding.ts';
-import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/HLI/HLI-thema-config.ts';
 import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
   apiSuccessResult,

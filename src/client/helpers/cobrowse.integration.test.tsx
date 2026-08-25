@@ -6,19 +6,19 @@ import { describe } from 'vitest';
 
 import type { Kanaal } from '../../server/services/klantcontact/klantcontact.types.ts';
 import type { AppState } from '../../universal/types/App.types.ts';
-import { DashboardRoute } from '../pages/Dashboard/Dashboard-routes.ts';
-import { Dashboard } from '../pages/Dashboard/Dashboard.tsx';
-import { MockApp } from '../pages/MockApp.tsx';
-import { MyNotificationsPage } from '../pages/MyNotifications/MyNotifications.tsx';
-import { themaConfig as themaAfis } from '../pages/Thema/Afis/Afis-thema-config.ts';
-import { themaConfig as themaBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
-import { BezwarenDetail } from '../pages/Thema/Bezwaren/BezwarenDetail.tsx';
-import { BezwarenList } from '../pages/Thema/Bezwaren/BezwarenList.tsx';
-import { BezwarenThema } from '../pages/Thema/Bezwaren/BezwarenThema.tsx';
-import { ContactmomentenListPage } from '../pages/Thema/KlantContact/Contactmomenten/ContactmomentenListPage.tsx';
-import { KlantContactThema } from '../pages/Thema/KlantContact/KlantContactThema.tsx';
-import { MijnGegevensThema } from '../pages/Thema/Profile/private/ProfilePrivate.tsx';
-import { themaConfig as themaVergunningen } from '../pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
+import { DashboardRoute } from '../apps/bob/pages/Dashboard/Dashboard-routes.ts';
+import { Dashboard } from '../apps/bob/pages/Dashboard/Dashboard.tsx';
+import { MockApp } from '../apps/bob/pages/MockApp.tsx';
+import { MyNotificationsPage } from '../apps/bob/pages/MyNotifications/MyNotifications.tsx';
+import { themaConfig as themaAfis } from '../apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig as themaBezwaren } from '../apps/bob/pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
+import { BezwarenDetail } from '../apps/bob/pages/Thema/Bezwaren/BezwarenDetail.tsx';
+import { BezwarenList } from '../apps/bob/pages/Thema/Bezwaren/BezwarenList.tsx';
+import { BezwarenThema } from '../apps/bob/pages/Thema/Bezwaren/BezwarenThema.tsx';
+import { ContactmomentenListPage } from '../apps/bob/pages/Thema/KlantContact/Contactmomenten/ContactmomentenListPage.tsx';
+import { KlantContactThema } from '../apps/bob/pages/Thema/KlantContact/KlantContactThema.tsx';
+import { MijnGegevensThema } from '../apps/bob/pages/Thema/Profile/private/ProfilePrivate.tsx';
+import { themaConfig as themaVergunningen } from '../apps/bob/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 
 const testState = {
   KLANT_CONTACT: {

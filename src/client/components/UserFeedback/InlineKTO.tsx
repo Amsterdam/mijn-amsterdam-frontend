@@ -4,7 +4,7 @@ import styles from './UserFeedback.module.scss';
 import { UserFeedback } from './UserFeedback.tsx';
 import { useSubmitUserFeedback } from './useSubmitUserFeedback.ts';
 import type { RecordStr2 } from '../../../server/routing/route-helpers.ts';
-import { BFFApiUrls } from '../../config/api.ts';
+import { BFFApiUrls } from '../../apps/bob/config/api.ts';
 import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';

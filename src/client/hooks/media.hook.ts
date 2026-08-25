@@ -1,7 +1,7 @@
 // Helper functions to determine screen size in JS
 import { useLayoutEffect, useState } from 'react';
 
-import { Breakpoints } from '../config/app.ts';
+import { Breakpoints } from '../apps/bob/config/app.ts';
 
 export type MediaQueryObject = { [key: string]: string | number | boolean };
 

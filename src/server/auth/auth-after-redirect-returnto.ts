@@ -2,7 +2,7 @@ import type { ParsedQs } from 'qs';
 
 import { getReturnToUrlZaakStatus } from './auth-helpers.ts';
 import { authRoutes } from './auth-routes.ts';
-import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config.ts';
+import { ZAAK_STATUS_ROUTE } from '../../client/apps/bob/pages/ZaakStatus/ZaakStatus-config.ts';
 import {
   generateFullApiUrlBFF,
   generateMaFrontendUrl,

@@ -20,7 +20,7 @@ import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { useAppStateReady } from '../../hooks/useAppStateStore.ts';
 import { useKeyDown } from '../../hooks/useKey.ts';
-import { SearchPageRoute } from '../../pages/Search/Search-routes.ts';
+import { SearchPageRoute } from '../../apps/bob/pages/Search/Search-routes.ts';
 import { MaButtonLink, MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 import { Spinner } from '../Spinner/Spinner.tsx';
 

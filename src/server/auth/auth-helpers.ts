@@ -14,7 +14,7 @@ import type {
   MaSession,
   TokenData,
 } from './auth-types.ts';
-import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config.ts';
+import { ZAAK_STATUS_ROUTE } from '../../client/apps/bob/pages/ZaakStatus/ZaakStatus-config.ts';
 import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
 import { PROFILE_TYPES } from '../../universal/types/App.types.ts';
 import { ONE_SECOND_MS } from '../config/app.ts';

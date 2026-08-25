@@ -44,17 +44,17 @@ import type {
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types/App.types.ts';
-import type { ThemaMenuItem } from '../../config/thema-types.ts';
-import type { AfisFactuurFrontend } from '../../pages/Thema/Afis/Afis-thema-config.ts';
-import { themaConfig as avgThemaConfig } from '../../pages/Thema/AVG/AVG-thema-config.ts';
-import { themaConfig as themaConfigBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
-import { themaConfig as themaConfigBodem } from '../../pages/Thema/Bodem/Bodem-thema-config.ts';
-import { themaConfig as themaConfigHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config.ts';
-import { themaConfig as themaConfigKlachten } from '../../pages/Thema/Klachten/Klachten-thema-config.ts';
-import { themaConfig as themaConfigKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config.ts';
-import { themaConfig } from '../../pages/Thema/Profile/Profile-thema-config.ts';
-import { themaConfig as toeristischeVerhuurThemaConfig } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
-import { themaConfig as themaConfigVaren } from '../../pages/Thema/Varen/Varen-thema-config.ts';
+import type { ThemaMenuItem } from '../../../universal/types/thema-types.ts';
+import type { AfisFactuurFrontend } from '../../apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig as avgThemaConfig } from '../../apps/bob/pages/Thema/AVG/AVG-thema-config.ts';
+import { themaConfig as themaConfigBezwaren } from '../../apps/bob/pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
+import { themaConfig as themaConfigBodem } from '../../apps/bob/pages/Thema/Bodem/Bodem-thema-config.ts';
+import { themaConfig as themaConfigHoreca } from '../../apps/bob/pages/Thema/Horeca/Horeca-thema-config.ts';
+import { themaConfig as themaConfigKlachten } from '../../apps/bob/pages/Thema/Klachten/Klachten-thema-config.ts';
+import { themaConfig as themaConfigKrefia } from '../../apps/bob/pages/Thema/Krefia/Krefia-thema-config.ts';
+import { themaConfig } from '../../apps/bob/pages/Thema/Profile/Profile-thema-config.ts';
+import { themaConfig as toeristischeVerhuurThemaConfig } from '../../apps/bob/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import { themaConfig as themaConfigVaren } from '../../apps/bob/pages/Thema/Varen/Varen-thema-config.ts';
 
 export interface SearchEntry {
   url: string;

@@ -1,0 +1,74 @@
+import { useMemo } from 'react';
+
+import { useBodemDetailData } from './useBodemDetailData.hook.tsx';
+import type { LoodMetingFrontend } from '../../../../../../server/services/bodem/types.ts';
+import type { Row } from '../../../../../components/Datalist/Datalist.tsx';
+import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
+import { DocumentLink } from '../../../../../components/DocumentList/DocumentLink.tsx';
+import { AddressDisplayAndModal } from '../../../../../components/LocationModal/LocationModal.tsx';
+import { PageContentCell } from '../../../../../components/Page/Page.tsx';
+import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';
+import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+
+function BodemDetailContent({ meting }: { meting: LoodMetingFrontend }) {
+  const LoodMetingRows = useMemo(() => {
+    const rows: Row[] = [{ label: 'Kenmerk', content: meting.identifier }];
+
+    if (meting.adres) {
+      rows.push({
+        label: 'Locatie',
+        content: <AddressDisplayAndModal address={meting.adres} />,
+      });
+    }
+
+    if (meting.document) {
+      rows.push({
+        label: 'Document',
+        content: <DocumentLink document={meting.document} />,
+      });
+    }
+
+    if (meting.decision === 'Afgewezen') {
+      rows.push(
+        ...[
+          { label: 'Resultaat', content: meting.decision },
+          { label: 'Reden afwijzing', content: meting.redenAfwijzing },
+        ]
+      );
+    }
+
+    return rows.filter((row) => !!row.content);
+  }, [meting]);
+
+  return (
+    <PageContentCell>
+      <Datalist rows={LoodMetingRows} />
+    </PageContentCell>
+  );
+}
+
+export function BodemDetail() {
+  const {
+    themaId,
+    meting,
+    isLoading,
+    isError,
+    breadcrumbs,
+    title,
+    routeConfig,
+  } = useBodemDetailData();
+
+  useHTMLDocumentTitle(routeConfig);
+
+  return (
+    <ThemaDetailPagina<LoodMetingFrontend>
+      themaId={themaId}
+      title={title}
+      zaak={meting}
+      breadcrumbs={breadcrumbs}
+      isError={isError}
+      isLoading={isLoading}
+      pageContentMain={!!meting && <BodemDetailContent meting={meting} />}
+    />
+  );
+}
