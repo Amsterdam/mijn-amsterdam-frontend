@@ -8,7 +8,7 @@ import {
   useAfisFacturenData,
 } from './useAfisThemaData.hook.tsx';
 import { entries } from '../../../../universal/helpers/utils.ts';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaDataView } from '../../../components/Thema/ThemaPaginaDataView.tsx';
 
 type FacturenTablesProps = {
   themaContextParams?: AfisFacturenThemaContextParams;
@@ -57,7 +57,7 @@ export function AfisFacturenTables({
           );
         }
         return (
-          <ThemaPaginaTable<AfisFactuurFrontend>
+          <ThemaPaginaDataView<AfisFactuurFrontend>
             key={state}
             title={title}
             contentAfterTheTitle={contentAfterTheTitle}

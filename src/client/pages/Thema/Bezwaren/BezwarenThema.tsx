@@ -5,7 +5,7 @@ import { useBezwarenThemaData } from './useBezwarenThemaData.hook.ts';
 import type { BezwaarFrontend } from '../../../../server/services/bezwaren/types.ts';
 import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaDataView } from '../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { themaConfig as belastingenThemaConfig } from '../Belastingen/Belastingen-thema-config.ts';
 
@@ -42,7 +42,7 @@ export function BezwarenThema() {
       { title, displayProps, filter, textNoContent, listPageRoute, maxItems },
     ]) => {
       return (
-        <ThemaPaginaTable<BezwaarFrontend>
+        <ThemaPaginaDataView<BezwaarFrontend>
           key={kind}
           title={title}
           listPageRoute={listPageRoute}

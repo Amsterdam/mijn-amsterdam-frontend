@@ -18,7 +18,7 @@ import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
 import { TableV2 } from '../../../components/Table/TableV2.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
-import { ThemaPaginaTable } from '../../../components/Thema/ThemaPaginaTable.tsx';
+import { ThemaPaginaDataView } from '../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 
 export function HistoricItemsMention() {
@@ -114,7 +114,7 @@ export function HLIThema() {
             { title, displayProps, filter, sort, maxItems, listPageRoute },
           ]) => {
             return (
-              <ThemaPaginaTable<HLIRegelingFrontend>
+              <ThemaPaginaDataView<HLIRegelingFrontend>
                 key={kind}
                 title={title}
                 zaken={regelingen.filter(filter).sort(sort)}
@@ -144,7 +144,7 @@ export function HLIThema() {
               />
             )}
             {!!specificaties.length && (
-              <ThemaPaginaTable<HLIRegelingSpecificatieFrontend>
+              <ThemaPaginaDataView<HLIRegelingSpecificatieFrontend>
                 title={specificatieTableConfig.title}
                 displayProps={specificatieTableConfig.displayProps}
                 zaken={specificaties.sort(specificatieTableConfig.sort)}

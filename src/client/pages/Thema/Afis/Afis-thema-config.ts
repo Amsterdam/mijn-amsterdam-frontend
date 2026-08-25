@@ -13,6 +13,7 @@ import type {
   AfisFactuurTermijn,
   EmandateStatusCode,
 } from '../../../../server/services/afis/afis-types.ts';
+import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import type { DisplayProps } from '../../../components/Table/TableV2.types.ts';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import {
@@ -118,6 +119,7 @@ const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
     large: ['15%', '25%', '25%', '35%'],
     small: ['25%', '0', '0', '75%'],
   },
+  enableMobileListView: !IS_PRODUCTION,
 };
 
 const displayPropsFacturenAfgehandeldOfOvergedragen: DisplayProps<AfisFactuurFrontend> =
@@ -131,6 +133,7 @@ const displayPropsFacturenAfgehandeldOfOvergedragen: DisplayProps<AfisFactuurFro
       large: ['25%', '25%', '50%'],
       small: ['100%', '0', '0'],
     },
+    enableMobileListView: !IS_PRODUCTION,
   };
 
 export const displayPropsTermijnenTable: DisplayProps<AfisFactuurTermijn> = {

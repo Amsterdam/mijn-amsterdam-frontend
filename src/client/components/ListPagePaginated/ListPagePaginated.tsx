@@ -10,11 +10,11 @@ import type {
 } from '../../../universal/types/App.types.ts';
 import { usePageTypeSetting } from '../../hooks/usePageTypeSetting.ts';
 import { ErrorAlert } from '../Alert/Alert.tsx';
+import { DataView } from '../DataView/DataView.tsx';
 import { LoadingContent } from '../LoadingContent/LoadingContent.tsx';
 import { PageContentCell, PageV2 } from '../Page/Page.tsx';
 import { PaginationV2 } from '../Pagination/PaginationV2.tsx';
 import type { DisplayProps } from '../Table/TableV2.tsx';
-import { TableV2 } from '../Table/TableV2.tsx';
 
 const DEFAULT_PAGE_SIZE = 20;
 
@@ -30,7 +30,7 @@ interface ListPagePaginatedProps<T> {
   items: T[];
   noItemsText?: string;
   pageSize?: number;
-  tableClassName?: string;
+  dataViewClassName?: string;
   title: string;
   themaId: string;
   totalCount?: number;
@@ -49,7 +49,7 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
   items,
   pageSize = DEFAULT_PAGE_SIZE,
   totalCount,
-  tableClassName,
+  dataViewClassName,
   title,
   themaId,
 }: ListPagePaginatedProps<T>) {
@@ -112,10 +112,10 @@ export function ListPagePaginated<T extends object = ZaakAanvraagDetail>({
               />
             )}
             {!isLoading && !!itemsPaginated.length && (
-              <TableV2<T>
+              <DataView<T>
                 items={itemsPaginated}
                 displayProps={displayProps}
-                className={tableClassName}
+                className={dataViewClassName}
               />
             )}
             {items.length > pageSize && (
