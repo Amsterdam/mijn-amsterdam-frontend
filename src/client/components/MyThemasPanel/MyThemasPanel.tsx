@@ -4,11 +4,11 @@ import classNames from 'classnames';
 import styles from './MyThemasPanel.module.scss';
 import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
 import type { ThemaMenuItemTransformed } from '../../../universal/types/thema-types.ts';
-import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import {
   GENERAL_INFO_PAGE_DOCUMENT_TITLE,
   GeneralInfoRoute,
 } from '../../apps/bob/pages/GeneralInfo/GeneralInfo-routes.ts';
+import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import { LoadingContent } from '../LoadingContent/LoadingContent.tsx';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 

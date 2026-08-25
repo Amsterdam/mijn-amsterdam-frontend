@@ -2,12 +2,12 @@ import cloneDeep from 'lodash.clonedeep';
 import { generatePath } from 'react-router';
 
 import { IS_PRODUCTION } from '../../../../../../universal/config/env.ts';
+import { entries } from '../../../../../../universal/helpers/utils.ts';
 import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
 } from '../../../../../../universal/types/thema-types.ts';
-import { entries } from '../../../../../../universal/helpers/utils.ts';
 import { propagateFeatureToggles } from '../../../config/feature-toggles.ts';
 import type { ListPageParamKind as ListPageParamKindVergunningen } from '../Vergunningen/Vergunningen-thema-config.ts';
 import { tableConfig as tableConfigVergunningen } from '../Vergunningen/Vergunningen-thema-config.ts';

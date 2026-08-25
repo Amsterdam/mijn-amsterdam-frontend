@@ -3,13 +3,13 @@ import type { ReactNode } from 'react';
 import { generatePath } from 'react-router';
 
 import type { ContactmomentFrontend } from '../../../../../../server/services/klantcontact/klantcontact.types.ts';
-import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
-import { isEnabled } from '../../../config/feature-toggles.ts';
 import type {
   InfoSection,
   ThemaConfigBase,
   WithPageConfig,
 } from '../../../../../../universal/types/thema-types.ts';
+import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
+import { isEnabled } from '../../../config/feature-toggles.ts';
 
 export type InstelAction = 'instellen' | 'wijzigen' | 'valideren';
 

@@ -1,7 +1,7 @@
 import { EMANDATE_ENDDATE_INDICATOR } from './Afis-thema-config.ts';
 import type { AfisEMandateFrontend } from '../../../../../../server/services/afis/afis-types.ts';
-import type { BFFApiUrls } from '../../../config/api.ts';
 import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../../../helpers/api.ts';
+import type { BFFApiUrls } from '../../../config/api.ts';
 
 export function generateApiUrl(
   businessPartnerIdEncrypted: string | null,

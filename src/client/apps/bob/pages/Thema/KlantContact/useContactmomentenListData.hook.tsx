@@ -7,11 +7,11 @@ import {
 
 import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import type { Kanaal } from '../../../../../../server/services/klantcontact/klantcontact.types.ts';
-import { IconAfspraak } from '../../../assets/icons/index.tsx';
+import type { ThemaMenuItemTransformed } from '../../../../../../universal/types/thema-types.ts';
 import { MaRouterLink } from '../../../../../components/MaLink/MaLink.tsx';
 import { getRedactedClass } from '../../../../../helpers/cobrowse.ts';
 import { useActiveThemaMenuItems } from '../../../../../hooks/useThemaMenuItems.ts';
-import type { ThemaMenuItemTransformed } from '../../../../../../universal/types/thema-types.ts';
+import { IconAfspraak } from '../../../assets/icons/index.tsx';
 import { themaConfig as themaAfis } from '../Afis/Afis-thema-config.ts';
 import { themaConfig as themaBelastingen } from '../Belastingen/Belastingen-thema-config.ts';
 import { themaConfig as themaInkomen } from '../Inkomen/Inkomen-thema-config.ts';

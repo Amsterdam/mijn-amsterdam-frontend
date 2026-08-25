@@ -10,8 +10,8 @@ import {
   useActiveThemaMenuItems,
   useAllThemaMenuItemsByThemaID,
 } from './useThemaMenuItems.ts';
-import { useThemasByProfileType } from '../apps/bob/config/menuItems.ts';
 import type { ThemaMenuItemTransformed } from '../../universal/types/thema-types.ts';
+import { useThemasByProfileType } from '../apps/bob/config/menuItems.ts';
 
 vi.mock('./useProfileType', () => ({
   useProfileTypeValue: vi.fn(),

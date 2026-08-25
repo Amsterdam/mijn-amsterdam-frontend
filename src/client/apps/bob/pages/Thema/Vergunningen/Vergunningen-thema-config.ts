@@ -13,13 +13,13 @@ import type {
   WithDateRange,
 } from '../../../../../../server/services/vergunningen/config-and-types.ts';
 import { dateSort } from '../../../../../../universal/helpers/date.ts';
-import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
 } from '../../../../../../universal/types/thema-types.ts';
+import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 
 type VergunningFrontendDisplayProps = DisplayProps<DecosZaakFrontend>;
 

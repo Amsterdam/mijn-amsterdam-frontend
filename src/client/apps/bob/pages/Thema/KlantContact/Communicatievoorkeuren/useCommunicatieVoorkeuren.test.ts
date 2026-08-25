@@ -10,8 +10,8 @@ import type { KlantcontactResponseData } from '../../../../../../../server/servi
 import { bffApiHost } from '../../../../../../../testing/setup.ts';
 import { bffApi } from '../../../../../../../testing/utils.ts';
 import type { ApiResponse } from '../../../../../../../universal/helpers/api.ts';
-import { BFFApiUrls } from '../../../../config/api.ts';
 import { useAppStateStore } from '../../../../../../hooks/useAppStateStore.ts';
+import { BFFApiUrls } from '../../../../config/api.ts';
 
 const BFF_ENDPOINTS = {
   create: BFFApiUrls.KLANTCONTACT_CONTACTGEGEVEN_CREATE.replace(

@@ -4,8 +4,8 @@ import type { Mock } from 'vitest';
 import { describe, it, expect } from 'vitest';
 
 import { useThemaBreadcrumbs } from './useThemaBreadcrumbs.ts';
-import { useThemasByProfileType } from '../apps/bob/config/menuItems.ts';
 import type { ThemaMenuItemTransformed } from '../../universal/types/thema-types.ts';
+import { useThemasByProfileType } from '../apps/bob/config/menuItems.ts';
 
 vi.mock('../config/menuItems', () => ({
   useThemasByProfileType: vi.fn(),

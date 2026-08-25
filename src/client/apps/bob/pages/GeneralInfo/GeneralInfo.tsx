@@ -5,13 +5,13 @@ import {
 } from '@amsterdam/design-system-react';
 
 import { GENERAL_INFO_PAGE_DOCUMENT_TITLE } from './GeneralInfo-routes.ts';
-import { MaLink, MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
-import { myAreaSectionProps } from '../../../../components/MyArea/InfoSection.tsx';
-import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
 import type {
   ThemaConfigBase,
   InfoSection,
 } from '../../../../../universal/types/thema-types.ts';
+import { MaLink, MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
+import { myAreaSectionProps } from '../../../../components/MyArea/InfoSection.tsx';
+import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
 import { getRedactedClass } from '../../../../helpers/cobrowse.ts';
 import {
   compareThemas,

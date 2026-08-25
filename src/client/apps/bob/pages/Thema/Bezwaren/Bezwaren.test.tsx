@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
+import { themaConfig } from './Bezwaren-thema-config.ts';
 import { BezwarenThema } from './BezwarenThema.tsx';
 import { MockApp } from '../../MockApp.tsx';
-import { themaConfig } from './Bezwaren-thema-config.ts';
 
 const testState = {
   BEZWAREN: {
