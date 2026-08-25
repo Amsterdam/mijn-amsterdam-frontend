@@ -37,7 +37,7 @@ export function useSessionApi() {
         // Delaying the fetch with a setTimeout somehow prevents this from happening.
         setTimeout(() => {
           fetch();
-        }, 0);
+        }, 10);
       }
     };
 
