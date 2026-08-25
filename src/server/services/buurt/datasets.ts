@@ -877,7 +877,7 @@ export function transformWiorApiListResponse(
     const eind = feature.datumEindeUitvoering;
     const dutchDate = parseYYYYMMDDDateString(start as string);
     if (dutchDate) {
-      feature.isoDatumStartUitvoeringISO = dutchDate.toISOString();
+      feature.isoDatumStartUitvoering = dutchDate.toISOString();
     }
     if (typeof start === 'string' && typeof eind === 'string') {
       if (new Date(eind) > new Date(start)) {
