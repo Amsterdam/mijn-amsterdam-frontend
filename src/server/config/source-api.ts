@@ -154,13 +154,13 @@ const ApiConfig_ = {
     },
     url: `${getFromEnv('BFF_POM_API_BASE_URL')}`,
   },
-  ZORGNED_JZD: {
+  ZORGNED_WMO: {
     method: 'post',
     url: `${getFromEnv('BFF_ZORGNED_API_BASE_URL')}`,
     headers: {
       Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
       'Content-type': 'application/json; charset=utf-8',
-      'x-cache-key-supplement': 'JZD',
+      'x-cache-key-supplement': 'WMO',
     },
     httpsAgent: httpsAgentBFF,
   },

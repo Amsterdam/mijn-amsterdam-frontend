@@ -3,8 +3,8 @@ import { HttpStatusCode } from 'axios';
 import ZORGNED_AV_AANVRAGEN_RESPONSE_RTM from '../fixtures/zorgned-av-aanvragen-rtm.json' with { type: 'json' };
 import ZORGNED_AV_AANVRAGEN_RESPONSE from '../fixtures/zorgned-av-aanvragen.json' with { type: 'json' };
 import ZORGNED_AV_PERSOONSGEGEVENSNAW_RESPONSE from '../fixtures/zorgned-av-persoonsgegevensNAW.json' with { type: 'json' };
-import ZORGNED_JZD_AANVRAGEN_RESPONSE from '../fixtures/zorgned-jzd-aanvragen.json' with { type: 'json' };
 import ZORGNED_LLV_AANVRAGEN_RESPONSE from '../fixtures/zorgned-leerlingenvervoer-aanvragen.json' with { type: 'json' };
+import ZORGNED_WMO_AANVRAGEN_RESPONSE from '../fixtures/zorgned-wmo-aanvragen.json' with { type: 'json' };
 import { MOCK_BASE_PATH, MOCK_DOCUMENT_B64 } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 
@@ -50,16 +50,16 @@ export const routes: MockRouteDefinition[] = [
 
             return res.status(HttpStatusCode.Ok).send(aanvragen);
           }
-          case 'JZD':
+          case 'WMO':
             return res
               .status(HttpStatusCode.Ok)
-              .send(ZORGNED_JZD_AANVRAGEN_RESPONSE);
+              .send(ZORGNED_WMO_AANVRAGEN_RESPONSE);
           case 'LLV':
             return res
               .status(HttpStatusCode.Ok)
               .send(ZORGNED_LLV_AANVRAGEN_RESPONSE);
           default: {
-            const message = `No fixture response found for ${apiUser}`;
+            const message = `"No fixture response found for ${apiUser}"`;
             core.logger.error(message);
             return res.status(HttpStatusCode.NotFound).send(message);
           }
