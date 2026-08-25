@@ -881,7 +881,7 @@ export function transformWiorApiListResponse(
     }
     if (typeof start === 'string' && typeof eind === 'string') {
       if (new Date(eind) > new Date(start)) {
-        feature.duur = 'meerdaags2';
+        feature.duur = 'meerdaags';
       } else {
         feature.duur = 'enkel';
       }
