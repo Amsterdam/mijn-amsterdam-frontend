@@ -12,7 +12,6 @@ import classNames from 'classnames';
 
 import styles from './DataViewList.module.scss';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
-import { isLinkLikeElement } from '../../helpers/utils.ts';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 import type { TableV2Props } from '../Table/TableV2.types.ts';
 import { useDisplayPropsEntries } from '../Table/useDisplayPropEntries.hook.ts';
@@ -86,15 +85,6 @@ export function formatPropValueForDisplay<T>(value: T[keyof T]) {
 
   return String(value);
 }
-
-export function displayLinkChildren(titleEl: React.ReactNode) {
-  if (isLinkLikeElement(titleEl)) {
-    return titleEl.props.children;
-  }
-
-  return titleEl;
-}
-
 export function DataViewList<T extends { link?: LinkProps; title?: string }>({
   caption,
   items,
@@ -134,9 +124,7 @@ export function DataViewList<T extends { link?: LinkProps; title?: string }>({
               <LinkOrFragment link={zaak.link}>
                 <article className={styles.ListViewArticle}>
                   <Heading level={4} size="level-4">
-                    {displayLinkChildren(
-                      zaak[titleAttribute] as React.ReactNode
-                    )}
+                    {zaak[titleAttribute] as React.ReactNode}
                   </Heading>
                   {displayPropEntries.slice(1).map(([propKey, { label }]) => {
                     const value = zaak[propKey as keyof T];
