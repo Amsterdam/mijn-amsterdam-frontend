@@ -5,6 +5,7 @@ import {
   fetchMeldingenBuurt,
   transformHardlooproutesResponse,
   transformMeldingenBuurtResponse,
+  transformWiorApiListResponse,
 } from './datasets.ts';
 import type { DsoApiResponse } from './dso-helpers.ts';
 import { remoteApiHost } from '../../../testing/setup.ts';
@@ -90,6 +91,43 @@ describe('Custom dataset tranformations', () => {
     );
 
     expect(result).toStrictEqual(transformedFeatures);
+  });
+
+  it('Should transform WIOR start date, duration and ISO date', () => {
+    const sourceResponse = {
+      _embedded: {
+        wior: [
+          {
+            id: 1,
+            datumStartUitvoering: '2025-12-20',
+            datumEindeUitvoering: '2026-01-03',
+            geometrie: { coordinates: [4.9, 52.37], type: 'Point' },
+          },
+        ],
+      },
+    };
+
+    const config: DatasetConfig = {
+      featureType: 'MultiPolygon',
+      triesUntilConsiderdStale: 5,
+      listUrl: remoteApiHost,
+      geometryKey: 'geometrie',
+    };
+
+    const result = transformWiorApiListResponse(
+      'wior',
+      config,
+      sourceResponse as unknown as DsoApiResponse
+    );
+
+    expect(result).toHaveLength(1);
+    expect(result[0].properties.datumStartUitvoering).toBe(
+      'Lopende werkzaamheden'
+    );
+    expect(result[0].properties.duur).toBe('Meerdaags');
+    expect(result[0].properties.isoDatumStartUitvoering).toBe(
+      '2025-12-20T00:00:00.000Z'
+    );
   });
 
   test('fetchMeldingenBuurt:success', async () => {
