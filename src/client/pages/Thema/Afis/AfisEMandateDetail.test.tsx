@@ -221,7 +221,7 @@ describe('AfisEMandateDetail', () => {
 
       const screen = render(<Detail />);
       const headingEl = screen.getByRole('heading', {
-        name: /Eerdere E-Mandaten/i,
+        name: /Eerdere incassomachtiging/i,
       });
       expect(headingEl?.nextSibling).toMatchSnapshot();
     });
