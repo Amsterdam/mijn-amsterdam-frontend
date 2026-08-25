@@ -94,7 +94,7 @@ export async function fetchWiorNotifications(
     const bbox = getBboxFromFeatures(filteredFeatures, latlng);
 
     const startingDates = filteredFeatures
-      .map((f) => f.properties.isoDatumStartUitvoering as string)
+      .map((feature) => feature.properties.isoDatumStartUitvoering as string)
       .filter(Boolean)
       .toSorted(sortLatestToFirst);
     const latestStartingDate = startingDates[0] ?? new Date(0).toISOString();
