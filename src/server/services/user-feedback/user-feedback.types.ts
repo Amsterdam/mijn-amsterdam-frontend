@@ -90,6 +90,7 @@ export const userFeedbackInput = z.object({
   browserWindowInnerSize: z.string(),
   browserTimezone: z.string(),
   maThemas: z.string(),
+  maMokum: z.string().optional(),
   maErrors: z.string().optional(),
   maProfileType: z.string(),
   pageTitle: z.string(),
