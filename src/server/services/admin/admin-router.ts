@@ -16,6 +16,7 @@ import {
 } from './admin-service-config.ts';
 import type { RequestWithSession } from './admin-types.ts';
 import { loginStats, loginStatsTable } from './admin-visitors.ts';
+import { IS_AP, OTAP_ENV } from '../../../universal/config/env.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 import { createBFFRouter } from '../../routing/route-helpers.ts';
 
@@ -25,17 +26,24 @@ const maAdminAuthRouterPublic = createBFFRouter({
   id: 'ma-admin-router-public',
 });
 
-maAdminAuthRouterPublic.use((req, _res, next) => {
-  if (!IS_ADMIN_AUTHENTICATION_MIDDLEWARE_ENABLED) {
+if (!IS_ADMIN_AUTHENTICATION_MIDDLEWARE_ENABLED) {
+  if (IS_AP) {
+    throw new Error(
+      `Admin authentication middleware is disabled, but the app is running in ${OTAP_ENV} mode. This is not allowed.`
+    );
+  }
+  maAdminAuthRouterPublic.use((req, _res, next) => {
     console.info(
       'Admin authentication middleware is disabled. All admin routes will be accessible without authentication.'
     );
+
     (req as RequestWithSession).session.isAuthenticated = true;
     (req as RequestWithSession).session.username =
       `${getFromEnv('MA_DEV_ADMIN_USERNAME') ?? '--no-username--'}`;
-  }
-  next();
-});
+
+    next();
+  });
+}
 
 maAdminAuthRouterPublic.get(routes.public.auth.SIGNIN, handleLogin);
 maAdminAuthRouterPublic.use(express.urlencoded({ extended: true }));
