@@ -2,7 +2,7 @@ import { TabNavigation } from '@amsterdam/design-system-react';
 import { useLocation } from 'react-router';
 
 import { themaConfig as themaConfigHome } from './Pages/Home/Home-thema-config.ts';
-// import { themaConfig as themaConfigUserFeedback } from './Pages/UserFeedback/UserFeedback-thema-config.ts';
+import { themaConfig as themaConfigUserFeedback } from './Pages/UserFeedback/UserFeedback-thema-config.ts';
 import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 
 const appTabLinks = [
@@ -10,10 +10,10 @@ const appTabLinks = [
     title: themaConfigHome.title,
     href: themaConfigHome.route.path,
   },
-  // {
-  //   title: themaConfigUserFeedback.title,
-  //   href: themaConfigUserFeedback.route.path,
-  // },
+  {
+    title: themaConfigUserFeedback.title,
+    href: themaConfigUserFeedback.route.path,
+  },
 ];
 
 export function AppTabs() {
