@@ -8,8 +8,12 @@ export const routes = {
     USER_FEEDBACK_SURVEY: '/user-feedback/survey',
   },
   admin: {
-    USER_FEEDBACK_OVERVIEW_TABLE: '/user-feedback/overview/table',
     USER_FEEDBACK_OVERVIEW: '/user-feedback/overview',
+    USER_FEEDBACK_HANDOFF_CONFIG: '/user-feedback/handoff-config',
+    USER_FEEDBACK_CREATE_TICKET: '/user-feedback/:entryId/create-ticket',
+    USER_FEEDBACK_DELETE_TICKET: '/user-feedback/:entryId/delete-ticket',
+    USER_FEEDBACK_HANDOFF_DEPARTMENT:
+      '/user-feedback/:entryId/handoff-department',
   },
 };
 
@@ -32,7 +36,7 @@ export const featureToggle = {
   },
 };
 
-export const sourceApiConfig: DataRequestConfig = {
+export const sourceApiConfigSurvey: DataRequestConfig = {
   url: `${process.env.BFF_AMSAPP_SURVEY_API_BASE_URL}`,
   method: 'POST',
   headers: {

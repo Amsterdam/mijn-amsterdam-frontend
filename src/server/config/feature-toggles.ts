@@ -19,6 +19,7 @@ export const featureToggle = {
   ['WMO.fetchWmo.addMaVoorzieningenApiProps']: !IS_PRODUCTION,
   ['ERFPACHT.service']: !IS_PRODUCTION,
   ['ERFPACHT.wijzigingsaanvragen']: !IS_PRODUCTION,
+  ['USER_FEEDBACK.ticketCreation']: !IS_PRODUCTION,
 };
 // globalThis is used to make sure featureToggles imported from frontend *-thema-configs have access.
 globalThis.MA_FEATURETOGGLES = featureToggle;

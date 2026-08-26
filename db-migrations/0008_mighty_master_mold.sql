@@ -1,0 +1,1 @@
+ALTER TABLE "user_feedback_meta" ADD COLUMN "date_modified" timestamp with time zone DEFAULT now() NOT NULL;

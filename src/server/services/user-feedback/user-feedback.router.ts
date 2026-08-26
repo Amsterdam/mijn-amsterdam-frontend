@@ -1,9 +1,12 @@
 import express from 'express';
 
 import {
+  handleCreateJiraTicket,
+  handleDeleteJiraTicketMeta,
   handleFetchSurvey,
-  handleFetchSurveyOverview,
   handleShowSurveyOverview,
+  handleHandoffFeedbackToDepartment,
+  handleUserFeedbackHandoffConfig,
   handleUserFeedbackSubmission,
 } from './user-feedback.route-handlers.ts';
 import { featureToggle, routes } from './user-feedback.service-config.ts';
@@ -31,13 +34,28 @@ const userFeedbackRouterAdmin = createBFFRouter({
 });
 
 userFeedbackRouterAdmin.get(
-  routes.admin.USER_FEEDBACK_OVERVIEW_TABLE,
+  routes.admin.USER_FEEDBACK_OVERVIEW,
   handleShowSurveyOverview
 );
 
 userFeedbackRouterAdmin.get(
-  routes.admin.USER_FEEDBACK_OVERVIEW,
-  handleFetchSurveyOverview
+  routes.admin.USER_FEEDBACK_HANDOFF_CONFIG,
+  handleUserFeedbackHandoffConfig
+);
+
+userFeedbackRouterAdmin.post(
+  routes.admin.USER_FEEDBACK_CREATE_TICKET,
+  handleCreateJiraTicket
+);
+
+userFeedbackRouterAdmin.delete(
+  routes.admin.USER_FEEDBACK_DELETE_TICKET,
+  handleDeleteJiraTicketMeta
+);
+
+userFeedbackRouterAdmin.post(
+  routes.admin.USER_FEEDBACK_HANDOFF_DEPARTMENT,
+  handleHandoffFeedbackToDepartment
 );
 
 export const userFeedbackRouter = {
