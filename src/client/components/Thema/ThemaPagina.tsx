@@ -27,7 +27,7 @@ interface ThemaPaginaProps {
   id: string;
   title: string;
   breadcrumbs?: LinkProps[];
-  showBreadcrumbs?: false;
+  showBreadcrumbs?: boolean;
   pageContentTop: ReactNode;
   pageContentTopSecondary?: ReactNode;
   pageContentMain: ReactNode;
