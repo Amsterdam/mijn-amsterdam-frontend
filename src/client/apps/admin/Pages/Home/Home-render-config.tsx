@@ -8,6 +8,7 @@ export const AdminHomeRoutes = [
     Component: Home,
     isActive: themaConfig.featureToggle.active,
     public: false,
+    private: true,
     props: {
       index: true,
     },
@@ -17,5 +18,9 @@ export const AdminHomeRoutes = [
     Component: HomePublic,
     isActive: themaConfig.featureToggle.active,
     public: true,
+    private: false,
+    props: {
+      index: true,
+    },
   },
 ] as const satisfies readonly ApplicationRouteConfig[];
