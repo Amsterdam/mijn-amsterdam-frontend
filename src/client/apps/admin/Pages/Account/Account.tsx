@@ -1,19 +1,20 @@
 import { useEffect, useState, type FormEvent } from 'react';
 
 import {
-  Button,
   Field,
   Label,
   Paragraph,
   TextInput,
   Link,
+  ErrorMessage,
+  Icon,
 } from '@amsterdam/design-system-react';
+import { CheckMarkIcon } from '@amsterdam/design-system-react-icons';
 
 import { themaConfig } from './Account-thema-config.ts';
-import styles from './Account.module.scss';
 import type { AccountData } from '../../../../../server/services/admin/admin-account.types.ts';
-import { PageContentCell } from '../../../../components/Page/Page.tsx';
-import { ThemaPagina } from '../../../../components/Thema/ThemaPagina.tsx';
+import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
+import { Spinner } from '../../../../components/Spinner/Spinner.tsx';
 import { useBffApi } from '../../../../hooks/api/useBffApi.ts';
 import { BFFApiUrls } from '../../config/api.ts';
 
@@ -37,7 +38,7 @@ export function useAccountApi(fetchImmediately: boolean = false) {
 }
 
 export function Account() {
-  const { data, isLoading, isError, saveToken } = useAccountApi(false);
+  const { data, isLoading, isError, isDirty, saveToken } = useAccountApi(false);
   const accountData = data?.content ?? null;
   const [jiraApiToken, setJiraApiToken] = useState('');
 
@@ -50,11 +51,6 @@ export function Account() {
     await saveToken(jiraApiToken);
   }
 
-  async function handleDeleteToken() {
-    setJiraApiToken('');
-    await saveToken('');
-  }
-
   const pageContentMain = (
     <PageContentCell>
       <Paragraph className="ams-mb-m">
@@ -63,16 +59,26 @@ export function Account() {
 
       <form onSubmit={handleSubmit}>
         <Field className="ams-mb-m">
-          <Label htmlFor="jira-api-token">Jira API token</Label>
+          <Label htmlFor="jira-api-token">
+            Jira API token {isLoading && <Spinner />}{' '}
+            {isDirty && !isError && jiraApiToken && (
+              <Icon svg={CheckMarkIcon} />
+            )}
+          </Label>
           <TextInput
             id="jira-api-token"
             name="jiraApiToken"
             value={jiraApiToken}
             onChange={(event) => {
-              setJiraApiToken(event.currentTarget.value);
+              const tokenFromInput = event.currentTarget.value;
+              setJiraApiToken(tokenFromInput);
+              saveToken(tokenFromInput);
             }}
             autoComplete="off"
           />
+          {isError && (
+            <ErrorMessage>Opslaan van het token is mislukt.</ErrorMessage>
+          )}
           <Paragraph className="ams-mt-xs">
             <Link
               href="https://id.atlassian.com/manage-profile/security/api-tokens"
@@ -82,56 +88,17 @@ export function Account() {
             </Link>
           </Paragraph>
         </Field>
-
-        <div className={styles.AccountActions}>
-          <Button type="submit" disabled={isLoading}>
-            Opslaan
-          </Button>
-          <Button
-            type="button"
-            variant="secondary"
-            className={styles.AccountDeleteButton}
-            disabled={isLoading}
-            onClick={handleDeleteToken}
-          >
-            Verwijder token
-          </Button>
-        </div>
       </form>
-
-      {/* {saveState === 'SUCCESS' && (
-        <Alert
-          className="ams-mt-m"
-          heading="Opgeslagen"
-          headingLevel={2}
-          severity="success"
-        >
-          Accountgegevens zijn bijgewerkt.
-        </Alert>
-      )}
-      {saveState === 'ERROR' && (
-        <Alert
-          className="ams-mt-m"
-          heading="Opslaan mislukt"
-          headingLevel={2}
-          severity="error"
-        >
-          {saveError || 'De accountgegevens konden niet worden bijgewerkt.'}
-        </Alert>
-      )} */}
     </PageContentCell>
   );
 
   return (
-    <ThemaPagina
-      title={themaConfig.title}
+    <PageV2
+      heading={themaConfig.title}
       showBreadcrumbs={false}
-      isError={isError}
-      isLoading={isLoading}
       id="admin-account"
-      pageContentTop={null}
-      pageContentMain={null}
-      pageContentTopSecondary={pageContentMain}
-    />
+    >
+      {pageContentMain}
+    </PageV2>
   );
 }

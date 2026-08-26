@@ -31,7 +31,7 @@ import {
   type RequestWithRouteAndQueryParams,
   type RequestWithQueryParams,
 } from '../../routing/route-helpers.ts';
-import type { RequestWithSession } from '../admin/admin-types.ts';
+import { getUsernameFromSession } from '../admin/admin-helpers.ts';
 
 export async function handleFetchSurvey(
   req: RequestWithQueryParams<{ id?: Survey['unique_code']; version?: string }>,
@@ -139,10 +139,6 @@ export async function handleShowSurveyOverview(
       currentPage,
     })
   );
-}
-
-function getUsernameFromSession(req: Request): string {
-  return (req as RequestWithSession).session.username;
 }
 
 export async function handleCreateJiraTicket(

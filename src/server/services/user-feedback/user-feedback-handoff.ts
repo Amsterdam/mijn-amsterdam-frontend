@@ -10,29 +10,26 @@ import {
   type ApiResponsePromise,
 } from '../../../universal/helpers/api.ts';
 import { pick } from '../../../universal/helpers/utils.ts';
+import { getValueMapFromEnv } from '../../helpers/env.ts';
 
-const HANDOFF_DEPARTMENTS: UserFeedbackHandoffConfigResponse['departments'] = [
-  {
-    name: 'Klantcontact Centrum',
-    email: 'klantcontactcentrum@amsterdam.nl',
-  },
-  {
-    name: 'Vergunningen',
-    email: 'vergunningen@amsterdam.nl',
-  },
-  {
-    name: 'Wmo Loket',
-    email: 'wmo-loket@amsterdam.nl',
-  },
-];
+const HANDOFF_DEPARTMENTS: UserFeedbackHandoffConfigResponse['departments'] =
+  getValueMapFromEnv('BFF_HANDOFF_DEPARTMENTS')
+    .entries()
+    .map(([name, email]) => {
+      return {
+        name,
+        email,
+      };
+    })
+    .toArray();
 
 const HANDOFF_CC_EMAIL = 'mijnamsterdam@amsterdam.nl';
 
-const HANDOFF_EMAIL_INTRO =
-  'Hallo, wij kregen onderstaande melding op Mijn Amsterdam. Kunnen jullie dit verder oppakken?';
+const NEWLINE_SEPARATOR = encodeURIComponent('\n');
 
-const HANDOFF_EMAIL_SIGN_OFF =
-  'Mochten er nog vragen en/of opmerkingen zijn tav deze melding horen wij dat graag!\n\nMet vriendelijke groet,\nTeam Mijn Amsterdam';
+const HANDOFF_EMAIL_INTRO = `Hallo, wij kregen onderstaande melding op Mijn Amsterdam. Kunnen jullie dit verder oppakken?${NEWLINE_SEPARATOR + NEWLINE_SEPARATOR}`;
+
+const HANDOFF_EMAIL_SIGN_OFF = `${NEWLINE_SEPARATOR}Mochten er nog vragen en/of opmerkingen zijn tav deze melding horen wij dat graag!${NEWLINE_SEPARATOR + NEWLINE_SEPARATOR}Met vriendelijke groet,${NEWLINE_SEPARATOR}Team Mijn Amsterdam`;
 
 export function getUserFeedbackHandoffConfig(): ApiResponsePromise<UserFeedbackHandoffConfigResponse> {
   return Promise.resolve(
