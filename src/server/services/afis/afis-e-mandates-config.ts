@@ -87,3 +87,24 @@ export const afisEMandatePostbodyStatic: AfisEMandateSourceStatic = {
   RecId: getFromEnv('BFF_AFIS_EMANDATE_RECID') ?? '',
   Status: getFromEnv('BFF_AFIS_EMANDATE_STATUS') ?? '',
 };
+
+export const EMANDATE_CREATION_FAILED_ALERT_MESSAGE =
+  'Failed to create E-Mandate from sign request status notification payload';
+
+export const EMANDATE_STATUS_FRONTEND = {
+  ON: '1', // AfisEMandateStatusCodes['1'],
+  OFF: '0', // AfisEMandateStatusCodes['0'],
+} as const;
+
+export const EMANDATE_STATUS_SOURCE = {
+  NietActief: '0',
+  Actief: '1',
+  'Te bevestigen': '2',
+  Geblokkeerd: '3',
+  Gestorneerd: '4',
+  Verouderd: '5',
+  Afgesloten: '6',
+} as const;
+
+export type EmandateStatusFrontend =
+  (typeof EMANDATE_STATUS_FRONTEND)[keyof typeof EMANDATE_STATUS_FRONTEND];

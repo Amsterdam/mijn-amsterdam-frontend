@@ -4,8 +4,9 @@ import type { Response, Request } from 'express';
 import type { ParamsDictionary } from 'express-serve-static-core';
 import z from 'zod';
 
+import { EMANDATE_CREATION_FAILED_ALERT_MESSAGE } from './afis-e-mandates-config.ts';
 import {
-  createOrUpdateEMandateFromStatusNotificationPayload,
+  createEMandateFromStatusNotificationPayload,
   fetchEmandateSignRequestStatusFromPaymentProvider,
   updateAfisEMandate,
 } from './afis-e-mandates.ts';
@@ -24,7 +25,7 @@ import {
   type EMandateUpdatePayload,
   type POMEMandateSignRequestPayload,
 } from './afis-types.ts';
-import { IS_ACCEPTANCE, IS_AP } from '../../../universal/config/env.ts';
+import { IS_AP } from '../../../universal/config/env.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -208,25 +209,17 @@ export async function handleAfisEMandateSignRequestStatusNotification(
 
   try {
     createEmandateResponse =
-      await createOrUpdateEMandateFromStatusNotificationPayload(
-        eMandatePayload
-      );
+      await createEMandateFromStatusNotificationPayload(eMandatePayload);
   } catch (error) {
     // If the eMandate creation fails, we should log the error and return an error response.
     // This is important because the creation of the eMandate is a crucial part of the sign request process.
     // Without it, the user will not be able to complete their mandate activation.
-    captureException(
-      error,
-      IS_ACCEPTANCE
-        ? {
-            properties: {
-              payload: eMandatePayload,
-              message:
-                'Failed to create E-Mandate from sign request status notification payload',
-            },
-          }
-        : undefined
-    );
+    captureException(error, {
+      properties: {
+        payload: eMandatePayload,
+        message: EMANDATE_CREATION_FAILED_ALERT_MESSAGE,
+      },
+    });
     creationError = (error as Error).message;
   }
 
