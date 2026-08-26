@@ -89,6 +89,7 @@ export function TicketControls({
     });
 
     ticketApi.handoffDepartmentApi.fetch({
+      keepalive: true,
       payload: {
         departmentName: department.name,
         departmentEmail: department.email,
@@ -101,6 +102,7 @@ export function TicketControls({
 
   function handleResetHandoff() {
     ticketApi.handoffDepartmentApi.fetch({
+      keepalive: true,
       payload: {
         departmentName: null,
         departmentEmail: null,
