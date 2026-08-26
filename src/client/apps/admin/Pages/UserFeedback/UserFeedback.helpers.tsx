@@ -129,7 +129,7 @@ export function buildHandoffMailBody({
     `Pagina titel: ${browserTitle || '-'}`,
     '',
     'Inhoud van de vraag/opmerking:',
-    `${secondAnswer.answer || '-- geen inhoud --'}`,
+    `${secondAnswer?.answer || '-- geen inhoud --'}`,
     '',
     signOff,
   ];
