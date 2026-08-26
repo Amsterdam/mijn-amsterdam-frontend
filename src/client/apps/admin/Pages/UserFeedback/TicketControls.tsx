@@ -1,14 +1,16 @@
 import { useState } from 'react';
 
 import {
-  ActionGroup,
   Button,
   Heading,
   Link,
   Paragraph,
   UnorderedList,
 } from '@amsterdam/design-system-react';
+import { CloseIcon, PlusIcon } from '@amsterdam/design-system-react-icons';
+import classnames from 'classnames';
 
+import styles from './TicketControls.module.scss';
 import {
   buildMailtoLink,
   buildHandoffMailBody,
@@ -84,7 +86,7 @@ export function TicketControls({
     const mailToLink = buildMailtoLink({
       to: department.email,
       cc: handoffConfig.ccEmail,
-      subject: `Mijn Amsterdam melding - entry ${entry.id}`,
+      subject: `Mijn Amsterdam KTO melding - ${entry.id}`,
       body: emailBody,
     });
 
@@ -96,7 +98,11 @@ export function TicketControls({
       },
     });
 
-    window.location.href = mailToLink;
+    const a = document.createElement('a');
+    a.href = mailToLink;
+    a.target = '_blank';
+    a.click();
+
     setShowDepartments(false);
   }
 
@@ -120,18 +126,26 @@ export function TicketControls({
 
   return (
     <div>
-      <ActionGroup className="ams-mb-l">
+      <div className={classnames(styles.TicketControlButtons, 'ams-mb-l')}>
         {entry.administrationMeta?.jiraTicketNumber ? (
-          <Button
-            variant="secondary"
-            onClick={handleDeleteTicket}
-            disabled={isDeleting}
-          >
-            Verwijder ticket referentie
-          </Button>
+          <>
+            <Button
+              title="Verwijder ticketreferentie. Ticket wordt -=NIET=- verwijderd in Jira."
+              variant="secondary"
+              onClick={handleDeleteTicket}
+              disabled={isDeleting}
+              icon={<CloseIcon />}
+            >
+              {entry.administrationMeta.jiraTicketNumber}
+            </Button>
+          </>
         ) : (
-          <Button onClick={handleCreateTicket} disabled={isCreating}>
-            Maak ticket aan in Jira
+          <Button
+            icon={<PlusIcon />}
+            onClick={handleCreateTicket}
+            disabled={isCreating}
+          >
+            Maak ticket
           </Button>
         )}
         {hasHandoffDestination ? (
@@ -139,13 +153,17 @@ export function TicketControls({
             variant="secondary"
             onClick={handleResetHandoff}
             disabled={isHandingOff}
+            title="Reset doorsturen naar afdeling. Er wordt geen e-mail geopend in je standaard e-mailprogramma."
+            icon={<CloseIcon />}
           >
-            Verwijder doorstuurreferentie
+            {entry.administrationMeta?.departmentName}
           </Button>
         ) : (
           <Button
+            icon={<PlusIcon />}
             variant="secondary"
             disabled={isHandingOff}
+            title="Stuur door naar afdeling. Er wordt een e-mail geopend in je standaard e-mailprogramma."
             onClick={() => {
               setShowDepartments((current) => !current);
             }}
@@ -153,7 +171,7 @@ export function TicketControls({
             Stuur door
           </Button>
         )}
-      </ActionGroup>
+      </div>
       {showDepartments && (
         <div className="ams-mb-xl">
           <Heading size="level-3" level={3} className="ams-mb-xs">
