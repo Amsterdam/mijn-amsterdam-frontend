@@ -104,9 +104,7 @@ function AppAuthenticated() {
   );
 }
 function AppLanding() {
-  const session = useSessionApi({
-    authApiUrl: AUTH_API_URL,
-  });
+  const session = useSessionApi(AUTH_API_URL);
   const { isAuthenticated, isDirty } = session;
 
   useScrollToTop();
