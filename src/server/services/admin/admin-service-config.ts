@@ -39,6 +39,7 @@ export const routes = {
       SIGNOUT: '/auth/signout',
       ACQUIRE_TOKEN: '/auth/acquireToken',
       CALLBACK: '/auth/callback',
+      CHECK: '/auth/check',
     },
   },
   protected: {
@@ -46,6 +47,7 @@ export const routes = {
       STATS: '/visitors{/:authMethod}',
       STATS_TABLE: '/visitors/table',
     },
+    ACCOUNT: '/account',
     CACHE_OVERVIEW: '/cache',
   },
 };

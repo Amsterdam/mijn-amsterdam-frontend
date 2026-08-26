@@ -1,10 +1,12 @@
+import { getUserFeedbackMetaByEntryIds } from './user-feedback-meta.model.ts';
 import {
   featureToggle,
-  sourceApiConfig,
+  sourceApiConfigSurvey,
   SURVEY_ID_INLINE_KTO,
   SURVEY_VERSION_INLINE_KTO,
 } from './user-feedback.service-config.ts';
 import type {
+  FeedbackSurveyEntries,
   SaveUserFeedbackResponse,
   Survey,
   SurveyEntriesResponse,
@@ -25,6 +27,7 @@ import { isNumeric, omit, pick } from '../../../universal/helpers/utils.ts';
 import { camelize } from '../../helpers/camelize.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
+import { IS_DB_ENABLED } from '../db/config.ts';
 import { captureMessage } from '../monitoring.ts';
 
 export async function fetchUserFeedbackSurvey(
@@ -32,7 +35,7 @@ export async function fetchUserFeedbackSurvey(
   version: string = SURVEY_VERSION_INLINE_KTO,
   enableCache: boolean = true
 ): ApiResponsePromise<SurveyFrontend> {
-  const requestConfig = getCustomApiConfig(sourceApiConfig, {
+  const requestConfig = getCustomApiConfig(sourceApiConfigSurvey, {
     formatUrl: ({ url }) =>
       version === 'latest'
         ? `${url}/${surveyId}/latest`
@@ -41,7 +44,6 @@ export async function fetchUserFeedbackSurvey(
     enableCache,
     transformResponse(survey: Survey) {
       const surveyCamelized = camelize(survey);
-
       const base = pick(surveyCamelized, [
         'id',
         'version',
@@ -54,6 +56,7 @@ export async function fetchUserFeedbackSurvey(
 
       return {
         ...base,
+        title: base.title ?? `Survey ${base.version}`,
         questions: survey.questions?.map((question) => {
           return (
             pick(camelize(question), [
@@ -109,7 +112,7 @@ export async function saveUserFeedback(
     return answer_ ? !isNumeric(answer_) : false;
   });
 
-  const requestConfig = getCustomApiConfig(sourceApiConfig, {
+  const requestConfig = getCustomApiConfig(sourceApiConfigSurvey, {
     formatUrl: ({ url }) => `${url}/${surveyId}/versions/${version}/entries`,
     method: 'POST',
     data: surveyEntryPayload,
@@ -133,9 +136,9 @@ async function fetchFeedbackSurveyEntries(
   surveyId: Survey['unique_code'],
   surveyVersion: string,
   page: number = 1
-): ApiResponsePromise<{ entries: SurveyEntryFrontend[]; pageCount: number }> {
+): ApiResponsePromise<FeedbackSurveyEntries> {
   const PAGE_SIZE = 100;
-  const requestConfig = getCustomApiConfig(sourceApiConfig, {
+  const requestConfig = getCustomApiConfig(sourceApiConfigSurvey, {
     formatUrl: ({ url }) => `${url}/entries`,
     method: 'GET',
     params: {
@@ -143,6 +146,8 @@ async function fetchFeedbackSurveyEntries(
       page,
       survey_unique_code: surveyId,
       survey_version: surveyVersion,
+      sort_by: 'created_at',
+      sort_order: 'desc',
     },
     enableCache: false,
     transformResponse(entriesResponse: SurveyEntriesResponse) {
@@ -168,6 +173,7 @@ async function fetchFeedbackSurveyEntries(
             'browserTitle',
           ]),
           entryPoint: entry.entry_point,
+          administrationMeta: null,
         };
 
         return surveyEntryFrontend;
@@ -175,14 +181,13 @@ async function fetchFeedbackSurveyEntries(
 
       return {
         entries,
+        total: entriesResponse.count,
         pageCount: Math.ceil(entriesResponse.count / PAGE_SIZE),
       };
     },
   });
 
-  return requestData<{ entries: SurveyEntryFrontend[]; pageCount: number }>(
-    requestConfig
-  );
+  return requestData<FeedbackSurveyEntries>(requestConfig);
 }
 
 export async function userFeedbackOverview(
@@ -208,6 +213,20 @@ export async function userFeedbackOverview(
   }
 
   const survey = surveyResponse.content;
+  const entries = entriesResponse.content.entries;
+  let entriesWithMeta = entries;
+
+  if (IS_DB_ENABLED && entries.length > 0) {
+    const metaByEntryId = await getUserFeedbackMetaByEntryIds(
+      entries.map((entry) => entry.id)
+    );
+
+    entriesWithMeta = entries.map((entry) => ({
+      ...entry,
+      administrationMeta: metaByEntryId.get(entry.id) ?? null,
+    }));
+  }
+
   const questionsById = Object.fromEntries(
     survey.questions.map((question) => {
       return [question.id, question.questionText];
@@ -217,12 +236,13 @@ export async function userFeedbackOverview(
   return apiSuccessResult(
     {
       survey: {
-        title: survey.title ?? 'Untitled survey',
+        title: survey.title,
         questions: questionsById,
       },
-      entries: entriesResponse.content.entries.toSorted((a, b) =>
+      entries: entriesWithMeta.toSorted((a, b) =>
         b.dateCreated.localeCompare(a.dateCreated)
       ),
+      total: entriesResponse.content.total,
       pageCount: entriesResponse.content.pageCount,
     },
     getFailedDependencies({
