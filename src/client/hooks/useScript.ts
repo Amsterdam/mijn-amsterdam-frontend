@@ -59,7 +59,7 @@ export function useScript({
           loaded: true,
           error: false,
         });
-        onLoadCallback && onLoadCallback();
+        onLoadCallback?.();
       };
 
       const onScriptError = () => {

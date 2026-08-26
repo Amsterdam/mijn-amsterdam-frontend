@@ -18,6 +18,7 @@ import type { RequestWithSession } from './admin-types.ts';
 import { loginStats, loginStatsTable } from './admin-visitors.ts';
 import { IS_AP, OTAP_ENV } from '../../../universal/config/env.ts';
 import { getFromEnv } from '../../helpers/env.ts';
+import { checkIfDbEnabled } from '../../routing/route-handlers.ts';
 import { createBFFRouter } from '../../routing/route-helpers.ts';
 
 // Public routes that don't require authentication.
@@ -57,6 +58,7 @@ maAdminAuthRouterPublic.get(routes.public.auth.CHECK, authCheckHandler);
 const maAdminRouterProtected = createBFFRouter({
   id: 'ma-admin-router-protected',
 });
+maAdminRouterProtected.use(checkIfDbEnabled);
 
 maAdminRouterProtected.get(
   routes.protected.visitors.STATS_TABLE,
