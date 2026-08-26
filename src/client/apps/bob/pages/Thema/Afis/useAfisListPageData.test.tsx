@@ -6,8 +6,8 @@ import { useAfisListPageData } from './useAfisListPageData.tsx';
 import { bffApi } from '../../../../../../testing/utils.ts';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 
-vi.mock('../../../hooks/useAppStateStore');
-vi.mock('../../../hooks/useThemaBreadcrumbs');
+vi.mock('../../../../../hooks/useAppStateStore');
+vi.mock('../../../../../hooks/useThemaBreadcrumbs');
 
 const mockAFIS = {
   content: {

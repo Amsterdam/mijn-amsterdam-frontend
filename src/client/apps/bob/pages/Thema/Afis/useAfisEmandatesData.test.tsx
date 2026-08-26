@@ -12,7 +12,8 @@ import { bffApi } from '../../../../../../testing/utils.ts';
 import { useBffApiStateStore } from '../../../../../hooks/api/useBffApi.ts';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 
-vi.mock('../../../hooks/useAppStateStore');
+vi.mock('../../../../../hooks/useAppStateStore.ts');
+
 vi.mock('react-router', async (importActual) => {
   const actual: object = await importActual();
   return {
@@ -40,6 +41,8 @@ describe('updateEmandateById', () => {
         dateValidToFormatted: '31-12-2025',
         link: { to: '/details', title: 'Details' },
         eMandateIdSource: null,
+        businessPartnerId: '',
+        history: [],
       },
       {
         id: '2',
@@ -55,6 +58,8 @@ describe('updateEmandateById', () => {
         dateValidToFormatted: '31-12-2025',
         link: { to: '/details', title: 'Details' },
         eMandateIdSource: null,
+        businessPartnerId: '',
+        history: [],
       },
     ];
     const updatedMandates = forTesting.updateEmandateById(
@@ -319,6 +324,8 @@ describe('useEmandateApis', () => {
     dateValidTo: '2025-12-31',
     dateValidToFormatted: '31-12-2025',
     eMandateIdSource: null,
+    businessPartnerId: '',
+    history: [],
   };
 
   beforeEach(() => {

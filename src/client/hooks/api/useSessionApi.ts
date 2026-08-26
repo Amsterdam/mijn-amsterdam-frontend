@@ -16,8 +16,8 @@ export type SessionData = {
   expiresAtMilliseconds: number; // In milliseconds
 };
 
-export function useSessionApi() {
-  const sessionApi = useBffApi<SessionData>(AUTH_API_URL);
+export function useSessionApi(url: string = AUTH_API_URL) {
+  const sessionApi = useBffApi<SessionData>(url);
   const { data, fetch } = sessionApi;
   const sessionData = data?.content ?? null;
   const { setProfileType } = useProfileType();
@@ -57,10 +57,10 @@ export function useSessionApi() {
   };
 }
 
-export function useLogout() {
+export function useLogout(url: string = LOGOUT_URL) {
   return () => {
     clearSessionStorage();
     clearDeeplinkEntry();
-    window.location.href = LOGOUT_URL;
+    window.location.href = url;
   };
 }

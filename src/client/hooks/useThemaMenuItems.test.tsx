@@ -22,7 +22,7 @@ vi.mock('./useAppStateStore', () => ({
   useAppStateReady: vi.fn(),
 }));
 
-vi.mock('../config/menuItems', () => ({
+vi.mock('../apps/bob/config/menuItems.ts', () => ({
   useThemasByProfileType: vi.fn(),
 }));
 

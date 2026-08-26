@@ -6,7 +6,7 @@ import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData.tsx';
 import type { ApiSuccessResponse } from '../../../../../../universal/helpers/api.ts';
 import { useBffApi } from '../../../../../hooks/api/useBffApi.ts';
 
-vi.mock('../../../hooks/api/useBffApi');
+vi.mock('../../../../../hooks/api/useBffApi');
 
 describe('useAfisBetaalVoorkeurenData', () => {
   const businessPartnerIdEncrypted = 'encryptedId';

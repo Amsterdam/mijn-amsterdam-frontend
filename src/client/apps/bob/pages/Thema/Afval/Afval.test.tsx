@@ -149,7 +149,7 @@ const testState = {
   },
 };
 
-vi.mock('../../../hooks/useProfileType');
+vi.mock('../../../../../hooks/useProfileType');
 
 describe('<AfvalThemaPagina />', () => {
   const routePath = themaConfig.route.path;
@@ -218,8 +218,8 @@ describe('<AfvalThemaPagina />', () => {
   it('Does not show warning concercing woonfunctie', () => {
     (useProfileTypeValue as Mock).mockReturnValueOnce('private');
 
-    const testState2 = jsonCopy(testState);
-    testState2.AFVAL.content = testState2.AFVAL.content.map(
+    const testState2 = jsonCopy(testState) as any;
+    testState2.AFVAL.content = testState2.AFVAL.content?.map(
       (fractie: AfvalFractionData) => ({
         ...fractie,
         gebruiksdoelWoonfunctie: true,

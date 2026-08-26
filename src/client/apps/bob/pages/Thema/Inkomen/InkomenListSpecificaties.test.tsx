@@ -11,25 +11,31 @@ import { dateSort } from '../../../../../../universal/helpers/date.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { MockApp } from '../../MockApp.tsx';
 
-vi.mock('../../../components/DateInput/DateInput', async (importOriginal) => {
-  const original = (await importOriginal()) as object;
-  return {
-    ...original,
-    isNativeDatePickerInputSupported() {
-      return true;
-    },
-  };
-});
+vi.mock(
+  '../../../../../components/DateInput/DateInput',
+  async (importOriginal) => {
+    const original = (await importOriginal()) as object;
+    return {
+      ...original,
+      isNativeDatePickerInputSupported() {
+        return true;
+      },
+    };
+  }
+);
 
-vi.mock('../../../../server/helpers/encrypt-decrypt', async (requireActual) => {
-  return {
-    ...((await requireActual()) as object),
-    encryptSessionIdWithRouteIdParam: () => {
-      return 'test-encrypted-id';
-    },
-    decrypt: () => 'session-id:e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
-  };
-});
+vi.mock(
+  '../../../../../../server/helpers/encrypt-decrypt',
+  async (requireActual) => {
+    return {
+      ...((await requireActual()) as object),
+      encryptSessionIdWithRouteIdParam: () => {
+        return 'test-encrypted-id';
+      },
+      decrypt: () => 'session-id:e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
+    };
+  }
+);
 
 const sourceData: WpiIncomeSpecificationResponseData = {
   jaaropgaven: [

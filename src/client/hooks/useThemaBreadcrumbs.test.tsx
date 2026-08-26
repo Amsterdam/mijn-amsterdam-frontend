@@ -7,7 +7,7 @@ import { useThemaBreadcrumbs } from './useThemaBreadcrumbs.ts';
 import type { ThemaMenuItemTransformed } from '../../universal/types/thema-types.ts';
 import { useThemasByProfileType } from '../apps/bob/config/menuItems.ts';
 
-vi.mock('../config/menuItems', () => ({
+vi.mock('../apps/bob/config/menuItems.ts', () => ({
   useThemasByProfileType: vi.fn(),
 }));
 
