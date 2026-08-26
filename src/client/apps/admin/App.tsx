@@ -28,7 +28,7 @@ function AppLanding() {
 
   // We don't want to show the app content until we know whether the user is authenticated or not,
   // to prevent flashing of the wrong content.
-  // Therefore, we return null while the session is still loading (dirty).
+  // Therefore, we return null until the session check has completed at least once (isDirty === true).
   if (!isDirty) {
     return null;
   }
