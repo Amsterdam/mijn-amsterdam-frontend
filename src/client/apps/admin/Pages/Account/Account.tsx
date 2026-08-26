@@ -17,8 +17,8 @@ import { ThemaPagina } from '../../../../components/Thema/ThemaPagina.tsx';
 import { useBffApi } from '../../../../hooks/api/useBffApi.ts';
 import { BFFApiUrls } from '../../config/api.ts';
 
-function useAccountApi() {
-  const api = useBffApi<AccountData>(BFFApiUrls.ACCOUNT);
+export function useAccountApi(fetchImmediately: boolean = false) {
+  const api = useBffApi<AccountData>(BFFApiUrls.ACCOUNT, { fetchImmediately });
 
   return {
     ...api,
@@ -37,7 +37,7 @@ function useAccountApi() {
 }
 
 export function Account() {
-  const { data, isLoading, isError, saveToken } = useAccountApi();
+  const { data, isLoading, isError, saveToken } = useAccountApi(false);
   const accountData = data?.content ?? null;
   const [jiraApiToken, setJiraApiToken] = useState('');
 
