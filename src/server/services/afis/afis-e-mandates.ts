@@ -559,26 +559,6 @@ export async function fetchEmandatesByCreditorRefId(
   return requestData<AfisEMandateSource[]>(config);
 }
 
-export async function fetchEmandateIdsByCreditorRefId(
-  businessPartnerId: BusinessPartnerId,
-  creditorRefID: AfisEMandateCreditor['refId']
-): Promise<ApiResponse<AfisEMandateSource['IMandateId'][]>> {
-  const response = await fetchEmandatesByCreditorRefId(
-    businessPartnerId,
-    creditorRefID
-  );
-
-  if (response.status !== 'OK') {
-    return response;
-  }
-
-  const eMandateIds = response.content.map(
-    (eMandateSource) => eMandateSource.IMandateId
-  );
-
-  return apiSuccessResult(eMandateIds);
-}
-
 export async function fetchEMandates(
   payload: BusinessPartnerIdPayload,
   sessionID: SessionID
