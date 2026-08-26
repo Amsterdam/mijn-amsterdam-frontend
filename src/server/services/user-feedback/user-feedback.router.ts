@@ -10,6 +10,7 @@ import {
   handleUserFeedbackSubmission,
 } from './user-feedback.route-handlers.ts';
 import { featureToggle, routes } from './user-feedback.service-config.ts';
+import { checkIfDbEnabled } from '../../routing/route-handlers.ts';
 import { createBFFRouter } from '../../routing/route-helpers.ts';
 
 const userFeedbackRouterProtected = createBFFRouter({
@@ -32,6 +33,8 @@ const userFeedbackRouterAdmin = createBFFRouter({
   id: 'admin-user-feedback-router',
   isEnabled: featureToggle.router.admin.isEnabled,
 });
+
+userFeedbackRouterAdmin.use(checkIfDbEnabled);
 
 userFeedbackRouterAdmin.get(
   routes.admin.USER_FEEDBACK_OVERVIEW,

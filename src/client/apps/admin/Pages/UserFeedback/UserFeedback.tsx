@@ -101,7 +101,7 @@ function UserFeedbackTable({
                   <Link href={jiraTicketUrl}>{jiraTicketNumber}</Link>
                 )}
                 {departmentName && departmentEmail ? (
-                  <span>
+                  <span className={styles.DepartmentInfo}>
                     Overgedragen aan: {departmentName} ({departmentEmail})
                   </span>
                 ) : (
