@@ -4,6 +4,7 @@ import styles from './UserFeedback.module.scss';
 import { UserFeedback } from './UserFeedback.tsx';
 import { useSubmitUserFeedback } from './useSubmitUserFeedback.ts';
 import type { RecordStr2 } from '../../../server/routing/route-helpers.ts';
+import { isMokum } from '../../../universal/helpers/brp.ts';
 import { BFFApiUrls } from '../../apps/bob/config/api.ts';
 import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
@@ -68,6 +69,7 @@ export function InlineKTO({ userFeedbackDetails }: InlineKTOProps) {
     payload.maThemas = JSON.stringify(
       myThemaItems.filter((item) => item.isActive).map((item) => item.title)
     );
+    payload.maMokum = isMokum(appState.BRP.content) ? 'Ja' : 'Nee';
     if (errors.length) {
       payload.maErrors = JSON.stringify(errors);
     }
