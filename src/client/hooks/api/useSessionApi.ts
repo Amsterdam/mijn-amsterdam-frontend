@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
 
 import type { AuthProfile } from '../../../server/auth/auth-types.ts';
-import { AUTH_API_URL, LOGOUT_URL } from '../../apps/bob/config/api.ts';
 import { clearSessionStorage } from '../storage.hook.ts';
 import { clearDeeplinkEntry } from '../useDeeplink.hook.ts';
 import { useProfileType } from '../useProfileType.ts';
-import { useBffApi } from './useBffApi.ts';
+import { useBffApi, useBffApiStateStore } from './useBffApi.ts';
 
 export const ONE_SECOND_MS = 1000;
 
@@ -16,8 +15,10 @@ export type SessionData = {
   expiresAtMilliseconds: number; // In milliseconds
 };
 
-export function useSessionApi(url: string = AUTH_API_URL) {
-  const sessionApi = useBffApi<SessionData>(url);
+export function useSessionApi<T extends SessionData = SessionData>(
+  url: string
+) {
+  const sessionApi = useBffApi<T>(url);
   const { data, fetch } = sessionApi;
   const sessionData = data?.content ?? null;
   const { setProfileType } = useProfileType();
@@ -57,7 +58,14 @@ export function useSessionApi(url: string = AUTH_API_URL) {
   };
 }
 
-export function useLogout(url: string = LOGOUT_URL) {
+export function useSessionApiData<T extends SessionData = SessionData>(
+  url: string
+) {
+  const bffApiStateStore = useBffApiStateStore();
+  return bffApiStateStore.get<T>(url)?.data?.content ?? null;
+}
+
+export function useLogout(url: string) {
   return () => {
     clearSessionStorage();
     clearDeeplinkEntry();
