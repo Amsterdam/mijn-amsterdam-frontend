@@ -47,7 +47,7 @@ export function ThemaPagina({
   id,
   title,
   breadcrumbs,
-  showBreadcrumbs,
+  showBreadcrumbs = true,
   pageContentTop,
   pageContentTopSecondary,
   pageLinks = [],
