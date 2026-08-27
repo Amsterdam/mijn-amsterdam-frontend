@@ -179,7 +179,7 @@ function AfvalFractionPanels({ fractions }: AfvalFractionPanelsProps) {
       </PageContentCell>
       <PageContentCell
         start={{ wide: 7, medium: 1, narrow: 1 }}
-        span={{ wide: 6, medium: 1, narrow: 1 }}
+        span={{ wide: 6, medium: 8, narrow: 4 }}
       >
         {fractions2
           .filter((fractionCode) => fractionCode in fractionsByCode)
