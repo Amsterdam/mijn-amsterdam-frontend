@@ -88,6 +88,22 @@ describe('DataView helpers', () => {
     expect(formatPropValueForDisplay<typeof element>(element)).toBe(element);
   });
 
+  test('formatPropValueForDisplay returns mixed React-node arrays unchanged', () => {
+    const mixedValue = [
+      '€ 1.000,00 betaaltermijn verstreken',
+      <br key="line-break" />,
+      <strong key="warning">Let op!</strong>,
+    ];
+    const result = formatPropValueForDisplay<{ mixedValue: React.ReactNode[] }>(
+      mixedValue
+    );
+
+    const expectedResult =
+      '["€ 1.000,00 betaaltermijn verstreken",{"type":"br","key":"line-break","ref":null,"props":{},"_owner":null,"_store":{}},{"type":"strong","key":"warning","ref":null,"props":{"children":"Let op!"},"_owner":null,"_store":{}}]';
+
+    expect(result).toBe(expectedResult);
+  });
+
   test('formatPropValueForDisplay stringifies objects', () => {
     const testObject = { label: 'value' };
     const testElementObject = { label: testObject };

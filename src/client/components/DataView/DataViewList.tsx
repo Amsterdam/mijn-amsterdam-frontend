@@ -85,6 +85,15 @@ export function formatPropValueForDisplay<T>(value: T[keyof T]) {
 
   return String(value);
 }
+
+export function formatPropValueForDisplayList<T>(value: T[keyof T]) {
+  if (!Array.isArray(value)) {
+    return formatPropValueForDisplay(value);
+  }
+
+  return value.map((item: T[keyof T]) => formatPropValueForDisplay(item));
+}
+
 export function DataViewList<T extends { link?: LinkProps; title?: string }>({
   caption,
   items,
@@ -131,7 +140,11 @@ export function DataViewList<T extends { link?: LinkProps; title?: string }>({
                     return (
                       <Paragraph key={propKey}>
                         <strong>{label}:</strong>{' '}
-                        {formatPropValueForDisplay(value)}
+                        {Array.isArray(value)
+                          ? value.map((item: T[keyof T]) =>
+                              formatPropValueForDisplay(item)
+                            )
+                          : formatPropValueForDisplay(value)}
                       </Paragraph>
                     );
                   })}
