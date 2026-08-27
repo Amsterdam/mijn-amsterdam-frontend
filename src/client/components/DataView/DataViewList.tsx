@@ -85,7 +85,6 @@ export function formatPropValueForDisplay<T>(value: T[keyof T]) {
 
   return String(value);
 }
-
 export function DataViewList<T extends { link?: LinkProps; title?: string }>({
   caption,
   items,
