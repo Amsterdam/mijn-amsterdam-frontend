@@ -1,20 +1,19 @@
 import { eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/node-postgres';
 
-import type { AccountData, AccountUpdateInput } from './admin-account.types.ts';
+import type {
+  AccountData,
+  AccountRow,
+  AccountUpdateInput,
+} from './admin-account.types.ts';
 import { defaultDateTimeFormat } from '../../../universal/helpers/date.ts';
+import { encrypt, decrypt } from '../../helpers/encrypt-decrypt.ts';
 import { getPool } from '../db/postgres.ts';
 import { adminAccountsTable } from '../db/schema/admin-accounts.ts';
 
 function getDrizzleDb() {
   return drizzle(getPool());
 }
-
-type AccountRow = {
-  username: string;
-  jiraApiToken: string;
-  lastSignInDate: Date;
-};
 
 function ensureRow(row: AccountRow | undefined): AccountRow {
   if (!row) {
@@ -27,7 +26,7 @@ function ensureRow(row: AccountRow | undefined): AccountRow {
 function toAccountData(row: AccountRow): AccountData {
   return {
     username: row.username,
-    jiraApiToken: row.jiraApiToken,
+    jiraApiToken: row.jiraApiToken ? decrypt(row.jiraApiToken) : '',
     lastSignInDate: defaultDateTimeFormat(row.lastSignInDate),
   };
 }
@@ -78,7 +77,7 @@ export async function getOrCreateAccountData(
 
 export async function updateAccountData(
   username: string,
-  update: AccountUpdateInput,
+  updatePayload: AccountUpdateInput,
   now: Date = new Date()
 ): Promise<AccountData> {
   const drizzleDb = getDrizzleDb();
@@ -89,12 +88,14 @@ export async function updateAccountData(
     .where(eq(adminAccountsTable.username, username))
     .limit(1);
 
+  const [jiraApiTokenEncrypted] = encrypt(updatePayload.jiraApiToken);
+
   if (existing.length === 0) {
     const [inserted] = await drizzleDb
       .insert(adminAccountsTable)
       .values({
         username,
-        jiraApiToken: update.jiraApiToken,
+        jiraApiToken: jiraApiTokenEncrypted,
         lastSignInDate: now,
       })
       .returning(accountSelect);
@@ -105,7 +106,7 @@ export async function updateAccountData(
   const [updated] = await drizzleDb
     .update(adminAccountsTable)
     .set({
-      jiraApiToken: update.jiraApiToken,
+      jiraApiToken: jiraApiTokenEncrypted,
     })
     .where(eq(adminAccountsTable.username, username))
     .returning(accountSelect);
