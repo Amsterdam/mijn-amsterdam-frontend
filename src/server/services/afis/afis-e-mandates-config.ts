@@ -99,7 +99,7 @@ export const EMANDATE_STATUS_FRONTEND = {
 export const EMANDATE_STATUS_SOURCE = {
   NietActief: '0',
   Actief: '1',
-  'Te bevestigen': '2',
+  TeBevestigen: '2',
   Geblokkeerd: '3',
   Gestorneerd: '4',
   Verouderd: '5',
