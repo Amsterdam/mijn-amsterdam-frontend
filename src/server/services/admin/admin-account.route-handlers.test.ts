@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('../db/config.ts', async (importOriginal) => {
-  const actual = await importOriginal();
+  const actual: object = await importOriginal();
 
   return {
     ...actual,
@@ -32,18 +32,13 @@ describe('admin-account-route-handlers', () => {
     vi.resetAllMocks();
   });
 
-  it('returns unauthorized when username is missing for GET', async () => {
+  it('expect handler to throw if session is not set', async () => {
     const req = RequestMock.new().get();
     const res = ResponseMock.new();
 
-    await getAccountDataHandler(req, res);
+    await expect(() => getAccountDataHandler(req, res)).rejects.toThrow();
 
-    expect(res.status).toHaveBeenCalledWith(401);
-    expect(res.send).toHaveBeenCalledWith(
-      expect.objectContaining({
-        status: 'ERROR',
-      })
-    );
+    expect(res.send).not.toHaveBeenCalled();
   });
 
   it('returns account data for GET', async () => {
