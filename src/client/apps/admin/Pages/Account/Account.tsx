@@ -9,6 +9,7 @@ import {
   ActionGroup,
 } from '@amsterdam/design-system-react';
 import { CheckMarkIcon } from '@amsterdam/design-system-react-icons';
+import { useDebouncedCallback } from 'use-debounce';
 
 import { themaConfig } from './Account-thema-config.ts';
 import type { AccountData } from '../../../../../server/services/admin/admin-account.types.ts';
@@ -50,6 +51,10 @@ export function Account() {
     await saveToken(jiraApiToken);
   }
 
+  const saveDebounced = useDebouncedCallback(async () => {
+    await saveToken(jiraApiToken);
+  }, 500);
+
   const pageContentMain = (
     <PageContentCell>
       <Paragraph className="ams-mb-m">
@@ -71,7 +76,7 @@ export function Account() {
             onChange={(event) => {
               const tokenFromInput = event.currentTarget.value;
               setJiraApiToken(tokenFromInput);
-              saveToken(tokenFromInput);
+              saveDebounced();
             }}
             autoComplete="off"
           />
