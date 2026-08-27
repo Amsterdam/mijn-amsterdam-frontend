@@ -2,7 +2,6 @@ import { HttpStatusCode } from 'axios';
 
 import {
   getJiraAuthHeader,
-  isAuthenticationFailure,
   normalizeJiraLabel,
   toJiraDescription,
 } from './user-feedback-jira.helpers.ts';
@@ -170,14 +169,6 @@ export async function createJiraTicketForFeedbackEntry(
   );
 
   if (jiraAccountResponse.status === 'ERROR') {
-    if (isAuthenticationFailure(jiraAccountResponse.code)) {
-      return apiErrorResult(
-        AUTH_FAILURE_MESSAGE,
-        null,
-        HttpStatusCode.Unauthorized
-      );
-    }
-
     return jiraAccountResponse;
   }
 
@@ -190,7 +181,6 @@ export async function createJiraTicketForFeedbackEntry(
   }
 
   const jiraAccountId = jiraAccountResponse.content.accountId;
-
   const summary = `${input.surveyTitle} - entry ${input.entryId}`;
 
   const requestConfig = getCustomApiConfig(sourceApiConfigJiraRestV3, {
@@ -225,14 +215,6 @@ export async function createJiraTicketForFeedbackEntry(
     await requestData<JiraIssueCreateResponse>(requestConfig);
 
   if (createIssueResponse.status === 'ERROR') {
-    if (isAuthenticationFailure(createIssueResponse.code)) {
-      return apiErrorResult(
-        AUTH_FAILURE_MESSAGE,
-        null,
-        HttpStatusCode.Unauthorized
-      );
-    }
-
     return createIssueResponse;
   }
 
@@ -251,14 +233,6 @@ export async function createJiraTicketForFeedbackEntry(
   );
 
   if (addToSprintResponse.status === 'ERROR') {
-    if (isAuthenticationFailure(addToSprintResponse.code)) {
-      return apiErrorResult(
-        AUTH_FAILURE_MESSAGE,
-        null,
-        HttpStatusCode.Unauthorized
-      );
-    }
-
     return addToSprintResponse;
   }
 
