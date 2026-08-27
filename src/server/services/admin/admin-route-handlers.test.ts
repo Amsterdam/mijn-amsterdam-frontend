@@ -54,15 +54,25 @@ describe('admin-route-handlers', () => {
 
     await adminIndexHandler(req, res);
 
-    expect(res.render).toHaveBeenCalledWith(
-      'admin-index',
-      expect.objectContaining({
-        title: 'Mijn Amsterdam Admin',
-        isAuthenticated: true,
-        username: 'Alice',
-        links: expect.any(Object),
-      })
-    );
+    expect(res.send).toHaveBeenCalledWith({
+      content: {
+        links: [
+          {
+            title: 'Cache overzicht',
+            to: 'http://bff-api-host/api/v1/admin/cache',
+          },
+          {
+            title: 'Login statistieken',
+            to: 'http://bff-api-host/api/v1/admin/visitors/private',
+          },
+          {
+            title: 'App notificaties registraties',
+            to: 'http://bff-api-host/api/v1/admin/notifications/registrations-overview',
+          },
+        ],
+      },
+      status: 'OK',
+    });
   });
 
   it('renders admin-index with login link when not authenticated (adminIndexHandler)', async () => {
@@ -72,17 +82,25 @@ describe('admin-route-handlers', () => {
 
     await adminIndexHandler(req, res);
 
-    expect(res.render).toHaveBeenCalledWith(
-      'admin-index',
-      expect.objectContaining({
-        isAuthenticated: false,
-        links: {
-          Inloggen: 'http://bff-api-host/api/v1/admin/auth/signin',
-        },
-        title: 'Mijn Amsterdam Admin',
-        username: undefined,
-      })
-    );
+    expect(res.send).toHaveBeenCalledWith({
+      content: {
+        links: [
+          {
+            title: 'Cache overzicht',
+            to: 'http://bff-api-host/api/v1/admin/cache',
+          },
+          {
+            title: 'Login statistieken',
+            to: 'http://bff-api-host/api/v1/admin/visitors/private',
+          },
+          {
+            title: 'App notificaties registraties',
+            to: 'http://bff-api-host/api/v1/admin/notifications/registrations-overview',
+          },
+        ],
+      },
+      status: 'OK',
+    });
   });
 
   it('returns cache overview JSON (cacheOverviewHandler)', async () => {
