@@ -1,5 +1,3 @@
-import { HttpStatusCode } from 'axios';
-
 import {
   JIRA_BASE_URL,
   MA_FRONTEND_URL,
@@ -67,12 +65,6 @@ export function getJiraAuthHeader(username: string, jiraApiToken: string) {
   );
 
   return `Basic ${credentials}`;
-}
-
-export function isAuthenticationFailure(code?: number) {
-  return (
-    code === HttpStatusCode.Unauthorized || code === HttpStatusCode.Forbidden
-  );
 }
 
 export function toJiraDescription(input: CreateJiraTicketInput) {
