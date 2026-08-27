@@ -17,16 +17,13 @@ export const routes = {
   },
 };
 
-const isUserfeedbackEnabled =
-  getFromEnv('BFF_USER_FEEDBACK_ENABLED') === 'true';
-
 export const featureToggle = {
   router: {
     protected: {
-      isEnabled: isUserfeedbackEnabled,
+      isEnabled: isEnabled('USER_FEEDBACK.router.protected'),
     },
     admin: {
-      isEnabled: isUserfeedbackEnabled,
+      isEnabled: isEnabled('USER_FEEDBACK.router.admin'),
     },
   },
   service: {

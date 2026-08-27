@@ -6,7 +6,7 @@ function requiredEnv(key: string) {
   return getFromEnv(
     key,
     true,
-    isEnabled('USER_FEEDBACK.ticketCreation')
+    isEnabled('USER_FEEDBACK.sevice.jira')
   ) as string;
 }
 
@@ -25,6 +25,14 @@ export const MA_FRONTEND_URL = requiredEnv('MA_FRONTEND_URL');
 export const AUTH_FAILURE_MESSAGE =
   'Renew your token / check your authentication.';
 
+export const featureToggle = {
+  service: {
+    ticketCreation: {
+      enabled: isEnabled('USER_FEEDBACK.sevice.jira'),
+    },
+  },
+};
+
 export const sourceApiConfigJiraRestV3: DataRequestConfig = {
   url: `${JIRA_BASE_URL}/rest/api/3`,
   method: 'GET',
@@ -32,6 +40,7 @@ export const sourceApiConfigJiraRestV3: DataRequestConfig = {
     Accept: 'application/json',
   },
   enableCache: false,
+  postponeFetch: !featureToggle.service.ticketCreation.enabled,
 } as const;
 
 export const sourceApiConfigJiraAgile: DataRequestConfig = {
@@ -41,6 +50,7 @@ export const sourceApiConfigJiraAgile: DataRequestConfig = {
     Accept: 'application/json',
   },
   enableCache: false,
+  postponeFetch: !featureToggle.service.ticketCreation.enabled,
 } as const;
 
 export const ALL_ISSUES_LINK =
