@@ -97,11 +97,7 @@ describe('DataView helpers', () => {
     const result = formatPropValueForDisplay<{ mixedValue: React.ReactNode[] }>(
       mixedValue
     );
-
-    const expectedResult =
-      '["€ 1.000,00 betaaltermijn verstreken",{"type":"br","key":"line-break","ref":null,"props":{},"_owner":null,"_store":{}},{"type":"strong","key":"warning","ref":null,"props":{"children":"Let op!"},"_owner":null,"_store":{}}]';
-
-    expect(result).toBe(expectedResult);
+    expect(result).toStrictEqual(mixedValue);
   });
 
   test('formatPropValueForDisplay stringifies objects', () => {
