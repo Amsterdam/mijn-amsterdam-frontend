@@ -427,7 +427,8 @@ async function fetchZakenByUserKey(
   zaakTypeTransformers: DecosZaakTransformer[]
 ) {
   assert(
-    SELECT_FIELDS_TRANSFORM_BASE[CASE_TYP_FIELD_DECOS] === caseType,
+    // eslint-disable-next-line eqeqeq
+    SELECT_FIELDS_TRANSFORM_BASE[CASE_TYP_FIELD_DECOS] == caseType,
     `getZakenByUserKey expects field ${CASE_TYP_FIELD_DECOS} to be the caseType`
   );
   const zaakTypeTransformersByItemType = zaakTypeTransformers.reduce<
