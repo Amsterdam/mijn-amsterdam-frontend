@@ -192,7 +192,8 @@ async function transformDecosZaakResponse<
 ): Promise<DZ | null> {
   const zaakType: T['caseType'] = getDecosZaakTypeFromSource(decosZaakSource);
   const decosZaakTransformer = decosZaakTransformers.find(
-    (transformer) => transformer.caseType === zaakType
+    // eslint-disable-next-line eqeqeq
+    (transformer) => transformer.caseType == zaakType
   );
 
   if (!decosZaakTransformer || !decosZaakTransformer.transformFields) {
@@ -374,7 +375,8 @@ async function transformDecosZakenResponse<
   for (const decosZaakSource of decosZakenSource) {
     const zaakType: T['caseType'] = getDecosZaakTypeFromSource(decosZaakSource);
     const decosZaakTransformer = decosZaakTransformers.find(
-      (transformer) => transformer.caseType === zaakType
+      // eslint-disable-next-line eqeqeq
+      (transformer) => transformer.caseType == zaakType
     );
 
     // exclude decosZaakSources that do not have a matching decosZaakTransformer
