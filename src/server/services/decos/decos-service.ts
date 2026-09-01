@@ -192,8 +192,7 @@ async function transformDecosZaakResponse<
 ): Promise<DZ | null> {
   const zaakType: T['caseType'] = getDecosZaakTypeFromSource(decosZaakSource);
   const decosZaakTransformer = decosZaakTransformers.find(
-    // eslint-disable-next-line eqeqeq
-    (transformer) => transformer.caseType == zaakType
+    (transformer) => transformer.caseType === zaakType
   );
 
   if (!decosZaakTransformer || !decosZaakTransformer.transformFields) {
@@ -375,8 +374,7 @@ async function transformDecosZakenResponse<
   for (const decosZaakSource of decosZakenSource) {
     const zaakType: T['caseType'] = getDecosZaakTypeFromSource(decosZaakSource);
     const decosZaakTransformer = decosZaakTransformers.find(
-      // eslint-disable-next-line eqeqeq
-      (transformer) => transformer.caseType == zaakType
+      (transformer) => transformer.caseType === zaakType
     );
 
     // exclude decosZaakSources that do not have a matching decosZaakTransformer
@@ -427,8 +425,7 @@ async function fetchZakenByUserKey(
   zaakTypeTransformers: DecosZaakTransformer[]
 ) {
   assert(
-    // eslint-disable-next-line eqeqeq
-    SELECT_FIELDS_TRANSFORM_BASE[CASE_TYP_FIELD_DECOS] == caseType,
+    SELECT_FIELDS_TRANSFORM_BASE[CASE_TYP_FIELD_DECOS] === caseType,
     `getZakenByUserKey expects field ${CASE_TYP_FIELD_DECOS} to be the caseType`
   );
   const zaakTypeTransformersByItemType = zaakTypeTransformers.reduce<
