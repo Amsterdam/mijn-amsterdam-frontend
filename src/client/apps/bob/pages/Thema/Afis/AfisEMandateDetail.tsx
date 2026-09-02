@@ -222,7 +222,7 @@ function EMandate({ eMandate }: EMandateProps) {
         (isWideScreen ? (
           <TableV2
             items={eMandate.history}
-            caption="Eerdere E-Mandaten"
+            caption={`Eerdere incassomachtiging${eMandate.history.length > 1 ? 'en' : ''}`}
             displayProps={eMandateHistoryDisplayProps}
           />
         ) : (

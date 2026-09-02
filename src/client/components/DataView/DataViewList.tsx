@@ -68,11 +68,17 @@ export function getTitleAttribute<
   return firstTruthyPrimitiveKey;
 }
 
-export function formatPropValueForDisplay<T>(value: T[keyof T]) {
+export function formatPropValueForDisplay<T>(
+  value: T[keyof T]
+): React.ReactNode {
   const FALLBACK_VALUE = '';
 
   if (isValidElement(value)) {
     return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((item: T[keyof T]) => formatPropValueForDisplay(item));
   }
 
   if (typeof value === 'object' && value !== null) {

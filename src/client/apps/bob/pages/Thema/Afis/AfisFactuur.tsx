@@ -111,7 +111,9 @@ function FactuurDetailContent({
       content: factuur.statusDescription ?? '-',
       isVisible: factuur.status !== 'factuur-in-termijnen',
     },
-    ...(eMandateRowsets ? eMandateRowsets : []),
+    ...(themaConfig.featureToggle.emandates.active && eMandateRowsets
+      ? eMandateRowsets
+      : []),
     {
       label: 'Termijnen',
       content: getTermijnenTable(factuur),

@@ -29,14 +29,21 @@ export function useSessionApi(url: string = AUTH_API_URL) {
   }, [setProfileType, sessionData?.profileType]);
 
   useEffect(() => {
+    let fetchTimeout: ReturnType<typeof setTimeout>;
     const checkAway = () => {
       if (document.body.classList.contains('is-away')) {
         document.body.classList.remove('is-away');
-        fetch();
+        // Fetching immediately causes Safari IOS to block the request when coming back (focus) from a download dialog.
+        // This causes the user to appear logged out, even though the session is still valid.
+        // Delaying the fetch with a setTimeout somehow prevents this from happening.
+        fetchTimeout = setTimeout(() => {
+          fetch();
+        }, 10);
       }
     };
 
     const addAway = () => {
+      clearTimeout(fetchTimeout);
       document.body.classList.add('is-away');
     };
 
@@ -44,6 +51,7 @@ export function useSessionApi(url: string = AUTH_API_URL) {
     window.addEventListener('blur', addAway);
 
     return () => {
+      clearTimeout(fetchTimeout);
       window.removeEventListener('focus', checkAway);
       window.removeEventListener('blur', addAway);
     };
