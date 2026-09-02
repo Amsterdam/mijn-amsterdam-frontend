@@ -7,7 +7,7 @@ import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaDataView } from '../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
-import { themaConfig } from '../Parkeren/Parkeren-thema-config.ts';
+import { themaConfig } from '../Vergunningen/Vergunningen-thema-config.ts';
 
 export function VergunningenThema() {
   const {

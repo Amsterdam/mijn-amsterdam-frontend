@@ -22,7 +22,7 @@ export const themaConfig: ThemaConfigJeugd = {
   profileTypes: ['private'],
   route: {
     path: '/jeugd',
-    documentTitle: THEMA_TITLE,
+    documentTitle: `${THEMA_TITLE} | overzicht`,
     trackingUrl: null,
   },
   featureToggle: {
