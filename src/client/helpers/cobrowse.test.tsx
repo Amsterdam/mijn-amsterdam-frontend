@@ -2,7 +2,7 @@ import { describe } from 'vitest';
 
 import { getRedactedClass } from './cobrowse.ts';
 
-vi.mock('../config/thema', () => ({
+vi.mock('../apps/bob/config/thema.ts', () => ({
   myThemasMenuItems: [
     {
       id: 'themaIDRedacted',

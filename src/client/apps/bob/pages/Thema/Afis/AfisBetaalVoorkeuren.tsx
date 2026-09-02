@@ -1,0 +1,261 @@
+import {
+  Alert,
+  Grid,
+  Heading,
+  Link,
+  Paragraph,
+} from '@amsterdam/design-system-react';
+
+import styles from './AfisBetaalVoorkeuren.module.scss';
+import { AfisEmandateRefetchInterval } from './AfisEmandateFetchInterval.tsx';
+import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData.tsx';
+import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
+import { useSignRequestPayloadStorage } from './useAfisEMandatesSignRequest.tsx';
+import { useAfisThemaData } from './useAfisThemaData.hook.tsx';
+import {
+  type AfisBusinessPartnerDetailsTransformed,
+  type AfisEMandateFrontend,
+} from '../../../../../../server/services/afis/afis-types.ts';
+import { entries } from '../../../../../../universal/helpers/utils.ts';
+import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
+import { LoadingContent } from '../../../../../components/LoadingContent/LoadingContent.tsx';
+import { PageContentCell } from '../../../../../components/Page/Page.tsx';
+import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
+import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
+import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
+import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+
+type AfisBusinessPartnerProps = {
+  businesspartner: Omit<
+    AfisBusinessPartnerDetailsTransformed,
+    'address'
+  > | null;
+  labels: DisplayProps<
+    Omit<
+      AfisBusinessPartnerDetailsTransformed,
+      'address' | 'firstName' | 'lastName'
+    >
+  >;
+  isLoading: boolean;
+};
+
+function AfisBusinessPartnerDetails({
+  businesspartner,
+  labels,
+  isLoading,
+}: AfisBusinessPartnerProps) {
+  const rows = businesspartner
+    ? entries(labels)
+        .filter(
+          ([key]) => !!businesspartner[key as keyof typeof businesspartner]
+        )
+        .map(([key, label]) => {
+          let value = businesspartner[key as keyof typeof businesspartner];
+
+          if (value && key === 'businessPartnerId') {
+            value = `${parseInt(value, 10)}`;
+          }
+
+          return {
+            label,
+            content: value,
+          };
+        })
+    : [];
+
+  return (
+    <PageContentCell>
+      <Heading level={3} size="level-2" className="ams-mb-s">
+        Facturatiegegevens
+      </Heading>
+      {isLoading && <LoadingContent />}
+      {!isLoading && !rows.length && (
+        <Paragraph>Geen facturatiegegevens gevonden.</Paragraph>
+      )}
+      {!isLoading && !!rows.length && (
+        <Grid>
+          <Grid.Cell span={6}>
+            <Datalist
+              className={styles['Datalist--businesspartnerdetails']}
+              rows={rows}
+              rowVariant="horizontal"
+            />
+          </Grid.Cell>
+        </Grid>
+      )}
+    </PageContentCell>
+  );
+}
+
+export function AfisBetaalVoorkeuren() {
+  const {
+    businessPartnerIdEncrypted,
+    isThemaPaginaError,
+    isThemaPaginaLoading,
+    pageLinks,
+    breadcrumbs,
+    themaConfig,
+    themaId,
+    belastingenLinkListItem,
+  } = useAfisThemaData();
+
+  useHTMLDocumentTitle(themaConfig.detailPageBetaalvoorkeuren.route);
+
+  const {
+    title,
+    businesspartnerDetails,
+    businessPartnerDetailsLabels,
+    hasBusinessPartnerDetailsError,
+    hasFailedFullNameDependency,
+    hasFailedPhoneDependency,
+    isLoadingBusinessPartnerDetails,
+  } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
+
+  const {
+    eMandates,
+    eMandateTableConfig,
+    hasEMandatesError,
+    isLoadingEMandates,
+    fetchEMandates,
+  } = useAfisEMandatesApi();
+
+  const payloadStorage = useSignRequestPayloadStorage();
+
+  const isLoadingAllAPis =
+    isThemaPaginaLoading ||
+    isLoadingBusinessPartnerDetails ||
+    isLoadingEMandates;
+
+  const eMandatesTable = themaConfig.featureToggle.emandates.active && (
+    <ThemaPaginaDataView<AfisEMandateFrontend>
+      displayProps={eMandateTableConfig.displayProps}
+      maxItems={-1}
+      title={eMandateTableConfig.title}
+      zaken={eMandates}
+      contentAfterTheTitle={
+        <Alert
+          severity="warning"
+          heading="Let op uitzonderingen"
+          headingLevel={3}
+          className="ams-mb-m"
+        >
+          <Paragraph className="ams-mb-s">
+            Een automatische incasso instellen voor de directie Belastingen gaat
+            via
+            <br />
+            <Link href={belastingenLinkListItem.to}>
+              Mijn Belastingen - gemeente Amsterdam
+            </Link>
+          </Paragraph>
+          <Paragraph>
+            Voor parkeervergunningen ga je naar
+            <br />
+            <Link href="https://www.amsterdam.nl/parkeren/parkeervergunning/wijzigen-opzeggen/parkeervergunning-betaalgegevens/">
+              Parkeervergunning: betaalgegevens wijzigen - Gemeente Amsterdam
+            </Link>
+          </Paragraph>
+        </Alert>
+      }
+    />
+  );
+
+  const mailBody = `Debiteurnaam: ${businesspartnerDetails?.fullName ?? '-'}%0D%0ADebiteurnummer: ${businesspartnerDetails?.businessPartnerId ?? '-'}`;
+
+  const pageContentTop = (
+    <PageContentCell spanWide={8}>
+      <Paragraph className="ams-mb-m">
+        Hieronder kunt u uw gegevens bekijken en een automatische incasso
+        instellen per afdeling van de gemeente. Voor bijvoorbeeld een
+        adreswijziging stuur dan een e-mail naar:
+        <Link
+          href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Facturatiegegevens wijzigen&body=${encodeURIComponent(mailBody)}`}
+        >
+          debiteurenadministratie@amsterdam.nl
+        </Link>
+        .
+      </Paragraph>
+      {!themaConfig.featureToggle.emandates.active && (
+        <>
+          <Heading level={4}>Via automatische incasso betalen</Heading>
+          <Paragraph className="ams-mb-m">
+            Download{' '}
+            <Link
+              rel="noreferrer noopener"
+              href="https://omnichanneliv.cdn.salesforce-experience.com/cms/delivery/media/MCJM5EH46HYNAZXFYHPNR4WUIMBA?oid=00D68000000aIuV&channelId=0ap68000000g3EBAAY"
+            >
+              het machtigingsformulier.
+            </Link>{' '}
+            Kies een of meerdere producten waarvoor de gemeente automatisch mag
+            incasseren en vul uw gegevens in. Het debiteurennummer is niet
+            verplicht. Onderteken het formulier en stuur het naar:
+          </Paragraph>
+          <Paragraph className="ams-mb-m">
+            Gemeente Amsterdam
+            <br />
+            Debiteurenadministratie
+            <br />
+            Antwoordnummer 47389
+            <br />
+            1070 WC Amsterdam
+          </Paragraph>
+          <Paragraph>Een postzegel is niet nodig.</Paragraph>
+        </>
+      )}
+    </PageContentCell>
+  );
+
+  const pageContentMain = (
+    <>
+      <AfisBusinessPartnerDetails
+        businesspartner={businesspartnerDetails}
+        labels={businessPartnerDetailsLabels}
+        isLoading={!!(isLoadingBusinessPartnerDetails || isThemaPaginaLoading)}
+      />
+      {payloadStorage.hasPayloads() && (
+        <AfisEmandateRefetchInterval fetch={fetchEMandates} />
+      )}
+      {eMandatesTable}
+    </>
+  );
+
+  const errorAlertContent = isThemaPaginaError ? (
+    <>Wij kunnen nu niet alle gegevens laten zien.</>
+  ) : (
+    <>
+      {hasBusinessPartnerDetailsError && (
+        <>
+          Wij kunnen nu geen facturatiegegevens laten zien.
+          <br />
+        </>
+      )}
+      {hasEMandatesError && (
+        <>Wij kunnen nu geen automatische incasso&apos;s laten zien.</>
+      )}
+    </>
+  );
+
+  return (
+    <ThemaPagina
+      id={themaId}
+      title={title}
+      isError={
+        isThemaPaginaError ||
+        (hasBusinessPartnerDetailsError && hasEMandatesError)
+      }
+      isPartialError={
+        hasFailedFullNameDependency ||
+        hasFailedPhoneDependency ||
+        hasFailedPhoneDependency ||
+        hasBusinessPartnerDetailsError ||
+        hasEMandatesError
+      }
+      errorAlertContent={errorAlertContent}
+      isLoading={isLoadingAllAPis}
+      breadcrumbs={breadcrumbs}
+      pageLinks={pageLinks}
+      pageContentTop={pageContentTop}
+      pageContentMain={pageContentMain}
+      maintenanceNotificationsPageSlug="afis"
+    />
+  );
+}

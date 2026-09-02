@@ -4,9 +4,7 @@ import { useMapInstance } from '@amsterdam/react-maps';
 import type { LatLngLiteral, TileLayerOptions } from 'leaflet';
 import type L from 'leaflet';
 
-import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets.ts';
-import iconUrlCommercialSecondary from '../../assets/icons/map/homeSecondaryCommercial.svg';
-import { DEFAULT_MAP_OPTIONS } from '../../config/map.ts';
+import { DEFAULT_MAP_OPTIONS } from '../../apps/bob/config/map.ts';
 import { useWidescreen } from '../../hooks/media.hook.ts';
 import { getElementSize } from '../../hooks/useComponentSize.ts';
 import { MaintenanceNotifications } from '../MaintenanceNotifications/MaintenanceNotifications.tsx';
@@ -34,6 +32,8 @@ import { MyAreaCustomLocationControlButton } from './MyAreaCustomLocationControl
 import { MyAreaDatasets } from './MyAreaDatasets.tsx';
 import { HomeControlButton } from './MyAreaHomeControlButton.tsx';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker.tsx';
+import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets.ts';
+import iconUrlCommercialSecondary from '../../assets/icons/map/homeSecondaryCommercial.svg';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 import { AmsMainMenuClassname } from '../MainHeader/MainHeader.tsx';
 

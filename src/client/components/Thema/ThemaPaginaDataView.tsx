@@ -6,7 +6,7 @@ import type {
   LinkProps,
   ZaakAanvraagDetail,
 } from '../../../universal/types/App.types.ts';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app.ts';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../apps/bob/config/app.ts';
 import { DataView } from '../DataView/DataView.tsx';
 import { LinkToListPage } from '../LinkToListPage/LinkToListPage.tsx';
 import { PageContentCell } from '../Page/Page.tsx';

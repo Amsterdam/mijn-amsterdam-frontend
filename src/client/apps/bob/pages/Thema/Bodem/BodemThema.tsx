@@ -1,0 +1,52 @@
+import { Paragraph } from '@amsterdam/design-system-react';
+
+import { themaConfig } from './Bodem-thema-config.ts';
+import { useBodemData } from './useBodemData.hook.tsx';
+import type { LoodMetingFrontend } from '../../../../../../server/services/bodem/types.ts';
+import { PageContentCell } from '../../../../../components/Page/Page.tsx';
+import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
+import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
+import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+
+export function BodemThema() {
+  const { items, tableConfig, isLoading, isError, pageLinks, themaId, title } =
+    useBodemData();
+  useHTMLDocumentTitle(themaConfig.route);
+
+  const tables = Object.entries(tableConfig).map(
+    ([
+      kind,
+      { title, displayProps, filter, sort, listPageRoute, maxItems },
+    ]) => {
+      return (
+        <ThemaPaginaDataView<LoodMetingFrontend>
+          key={kind}
+          title={title}
+          zaken={items.filter(filter).sort(sort)}
+          listPageRoute={listPageRoute}
+          displayProps={displayProps}
+          textNoContent={`U heeft geen ${title.toLowerCase()}`}
+          maxItems={maxItems}
+        />
+      );
+    }
+  );
+  return (
+    <ThemaPagina
+      id={themaId}
+      title={title}
+      isLoading={isLoading}
+      isError={isError}
+      pageContentTop={
+        <PageContentCell spanWide={8}>
+          <Paragraph>
+            Op deze pagina vindt u informatie over uw lood in de bodem-check.
+          </Paragraph>
+        </PageContentCell>
+      }
+      pageContentMain={tables}
+      pageLinks={pageLinks}
+      maintenanceNotificationsPageSlug="bodem"
+    />
+  );
+}

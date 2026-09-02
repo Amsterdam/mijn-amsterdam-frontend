@@ -9,7 +9,7 @@ import type {
   SmileAvgResponse,
   SmileAvgThemesResponse,
 } from './types.ts';
-import { themaConfig } from '../../../client/pages/Thema/AVG/AVG-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/AVG/AVG-thema-config.ts';
 import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
 import {
   apiDependencyError,

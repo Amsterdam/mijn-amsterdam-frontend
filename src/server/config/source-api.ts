@@ -8,10 +8,10 @@ import {
   ONE_MINUTE_MS,
   ONE_SECOND_MS,
 } from './app.ts';
-import { themaConfig as themaConfigAfis } from '../../client/pages/Thema/Afis/Afis-thema-config.ts';
-import { themaConfig as themaConfigBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config.ts';
-import { themaConfig as themaConfigJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
-import { themaConfig as themaConfigToeristischeVerhuur } from '../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import { themaConfig as themaConfigAfis } from '../../client/apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig as themaConfigBodem } from '../../client/apps/bob/pages/Thema/Bodem/Bodem-thema-config.ts';
+import { themaConfig as themaConfigJeugd } from '../../client/apps/bob/pages/Thema/Jeugd/Jeugd-thema-config.ts';
+import { themaConfig as themaConfigToeristischeVerhuur } from '../../client/apps/bob/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
 import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
 import { getCert } from '../helpers/cert.ts';

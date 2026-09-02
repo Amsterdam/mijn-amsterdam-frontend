@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import type { AuthProfile } from '../../../server/auth/auth-types.ts';
-import { AUTH_API_URL, LOGOUT_URL } from '../../config/api.ts';
+import { AUTH_API_URL, LOGOUT_URL } from '../../apps/bob/config/api.ts';
 import { clearSessionStorage } from '../storage.hook.ts';
 import { clearDeeplinkEntry } from '../useDeeplink.hook.ts';
 import { useProfileType } from '../useProfileType.ts';
@@ -16,8 +16,8 @@ export type SessionData = {
   expiresAtMilliseconds: number; // In milliseconds
 };
 
-export function useSessionApi() {
-  const sessionApi = useBffApi<SessionData>(AUTH_API_URL);
+export function useSessionApi(url: string = AUTH_API_URL) {
+  const sessionApi = useBffApi<SessionData>(url);
   const { data, fetch } = sessionApi;
   const sessionData = data?.content ?? null;
   const { setProfileType } = useProfileType();
@@ -65,10 +65,10 @@ export function useSessionApi() {
   };
 }
 
-export function useLogout() {
+export function useLogout(url: string = LOGOUT_URL) {
   return () => {
     clearSessionStorage();
     clearDeeplinkEntry();
-    window.location.href = LOGOUT_URL;
+    window.location.href = url;
   };
 }

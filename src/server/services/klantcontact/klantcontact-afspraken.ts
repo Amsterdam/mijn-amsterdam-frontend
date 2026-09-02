@@ -4,7 +4,7 @@ import type {
   AfspraakSource,
   AfspraakResponseSource as AfsprakenResponseSource,
 } from './klantcontact.types.ts';
-import { themaConfig } from '../../../client/pages/Thema/KlantContact/KlantContact-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/KlantContact/KlantContact-thema-config.ts';
 import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
   dateFormat,

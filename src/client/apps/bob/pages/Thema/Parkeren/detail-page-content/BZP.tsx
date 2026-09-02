@@ -1,0 +1,23 @@
+import type { BZP } from '../../../../../../../server/services/parkeren/config-and-types.ts';
+import type { DecosZaakFrontend } from '../../../../../../../server/services/vergunningen/config-and-types.ts';
+import { Datalist } from '../../../../../../components/Datalist/Datalist.tsx';
+import {
+  getRows,
+  dateRange,
+  commonTransformers,
+} from '../../Vergunningen/detail-page-content/fields-config.tsx';
+
+export function BZP({ vergunning }: { vergunning: DecosZaakFrontend<BZP> }) {
+  const dateRangeTransformer = () => {
+    return vergunning.processed ? dateRange(vergunning) : null;
+  };
+
+  const rows = getRows(vergunning, [
+    commonTransformers.identifier,
+    commonTransformers.kentekens,
+    dateRangeTransformer,
+    commonTransformers.decision,
+  ]);
+
+  return <Datalist rows={rows} />;
+}

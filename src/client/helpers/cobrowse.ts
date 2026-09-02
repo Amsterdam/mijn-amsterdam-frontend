@@ -1,9 +1,9 @@
 import memoizee from 'memoizee';
 import { create } from 'zustand';
 
-import type { ThemaMenuItem } from '../config/thema-types.ts';
-import { myThemasMenuItems } from '../config/thema.ts';
-import { themaId as themaIdNotificaties } from '../pages/MyNotifications/MyNotifications-config.ts';
+import type { ThemaMenuItem } from '../../universal/types/thema-types.ts';
+import { myThemasMenuItems } from '../apps/bob/config/thema.ts';
+import { themaId as themaIdNotificaties } from '../apps/bob/pages/MyNotifications/MyNotifications-config.ts';
 
 type CobrowseState = {
   isScreensharing: boolean;

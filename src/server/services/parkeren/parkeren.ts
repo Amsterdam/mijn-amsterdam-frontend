@@ -3,7 +3,7 @@ import {
   hasPermitsOrPermitRequests,
   fetchSSOURL,
 } from './parkeren-egis-service.ts';
-import { themaConfig } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Parkeren/Parkeren-thema-config.ts';
 import {
   apiSuccessResult,
   getFailedDependencies,

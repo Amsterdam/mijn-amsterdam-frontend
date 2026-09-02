@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router';
 
 import styles from './PageHeadingV2.module.scss';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
-import { dashboardMenuItem } from '../../pages/Dashboard/Dashboard-routes.ts';
+import { dashboardMenuItem } from '../../apps/bob/pages/Dashboard/Dashboard-routes.ts';
 import { MaBreadcrumbLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 import { PageContentCell } from '../Page/Page.tsx';
 

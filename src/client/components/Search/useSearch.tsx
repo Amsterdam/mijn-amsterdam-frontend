@@ -24,7 +24,9 @@ import {
 } from '../../../universal/helpers/api.ts';
 import { pick, uniqueArray } from '../../../universal/helpers/utils.ts';
 import type { AppState } from '../../../universal/types/App.types.ts';
-import { BFFApiUrls } from '../../config/api.ts';
+import { BFFApiUrls } from '../../apps/bob/config/api.ts';
+import { DashboardRoute } from '../../apps/bob/pages/Dashboard/Dashboard-routes.ts';
+import { SearchPageRoute } from '../../apps/bob/pages/Search/Search-routes.ts';
 import { useBffApi } from '../../hooks/api/useBffApi.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import {
@@ -32,8 +34,6 @@ import {
   useAppStateReady,
 } from '../../hooks/useAppStateStore.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
-import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes.ts';
-import { SearchPageRoute } from '../../pages/Search/Search-routes.ts';
 import { routeConfig as buurtRouteConfig } from '../MyArea/MyArea-thema-config.ts';
 
 export function generateSearchIndexPageEntry(

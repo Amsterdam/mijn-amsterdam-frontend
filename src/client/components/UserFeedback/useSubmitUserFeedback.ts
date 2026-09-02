@@ -1,4 +1,4 @@
-import { BFFApiUrls } from '../../config/api.ts';
+import { BFFApiUrls } from '../../apps/bob/config/api.ts';
 import { useBffApi, sendFormPostRequest } from '../../hooks/api/useBffApi.ts';
 
 export function useSubmitUserFeedback(version?: number) {

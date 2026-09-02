@@ -1,0 +1,51 @@
+import type { StadspasFrontend } from '../../../../../../server/services/hli/stadspas-types.ts';
+import { type PasblokkadeByPasnummer } from '../../../../../../server/services/hli/stadspas-types.ts';
+import {
+  useBffApi,
+  useBffApiStateStore,
+} from '../../../../../hooks/api/useBffApi.ts';
+import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
+
+function getPasBlockedStateKey(passNumber: StadspasFrontend['passNumber']) {
+  return `pass-blocked-state-${passNumber}`;
+}
+
+export function useStadspas(
+  passNumber: string | undefined
+): StadspasFrontend | undefined {
+  const stadspassen = useStadspassen();
+  if (!passNumber) {
+    return undefined;
+  }
+  const stadspas = stadspassen.find(
+    (pass) => pass.passNumber.toString() === passNumber
+  );
+  return stadspas;
+}
+
+export function useStadspassen() {
+  const { HLI } = useAppStateGetter();
+  const store = useBffApiStateStore();
+  const stadspassen = (HLI.content?.stadspas?.stadspassen || []).map((pas) => {
+    const pasBlokkade =
+      store.get<PasblokkadeByPasnummer>(getPasBlockedStateKey(pas.passNumber))
+        ?.data?.content ?? null;
+    const isGeblokkeerd =
+      pasBlokkade !== null ? !pasBlokkade.actief : undefined;
+    const stadspas: StadspasFrontend = {
+      ...pas,
+      actief:
+        typeof isGeblokkeerd !== 'undefined' ? !isGeblokkeerd : pas.actief,
+    };
+
+    return stadspas;
+  });
+
+  return stadspassen;
+}
+
+export function useBlockStadspas(passNumber: StadspasFrontend['passNumber']) {
+  return useBffApi<PasblokkadeByPasnummer>(getPasBlockedStateKey(passNumber), {
+    fetchImmediately: false,
+  });
+}

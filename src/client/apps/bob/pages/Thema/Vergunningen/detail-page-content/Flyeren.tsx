@@ -1,0 +1,47 @@
+import { commonTransformers, getRows } from './fields-config.tsx';
+import type { DecosZaakBase } from '../../../../../../../server/services/decos/decos-types.ts';
+import type {
+  WithDateRange,
+  WithDateTimeRange,
+} from '../../../../../../../server/services/vergunningen/config-and-types.ts';
+import type {
+  Flyeren,
+  DecosZaakFrontend,
+} from '../../../../../../../server/services/vergunningen/config-and-types.ts';
+import { Datalist } from '../../../../../../components/Datalist/Datalist.tsx';
+
+const isSameDate = (vergunning: WithDateRange) =>
+  vergunning.dateStart === vergunning.dateEnd || vergunning.dateEnd === null;
+
+export function onFromToExceptSameDate(
+  vergunning: DecosZaakFrontend<DecosZaakBase & WithDateTimeRange>
+) {
+  return vergunning.isVerleend && isSameDate(vergunning)
+    ? commonTransformers.onFromTo(vergunning)
+    : null;
+}
+
+export function dateTimeRangeBetweenIfSameDate(
+  vergunning: DecosZaakFrontend<DecosZaakBase & WithDateTimeRange>
+) {
+  return vergunning.isVerleend && !isSameDate(vergunning)
+    ? commonTransformers.dateTimeRangeBetween(vergunning)
+    : null;
+}
+
+// Controleren of van/tot dezelfde datum is, in dat geval niet de velden van/tot tonen.
+// In dat geval allen de datum tonen.
+export function Flyeren({
+  vergunning,
+}: {
+  vergunning: DecosZaakFrontend<Flyeren>;
+}) {
+  const rows = getRows(vergunning, [
+    commonTransformers.identifier,
+    commonTransformers.location,
+    onFromToExceptSameDate,
+    dateTimeRangeBetweenIfSameDate,
+    commonTransformers.decision,
+  ]);
+  return <Datalist rows={rows} />;
+}

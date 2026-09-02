@@ -6,6 +6,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 
 import styles from './Datasets.module.scss';
 import type { MaPointFeature } from '../../../server/services/buurt/datasets.ts';
+import { Colors } from '../../apps/bob/config/app.ts';
 import {
   IconAfvalGft,
   IconAfvalGlas,
@@ -46,7 +47,6 @@ import {
   IconWior,
   IconZwembad,
 } from '../../assets/icons/map/index.tsx';
-import { Colors } from '../../config/app.ts';
 
 const DatasetIcon: React.FC<{
   color?: string;

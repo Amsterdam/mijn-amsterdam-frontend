@@ -1,7 +1,7 @@
 import { generatePath } from 'react-router';
 
 import type { StadspasFrontend } from './stadspas-types.ts';
-import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/HLI/HLI-thema-config.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import {
   NOTIFICATION_SORTPRIORITY,

@@ -5,7 +5,7 @@ import { generatePath } from 'react-router';
 import slug from 'slugme';
 import thenBy from 'thenby';
 
-import { themaConfig } from '../../../../client/pages/Thema/HLI/HLI-thema-config.ts';
+import { themaConfig } from '../../../../client/apps/bob/pages/Thema/HLI/HLI-thema-config.ts';
 import {
   type ApiResponse,
   apiSuccessResult,

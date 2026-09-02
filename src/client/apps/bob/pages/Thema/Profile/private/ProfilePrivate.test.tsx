@@ -1,0 +1,377 @@
+import { render, screen, cleanup, waitFor } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
+import type { PartialDeep } from 'type-fest';
+
+import { MijnGegevensThema } from './ProfilePrivate.tsx';
+import type {
+  Adres,
+  BrpFrontend,
+} from '../../../../../../../server/services/brp/brp-types.ts';
+import type { WonenDataFrontend } from '../../../../../../../server/services/wonen/wonen.types.ts';
+import { bffApiHost } from '../../../../../../../testing/setup.ts';
+import { bffApi } from '../../../../../../../testing/utils.ts';
+import type { AppState } from '../../../../../../../universal/types/App.types.ts';
+import { MockApp } from '../../../MockApp.tsx';
+import { themaConfig } from '../Profile-thema-config.ts';
+
+const testState = (
+  responseBRP: BrpFrontend | object = {},
+  responseZWD?: WonenDataFrontend
+) => ({
+  BRP: { status: 'OK', content: responseBRP },
+  KVK: { status: 'OK', content: null },
+  WONEN: { status: 'OK', content: responseZWD },
+});
+
+const panelHeadings = [
+  'Persoonlijke gegevens',
+  'Adres',
+  'Partner',
+  'Ouders',
+  'Kinderen',
+];
+
+describe('<Profile />', () => {
+  const routeEntry = themaConfig.BRP.route.path;
+
+  function Component({
+    state,
+  }: {
+    state?: PartialDeep<BrpFrontend, { recurseIntoArrays: true }>;
+  }) {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routeEntry}
+        component={MijnGegevensThema}
+        state={testState(state) as AppState}
+      />
+    );
+  }
+
+  test('Lives in Mokum + verbintenis: displays all data', async () => {
+    bffApi.get('/aantal-bewoners').reply(200, { content: '3', status: 'OK' });
+    const { asFragment } = render(
+      <Component
+        state={{
+          persoon: {
+            geslachtsnaam: 'Mooier',
+            geboorteplaatsnaam: 'Neverland',
+            mokum: true,
+            aanschrijfwijze: 'Mooier, Piet',
+            naamgebruik: 'eigen geslachtsnaam',
+          },
+          adres: {
+            straatnaam: 'Mooie Straat',
+            huisnummer: '1',
+            landnaam: 'Nederland',
+            isBriefadres: false,
+            isBewoner: true,
+          },
+          verbintenis: {
+            datumSluiting: '2020-01-01',
+          },
+          ouders: [
+            {
+              voornamen: 'Piet',
+              geslachtsnaam: 'Mooier',
+            },
+          ],
+          kinderen: [
+            {
+              voornamen: 'Klein',
+              geslachtsnaam: 'Mooier',
+            },
+          ],
+          fetchUrlAantalIngeschrevenPersonen: `${bffApiHost}/aantal-bewoners`,
+        }}
+      />
+    );
+    expect(
+      screen.getByRole('heading', {
+        name: 'Mijn gegevens',
+      })
+    ).toBeInTheDocument();
+    expect(screen.getByText('Mooier')).toBeInTheDocument();
+    expect(screen.getByText('Neverland')).toBeInTheDocument();
+
+    const panelHeadings = [
+      'Persoonlijke gegevens',
+      'Adres',
+      'Partner',
+      'Ouders',
+      'Kinderen',
+    ];
+
+    panelHeadings.forEach((heading) => {
+      expect(screen.getByText(heading)).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Ingeschreven personen')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Verhuizing doorgeven')).toBeInTheDocument();
+    expect(
+      screen.getByText('Onjuiste inschrijving melden')
+    ).toBeInTheDocument();
+    expect(screen.queryByText('Adres in onderzoek')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('Vertrokken Onbekend Waarheen')
+    ).not.toBeInTheDocument();
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  test('Has briefadres if isBriefadres set to true', async () => {
+    render(
+      <Component
+        state={{
+          persoon: { mokum: true },
+          adres: {
+            straatnaam: 'Prachtige Straat',
+            huisnummer: '13',
+            landnaam: 'Nederland',
+            isBriefadres: true,
+          },
+        }}
+      />
+    );
+
+    expect(
+      screen.queryByText('Onjuiste inschrijving melden')
+    ).not.toBeInTheDocument();
+    expect(screen.queryByText('Ingeschreven personen')).not.toBeInTheDocument();
+
+    screen.getByText('Briefadres');
+  });
+
+  test('Lives in Mokum and has no verbintenis: shows disclaimer and hides overlijdensdatum', async () => {
+    render(
+      <Component
+        state={{
+          persoon: { mokum: true },
+          adres: {
+            straatnaam: 'Prachtige Straat',
+            huisnummer: '13',
+            landnaam: 'Nederland',
+          },
+          verbintenis: undefined,
+          ouders: [{ voornamen: 'Hendrik' }, { voornamen: 'Marie' }],
+          kinderen: [{ voornamen: 'Dirkje' }],
+        }}
+      />
+    );
+
+    screen.getByText('Prachtige Straat 13');
+
+    const button = screen.getByTitle('Toon inhoud over Ouders');
+    await userEvent.click(button);
+
+    screen.getByText('Hendrik');
+    screen.getByText('Marie');
+
+    const button2 = screen.getByTitle('Toon inhoud over Kinderen');
+    await userEvent.click(button2);
+
+    screen.getByText('Dirkje');
+
+    expect(
+      screen.getAllByText(
+        /Wij mogen een overlijdensdatum van ouders of kinderen niet laten zien/
+      )
+    ).toHaveLength(2);
+    expect(screen.queryByText('Datum overlijden')).not.toBeInTheDocument();
+  });
+
+  test('Non-Mokum does not display certain panels', async () => {
+    render(
+      <Component
+        state={{
+          persoon: { mokum: false },
+          adres: { landnaam: 'Nederland' },
+          ouders: [{ voornamen: 'Hendrik' }, { voornamen: 'Marie' }],
+        }}
+      />
+    );
+
+    const panelHeadingsNonMokum = ['Persoonlijke gegevens', 'Adres'];
+
+    panelHeadingsNonMokum.forEach((heading) => {
+      expect(screen.getByText(heading)).toBeInTheDocument();
+    });
+
+    panelHeadings
+      .filter((heading) => !panelHeadingsNonMokum.includes(heading))
+      .forEach(async (heading) => {
+        expect(await screen.findByText(heading)).not.toBeInTheDocument();
+      });
+
+    expect(screen.queryByText('Ouders')).not.toBeInTheDocument();
+    expect(
+      screen.getByText('Verhuizing naar Amsterdam doorgeven')
+    ).toBeInTheDocument();
+  });
+
+  test('Onjuiste inschrijving action link is niet zichtbaar bij mokum=false', async () => {
+    render(
+      <Component
+        state={{
+          persoon: {
+            mokum: false,
+          },
+        }}
+      />
+    );
+
+    expect(
+      await screen.queryByText('Onjuiste inschrijving melden')
+    ).not.toBeInTheDocument();
+  });
+
+  test('Shows gegevens onbekend', async () => {
+    render(
+      <Component
+        state={{ persoon: {}, adres: {} as Adres, adresHistorisch: [] }}
+      />
+    );
+    expect(screen.queryByText('Gegevens')).toBeInTheDocument();
+    expect(screen.queryByText('onbekend')).toBeInTheDocument();
+  });
+
+  test('Shows adres in onderzoek', async () => {
+    {
+      const comp = render(
+        <Component
+          state={{ persoon: { adresInOnderzoek: { type: '089999' } } }}
+        />
+      );
+      expect(comp.getByText('Adres in onderzoek')).toBeInTheDocument();
+      const adresInfo = await comp.queryByText(
+        /U woont niet meer op het adres waarop u staat ingeschreven\./
+      );
+      expect(adresInfo).toBeInTheDocument();
+    }
+    // Render can only be called once in per test.
+    cleanup();
+    {
+      const comp = render(
+        <Component
+          state={{ persoon: { adresInOnderzoek: { type: '080000' } } }}
+        />
+      );
+      expect(comp.getByText('Adres in onderzoek')).toBeInTheDocument();
+      const adresInfo2 = await comp.queryByText(
+        /Op dit moment onderzoeken wij of u nog steeds woont op het adres/
+      );
+      expect(adresInfo2).toBeInTheDocument();
+    }
+  });
+
+  test('Shows vertrokken onbekend waarheen', () => {
+    render(
+      <Component state={{ persoon: { vertrokkenOnbekendWaarheen: true } }} />
+    );
+
+    expect(
+      screen.getByText('Vertrokken Onbekend Waarheen')
+    ).toBeInTheDocument();
+  });
+
+  test('Shows foreign nationalities', () => {
+    render(
+      <Component
+        state={{
+          persoon: {
+            nationaliteiten: [
+              {
+                omschrijving: 'Armeense',
+              },
+              {
+                omschrijving: 'Turkse',
+              },
+            ],
+          },
+        }}
+      />
+    );
+    expect(screen.getByText('Armeense, Turkse')).toBeInTheDocument();
+  });
+
+  test('Shows Vereniging van Eigenaren data', async () => {
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routeEntry}
+          component={MijnGegevensThema}
+          state={
+            testState(
+              {
+                persoon: { mokum: true },
+                adres: {
+                  straatnaam: 'Mooie Straat',
+                  huisnummer: '1',
+                  landnaam: 'Nederland',
+                },
+              },
+              {
+                vve: { name: 'VvE Prachtige Straat 13' },
+              } as unknown as WonenDataFrontend
+            ) as unknown as AppState
+          }
+        />
+      );
+    }
+    render(<Component />);
+
+    screen.getByText('VvE Prachtige Straat 13');
+  });
+
+  test('Only shows dutch nationality', () => {
+    render(
+      <Component
+        state={{
+          persoon: {
+            nationaliteiten: [
+              {
+                omschrijving: 'Nederlandse',
+              },
+              {
+                omschrijving: 'Armeense',
+              },
+              {
+                omschrijving: 'Turkse',
+              },
+            ],
+          },
+        }}
+      />
+    );
+    expect(screen.getByText('Nederlandse')).toBeInTheDocument();
+    expect(screen.queryByText('Armeense, Turkse')).toBeNull();
+  });
+
+  test('Displays page without address', () => {
+    render(
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routeEntry}
+        component={MijnGegevensThema}
+        state={
+          {
+            BRP: { content: { adres: null, persoon: { voornamen: 'Jan' } } },
+            WONEN: {
+              content: { vve: { name: 'VvE Prachtige Straat 13' } },
+            },
+            KLANT_CONTACT: { content: [] },
+          } as unknown as AppState
+        }
+      />
+    );
+    expect(screen.getByText('Jan')).toBeInTheDocument();
+    expect(
+      screen.queryByText('VvE Prachtige Straat 13')
+    ).not.toBeInTheDocument();
+  });
+});

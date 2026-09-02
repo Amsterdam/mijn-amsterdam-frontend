@@ -1,0 +1,86 @@
+import { matchPath } from 'react-router';
+
+import { BffErrorRoutes } from './pages/BffError/BffError-routes.ts';
+import { BurgerzakenRoutes } from './pages/Burgerzaken/Burgerzaken-routes.ts';
+import { DashboardRoutes } from './pages/Dashboard/Dashboard-routes.ts';
+import { GeneralInfoRoutes } from './pages/GeneralInfo/GeneralInfo-routes.ts';
+import { LandingRoutes } from './pages/Landing/Landing-routes.ts';
+import { MyNotificationsRoutes } from './pages/MyNotifications/MyNotifications-routes.ts';
+import { NotFoundRoutes } from './pages/NotFound/NotFound-routes.ts';
+import { SearchRoutes } from './pages/Search/Search-routes.ts';
+import { MyAreaRoutes } from '../../components/MyArea/MyArea-routes.ts';
+import { AfisRoutes } from './pages/Thema/Afis/Afis-render-config.tsx';
+import { AfvalRoutes } from './pages/Thema/Afval/Afval-render-config.tsx';
+import { AvgRoutes } from './pages/Thema/AVG/AVG-render-config.tsx';
+import { BezwarenRoutes } from './pages/Thema/Bezwaren/Bezwaren-render-config.tsx';
+import { BodemRoutes } from './pages/Thema/Bodem/Bodem-render-config.tsx';
+import { ErfpachtRoutes } from './pages/Thema/Erfpacht/Erfpacht-render-config.tsx';
+import { HLIRoutes } from './pages/Thema/HLI/HLI-render-config.tsx';
+import { HorecaRoutes } from './pages/Thema/Horeca/Horeca-render-config.tsx';
+import { InkomenRoutes } from './pages/Thema/Inkomen/Inkomen-render-config.tsx';
+import { JeugdRoutes } from './pages/Thema/Jeugd/Jeugd-render-config.tsx';
+import { KlachtenRoutes } from './pages/Thema/Klachten/Klachten-render-config.tsx';
+import { KlantContactRoutes } from './pages/Thema/KlantContact/KlantContact-render-config.tsx';
+import { KrefiaRoutes } from './pages/Thema/Krefia/Krefia-render-config.tsx';
+import { ParkerenRoutes } from './pages/Thema/Parkeren/Parkeren-render-config.tsx';
+import { ProfileRoutes } from './pages/Thema/Profile/Profile-render-config.tsx';
+import { ToeristischeVerhuurRoutes } from './pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-render-config.tsx';
+import { VarenRoutes } from './pages/Thema/Varen/Varen-render-config.tsx';
+import { VergunningenRoutes } from './pages/Thema/Vergunningen/Vergunningen-render-config.tsx';
+import { ZorgRoutes } from './pages/Thema/Zorg/Zorg-render-config.tsx';
+import { ZaakStatusRoutes } from './pages/ZaakStatus/ZaakStatus-routes.ts';
+import type { ApplicationRouteConfig } from '../../../universal/types/thema-types.ts';
+import { ApplicationRoutes } from '../../components/ApplicationRoutes/ApplicationRoutes.tsx';
+
+const routeComponents: ApplicationRouteConfig[] = [
+  AfisRoutes,
+  AfvalRoutes,
+  AvgRoutes,
+  BezwarenRoutes,
+  BffErrorRoutes,
+  BodemRoutes,
+  BurgerzakenRoutes,
+  DashboardRoutes,
+  ErfpachtRoutes,
+  GeneralInfoRoutes,
+  HLIRoutes,
+  HorecaRoutes,
+  InkomenRoutes,
+  JeugdRoutes,
+  KlachtenRoutes,
+  KlantContactRoutes,
+  KrefiaRoutes,
+  LandingRoutes,
+  MyAreaRoutes,
+  MyNotificationsRoutes,
+  NotFoundRoutes,
+  ParkerenRoutes,
+  ProfileRoutes,
+  SearchRoutes,
+  ToeristischeVerhuurRoutes,
+  VarenRoutes,
+  VergunningenRoutes,
+  ZaakStatusRoutes,
+  ZorgRoutes,
+].flat();
+
+const privateRoutes = routeComponents.filter(
+  (config) => config.private !== false
+);
+
+const publicRoutes = routeComponents.filter((config) => config.public === true);
+
+export function PrivateRoutes() {
+  return <ApplicationRoutes routes={privateRoutes} />;
+}
+
+export function PublicRoutes() {
+  return <ApplicationRoutes routes={publicRoutes} />;
+}
+
+export function isPrivateRoute(pathname: string) {
+  return privateRoutes.some(({ route }) => {
+    const isMatched = !!matchPath(route, pathname);
+    return isMatched;
+  });
+}

@@ -2,7 +2,7 @@ import { generatePath } from 'react-router';
 import slug from 'slugme';
 
 import { jeugdStatusLineItemsConfig } from './status-line-items.ts';
-import { themaConfig } from '../../../../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
+import { themaConfig } from '../../../../client/apps/bob/pages/Thema/Jeugd/Jeugd-thema-config.ts';
 import type { ApiResponse } from '../../../../universal/helpers/api.ts';
 import { apiSuccessResult } from '../../../../universal/helpers/api.ts';
 import {
