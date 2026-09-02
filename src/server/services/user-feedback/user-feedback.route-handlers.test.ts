@@ -100,8 +100,30 @@ describe('User Feedback Route Handlers', () => {
     await handleShowSurveyOverview(req, res);
 
     expect(userFeedbackOverview).toHaveBeenCalledWith('survey123', 'latest', 1);
-    expect(res.render).toHaveBeenCalledWith('user-feedback-overview', {
-      feedbackOverview: { ...mockOverview.content, score: '4.00' },
+    expect(res.send).toHaveBeenCalledWith({
+      content: {
+        currentPage: 1,
+        entries: [
+          {
+            answers: {
+              '3': '5',
+            },
+          },
+          {
+            answers: {
+              '3': '3',
+            },
+          },
+        ],
+        pageLinks: [
+          {
+            page: 1,
+            url: '?page=1',
+          },
+        ],
+        score: '4.00',
+      },
+      status: 'OK',
     });
   });
 });

@@ -29,7 +29,7 @@ export function encrypt(
 export function decrypt(
   encryptedValue: string,
   encryptionKey: string | undefined = process.env.BFF_GENERAL_ENCRYPTION_KEY
-) {
+): string {
   if (!encryptionKey) {
     throw new Error('Cannot decrypt, Encryption key not found.');
   }

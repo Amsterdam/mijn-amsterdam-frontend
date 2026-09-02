@@ -1,11 +1,13 @@
+import { useEffect } from 'react';
+
 import { Grid, PageHeader } from '@amsterdam/design-system-react';
 import { BrowserRouter } from 'react-router';
 
 import { PrivateRoutes, PublicRoutes } from './App.routes.tsx';
 import { AppTabs } from './AppTabs.tsx';
 import { AUTH_API_URL, LOGIN_URL, LOGOUT_URL } from './config/api.ts';
-// import { themaConfig as themaConfigAccount } from './Pages/Account/Account-thema-config.ts';
-// import type { AccountData } from '../../../server/services/admin/admin-account.types.ts';
+import { themaConfig as themaConfigAccount } from './Pages/Account/Account-thema-config.ts';
+import { useAccountApi } from './Pages/Account/Account.tsx';
 import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../components/Page/Page.tsx';
 import { useSessionApi } from '../../hooks/api/useSessionApi.ts';
@@ -13,18 +15,13 @@ import { useSessionApi } from '../../hooks/api/useSessionApi.ts';
 function AppLanding() {
   const session = useSessionApi(AUTH_API_URL);
   const { isAuthenticated, isDirty } = session;
-  // const { fetch: fetchAccountData, data } = useBffApi<AccountData>(
-  //   BFFApiUrls.ACCOUNT,
-  //   {
-  //     fetchImmediately: false,
-  //   }
-  // );
+  const { fetch: fetchAccountData, data: accountData } = useAccountApi();
 
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     void fetchAccountData();
-  //   }
-  // }, [fetchAccountData, isAuthenticated]);
+  useEffect(() => {
+    if (isAuthenticated) {
+      void fetchAccountData();
+    }
+  }, [fetchAccountData, isAuthenticated]);
 
   // We don't want to show the app content until we know whether the user is authenticated or not,
   // to prevent flashing of the wrong content.
@@ -49,9 +46,9 @@ function AppLanding() {
               <PageHeader.MenuLink
                 linkComponent={MaRouterLink}
                 fixed
-                // href={themaConfigAccount.route.path}
+                href={themaConfigAccount.route.path}
               >
-                {/* {data?.content?.username ?? 'Account'} */}Account
+                {accountData?.content?.username ?? 'Account'}
               </PageHeader.MenuLink>
               <PageHeader.MenuLink fixed href={LOGOUT_URL}>
                 Uitloggen
