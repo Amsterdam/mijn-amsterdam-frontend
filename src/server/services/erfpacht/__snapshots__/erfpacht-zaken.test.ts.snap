@@ -4,9 +4,9 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
 {
   "content": [
     {
-      "datePublished": "2026-07-15T00:00:00.000Z",
-      "datePublishedFormatted": "15 juli 2026",
-      "displayStatus": "Aanvraag",
+      "datePublished": "2026-02-05T00:00:00.000Z",
+      "datePublishedFormatted": "05 februari 2026",
+      "displayStatus": "Afgehandeld",
       "dossierLinks": [
         {
           "title": "EW123/456",
@@ -18,12 +18,12 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
         },
       ],
       "fetchZaakDetailUrl": "http://bff-api-host/api/v1/services/erfpacht/zaak/1234-5678-9012-9999",
-      "formattedStatusDatum": "15-07-2026",
+      "formattedStatusDatum": "05-02-2026",
       "link": {
         "title": "Wijzigen Erfpachtrecht",
         "to": "/erfpacht/zaak/1234-5678-9012-9999",
       },
-      "statusOmschrijving": "Aanvraag beoordelen",
+      "statusOmschrijving": "Aanvraag afgerond",
       "titelFormattedStatusDatum": "Datum status",
       "titelStatusOmschrijving": "Status",
       "titelZaakNummer": "Zaak nummer",
