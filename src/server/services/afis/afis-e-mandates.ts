@@ -14,12 +14,15 @@ import {
   AFIS_EMANDATE_RECURRING_DATE_END,
   AFIS_EMANDATE_SIGN_REQUEST_URL_VALIDITY_IN_DAYS,
   afisEMandatePostbodyStatic,
+  EMANDATE_ENDDATE_INDICATOR,
   EMandateCreditorsGemeenteAmsterdam,
   eMandateReceiver,
 } from './afis-e-mandates-config.ts';
+import { EMANDATE_STATUS_FRONTEND } from './afis-e-mandates-config.ts';
+import { EMANDATE_STATUS_SOURCE } from './afis-e-mandates-config.ts';
+import { type EmandateStatusFrontend } from './afis-e-mandates-config.ts';
 import {
   debugEmandates,
-  EMANDATE_STATUS_FRONTEND,
   formatBusinessPartnerId,
   getAfisApiConfig,
   getEmandateDisplayStatus,
@@ -27,7 +30,6 @@ import {
   getEmandateValidityDateFormatted,
   getFeedEntryProperties,
   isEmandateActive,
-  type EmandateStatusFrontend,
 } from './afis-helpers.ts';
 import { handleEmandateLifetimeUpdate } from './afis-route-handlers.ts';
 import { routes } from './afis-service-config.ts';
@@ -73,8 +75,9 @@ import {
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import { captureMessage } from '../monitoring.ts';
 
-export async function createOrUpdateEMandateFromStatusNotificationPayload(
+export async function createEMandateFromStatusNotificationPayload(
   payload: EMandateSignRequestPayload & EMandateSignRequestNotificationPayload
 ) {
   const creditor = EMandateCreditorsGemeenteAmsterdam.find(
@@ -86,6 +89,40 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
   }
 
   const businessPartnerId = formatBusinessPartnerId(payload.businessPartnerId);
+
+  // Fetch the existing e-mandates for this business partner and creditor to check if the e-mandate was already created via the sign request flow.
+  // This happens if the callback receives data that has already been processed, for example if the first callback timed out on the caller side and the payment provider retries the callback.
+  const existingEmandatesByCreditorResponse =
+    await fetchEmandatesByCreditorRefId(businessPartnerId, creditor.refId);
+
+  debugEmandates(
+    'Fetched existing e-mandates for businessPartnerId %s and creditorRefId %s with response: %o',
+    businessPartnerId,
+    creditor.refId,
+    existingEmandatesByCreditorResponse
+  );
+
+  if (existingEmandatesByCreditorResponse.status === 'OK') {
+    const existingMandates = existingEmandatesByCreditorResponse.content;
+
+    if (
+      existingMandates.some(
+        (mandate) =>
+          mandate.Status === EMANDATE_STATUS_SOURCE.Actief &&
+          mandate.SndIban === payload.senderIBAN &&
+          mandate.LifetimeTo.includes(EMANDATE_ENDDATE_INDICATOR)
+      )
+    ) {
+      debugEmandates(
+        'E-mandate already exists for businessPartnerId %s, creditorRefId %s, senderIBAN %s and signDate %s. No action needed.',
+        businessPartnerId,
+        creditor.refId,
+        payload.senderIBAN,
+        payload.eMandateSignDate
+      );
+      return apiSuccessResult('Already exists');
+    }
+  }
 
   const INCLUDE_PHONE_AND_EMAIL = false;
   const businessPartnerResponse = await fetchAfisBusinessPartnerDetails(
@@ -163,7 +200,9 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     !bankAccountResponse.content?.eMandateCollectionEnabled
   ) {
     // If the bank account exists but is not yet enabled for e-mandate collection, we update the bank account to enable it for e-mandate collection.
-    // TODO: Is this possible?
+    captureMessage(
+      `Bank account with IBAN ${senderIBAN} for businessPartnerId ${businessPartnerId} exists but is not enabled for e-mandate collection.`
+    );
   }
 
   // We start the e-mandate lifetime with an enddate far in the future.
@@ -211,10 +250,14 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
     LifetimeTo: lifetimeTo,
   };
 
-  await disableOtherActiveEMandatesForCreditor(
-    businessPartnerId,
-    creditor.refId
-  );
+  if (
+    existingEmandatesByCreditorResponse.status === 'OK' &&
+    existingEmandatesByCreditorResponse.content.length > 0
+  ) {
+    await disableOtherActiveEMandatesForCreditor(
+      existingEmandatesByCreditorResponse.content.map((x) => x.IMandateId)
+    );
+  }
 
   debugEmandates('Creating new e-mandate.', payloadCreateEmandate);
   const response = await createAfisEMandate(payloadCreateEmandate);
@@ -230,31 +273,16 @@ export async function createOrUpdateEMandateFromStatusNotificationPayload(
 }
 
 async function disableOtherActiveEMandatesForCreditor(
-  businessPartnerId: BusinessPartnerId,
-  creditorRefId: AfisEMandateCreditor['refId']
+  eMandateIds: AfisEMandateSource['IMandateId'][]
 ) {
-  const eMandateIdsResponse = await fetchEmandateIdsByCreditorRefId(
-    businessPartnerId,
-    creditorRefId
-  );
-
-  debugEmandates(
-    'Deactivating other active e-mandates for creditor.',
-    eMandateIdsResponse
-  );
-
-  if (eMandateIdsResponse.status !== 'OK') {
-    return eMandateIdsResponse;
-  }
   await Promise.all(
-    eMandateIdsResponse.content.map((eMandateId) => {
-      // TODO: filter only active mandates.
+    eMandateIds.map((eMandateId) => {
       return deactivateEmandate({
         IMandateId: eMandateId.toString(),
       });
     })
   );
-  return apiSuccessResult({ deactivatedIds: eMandateIdsResponse.content });
+  return apiSuccessResult({ deactivatedIds: eMandateIds });
 }
 
 async function createAfisEMandate(payload: AfisEMandateCreatePayload) {
@@ -504,10 +532,10 @@ function transformEMandatesResponse(
   );
 }
 
-export async function fetchEmandateIdsByCreditorRefId(
+export async function fetchEmandatesByCreditorRefId(
   businessPartnerId: BusinessPartnerId,
   creditorRefID: AfisEMandateCreditor['refId']
-): Promise<ApiResponse<AfisEMandateSource['IMandateId'][]>> {
+): Promise<ApiResponse<AfisEMandateSource[]>> {
   const config = await getAfisApiConfig({
     formatUrl: ({ url }) => {
       return `${url}/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet?$filter=SndId eq '${businessPartnerId}'`;
@@ -517,8 +545,7 @@ export async function fetchEmandateIdsByCreditorRefId(
         getFeedEntryProperties<AfisEMandateSource>(responseData);
       return sourceMandates
         .toSorted(sortByNumber('IMandateId', 'asc'))
-        .filter((mandate) => mandate.SndDebtorId === creditorRefID)
-        .map((mandate) => mandate.IMandateId);
+        .filter((mandate) => mandate.SndDebtorId === creditorRefID);
     },
 
     /**
@@ -529,7 +556,7 @@ export async function fetchEmandateIdsByCreditorRefId(
     enableCache: false,
   });
 
-  return requestData<AfisEMandateSource['IMandateId'][]>(config);
+  return requestData<AfisEMandateSource[]>(config);
 }
 
 export async function fetchEMandates(
@@ -747,7 +774,7 @@ export async function deactivateEmandate(
 export const forTesting = {
   addEmandateApiUrls,
   deactivateEmandate,
-  createEMandate: createOrUpdateEMandateFromStatusNotificationPayload,
+  createEMandate: createEMandateFromStatusNotificationPayload,
   createEMandateSignRequestPayload,
   fetchEMandates,
   fetchEmandateSignRequestRedirectUrlFromPaymentProvider,
