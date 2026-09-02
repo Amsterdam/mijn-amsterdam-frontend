@@ -1,9 +1,16 @@
 import { matchPath } from 'react-router';
 
+// import { AdminAccountRoutes } from './Pages/Account/Account-render-config.tsx';
+import { AdminHomeRoutes } from './Pages/Home/Home-render-config.tsx';
+// import { AdminUserFeedbackRoutes } from './Pages/UserFeedback/UserFeedback-render-config.tsx';
 import type { ApplicationRouteConfig } from '../../../universal/types/thema-types.ts';
 import { ApplicationRoutes } from '../../components/ApplicationRoutes/ApplicationRoutes.tsx';
 
-const routeComponents: ApplicationRouteConfig[] = [].flat();
+const routeComponents: ApplicationRouteConfig[] = [
+  AdminHomeRoutes,
+  // AdminAccountRoutes,
+  // AdminUserFeedbackRoutes,
+].flat();
 
 export const privateRoutes = routeComponents.filter(
   (config) => config.private !== false
