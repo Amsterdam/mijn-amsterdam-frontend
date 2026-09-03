@@ -45,7 +45,7 @@ export const themaConfig: ParkerenThemaConfig = {
       title: 'Parkeren voor gehandicapten',
     },
     {
-      to: BELASTINGEN_ROUTE_DEFAULT,
+      to: BELASTINGEN_ROUTE_DEFAULT, // uitsluitend tonen wanneer men themapagina Parkeren heeft
       title: 'Parkeerbon betalen',
     },
   ],
