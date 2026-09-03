@@ -108,13 +108,6 @@ export function ParkerenThema() {
     </PageContentCell>
   );
 
-  const filteredPageLinks =
-    tables.length > 0
-      ? themaConfig.pageLinks
-      : themaConfig.pageLinks.filter(
-          (link) => link.title !== 'Parkeerbon betalen'
-        );
-
   return (
     <ThemaPagina
       id={id}
@@ -122,12 +115,11 @@ export function ParkerenThema() {
       isError={isError}
       isLoading={isLoading}
       pageContentTop={pageContentTop}
-      pageLinks={filteredPageLinks}
+      pageLinks={themaConfig.pageLinks}
       pageContentMain={tables}
       pageContentBottom={pageContentBottom}
       maintenanceNotificationsPageSlug="parkeren"
     />
   );
 }
-
 export const forTesting = { PageContentTop };
