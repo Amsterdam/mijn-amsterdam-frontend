@@ -159,7 +159,7 @@ export function AfisBetaalVoorkeuren() {
     />
   );
 
-  const mailBody = `Debiteurnaam: ${businesspartnerDetails?.fullName ?? '-'}%0D%0ADebiteurnummer: ${businesspartnerDetails?.businessPartnerId ?? '-'}`;
+  const mailBody = `Debiteurnaam: ${businesspartnerDetails?.fullName ?? '-'}. Debiteurnummer: ${businesspartnerDetails?.businessPartnerId ?? '-'}`;
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
