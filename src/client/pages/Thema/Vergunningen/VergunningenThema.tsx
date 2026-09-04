@@ -7,7 +7,8 @@ import { PageContentCell } from '../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaDataView } from '../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
-import { themaConfig } from '../Parkeren/Parkeren-thema-config.ts';
+import { themaConfig as ParkerenThemaConfig } from '../Parkeren/Parkeren-thema-config.ts';
+import { themaConfig as VergunningenThemaConfig } from '../Vergunningen/Vergunningen-thema-config.ts';
 
 export function VergunningenThema() {
   const {
@@ -20,7 +21,7 @@ export function VergunningenThema() {
     title,
     hasParkeervergunningen,
   } = useVergunningenThemaData();
-  useHTMLDocumentTitle(themaConfig.route);
+  useHTMLDocumentTitle(VergunningenThemaConfig.route);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
@@ -31,7 +32,7 @@ export function VergunningenThema() {
       {hasParkeervergunningen && (
         <Alert heading="Parkeervergunningen?" headingLevel={4}>
           <Paragraph>
-            <MaRouterLink href={themaConfig.route.path}>
+            <MaRouterLink href={ParkerenThemaConfig.route.path}>
               Bekijk hier de vergunningen voor parkeren.
             </MaRouterLink>
           </Paragraph>
