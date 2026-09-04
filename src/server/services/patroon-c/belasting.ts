@@ -100,7 +100,7 @@ function getConfig(
 ): DataRequestConfig {
   return getApiConfig('BELASTINGEN', {
     headers: {
-      Authorization: `Bearer ${process.env.BFF_BELASTINGEN_BEARER_TOKEN}`,
+      Authorization: process.env.BFF_BELASTINGEN_BEARER_TOKEN,
       subjid: getBsnTranslation(authProfileAndToken.profile.id),
     },
     transformResponse(response: BelastingenSourceContent) {
