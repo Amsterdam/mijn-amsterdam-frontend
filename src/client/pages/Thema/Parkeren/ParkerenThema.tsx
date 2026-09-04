@@ -122,5 +122,4 @@ export function ParkerenThema() {
     />
   );
 }
-
 export const forTesting = { PageContentTop };
