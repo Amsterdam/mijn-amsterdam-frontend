@@ -47,6 +47,7 @@ export type ZwdVveDataSource = {
   wijk: string;
   zip_code: string;
   cases: ZwdCaseSource[];
+  is_priority_neighborhood: boolean;
 };
 
 export type VvEDataFrontend = Prettify<
@@ -62,6 +63,7 @@ export type VvEDataFrontend = Prettify<
       | 'build_year'
       | 'ligt_in_beschermd_gebied'
       | 'beschermd_stadsdorpsgezicht'
+      | 'is_priority_neighborhood'
     >
   >
 >;
