@@ -125,7 +125,8 @@ export async function storeNotificationsResponses(
   const temporaryExcludedServices: ServiceId[] = [
     'belasting',
     'fetchWior',
-  ] as const; // MIJN-12971 & MIJN-13488: Temporary filter to not push notifications repeatedly for notifications that have a datePublished set to today everyday
+    'fetchKrefia',
+  ] as const; // MIJN-12971 & MIJN-13488 & MIJN-13592: Temporary filter to not push notifications repeatedly for notifications that have a datePublished set to today everyday
   const responses = entries(serviceResponses)
     .filter(
       // Unsuccessful responses do not contain new notifications
