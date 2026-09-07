@@ -3,11 +3,13 @@ import { Column, Link, Paragraph } from '@amsterdam/design-system-react';
 import { useProfileData } from './useProfileData.hook.tsx';
 import { useWonenThemaData } from './useWonenThemaData.hook.ts';
 import type { VvEDataFrontend } from '../../../../../server/services/wonen/zwd.types.ts';
+import type { ZaakAanvraagDetail } from '../../../../../universal/types/App.types.ts';
 import {
   Datalist,
   type Row,
   type RowSet,
 } from '../../../../components/Datalist/Datalist.tsx';
+import { DataView } from '../../../../components/DataView/DataView.tsx';
 import { PageContentCell } from '../../../../components/Page/Page.tsx';
 import { ThemaDetailPagina } from '../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
@@ -16,6 +18,22 @@ import { themaConfig } from '../Profile-thema-config.ts';
 type VveDetailsProps = {
   vve: VvEDataFrontend;
 };
+
+function TransformZWDCases(
+  cases: VvEDataFrontend['cases']
+): ZaakAanvraagDetail[] {
+  return cases.map((c) => ({
+    id: String(c.id),
+    title: c.adviceType,
+    steps: [],
+    link: {
+      to: themaConfig.BRP.detailPageVvE.route.path,
+      title: 'Bekijk details',
+    },
+    displayStatus: c.status,
+    lastUpdated: c.updated,
+  }));
+}
 
 function VveDetail({ vve }: VveDetailsProps) {
   const rows: Array<Row | RowSet> = [
@@ -77,6 +95,15 @@ function VveDetail({ vve }: VveDetailsProps) {
       </PageContentCell>
       <PageContentCell>
         <Datalist rows={rows} />
+      </PageContentCell>
+      <PageContentCell>
+        <DataView
+          displayProps={{
+            title: 'Aanvraag',
+            displayStatus: 'Status',
+          }}
+          items={TransformZWDCases(vve.cases)}
+        />
       </PageContentCell>
     </>
   );

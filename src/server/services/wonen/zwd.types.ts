@@ -64,6 +64,7 @@ export type VvEDataFrontend = Prettify<
       | 'ligt_in_beschermd_gebied'
       | 'beschermd_stadsdorpsgezicht'
       | 'is_priority_neighborhood'
+      | 'cases'
     >
   >
 >;
