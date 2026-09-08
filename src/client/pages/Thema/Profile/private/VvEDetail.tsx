@@ -25,7 +25,7 @@ type VveCaseDetail = ZaakAanvraagDetail & {
   lastUpdated: string;
 };
 
-const VVE_CASES_DISPLAYPROPS: DisplayProps = {
+const VVE_CASES_DISPLAYPROPS: DisplayProps<VveCaseDetail> = {
   title: 'Aanvraag',
   lastUpdated: 'Laatst bijgewerkt',
   displayStatus: 'Status',
