@@ -21,27 +21,27 @@ type VveDetailsProps = {
   vve: VvEDataFrontend;
 };
 
-type VveCaseDetail = ZaakAanvraagDetail & {
-  lastUpdated: string;
-};
+  type VveCaseDetail = ZaakAanvraagDetail & {
+    startAanvraag: string;
+  };
 
 const VVE_CASES_DISPLAYPROPS: DisplayProps<VveCaseDetail> = {
   title: 'Aanvraag',
-  lastUpdated: 'Laatst bijgewerkt',
+  startAanvraag: 'Start Aanvraag',
   displayStatus: 'Status',
 };
 
 function TransformZWDCases(cases: VvEDataFrontend['cases']): VveCaseDetail[] {
   return cases.map((c) => ({
     id: String(c.id),
-    title: c.adviceType,
+    title: 'VvE verduurzamingsadvies',
     steps: [],
     link: {
       to: themaConfig.BRP.detailPageVvE.route.path,
       title: 'Bekijk details',
     },
     displayStatus: c.status,
-    lastUpdated: defaultDateFormat(c.updated),
+    startAanvraag: defaultDateFormat(c.created),
   }));
 }
 
@@ -90,17 +90,18 @@ function VveDetail({ vve }: VveDetailsProps) {
             </Link>{' '}
             leest u hoe u dit doet.
           </Paragraph>
-          {vve.isPriorityNeighborhood && (
-            <Paragraph>
-              Wilt u VVE uw woning verduurzamen?{' '}
-              <Link
-                href="https://duurzaamwonen.amsterdam/vve/gratis-verduurzamingsadvies-voor-vves"
-                rel="external noopener"
-              >
-                Vraag hier gratis advies aan.
-              </Link>
-            </Paragraph>
-          )}
+          {themaConfig.BRP.featureToggle.enableZWDZaken &&
+            vve.isPriorityNeighborhood && (
+              <Paragraph>
+                Wilt u VVE uw woning verduurzamen?{' '}
+                <Link
+                  href="https://duurzaamwonen.amsterdam/vve/gratis-verduurzamingsadvies-voor-vves"
+                  rel="external noopener"
+                >
+                  Vraag hier gratis advies aan.
+                </Link>
+              </Paragraph>
+            )}
         </Column>
       </PageContentCell>
       <PageContentCell>
@@ -109,6 +110,12 @@ function VveDetail({ vve }: VveDetailsProps) {
       {themaConfig.BRP.featureToggle.enableZWDZaken && vve.cases.length > 0 && (
         <PageContentCell>
           <DataView<VveCaseDetail>
+            contentAfterTheCaption={
+              <Paragraph>
+                Heb je vragen over de onderstaande aanvragen, neem contact op
+                met je VvE bestuur.
+              </Paragraph>
+            }
             displayProps={VVE_CASES_DISPLAYPROPS}
             items={TransformZWDCases(vve.cases)}
           />
