@@ -10,6 +10,7 @@ export const featureToggle = {
   ['MA_ADMIN.router']: !IS_PRODUCTION,
   ['WONEN.vve']: !IS_PRODUCTION,
   ['WONEN.vve.monumentstatus']: !IS_PRODUCTION,
+  ['WONEN.vve.zaken']: !IS_PRODUCTION,
   ['VERGUNNINGEN.VTHOnPowerbrowserActive']: !IS_PRODUCTION,
   ['KLANT_CONTACT.afspraken']: !IS_PRODUCTION,
   ['KLANT_CONTACT.communicatievoorkeuren']: !IS_PRODUCTION,

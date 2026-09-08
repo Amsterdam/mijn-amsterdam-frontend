@@ -99,16 +99,18 @@ function VveDetail({ vve }: VveDetailsProps) {
       <PageContentCell>
         <Datalist rows={rows} />
       </PageContentCell>
-      <PageContentCell>
-        <DataView<VveCaseDetail>
-          displayProps={{
-            title: 'Aanvraag',
-            lastUpdated: 'Laatst bijgewerkt',
-            displayStatus: 'Status',
-          }}
-          items={TransformZWDCases(vve.cases)}
-        />
-      </PageContentCell>
+      {themaConfig.BRP.featureToggle.enableZWDZaken && (
+        <PageContentCell>
+          <DataView<VveCaseDetail>
+            displayProps={{
+              title: 'Aanvraag',
+              lastUpdated: 'Laatst bijgewerkt',
+              displayStatus: 'Status',
+            }}
+            items={TransformZWDCases(vve.cases)}
+          />
+        </PageContentCell>
+      )}
     </>
   );
 }
