@@ -167,7 +167,7 @@ Services:
 Request tooling:`DEBUG=vergunningen,source-api-request:request,source-api-request:cache-hit,source-api-request:cache-key,decos-service`
 
 To log response data from incoming responses before any transformation.
-A comma separated list of keywords / pathsegments can be used to log specific requests. For example: zorgned/aanvragen,gpass
+A comma separated list of keywords / pathsegments can be used to log specific requests. For example: zorgned/aanvragen,gpass. Keywords are matched agains request parameters and response body. Any match will mark the response to be logged.
 `export DEBUG_RESPONSE_DATA=term1,term2` this setting only works in conjunction with `DEBUG=source-api-request:response` and is turned on or added **automatically** when DEBUG_RESPONSE_DATA is defined.
 
 To log request body for outgoing requests. A comma separated list of pathsegments|keywords can be used to log specific requests. For example: personen|ZoekMetAdresseerbaarObjectIdentificatie;keyword2,gpass

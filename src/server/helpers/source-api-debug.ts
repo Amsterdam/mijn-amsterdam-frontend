@@ -18,13 +18,19 @@ if (debugResponseDataTerms().length > 0) {
   debugResponse(debugResponseDataTerms(), 'debug response data terms');
 }
 
-function isDebugResponseDataMatch(config: AxiosRequestConfig) {
+function isDebugResponseDataMatch(
+  config: AxiosRequestConfig,
+  responseDataRaw: string
+) {
   return function isDebugResponseDataMatch(term: string) {
     const hasTermInRequestUrl = !!config.url?.includes(term);
     const hasTermInRequestParams = config.params
       ? JSON.stringify(config.params).includes(term)
       : false;
-    return hasTermInRequestUrl || hasTermInRequestParams;
+    const hasTermInResponseData = !!responseDataRaw.includes(term);
+    return (
+      hasTermInRequestUrl || hasTermInRequestParams || hasTermInResponseData
+    );
   };
 }
 
@@ -38,9 +44,6 @@ export function addResponseDataDebugging(config: AxiosRequestConfig) {
     params: config.params,
   };
 
-  const isDebugResponseDataTermMatch =
-    debugResponseDataTerms().some(isDebugResponseDataMatch(config)) ?? false;
-
   // Add default transformer if no transformers are defined
   if (!config.transformResponse) {
     const transformers: AxiosResponseTransformer[] = [];
@@ -51,10 +54,14 @@ export function addResponseDataDebugging(config: AxiosRequestConfig) {
 
   // Add an additional transformer to log the raw response before any other transformers are applied
   config.transformResponse?.unshift((responseDataRaw, headers, status) => {
+    const isDebugResponseDataTermMatch =
+      debugResponseDataTerms().some(
+        isDebugResponseDataMatch(config, responseDataRaw)
+      ) ?? false;
     if (isDebugResponseDataTermMatch) {
       debugResponse('');
       debugResponse('------');
-      debugResponse('[CONFIG]: %o', configExcerpt);
+      debugResponse('[CONFIG]: %O', configExcerpt);
       debugResponse('[RESPONSE DATA]: %s', responseDataRaw);
       debugResponse('[HEADERS]: %o', headers);
       debugResponse('[STATUS]: %d', status);
