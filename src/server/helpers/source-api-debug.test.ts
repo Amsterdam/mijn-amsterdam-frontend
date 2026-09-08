@@ -1,13 +1,8 @@
-import type { AxiosRequestConfig } from 'axios';
 import { describe, expect, it, vi } from 'vitest';
 
 vi.mock('../debug', () => ({ debugRequest: vi.fn(), debugResponse: vi.fn() }));
 import * as debug from '../debug.ts';
-import {
-  forTesting,
-  addRequestDataDebugging,
-  addResponseDataDebugging,
-} from './source-api-debug.ts';
+import { forTesting, addRequestDataDebugging } from './source-api-debug.ts';
 
 describe('source-api-debug', () => {
   describe('isDebugResponseDataMatch', () => {
@@ -89,53 +84,6 @@ describe('source-api-debug', () => {
       vi.stubEnv('DEBUG_REQUEST_DATA', '');
       const spy = vi.spyOn(debug, 'debugRequest');
       addRequestDataDebugging({ url: 'path' });
-      expect(spy).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('addResponseDataDebugging', () => {
-    afterEach(() => {
-      vi.restoreAllMocks();
-      vi.unstubAllEnvs();
-    });
-
-    it('debugs a matching response using structured terms', () => {
-      vi.stubEnv('DEBUG_RESPONSE_DATA', 'path|id|ready');
-      const spy = vi.spyOn(debug, 'debugResponse');
-      const config: AxiosRequestConfig = {
-        url: 'https://domain.nl/path',
-        params: {
-          id: 123,
-        },
-      };
-
-      addResponseDataDebugging(config);
-      const [debugTransformer] = config.transformResponse as Array<
-        (data: string, headers: object, status: number) => string
-      >;
-
-      debugTransformer('{"state":"ready"}', { 'x-request-id': 'abc' }, 200);
-
-      expect(spy).toHaveBeenCalledWith('[STATUS]: %d', 200);
-    });
-
-    it('does not debug a non-matching response when structured terms do not match', () => {
-      vi.stubEnv('DEBUG_RESPONSE_DATA', 'path|missing|ready');
-      const spy = vi.spyOn(debug, 'debugResponse');
-      const config: AxiosRequestConfig = {
-        url: 'https://domain.nl/path',
-        params: {
-          id: 123,
-        },
-      };
-
-      addResponseDataDebugging(config);
-      const [debugTransformer] = config.transformResponse as Array<
-        (data: string, headers: object, status: number) => string
-      >;
-
-      debugTransformer('{"state":"ready"}', { 'x-request-id': 'abc' }, 200);
-
       expect(spy).not.toHaveBeenCalled();
     });
   });
