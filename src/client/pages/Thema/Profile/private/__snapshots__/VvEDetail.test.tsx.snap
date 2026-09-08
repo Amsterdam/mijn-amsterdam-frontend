@@ -87,19 +87,23 @@ exports[`VvEDetail > Matches snapshot with VvE cases 1`] = `
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
-          <p
-            class="ams-paragraph"
+          <div
+            class="ams-column"
           >
-            Hieronder staan de gegevens van uw Vereniging van Eigenaren (VvE) zoals wij die hebben. Geef aan ons door als gegevens niet kloppen. Op 
-            <a
-              class="ams-link"
-              href="https://www.amsterdam.nl/stelselpedia/terugmelden/"
-              rel="noopener noreferrer"
+            <p
+              class="ams-paragraph"
             >
-              Terugmelden op basisgegevens en stelselrelaties
-            </a>
-             leest u hoe u dit doet.
-          </p>
+              Hieronder staan de gegevens van uw Vereniging van Eigenaren (VvE) zoals wij die hebben. Geef aan ons door als gegevens niet kloppen. Op 
+              <a
+                class="ams-link"
+                href="https://www.amsterdam.nl/stelselpedia/terugmelden/"
+                rel="noopener noreferrer"
+              >
+                Terugmelden op basisgegevens en stelselrelaties
+              </a>
+               leest u hoe u dit doet.
+            </p>
+          </div>
         </div>
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
@@ -168,6 +172,64 @@ exports[`VvEDetail > Matches snapshot with VvE cases 1`] = `
               Ja
             </dd>
           </dl>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <div
+            class="ams-table"
+          >
+            <table
+              class="ams-table__table _TableV2_1fc147"
+            >
+              <thead
+                class="ams-table__header"
+              >
+                <tr
+                  class="ams-table__row"
+                >
+                  <th
+                    class="ams-table__header-cell"
+                  >
+                    Aanvraag
+                  </th>
+                  <th
+                    class="ams-table__header-cell"
+                  >
+                    Laatst bijgewerkt
+                  </th>
+                  <th
+                    class="ams-table__header-cell"
+                  >
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                class="ams-table__body"
+              >
+                <tr
+                  class="ams-table__row"
+                >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    Verduurzamingsadvies
+                  </td>
+                  <td
+                    class="ams-table__cell"
+                  >
+                    03 juni 2026
+                  </td>
+                  <td
+                    class="ams-table__cell"
+                  >
+                    In behandeling
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </main>
