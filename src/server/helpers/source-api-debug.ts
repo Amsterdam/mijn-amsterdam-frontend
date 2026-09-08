@@ -1,7 +1,4 @@
-import axios, {
-  type AxiosRequestConfig,
-  type AxiosResponseTransformer,
-} from 'axios';
+import axios, { type AxiosRequestConfig } from 'axios';
 
 import { getFromEnv } from './env.ts';
 import { debugRequest, debugResponse } from '../debug.ts';
@@ -68,25 +65,12 @@ function isDebugResponseDataMatch(
 }
 
 export function addResponseDataDebugging(config: AxiosRequestConfig) {
-  const configuredTransformers = config.transformResponse;
-  const transformResponse: AxiosResponseTransformer[] = [];
+  const configuredTransformers =
+    config.transformResponse ?? axios.defaults.transformResponse ?? [];
 
-  if (configuredTransformers) {
-    if (Array.isArray(configuredTransformers)) {
-      transformResponse.push(...configuredTransformers);
-    } else {
-      transformResponse.push(configuredTransformers);
-    }
-  } else if (axios.defaults.transformResponse) {
-    const defaultTransformers = axios.defaults.transformResponse;
-    if (Array.isArray(defaultTransformers)) {
-      transformResponse.push(...defaultTransformers);
-    } else {
-      transformResponse.push(defaultTransformers);
-    }
-  }
-
-  config.transformResponse = transformResponse;
+  config.transformResponse = Array.isArray(configuredTransformers)
+    ? [...configuredTransformers]
+    : [configuredTransformers];
 
   const configExcerpt = {
     method: config.method ?? 'GET',
