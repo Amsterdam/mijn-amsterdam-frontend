@@ -19,6 +19,7 @@ import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 import { useAppStateNotifications } from '../../hooks/useNotifications.ts';
+import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
 import { AfsprakenDashboard } from '../Thema/KlantContact/Afspraken/Afspraken.tsx';
@@ -34,6 +35,7 @@ export function Dashboard() {
   const appState = useAppStateGetter();
   const location = useLocation();
   const navigate = useNavigate();
+  const profileType = useProfileTypeValue();
   const { NOTIFICATIONS } = appState;
   const { notifications, total } = useAppStateNotifications(
     MAX_NOTIFICATIONS_VISIBLE
@@ -70,7 +72,9 @@ export function Dashboard() {
           spanWide={7}
           className={getRedactedClass(null, 'full')}
         >
-          {isKlantcontactLoading && <LoadingContent className="ams-mb-l" />}
+          {isKlantcontactLoading && profileType === 'private' && (
+            <LoadingContent className="ams-mb-l" />
+          )}
           {!isKlantcontactLoading && hasAfspraken && (
             <AfsprakenDashboard afspraken={afspraken} className="ams-mb-l" />
           )}
