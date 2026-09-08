@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import { VvEDetail } from './VvEDetail.tsx';
 import type { WonenDataFrontend } from '../../../../../server/services/wonen/wonen.types.ts';
@@ -80,25 +80,7 @@ function Component() {
 
 describe('VvEDetail', () => {
   test('Matches snapshot with VvE cases', () => {
-    render(<Component />);
-
-    expect({
-      title: screen.getByRole('heading', { name: 'Vereniging van Eigenaren' })
-        .textContent,
-      naam: screen.getByText('VvE Prachtige Straat 13').textContent,
-      bouwjaar: screen.getByText('1926').textContent,
-      kvk: screen.getByText('12345678').textContent,
-      hasTerugmeldenLink: !!screen.getByRole('link', {
-        name: 'Terugmelden op basisgegevens en stelselrelaties',
-      }),
-    }).toMatchInlineSnapshot(`
-      {
-        "bouwjaar": "1926",
-        "hasTerugmeldenLink": true,
-        "kvk": "12345678",
-        "naam": "VvE Prachtige Straat 13",
-        "title": "Vereniging van Eigenaren",
-      }
-    `);
+    const { asFragment } = render(<Component />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });
