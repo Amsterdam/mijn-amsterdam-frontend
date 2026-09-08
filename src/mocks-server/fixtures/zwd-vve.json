@@ -54,8 +54,8 @@
       "activation_team": null,
       "advice_type": "Energieadvies",
       "application_type": "Advies",
-      "created": "2016-12-07T00:00:00Z",
-      "end_date": "2016-12-07",
+      "created": "2024-12-07T00:00:00Z",
+      "end_date": "2026-09-08",
       "homeowner_association": {
         "id": 11,
         "name": "Vereniging van Eigenaars Groenhoven huisnummers 106 tot en met 866 te Amsterdam",
@@ -68,7 +68,7 @@
       "prefixed_dossier_id": "623OUD",
       "request_date": "2016-12-07",
       "status": "Afgesloten",
-      "updated": "2026-06-03T09:50:53.447114Z"
+      "updated": "2026-09-08T09:50:53.447114Z"
     }
   ]
 }
