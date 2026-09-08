@@ -3,6 +3,7 @@ import { Column, Link, Paragraph } from '@amsterdam/design-system-react';
 import { useProfileData } from './useProfileData.hook.tsx';
 import { useWonenThemaData } from './useWonenThemaData.hook.ts';
 import type { VvEDataFrontend } from '../../../../../server/services/wonen/zwd.types.ts';
+import { defaultDateFormat } from '../../../../../universal/helpers/date.ts';
 import type { ZaakAanvraagDetail } from '../../../../../universal/types/App.types.ts';
 import {
   Datalist,
@@ -19,9 +20,11 @@ type VveDetailsProps = {
   vve: VvEDataFrontend;
 };
 
-function TransformZWDCases(
-  cases: VvEDataFrontend['cases']
-): ZaakAanvraagDetail[] {
+type VveCaseDetail = ZaakAanvraagDetail & {
+  lastUpdated: string;
+};
+
+function TransformZWDCases(cases: VvEDataFrontend['cases']): VveCaseDetail[] {
   return cases.map((c) => ({
     id: String(c.id),
     title: c.adviceType,
@@ -31,7 +34,7 @@ function TransformZWDCases(
       title: 'Bekijk details',
     },
     displayStatus: c.status,
-    lastUpdated: c.updated,
+    lastUpdated: defaultDateFormat(c.updated),
   }));
 }
 
@@ -97,9 +100,10 @@ function VveDetail({ vve }: VveDetailsProps) {
         <Datalist rows={rows} />
       </PageContentCell>
       <PageContentCell>
-        <DataView
+        <DataView<VveCaseDetail>
           displayProps={{
             title: 'Aanvraag',
+            lastUpdated: 'Laatst bijgewerkt',
             displayStatus: 'Status',
           }}
           items={TransformZWDCases(vve.cases)}

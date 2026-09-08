@@ -5,7 +5,7 @@
   "contacts": [],
   "district": "Zuidoost",
   "id": 11,
-  "is_priority_neighborhood": true,
+  "is_priority_neighborhood": false,
   "is_small": false,
   "kvk_nummer": null,
   "ligt_in_beschermd_gebied": "nee",
@@ -52,7 +52,7 @@
   "cases": [
     {
       "activation_team": null,
-      "advice_type": "Energieadvies (OUD)",
+      "advice_type": "Energieadvies",
       "application_type": "Advies",
       "created": "2016-12-07T00:00:00Z",
       "end_date": "2016-12-07",
