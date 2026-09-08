@@ -12,6 +12,7 @@ import {
 } from '../../../../components/Datalist/Datalist.tsx';
 import { DataView } from '../../../../components/DataView/DataView.tsx';
 import { PageContentCell } from '../../../../components/Page/Page.tsx';
+import type { DisplayProps } from '../../../../components/Table/TableV2.types.ts';
 import { ThemaDetailPagina } from '../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
 import { themaConfig } from '../Profile-thema-config.ts';
@@ -22,6 +23,12 @@ type VveDetailsProps = {
 
 type VveCaseDetail = ZaakAanvraagDetail & {
   lastUpdated: string;
+};
+
+const VVE_CASES_DISPLAYPROPS: DisplayProps = {
+  title: 'Aanvraag',
+  lastUpdated: 'Laatst bijgewerkt',
+  displayStatus: 'Status',
 };
 
 function TransformZWDCases(cases: VvEDataFrontend['cases']): VveCaseDetail[] {
@@ -99,14 +106,10 @@ function VveDetail({ vve }: VveDetailsProps) {
       <PageContentCell>
         <Datalist rows={rows} />
       </PageContentCell>
-      {themaConfig.BRP.featureToggle.enableZWDZaken && (
+      {themaConfig.BRP.featureToggle.enableZWDZaken && vve.cases.length > 0 && (
         <PageContentCell>
           <DataView<VveCaseDetail>
-            displayProps={{
-              title: 'Aanvraag',
-              lastUpdated: 'Laatst bijgewerkt',
-              displayStatus: 'Status',
-            }}
+            displayProps={VVE_CASES_DISPLAYPROPS}
             items={TransformZWDCases(vve.cases)}
           />
         </PageContentCell>
