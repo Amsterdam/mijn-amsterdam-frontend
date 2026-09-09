@@ -157,7 +157,7 @@
     "vite": "^6.4.3",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.5.0",
-    "vitest": "^3.2.7",
+    "vitest": "^4.1.11",
     "xlsx": "file:vendor/xlsx-0.20.2.tgz",
     "zod": "^4.4.3",
     "zustand": "^5.0.15"
