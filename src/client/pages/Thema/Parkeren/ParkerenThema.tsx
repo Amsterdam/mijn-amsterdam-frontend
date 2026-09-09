@@ -107,6 +107,10 @@ export function ParkerenThema() {
       </ParagaphSuppressed>
     </PageContentCell>
   );
+  const mappedPageLinks = themaConfig.pageLinks.map((link) => ({
+    ...link,
+    to: typeof link.to === 'function' ? link.to(null, profileType) : link.to,
+  }));
 
   return (
     <ThemaPagina
@@ -115,7 +119,7 @@ export function ParkerenThema() {
       isError={isError}
       isLoading={isLoading}
       pageContentTop={pageContentTop}
-      pageLinks={themaConfig.pageLinks}
+      pageLinks={mappedPageLinks}
       pageContentMain={tables}
       pageContentBottom={pageContentBottom}
       maintenanceNotificationsPageSlug="parkeren"

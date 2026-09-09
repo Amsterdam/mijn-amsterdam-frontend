@@ -28,15 +28,10 @@ export interface Action {
 }
 
 export type JSONValue =
-  | string
-  | number
-  | boolean
-  | null
-  | JSONValue[]
-  | { [key: string]: JSONValue };
+  string | number | boolean | null | JSONValue[] | { [key: string]: JSONValue };
 
 export interface LinkProps {
-  to: string;
+  to: string | ((appState: any, profileType?: string) => string);
   title: string;
   target?: '_blank' | '_self' | '_parent' | '_top';
   rel?: string;

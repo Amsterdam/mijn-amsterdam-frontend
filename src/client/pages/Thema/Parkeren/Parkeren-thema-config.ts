@@ -9,7 +9,7 @@ import type {
   WithDetailPage,
   WithListPage,
 } from '../../../config/thema-types.ts';
-import { BELASTINGEN_ROUTE_DEFAULT } from '../Belastingen/Belastingen-thema-config.ts';
+import { getBelastingenSSOUrl } from '../Belastingen/Belastingen-thema-config.ts';
 import type { ListPageParamKind as ListPageParamKindVergunningen } from '../Vergunningen/Vergunningen-thema-config.ts';
 import { tableConfig as tableConfigVergunningen } from '../Vergunningen/Vergunningen-thema-config.ts';
 
@@ -45,7 +45,8 @@ export const themaConfig: ParkerenThemaConfig = {
       title: 'Parkeren voor gehandicapten',
     },
     {
-      to: BELASTINGEN_ROUTE_DEFAULT,
+      to: (appState: any, profileType?: string) =>
+        getBelastingenSSOUrl(appState, profileType),
       title: 'Parkeerbon betalen',
     },
   ],
