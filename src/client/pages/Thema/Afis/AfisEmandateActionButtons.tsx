@@ -4,6 +4,7 @@ import {
   ActionGroup,
   Alert,
   Button,
+  Link,
   Paragraph,
   Table,
 } from '@amsterdam/design-system-react';
@@ -216,9 +217,21 @@ function ApiDeactivateButton({
               className="ams-mb-m"
             >
               <Paragraph className="ams-mb-s">
-                U heeft nog openstaande facturen die gekoppeld zijn aan deze
-                incassomachtiging. Deze facturen worden niet meer automatisch
-                geïncasseerd als u de machtiging stopzet.
+                Als u de automatische incasso stopt, moet u zelf de openstaande
+                facturen betalen. Hieronder ziet u welke facturen niet meer
+                automatisch van uw rekening worden afgeschreven.
+              </Paragraph>
+              <Paragraph className="ams-mb-s">
+                Heeft u een erfpachtfactuur die in delen is opgesplitst? Dan
+                moet u het resterende bedrag in één keer betalen. Wilt u toch in
+                delen betalen? Vraag dan een betalingsregeling aan via{' '}
+                <Link
+                  rel="noreferrer"
+                  href="mailto:debiteurenadministratie@amsterdam.nl"
+                >
+                  debiteurenadministratie@amsterdam.nl
+                </Link>
+                .
                 <br />
               </Paragraph>
               <Table className={styles.FacturenAlertTable}>
