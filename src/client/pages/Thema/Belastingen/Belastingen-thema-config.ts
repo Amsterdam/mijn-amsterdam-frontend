@@ -1,4 +1,3 @@
-import type { AppState } from '../../../../universal/types/App.types.ts';
 import type { ThemaConfigBase } from '../../../config/thema-types.ts';
 
 const BELASTINGEN_ROUTE_DEFAULT = 'https://belastingbalie.amsterdam.nl';
@@ -34,10 +33,7 @@ export const themaConfig: ThemaConfigBase = {
     documentTitle: '',
   },
 };
-export const getBelastingenSSOUrl = (
-  _appState: AppState,
-  profileType?: string
-) => {
+export const getBelastingenSSOUrl = (profileType?: string) => {
   const path =
     profileType === 'commercial'
       ? '/eherkenning.saml.php?start'
