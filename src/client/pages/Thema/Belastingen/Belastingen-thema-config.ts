@@ -1,6 +1,7 @@
+import type { AppState } from '../../../../universal/types/App.types.ts';
 import type { ThemaConfigBase } from '../../../config/thema-types.ts';
 
-export const BELASTINGEN_ROUTE_DEFAULT = 'https://belastingbalie.amsterdam.nl';
+const BELASTINGEN_ROUTE_DEFAULT = 'https://belastingbalie.amsterdam.nl';
 const THEMA_ID = 'BELASTINGEN';
 const THEMA_TITLE = 'Belastingen';
 
@@ -32,4 +33,14 @@ export const themaConfig: ThemaConfigBase = {
     trackingUrl: null,
     documentTitle: '',
   },
+};
+export const getBelastingenSSOUrl = (
+  _appState: AppState,
+  profileType?: string
+) => {
+  const path =
+    profileType === 'commercial'
+      ? '/eherkenning.saml.php?start'
+      : '/digid.saml.php?start';
+  return `${themaConfig.route.path + path}`;
 };
