@@ -62,8 +62,7 @@ export type DatasetFeatureProperties = {
   color?: string;
   zIndex?: ZIndexPaneValue;
   [propertyName: string /*DatasetPropertyName*/]:
-    | DatasetPropertyValue
-    | unknown;
+    DatasetPropertyValue | unknown;
 };
 
 export type DatasetClusterFeatureProperties = DatasetFeatureProperties & {
@@ -259,7 +258,7 @@ export const datasetEndpoints: Record<
   },
   zwembad: {
     listUrl: dsoApiListUrl('sport/zwembad'),
-    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/zwembad/',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/v1/v1/zwembad/',
     transformList: transformGenericApiListResponse_,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
@@ -272,7 +271,7 @@ export const datasetEndpoints: Record<
   },
   sportpark: {
     listUrl: dsoApiListUrl('sport/park'),
-    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/park/',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/v1/v1/park/',
     transformList: transformSportparkResponse,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.SPORTPARK,
@@ -286,7 +285,7 @@ export const datasetEndpoints: Record<
   },
   sportveld: {
     listUrl: dsoApiListUrl('sport/veld'),
-    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/veld/',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/v1/v1/veld/',
     transformList: transformSportveldResponse,
     dsoApiAdditionalStaticFieldNames: ['soortOndergrond', 'sportfunctie'],
     featureType: 'MultiPolygon',
@@ -301,7 +300,7 @@ export const datasetEndpoints: Record<
   },
   gymzaal: {
     listUrl: dsoApiListUrl('sport/gymzaal', undefined, 'gymzaal'),
-    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymzaal/',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/v1/v1/gymzaal/',
     transformList: transformGymzaalResponse,
     featureType: 'Point',
     dsoApiAdditionalStaticFieldNames: ['type'],
@@ -315,7 +314,7 @@ export const datasetEndpoints: Record<
   },
   sportzaal: {
     listUrl: dsoApiListUrl('sport/gymzaal', undefined, 'gymzaal'),
-    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymzaal/',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/v1/v1/gymzaal/',
     transformList: transformSportzaalResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
@@ -328,7 +327,7 @@ export const datasetEndpoints: Record<
   },
   sporthal: {
     listUrl: dsoApiListUrl('sport/hal'),
-    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/hal/',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/v1/v1/hal/',
     transformList: transformSporthalResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
@@ -345,7 +344,7 @@ export const datasetEndpoints: Record<
       SPORT_AANBIEDER_LIMIT,
       'sportaanbieder'
     ),
-    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/aanbieder/',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/v1/v1/aanbieder/',
     transformList: transformSportaanbiederResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
@@ -358,7 +357,8 @@ export const datasetEndpoints: Record<
   },
   openbaresportplek: {
     listUrl: dsoApiListUrl('sport/openbaresportplek'),
-    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/',
+    detailUrl:
+      'https://api.data.amsterdam.nl/v1/sport/v1/v1/openbaresportplek/',
     transformList: transformGenericApiListResponse_,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
@@ -371,7 +371,7 @@ export const datasetEndpoints: Record<
   },
   hardlooproute: {
     listUrl: dsoApiListUrl('sport/hardlooproute'),
-    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/hardlooproute/',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/v1/v1/hardlooproute/',
     transformList: transformHardlooproutesResponse,
     featureType: 'MultiLineString',
     zIndex: zIndexPane.HARDLOOPROUTE,
