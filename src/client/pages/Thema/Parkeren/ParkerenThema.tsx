@@ -10,6 +10,7 @@ import { ThemaPagina } from '../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaDataView } from '../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
 import { useProfileTypeValue } from '../../../hooks/useProfileType.ts';
+import { getBelastingenSSOUrl } from '../Belastingen/Belastingen-thema-config.ts';
 
 type PageContentTopProps = {
   hasMijnParkerenVergunningen: boolean;
@@ -65,6 +66,7 @@ export function ParkerenThema() {
     themaConfig,
   } = useParkerenData();
 
+
   useHTMLDocumentTitle(themaConfig.route);
 
   const tables = Object.entries(tableConfig).map(
@@ -85,6 +87,15 @@ export function ParkerenThema() {
     }
   );
   const profileType = useProfileTypeValue();
+
+  const pageLinks = [
+    ...themaConfig.pageLinks,
+    {
+      to: getBelastingenSSOUrl(profileType),
+      title: 'Parkeerbon betalen',
+    },
+  ];
+
   const pageContentTop = (
     <PageContentTop
       hasMijnParkerenVergunningen={hasMijnParkerenVergunningen}
@@ -115,12 +126,11 @@ export function ParkerenThema() {
       isError={isError}
       isLoading={isLoading}
       pageContentTop={pageContentTop}
-      pageLinks={themaConfig.pageLinks}
+      pageLinks={pageLinks}
       pageContentMain={tables}
       pageContentBottom={pageContentBottom}
       maintenanceNotificationsPageSlug="parkeren"
     />
   );
 }
-
 export const forTesting = { PageContentTop };

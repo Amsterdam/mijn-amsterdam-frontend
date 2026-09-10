@@ -33,3 +33,10 @@ export const themaConfig: ThemaConfigBase = {
     documentTitle: '',
   },
 };
+export const getBelastingenSSOUrl = (profileType?: string) => {
+  const path =
+    profileType === 'commercial'
+      ? '/eherkenning.saml.php?start'
+      : '/digid.saml.php?start';
+  return `${themaConfig.route.path + path}`;
+};
