@@ -67,7 +67,11 @@ export function isLoading(apiResponseData?: ApiResponse_DEPRECATED<unknown>) {
 
   const { profileType } = useAppStateStore.getState();
 
-  return !!profileType && profileTypes.includes(profileType);
+  if (!profileType) {
+    return true;
+  }
+
+  return profileTypes.includes(profileType);
 }
 export function isOk(apiResponseData?: ApiResponse_DEPRECATED<unknown>) {
   return apiResponseData?.status === 'OK';
