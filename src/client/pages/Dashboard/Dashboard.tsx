@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { Heading, OrderedList } from '@amsterdam/design-system-react';
+import { Grid, Heading, OrderedList } from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
 
 import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Dashboard-config.ts';
@@ -9,11 +9,12 @@ import { DashboardHeader } from './DashboardHeader.tsx';
 import { WelcomeHeading } from './WelcomHeading.tsx';
 import { isLoading } from '../../../universal/helpers/api.ts';
 import { LoadingContent } from '../../components/LoadingContent/LoadingContent.tsx';
-import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
+import { MaLink, MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 import { MyAreaDashboard } from '../../components/MyArea/MyAreaDashboard.tsx';
 import { MyNotification } from '../../components/MyNotification/MyNotification.tsx';
 import { MyThemasPanel } from '../../components/MyThemasPanel/MyThemasPanel.tsx';
 import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
+import { TipCard, tipCardColors } from '../../components/TipCard/TipCard.tsx';
 import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
@@ -54,6 +55,11 @@ export function Dashboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const tips = NOTIFICATIONS.content?.filter(
+    (notification) => notification.isTip
+  );
+
+  const colours = ['green', 'azure', 'purple'] as const;
   return (
     <>
       {!isPhoneScreen && <DashboardHeader />}
@@ -114,6 +120,7 @@ export function Dashboard() {
           </Heading>
           <MyThemasPanel isLoading={isMyThemasLoading} items={myThemaItems} />
         </PageContentCell>
+        {tips && <Tips tips={tips} />}
         {!isPhoneScreen && (
           <PageContentCell>
             <MyAreaDashboard />

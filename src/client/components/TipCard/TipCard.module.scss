@@ -1,0 +1,27 @@
+.TipCard {
+  display: grid;
+  padding-block: var(--ams-space-m);
+  padding-inline: var(--ams-space-m);
+}
+
+.TipCard__greenBackground {
+  background-color: var(--ams-color-highlight-green);
+}
+
+.TipCard__azureBackground {
+  background-color: var(--ams-color-highlight-azure);
+}
+
+.TipCard__purpleBackground {
+  background-color: var(--ams-color-highlight-purple);
+}
+
+.RemoveButton {
+  background-color: transparent;
+  inline-size: fit-content;
+  justify-self: end;
+
+  &:hover {
+    background-color: transparent;
+  }
+}
