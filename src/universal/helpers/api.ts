@@ -1,3 +1,5 @@
+import { useAppStateStore } from '../../client/hooks/useAppStateStore.ts';
+
 export interface ApiErrorResponse<T> {
   message: string;
   content: T;
@@ -44,18 +46,32 @@ export type ApiResponse_DEPRECATED<T> =
   | ApiPostponeResponse<T>;
 
 export type ApiResponse<T> =
-  | ApiErrorResponse<null>
-  | ApiSuccessResponse<T>
-  | ApiPostponeResponse<null>;
+  ApiErrorResponse<null> | ApiSuccessResponse<T> | ApiPostponeResponse<null>;
 
 export type ApiResponsePromise<T> = Promise<ApiResponse<T>>;
 
 export function isLoading(apiResponseData?: ApiResponse_DEPRECATED<unknown>) {
-  // If no responseData was found, assumes it's still loading
-  return !!(
-    !apiResponseData ||
-    !!(apiResponseData?.status === 'PRISTINE' && apiResponseData.isActive)
-  );
+  if (!apiResponseData) {
+    return true;
+  }
+
+  if (apiResponseData.status !== 'PRISTINE' || !apiResponseData.isActive) {
+    return false;
+  }
+
+  const { profileTypes } = apiResponseData;
+
+  if (!profileTypes || profileTypes.length === 0) {
+    return true;
+  }
+
+  const { profileType } = useAppStateStore.getState();
+
+  if (!profileType) {
+    return true;
+  }
+
+  return profileTypes.includes(profileType);
 }
 export function isOk(apiResponseData?: ApiResponse_DEPRECATED<unknown>) {
   return apiResponseData?.status === 'OK';
