@@ -45,8 +45,7 @@ export const themaConfig: ParkerenThemaConfig = {
       title: 'Parkeren voor gehandicapten',
     },
     {
-      to: (appState: any, profileType?: string) =>
-        getBelastingenSSOUrl(appState, profileType),
+      to: getBelastingenSSOUrl,
       title: 'Parkeerbon betalen',
     },
   ],
