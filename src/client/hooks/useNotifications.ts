@@ -10,7 +10,7 @@ export function useAppStateNotifications(top?: number) {
   const { isReady, NOTIFICATIONS } = useAppStateStore();
   const notifications_: MyNotification[] = NOTIFICATIONS?.content ?? [];
   // Merge the WelcomeNotification when AppState is ready.
-  const notifications = useMemo(
+  const notificationsWithWecomeNotification = useMemo(
     () =>
       (isReady ? [...notifications_, WelcomeNotification] : notifications_).map(
         (n) => ({
@@ -40,6 +40,8 @@ export function useAppStateNotifications(top?: number) {
 
   return {
     notifications: top ? notifications.slice(0, top) : notifications,
-    total: notifications.length,
+    tips,
+    tipsTotal: tips.length,
+    notificationsTotal: notifications.length,
   };
 }

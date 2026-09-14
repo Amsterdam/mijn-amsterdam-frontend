@@ -7,7 +7,6 @@ import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Dashboard-config.ts';
 import styles from './Dashboard.module.scss';
 import { DashboardHeader } from './DashboardHeader.tsx';
 import { WelcomeHeading } from './WelcomHeading.tsx';
-import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { isLoading } from '../../../universal/helpers/api.ts';
 import { LoadingContent } from '../../components/LoadingContent/LoadingContent.tsx';
 import { MaLink, MaRouterLink } from '../../components/MaLink/MaLink.tsx';
@@ -25,12 +24,9 @@ import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
 import { AfsprakenDashboard } from '../Thema/KlantContact/Afspraken/Afspraken.tsx';
 import { useKlantcontactData } from '../Thema/KlantContact/useKlantcontactData.hook.tsx';
+import { featureToggle } from '../Tips/tips-config.ts';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
-
-export const featureToggle = {
-  tipsActive: !IS_PRODUCTION,
-};
 
 export function Dashboard() {
   useHTMLDocumentTitle({
@@ -41,7 +37,7 @@ export function Dashboard() {
   const location = useLocation();
   const navigate = useNavigate();
   const { NOTIFICATIONS } = appState;
-  const { notifications, total } = useAppStateNotifications(
+  const { notifications, tips, notificationsTotal } = useAppStateNotifications(
     MAX_NOTIFICATIONS_VISIBLE
   );
 
@@ -61,11 +57,6 @@ export function Dashboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const tips = NOTIFICATIONS.content?.filter(
-    (notification) => notification.isTip
-  );
-
-  const colours = ['green', 'azure', 'purple'] as const;
   return (
     <>
       {!isPhoneScreen && <DashboardHeader />}
@@ -89,7 +80,7 @@ export function Dashboard() {
 
           <Heading level={2} className="ams-mb-m">
             Recente berichten{' '}
-            {total > notifications.length && (
+            {notificationsTotal > notifications.length && (
               <MaRouterLink
                 className={styles.LinkToNotifications}
                 href={myNotificationsMenuItem.to}
