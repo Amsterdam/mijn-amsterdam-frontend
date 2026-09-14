@@ -33,7 +33,7 @@ export const themaConfig: ThemaConfigBase = {
     documentTitle: '',
   },
 };
-export const getBelastingenSSOUrl = (profileType?: string) => {
+export const getBelastingenSSOUrl = (profileType?: ProfileType) => {
   const path =
     profileType === 'commercial'
       ? '/eherkenning.saml.php?start'
