@@ -7,6 +7,7 @@ import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Dashboard-config.ts';
 import styles from './Dashboard.module.scss';
 import { DashboardHeader } from './DashboardHeader.tsx';
 import { WelcomeHeading } from './WelcomHeading.tsx';
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { isLoading } from '../../../universal/helpers/api.ts';
 import { LoadingContent } from '../../components/LoadingContent/LoadingContent.tsx';
 import { MaLink, MaRouterLink } from '../../components/MaLink/MaLink.tsx';
@@ -27,6 +28,10 @@ import { useKlantcontactData } from '../Thema/KlantContact/useKlantcontactData.h
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
 
+export const featureToggle = {
+  tipsActive: !IS_PRODUCTION,
+};
+
 export function Dashboard() {
   useHTMLDocumentTitle({
     documentTitle: DASHBOARD_PAGE_DOCUMENT_TITLE,
@@ -46,6 +51,7 @@ export function Dashboard() {
     useActiveThemaMenuItems();
   const { afspraken, isLoading: isKlantcontactLoading } = useKlantcontactData();
   const hasAfspraken = afspraken.length > 0;
+  const hasTips = tips && tips.length > 0;
 
   // We only want to run this on mount.
   useEffect(() => {
@@ -120,7 +126,24 @@ export function Dashboard() {
           </Heading>
           <MyThemasPanel isLoading={isMyThemasLoading} items={myThemaItems} />
         </PageContentCell>
-        {tips && <Tips tips={tips} />}
+        {featureToggle.newTipsDesign && hasTips && (
+          <Grid.Subgrid as="ul" span="all" gapVertical="large">
+            {tips.map((tip, index) => (
+              <Grid.Cell as="li" span={4} key={tip.themaID}>
+                <TipCard
+                  backgroundColor={tipCardColors[index]}
+                  description={tip.description}
+                  heading={tip.title}
+                  link={tip.link}
+                  tipReason={tip.tipReason}
+                />
+              </Grid.Cell>
+            ))}
+            <Grid.Cell span="all">
+              <MaLink href="/alle-tips">Toon alle tips</MaLink>
+            </Grid.Cell>
+          </Grid.Subgrid>
+        )}
         {!isPhoneScreen && (
           <PageContentCell>
             <MyAreaDashboard />
