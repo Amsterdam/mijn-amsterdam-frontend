@@ -173,7 +173,8 @@ export const datasetEndpoints: Record<
   afvalcontainers: {
     listUrl:
       'https://api.data.amsterdam.nl/v1/wfs/huishoudelijkafval/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=container&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326&FILTER=%3CFilter%3E%3CAnd%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Estatus%3C/PropertyName%3E%3CLiteral%3E1%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsGreaterThan%3E%3CPropertyName%3Edatum_creatie%3C/PropertyName%3E%3CLiteral%3E1970-01-01%3C/Literal%3E%3C/PropertyIsGreaterThan%3E%3COr%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E110%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E16%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E111%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E112%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E67%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E181%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsGreaterThan%3E%3CPropertyName%3Edatum_creatie%3C/PropertyName%3E%3CLiteral%3E1970-01-01%3C/Literal%3E%3C/PropertyIsGreaterThan%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E113%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Or%3E%3C/And%3E%3C/Filter%3E',
-    detailUrl: 'https://api.data.amsterdam.nl/v1/huishoudelijkafval/container/',
+    detailUrl:
+      'https://api.data.amsterdam.nl/v1/huishoudelijkafval/v1/container/',
     transformList: transformAfvalcontainersResponse,
     transformDetail: transformAfvalcontainerDetailResponse,
     featureType: 'Point',
@@ -189,8 +190,8 @@ export const datasetEndpoints: Record<
     },
   },
   evenementen: {
-    listUrl: dsoApiListUrl('evenementen/evenementen'),
-    detailUrl: 'https://api.data.amsterdam.nl/v1/evenementen/evenementen/',
+    listUrl: dsoApiListUrl('evenementen/v1/evenementen'),
+    detailUrl: 'https://api.data.amsterdam.nl/v1/evenementen/v1/evenementen/',
     transformList: transformGenericApiListResponse_,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
@@ -222,8 +223,8 @@ export const datasetEndpoints: Record<
     disabled: !featureToggle.bekendmakingenDatasetActive,
   },
   parkeerzones: {
-    listUrl: dsoApiListUrl('parkeerzones/parkeerzones'),
-    detailUrl: 'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/',
+    listUrl: dsoApiListUrl('parkeerzones/v1/parkeerzones'),
+    detailUrl: 'https://api.data.amsterdam.nl/v1/parkeerzones/v1/parkeerzones/',
     transformList: transformParkeerzoneCoords,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.PARKEERZONES,
@@ -239,9 +240,9 @@ export const datasetEndpoints: Record<
     },
   },
   parkeerzones_uitzondering: {
-    listUrl: dsoApiListUrl('parkeerzones/parkeerzones_uitzondering'),
+    listUrl: dsoApiListUrl('parkeerzones/v1/parkeerzones_uitzondering'),
     detailUrl:
-      'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/',
+      'https://api.data.amsterdam.nl/v1/parkeerzones/v1/parkeerzones_uitzondering/',
     transformList: transformParkeerzoneCoords,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.PARKEERZONES_UITZONDERING,
@@ -257,7 +258,7 @@ export const datasetEndpoints: Record<
     },
   },
   zwembad: {
-    listUrl: dsoApiListUrl('sport/zwembad'),
+    listUrl: dsoApiListUrl('sport/v1/zwembad'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/v1/zwembad/',
     transformList: transformGenericApiListResponse_,
     featureType: 'Point',
@@ -270,7 +271,7 @@ export const datasetEndpoints: Record<
     },
   },
   sportpark: {
-    listUrl: dsoApiListUrl('sport/park'),
+    listUrl: dsoApiListUrl('sport/v1/park'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/v1/park/',
     transformList: transformSportparkResponse,
     featureType: 'MultiPolygon',
@@ -284,7 +285,7 @@ export const datasetEndpoints: Record<
     },
   },
   sportveld: {
-    listUrl: dsoApiListUrl('sport/veld'),
+    listUrl: dsoApiListUrl('sport/v1/veld'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/v1/veld/',
     transformList: transformSportveldResponse,
     dsoApiAdditionalStaticFieldNames: ['soortOndergrond', 'sportfunctie'],
@@ -299,7 +300,7 @@ export const datasetEndpoints: Record<
     },
   },
   gymzaal: {
-    listUrl: dsoApiListUrl('sport/gymzaal', undefined, 'gymzaal'),
+    listUrl: dsoApiListUrl('sport/v1/gymzaal', undefined, 'gymzaal'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/v1/gymzaal/',
     transformList: transformGymzaalResponse,
     featureType: 'Point',
@@ -313,7 +314,7 @@ export const datasetEndpoints: Record<
     },
   },
   sportzaal: {
-    listUrl: dsoApiListUrl('sport/gymzaal', undefined, 'gymzaal'),
+    listUrl: dsoApiListUrl('sport/v1/gymzaal', undefined, 'gymzaal'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/v1/gymzaal/',
     transformList: transformSportzaalResponse,
     featureType: 'Point',
@@ -326,7 +327,7 @@ export const datasetEndpoints: Record<
     },
   },
   sporthal: {
-    listUrl: dsoApiListUrl('sport/hal'),
+    listUrl: dsoApiListUrl('sport/v1/hal'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/v1/hal/',
     transformList: transformSporthalResponse,
     featureType: 'Point',
@@ -340,7 +341,7 @@ export const datasetEndpoints: Record<
   },
   sportaanbieder: {
     listUrl: dsoApiListUrl(
-      'sport/aanbieder',
+      'sport/v1/aanbieder',
       SPORT_AANBIEDER_LIMIT,
       'sportaanbieder'
     ),
@@ -356,7 +357,7 @@ export const datasetEndpoints: Record<
     },
   },
   openbaresportplek: {
-    listUrl: dsoApiListUrl('sport/openbaresportplek'),
+    listUrl: dsoApiListUrl('sport/v1/openbaresportplek'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/v1/openbaresportplek/',
     transformList: transformGenericApiListResponse_,
     featureType: 'Point',
@@ -369,7 +370,7 @@ export const datasetEndpoints: Record<
     },
   },
   hardlooproute: {
-    listUrl: dsoApiListUrl('sport/hardlooproute'),
+    listUrl: dsoApiListUrl('sport/v1/hardlooproute'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/v1/hardlooproute/',
     transformList: transformHardlooproutesResponse,
     featureType: 'MultiLineString',
@@ -384,10 +385,10 @@ export const datasetEndpoints: Record<
   },
   bedrijveninvesteringszones: {
     listUrl: dsoApiListUrl(
-      'bedrijveninvesteringszones/bedrijveninvesteringszones'
+      'bedrijveninvesteringszones/v1/bedrijveninvesteringszones'
     ),
     detailUrl:
-      'https://api.data.amsterdam.nl/v1/bedrijveninvesteringszones/bedrijveninvesteringszones/',
+      'https://api.data.amsterdam.nl/v1/bedrijveninvesteringszones/v1/bedrijveninvesteringszones/',
     transformList: transformGenericApiListResponse_,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.BEDRIJVENINVESTERINGSZONES,
@@ -404,13 +405,13 @@ export const datasetEndpoints: Record<
   },
   wior: {
     listUrl: () => {
-      const url = `https://api.data.amsterdam.nl/v1/wior/wior/?_fields=id,geometrie,datumStartUitvoering,datumEindeUitvoering&_pageSize=2000&datumEindeUitvoering[gte]=${format(
+      const url = `https://api.data.amsterdam.nl/v1/wior/v1/wior/?_fields=id,geometrie,datumStartUitvoering,datumEindeUitvoering&_pageSize=2000&datumEindeUitvoering[gte]=${format(
         new Date(),
         'yyyy-MM-dd'
       )}`;
       return url;
     },
-    detailUrl: 'https://api.data.amsterdam.nl/v1/wior/wior/',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/wior/v1/wior/',
     transformList: transformWiorApiListResponse,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.WIOR,
