@@ -70,8 +70,7 @@ export interface ThemaMenuItem<ID extends string = string> extends Omit<
     | ((appState: AppState, profileType?: ProfileType) => string);
   to:
     | LinkProps['to']
-    | ((appState: AppState, profileType?: ProfileType) => string)
-    | ((profileType: ProfileType) => string);
+    | ((appState: AppState, profileType?: ProfileType) => string);
   isActive?: IsThemaVisibleFN;
   IconSVG?: SVGComponent;
 }

@@ -9,7 +9,7 @@ import { type ThemaMenuItem } from '../../../config/thema-types.ts';
 export const menuItem: ThemaMenuItem = {
   title: themaConfig.title,
   id: themaConfig.id,
-  to: getBelastingenSSOUrl,
+  to: (_appState, profileType) => getBelastingenSSOUrl(profileType),
   profileTypes: themaConfig.profileTypes,
   redactedScope: themaConfig.redactedScope,
   isActive(appState, profileType) {
