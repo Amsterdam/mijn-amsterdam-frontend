@@ -4,7 +4,7 @@ import type {
   KrefiaSourceResponse,
   Krefia,
 } from './krefia.types.ts';
-import { themaConfig } from '../../../client/pages/Thema/Krefia/Krefia-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Krefia/Krefia-thema-config.ts';
 import {
   type ApiResponse,
   apiSuccessResult,

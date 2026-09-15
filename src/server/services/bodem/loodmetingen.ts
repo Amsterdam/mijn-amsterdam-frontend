@@ -9,7 +9,7 @@ import type {
   LoodMetingStatusLowerCase,
   LoodMetingen,
 } from './types.ts';
-import { themaConfig } from '../../../client/pages/Thema/Bodem/Bodem-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Bodem/Bodem-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,

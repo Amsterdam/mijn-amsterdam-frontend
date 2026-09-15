@@ -7,7 +7,7 @@ import { PageFooter } from '@amsterdam/design-system-react';
 import type { CobrowseWidget } from './lib/cobrowse-widget.d.ts';
 
 import './lib/cobrowse-widget.css';
-import { isEnabled } from '../../../config/feature-toggles.ts';
+import { isEnabled } from '../../../apps/bob/config/feature-toggles.ts';
 import { REDACTED_CLASS, useCobrowseStore } from '../../../helpers/cobrowse.ts';
 
 export const LABEL_HULP_SCHERMDELEN = 'Hulp via schermdelen';

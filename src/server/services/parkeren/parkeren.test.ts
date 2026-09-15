@@ -12,7 +12,7 @@ const mocks = vi.hoisted(() => {
 });
 
 vi.mock(
-  '../../../client/pages/Thema/Parkeren/Parkeren-thema-config.ts',
+  '../../../client/apps/bob/pages/Thema/Parkeren/Parkeren-thema-config.ts',
   async (importOriginal) => {
     const module: { themaConfig: typeof themaConfig } = await importOriginal();
     module.themaConfig.featureToggle.parkerenJWETokenCreationActive =
