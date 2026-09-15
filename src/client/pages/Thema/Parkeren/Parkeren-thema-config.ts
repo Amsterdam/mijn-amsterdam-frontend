@@ -16,7 +16,7 @@ import { tableConfig as tableConfigVergunningen } from '../Vergunningen/Vergunni
 const THEMA_ID = 'PARKEREN';
 const THEMA_TITLE = 'Parkeren';
 
-type ParkerenThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
+export type ParkerenThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
   WithListPage &
   WithDetailPage;
 
