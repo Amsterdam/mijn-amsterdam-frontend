@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { Heading, OrderedList } from '@amsterdam/design-system-react';
+import { Grid, Heading, OrderedList } from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
 
 import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Dashboard-config.ts';
@@ -9,11 +9,12 @@ import { DashboardHeader } from './DashboardHeader.tsx';
 import { WelcomeHeading } from './WelcomHeading.tsx';
 import { isLoading } from '../../../universal/helpers/api.ts';
 import { LoadingContent } from '../../components/LoadingContent/LoadingContent.tsx';
-import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
+import { MaLink, MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 import { MyAreaDashboard } from '../../components/MyArea/MyAreaDashboard.tsx';
 import { MyNotification } from '../../components/MyNotification/MyNotification.tsx';
 import { MyThemasPanel } from '../../components/MyThemasPanel/MyThemasPanel.tsx';
 import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
+import { TipCard, tipCardColors } from '../../components/TipCard/TipCard.tsx';
 import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
@@ -23,6 +24,7 @@ import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
 import { AfsprakenDashboard } from '../Thema/KlantContact/Afspraken/Afspraken.tsx';
 import { useKlantcontactData } from '../Thema/KlantContact/useKlantcontactData.hook.tsx';
+import { featureToggle } from '../Tips/tips-config.ts';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
 
@@ -35,7 +37,7 @@ export function Dashboard() {
   const location = useLocation();
   const navigate = useNavigate();
   const { NOTIFICATIONS } = appState;
-  const { notifications, total } = useAppStateNotifications(
+  const { notifications, tips, notificationsTotal } = useAppStateNotifications(
     MAX_NOTIFICATIONS_VISIBLE
   );
 
@@ -45,6 +47,7 @@ export function Dashboard() {
     useActiveThemaMenuItems();
   const { afspraken, isLoading: isKlantcontactLoading } = useKlantcontactData();
   const hasAfspraken = afspraken.length > 0;
+  const hasTips = tips && tips.length > 0;
 
   // We only want to run this on mount.
   useEffect(() => {
@@ -77,7 +80,7 @@ export function Dashboard() {
 
           <Heading level={2} className="ams-mb-m">
             Recente berichten{' '}
-            {total > notifications.length && (
+            {notificationsTotal > notifications.length && (
               <MaRouterLink
                 className={styles.LinkToNotifications}
                 href={myNotificationsMenuItem.to}
@@ -114,6 +117,24 @@ export function Dashboard() {
           </Heading>
           <MyThemasPanel isLoading={isMyThemasLoading} items={myThemaItems} />
         </PageContentCell>
+        {featureToggle.newTipsDesign && hasTips && (
+          <Grid.Subgrid as="ul" span="all" gapVertical="large">
+            {tips.map((tip, index) => (
+              <Grid.Cell as="li" span={4} key={tip.themaID}>
+                <TipCard
+                  backgroundColor={tipCardColors[index]}
+                  description={tip.description}
+                  heading={tip.title}
+                  link={tip.link}
+                  tipReason={tip.tipReason}
+                />
+              </Grid.Cell>
+            ))}
+            <Grid.Cell span="all">
+              <MaLink href="/alle-tips">Toon alle tips</MaLink>
+            </Grid.Cell>
+          </Grid.Subgrid>
+        )}
         {!isPhoneScreen && (
           <PageContentCell>
             <MyAreaDashboard />

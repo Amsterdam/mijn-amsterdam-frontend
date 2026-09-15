@@ -4,12 +4,13 @@ import { useAppStateStore } from './useAppStateStore.ts';
 import type { MyNotification } from '../../universal/types/App.types.ts';
 import { WelcomeNotification } from '../config/staticData.tsx';
 import { getRedactedClass } from '../helpers/cobrowse.ts';
+import { featureToggle } from '../pages/Tips/tips-config.ts';
 
 export function useAppStateNotifications(top?: number) {
   const { isReady, NOTIFICATIONS } = useAppStateStore();
   const notifications_: MyNotification[] = NOTIFICATIONS?.content ?? [];
   // Merge the WelcomeNotification when AppState is ready.
-  const notifications = useMemo(
+  const notificationsWithWecomeNotification = useMemo(
     () =>
       (isReady ? [...notifications_, WelcomeNotification] : notifications_).map(
         (n) => ({
@@ -22,8 +23,25 @@ export function useAppStateNotifications(top?: number) {
     [isReady]
   );
 
+  if (!featureToggle.newTipsDesign) {
+    return {
+      notifications: top
+        ? notificationsWithWecomeNotification.slice(0, top)
+        : notificationsWithWecomeNotification,
+      notificationsTotal: notificationsWithWecomeNotification.length,
+    };
+  }
+
+  // Seperate notifications and tips
+  const notifications = notificationsWithWecomeNotification.filter(
+    (notification) => !notification.isTip
+  );
+  const tips = notifications_.filter((notification) => notification.isTip);
+
   return {
     notifications: top ? notifications.slice(0, top) : notifications,
-    total: notifications.length,
+    tips,
+    tipsTotal: tips.length,
+    notificationsTotal: notifications.length,
   };
 }

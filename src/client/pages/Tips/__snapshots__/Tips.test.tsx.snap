@@ -1,0 +1,181 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`<TipCard /> > Renders color variant azure 1`] = `
+<DocumentFragment>
+  <article
+    class="_TipCard_59c5aa _TipCard__azureBackground_59c5aa"
+  >
+    <button
+      class="ams-icon-button ams-icon-button--inverse _RemoveButton_59c5aa"
+      type="button"
+    >
+      <span
+        class="ams-visually-hidden"
+      >
+        Verwijder tip
+      </span>
+      <span
+        class="ams-icon ams-icon--large ams-icon--square"
+        hidden=""
+      >
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M21 4.587 19.57 3l-7.565 7.495L4.43 3 3 4.587l7.482 7.419L3 19.413 4.43 21l7.575-7.495L19.57 21 21 19.413l-7.482-7.408z"
+          />
+        </svg>
+      </span>
+    </button>
+    <h3
+      class="ams-heading ams-heading--2 ams-heading--inverse ams-mb-s _Heading_59c5aa"
+    >
+      Tip 1
+    </h3>
+    <a
+      class="ams-link ams-link--inverse _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
+      href="/"
+    >
+      Toon tip
+    </a>
+  </article>
+</DocumentFragment>
+`;
+
+exports[`<TipCard /> > Renders color variant green 1`] = `
+<DocumentFragment>
+  <article
+    class="_TipCard_59c5aa _TipCard__greenBackground_59c5aa"
+  >
+    <button
+      class="ams-icon-button ams-icon-button--inverse _RemoveButton_59c5aa"
+      type="button"
+    >
+      <span
+        class="ams-visually-hidden"
+      >
+        Verwijder tip
+      </span>
+      <span
+        class="ams-icon ams-icon--large ams-icon--square"
+        hidden=""
+      >
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M21 4.587 19.57 3l-7.565 7.495L4.43 3 3 4.587l7.482 7.419L3 19.413 4.43 21l7.575-7.495L19.57 21 21 19.413l-7.482-7.408z"
+          />
+        </svg>
+      </span>
+    </button>
+    <h3
+      class="ams-heading ams-heading--2 ams-heading--inverse ams-mb-s _Heading_59c5aa"
+    >
+      Tip 1
+    </h3>
+    <a
+      class="ams-link ams-link--inverse _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
+      href="/"
+    >
+      Toon tip
+    </a>
+  </article>
+</DocumentFragment>
+`;
+
+exports[`<TipCard /> > Renders color variant purple 1`] = `
+<DocumentFragment>
+  <article
+    class="_TipCard_59c5aa _TipCard__purpleBackground_59c5aa"
+  >
+    <button
+      class="ams-icon-button ams-icon-button--inverse _RemoveButton_59c5aa"
+      type="button"
+    >
+      <span
+        class="ams-visually-hidden"
+      >
+        Verwijder tip
+      </span>
+      <span
+        class="ams-icon ams-icon--large ams-icon--square"
+        hidden=""
+      >
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M21 4.587 19.57 3l-7.565 7.495L4.43 3 3 4.587l7.482 7.419L3 19.413 4.43 21l7.575-7.495L19.57 21 21 19.413l-7.482-7.408z"
+          />
+        </svg>
+      </span>
+    </button>
+    <h3
+      class="ams-heading ams-heading--2 ams-heading--inverse ams-mb-s _Heading_59c5aa"
+    >
+      Tip 1
+    </h3>
+    <a
+      class="ams-link ams-link--inverse _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
+      href="/"
+    >
+      Toon tip
+    </a>
+  </article>
+</DocumentFragment>
+`;
+
+exports[`<TipCard /> > Renders correctly 1`] = `
+<DocumentFragment>
+  <article
+    class="_TipCard_59c5aa _TipCard__greenBackground_59c5aa"
+  >
+    <button
+      class="ams-icon-button ams-icon-button--inverse _RemoveButton_59c5aa"
+      type="button"
+    >
+      <span
+        class="ams-visually-hidden"
+      >
+        Verwijder tip
+      </span>
+      <span
+        class="ams-icon ams-icon--large ams-icon--square"
+        hidden=""
+      >
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M21 4.587 19.57 3l-7.565 7.495L4.43 3 3 4.587l7.482 7.419L3 19.413 4.43 21l7.575-7.495L19.57 21 21 19.413l-7.482-7.408z"
+          />
+        </svg>
+      </span>
+    </button>
+    <h3
+      class="ams-heading ams-heading--2 ams-heading--inverse ams-mb-s _Heading_59c5aa"
+    >
+      Tip 1
+    </h3>
+    <a
+      class="ams-link ams-link--inverse _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
+      href="/"
+    >
+      Toon tip
+    </a>
+  </article>
+</DocumentFragment>
+`;

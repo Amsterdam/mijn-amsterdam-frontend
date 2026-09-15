@@ -29,6 +29,7 @@ import { ToeristischeVerhuurRoutes } from './pages/Thema/ToeristischeVerhuur/Toe
 import { VarenRoutes } from './pages/Thema/Varen/Varen-render-config.tsx';
 import { VergunningenRoutes } from './pages/Thema/Vergunningen/Vergunningen-render-config.tsx';
 import { ZorgRoutes } from './pages/Thema/Zorg/Zorg-render-config.tsx';
+import { MyTipsRoutes } from './pages/Tips/MyTips-routes.ts';
 import { ZaakStatusRoutes } from './pages/ZaakStatus/ZaakStatus-routes.ts';
 
 export type ApplicationRouteConfig = ThemaRenderRouteConfig & {
@@ -60,6 +61,7 @@ const routeComponents: ApplicationRouteConfig[] = [
   LandingRoutes,
   MyAreaRoutes,
   MyNotificationsRoutes,
+  MyTipsRoutes,
   NotFoundRoutes,
   ParkerenRoutes,
   ProfileRoutes,
