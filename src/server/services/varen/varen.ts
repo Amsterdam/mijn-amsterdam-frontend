@@ -15,7 +15,7 @@ import {
 } from './decos-zaken.ts';
 import { filterNonPassagiersvaart } from './varen-helper.ts';
 import { getStatusSteps } from './varen-status-steps.ts';
-import { themaConfig } from '../../../client/pages/Thema/Varen/Varen-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Varen/Varen-thema-config.ts';
 import {
   apiErrorResult,
   apiSuccessResult,

@@ -9,7 +9,7 @@ import {
   queryParams,
   type RequestWithQueryParams,
 } from './route-helpers.ts';
-import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config.ts';
+import { ZAAK_STATUS_ROUTE } from '../../client/apps/bob/pages/ZaakStatus/ZaakStatus-config.ts';
 import { IS_PRODUCTION, OTAP_ENV } from '../../universal/config/env.ts';
 import {
   DATASETS,

@@ -13,7 +13,7 @@ import {
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items.ts';
 import { type WMOVoorzieningFrontend } from './wmo-types.ts';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service.ts';
-import { themaConfig } from '../../../../client/pages/Thema/Zorg/Zorg-thema-config.ts';
+import { themaConfig } from '../../../../client/apps/bob/pages/Thema/Zorg/Zorg-thema-config.ts';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles.ts';
 import {
   apiSuccessResult,

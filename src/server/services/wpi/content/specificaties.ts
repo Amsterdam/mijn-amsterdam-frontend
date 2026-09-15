@@ -1,6 +1,6 @@
 import { differenceInMonths } from 'date-fns';
 
-import { themaConfig } from '../../../../client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
+import { themaConfig } from '../../../../client/apps/bob/pages/Thema/Inkomen/Inkomen-thema-config.ts';
 import {
   dateFormat,
   defaultDateFormat,

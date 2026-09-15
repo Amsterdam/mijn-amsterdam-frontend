@@ -11,7 +11,7 @@ import type {
   WpiRequestProcessLabels,
   WpiRequestStatus,
 } from './wpi-types.ts';
-import { themaConfig as themaInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
+import { themaConfig as themaInkomen } from '../../../client/apps/bob/pages/Thema/Inkomen/Inkomen-thema-config.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import type {
   GenericDocument,

@@ -1,0 +1,152 @@
+import { render, screen } from '@testing-library/react';
+import { generatePath } from 'react-router';
+import { describe, expect, it } from 'vitest';
+
+import { themaConfig } from './Parkeren-thema-config.ts';
+import { ParkerenThema } from './ParkerenThema.tsx';
+import { forTesting } from './ParkerenThema.tsx';
+import type { AppState } from '../../../../../../universal/types/App.types.ts';
+import { MockApp } from '../../MockApp.tsx';
+
+const linkButtonTxt = 'Ga naar Mijn Parkeren';
+const EXTERNAL_PARKEREN_URL = 'https://parkeervergunningen.amsterdam.nl/';
+
+const testState = {
+  PARKEREN: {
+    content: {
+      url: EXTERNAL_PARKEREN_URL,
+      isKnown: true,
+      vergunningen: [
+        {
+          caseType: 'GPP',
+          dateDecision: null,
+          dateDecisionFormatted: null,
+          dateEnd: null,
+          dateRequest: '2024-06-05T00:00:00',
+          dateRequestFormatted: '05 juni 2024',
+          dateStart: null,
+          decision: null,
+          fetchDocumentsUrl:
+            'http://localhost:5000/api/v1/services/vergunningen/v2/962cCLy-d6nz4-85Cfyb2CaOKclPxVWCXF9L8T1lYamfgI25euHU1vf5OsA-qeyGYVuukIOquMqEFhww68MWxEW5LjLvu6jwplz4Hgs1LyE',
+          id: 'Z-24-2233516',
+          identifier: 'Z/24/2233516',
+          key: 'D8DEC5AD3C6F456D954C53DEF791EAA3',
+          link: {
+            to: '/vergunningen/gpp/Z-24-2233516',
+            title: 'Bekijk hoe het met uw aanvraag staat',
+          },
+          location: null,
+          processed: false,
+          title: 'Vergunning 1',
+          steps: [],
+        },
+        {
+          caseType: 'GPK',
+          dateDecision: null,
+          dateDecisionFormatted: null,
+          dateEnd: null,
+          dateRequest: '2024-06-05T00:00:00',
+          dateRequestFormatted: '05 juni 2024',
+          dateStart: null,
+          decision: null,
+          fetchDocumentsUrl:
+            'http://localhost:5000/api/v1/services/vergunningen/v2/962cCLy-d6nz4-85Cfyb2CaOKclPxVWCXF9L8T1lYamfgI25euHU1vf5OsA-qeyGYVuukIOquMqEFhww68MWxEW5LjLvu6jwplz4Hgs1LyE',
+          id: 'Z-24-2233517',
+          identifier: 'Z/24/2233516',
+          key: 'D8DEC5AD3C6F456D954C53DEF791EAA3',
+          link: {
+            to: '/vergunningen/gpp/Z-24-2233516',
+            title: 'Bekijk hoe het met uw aanvraag staat',
+          },
+          location: null,
+          processed: false,
+          title: 'Vergunning 2',
+          steps: [],
+        },
+      ],
+    },
+  },
+} as unknown as AppState;
+
+describe('Parkeren', () => {
+  const routeEntry = generatePath(themaConfig.route.path);
+  const routePath = themaConfig.route.path;
+
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={ParkerenThema}
+        state={testState}
+      />
+    );
+  }
+
+  it('should render the component and show the correct title', () => {
+    render(<Component />);
+
+    expect(screen.getAllByText(themaConfig.title)[0]).toBeInTheDocument();
+  });
+
+  it('should contain the correct links', () => {
+    render(<Component />);
+
+    expect(
+      screen.getByText('Meer over parkeervergunningen')
+    ).toBeInTheDocument();
+
+    expect(screen.getByText(linkButtonTxt)).toBeInTheDocument();
+  });
+
+  it('should display the list of parkeervergunningen', async () => {
+    const screen = render(<Component />);
+
+    expect(screen.getByText('Vergunning 1')).toBeInTheDocument();
+    expect(screen.getByText('Vergunning 2')).toBeInTheDocument();
+  });
+});
+
+describe('PageContentTop', () => {
+  function getPageContentTopComponent(
+    hasMijnParkerenVergunningen: boolean,
+    parkerenUrlSSO: string
+  ) {
+    function Component() {
+      const PageContentTop = forTesting.PageContentTop;
+      return (
+        <PageContentTop
+          hasMijnParkerenVergunningen={hasMijnParkerenVergunningen}
+          parkerenUrlSSO={parkerenUrlSSO}
+          profileType="private"
+        />
+      );
+    }
+    return Component;
+  }
+
+  test('Renders button with parkeer vergunningen', () => {
+    const PageContentTop = getPageContentTopComponent(
+      true,
+      EXTERNAL_PARKEREN_URL
+    );
+    const screen = render(
+      <MockApp
+        routeEntry="/"
+        routePath="/"
+        component={PageContentTop}
+        state={testState}
+      />
+    );
+    expect(screen.queryByText(linkButtonTxt)).toBeInTheDocument();
+  });
+
+  test('Does not render link when only vergunningen from another source then parkeren are present', () => {
+    const PageContentTop = getPageContentTopComponent(
+      false,
+      EXTERNAL_PARKEREN_URL
+    );
+    const screen = render(<PageContentTop />);
+    expect(screen.queryByText(linkButtonTxt)).not.toBeInTheDocument();
+  });
+});
