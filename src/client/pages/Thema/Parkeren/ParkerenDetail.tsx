@@ -59,7 +59,7 @@ function DetailPageContent<
 }
 
 export function ParkerenDetail() {
-  const { vergunningen, isLoading, isError, breadcrumbs, themaConfig } =
+  const { vergunningen, isLoading, isError, breadcrumbs, resolvedThemaConfig } =
     useParkerenData();
   const {
     vergunning,
@@ -69,7 +69,7 @@ export function ParkerenDetail() {
     isLoadingDocuments,
     isErrorDocuments,
   } = useVergunningenDetailData(vergunningen);
-  useHTMLDocumentTitle(themaConfig.detailPage.route);
+  useHTMLDocumentTitle(resolvedThemaConfig.detailPage.route);
 
   return (
     <ThemaDetailPagina

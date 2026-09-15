@@ -62,10 +62,13 @@ export function ParkerenThema() {
     isLoading,
     isError,
     parkerenUrlSSO,
-    themaConfig,
+    resolvedThemaConfig,
   } = useParkerenData();
 
-  useHTMLDocumentTitle(themaConfig.route);
+
+  useHTMLDocumentTitle(resolvedThemaConfig.route);
+
+  const profileType = useProfileTypeValue();
 
   const tables = Object.entries(tableConfig).map(
     ([
@@ -84,7 +87,7 @@ export function ParkerenThema() {
       );
     }
   );
-  const profileType = useProfileTypeValue();
+
   const pageContentTop = (
     <PageContentTop
       hasMijnParkerenVergunningen={hasMijnParkerenVergunningen}
@@ -115,12 +118,11 @@ export function ParkerenThema() {
       isError={isError}
       isLoading={isLoading}
       pageContentTop={pageContentTop}
-      pageLinks={themaConfig.pageLinks}
+      pageLinks={resolvedThemaConfig.pageLinks}
       pageContentMain={tables}
       pageContentBottom={pageContentBottom}
       maintenanceNotificationsPageSlug="parkeren"
     />
   );
 }
-
 export const forTesting = { PageContentTop };

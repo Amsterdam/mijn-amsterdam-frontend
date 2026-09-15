@@ -1,9 +1,15 @@
-import { tableConfig, themaConfig } from './Parkeren-thema-config.ts';
+import {
+  tableConfig,
+  themaConfig,
+  type ParkerenThemaConfig,
+} from './Parkeren-thema-config.ts';
 import type { DecosParkeerVergunning } from '../../../../server/services/parkeren/config-and-types.ts';
 import type { DecosZaakFrontend } from '../../../../server/services/vergunningen/config-and-types.ts';
 import { isError, isLoading } from '../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
+import { createThemaConfig } from '../../../config/create-thema-config.ts';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
+import { useProfileTypeValue } from '../../../hooks/useProfileType.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
 
 export function useParkerenData() {
@@ -16,9 +22,15 @@ export function useParkerenData() {
 
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
+  const profileType = useProfileTypeValue();
+  const resolvedThemaConfig = createThemaConfig<ParkerenThemaConfig>(
+    themaConfig,
+    profileType
+  );
+
   return {
-    id: themaConfig.id,
-    title: themaConfig.title,
+    id: resolvedThemaConfig.id,
+    title: resolvedThemaConfig.title,
     tableConfig,
     vergunningen,
     hasMijnParkerenVergunningen,
@@ -26,8 +38,8 @@ export function useParkerenData() {
     isError: isError(PARKEREN),
     parkerenUrlSSO: PARKEREN.content?.url ?? '/',
     isLoadingParkerenUrl: isLoading(PARKEREN),
-    pageLinks: themaConfig.pageLinks,
+    pageLinks: resolvedThemaConfig.pageLinks,
     breadcrumbs,
-    themaConfig,
+    resolvedThemaConfig,
   };
 }

@@ -16,13 +16,17 @@ export type IsThemaVisibleFN = (
   profileType?: ProfileType
 ) => boolean;
 
+export type LinkConfig = LinkProps & {
+  profileTypes?: ProfileType[];
+};
+
 export type ThemaConfigBase<ID = string> = {
   id: ID;
   title: string;
   featureToggle: ThemaFeatureToggle;
   profileTypes: ProfileType[];
   uitlegPageSections: InfoSection[];
-  pageLinks: LinkProps[];
+  pageLinks: LinkConfig[];
   route: ThemaRouteConfig;
   redactedScope: RedactedScope;
 };

@@ -9,13 +9,14 @@ import type {
   WithDetailPage,
   WithListPage,
 } from '../../../config/thema-types.ts';
+import { getBelastingenSSOUrl } from '../Belastingen/Belastingen-thema-config.ts';
 import type { ListPageParamKind as ListPageParamKindVergunningen } from '../Vergunningen/Vergunningen-thema-config.ts';
 import { tableConfig as tableConfigVergunningen } from '../Vergunningen/Vergunningen-thema-config.ts';
 
 const THEMA_ID = 'PARKEREN';
 const THEMA_TITLE = 'Parkeren';
 
-type ParkerenThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
+export type ParkerenThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
   WithListPage &
   WithDetailPage;
 
@@ -42,6 +43,16 @@ export const themaConfig: ParkerenThemaConfig = {
     {
       to: 'https://www.amsterdam.nl/parkeren/parkeren-gehandicapten/',
       title: 'Parkeren voor gehandicapten',
+    },
+    {
+      to: getBelastingenSSOUrl('private'),
+      title: 'Parkeerbon betalen',
+      profileTypes: ['private'],
+    },
+    {
+      to: getBelastingenSSOUrl('commercial'),
+      title: 'Parkeerbon betalen',
+      profileTypes: ['commercial'],
     },
   ],
   uitlegPageSections: [
