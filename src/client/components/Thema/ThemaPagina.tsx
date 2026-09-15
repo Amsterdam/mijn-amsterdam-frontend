@@ -27,10 +27,11 @@ interface ThemaPaginaProps {
   id: string;
   title: string;
   breadcrumbs?: LinkProps[];
+  showBreadcrumbs?: boolean;
   pageContentTop: ReactNode;
   pageContentTopSecondary?: ReactNode;
   pageContentMain: ReactNode;
-  pageLinks: LinkProps[];
+  pageLinks?: LinkProps[];
   pageContentBottom?: ReactNode;
   errorAlertContent?: ReactNode;
   loadingBarConfig?: BarConfig;
@@ -44,6 +45,7 @@ export function ThemaPagina({
   id,
   title,
   breadcrumbs,
+  showBreadcrumbs,
   pageContentTop,
   pageContentTopSecondary,
   pageLinks = [],
@@ -66,6 +68,7 @@ export function ThemaPagina({
     <PageV2
       heading={title}
       breadcrumbs={breadcrumbs}
+      showBreadcrumbs={!!showBreadcrumbs}
       redactedThemaId={id}
       showUserFeedback
       userFeedbackDetails={userFeedbackDetails}
