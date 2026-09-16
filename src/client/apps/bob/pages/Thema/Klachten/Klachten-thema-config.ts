@@ -12,7 +12,7 @@ import type {
   ThemaRoutesConfig,
   WithDetailPage,
   WithListPage,
-} from '../../../config/thema-types.ts';
+} from '../../../../../../universal/types/thema-types.ts';
 
 export const THEMA_ID = 'KLACHTEN';
 export const THEMA_TITLE = 'Klachten';

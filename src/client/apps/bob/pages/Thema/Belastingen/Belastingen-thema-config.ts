@@ -1,4 +1,4 @@
-import type { ThemaConfigBase } from '../../../config/thema-types.ts';
+import type { ThemaConfigBase } from '../../../../../../universal/types/thema-types.ts';
 
 const BELASTINGEN_ROUTE_DEFAULT = 'https://belastingbalie.amsterdam.nl';
 const THEMA_ID = 'BELASTINGEN';

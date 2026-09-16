@@ -45,7 +45,7 @@ import type {
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types/App.types.ts';
-import type { ThemaMenuItem } from '../../apps/bob/config/thema-types.ts';
+import type { ThemaMenuItem } from '../../../universal/types/thema-types.ts';
 import type { AfisFactuurFrontend } from '../../apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
 import { themaConfig as avgThemaConfig } from '../../apps/bob/pages/Thema/AVG/AVG-thema-config.ts';
 import { themaConfig as themaConfigBezwaren } from '../../apps/bob/pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
@@ -85,8 +85,7 @@ export interface ApiSearchConfig {
   // A description that will be used by Fuse to find matching items and is also displayed as description
   // of the SearchEntry on the Search page for Amsterdam.nl Results.
   description:
-    | ReactElement
-    | ((item: ApiBaseItem, config: ApiSearchConfig) => string);
+    ReactElement | ((item: ApiBaseItem, config: ApiSearchConfig) => string);
 
   // A list of keys of which the values are used for keywords
   keywordsGeneratedFromProps?: string[];

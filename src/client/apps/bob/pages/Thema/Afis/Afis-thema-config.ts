@@ -25,7 +25,7 @@ import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
-} from '../../../config/thema-types.ts';
+} from '../../../../../../universal/types/thema-types.ts';
 
 const THEMA_ID = 'AFIS';
 const THEMA_TITLE = 'Facturen en betalen';

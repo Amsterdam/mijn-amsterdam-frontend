@@ -1,4 +1,4 @@
-import type { ThemaConfigBase } from '../../../config/thema-types.ts';
+import type { ThemaConfigBase } from '../../../../../../universal/types/thema-types.ts';
 
 const OVERTREDINGEN_ROUTE_DEFAULT =
   'https://ontheffingen.amsterdam.nl/publiek/aanvragen';

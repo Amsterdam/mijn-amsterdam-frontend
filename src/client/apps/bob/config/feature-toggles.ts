@@ -1,4 +1,4 @@
-import type { ThemaFeatureToggle } from './thema-types.ts';
+import type { ThemaFeatureToggle } from '../../../../universal/types/thema-types.ts';
 import type { FeatureToggleKey } from '../../../../server/config/feature-toggles.ts';
 import { entries } from '../../../../universal/helpers/utils.ts';
 

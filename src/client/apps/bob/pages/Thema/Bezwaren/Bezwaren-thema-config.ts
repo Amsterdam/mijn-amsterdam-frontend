@@ -10,7 +10,7 @@ import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
-} from '../../../config/thema-types.ts';
+} from '../../../../../../universal/types/thema-types.ts';
 
 const THEMA_ID = 'BEZWAREN';
 const THEMA_TITLE = 'Bezwaren';

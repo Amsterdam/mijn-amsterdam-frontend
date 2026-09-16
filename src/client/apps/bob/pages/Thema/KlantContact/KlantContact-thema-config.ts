@@ -9,7 +9,7 @@ import type {
   InfoSection,
   ThemaConfigBase,
   WithPageConfig,
-} from '../../../config/thema-types.ts';
+} from '../../../../../../universal/types/thema-types.ts';
 
 export type InstelAction = 'instellen' | 'wijzigen' | 'valideren';
 

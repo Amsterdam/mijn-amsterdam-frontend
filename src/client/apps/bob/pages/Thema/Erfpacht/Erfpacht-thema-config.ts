@@ -15,7 +15,7 @@ import {
 import type {
   PageConfig,
   ThemaConfigBase,
-} from '../../../config/thema-types.ts';
+} from '../../../../../../universal/types/thema-types.ts';
 import {
   getAfisListPageDocumentTitle,
   getFacturenTableConfig,

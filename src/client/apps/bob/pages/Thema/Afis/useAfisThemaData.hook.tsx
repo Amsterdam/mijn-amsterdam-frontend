@@ -13,7 +13,7 @@ import {
   isLoading,
 } from '../../../../../../universal/helpers/api.ts';
 import type { LinkProps } from '../../../../../../universal/types/App.types.ts';
-import type { ThemaRouteConfig } from '../../../config/thema-types.ts';
+import type { ThemaRouteConfig } from '../../../../../../universal/types/thema-types.ts';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
 import { useThemaMenuItemByThemaID } from '../../../../../hooks/useThemaMenuItems.ts';

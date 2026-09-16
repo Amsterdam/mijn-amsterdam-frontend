@@ -6,7 +6,7 @@ import { VvEDetail } from './private/VvEDetail.tsx';
 import { themaConfig } from './Profile-thema-config.ts';
 import { default as ProfilePrivateIcon } from './ProfilePrivateIcon.svg?react';
 import { isLoading } from '../../../../../../universal/helpers/api.ts';
-import type { ThemaMenuItem } from '../../../config/thema-types.ts';
+import type { ThemaMenuItem } from '../../../../../../universal/types/thema-types.ts';
 
 export const ProfileRoutes = [
   { route: themaConfig.BRP.route.path, Component: MijnGegevensThema },

@@ -16,7 +16,7 @@ import type {
   PageConfig,
   ThemaConfigBase,
   WithListPage,
-} from '../../../config/thema-types.ts';
+} from '../../../../../../universal/types/thema-types.ts';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_AFGEHANDELD = 3;

@@ -8,7 +8,7 @@ import { IconAfspraak } from '../../../../../assets/icons/index.tsx';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types.ts';
+} from '../../../../../../universal/types/thema-types.ts';
 
 export const KlantContactRoutes = [
   {

@@ -8,7 +8,7 @@ import { isLoading } from '../../../../../../universal/helpers/api.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../../config/thema-types.ts';
+} from '../../../../../../universal/types/thema-types.ts';
 
 export const VarenRoutes = [
   {

@@ -12,7 +12,7 @@ import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
-} from '../../../config/thema-types.ts';
+} from '../../../../../../universal/types/thema-types.ts';
 
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
