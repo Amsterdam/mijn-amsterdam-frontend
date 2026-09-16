@@ -150,7 +150,7 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
             class="ams-table"
           >
             <table
-              class="ams-table__table _TableV2_1fc147 _Stadspassen_b80084"
+              class="ams-table__table _TableV2_1fc147 _Stadspassen_81540e"
             >
               <thead
                 class="ams-table__header"
@@ -189,7 +189,7 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                       title="Overzicht en uitgaven van Stadspas van Kerub"
                     >
                       <span
-                        class="_Stadspas_owner_b80084"
+                        class="_Stadspas_owner_81540e"
                       >
                         Stadspas van Kerub
                       </span>
@@ -204,7 +204,7 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                     class="ams-table__cell"
                   >
                     <span
-                      class="_StatusValue_b80084"
+                      class="_StatusValue_81540e"
                     >
                       Actief
                     </span>
@@ -221,7 +221,7 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                       title="Overzicht en uitgaven van Stadspas van Lou"
                     >
                       <span
-                        class="_Stadspas_owner_b80084"
+                        class="_Stadspas_owner_81540e"
                       >
                         Stadspas van Lou
                       </span>
@@ -236,7 +236,7 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                     class="ams-table__cell"
                   >
                     <span
-                      class="_StatusValue_b80084"
+                      class="_StatusValue_81540e"
                     >
                       Geblokkeerd
                     </span>

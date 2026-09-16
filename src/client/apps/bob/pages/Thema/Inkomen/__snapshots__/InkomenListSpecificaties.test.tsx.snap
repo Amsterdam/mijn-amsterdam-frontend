@@ -89,7 +89,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
         >
           <button
             aria-expanded="false"
-            class="ams-button ams-button--secondary _SearchButton_e52e4a ams-mb-m"
+            class="ams-button ams-button--secondary _SearchButton_fc53f4 ams-mb-m"
             type="button"
           >
             Zoeken
@@ -98,7 +98,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
               hidden=""
             >
               <i
-                class="_SearchButtonIcon_e52e4a"
+                class="_SearchButtonIcon_fc53f4"
               >
                 ◢
               </i>
@@ -442,7 +442,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
         >
           <button
             aria-expanded="false"
-            class="ams-button ams-button--secondary _SearchButton_e52e4a ams-mb-m"
+            class="ams-button ams-button--secondary _SearchButton_fc53f4 ams-mb-m"
             type="button"
           >
             Zoeken
@@ -451,7 +451,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               hidden=""
             >
               <i
-                class="_SearchButtonIcon_e52e4a"
+                class="_SearchButtonIcon_fc53f4"
               >
                 ◢
               </i>
