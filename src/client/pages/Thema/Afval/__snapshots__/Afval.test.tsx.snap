@@ -83,7 +83,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
             Dit zijn de afvalregels voor uw adres.
           </p>
           <section
-            aria-labelledby=":r1:"
+            aria-labelledby="ams-alert-heading"
             class="ams-alert ams-mb-m"
           >
             <div
@@ -115,7 +115,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
               >
                 <h4
                   class="ams-heading ams-heading--3"
-                  id=":r1:"
+                  id="ams-alert-heading"
                 >
                   Bedrijfsafval informatie
                 </h4>
@@ -152,7 +152,6 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
                 >
                   <svg
                     aria-hidden="true"
-                    data-directional="true"
                     focusable="false"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -179,7 +178,6 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
                 >
                   <svg
                     aria-hidden="true"
-                    data-directional="true"
                     focusable="false"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -701,7 +699,6 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
                 >
                   <svg
                     aria-hidden="true"
-                    data-directional="true"
                     focusable="false"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -736,7 +733,6 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
                 >
                   <svg
                     aria-hidden="true"
-                    data-directional="true"
                     focusable="false"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"

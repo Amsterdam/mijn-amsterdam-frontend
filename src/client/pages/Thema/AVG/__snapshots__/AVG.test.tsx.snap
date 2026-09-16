@@ -13,179 +13,6 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when API gives no res
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
-          aria-labelledby=":r9:"
-          class="ams-breadcrumb"
-        >
-          <h2
-            aria-hidden="true"
-            class="ams-visually-hidden"
-            id=":r9:"
-          >
-            Kruimelpad
-          </h2>
-          <ol
-            class="ams-breadcrumb__list"
-          >
-            <li
-              class="ams-breadcrumb__item"
-            >
-              <a
-                class="ams-breadcrumb__link"
-                href="/"
-              >
-                Home
-              </a>
-            </li>
-            <li
-              class="ams-breadcrumb__item"
-            >
-              <a
-                class="ams-breadcrumb__link"
-                href="/avg"
-                tabindex="-1"
-              >
-                <span
-                  class="ams-visually-hidden"
-                >
-                  AVG persoonsgegevens
-                </span>
-              </a>
-            </li>
-          </ol>
-        </nav>
-      </div>
-    </div>
-    <main
-      id="page-main-content"
-    >
-      <div
-        class="ams-grid"
-      >
-        <div
-          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-        >
-          <h1
-            class="ams-heading ams-heading--1 ams-mb-s"
-          >
-            AVG persoonsgegevens
-          </h1>
-        </div>
-      </div>
-      <div
-        class="ams-grid ams-grid--padding-bottom--x-large"
-      >
-        <div
-          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-        >
-          <p
-            class="ams-paragraph"
-          >
-            Hieronder ziet u een overzicht van uw AVG verzoeken.
-          </p>
-        </div>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PullUp_125440"
-        >
-          <ul
-            class="ams-link-list"
-          >
-            <li>
-              <a
-                class="ams-link-list__link"
-                href="https://www.amsterdam.nl/privacy/loket/"
-                rel="noreferrer"
-              >
-                <span
-                  class="ams-icon"
-                  hidden=""
-                >
-                  <svg
-                    aria-hidden="true"
-                    data-directional="true"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      clip-rule="evenodd"
-                      d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
-                      fill-rule="evenodd"
-                    />
-                  </svg>
-                </span>
-                Loket persoonsgegevens gemeente Amsterdam
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-        >
-          <section
-            aria-labelledby=":ra:"
-            class="ams-alert ams-alert--error"
-          >
-            <div
-              class="ams-alert__severity-indicator"
-            >
-              <span
-                class="ams-icon ams-icon--inverse ams-icon--heading-3"
-                hidden=""
-              >
-                <svg
-                  aria-hidden="true"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    clip-rule="evenodd"
-                    d="m22.879 12-5.44 9.422-10.877-.001L1.122 12 6.56 2.58h10.878zM12 10.586 8.856 7.442 7.442 8.856 10.586 12l-3.144 3.145 1.414 1.414L12 13.414l3.145 3.145 1.414-1.415L13.414 12l3.145-3.145-1.415-1.413z"
-                    fill-rule="evenodd"
-                  />
-                </svg>
-              </span>
-            </div>
-            <div
-              class="ams-alert__content"
-            >
-              <div
-                class="ams-row ams-row--align-between ams-row--align-vertical-start"
-              >
-                <h4
-                  class="ams-heading ams-heading--3"
-                  id=":ra:"
-                >
-                  Foutmelding
-                </h4>
-              </div>
-              <p
-                class="ams-paragraph"
-              >
-                We kunnen op dit moment niet alle gegevens tonen.
-              </p>
-            </div>
-          </section>
-        </div>
-      </div>
-    </main>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`AVG thema pagina > Matches the Full Page snapshot when there are no requests 1`] = `
-<DocumentFragment>
-  <div
-    class="mams-content-wrapper"
-  >
-    <div
-      class="ams-grid ams-grid--padding-top--large"
-      id="page-breadcrumbs"
-    >
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <nav
           aria-labelledby=":r8:"
           class="ams-breadcrumb"
         >
@@ -274,7 +101,6 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are no req
                 >
                   <svg
                     aria-hidden="true"
-                    data-directional="true"
                     focusable="false"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -294,56 +120,51 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are no req
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
-          <h2
-            class="ams-heading ams-heading--2"
+          <section
+            aria-labelledby="ams-alert-heading"
+            class="ams-alert ams-alert--error"
           >
-            Lopende aanvragen
-          </h2>
-          <div
-            class="ams-table"
-            role="group"
-            tabindex="0"
-          >
-            <table
-              class="ams-table__table _TableV2_1fc147"
+            <div
+              class="ams-alert__severity-indicator"
             >
-              <tbody
-                class="ams-table__body"
-              />
-            </table>
-          </div>
-          <p
-            class="ams-paragraph"
-          >
-            U heeft (nog) geen lopende aanvragen
-          </p>
-        </div>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-        >
-          <h2
-            class="ams-heading ams-heading--2"
-          >
-            Afgehandelde aanvragen
-          </h2>
-          <div
-            class="ams-table"
-            role="group"
-            tabindex="0"
-          >
-            <table
-              class="ams-table__table _TableV2_1fc147"
+              <span
+                class="ams-icon ams-icon--inverse ams-icon--heading-3"
+                hidden=""
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    clip-rule="evenodd"
+                    d="m22.879 12-5.44 9.422-10.877-.001L1.122 12 6.56 2.58h10.878zM12 10.586 8.856 7.442 7.442 8.856 10.586 12l-3.144 3.145 1.414 1.414L12 13.414l3.145 3.145 1.414-1.415L13.414 12l3.145-3.145-1.415-1.413z"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </span>
+            </div>
+            <div
+              class="ams-alert__content"
             >
-              <tbody
-                class="ams-table__body"
-              />
-            </table>
-          </div>
-          <p
-            class="ams-paragraph"
-          >
-            U heeft (nog) geen afgehandelde aanvragen
-          </p>
+              <div
+                class="ams-row ams-row--align-between ams-row--align-vertical-start"
+              >
+                <h4
+                  class="ams-heading ams-heading--3"
+                  id="ams-alert-heading"
+                >
+                  Foutmelding
+                </h4>
+              </div>
+              <p
+                class="ams-paragraph"
+              >
+                We kunnen op dit moment niet alle gegevens tonen.
+              </p>
+            </div>
+          </section>
         </div>
       </div>
     </main>
@@ -351,7 +172,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are no req
 </DocumentFragment>
 `;
 
-exports[`AVG thema pagina > Matches the Full Page snapshot when there are requests 1`] = `
+exports[`AVG thema pagina > Matches the Full Page snapshot when there are no requests 1`] = `
 <DocumentFragment>
   <div
     class="mams-content-wrapper"
@@ -452,7 +273,6 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
                 >
                   <svg
                     aria-hidden="true"
-                    data-directional="true"
                     focusable="false"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -479,8 +299,179 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
           </h2>
           <div
             class="ams-table"
-            role="group"
-            tabindex="0"
+          >
+            <table
+              class="ams-table__table _TableV2_1fc147"
+            >
+              <tbody
+                class="ams-table__body"
+              />
+            </table>
+          </div>
+          <p
+            class="ams-paragraph"
+          >
+            U heeft (nog) geen lopende aanvragen
+          </p>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <h2
+            class="ams-heading ams-heading--2"
+          >
+            Afgehandelde aanvragen
+          </h2>
+          <div
+            class="ams-table"
+          >
+            <table
+              class="ams-table__table _TableV2_1fc147"
+            >
+              <tbody
+                class="ams-table__body"
+              />
+            </table>
+          </div>
+          <p
+            class="ams-paragraph"
+          >
+            U heeft (nog) geen afgehandelde aanvragen
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AVG thema pagina > Matches the Full Page snapshot when there are requests 1`] = `
+<DocumentFragment>
+  <div
+    class="mams-content-wrapper"
+  >
+    <div
+      class="ams-grid ams-grid--padding-top--large"
+      id="page-breadcrumbs"
+    >
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <nav
+          aria-labelledby=":r6:"
+          class="ams-breadcrumb"
+        >
+          <h2
+            aria-hidden="true"
+            class="ams-visually-hidden"
+            id=":r6:"
+          >
+            Kruimelpad
+          </h2>
+          <ol
+            class="ams-breadcrumb__list"
+          >
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/avg"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  AVG persoonsgegevens
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <main
+      id="page-main-content"
+    >
+      <div
+        class="ams-grid"
+      >
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <h1
+            class="ams-heading ams-heading--1 ams-mb-s"
+          >
+            AVG persoonsgegevens
+          </h1>
+        </div>
+      </div>
+      <div
+        class="ams-grid ams-grid--padding-bottom--x-large"
+      >
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <p
+            class="ams-paragraph"
+          >
+            Hieronder ziet u een overzicht van uw AVG verzoeken.
+          </p>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PullUp_125440"
+        >
+          <ul
+            class="ams-link-list"
+          >
+            <li>
+              <a
+                class="ams-link-list__link"
+                href="https://www.amsterdam.nl/privacy/loket/"
+                rel="noreferrer"
+              >
+                <span
+                  class="ams-icon"
+                  hidden=""
+                >
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clip-rule="evenodd"
+                      d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                Loket persoonsgegevens gemeente Amsterdam
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <h2
+            class="ams-heading ams-heading--2"
+          >
+            Lopende aanvragen
+          </h2>
+          <div
+            class="ams-table"
           >
             <table
               class="ams-table__table _TableV2_1fc147"
@@ -553,8 +544,6 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
           </h2>
           <div
             class="ams-table"
-            role="group"
-            tabindex="0"
           >
             <table
               class="ams-table__table _TableV2_1fc147"
@@ -711,7 +700,7 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
           <section
-            aria-labelledby=":r1:"
+            aria-labelledby="ams-alert-heading"
             class="ams-alert"
           >
             <div
@@ -743,7 +732,7 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
               >
                 <h4
                   class="ams-heading ams-heading--3"
-                  id=":r1:"
+                  id="ams-alert-heading"
                 >
                   Geen gegevens gevonden
                 </h4>
@@ -775,13 +764,13 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
-          aria-labelledby=":r2:"
+          aria-labelledby=":r1:"
           class="ams-breadcrumb"
         >
           <h2
             aria-hidden="true"
             class="ams-visually-hidden"
-            id=":r2:"
+            id=":r1:"
           >
             Kruimelpad
           </h2>
@@ -1002,7 +991,6 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                       >
                         <svg
                           aria-hidden="true"
-                          data-directional="true"
                           focusable="false"
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"

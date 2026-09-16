@@ -127,7 +127,6 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                 >
                   <svg
                     aria-hidden="true"
-                    data-directional="true"
                     focusable="false"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -154,7 +153,6 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                 >
                   <svg
                     aria-hidden="true"
-                    data-directional="true"
                     focusable="false"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +189,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
             Ga naar betaalvoorkeuren
           </a>
           <section
-            aria-labelledby=":r1:"
+            aria-labelledby="ams-alert-heading"
             class="ams-alert ams-alert--warning"
           >
             <div
@@ -223,7 +221,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
               >
                 <h4
                   class="ams-heading ams-heading--3"
-                  id=":r1:"
+                  id="ams-alert-heading"
                 >
                   Belangrijk om te weten
                 </h4>
@@ -260,8 +258,6 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
           </h2>
           <div
             class="ams-table"
-            role="group"
-            tabindex="0"
           >
             <table
               class="ams-table__table _TableV2_1fc147"
@@ -387,8 +383,6 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
           </h2>
           <div
             class="ams-table"
-            role="group"
-            tabindex="0"
           >
             <table
               class="ams-table__table _TableV2_1fc147"
@@ -428,8 +422,6 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
           </p>
           <div
             class="ams-table"
-            role="group"
-            tabindex="0"
           >
             <table
               class="ams-table__table _TableV2_1fc147"
