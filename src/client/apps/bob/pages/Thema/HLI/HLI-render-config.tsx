@@ -13,7 +13,7 @@ import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import type {
   ThemaRenderRouteConfig,
   ThemaMenuItem,
-} from '../../../config/thema-types.ts';
+} from '../../../../../../universal/types/thema-types.ts';
 
 export const HLIRoutes = [
   {

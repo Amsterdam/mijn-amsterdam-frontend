@@ -11,7 +11,7 @@ import { propagateFeatureToggles } from '../../../config/feature-toggles.ts';
 import type {
   PageConfig,
   ThemaConfigBase,
-} from '../../../config/thema-types.ts';
+} from '../../../../../../universal/types/thema-types.ts';
 
 const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen' as const;
 export const regelingenTitle = 'Regelingen bij laag inkomen' as const;

@@ -2,7 +2,7 @@ import { themaConfig } from './Belastingen-thema-config.ts';
 import { default as BelastingenIcon } from './BelastingenIcon.svg?react';
 import { isLoading } from '../../../../../../universal/helpers/api.ts';
 import { type AppState } from '../../../../../../universal/types/App.types.ts';
-import { type ThemaMenuItem } from '../../../config/thema-types.ts';
+import { type ThemaMenuItem } from '../../../../../../universal/types/thema-types.ts';
 
 export const menuItem: ThemaMenuItem = {
   title: themaConfig.title,

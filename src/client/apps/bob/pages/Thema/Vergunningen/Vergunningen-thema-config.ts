@@ -19,7 +19,7 @@ import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
-} from '../../../config/thema-types.ts';
+} from '../../../../../../universal/types/thema-types.ts';
 
 type VergunningFrontendDisplayProps = DisplayProps<DecosZaakFrontend>;
 

@@ -9,7 +9,7 @@ import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import type { Kanaal } from '../../../../../../server/services/klantcontact/klantcontact.types.ts';
 import { IconAfspraak } from '../../../../../assets/icons/index.tsx';
 import { MaRouterLink } from '../../../../../components/MaLink/MaLink.tsx';
-import type { ThemaMenuItemTransformed } from '../../../config/thema-types.ts';
+import type { ThemaMenuItemTransformed } from '../../../../../../universal/types/thema-types.ts';
 import { getRedactedClass } from '../../../../../helpers/cobrowse.ts';
 import { useActiveThemaMenuItems } from '../../../../../hooks/useThemaMenuItems.ts';
 import { themaConfig as themaAfis } from '../Afis/Afis-thema-config.ts';

@@ -11,7 +11,7 @@ import {
   useAllThemaMenuItemsByThemaID,
 } from './useThemaMenuItems.ts';
 import { useThemasByProfileType } from '../apps/bob/config/menuItems.ts';
-import type { ThemaMenuItemTransformed } from '../apps/bob/config/thema-types.ts';
+import type { ThemaMenuItemTransformed } from '../../universal/types/thema-types.ts';
 
 vi.mock('./useProfileType', () => ({
   useProfileTypeValue: vi.fn(),

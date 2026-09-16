@@ -1,7 +1,5 @@
 import { Routes, Route, matchPath } from 'react-router';
 
-import { MyAreaRoutes } from '../../components/MyArea/MyArea-routes.ts';
-import type { ThemaRenderRouteConfig } from './config/thema-types.ts';
 import { BffErrorRoutes } from './pages/BffError/BffError-routes.ts';
 import { BurgerzakenRoutes } from './pages/Burgerzaken/Burgerzaken-routes.ts';
 import { DashboardRoutes } from './pages/Dashboard/Dashboard-routes.ts';
@@ -30,14 +28,8 @@ import { VarenRoutes } from './pages/Thema/Varen/Varen-render-config.tsx';
 import { VergunningenRoutes } from './pages/Thema/Vergunningen/Vergunningen-render-config.tsx';
 import { ZorgRoutes } from './pages/Thema/Zorg/Zorg-render-config.tsx';
 import { ZaakStatusRoutes } from './pages/ZaakStatus/ZaakStatus-routes.ts';
-
-export type ApplicationRouteConfig = ThemaRenderRouteConfig & {
-  props?: {
-    index?: boolean;
-  };
-  public?: boolean;
-  private?: boolean;
-};
+import type { ApplicationRouteConfig } from '../../../universal/types/thema-types.ts';
+import { MyAreaRoutes } from '../../components/MyArea/MyArea-routes.ts';
 
 const routeComponents: ApplicationRouteConfig[] = [
   AfisRoutes,

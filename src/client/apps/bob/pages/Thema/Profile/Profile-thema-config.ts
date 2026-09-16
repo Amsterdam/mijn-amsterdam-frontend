@@ -2,7 +2,7 @@ import { isEnabled } from '../../../config/feature-toggles.ts';
 import type {
   PageConfig,
   ThemaConfigBase,
-} from '../../../config/thema-types.ts';
+} from '../../../../../../universal/types/thema-types.ts';
 
 type WithDetailPageVvE = PageConfig<'detailPageVvE'>;
 

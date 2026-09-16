@@ -7,7 +7,7 @@ import {
 import { default as SvwiIcon } from './SvwiIcon.svg?react';
 import { isLoading } from '../../../../../../universal/helpers/api.ts';
 import { type AppState } from '../../../../../../universal/types/App.types.ts';
-import { type ThemaMenuItem } from '../../../config/thema-types.ts';
+import { type ThemaMenuItem } from '../../../../../../universal/types/thema-types.ts';
 
 export const menuItem: ThemaMenuItem<typeof themaId> = {
   title: themaTitle,
