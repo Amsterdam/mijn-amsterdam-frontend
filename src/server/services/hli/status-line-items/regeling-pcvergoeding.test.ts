@@ -22,7 +22,7 @@ vi.mock(
   async (importActual) => {
     const actual =
       await importActual<
-        typeof import('../../../../client/pages/Thema/HLI/HLI-thema-config')
+        typeof import('../../../../client/apps/bob/pages/Thema/HLI/HLI-thema-config')
       >();
     return {
       ...actual,

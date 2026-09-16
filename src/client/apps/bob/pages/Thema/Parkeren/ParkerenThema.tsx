@@ -1,0 +1,126 @@
+import { Alert, Icon, Paragraph } from '@amsterdam/design-system-react';
+import { LinkExternalIcon } from '@amsterdam/design-system-react-icons';
+
+import { useParkerenData } from './useParkerenData.hook.tsx';
+import type { DecosZaakFrontend } from '../../../../../../server/services/vergunningen/config-and-types.ts';
+import { MaButtonLink } from '../../../../../components/MaLink/MaLink.tsx';
+import { PageContentCell } from '../../../../../components/Page/Page.tsx';
+import { ParagaphSuppressed } from '../../../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
+import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
+import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
+import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { useProfileTypeValue } from '../../../../../hooks/useProfileType.ts';
+
+type PageContentTopProps = {
+  hasMijnParkerenVergunningen: boolean;
+  parkerenUrlSSO: string;
+  profileType: ProfileType;
+};
+
+function PageContentTop({
+  hasMijnParkerenVergunningen,
+  parkerenUrlSSO,
+  profileType,
+}: PageContentTopProps) {
+  if (hasMijnParkerenVergunningen) {
+    const profileTypeLabel =
+      profileType === 'commercial' ? 'bedrijven' : 'bewoners';
+    return (
+      <PageContentCell spanWide={8}>
+        <Alert
+          heading={`Parkeervergunning voor ${profileTypeLabel}`}
+          headingLevel={4}
+        >
+          <Paragraph>
+            Het inzien, aanvragen of wijzigen van een parkeervergunning voor{' '}
+            {profileTypeLabel} kan via Mijn Parkeren.
+          </Paragraph>
+          <Paragraph>
+            <MaButtonLink href={parkerenUrlSSO}>
+              Ga naar Mijn Parkeren&nbsp;
+              <Icon svg={LinkExternalIcon} size="heading-5" />
+            </MaButtonLink>
+          </Paragraph>
+        </Alert>
+      </PageContentCell>
+    );
+  }
+  return (
+    <PageContentCell spanWide={8}>
+      <Paragraph>Hieronder ziet u een overzicht van uw vergunningen.</Paragraph>
+    </PageContentCell>
+  );
+}
+
+export function ParkerenThema() {
+  const {
+    id,
+    title,
+    tableConfig,
+    vergunningen,
+    hasMijnParkerenVergunningen,
+    isLoading,
+    isError,
+    parkerenUrlSSO,
+    themaConfig,
+  } = useParkerenData();
+
+  useHTMLDocumentTitle(themaConfig.route);
+
+  const tables = Object.entries(tableConfig).map(
+    ([
+      kind,
+      { title, displayProps, filter, sort, listPageRoute, maxItems },
+    ]) => {
+      return (
+        <ThemaPaginaDataView<DecosZaakFrontend>
+          key={kind}
+          title={title}
+          zaken={vergunningen.filter(filter).sort(sort)}
+          listPageRoute={listPageRoute}
+          displayProps={displayProps}
+          maxItems={maxItems}
+        />
+      );
+    }
+  );
+  const profileType = useProfileTypeValue();
+  const pageContentTop = (
+    <PageContentTop
+      hasMijnParkerenVergunningen={hasMijnParkerenVergunningen}
+      parkerenUrlSSO={parkerenUrlSSO}
+      profileType={profileType}
+    />
+  );
+
+  const hasActualGPK = vergunningen.find(
+    (vergunning) => !vergunning.processed && vergunning.caseType === 'GPK'
+  );
+
+  const pageContentBottom = hasActualGPK && (
+    <PageContentCell startWide={3} spanWide={7}>
+      <ParagaphSuppressed>
+        Heeft u naast een Europese gehandicaptenparkeerkaart (GPK) ook een vaste
+        parkeerplaats voor gehandicapten (GPP) aangevraagd? Dan ziet u hier in
+        Mijn Amsterdam alleen de aanvraag voor een GPK staan. Zodra de GPK is
+        gegeven, ziet u ook uw aanvraag voor uw GPP in Mijn Amsterdam.
+      </ParagaphSuppressed>
+    </PageContentCell>
+  );
+
+  return (
+    <ThemaPagina
+      id={id}
+      title={title}
+      isError={isError}
+      isLoading={isLoading}
+      pageContentTop={pageContentTop}
+      pageLinks={themaConfig.pageLinks}
+      pageContentMain={tables}
+      pageContentBottom={pageContentBottom}
+      maintenanceNotificationsPageSlug="parkeren"
+    />
+  );
+}
+
+export const forTesting = { PageContentTop };

@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 
 import styles from './ViewerContainer.module.scss';
-import type { MapOffset } from '../MyArea';
+import type { MapOffset } from '../MyArea.tsx';
 
 type Props = {
   topLeft?: React.ReactNode;

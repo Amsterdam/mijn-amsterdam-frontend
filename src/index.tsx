@@ -5,7 +5,7 @@ import 'core-js/actual/array/find-last-index';
 import 'core-js/actual/string/replace-all';
 
 import './client/styles/main.scss';
-import { BFFApiUrls } from './client/config/api.ts';
+import { BFFApiUrls } from './client/apps/bob/config/api.ts';
 import { type FeatureToggles } from './server/config/feature-toggles.ts';
 
 (async function startApp() {
@@ -28,7 +28,7 @@ import { type FeatureToggles } from './server/config/feature-toggles.ts';
     const response = await fetch(BFFApiUrls.FEATURE_TOGGLES);
     const featureToggles: FeatureToggles = await response.json();
     globalThis.MA_FEATURETOGGLES = featureToggles;
-    await import('./client/render-root.tsx');
+    await import('./client/apps/bob/render-root.tsx');
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error fetching feature toggles', error);
