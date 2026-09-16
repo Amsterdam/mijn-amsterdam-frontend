@@ -6,7 +6,7 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import { configDefaults } from 'vitest/config';
 import svgr from 'vite-plugin-svgr';
-import path from 'node:path';
+import path, { resolve } from 'node:path';
 
 const testExclude = [...configDefaults.exclude, '**/__tmp-routes-*/**'];
 
@@ -36,6 +36,12 @@ export default defineConfig({
     outDir: 'build',
     sourcemap: true,
     target: 'es2015',
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        admin: resolve(__dirname, 'admin.html'),
+      },
+    },
   },
 
   test: {
@@ -91,6 +97,17 @@ export default defineConfig({
     react(),
     // svgr options: https://react-svgr.com/docs/options/
     svgr(),
+    {
+      name: 'rewrite-middleware',
+      configureServer(serve) {
+        serve.middlewares.use((req, res, next) => {
+          if (req.url.startsWith('/admin/')) {
+            req.url = '/admin';
+          }
+          next();
+        });
+      },
+    },
   ],
   css: {
     preprocessorOptions: {

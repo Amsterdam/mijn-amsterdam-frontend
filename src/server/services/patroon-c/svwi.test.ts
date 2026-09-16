@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
 import { fetchSVWI } from './svwi.ts';
-import { featureToggle } from '../../../client/pages/Thema/Svwi/Svwi-thema-config.ts';
+import { featureToggle } from '../../../client/apps/bob/pages/Thema/Svwi/Svwi-thema-config.ts';
 import SVWI from '../../../mocks-server/fixtures/svwi.json' with { type: 'json' };
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 
