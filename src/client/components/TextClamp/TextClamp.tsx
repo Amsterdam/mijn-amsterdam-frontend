@@ -14,6 +14,7 @@ export type TextClampCSSProperties = CustomProp;
 
 interface TextClampProps {
   children: ReactNode;
+  className?: string;
   tagName?: keyof JSX.IntrinsicElements;
   maxHeight?: `${number}px`;
   minHeight?: `${number}px`;
@@ -23,6 +24,7 @@ interface TextClampProps {
 
 export function TextClamp({
   children,
+  className,
   tagName = 'div',
   maxHeight = '45px',
   minHeight = '35px',
@@ -57,6 +59,7 @@ export function TextClamp({
     <WrapperEL
       className={classNames(
         styles.TextClamp,
+        className,
         hasOverflow && isClamped && styles.isClamped,
         hasOverflow && styles.hasOverflow
       )}
