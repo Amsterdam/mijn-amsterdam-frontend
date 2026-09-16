@@ -2,6 +2,7 @@ import { HttpStatusCode } from 'axios';
 
 import { hasPermitsOrPermitRequests } from './parkeren-egis-service.ts';
 import { fetchParkeren } from './parkeren.ts';
+import type { themaConfig } from '../../../client/apps/bob/pages/Thema/Parkeren/Parkeren-thema-config.ts';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 
@@ -12,7 +13,7 @@ const mocks = vi.hoisted(() => {
 });
 
 vi.mock(
-  '../../../client/pages/Thema/Parkeren/Parkeren-thema-config.ts',
+  '../../../client/apps/bob/pages/Thema/Parkeren/Parkeren-thema-config.ts',
   async (importOriginal) => {
     const module: { themaConfig: typeof themaConfig } = await importOriginal();
     module.themaConfig.featureToggle.parkerenJWETokenCreationActive =

@@ -18,7 +18,7 @@ const mocks = vi.hoisted(() => {
 });
 
 vi.mock(
-  '../../../../client/pages/Thema/HLI/HLI-thema-config',
+  '../../../../client/apps/bob/pages/Thema/HLI/HLI-thema-config',
   async (importActual) => {
     const actual =
       await importActual<
