@@ -1,6 +1,6 @@
 import { decosZaakTransformers } from './toeristische-verhuur-service-config.ts';
 import type { VakantieverhuurVergunningFrontend } from './toeristische-verhuur.types.ts';
-import { themaConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import {

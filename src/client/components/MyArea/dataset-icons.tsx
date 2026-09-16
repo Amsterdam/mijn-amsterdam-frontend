@@ -46,7 +46,7 @@ import {
   IconWior,
   IconZwembad,
 } from '../../assets/icons/map/index.tsx';
-import { Colors } from '../../config/app.ts';
+import { Colors } from '../../apps/bob/config/app.ts';
 
 const DatasetIcon: React.FC<{
   color?: string;

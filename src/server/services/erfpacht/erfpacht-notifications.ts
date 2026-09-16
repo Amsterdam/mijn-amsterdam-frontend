@@ -5,7 +5,7 @@ import {
 } from './erfpacht-zaken-config.ts';
 import type { ErfpachtZaakExcerptFrontend } from './erfpacht-zaken-types.ts';
 import { fetchErfpachtZaakInfo } from './erfpacht-zaken.ts';
-import { themaConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
 import {
   apiSuccessResult,
   type ApiResponse,
