@@ -3,14 +3,14 @@
 exports[`DatalistFinancieelPeriode > renders afgekocht canon correctly 1`] = `
 <DocumentFragment>
   <div
-    class="_DataListFinancieelPeriode_281503"
+    class="_DataListFinancieelPeriode_87d973"
   >
     <h3
-      class="ams-heading ams-heading--3 _Section_heading_281503 ams-mb-s"
+      class="ams-heading ams-heading--3 _Section_heading_87d973 ams-mb-s"
     >
       Periode Van: 
       <span
-        class="_periodeSamengesteld_281503"
+        class="_periodeSamengesteld_87d973"
       >
         2020-2025
       </span>
@@ -71,14 +71,14 @@ exports[`DatalistFinancieelPeriode > renders afgekocht canon correctly 1`] = `
 exports[`DatalistFinancieelPeriode > renders niet afgekocht canon correctly 1`] = `
 <DocumentFragment>
   <div
-    class="_DataListFinancieelPeriode_281503"
+    class="_DataListFinancieelPeriode_87d973"
   >
     <h3
-      class="ams-heading ams-heading--3 _Section_heading_281503 ams-mb-s"
+      class="ams-heading ams-heading--3 _Section_heading_87d973 ams-mb-s"
     >
       Periode Van: 
       <span
-        class="_periodeSamengesteld_281503"
+        class="_periodeSamengesteld_87d973"
       >
         2025-2030
       </span>

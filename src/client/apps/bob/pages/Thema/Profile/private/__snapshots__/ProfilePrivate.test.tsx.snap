@@ -104,61 +104,61 @@ exports[`<Profile /> > Lives in Mokum + verbintenis: displays all data 1`] = `
             </button>
           </div>
           <div
-            class="ams-grid _ProfileSectionPanelGrid_013e82"
+            class="ams-grid _ProfileSectionPanelGrid_d05464"
           >
             <div
               class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-5-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1"
             >
               <dl
-                class="_Datalist_240c86 _has-horizontal-rows_240c86 _ProfileSection_013e82"
+                class="_Datalist_240c86 _has-horizontal-rows_240c86 _ProfileSection_d05464"
               >
                 <dt
-                  class="_Datalist__title_240c86 _Label_013e82"
+                  class="_Datalist__title_240c86 _Label_d05464"
                 >
                   Achternaam
                 </dt>
                 <dd
-                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                  class="_Datalist__description_240c86 _Content_d05464 redacted"
                 >
                   Mooier
                 </dd>
                 <dt
-                  class="_Datalist__title_240c86 _Label_013e82"
+                  class="_Datalist__title_240c86 _Label_d05464"
                 >
                   Naamgebruik
                 </dt>
                 <dd
-                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                  class="_Datalist__description_240c86 _Content_d05464 redacted"
                 >
                   eigen geslachtsnaam
                 </dd>
                 <dt
-                  class="_Datalist__title_240c86 _Label_013e82"
+                  class="_Datalist__title_240c86 _Label_d05464"
                 >
                   Aanschrijfwijze
                 </dt>
                 <dd
-                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                  class="_Datalist__description_240c86 _Content_d05464 redacted"
                 >
                   Mooier, Piet
                 </dd>
                 <dt
-                  class="_Datalist__title_240c86 _Label_013e82"
+                  class="_Datalist__title_240c86 _Label_d05464"
                 >
                   Geboorteplaats
                 </dt>
                 <dd
-                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                  class="_Datalist__description_240c86 _Content_d05464 redacted"
                 >
                   Neverland
                 </dd>
                 <dt
-                  class="_Datalist__title_240c86 _Label_013e82"
+                  class="_Datalist__title_240c86 _Label_d05464"
                 >
                   Geboorteland
                 </dt>
                 <dd
-                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                  class="_Datalist__description_240c86 _Content_d05464 redacted"
                 >
                   Onbekend
                 </dd>
@@ -239,61 +239,61 @@ exports[`<Profile /> > Lives in Mokum + verbintenis: displays all data 1`] = `
              voor meer informatie.
           </p>
           <div
-            class="ams-grid _ProfileSectionPanelGrid_013e82"
+            class="ams-grid _ProfileSectionPanelGrid_d05464"
           >
             <div
               class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-5-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1"
             >
               <dl
-                class="_Datalist_240c86 _has-horizontal-rows_240c86 _ProfileSection_013e82"
+                class="_Datalist_240c86 _has-horizontal-rows_240c86 _ProfileSection_d05464"
               >
                 <dt
-                  class="_Datalist__title_240c86 _Label_013e82"
+                  class="_Datalist__title_240c86 _Label_d05464"
                 >
                   Straat
                 </dt>
                 <dd
-                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                  class="_Datalist__description_240c86 _Content_d05464 redacted"
                 >
                   Mooie Straat 1
                 </dd>
                 <dt
-                  class="_Datalist__title_240c86 _Label_013e82"
+                  class="_Datalist__title_240c86 _Label_d05464"
                 >
                   Plaats
                 </dt>
                 <dd
-                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                  class="_Datalist__description_240c86 _Content_d05464 redacted"
                 >
                    Onbekend
                 </dd>
                 <dt
-                  class="_Datalist__title_240c86 _Label_013e82"
+                  class="_Datalist__title_240c86 _Label_d05464"
                 >
                   Vanaf
                 </dt>
                 <dd
-                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                  class="_Datalist__description_240c86 _Content_d05464 redacted"
                 >
                   Onbekend
                 </dd>
                 <dt
-                  class="_Datalist__title_240c86 _Label_013e82"
+                  class="_Datalist__title_240c86 _Label_d05464"
                 >
                   Ingeschreven personen
                 </dt>
                 <dd
-                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                  class="_Datalist__description_240c86 _Content_d05464 redacted"
                 >
                   3
                 </dd>
                 <dt
-                  class="_Datalist__title_240c86 _Label_013e82"
+                  class="_Datalist__title_240c86 _Label_d05464"
                 >
                   WOZ-waarde
                 </dt>
                 <dd
-                  class="_Datalist__description_240c86 _Content_013e82 redacted"
+                  class="_Datalist__description_240c86 _Content_d05464 redacted"
                 >
                   Te vinden op 
                   <a
