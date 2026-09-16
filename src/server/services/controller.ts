@@ -274,8 +274,8 @@ export const servicesByProfileType = {
 
 export type ServiceMap = Prettify<
   typeof servicesByProfileType.private &
-    typeof servicesByProfileType.commercial &
-    (typeof servicesByProfileType)['private-attributes']
+  typeof servicesByProfileType.commercial &
+  (typeof servicesByProfileType)['private-attributes']
 >;
 
 export type ServiceID = Extract<keyof ServiceMap, string>;

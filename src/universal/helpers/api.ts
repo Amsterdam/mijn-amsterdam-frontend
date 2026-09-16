@@ -1,5 +1,3 @@
-import { useAppStateStore } from '../../client/hooks/useAppStateStore.ts';
-
 export interface ApiErrorResponse<T> {
   message: string;
   content: T;
@@ -50,7 +48,10 @@ export type ApiResponse<T> =
 
 export type ApiResponsePromise<T> = Promise<ApiResponse<T>>;
 
-export function isLoading(apiResponseData?: ApiResponse_DEPRECATED<unknown>) {
+export function isLoading(
+  apiResponseData?: ApiResponse_DEPRECATED<unknown>,
+  profileType: ProfileType
+) {
   if (!apiResponseData) {
     return true;
   }
@@ -64,8 +65,6 @@ export function isLoading(apiResponseData?: ApiResponse_DEPRECATED<unknown>) {
   if (!profileTypes || profileTypes.length === 0) {
     return true;
   }
-
-  const { profileType } = useAppStateStore.getState();
 
   if (!profileType) {
     return true;
