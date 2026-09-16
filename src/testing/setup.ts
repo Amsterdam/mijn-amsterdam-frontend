@@ -51,7 +51,7 @@ vi.mock('../server/helpers/env.ts', async (importOriginal) => {
   };
 });
 
-vi.mock('../client/config/feature-toggles', async (importOriginal) => {
+vi.mock('../client/apps/bob/config/feature-toggles', async (importOriginal) => {
   const originalModule: object = await importOriginal();
   return {
     ...originalModule,

@@ -149,7 +149,7 @@ const testState = {
   },
 };
 
-vi.mock('../../../hooks/useProfileType');
+vi.mock('../../../../../hooks/useProfileType');
 
 describe('<AfvalThemaPagina />', () => {
   const routePath = themaConfig.route.path;

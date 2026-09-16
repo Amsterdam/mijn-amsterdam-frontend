@@ -11,7 +11,7 @@ import type { AfisEMandateFrontend } from '../../../../../../server/services/afi
 import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
 
 // Simplify routing link used by the component for tests
-vi.mock('../../../components/MaLink/MaLink.tsx', () => ({
+vi.mock('../../../../../components/MaLink/MaLink.tsx', () => ({
   MaRouterLink: ({ href, children }: any) => <a href={href}>{children}</a>,
 }));
 
