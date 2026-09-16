@@ -56,8 +56,6 @@ exports[`AfisEMandateDetail > shows incassomachtiging history when history items
 exports[`AfisEMandateDetail > shows incassomachtiging history when history items present > Wide screen display 1`] = `
 <div
   class="ams-table"
-  role="group"
-  tabindex="0"
 >
   <table
     class="ams-table__table _TableV2_1fc147"

@@ -46,8 +46,6 @@ exports[`ContactMomenten > matches snapshot 1`] = `
     </p>
     <div
       class="ams-table"
-      role="group"
-      tabindex="0"
     >
       <table
         class="ams-table__table _TableV2_1fc147"

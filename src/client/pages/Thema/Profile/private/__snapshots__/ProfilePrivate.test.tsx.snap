@@ -182,7 +182,6 @@ exports[`<Profile /> > Lives in Mokum + verbintenis: displays all data 1`] = `
                     >
                       <svg
                         aria-hidden="true"
-                        data-directional="true"
                         focusable="false"
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
@@ -325,7 +324,6 @@ exports[`<Profile /> > Lives in Mokum + verbintenis: displays all data 1`] = `
                     >
                       <svg
                         aria-hidden="true"
-                        data-directional="true"
                         focusable="false"
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
@@ -352,7 +350,6 @@ exports[`<Profile /> > Lives in Mokum + verbintenis: displays all data 1`] = `
                     >
                       <svg
                         aria-hidden="true"
-                        data-directional="true"
                         focusable="false"
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
