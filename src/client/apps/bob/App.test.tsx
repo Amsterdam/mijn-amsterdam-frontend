@@ -13,7 +13,7 @@ const mocks = vi.hoisted(() => {
   };
 });
 
-vi.mock('./hooks/api/useSessionApi', async (importOriginal) => {
+vi.mock('../../hooks/api/useSessionApi', async (importOriginal) => {
   const module: object = await importOriginal();
 
   return {

@@ -24,14 +24,14 @@ vi.mock('./AfisEmandateFetchInterval.tsx', () => ({
   AfisEmandateRefetchInterval: () => <div>AfisEmandateRefetchInterval</div>,
 }));
 
-vi.mock('../../../hooks/useHTMLDocumentTitle.ts', () => ({
+vi.mock('../../../../../hooks/useHTMLDocumentTitle.ts', () => ({
   useHTMLDocumentTitle: () => undefined,
 }));
 
 vi.mock('./useAfisEMandatesSignRequest.tsx');
 vi.mock('./useAfisEmandateActionsApi.tsx');
 vi.mock('./useAfisEmandatesApi.tsx');
-vi.mock('../../../hooks/media.hook.ts');
+vi.mock('../../../../../hooks/media.hook.ts');
 
 const mockCancel = vi.fn();
 

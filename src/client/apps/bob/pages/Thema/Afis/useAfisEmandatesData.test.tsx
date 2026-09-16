@@ -12,7 +12,7 @@ import { bffApi } from '../../../../../../testing/utils.ts';
 import { useBffApiStateStore } from '../../../../../hooks/api/useBffApi.ts';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 
-vi.mock('../../../hooks/useAppStateStore');
+vi.mock('../../../../../hooks/useAppStateStore');
 vi.mock('react-router', async (importActual) => {
   const actual: object = await importActual();
   return {
