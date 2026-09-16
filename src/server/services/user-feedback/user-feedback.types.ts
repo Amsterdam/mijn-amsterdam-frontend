@@ -1,6 +1,16 @@
 import type { CamelCasedPropertiesDeep } from 'type-fest';
 import z from 'zod';
 
+export type UserFeedbackMetaRow = {
+  id: number;
+  entryId: number;
+  dateCreated: Date;
+  dateModified: Date;
+  jiraTicketNumber: string | null;
+  departmentName: string | null;
+  departmentEmail: string | null;
+};
+
 type SurveyQuestionChoice = {
   text: string;
   label: string;
@@ -80,6 +90,7 @@ export const userFeedbackInput = z.object({
   browserWindowInnerSize: z.string(),
   browserTimezone: z.string(),
   maThemas: z.string(),
+  maMokum: z.string().optional(),
   maErrors: z.string().optional(),
   maProfileType: z.string(),
   pageTitle: z.string(),
@@ -111,6 +122,15 @@ export type SurveyAnswerFrontend = {
   answer: string;
 };
 
+export type UserFeedbackAdministrationMeta = Omit<
+  UserFeedbackMetaRow,
+  'dateCreated' | 'dateModified'
+> & {
+  dateCreated: string;
+  dateModified: string;
+  jiraTicketUrl: string | null;
+};
+
 export type SurveyEntryFrontend = {
   id: number;
   answers: Record<
@@ -127,13 +147,73 @@ export type SurveyEntryFrontend = {
   browserTitle: string;
   metadata: Record<string, unknown>;
   entryPoint: string;
+  administrationMeta: UserFeedbackAdministrationMeta | null;
 };
 
-export type SurveyOverviewFrontend = {
+export type FeedbackSurveyEntries = {
+  entries: SurveyEntryFrontend[];
+  pageCount: number;
+  total: number;
+};
+
+export type SurveyOverviewFrontend = FeedbackSurveyEntries & {
   survey: {
     title: SurveyFrontend['title'];
     questions: Record<SurveyQuestion['id'], SurveyQuestion['question_text']>;
   };
-  entries: SurveyEntryFrontend[];
-  pageCount: number;
+};
+
+const MAX_TICKET_BODY_FIELD_LENGTH = 1000;
+
+export const createJiraTicketInput = z
+  .object({
+    entryId: z.number().int().positive(),
+    surveyTitle: z.string().max(MAX_TICKET_BODY_FIELD_LENGTH),
+    entryPoint: z.string().max(MAX_TICKET_BODY_FIELD_LENGTH),
+    dateCreated: z.string().max(MAX_TICKET_BODY_FIELD_LENGTH),
+    questionAnswers: z
+      .array(
+        z
+          .object({
+            question: z.string().max(MAX_TICKET_BODY_FIELD_LENGTH),
+            answer: z.string().max(MAX_TICKET_BODY_FIELD_LENGTH),
+          })
+          .strict()
+      )
+      .min(1),
+  })
+  .strict();
+
+export type CreateJiraTicketInput = z.infer<typeof createJiraTicketInput>;
+
+export const handoffDepartmentInput = z
+  .object({
+    entryId: z.number().int().positive(),
+    departmentName: z
+      .string()
+      .max(MAX_TICKET_BODY_FIELD_LENGTH)
+      .nullable()
+      .optional(),
+    departmentEmail: z
+      .string()
+      .email()
+      .max(MAX_TICKET_BODY_FIELD_LENGTH)
+      .nullable()
+      .optional(),
+  })
+  .strict();
+
+export type HandoffDepartmentInput = z.infer<typeof handoffDepartmentInput>;
+
+export type UserFeedbackHandoffDepartment = {
+  name: string;
+  email: string;
+};
+
+export type UserFeedbackHandoffConfigResponse = {
+  departments: UserFeedbackHandoffDepartment[];
+  ccEmail: string;
+  emailIntro: string;
+  emailSignOff: string;
+  issuesOverviewLink: string;
 };
