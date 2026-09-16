@@ -56,6 +56,8 @@ function transformZwdVvEResponse(
     'build_year',
     'ligt_in_beschermd_gebied',
     'beschermd_stadsdorpsgezicht',
+    'is_priority_neighborhood',
+    'cases',
   ]);
   const camelizedData: VvEDataFrontend = camelize(responseDataPicked);
   return camelizedData;
