@@ -50,7 +50,7 @@ export type ApiResponsePromise<T> = Promise<ApiResponse<T>>;
 
 export function isLoading(
   apiResponseData?: ApiResponse_DEPRECATED<unknown>,
-  profileType: ProfileType
+  profileType?: ProfileType
 ) {
   if (!apiResponseData) {
     return true;
