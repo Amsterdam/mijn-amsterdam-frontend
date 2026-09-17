@@ -9,8 +9,8 @@ import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker.tsx';
 import type { BAGLocation } from '../../../server/services/bag/bag.types.ts';
 import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets.ts';
 import { getFullAddress } from '../../../universal/helpers/brp.ts';
+import { DEFAULT_MAP_OPTIONS } from '../../apps/bob/config/map.ts';
 import iconUrlCommercialSecondary from '../../assets/icons/map/homeSecondaryCommercial.svg';
-import { DEFAULT_MAP_OPTIONS } from '../../config/map.ts';
 import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../hooks/useIsLoading.ts';
 

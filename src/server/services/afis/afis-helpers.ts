@@ -1,7 +1,11 @@
 import { parseISO } from 'date-fns';
 import createDebugger from 'debug';
 
-import { EMANDATE_ENDDATE_INDICATOR } from './afis-e-mandates-config.ts';
+import {
+  EMANDATE_ENDDATE_INDICATOR,
+  EMANDATE_STATUS_FRONTEND,
+  type EmandateStatusFrontend,
+} from './afis-e-mandates-config.ts';
 import type { AfisApiFeedResponseSource } from './afis-types.ts';
 import { type BusinessPartnerId } from './afis-types.ts';
 import { fetchAfisTokenHeader } from './afis.ts';
@@ -56,14 +60,6 @@ export function isEmandateActive(dateValidTo: string | null) {
   // Active if date is in the future.
   return parseISO(dateValidTo) > new Date();
 }
-
-export const EMANDATE_STATUS_FRONTEND = {
-  ON: '1', // AfisEMandateStatusCodes['1'],
-  OFF: '0', // AfisEMandateStatusCodes['0'],
-} as const;
-
-export type EmandateStatusFrontend =
-  (typeof EMANDATE_STATUS_FRONTEND)[keyof typeof EMANDATE_STATUS_FRONTEND];
 
 export function getEmandateStatusFrontend(
   currentStatus: EmandateStatusFrontend,

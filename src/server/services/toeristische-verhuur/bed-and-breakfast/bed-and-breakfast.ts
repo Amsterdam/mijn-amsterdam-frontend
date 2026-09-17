@@ -7,7 +7,7 @@ import type {
   BBVergunningFrontend,
   BedAndBreakfastType,
 } from './bed-and-breakfast-types.ts';
-import { themaConfig } from '../../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import { themaConfig } from '../../../../client/apps/bob/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import type { ApiResponse } from '../../../../universal/helpers/api.ts';
 import { apiSuccessResult } from '../../../../universal/helpers/api.ts';
 import type { AuthProfile } from '../../../auth/auth-types.ts';

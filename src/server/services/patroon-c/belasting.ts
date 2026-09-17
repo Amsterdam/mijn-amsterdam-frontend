@@ -3,7 +3,7 @@ import {
   fetchTipsAndNotifications,
   type ApiPatternResponseA,
 } from './api-service.ts';
-import { themaConfig } from '../../../client/pages/Thema/Belastingen/Belastingen-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Belastingen/Belastingen-thema-config.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
@@ -100,7 +100,7 @@ function getConfig(
 ): DataRequestConfig {
   return getApiConfig('BELASTINGEN', {
     headers: {
-      Authorization: `Bearer ${process.env.BFF_BELASTINGEN_BEARER_TOKEN}`,
+      Authorization: process.env.BFF_BELASTINGEN_BEARER_TOKEN,
       subjid: getBsnTranslation(authProfileAndToken.profile.id),
     },
     transformResponse(response: BelastingenSourceContent) {

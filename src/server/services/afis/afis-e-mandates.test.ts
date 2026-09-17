@@ -2,7 +2,10 @@ import Mockdate from 'mockdate';
 import nock from 'nock';
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 
-import { EMandateCreditorsGemeenteAmsterdam } from './afis-e-mandates-config.ts';
+import {
+  EMANDATE_STATUS_SOURCE,
+  EMandateCreditorsGemeenteAmsterdam,
+} from './afis-e-mandates-config.ts';
 import * as emandates from './afis-e-mandates.ts';
 import { routes } from './afis-service-config.ts';
 import type {
@@ -119,12 +122,33 @@ describe('afis-e-mandates service (with nock)', () => {
 
   describe('createAfisEMandate - Happy scenario', () => {
     it('creates an Emandate and Bankdetails', async () => {
-      const s = vi.spyOn(sourceApiRequest, 'requestData');
+      const requestDataMock = vi.spyOn(sourceApiRequest, 'requestData');
 
+      // Read existing mandates for business partner
+      remoteApi.get(/Mandate_readSet/).reply(200, {
+        feed: {
+          entry: [
+            {
+              content: {
+                '@type': 'application/xml',
+                properties: {
+                  IMandateId: 1,
+                  LifetimeTo: '2024-12-31T00:00:00',
+                  SndIban: validSenderIBAN,
+                  Status: EMANDATE_STATUS_SOURCE.Actief,
+                  SndDebtorId: creditor.refId,
+                },
+              },
+            },
+          ],
+        },
+      });
+      // Get the business partner
       remoteApi.get(/A_BusinessPartner/).reply(200, {
         status: 'OK',
         content: null,
       });
+      // Get the address
       remoteApi.get(/A_BusinessPartnerAddress/).reply(200, {
         feed: {
           entry: [
@@ -148,23 +172,23 @@ describe('afis-e-mandates service (with nock)', () => {
           ],
         },
       });
-
       // No bankaccount found
       remoteApi.get(/A_BusinessPartnerBank/).reply(200);
       // Create bankaccount
       remoteApi.post(/A_BusinessPartnerBank/).reply(200);
-
-      // Read existing mandates for business partner
-      remoteApi.get(/Mandate_readSet/).reply(200);
-
+      // Deactivate other active mandates for creditor
+      remoteApi.put(/Mandate_changeSet/).reply(200);
+      // Create the mandate
       remoteApi.post(/CreateMandate/).reply(200);
 
       const result =
-        await emandates.createOrUpdateEMandateFromStatusNotificationPayload(
+        await emandates.createEMandateFromStatusNotificationPayload(
           validPayload
         );
 
-      expect(s.mock.calls.map((x) => x[0].url)).toStrictEqual([
+      expect(requestDataMock.mock.calls.map((x) => x[0].url)).toStrictEqual([
+        // read existing mandates for business partner
+        "http://remote-api-host/afis/RESTAdapter/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet?$filter=SndId eq '0000000123'",
         // get business partner details
         'http://remote-api-host/afis/RESTAdapter/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner',
         // get business partner address
@@ -173,18 +197,18 @@ describe('afis-e-mandates service (with nock)', () => {
         "http://remote-api-host/afis/RESTAdapter/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank?$filter=IBAN eq 'NL35BOOG9343513650' and BusinessPartner eq '0000000123'&$orderBy=BankIdentification desc",
         // create bank account
         'http://remote-api-host/afis/RESTAdapter/BusinessPartner/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank',
-        // read existing mandates for business partner
-        "http://remote-api-host/afis/RESTAdapter/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet?$filter=SndId eq '0000000123'",
+        // Deactivate other active mandates for creditor
+        "http://remote-api-host/afis/RESTAdapter/ChangeMandate/ZGW_FI_MANDATE_SRV_01/Mandate_changeSet(IMandateId='1')",
         // create mandate
         'http://remote-api-host/afis/RESTAdapter/CreateMandate/ZGW_FI_MANDATE_SRV_01/Mandate_createSet',
       ]);
 
-      const bankCreateData = (s.mock.calls.at(-3)?.at(-1) as DataRequestConfig)
-        .data;
+      const bankCreateData =
+        // Third to last call is the create bank account call
+        (requestDataMock.mock.calls.at(-3)?.at(-1) as DataRequestConfig).data;
 
-      const emandateCreateData = (
-        s.mock.calls.at(-1)?.at(-1) as DataRequestConfig
-      ).data;
+      const emandateCreateData = // Last call is the create mandate call
+        (requestDataMock.mock.calls.at(-1)?.at(-1) as DataRequestConfig).data;
 
       expect(bankCreateData).toStrictEqual({
         BankAccount: '9343513650',
@@ -195,7 +219,7 @@ describe('afis-e-mandates service (with nock)', () => {
         BankNumber: 'BOOG',
         BusinessPartner: '0000000123',
         CollectionAuthInd: true,
-        IBAN: 'NL35BOOG9343513650',
+        IBAN: validSenderIBAN,
         SWIFTCode: 'BANKNL2A',
       });
       expect(emandateCreateData).toStrictEqual({
@@ -229,12 +253,42 @@ describe('afis-e-mandates service (with nock)', () => {
       });
       expect(result.status).toBe('OK');
     });
+
+    it('does not create an Emandate if it already exists', async () => {
+      const requestDataMock = vi.spyOn(sourceApiRequest, 'requestData');
+
+      remoteApi.get(/Mandate_readSet/).reply(200, {
+        feed: {
+          entry: [
+            {
+              content: {
+                '@type': 'application/xml',
+                properties: {
+                  LifetimeTo: '9999-12-31T00:00:00',
+                  SndIban: validSenderIBAN,
+                  Status: EMANDATE_STATUS_SOURCE.Actief,
+                  SndDebtorId: creditor.refId,
+                },
+              },
+            },
+          ],
+        },
+      });
+
+      const result =
+        await emandates.createEMandateFromStatusNotificationPayload(
+          validPayload
+        );
+      expect(result.status).toBe('OK');
+      expect(result.content).toBe('Already exists');
+      expect(requestDataMock).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('createAfisEMandate - Error Scenarios', () => {
     it('throws an error if creditor IBAN is invalid', async () => {
       await expect(
-        emandates.createOrUpdateEMandateFromStatusNotificationPayload({
+        emandates.createEMandateFromStatusNotificationPayload({
           ...validPayload,
           creditorIBAN: 'invalid',
         })
@@ -246,9 +300,7 @@ describe('afis-e-mandates service (with nock)', () => {
       remoteApi.get(/A_BusinessPartner/).reply(500);
 
       await expect(
-        emandates.createOrUpdateEMandateFromStatusNotificationPayload(
-          validPayload
-        )
+        emandates.createEMandateFromStatusNotificationPayload(validPayload)
       ).rejects.toThrow(/Error fetching business partner details/);
     });
 
@@ -271,9 +323,7 @@ describe('afis-e-mandates service (with nock)', () => {
       });
 
       await expect(
-        emandates.createOrUpdateEMandateFromStatusNotificationPayload(
-          validPayload
-        )
+        emandates.createEMandateFromStatusNotificationPayload(validPayload)
       ).rejects.toThrow(/Error checking if bank account exists/);
     });
 
@@ -297,9 +347,7 @@ describe('afis-e-mandates service (with nock)', () => {
       remoteApi.post(/CreateBankAccount/).reply(500);
 
       await expect(
-        emandates.createOrUpdateEMandateFromStatusNotificationPayload(
-          validPayload
-        )
+        emandates.createEMandateFromStatusNotificationPayload(validPayload)
       ).rejects.toThrow(/Error creating bank account/);
     });
 
@@ -336,9 +384,7 @@ describe('afis-e-mandates service (with nock)', () => {
         .reply(500, { status: 'ERROR', message: 'fail' });
 
       await expect(
-        emandates.createOrUpdateEMandateFromStatusNotificationPayload(
-          validPayload
-        )
+        emandates.createEMandateFromStatusNotificationPayload(validPayload)
       ).rejects.toThrow(/Error creating e-mandate/);
     });
   });

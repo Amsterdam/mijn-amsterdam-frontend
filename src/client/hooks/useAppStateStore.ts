@@ -3,7 +3,7 @@ import type { PartialDeep } from 'type-fest';
 import { create, type StateCreator } from 'zustand';
 
 import type { AppState } from '../../universal/types/App.types.ts';
-import { PRISTINE_APPSTATE } from '../AppState.ts';
+import { PRISTINE_APPSTATE } from '../apps/bob/AppState.ts';
 
 export type AppStateStore = AppState & {
   setAppState: (appState: Partial<AppState>, isReady?: boolean) => void;

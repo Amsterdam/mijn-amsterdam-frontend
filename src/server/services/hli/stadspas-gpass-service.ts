@@ -21,7 +21,7 @@ import type {
   StadspasTransactiesResponseSource,
   StadspasTransactionQueryParams,
 } from './stadspas-types.ts';
-import { themaConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/HLI/HLI-thema-config.ts';
 import type {
   ApiResponse,
   ApiSuccessResponse,

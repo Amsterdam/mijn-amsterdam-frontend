@@ -7,7 +7,7 @@ import {
   fetchTipsAndNotifications,
   type ApiPatternResponseA,
 } from './api-service.ts';
-import { themaConfig } from '../../../client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Subsidies/Subsidies-thema-config.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type {

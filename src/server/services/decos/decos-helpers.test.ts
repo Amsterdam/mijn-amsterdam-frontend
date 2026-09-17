@@ -242,6 +242,11 @@ describe('decos/helpers', () => {
         fields: { text45: 'Werk en vervoer op straat' },
       } as unknown as DecosZaakSource)
     ).toBe('Werk en vervoer op straat');
+    expect(
+      getDecosZaakTypeFromSource({
+        fields: {},
+      } as unknown as DecosZaakSource)
+    ).toBe(null);
   });
 
   test('transformBoolean', () => {

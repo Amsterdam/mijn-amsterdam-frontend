@@ -74,7 +74,7 @@ Not all browsers in the world are supported. The targeted browsers can be found 
 - For styling we use [scss](https://create-react-app.dev/docs/adding-a-sass-stylesheet) and [scss modules](https://create-react-app.dev/docs/adding-a-css-modules-stylesheet)
 
 There is no super strict convention (yet) for grouping components, functions, types etc. For larger components we might want to separate for example additional components, helpers, config and constants
-into other files as done in `src/client/pages/Profile` or `src/server/services/focus`.
+into other files as done in `src/client/apps/bob/pages/Profile` or `src/server/services/focus`.
 
 ## Thema configuration
 
@@ -167,8 +167,21 @@ Services:
 Request tooling:`DEBUG=vergunningen,source-api-request:request,source-api-request:cache-hit,source-api-request:cache-key,decos-service`
 
 To log response data from incoming responses before any transformation.
-A comma separated list of keywords / pathsegments can be used to log specific requests. For example: zorgned/aanvragen,gpass
-`export DEBUG_RESPONSE_DATA=term1,term2` this setting only works in conjunction with `DEBUG=source-api-request:response` and is turned on or added **automatically** when DEBUG_RESPONSE_DATA is defined.
+A comma-separated list of rules can be used to log specific requests.
+
+Rule format for each entry:
+`urlPart|paramsPart;paramPart2|responsePart`
+
+Current matching behavior:
+- If one rule matches, the response is logged
+- The three parts of each rule are combined with AND.
+- `;` inside each part means AND (all sub-terms must be present).
+- `paramsPart` and `responsePart` can be left empty (for example `path||` or `path||"state":"ok"`).
+- A single value like `path` matches only the url part
+
+Examples can be viewed in the test file
+
+This setting only works in conjunction with `DEBUG=source-api-request:response` and is turned on or added **automatically** when DEBUG_RESPONSE_DATA is defined.
 
 To log request body for outgoing requests. A comma separated list of pathsegments|keywords can be used to log specific requests. For example: personen|ZoekMetAdresseerbaarObjectIdentificatie;keyword2,gpass
 `export DEBUG_REQUEST_DATA=path1|term1,term2`. Keywords match any string in the params or body of the request. This setting only works in conjunction with `DEBUG=source-api-request:request` and is turned on or added **automatically** when DEBUG_REQUEST_DATA is defined.
