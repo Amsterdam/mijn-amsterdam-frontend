@@ -1,10 +1,42 @@
 import { describe, expect, it, vi } from 'vitest';
 
-vi.mock('../debug', () => ({ debugRequest: vi.fn() }));
+vi.mock('../debug.ts', () => ({ debugRequest: vi.fn(), debugResponse: vi.fn() }));
 import * as debug from '../debug.ts';
 import { forTesting, addRequestDataDebugging } from './source-api-debug.ts';
 
 describe('source-api-debug', () => {
+  describe('isDebugResponseDataMatch', () => {
+    it('supports url + params + response term combinations', () => {
+      const fn = forTesting.isDebugResponseDataMatch(
+        {
+          url: 'https://domain.nl/parent/path',
+          params: {
+            page: 2,
+            filter: 'active',
+          },
+        },
+        '{"items":[{"id":1}],"state":"ok"}'
+      );
+
+      expect(fn('path')).toBeTruthy();
+      expect(fn('parent/path|filter|state')).toBeTruthy();
+      expect(fn('parent/path|filter|')).toBeTruthy();
+      expect(fn('parent/path||state')).toBeTruthy();
+      expect(fn('parent/path|page;filter|items;state')).toBeTruthy();
+      expect(fn('parent/path|2|')).toBeTruthy();
+      expect(fn('parent/path||"id":1')).toBeTruthy();
+
+      expect(fn('parent/path|page;missing|state;nope')).toBeFalsy();
+      expect(fn('parent/path|missing|state')).toBeFalsy();
+      expect(fn('parent/path|filter|missing')).toBeFalsy();
+      expect(fn('other-path|filter|state')).toBeFalsy();
+      expect(fn('|filter|state')).toBeFalsy();
+      expect(fn('filter')).toBeFalsy();
+      expect(fn('state')).toBeFalsy();
+      expect(fn('missing')).toBeFalsy();
+    });
+  });
+
   describe('isDebugRequestDataMatch', () => {
     it('returns true when the path and terms match', () => {
       const fn = forTesting.isDebugRequestDataMatch({

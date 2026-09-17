@@ -8,7 +8,7 @@ Tooling: Vitest + Testing Library, `happy-dom`.
 
 - App entry: `src/index.tsx` → `src/client/App.tsx`.
 - Routing: `src/client/App.routes.tsx`.
-- Most UI lives in `src/client/pages/**` and `src/client/components/**`.
+- Most UI lives in `src/client/apps/bob/pages/**` and `src/client/components/**`.
 - Styling: SCSS + SCSS modules (`*.module.scss`).
 - Frontend env vars are exposed via Vite with `REACT_APP_` prefix (`import.meta.env.REACT_APP_*`).
 

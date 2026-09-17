@@ -1,0 +1,100 @@
+import {
+  tableConfigLVVRegistraties,
+  tableConfig,
+  themaConfig,
+  vvVergunningPageLinkItem,
+  bbVergunningPageLinkItem,
+} from './ToeristischeVerhuur-thema-config.ts';
+import type { ToeristischeVerhuurVergunning } from '../../../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
+import {
+  hasFailedDependency,
+  isError,
+  isLoading,
+} from '../../../../../../universal/helpers/api.ts';
+import type { LinkProps } from '../../../../../../universal/types/App.types.ts';
+import { addLinkElementToProperty } from '../../../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
+import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
+
+export const BB_VERGUNNING_DISCLAIMER =
+  'Bed & breakfast vergunningen die vóór 14 mei 2021 zijn aangevraagd kunnen niet worden getoond';
+
+export function useToeristischeVerhuurThemaData() {
+  const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
+
+  const hasVergunningenVakantieVerhuur =
+    !!TOERISTISCHE_VERHUUR.content?.vakantieverhuurVergunningen?.length;
+
+  const hasVergunningenVakantieVerhuurVerleend =
+    TOERISTISCHE_VERHUUR.content?.vakantieverhuurVergunningen?.some(
+      (vergunning) => vergunning.isVerleend
+    );
+
+  const hasVergunningBB =
+    !!TOERISTISCHE_VERHUUR.content?.bbVergunningen?.length;
+
+  const hasVergunningBBVerleend =
+    TOERISTISCHE_VERHUUR.content?.bbVergunningen?.some(
+      (vergunning) => vergunning.isVerleend
+    );
+
+  const vergunningen = addLinkElementToProperty<ToeristischeVerhuurVergunning>(
+    [
+      ...(TOERISTISCHE_VERHUUR.content?.vakantieverhuurVergunningen ?? []),
+      ...(TOERISTISCHE_VERHUUR.content?.bbVergunningen ?? []),
+    ],
+    'identifier',
+    true
+  );
+
+  const lvvRegistraties = TOERISTISCHE_VERHUUR.content?.lvvRegistraties ?? [];
+  const hasRegistrations = !!lvvRegistraties.length;
+  const hasPermits = hasVergunningenVakantieVerhuur || hasVergunningBB;
+  const hasBothVerleend =
+    hasVergunningenVakantieVerhuurVerleend && hasVergunningBBVerleend;
+
+  const hasBBVergunningError = hasFailedDependency(
+    TOERISTISCHE_VERHUUR,
+    'bbVergunning'
+  );
+  const hasVakantieVerhuurVergunningError = hasFailedDependency(
+    TOERISTISCHE_VERHUUR,
+    'vakantieVerhuurVergunning'
+  );
+  const hasLVVRegistratiesError = hasFailedDependency(
+    TOERISTISCHE_VERHUUR,
+    'lvvRegistraties'
+  );
+
+  const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
+
+  const extraPageLinks: LinkProps[] = [];
+  if (hasVergunningenVakantieVerhuur) {
+    extraPageLinks.push(vvVergunningPageLinkItem);
+  } else if (hasVergunningBB) {
+    extraPageLinks.push(bbVergunningPageLinkItem);
+  }
+
+  return {
+    vergunningen,
+    lvvRegistraties,
+    themaId: themaConfig.id,
+    title: themaConfig.title,
+    isLoading: isLoading(TOERISTISCHE_VERHUUR),
+    isError: isError(TOERISTISCHE_VERHUUR, false),
+    hasLVVRegistratiesError,
+    hasBBVergunningError,
+    hasVakantieVerhuurVergunningError,
+    tableConfigVergunningen: tableConfig,
+    tableConfigLVVRegistraties,
+    listPageTitle: themaConfig.listPage.route,
+    hasRegistrations,
+    hasPermits,
+    hasVergunningenVakantieVerhuur,
+    hasBothVerleend,
+    hasVergunningBB,
+    breadcrumbs,
+    pageLinks: [...extraPageLinks, ...themaConfig.pageLinks],
+    themaConfig,
+  };
+}

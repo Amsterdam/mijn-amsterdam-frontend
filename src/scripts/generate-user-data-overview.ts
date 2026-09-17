@@ -41,33 +41,33 @@ import fs from 'node:fs';
 import { parseArgs } from 'node:util';
 import * as XLSX from 'xlsx';
 
-import { themaConfig as themaAfis } from '../client/pages/Thema/Afis/Afis-thema-config.ts';
-import { themaConfig as themaAfval } from '../client/pages/Thema/Afval/Afval-thema-config.ts';
-import { themaConfig as themaAVG } from '../client/pages/Thema/AVG/AVG-thema-config.ts';
-import { themaConfig as themaBelastingen } from '../client/pages/Thema/Belastingen/Belastingen-thema-config.ts';
-import { themaConfig as themaBezwaren } from '../client/pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
-import { themaConfig as themaBodem } from '../client/pages/Thema/Bodem/Bodem-thema-config.ts';
-import { themaConfig as themaErfpacht } from '../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
-import { themaConfig as themaHLI } from '../client/pages/Thema/HLI/HLI-thema-config.ts';
-import { themaConfig as themaHoreca } from '../client/pages/Thema/Horeca/Horeca-thema-config.ts';
-import { themaConfig as themaInkomen } from '../client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
-import { themaConfig as themaJeugd } from '../client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
-import { themaConfig as themaKlachten } from '../client/pages/Thema/Klachten/Klachten-thema-config.ts';
-import { themaConfig as themaKrefia } from '../client/pages/Thema/Krefia/Krefia-thema-config.ts';
-import { themaConfig as themaMilieuzone } from '../client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
-import { themaConfig as themaOvertredingen } from '../client/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
-import { themaConfig as themaParkeren } from '../client/pages/Thema/Parkeren/Parkeren-thema-config.ts';
-import { themaConfig as themaProfiles } from '../client/pages/Thema/Profile/Profile-thema-config.ts';
-import { themaConfig as themaSubsidies } from '../client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
-import { themaConfig as themaKlantContact } from '../client/pages/Thema/KlantContact/KlantContact-thema-config.ts';
+import { themaConfig as themaAfis } from '../client/apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig as themaAfval } from '../client/apps/bob/pages/Thema/Afval/Afval-thema-config.ts';
+import { themaConfig as themaAVG } from '../client/apps/bob/pages/Thema/AVG/AVG-thema-config.ts';
+import { themaConfig as themaBelastingen } from '../client/apps/bob/pages/Thema/Belastingen/Belastingen-thema-config.ts';
+import { themaConfig as themaBezwaren } from '../client/apps/bob/pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
+import { themaConfig as themaBodem } from '../client/apps/bob/pages/Thema/Bodem/Bodem-thema-config.ts';
+import { themaConfig as themaErfpacht } from '../client/apps/bob/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
+import { themaConfig as themaHLI } from '../client/apps/bob/pages/Thema/HLI/HLI-thema-config.ts';
+import { themaConfig as themaHoreca } from '../client/apps/bob/pages/Thema/Horeca/Horeca-thema-config.ts';
+import { themaConfig as themaInkomen } from '../client/apps/bob/pages/Thema/Inkomen/Inkomen-thema-config.ts';
+import { themaConfig as themaJeugd } from '../client/apps/bob/pages/Thema/Jeugd/Jeugd-thema-config.ts';
+import { themaConfig as themaKlachten } from '../client/apps/bob/pages/Thema/Klachten/Klachten-thema-config.ts';
+import { themaConfig as themaKrefia } from '../client/apps/bob/pages/Thema/Krefia/Krefia-thema-config.ts';
+import { themaConfig as themaMilieuzone } from '../client/apps/bob/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
+import { themaConfig as themaOvertredingen } from '../client/apps/bob/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
+import { themaConfig as themaParkeren } from '../client/apps/bob/pages/Thema/Parkeren/Parkeren-thema-config.ts';
+import { themaConfig as themaProfiles } from '../client/apps/bob/pages/Thema/Profile/Profile-thema-config.ts';
+import { themaConfig as themaSubsidies } from '../client/apps/bob/pages/Thema/Subsidies/Subsidies-thema-config.ts';
+import { themaConfig as themaKlantContact } from '../client/apps/bob/pages/Thema/KlantContact/KlantContact-thema-config.ts';
 import {
   themaId as themaIdSvwi,
   themaTitle as themaTitleSvwi,
-} from '../client/pages/Thema/Svwi/Svwi-thema-config.ts';
-import { themaConfig as themaToeristischeVerhuur } from '../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
-import { themaConfig as themaVaren } from '../client/pages/Thema/Varen/Varen-thema-config.ts';
-import { themaConfig as themaVergunningen } from '../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
-import { themaConfig as themaZorg } from '../client/pages/Thema/Zorg/Zorg-thema-config.ts';
+} from '../client/apps/bob/pages/Thema/Svwi/Svwi-thema-config.ts';
+import { themaConfig as themaToeristischeVerhuur } from '../client/apps/bob/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import { themaConfig as themaVaren } from '../client/apps/bob/pages/Thema/Varen/Varen-thema-config.ts';
+import { themaConfig as themaVergunningen } from '../client/apps/bob/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
+import { themaConfig as themaZorg } from '../client/apps/bob/pages/Thema/Zorg/Zorg-thema-config.ts';
 import {
   getTestAccountsBaseFromEnvMap,
   type OptionalTestUserAccountProperties,
