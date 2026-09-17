@@ -16,9 +16,9 @@ export function ParkerenList() {
     isError,
     tableConfig,
     breadcrumbs,
-    resolvedThemaConfig,
+    themaConfig,
   } = useParkerenData();
-  useHTMLDocumentTitle(resolvedThemaConfig.listPage.route);
+  useHTMLDocumentTitle(themaConfig.listPage.route);
 
   const { displayProps, title, filter, sort, listPageRoute } =
     tableConfig[kind];
@@ -26,7 +26,7 @@ export function ParkerenList() {
   return (
     <ListPagePaginated
       items={vergunningen.filter(filter).sort(sort)}
-      themaId={resolvedThemaConfig.id}
+      themaId={themaConfig.id}
       title={title}
       appRoute={listPageRoute}
       breadcrumbs={breadcrumbs}

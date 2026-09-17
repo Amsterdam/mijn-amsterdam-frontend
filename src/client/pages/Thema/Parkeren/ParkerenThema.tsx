@@ -62,11 +62,11 @@ export function ParkerenThema() {
     isLoading,
     isError,
     parkerenUrlSSO,
-    resolvedThemaConfig,
+    themaConfig,
   } = useParkerenData();
 
 
-  useHTMLDocumentTitle(resolvedThemaConfig.route);
+  useHTMLDocumentTitle(themaConfig.route);
 
   const profileType = useProfileTypeValue();
 
@@ -87,6 +87,12 @@ export function ParkerenThema() {
       );
     }
   );
+
+  const pageLinks = themaConfig.pageLinks.filter((pageLink) => {
+    return 'profileTypes' in pageLink
+      ? pageLink.profileTypes?.includes(profileType)
+      : true;
+  });
 
   const pageContentTop = (
     <PageContentTop
@@ -118,7 +124,7 @@ export function ParkerenThema() {
       isError={isError}
       isLoading={isLoading}
       pageContentTop={pageContentTop}
-      pageLinks={resolvedThemaConfig.pageLinks}
+      pageLinks={pageLinks}
       pageContentMain={tables}
       pageContentBottom={pageContentBottom}
       maintenanceNotificationsPageSlug="parkeren"
