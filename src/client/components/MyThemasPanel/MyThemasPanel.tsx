@@ -54,7 +54,11 @@ export function MyThemasPanel({
               className={getRedactedClass(id)}
               data-testid={IS_DEVELOPMENT && title}
             >
-              <LinkComponent maVariant="fatNoUnderline" href={to}>
+              <LinkComponent
+                className={classNames(styles.LinkListItem)}
+                maVariant="fatNoUnderline"
+                href={to}
+              >
                 <span className={styles.ThemaLink}>
                   {IconSVG && (
                     <Icon
