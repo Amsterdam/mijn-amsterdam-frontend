@@ -1,0 +1,9 @@
+@import '../../../styles/main.scss';
+
+.is-cobrowse-active {
+  .redacted {
+    color: black;
+    outline: solid var(--ams-color-highlight-orange);
+    background-color: var(--ams-color-highlight-orange);
+  }
+}

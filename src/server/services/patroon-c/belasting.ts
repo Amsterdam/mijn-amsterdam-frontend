@@ -3,7 +3,7 @@ import {
   fetchTipsAndNotifications,
   type ApiPatternResponseA,
 } from './api-service.ts';
-import { themaConfig } from '../../../client/pages/Thema/Belastingen/Belastingen-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Belastingen/Belastingen-thema-config.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';

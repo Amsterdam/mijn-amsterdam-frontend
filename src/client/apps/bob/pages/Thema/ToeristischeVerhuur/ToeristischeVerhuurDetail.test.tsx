@@ -1,0 +1,222 @@
+import { render, screen } from '@testing-library/react';
+import { generatePath } from 'react-router';
+import { describe, expect } from 'vitest';
+
+import { themaConfig } from './ToeristischeVerhuur-thema-config.ts';
+import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail.tsx';
+import type { BBVergunningFrontend } from '../../../../../../server/services/toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types.ts';
+import type { VakantieverhuurVergunningFrontend } from '../../../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
+import { bffApi } from '../../../../../../testing/utils.ts';
+import type { AppState } from '../../../../../../universal/types/App.types.ts';
+import { MockApp } from '../../MockApp.tsx';
+
+const vergunning: VakantieverhuurVergunningFrontend = {
+  id: 'Z-XXX-000007C',
+  key: 'xx',
+  itemType: 'vakantieverhuur',
+  title: 'Vergunning vakantieverhuur',
+  caseType: 'Vakantieverhuur vergunningsaanvraag',
+  dateDecision: '2022-05-12',
+  dateRequest: '2022-08-01',
+  dateRequestFormatted: '01 augustus 2022',
+  dateStart: '2022-08-01',
+  dateStartFormatted: '01 augustus 2022',
+  dateEnd: '2023-08-01',
+  dateEndFormatted: '22 augustus 2023',
+  decision: 'Verleend',
+  identifier: 'Z/123/000007',
+  isVerleend: true,
+  steps: [
+    {
+      id: 'step-1',
+      status: 'Ontvangen',
+      datePublished: '2022-05-10',
+      isActive: false,
+      isChecked: true,
+    },
+    {
+      id: 'step-2',
+      status: 'In behandeling',
+      datePublished: '2022-05-10',
+      isActive: false,
+      isChecked: true,
+    },
+    {
+      id: 'step-3',
+      status: 'Afgehandeld',
+      datePublished: '2022-05-10',
+      description: '',
+      isActive: false,
+      isChecked: true,
+    },
+    {
+      id: 'step-4',
+      status: 'Gewijzigd',
+      datePublished: '2023-08-22',
+      description: 'Uw Vergunning vakantieverhuur is verlopen.',
+      isActive: true,
+      isChecked: true,
+    },
+  ],
+  fetchDocumentsUrl:
+    'http://bff-api-host/api/v1/services/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n',
+  link: {
+    to: '/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007C',
+    title: 'Bekijk hoe het met uw aanvraag staat',
+  },
+  displayStatus: 'Verleend',
+  processed: true,
+  location: 'Amstel 1',
+};
+
+const vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[] = [
+  vergunning,
+];
+
+const bbVergunning: BBVergunningFrontend = {
+  isVerleend: true,
+  isExpired: true,
+  caseType: 'Bed en breakfast',
+  dateDecision: '2023-03-22',
+  dateStart: '2023-03-22',
+  dateStartFormatted: '22 maart 2023',
+  dateRequest: '2023-03-22',
+  dateRequestFormatted: '22 maart 2023',
+  dateEnd: '2028-07-01',
+  dateEndFormatted: '01 juli 2028',
+  decision: 'Verleend',
+  heeftOvergangsRecht: true,
+  id: 'Z-23-2130506',
+  identifier: 'Z/23/2130506',
+  link: {
+    to: '/toeristische-verhuur/vergunning/bed-and-breakfast/Z-23-2130506',
+    title: 'Vergunning bed & breakfast',
+  },
+  title: 'Vergunning bed & breakfast',
+  steps: [
+    {
+      id: 'step-1',
+      status: 'Ontvangen',
+      datePublished: '13 februari 2023',
+      isActive: false,
+      isChecked: true,
+    },
+    {
+      id: 'step-2',
+      status: 'Afgehandeld',
+      datePublished: '22 maart 2023',
+      description: '',
+      isActive: true,
+      isChecked: true,
+    },
+  ],
+  displayStatus: 'Verleend',
+  location: 'Amstel 1',
+  processed: true,
+  documents: [],
+};
+
+const bbVergunningen: BBVergunningFrontend[] = [bbVergunning];
+
+const testState = {
+  TOERISTISCHE_VERHUUR: {
+    status: 'OK',
+    content: { vakantieverhuurVergunningen, bbVergunningen },
+  },
+  BRP: {
+    status: 'OK',
+    content: {
+      persoon: {
+        voornamen: 'Namen, Enzo',
+        geslachtsnaam: 'Dingerdons',
+        voorvoegselGeslachtsnaam: 'Van de',
+      },
+      adres: {
+        straatnaam: 'Amstel',
+        huisnummer: '1',
+        huisletter: '',
+        huisnummertoevoeging: '',
+        postcode: '1017AB',
+        woonplaatsNaam: 'Amsterdam',
+      },
+    },
+  },
+} as unknown as AppState;
+
+describe('<ToeristischVerhuurDetail />', () => {
+  test('Vakantieverhuur vergunning', () => {
+    bffApi
+      .get((uri: string) => decodeURI(uri).includes('decosjoin/listdocuments'))
+      .reply(200, {
+        content: [],
+      });
+    const vergunning = vakantieverhuurVergunningen[0];
+    const routeEntry = generatePath(themaConfig.detailPage.route.path, {
+      id: vergunning.id,
+      caseType: 'vakantieverhuur',
+    });
+    const routePath = themaConfig.detailPage.route.path;
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={ToeristischeVerhuurDetail}
+          state={testState}
+        />
+      );
+    }
+    render(<Component />);
+    expect(
+      screen.getByRole('heading', { name: 'Vergunning vakantieverhuur' })
+    ).toBeInTheDocument();
+    expect(screen.getByText('Z/123/000007')).toBeInTheDocument();
+    expect(screen.getByText('Vanaf')).toBeInTheDocument();
+    expect(screen.getByText('Tot')).toBeInTheDocument();
+    expect(screen.getByText('01 augustus 2022')).toBeInTheDocument();
+    expect(screen.getAllByText('22 augustus 2023').length).toBe(2);
+    expect(screen.getByText('Verleend')).toBeInTheDocument();
+    expect(
+      screen.getByText('Uw Vergunning vakantieverhuur is verlopen.')
+    ).toBeInTheDocument();
+  });
+
+  test('Bed & Breakfast vergunning', () => {
+    const vergunning = bbVergunningen[0];
+    const routeEntry = generatePath(themaConfig.detailPage.route.path, {
+      id: vergunning.id,
+      caseType: 'bed-and-breakfast',
+    });
+    const routePath = themaConfig.detailPage.route.path;
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={ToeristischeVerhuurDetail}
+          state={testState}
+        />
+      );
+    }
+    const screen = render(<Component />);
+    expect(
+      screen.getByRole('heading', { name: 'Vergunning bed & breakfast' })
+    ).toBeInTheDocument();
+    expect(screen.getByText('Z/23/2130506')).toBeInTheDocument();
+    expect(screen.getByText('Vanaf')).toBeInTheDocument();
+    expect(screen.getByText('Tot')).toBeInTheDocument();
+    expect(screen.getAllByText('22 maart 2023').length).toBe(2);
+    expect(screen.getByText('01 juli 2028')).toBeInTheDocument();
+    expect(screen.getByText('Verleend')).toBeInTheDocument();
+    expect(
+      screen.queryByText('Uw Vergunning vakantieverhuur is verlopen.')
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByText(/Ziet u niet het juiste document/)
+    ).toBeInTheDocument();
+    const link = screen.getByText('bedandbreakfast@amsterdam.nl');
+    expect(link.getAttribute('href')).toMatchInlineSnapshot(
+      `"mailto:bedandbreakfast@amsterdam.nl?subject=Z%2F23%2F2130506%20-%20Document%20opvragen&body=Geachte%20heer%2Fmevrouw%2C%0D%0A%0D%0AHierbij%20verzoek%20ik%20u%20om%20het%20%5Bdocument%20type%5D%20document%20van%20de%20vergunning%20met%20zaaknummer%20Z%2F23%2F2130506%20op%20te%20sturen.%0D%0A%0D%0AMet%20vriendelijke%20groet%2C%0D%0A%0D%0ANamen%2C%20Enzo%20Van%20de%20Dingerdons%0D%0A%0D%0AAmstel%201%0D%0A1017AB%20Amsterdam"`
+    );
+  });
+});

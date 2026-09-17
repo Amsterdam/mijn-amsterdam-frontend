@@ -1,5 +1,5 @@
 import type { BBVergunningFrontend } from './bed-and-breakfast/bed-and-breakfast-types.ts';
-import type { caseTypeToeristischeVerhuur } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import type { caseTypeToeristischeVerhuur } from '../../../client/apps/bob/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import type { DecosZaakBase } from '../decos/decos-types.ts';
 import type {
   DecosZaakFrontend,
