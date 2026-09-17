@@ -190,12 +190,14 @@ function EMandate({ eMandate }: EMandateProps) {
             {signRequestStatusCheckApi.isPendingActivation ? (
               <Alert headingLevel={4} heading="Status">
                 <Paragraph>
-                  Wachten op bevestiging van de incassomachtiging voor{' '}
-                  {eMandate.creditorName}. Dit kan enkele minuten duren.
+                  U vraagt een incassomachtiging aan voor{' '}
+                  {eMandate.creditorName}. Dit duurt enkele minuten.
                 </Paragraph>
                 <Paragraph>
-                  Zodra de bevestiging is ontvangen, zal de incassomachtiging
-                  voor <strong>toekomstige facturen</strong> actief worden.
+                  Zodra de machtiging is bevestigd, worden{' '}
+                  <strong>toekomstige facturen</strong> voor{' '}
+                  {eMandate.creditorName} automatisch van uw rekening
+                  afgeschreven.
                 </Paragraph>
                 {signRequestStatusCheckApi.isTakingLong && (
                   <Paragraph>
