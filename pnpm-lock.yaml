@@ -381,6 +381,9 @@ importers:
       '@types/debug':
         specifier: ^4.1.13
         version: 4.1.13
+      '@types/formidable':
+        specifier: ^3.5.1
+        version: 3.5.1
       drizzle-kit:
         specifier: ^0.31.10
         version: 0.31.10
@@ -1878,6 +1881,9 @@ packages:
 
   '@types/flat-cache@2.0.2':
     resolution: {integrity: sha512-uZRK+n0d9JBzcEqjRJGD9SiPtDKUn4E5w4n6iFHqAdgylJFc2Eh2KK9UimvH/saz6dwGC36Jt1DzyKBvHiEIgA==}
+
+  '@types/formidable@3.5.1':
+    resolution: {integrity: sha512-aFQijSGbD8JCeEST2LEbwR7faHynbt43lojLIcTM/QhB2U06h41ZVRFVEql+Z1xdL+aKGIzm69V/P/uSW9N6XA==}
 
   '@types/geojson@7946.0.16':
     resolution: {integrity: sha512-6C8nqWur3j98U6+lXDfTUWIfgvZU+EumvpHKcYjujKH7woYyLj2sUmff0tRhrqM7BohUw7Pz3ZB1jj2gW9Fvmg==}
@@ -6620,6 +6626,10 @@ snapshots:
       '@types/serve-static': 2.2.0
 
   '@types/flat-cache@2.0.2': {}
+
+  '@types/formidable@3.5.1':
+    dependencies:
+      '@types/node': 22.20.1
 
   '@types/geojson@7946.0.16': {}
 

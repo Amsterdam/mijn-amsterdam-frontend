@@ -8,7 +8,7 @@ import {
   type CaseType,
 } from './vergunningen-notifications-config.ts';
 import { fetchVergunningen } from './vergunningen.ts';
-import { themaConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,
