@@ -13,8 +13,6 @@ export type AppStateStore = AppState & {
   ) => void;
   isReady: boolean;
   setIsAppStateReady: (isReady: boolean) => void;
-  profileType: ProfileType | null;
-  setProfileType: (profileType: ProfileType | null) => void;
 };
 
 export const INITIAL_APPSTATE = Object.seal(PRISTINE_APPSTATE);
@@ -22,8 +20,6 @@ export const INITIAL_APPSTATE = Object.seal(PRISTINE_APPSTATE);
 export const appStateStoreCreator: StateCreator<AppStateStore> = (set) => ({
   ...INITIAL_APPSTATE,
   isReady: false,
-  profileType: null,
-  setProfileType: (profileType) => set({ profileType }),
   setAppState: (appState, isReady) => {
     // Performs a partial update.
     set((state) => {
@@ -52,8 +48,6 @@ export const STATE_STORE_UTILITY_KEYS = [
   'mergeAppState',
   'setIsAppStateReady',
   'isReady',
-  'profileType',
-  'setProfileType',
 ] as const;
 
 export function createAppStateStoreHook() {

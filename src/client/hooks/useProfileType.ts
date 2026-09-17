@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { create } from 'zustand';
 
 import { useSessionStorage } from './storage.hook.ts';
-import { useAppStateStore } from './useAppStateStore.ts';
 import { logger } from '../helpers/logging.ts';
 
 const PROFILE_TYPE_STORAGE_KEY = 'profileType';
@@ -34,7 +33,6 @@ export const useProfileTypeStore = create<ProfileTypeStore>((set) => ({
 export function useProfileType() {
   const store = useProfileTypeStore();
   const { profileType: stateValue, setProfileType: setState } = store;
-  const { setProfileType: setAppStateProfileType } = useAppStateStore();
 
   const [profileType, setSessionState] = useSessionStorage(
     PROFILE_TYPE_STORAGE_KEY,
@@ -50,8 +48,7 @@ export function useProfileType() {
 
   useEffect(() => {
     setSessionState(stateValue);
-    setAppStateProfileType(stateValue);
-  }, [stateValue, setSessionState, setAppStateProfileType]);
+  }, [stateValue, setSessionState]);
 
   return store;
 }
