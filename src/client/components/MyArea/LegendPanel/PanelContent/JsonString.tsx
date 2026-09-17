@@ -1,4 +1,4 @@
-import type { JSONValue } from '../../../../../universal/types/App.types.ts';
+import type { JSONValue } from '../../../../../universal/types/App.types';
 
 interface JsonStringProps {
   data: JSONValue;

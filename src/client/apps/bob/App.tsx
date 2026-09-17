@@ -8,6 +8,7 @@ import { BrowserRouter, useLocation, useNavigate } from 'react-router';
 import styles from './App.module.scss';
 import { PrivateRoutes, PublicRoutes } from './App.routes.tsx';
 import { loginUrlByAuthMethod } from './config/api.ts';
+import { AUTH_API_URL } from '../../apps/bob/config/api.ts';
 import { CobrowseScreenshareAlert } from '../../components/Alert/CobrowseScreenshareDisclaimer.tsx';
 import { AutoLogoutDialog } from '../../components/AutoLogoutDialog/AutoLogoutDialog.tsx';
 import { ErrorMessages } from '../../components/ErrorMessages/ErrorMessages.tsx';
@@ -104,7 +105,7 @@ function AppAuthenticated() {
 }
 
 function AppLanding() {
-  const session = useSessionApi();
+  const session = useSessionApi(AUTH_API_URL);
   const { isAuthenticated, isDirty } = session;
 
   useScrollToTop();

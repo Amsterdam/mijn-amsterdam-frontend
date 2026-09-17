@@ -19,7 +19,7 @@ vi.mock('./config', async () => {
 describe('db', () => {
   it('should return a fake db', async () => {
     mocksDbConfig.IS_DB_ENABLED = false;
-    const { db } = await import('./db.ts');
+    const { db } = await import('./db');
     const result = await db();
     expect(result.id).toBe('fake-db');
   });

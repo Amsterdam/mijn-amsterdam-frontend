@@ -1,4 +1,4 @@
-import { Routes, Route, matchPath } from 'react-router';
+import { matchPath } from 'react-router';
 
 import { BffErrorRoutes } from './pages/BffError/BffError-routes.ts';
 import { BurgerzakenRoutes } from './pages/Burgerzaken/Burgerzaken-routes.ts';
@@ -8,6 +8,7 @@ import { LandingRoutes } from './pages/Landing/Landing-routes.ts';
 import { MyNotificationsRoutes } from './pages/MyNotifications/MyNotifications-routes.ts';
 import { NotFoundRoutes } from './pages/NotFound/NotFound-routes.ts';
 import { SearchRoutes } from './pages/Search/Search-routes.ts';
+import { MyAreaRoutes } from '../../components/MyArea/MyArea-routes.ts';
 import { AfisRoutes } from './pages/Thema/Afis/Afis-render-config.tsx';
 import { AfvalRoutes } from './pages/Thema/Afval/Afval-render-config.tsx';
 import { AvgRoutes } from './pages/Thema/AVG/AVG-render-config.tsx';
@@ -29,7 +30,7 @@ import { VergunningenRoutes } from './pages/Thema/Vergunningen/Vergunningen-rend
 import { ZorgRoutes } from './pages/Thema/Zorg/Zorg-render-config.tsx';
 import { ZaakStatusRoutes } from './pages/ZaakStatus/ZaakStatus-routes.ts';
 import type { ApplicationRouteConfig } from '../../../universal/types/thema-types.ts';
-import { MyAreaRoutes } from '../../components/MyArea/MyArea-routes.ts';
+import { ApplicationRoutes } from '../../components/ApplicationRoutes/ApplicationRoutes.tsx';
 
 const routeComponents: ApplicationRouteConfig[] = [
   AfisRoutes,
@@ -68,23 +69,6 @@ const privateRoutes = routeComponents.filter(
 );
 
 const publicRoutes = routeComponents.filter((config) => config.public === true);
-
-function ApplicationRoutes({ routes }: { routes: ApplicationRouteConfig[] }) {
-  return (
-    <Routes>
-      {routes
-        .filter(({ isActive }) => isActive !== false)
-        .map(({ route, Component, props }) => (
-          <Route
-            {...(props ? props : {})}
-            key={route}
-            path={route}
-            element={<Component />}
-          />
-        ))}
-    </Routes>
-  );
-}
 
 export function PrivateRoutes() {
   return <ApplicationRoutes routes={privateRoutes} />;

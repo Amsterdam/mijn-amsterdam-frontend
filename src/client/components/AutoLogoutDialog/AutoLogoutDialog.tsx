@@ -100,7 +100,7 @@ export function AutoLogoutDialog({
   lastChanceBeforeAutoLogoutSeconds = 2 * ONE_MINUTE_SECONDS, // 120 seconds
 }: AutoLogoutDialogProps) {
   const profileType = useProfileTypeValue();
-  const logout = useLogout();
+  const logout = useLogout(LOGOUT_URL);
 
   // Will open the dialog if secondsBeforeAutoLogoutDialogOpens is reached.
   const millisecondsBeforeAutoLogoutDialogOpens = getOpensDialogInMilliseconds(

@@ -100,7 +100,7 @@ export default defineConfig({
     {
       name: 'rewrite-middleware',
       configureServer(serve) {
-        serve.middlewares.use((req, _res, next) => {
+        serve.middlewares.use((req, res, next) => {
           if (req.url?.startsWith('/admin/')) {
             req.url = '/admin';
           }

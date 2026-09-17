@@ -1,5 +1,5 @@
-import type { ThemaMenuItem } from '../../../../universal/types/thema-types.ts';
 import { MIJN_AMSTERDAM } from '../../../../universal/config/app.ts';
+import type { ThemaMenuItem } from '../../../../universal/types/thema-types.ts';
 import { menuItem as menuItemAfis } from '../pages/Thema/Afis/Afis-render-config.tsx';
 import { menuItem as menuItemAfval } from '../pages/Thema/Afval/Afval-render-config.tsx';
 import { menuItem as menuItemAVG } from '../pages/Thema/AVG/AVG-render-config.tsx';

@@ -16,11 +16,11 @@ import type { SearchEntry } from './search-config.tsx';
 import { displayLinkToSearchResult } from './search-config.tsx';
 import styles from './Search.module.scss';
 import { useSearchIndex } from './useSearch.tsx';
+import { SearchPageRoute } from '../../apps/bob/pages/Search/Search-routes.ts';
 import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { useAppStateReady } from '../../hooks/useAppStateStore.ts';
 import { useKeyDown } from '../../hooks/useKey.ts';
-import { SearchPageRoute } from '../../apps/bob/pages/Search/Search-routes.ts';
 import { MaButtonLink, MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 import { Spinner } from '../Spinner/Spinner.tsx';
 

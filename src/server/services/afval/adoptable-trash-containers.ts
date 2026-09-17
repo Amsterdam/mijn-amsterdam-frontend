@@ -1,8 +1,8 @@
 import { differenceInYears } from 'date-fns';
 import type { LatLngBoundsLiteral } from 'leaflet';
 
-import { routeConfig as buurtRouteConfig } from '../../../client/components/MyArea/MyArea-thema-config.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Afval/Afval-thema-config.ts';
+import { routeConfig as buurtRouteConfig } from '../../../client/components/MyArea/MyArea-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,

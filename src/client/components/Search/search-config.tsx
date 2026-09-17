@@ -85,7 +85,8 @@ export interface ApiSearchConfig {
   // A description that will be used by Fuse to find matching items and is also displayed as description
   // of the SearchEntry on the Search page for Amsterdam.nl Results.
   description:
-    ReactElement | ((item: ApiBaseItem, config: ApiSearchConfig) => string);
+    | ReactElement
+    | ((item: ApiBaseItem, config: ApiSearchConfig) => string);
 
   // A list of keys of which the values are used for keywords
   keywordsGeneratedFromProps?: string[];
