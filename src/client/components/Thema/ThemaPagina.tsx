@@ -4,6 +4,8 @@ import { LinkList } from '@amsterdam/design-system-react';
 
 import styles from './ThemaPagina.module.scss';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
+import type { LinkConfig } from '../../config/thema-types.ts';
+import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import { ErrorAlert } from '../Alert/Alert.tsx';
 import {
   LoadingContent,
@@ -30,7 +32,7 @@ interface ThemaPaginaProps {
   pageContentTop: ReactNode;
   pageContentTopSecondary?: ReactNode;
   pageContentMain: ReactNode;
-  pageLinks: LinkProps[];
+  pageLinks: LinkConfig[];
   pageContentBottom?: ReactNode;
   errorAlertContent?: ReactNode;
   loadingBarConfig?: BarConfig;
@@ -57,11 +59,16 @@ export function ThemaPagina({
   maintenanceNotificationsPageSlug,
   themaFeedbackDetails,
 }: ThemaPaginaProps) {
+  const profileType = useProfileTypeValue();
   const showError = (!isError && isPartialError) || isError;
   const userFeedbackDetails = {
     pageTitle: title,
     pageDetails: themaFeedbackDetails || {},
   };
+  const visiblePageLinks = pageLinks.filter(
+    (pageLink) => pageLink.profileTypes?.includes(profileType) ?? true
+  );
+
   return (
     <PageV2
       heading={title}
@@ -74,10 +81,10 @@ export function ThemaPagina({
         <MaintenanceNotifications page={maintenanceNotificationsPageSlug} />
       )}
       {pageContentTop}
-      {!!pageLinks.length && (
+      {!!visiblePageLinks.length && (
         <PageContentCell className={pageContentTop ? styles.PullUp : ''}>
           <LinkList>
-            {pageLinks.map(({ to, title }) => (
+            {visiblePageLinks.map(({ to, title }) => (
               <LinkList.Link key={to} rel="noreferrer" href={to}>
                 {title}
               </LinkList.Link>

@@ -88,12 +88,6 @@ export function ParkerenThema() {
     }
   );
 
-  const pageLinks = themaConfig.pageLinks.filter((pageLink) => {
-    return 'profileTypes' in pageLink
-      ? pageLink.profileTypes?.includes(profileType)
-      : true;
-  });
-
   const pageContentTop = (
     <PageContentTop
       hasMijnParkerenVergunningen={hasMijnParkerenVergunningen}
@@ -124,7 +118,7 @@ export function ParkerenThema() {
       isError={isError}
       isLoading={isLoading}
       pageContentTop={pageContentTop}
-      pageLinks={pageLinks}
+      pageLinks={themaConfig.pageLinks}
       pageContentMain={tables}
       pageContentBottom={pageContentBottom}
       maintenanceNotificationsPageSlug="parkeren"
