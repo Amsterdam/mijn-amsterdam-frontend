@@ -1,7 +1,8 @@
 import { tableConfig, themaConfig } from './AVG-thema-config.ts';
-import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { isError } from '../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
 
 export function useAVGData() {
@@ -20,7 +21,7 @@ export function useAVGData() {
     id: themaConfig.id,
     title: themaConfig.title,
     tableConfig,
-    isLoading: isLoading(AVG),
+    isLoading: useIsLoading(AVG),
     isError: isError(AVG),
     avgVerzoeken,
     pageLinks: themaConfig.pageLinks,

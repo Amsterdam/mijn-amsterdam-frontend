@@ -5,9 +5,10 @@ import {
   themaConfig,
 } from './Zorg-thema-config.ts';
 import type { WMOVoorzieningFrontend } from '../../../../server/services/jzd/wmo/wmo-types.ts';
-import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { isError } from '../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
 
 export function useZorgThemaData() {
@@ -24,7 +25,7 @@ export function useZorgThemaData() {
     themaId: themaConfig.id,
     title: themaConfig.title,
     voorzieningen,
-    isLoading: isLoading(WMO),
+    isLoading: useIsLoading(WMO),
     isError: isError(WMO),
     tableConfig,
     listPageTitle,

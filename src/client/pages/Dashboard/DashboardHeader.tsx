@@ -3,13 +3,13 @@ import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 import styles from './DashboardHeader.module.scss';
-import { isLoading } from '../../../universal/helpers/api.ts';
 import { Search } from '../../components/Search/Search.tsx';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import {
   useAppStateGetter,
   useAppStateReady,
 } from '../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../hooks/useIsLoading.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 
 const STADSDELEN = [
@@ -40,7 +40,7 @@ function useStadsdeelFoto() {
 
   const size = isPhoneScreen ? 'small' : 'large';
 
-  return !isLoading(MY_LOCATION)
+  return !useIsLoading(MY_LOCATION)
     ? `/img/stadsdeel-foto/${size}/${stadsdeel}.jpg`
     : null;
 }

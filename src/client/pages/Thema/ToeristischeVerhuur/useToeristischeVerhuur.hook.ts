@@ -9,11 +9,11 @@ import type { ToeristischeVerhuurVergunning } from '../../../../server/services/
 import {
   hasFailedDependency,
   isError,
-  isLoading,
 } from '../../../../universal/helpers/api.ts';
 import type { LinkProps } from '../../../../universal/types/App.types.ts';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
 
 export const BB_VERGUNNING_DISCLAIMER =
@@ -80,7 +80,7 @@ export function useToeristischeVerhuurThemaData() {
     lvvRegistraties,
     themaId: themaConfig.id,
     title: themaConfig.title,
-    isLoading: isLoading(TOERISTISCHE_VERHUUR),
+    isLoading: useIsLoading(TOERISTISCHE_VERHUUR),
     isError: isError(TOERISTISCHE_VERHUUR, false),
     hasLVVRegistratiesError,
     hasBBVergunningError,

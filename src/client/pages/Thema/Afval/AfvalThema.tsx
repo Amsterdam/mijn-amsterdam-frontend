@@ -12,7 +12,7 @@ import type {
   AfvalFractionInformationTransformed,
   AfvalFractionCode,
 } from '../../../../server/services/afval/afval.types.ts';
-import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { isError } from '../../../../universal/helpers/api.ts';
 import { getFullAddress } from '../../../../universal/helpers/brp.ts';
 import {
   IconAfvalGft,
@@ -32,6 +32,7 @@ import { PageContentCell, PageV2 } from '../../../components/Page/Page.tsx';
 import { parseHTML } from '../../../helpers/html-react-parse.tsx';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle.ts';
+import { useIsLoading } from '../../../hooks/useIsLoading.ts';
 import { useProfileTypeValue } from '../../../hooks/useProfileType.ts';
 
 interface InstructionCTAProps {
@@ -199,7 +200,9 @@ export function AfvalThemaPagina() {
 
   const { AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
   const profileType = useProfileTypeValue();
-  const isApiReady = !isLoading(MY_LOCATION) && !isLoading(AFVAL);
+  const isLocationLoading = useIsLoading(MY_LOCATION);
+  const isAfvalLoading = useIsLoading(AFVAL);
+  const isApiReady = !isLocationLoading && !isAfvalLoading;
 
   const heeftGeenWoonfunctie = AFVAL.content?.some(
     (fractionData) => !fractionData.gebruiksdoelWoonfunctie
@@ -311,7 +314,7 @@ export function AfvalThemaPagina() {
                   <Paragraph className="ams-mb-m">
                     {MY_LOCATION.content?.[0]?.address ? (
                       getFullAddress(MY_LOCATION.content?.[0].address)
-                    ) : isLoading(MY_LOCATION) ? (
+                    ) : isLocationLoading ? (
                       <LoadingContent barConfig={[['20rem', '3rem', '0']]} />
                     ) : (
                       'Onbekend adres'

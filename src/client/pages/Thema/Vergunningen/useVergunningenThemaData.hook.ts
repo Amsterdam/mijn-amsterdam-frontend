@@ -1,8 +1,9 @@
 import { tableConfig, themaConfig } from './Vergunningen-thema-config.ts';
 import type { ZaakFrontendCombined } from '../../../../server/services/vergunningen/config-and-types.ts';
-import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { isError } from '../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
 
 export function useVergunningenThemaData() {
@@ -19,7 +20,7 @@ export function useVergunningenThemaData() {
     id: themaConfig.id,
     title: themaConfig.title,
     vergunningen,
-    isLoading: isLoading(VERGUNNINGEN),
+    isLoading: useIsLoading(VERGUNNINGEN),
     isError: isError(VERGUNNINGEN),
     tableConfig,
     pageLinks: themaConfig.pageLinks,

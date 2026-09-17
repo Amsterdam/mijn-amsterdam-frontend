@@ -7,7 +7,6 @@ import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Dashboard-config.ts';
 import styles from './Dashboard.module.scss';
 import { DashboardHeader } from './DashboardHeader.tsx';
 import { WelcomeHeading } from './WelcomHeading.tsx';
-import { isLoading } from '../../../universal/helpers/api.ts';
 import { LoadingContent } from '../../components/LoadingContent/LoadingContent.tsx';
 import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 import { MyAreaDashboard } from '../../components/MyArea/MyAreaDashboard.tsx';
@@ -18,6 +17,7 @@ import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
+import { useIsLoading } from '../../hooks/useIsLoading.ts';
 import { useAppStateNotifications } from '../../hooks/useNotifications.ts';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
@@ -87,12 +87,12 @@ export function Dashboard() {
             )}
           </Heading>
           <OrderedList markers={false}>
-            {isLoading(NOTIFICATIONS) && (
+            {useIsLoading(NOTIFICATIONS) && (
               <OrderedList.Item>
                 <LoadingContent />
               </OrderedList.Item>
             )}
-            {!isLoading(NOTIFICATIONS) &&
+            {!useIsLoading(NOTIFICATIONS) &&
               notifications.map((notification, index) => {
                 return (
                   <OrderedList.Item

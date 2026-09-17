@@ -1,9 +1,10 @@
 import { tableConfig, themaConfig } from './Parkeren-thema-config.ts';
 import type { DecosParkeerVergunning } from '../../../../server/services/parkeren/config-and-types.ts';
 import type { DecosZaakFrontend } from '../../../../server/services/vergunningen/config-and-types.ts';
-import { isError, isLoading } from '../../../../universal/helpers/api.ts';
+import { isError } from '../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaBreadcrumbs.ts';
 
 export function useParkerenData() {
@@ -22,10 +23,10 @@ export function useParkerenData() {
     tableConfig,
     vergunningen,
     hasMijnParkerenVergunningen,
-    isLoading: isLoading(PARKEREN),
+    isLoading: useIsLoading(PARKEREN),
     isError: isError(PARKEREN),
     parkerenUrlSSO: PARKEREN.content?.url ?? '/',
-    isLoadingParkerenUrl: isLoading(PARKEREN),
+    isLoadingParkerenUrl: useIsLoading(PARKEREN),
     pageLinks: themaConfig.pageLinks,
     breadcrumbs,
     themaConfig,

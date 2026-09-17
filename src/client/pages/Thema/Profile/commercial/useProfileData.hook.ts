@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
 
 import { formatKvkProfileData } from './ProfileCommercial.transform.tsx';
-import { isError, isLoading } from '../../../../../universal/helpers/api.ts';
+import { isError } from '../../../../../universal/helpers/api.ts';
 import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../../../hooks/useIsLoading.ts';
 import { themaConfig } from '../Profile-thema-config.ts';
 
 export function useProfileData() {
@@ -18,7 +19,7 @@ export function useProfileData() {
     id: themaConfig.KVK.id,
     title: themaConfig.KVK.title,
     profileData,
-    isLoading: isLoading(KVK),
+    isLoading: useIsLoading(KVK),
     isError: isError(KVK),
     pageLinks: themaConfig.KVK.pageLinks,
     themaConfig,

@@ -8,11 +8,11 @@ import { MyAreaLoadingIndicator } from './MyAreaLoadingIndicator.tsx';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker.tsx';
 import type { BAGLocation } from '../../../server/services/bag/bag.types.ts';
 import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets.ts';
-import { isLoading } from '../../../universal/helpers/api.ts';
 import { getFullAddress } from '../../../universal/helpers/brp.ts';
 import iconUrlCommercialSecondary from '../../assets/icons/map/homeSecondaryCommercial.svg';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map.ts';
 import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../hooks/useIsLoading.ts';
 
 export function MyAreaDashboardMap() {
   const { MY_LOCATION } = useAppStateGetter();
@@ -67,7 +67,7 @@ export function MyAreaDashboardMap() {
               />
             )
         )}
-      {isLoading(MY_LOCATION) && (
+      {useIsLoading(MY_LOCATION) && (
         <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
       )}
       {!!secondaryLocations?.length && (
