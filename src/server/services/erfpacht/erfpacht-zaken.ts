@@ -23,7 +23,7 @@ import type {
   ZaakStatusFrontend,
   ZaakStatussenResponseSource,
 } from './erfpacht-zaken-types.ts';
-import { themaConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
 import {
   apiErrorResult,
   apiSuccessResult,

@@ -11,14 +11,14 @@ const mocks = vi.hoisted(() => {
   };
 });
 
-vi.mock('../../hooks/api/useSessionApi', async (importOriginal) => ({
+vi.mock('../../hooks/api/useSessionApi.ts', async (importOriginal) => ({
   ...(await importOriginal()),
-  useLogout() {
+  useLogout(url: string) {
     return mocks.logout;
   },
 }));
 
-vi.mock('../../hooks/useProfileType', () => ({
+vi.mock('../../hooks/useProfileType.ts', () => ({
   useProfileTypeValue: vi.fn(),
 }));
 

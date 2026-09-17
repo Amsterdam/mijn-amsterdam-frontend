@@ -4,7 +4,7 @@ import { vi } from 'vitest';
 
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur-notifications.ts';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur.ts';
-import { themaConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../../../universal/config/app.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';

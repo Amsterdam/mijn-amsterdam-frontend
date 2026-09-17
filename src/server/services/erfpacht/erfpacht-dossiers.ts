@@ -10,7 +10,7 @@ import type {
   ErfpachtDossierPropsFrontend,
 } from './erfpacht-types.ts';
 import { type ErfpachtDossiersResponseSource } from './erfpacht-types.ts';
-import { themaConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
 import { type ApiResponse } from '../../../universal/helpers/api.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import { jsonCopy, sortAlpha } from '../../../universal/helpers/utils.ts';

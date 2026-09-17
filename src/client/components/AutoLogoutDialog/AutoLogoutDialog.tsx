@@ -14,8 +14,8 @@ import {
   LOGIN_URL_DIGID,
   LOGIN_URL_EHERKENNING,
   LOGOUT_URL,
-} from '../../config/api.ts';
-import { Colors } from '../../config/app.ts';
+} from '../../apps/bob/config/api.ts';
+import { Colors } from '../../apps/bob/config/app.ts';
 import { logger } from '../../helpers/logging.ts';
 import { ONE_SECOND_MS, useLogout } from '../../hooks/api/useSessionApi.ts';
 import type { CounterProps } from '../../hooks/timer.hook.ts';
@@ -100,7 +100,7 @@ export function AutoLogoutDialog({
   lastChanceBeforeAutoLogoutSeconds = 2 * ONE_MINUTE_SECONDS, // 120 seconds
 }: AutoLogoutDialogProps) {
   const profileType = useProfileTypeValue();
-  const logout = useLogout();
+  const logout = useLogout(LOGOUT_URL);
 
   // Will open the dialog if secondsBeforeAutoLogoutDialogOpens is reached.
   const millisecondsBeforeAutoLogoutDialogOpens = getOpensDialogInMilliseconds(
