@@ -7,7 +7,7 @@ import {
 export function useIsLoading(
   apiResponseData?: ApiResponse_DEPRECATED<unknown>
 ) {
-  const profileType = useProfileType();
+  const { profileType } = useProfileType();
 
   return isLoading(apiResponseData, profileType);
 }
