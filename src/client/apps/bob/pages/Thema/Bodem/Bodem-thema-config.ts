@@ -2,16 +2,16 @@ import { generatePath } from 'react-router';
 
 import type { LoodMetingFrontend } from '../../../../../../server/services/bodem/types.ts';
 import { dateSort } from '../../../../../../universal/helpers/date.ts';
-import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
-import {
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-} from '../../../config/app.ts';
 import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
 } from '../../../../../../universal/types/thema-types.ts';
+import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
+import {
+  MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+  MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
+} from '../../../config/app.ts';
 
 type BodemThemaConfig = ThemaConfigBase<typeof THEMA_ID> &
   WithDetailPage &
@@ -83,8 +83,9 @@ const displayPropsLopend: DisplayProps<LoodMetingFrontend> = {
   },
   colWidths: {
     large: ['25%', '25%', '50%'],
-    small: ['100%', '0', '0'],
+    small: ['auto', 'auto', 'auto'],
   },
+  enableMobileListView: true,
 };
 
 const displayPropsEerder: DisplayProps<LoodMetingFrontend> = {
@@ -95,8 +96,9 @@ const displayPropsEerder: DisplayProps<LoodMetingFrontend> = {
   },
   colWidths: {
     large: ['25%', '25%', '50%'],
-    small: ['100%', '0', '0'],
+    small: ['auto', 'auto', 'auto'],
   },
+  enableMobileListView: true,
 };
 
 export const tableConfig = {
