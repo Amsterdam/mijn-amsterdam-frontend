@@ -35,7 +35,11 @@ export function MyAreaDashboard() {
           {isLoading ? (
             <LoadingContent barConfig={[['200px', '30px', '20px']]} />
           ) : (
-            <Paragraph>{paragraphText}</Paragraph>
+            <Paragraph>
+              {mokum
+                ? 'Klik voor een overzicht van gemeentelijke informatie rond uw adres.'
+                : 'Uw adres kan niet worden getoond in Mijn Amsterdam.'}
+            </Paragraph>
           )}
         </span>
       </NavLink>
