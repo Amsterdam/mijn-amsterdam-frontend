@@ -4,6 +4,11 @@
   padding-inline: var(--ams-space-m);
 }
 
+.TipCardHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
 .TipCard__greenBackground {
   background-color: var(--ams-color-highlight-green);
 }
@@ -19,6 +24,7 @@
 .RemoveButton {
   background-color: transparent;
   inline-size: fit-content;
+  block-size: fit-content;
   justify-self: end;
 
   &:hover {

@@ -46,20 +46,22 @@ export function TipCard({
         styles[tipCardClassName[backgroundColor]]
       )}
     >
-      <IconButton
-        className={styles.RemoveButton}
-        color="inverse"
-        label="Verwijder tip"
-        size="large"
-      />
-      <Heading
-        className={classNames('ams-mb-s', styles.Heading)}
-        color="inverse"
-        level={3}
-        size="level-2"
-      >
-        {heading}
-      </Heading>
+      <div className={styles.TipCardHeader}>
+        <Heading
+          className={classNames('ams-mb-s', styles.Heading)}
+          color="inverse"
+          level={3}
+          size="level-2"
+        >
+          {heading}
+        </Heading>
+        <IconButton
+          className={styles.RemoveButton}
+          color="inverse"
+          label="Verwijder tip"
+          size="large"
+        />
+      </div>
       {!isTipShown && (
         <MaLink
           color="inverse"

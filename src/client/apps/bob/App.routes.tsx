@@ -9,6 +9,7 @@ import { MyNotificationsRoutes } from './pages/MyNotifications/MyNotifications-r
 import { NotFoundRoutes } from './pages/NotFound/NotFound-routes.ts';
 import { SearchRoutes } from './pages/Search/Search-routes.ts';
 import { MyAreaRoutes } from '../../components/MyArea/MyArea-routes.ts';
+import { MyTipsRoutes } from '../../pages/Tips/MyTips-routes.ts';
 import { AfisRoutes } from './pages/Thema/Afis/Afis-render-config.tsx';
 import { AfvalRoutes } from './pages/Thema/Afval/Afval-render-config.tsx';
 import { AvgRoutes } from './pages/Thema/AVG/AVG-render-config.tsx';
@@ -28,7 +29,6 @@ import { ToeristischeVerhuurRoutes } from './pages/Thema/ToeristischeVerhuur/Toe
 import { VarenRoutes } from './pages/Thema/Varen/Varen-render-config.tsx';
 import { VergunningenRoutes } from './pages/Thema/Vergunningen/Vergunningen-render-config.tsx';
 import { ZorgRoutes } from './pages/Thema/Zorg/Zorg-render-config.tsx';
-import { MyTipsRoutes } from './pages/Tips/MyTips-routes.ts';
 import { ZaakStatusRoutes } from './pages/ZaakStatus/ZaakStatus-routes.ts';
 import type { ApplicationRouteConfig } from '../../../universal/types/thema-types.ts';
 import { ApplicationRoutes } from '../../components/ApplicationRoutes/ApplicationRoutes.tsx';
