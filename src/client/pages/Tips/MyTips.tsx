@@ -1,21 +1,22 @@
 import { useMemo } from 'react';
 
-import type { GridColumnNumber } from '@amsterdam/design-system-react';
+import { OrderedList } from '@amsterdam/design-system-react';
 import { generatePath, useParams } from 'react-router';
 
 import { MyTipsRoute } from './MyTips-routes.ts';
 import { isError, isLoading } from '../../../universal/helpers/api.ts';
 import { ErrorAlert } from '../../components/Alert/Alert.tsx';
+import { LoadingContent } from '../../components/LoadingContent/LoadingContent.tsx';
+import { MyNotification } from '../../components/MyNotification/MyNotification.tsx';
 import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
 import { PaginationV2 } from '../../components/Pagination/PaginationV2.tsx';
-import { TipCard, tipCardColors } from '../../components/TipCard/TipCard.tsx';
 import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
 import { useAppStateNotifications } from '../../hooks/useNotifications.ts';
 
-const PAGE_SIZE = 6;
+const PAGE_SIZE = 12;
 
 export function MyTipsPage() {
-  const { NOTIFICATIONS } = useAppStateGetter();
+  const { NOTIFICATIONS: TIPS } = useAppStateGetter();
   const { tips, tipsTotal } = useAppStateNotifications();
   const { page = '1' } = useParams<{ page?: string }>();
 
@@ -33,38 +34,36 @@ export function MyTipsPage() {
     return tips?.slice(start, end);
   }, [currentPage, tips]);
 
-  const getStartColumn = (index: number): GridColumnNumber => {
-    const value = (index % 2) * 6 + 1;
-    return Math.min(Math.max(value, 1), 12) as GridColumnNumber;
-  };
-
   return (
     <PageV2 heading="Mijn tips">
-      {isError(NOTIFICATIONS) && (
-        <PageContentCell>
+      <PageContentCell>
+        {isError(TIPS) && (
           <ErrorAlert className="ams-mb-m">
             Niet alle tips kunnen op dit moment worden getoond.
           </ErrorAlert>
-        </PageContentCell>
-      )}
-      {!isLoading(NOTIFICATIONS) &&
-        tipsPaginated?.map((tip, index) => (
-          <PageContentCell
-            key={tip.themaID}
-            spanWide={6}
-            startWide={getStartColumn(index)}
-          >
-            <TipCard
-              backgroundColor={tipCardColors[index % tipCardColors.length]}
-              description={tip.description}
-              heading={tip.title}
-              link={tip.link}
-              tipReason={tip.tipReason}
-            />
-          </PageContentCell>
-        ))}
-      {tipsTotal != null && tipsTotal > PAGE_SIZE && (
-        <PageContentCell>
+        )}
+        <OrderedList markers={false}>
+          {isLoading(TIPS) && (
+            <OrderedList.Item>
+              <LoadingContent />
+            </OrderedList.Item>
+          )}
+          {!isLoading(TIPS) &&
+            tipsPaginated?.map((tip, index) => {
+              return (
+                <OrderedList.Item
+                  key={`${tip.themaID}-${tip.id}-${index}`}
+                  className="ams-mb-m"
+                >
+                  <MyNotification
+                    notification={tip}
+                    trackCategory="Dashboard / Actueel"
+                  />
+                </OrderedList.Item>
+              );
+            })}
+        </OrderedList>
+        {tipsTotal != null && tipsTotal > PAGE_SIZE && (
           <PaginationV2
             className="ams-mb-m"
             totalCount={tipsTotal}
@@ -72,8 +71,8 @@ export function MyTipsPage() {
             path={generatePath(MyTipsRoute.route)}
             currentPage={currentPage}
           />
-        </PageContentCell>
-      )}
+        )}
+      </PageContentCell>
     </PageV2>
   );
 }
