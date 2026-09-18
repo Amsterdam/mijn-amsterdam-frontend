@@ -44,18 +44,33 @@ export type ApiResponse_DEPRECATED<T> =
   | ApiPostponeResponse<T>;
 
 export type ApiResponse<T> =
-  | ApiErrorResponse<null>
-  | ApiSuccessResponse<T>
-  | ApiPostponeResponse<null>;
+  ApiErrorResponse<null> | ApiSuccessResponse<T> | ApiPostponeResponse<null>;
 
 export type ApiResponsePromise<T> = Promise<ApiResponse<T>>;
 
-export function isLoading(apiResponseData?: ApiResponse_DEPRECATED<unknown>) {
-  // If no responseData was found, assumes it's still loading
-  return !!(
-    !apiResponseData ||
-    !!(apiResponseData?.status === 'PRISTINE' && apiResponseData.isActive)
-  );
+export function isLoading(
+  apiResponseData?: ApiResponse_DEPRECATED<unknown>,
+  profileType?: ProfileType
+) {
+  if (!apiResponseData) {
+    return true;
+  }
+
+  if (apiResponseData.status !== 'PRISTINE' || !apiResponseData.isActive) {
+    return false;
+  }
+
+  const { profileTypes } = apiResponseData;
+
+  if (!profileTypes || profileTypes.length === 0) {
+    return true;
+  }
+
+  if (!profileType) {
+    return true;
+  }
+
+  return profileTypes.includes(profileType);
 }
 export function isOk(apiResponseData?: ApiResponse_DEPRECATED<unknown>) {
   return apiResponseData?.status === 'OK';

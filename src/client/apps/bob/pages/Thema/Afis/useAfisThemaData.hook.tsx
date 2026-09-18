@@ -10,11 +10,11 @@ import type { AfisFactuurState } from '../../../../../../server/services/afis/af
 import {
   hasFailedDependency,
   isError,
-  isLoading,
 } from '../../../../../../universal/helpers/api.ts';
 import type { LinkProps } from '../../../../../../universal/types/App.types.ts';
 import type { ThemaRouteConfig } from '../../../../../../universal/types/thema-types.ts';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
 import { useThemaMenuItemByThemaID } from '../../../../../hooks/useThemaMenuItems.ts';
 import { themaConfig as themaBelastingen } from '../Belastingen/Belastingen-thema-config.ts';
@@ -51,7 +51,7 @@ export function useAfisFacturenData(
 
   return {
     isThemaPaginaError: isError(AFIS, false),
-    isThemaPaginaLoading: isLoading(AFIS),
+    isThemaPaginaLoading: useIsLoading(AFIS),
     themaId,
     facturenByState,
     tableConfig,
