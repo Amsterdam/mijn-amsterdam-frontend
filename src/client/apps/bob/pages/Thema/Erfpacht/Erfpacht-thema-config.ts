@@ -7,15 +7,15 @@ import type {
   ErfpachtResponseFrontend,
 } from '../../../../../../server/services/erfpacht/erfpacht-types.ts';
 import type { ErfpachtZaakExcerptFrontend } from '../../../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
+import type {
+  PageConfig,
+  ThemaConfigBase,
+} from '../../../../../../universal/types/thema-types.ts';
 import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
 import {
   isEnabled,
   propagateFeatureToggles,
 } from '../../../config/feature-toggles.ts';
-import type {
-  PageConfig,
-  ThemaConfigBase,
-} from '../../../../../../universal/types/thema-types.ts';
 import {
   getAfisListPageDocumentTitle,
   getFacturenTableConfig,
@@ -192,7 +192,7 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
       zaakNummer: firstZaak?.titelZaakNummer,
       dossierLinks: 'Erfpachtdossier(s)',
       displayStatus: 'Status',
-      datePublishedFormatted: firstZaak?.titelFormattedStatusDatum,
+      formattedStatusDatum: firstZaak?.titelFormattedStatusDatum,
     },
     colWidths: {
       large: ['25%', '25%', '25%', '25%'],
@@ -206,7 +206,7 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
       props: {
         zaakNummer: firstZaak?.titelZaakNummer,
         displayStatus: 'Status',
-        datePublishedFormatted: firstZaak?.titelFormattedStatusDatum,
+        formattedStatusDatum: firstZaak?.titelFormattedStatusDatum,
       },
       colWidths: {
         large: ['33%', '33%', '34%'],

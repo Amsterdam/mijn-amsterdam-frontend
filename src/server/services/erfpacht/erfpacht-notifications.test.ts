@@ -33,7 +33,8 @@ function createZaakExcerpt(
     zaakUuid: '1234-5678-9012-9999',
     zaakOmschrijving: 'Wijzigen Erfpachtrecht',
     statusOmschrijving: 'Aanvraag Beoordelen',
-    formattedStatusDatum: '15-07-2026',
+    statusDatum: '15-07-2026',
+    formattedStatusDatum: '15 juli 2026',
     zaakUrl: 'https://example.invalid/zaak/1234-5678-9012-9999',
     zaakDossiers: ['EW123/456'],
     titelZaakNummer: 'Zaak nummer',
@@ -41,7 +42,6 @@ function createZaakExcerpt(
     titelStatusOmschrijving: 'Status',
     titelFormattedStatusDatum: 'Datum status',
     datePublished: '2026-07-15T00:00:00.000Z',
-    datePublishedFormatted: '15 juli 2026',
     fetchZaakDetailUrl:
       'http://bff-api-host/api/v1/services/erfpacht/zaak/1234-5678-9012-9999',
     link: {

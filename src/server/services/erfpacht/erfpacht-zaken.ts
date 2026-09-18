@@ -29,12 +29,7 @@ import {
   apiSuccessResult,
   type ApiResponse,
 } from '../../../universal/helpers/api.ts';
-import {
-  dateSort,
-  parseDutchDateString,
-  toDateFormatted,
-  toISOString,
-} from '../../../universal/helpers/date.ts';
+import { dateSort, toISOString } from '../../../universal/helpers/date.ts';
 import type { SomeOtherString } from '../../../universal/helpers/types.ts';
 import { hash } from '../../../universal/helpers/utils.ts';
 import type {
@@ -64,15 +59,11 @@ function transformErfpachtZakenResponse(
   zakenResponseSource: ZaakInfoResponseSource
 ): ErfpachtZaakExcerptFrontend[] {
   return (zakenResponseSource.content ?? []).map((zaakInfo) => {
-    const datePublished = zaakInfo.formattedStatusDatum
-      ? parseDutchDateString(zaakInfo.formattedStatusDatum)
-      : null;
-
     const zaak: ErfpachtZaakExcerptFrontend = {
       ...zaakInfo,
-      // Added these fields because the date notation from the API is not in ISO format, and we need to ensure that the date is in a consistent format for frontend use.
-      datePublished: datePublished ? toISOString(datePublished) : null,
-      datePublishedFormatted: toDateFormatted(datePublished),
+      // Added this fields because the date notation from the API is not in ISO format, and we need to ensure that the date is in a consistent format for frontend use.
+      datePublished: toISOString(zaakInfo.statusDatum),
+
       //
       fetchZaakDetailUrl: generateFullApiUrlBFF(
         routes.protected.ERFPACHT_ZAAK_DETAILS,
