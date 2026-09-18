@@ -72,7 +72,7 @@ export function Dashboard() {
 
   const markAsRead = (tipId: string) => {
     setReadTipIds((currentIds) =>
-      currentIds.includes() ? currentIds : [...currentIds, tipId]
+      currentIds.includes(tipId) ? currentIds : [...currentIds, tipId]
     );
 
     // TODO: MIJN-12460: Actually mark the tip as read.
@@ -147,7 +147,7 @@ export function Dashboard() {
                   description={tip.description}
                   heading={tip.title}
                   link={tip.link}
-                  onClick={() => markAsRead(tip.id)}
+                  onRead={() => markAsRead(tip.id)}
                   tipReason={tip.tipReason}
                 />
               </Grid.Cell>

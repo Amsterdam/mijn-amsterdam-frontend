@@ -18,7 +18,7 @@ type TipCardProps = {
     title: string;
     to: string;
   };
-  onRead: void;
+  onRead: () => void;
   tipReason?: string;
 };
 
@@ -62,7 +62,7 @@ export function TipCard({
           color="inverse"
           label="Verwijder tip"
           size="large"
-          onClick={onRead}
+          onClick={() => onRead()}
         />
       </div>
       {!isTipShown && (
