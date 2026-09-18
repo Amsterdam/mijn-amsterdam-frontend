@@ -1,14 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { themaConfig } from './Parkeren-thema-config.ts';
 import { ParkerenThema } from './ParkerenThema.tsx';
 import { forTesting } from './ParkerenThema.tsx';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { MockApp } from '../../MockApp.tsx';
-
-vi.mock('../../../hooks/useProfileType');
 
 const linkButtonTxt = 'Ga naar Mijn Parkeren';
 const EXTERNAL_PARKEREN_URL = 'https://parkeervergunningen.amsterdam.nl/';
@@ -84,7 +82,6 @@ describe('Parkeren', () => {
       />
     );
   }
-
 
   it('should render the component and show the correct title', () => {
     render(<Component />);
