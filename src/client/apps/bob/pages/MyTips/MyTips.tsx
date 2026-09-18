@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { OrderedList } from '@amsterdam/design-system-react';
+import { OrderedList, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath, useParams } from 'react-router';
 
 import { MY_TIPS_PAGE_DOCUMENT_TITLE } from './MyTips-config.ts';
@@ -22,7 +22,7 @@ export function MyTipsPage() {
     documentTitle: MY_TIPS_PAGE_DOCUMENT_TITLE,
   });
 
-  const { NOTIFICATIONS: TIPS } = useAppStateGetter();
+  const { NOTIFICATIONS } = useAppStateGetter();
   const { tips, tipsTotal } = useAppStateNotifications();
   const { page = '1' } = useParams<{ page?: string }>();
 
@@ -43,18 +43,18 @@ export function MyTipsPage() {
   return (
     <PageV2 heading="Mijn tips">
       <PageContentCell>
-        {isError(TIPS) && (
+        {isError(NOTIFICATIONS) && (
           <ErrorAlert className="ams-mb-m">
             Niet alle tips kunnen op dit moment worden getoond.
           </ErrorAlert>
         )}
         <OrderedList markers={false}>
-          {isLoading(TIPS) && (
+          {isLoading(NOTIFICATIONS) && (
             <OrderedList.Item>
               <LoadingContent />
             </OrderedList.Item>
           )}
-          {!isLoading(TIPS) &&
+          {!isLoading(NOTIFICATIONS) &&
             tipsPaginated?.map((tip, index) => {
               return (
                 <OrderedList.Item
@@ -69,6 +69,9 @@ export function MyTipsPage() {
               );
             })}
         </OrderedList>
+        {!isLoading(NOTIFICATIONS) && tips?.length === 0 && (
+          <Paragraph>Op dit moment zijn er geen tips.</Paragraph>
+        )}
         {tipsTotal != null && tipsTotal > PAGE_SIZE && (
           <PaginationV2
             className="ams-mb-m"

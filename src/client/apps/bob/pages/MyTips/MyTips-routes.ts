@@ -1,4 +1,6 @@
-import { featureToggle } from './MyTips-config.ts';
+import { generatePath } from 'react-router';
+
+import { featureToggle, themaTitle, themaId } from './MyTips-config.ts';
 import { MyTipsPage } from './MyTips.tsx';
 
 export const MyTipsRoute = {
@@ -8,3 +10,9 @@ export const MyTipsRoute = {
 };
 
 export const MyTipsRoutes = [MyTipsRoute];
+
+export const myTipsMenuItem = {
+  title: themaTitle,
+  id: themaId,
+  to: generatePath(MyTipsRoute.route),
+};

@@ -3,8 +3,14 @@ import classNames from 'classnames';
 
 import { categoryMenuItems } from './MainMenu.constants.ts';
 import styles from './MainMenu.module.scss';
+import {
+  featureToggle,
+  themaConfig,
+  themaId,
+} from '../../apps/bob/pages/MyTips/MyTips-config.ts';
 import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
+import { useProfileType } from '../../hooks/useProfileType.ts';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { MainHeaderSecondaryLinks } from '../MainHeader/MainHeader.tsx';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
@@ -14,6 +20,19 @@ export const MAIN_MENU_ID = 'main-menu';
 export function MainMenu() {
   const { items } = useActiveThemaMenuItems();
   const isPhoneScreen = useSmallScreen();
+  const { profileType } = useProfileType();
+
+  const hasTips =
+    themaConfig.profileTypes.includes(profileType) &&
+    featureToggle.newTipsDesign;
+
+  const visibleCategoryMenuItems = categoryMenuItems.filter((item) => {
+    if (hasTips) {
+      return true;
+    }
+
+    return item.id !== themaId;
+  });
 
   return (
     <div id={MAIN_MENU_ID} className={styles.MainMenu}>
@@ -44,7 +63,7 @@ export function MainMenu() {
       <nav className={styles.NavSection}>
         <Heading level={2}>Categorieën</Heading>
         <div>
-          {categoryMenuItems.map((item) => (
+          {visibleCategoryMenuItems.map((item) => (
             <MaRouterLink
               key={item.id}
               href={item.to}
