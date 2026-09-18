@@ -4,7 +4,7 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
 {
   "content": [
     {
-      "datePublished": "2026-02-04T23:00:00.000Z",
+      "datePublished": "2026-02-05T00:00:00.000Z",
       "displayStatus": "Afgehandeld",
       "dossierLinks": [
         {
@@ -37,7 +37,7 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "zaakUuid": "1234-5678-9012-9999",
     },
     {
-      "datePublished": "2026-06-29T22:00:00.000Z",
+      "datePublished": "2026-06-30T00:00:00.000Z",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
         {
@@ -65,7 +65,7 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "zaakUuid": "1234-5678-9012-8888",
     },
     {
-      "datePublished": "2026-07-14T22:00:00.000Z",
+      "datePublished": "2026-07-15T00:00:00.000Z",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
         {
@@ -98,7 +98,7 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "zaakUuid": "1234-5678-9012-9999",
     },
     {
-      "datePublished": "2026-06-29T22:00:00.000Z",
+      "datePublished": "2026-06-30T00:00:00.000Z",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
         {
@@ -126,7 +126,7 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "zaakUuid": "1234-5678-9012-8888",
     },
     {
-      "datePublished": "2026-07-14T22:00:00.000Z",
+      "datePublished": "2026-07-15T00:00:00.000Z",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
         {
@@ -159,7 +159,7 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "zaakUuid": "1234-5678-9012-9999",
     },
     {
-      "datePublished": "2026-06-29T22:00:00.000Z",
+      "datePublished": "2026-06-30T00:00:00.000Z",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
         {
@@ -187,7 +187,7 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "zaakUuid": "1234-5678-9012-8888",
     },
     {
-      "datePublished": "2026-07-14T22:00:00.000Z",
+      "datePublished": "2026-07-15T00:00:00.000Z",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
         {
@@ -220,7 +220,7 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "zaakUuid": "1234-5678-9012-9999",
     },
     {
-      "datePublished": "2026-06-29T22:00:00.000Z",
+      "datePublished": "2026-06-30T00:00:00.000Z",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
         {

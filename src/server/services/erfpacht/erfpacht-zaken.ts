@@ -61,10 +61,9 @@ function transformErfpachtZakenResponse(
   return (zakenResponseSource.content ?? []).map((zaakInfo) => {
     const zaak: ErfpachtZaakExcerptFrontend = {
       ...zaakInfo,
-      // Added this fields because the date notation from the API is not in ISO format, and we need to ensure that the date is in a consistent format for frontend use.
-      datePublished: toISOString(zaakInfo.statusDatum),
+      // Added this field to normalize API statusDatum to a full ISO-8601 date-time string for consistent frontend use.
+      datePublished: toISOString(`${zaakInfo.statusDatum}T00:00:00.000Z`),
 
-      //
       fetchZaakDetailUrl: generateFullApiUrlBFF(
         routes.protected.ERFPACHT_ZAAK_DETAILS,
         {

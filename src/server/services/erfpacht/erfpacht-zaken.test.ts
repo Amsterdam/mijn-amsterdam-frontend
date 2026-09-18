@@ -41,7 +41,7 @@ describe('erfpacht-zaken', () => {
     expect(transformedResponse).toMatchInlineSnapshot(`
       [
         {
-          "datePublished": "2026-02-04T23:00:00.000Z",
+          "datePublished": "2026-02-05T00:00:00.000Z",
           "displayStatus": "Aanvraag",
           "dossierLinks": [
             {
