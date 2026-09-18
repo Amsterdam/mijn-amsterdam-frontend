@@ -9,25 +9,21 @@
   justify-content: space-between;
 }
 
-.TipCard__greenBackground {
-  background-color: var(--ams-color-highlight-green);
+.RemoveButton {
+  block-size: fit-content;
+  inline-size: fit-content;
+  background-color: transparent;
+  justify-self: end;
 }
 
 .TipCard__azureBackground {
   background-color: var(--ams-color-highlight-azure);
 }
 
-.TipCard__purpleBackground {
-  background-color: var(--ams-color-highlight-purple);
+.TipCard__greenBackground {
+  background-color: var(--ams-color-highlight-green);
 }
 
-.RemoveButton {
-  background-color: transparent;
-  inline-size: fit-content;
-  block-size: fit-content;
-  justify-self: end;
-
-  &:hover {
-    background-color: transparent;
-  }
+.TipCard__purpleBackground {
+  background-color: var(--ams-color-highlight-purple);
 }
