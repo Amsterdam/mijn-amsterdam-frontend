@@ -25,6 +25,8 @@ export function MyNotificationsPage() {
   });
 
   const { NOTIFICATIONS } = useAppStateGetter();
+  const isLoadingNotifications = useIsLoading(NOTIFICATIONS);
+
   const { notifications, total } = useAppStateNotifications();
   const { page = '1' } = useParams<{ page?: string }>();
 
@@ -60,12 +62,12 @@ export function MyNotificationsPage() {
           />
         )}
         <OrderedList markers={false}>
-          {useIsLoading(NOTIFICATIONS) && (
+          {isLoadingNotifications && (
             <OrderedList.Item>
               <LoadingContent />
             </OrderedList.Item>
           )}
-          {!useIsLoading(NOTIFICATIONS) &&
+          {!isLoadingNotifications &&
             notificationsPaginated.map((notification, index) => {
               return (
                 <OrderedList.Item

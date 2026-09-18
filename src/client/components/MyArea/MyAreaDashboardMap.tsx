@@ -16,6 +16,8 @@ import { useIsLoading } from '../../hooks/useIsLoading.ts';
 
 export function MyAreaDashboardMap() {
   const { MY_LOCATION } = useAppStateGetter();
+  const isLoadingMyLocation = useIsLoading(MY_LOCATION);
+
   const locations = (MY_LOCATION.content || []).filter(
     (location: BAGLocation | null): location is BAGLocation =>
       !!location?.latlng
@@ -67,7 +69,7 @@ export function MyAreaDashboardMap() {
               />
             )
         )}
-      {useIsLoading(MY_LOCATION) && (
+      {isLoadingMyLocation && (
         <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
       )}
       {!!secondaryLocations?.length && (

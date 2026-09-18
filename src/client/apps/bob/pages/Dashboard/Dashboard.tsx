@@ -31,10 +31,14 @@ export function Dashboard() {
     documentTitle: DASHBOARD_PAGE_DOCUMENT_TITLE,
   });
 
-  const appState = useAppStateGetter();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const appState = useAppStateGetter();
   const { NOTIFICATIONS } = appState;
+
+  const isLoadingNotifications = useIsLoading(NOTIFICATIONS);
+
   const { notifications, total } = useAppStateNotifications(
     MAX_NOTIFICATIONS_VISIBLE
   );
@@ -87,12 +91,12 @@ export function Dashboard() {
             )}
           </Heading>
           <OrderedList markers={false}>
-            {useIsLoading(NOTIFICATIONS) && (
+            {isLoadingNotifications && (
               <OrderedList.Item>
                 <LoadingContent />
               </OrderedList.Item>
             )}
-            {!useIsLoading(NOTIFICATIONS) &&
+            {!isLoadingNotifications &&
               notifications.map((notification, index) => {
                 return (
                   <OrderedList.Item
