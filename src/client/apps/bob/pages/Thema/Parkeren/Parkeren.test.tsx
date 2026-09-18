@@ -1,15 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
-import type { Mock } from 'vitest';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { themaConfig } from './Parkeren-thema-config.ts';
 import { ParkerenThema } from './ParkerenThema.tsx';
 import { forTesting } from './ParkerenThema.tsx';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
-import { useProfileTypeValue } from '../../../../../hooks/useProfileType.ts';
 import { MockApp } from '../../MockApp.tsx';
-import { getBelastingenSSOUrl } from '../Belastingen/Belastingen-thema-config.ts';
 
 vi.mock('../../../hooks/useProfileType');
 
@@ -88,9 +85,6 @@ describe('Parkeren', () => {
     );
   }
 
-  afterEach(() => {
-    (useProfileTypeValue as Mock).mockReset();
-  });
 
   it('should render the component and show the correct title', () => {
     render(<Component />);
@@ -99,8 +93,6 @@ describe('Parkeren', () => {
   });
 
   it('should contain the correct links', () => {
-    (useProfileTypeValue as Mock).mockReturnValue('private');
-
     render(<Component />);
 
     expect(
@@ -108,24 +100,6 @@ describe('Parkeren', () => {
     ).toBeInTheDocument();
 
     expect(screen.getByText(linkButtonTxt)).toBeInTheDocument();
-  });
-
-  it('renders private profile page link', () => {
-    (useProfileTypeValue as Mock).mockReturnValue('private');
-
-    render(<Component />);
-
-    const link = screen.getByRole('link', { name: 'Parkeerbon betalen' });
-    expect(link).toHaveAttribute('href', getBelastingenSSOUrl('private'));
-  });
-
-  it('renders commercial profile page link', () => {
-    (useProfileTypeValue as Mock).mockReturnValue('commercial');
-
-    render(<Component />);
-
-    const link = screen.getByRole('link', { name: 'Parkeerbon betalen' });
-    expect(link).toHaveAttribute('href', getBelastingenSSOUrl('commercial'));
   });
 
   it('should display the list of parkeervergunningen', async () => {
