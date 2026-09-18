@@ -240,7 +240,7 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
         page: null,
       }),
       maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS,
-      sort: dateSort<ErfpachtZaakExcerptFrontend>('statusDatum'),
+      sort: dateSort<ErfpachtZaakExcerptFrontend>('statusDatum', 'desc'),
     },
     [listPageParamKind.erfpachtDossierDetailZaken]: {
       title: 'Wijzigingsaanvragen',
