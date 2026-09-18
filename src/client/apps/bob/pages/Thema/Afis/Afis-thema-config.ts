@@ -132,9 +132,9 @@ const displayPropsFacturenAfgehandeldOfOvergedragen: DisplayProps<AfisFactuurFro
     },
     colWidths: {
       large: ['0', '25%', '25%', '50%'],
-      small: ['auto', '0', 'auto', '0'],
+      small: ['0', 'auto', 'auto', '0'],
     },
-    enableMobileListView: true,
+    enableMobileListView: false,
   };
 
 export const displayPropsTermijnenTable: DisplayProps<AfisFactuurTermijn> = {
