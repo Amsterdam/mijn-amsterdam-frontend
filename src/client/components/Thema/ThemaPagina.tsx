@@ -4,7 +4,7 @@ import { LinkList } from '@amsterdam/design-system-react';
 
 import styles from './ThemaPagina.module.scss';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
-import type { LinkConfig } from '../../config/thema-types.ts';
+import type { LinkConfig } from '../../../universal/types/thema-types.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import { ErrorAlert } from '../Alert/Alert.tsx';
 import {
