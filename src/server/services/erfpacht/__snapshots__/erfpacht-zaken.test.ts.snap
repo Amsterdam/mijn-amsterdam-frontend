@@ -4,8 +4,7 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
 {
   "content": [
     {
-      "datePublished": "2026-02-05T00:00:00.000Z",
-      "datePublishedFormatted": "05 februari 2026",
+      "datePublished": "2026-02-04T23:00:00.000Z",
       "displayStatus": "Afgehandeld",
       "dossierLinks": [
         {
@@ -18,11 +17,12 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
         },
       ],
       "fetchZaakDetailUrl": "http://bff-api-host/api/v1/services/erfpacht/zaak/1234-5678-9012-9999",
-      "formattedStatusDatum": "05-02-2026",
+      "formattedStatusDatum": "5 februari 2026",
       "link": {
         "title": "Wijzigen Erfpachtrecht",
         "to": "/erfpacht/zaak/1234-5678-9012-9999",
       },
+      "statusDatum": "2026-02-05",
       "statusOmschrijving": "Aanvraag afgerond",
       "titelFormattedStatusDatum": "Datum status",
       "titelStatusOmschrijving": "Status",
@@ -37,8 +37,7 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "zaakUuid": "1234-5678-9012-9999",
     },
     {
-      "datePublished": "2026-06-30T00:00:00.000Z",
-      "datePublishedFormatted": "30 juni 2026",
+      "datePublished": "2026-06-29T22:00:00.000Z",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
         {
@@ -47,11 +46,12 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
         },
       ],
       "fetchZaakDetailUrl": "http://bff-api-host/api/v1/services/erfpacht/zaak/1234-5678-9012-8888",
-      "formattedStatusDatum": "30-06-2026",
+      "formattedStatusDatum": "30 juni 2026",
       "link": {
         "title": "Wijzigen Erfpachtrecht",
         "to": "/erfpacht/zaak/1234-5678-9012-8888",
       },
+      "statusDatum": "2026-06-30",
       "statusOmschrijving": "Aanvraag beoordelen",
       "titelFormattedStatusDatum": "Datum status",
       "titelStatusOmschrijving": "Status",
@@ -65,8 +65,7 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "zaakUuid": "1234-5678-9012-8888",
     },
     {
-      "datePublished": "2026-07-15T00:00:00.000Z",
-      "datePublishedFormatted": "15 juli 2026",
+      "datePublished": "2026-07-14T22:00:00.000Z",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
         {
@@ -79,11 +78,12 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
         },
       ],
       "fetchZaakDetailUrl": "http://bff-api-host/api/v1/services/erfpacht/zaak/1234-5678-9012-9999",
-      "formattedStatusDatum": "15-07-2026",
+      "formattedStatusDatum": "15 juli 2026",
       "link": {
         "title": "Wijzigen Erfpachtrecht",
         "to": "/erfpacht/zaak/1234-5678-9012-9999",
       },
+      "statusDatum": "2026-07-15",
       "statusOmschrijving": "Informatie opgevraagd",
       "titelFormattedStatusDatum": "Datum status",
       "titelStatusOmschrijving": "Status",
@@ -98,8 +98,7 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "zaakUuid": "1234-5678-9012-9999",
     },
     {
-      "datePublished": "2026-06-30T00:00:00.000Z",
-      "datePublishedFormatted": "30 juni 2026",
+      "datePublished": "2026-06-29T22:00:00.000Z",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
         {
@@ -108,11 +107,12 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
         },
       ],
       "fetchZaakDetailUrl": "http://bff-api-host/api/v1/services/erfpacht/zaak/1234-5678-9012-8888",
-      "formattedStatusDatum": "30-06-2026",
+      "formattedStatusDatum": "30 juni 2026",
       "link": {
         "title": "Wijzigen Erfpachtrecht",
         "to": "/erfpacht/zaak/1234-5678-9012-8888",
       },
+      "statusDatum": "2026-06-30",
       "statusOmschrijving": "Aanvraag beoordelen",
       "titelFormattedStatusDatum": "Datum status",
       "titelStatusOmschrijving": "Status",
@@ -126,8 +126,7 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "zaakUuid": "1234-5678-9012-8888",
     },
     {
-      "datePublished": "2026-07-15T00:00:00.000Z",
-      "datePublishedFormatted": "15 juli 2026",
+      "datePublished": "2026-07-14T22:00:00.000Z",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
         {
@@ -140,11 +139,12 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
         },
       ],
       "fetchZaakDetailUrl": "http://bff-api-host/api/v1/services/erfpacht/zaak/1234-5678-9012-9999",
-      "formattedStatusDatum": "15-07-2026",
+      "formattedStatusDatum": "15 juli 2026",
       "link": {
         "title": "Wijzigen Erfpachtrecht",
         "to": "/erfpacht/zaak/1234-5678-9012-9999",
       },
+      "statusDatum": "2026-07-15",
       "statusOmschrijving": "Aanvraag beoordelen",
       "titelFormattedStatusDatum": "Datum status",
       "titelStatusOmschrijving": "Status",
@@ -159,8 +159,7 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "zaakUuid": "1234-5678-9012-9999",
     },
     {
-      "datePublished": "2026-06-30T00:00:00.000Z",
-      "datePublishedFormatted": "30 juni 2026",
+      "datePublished": "2026-06-29T22:00:00.000Z",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
         {
@@ -169,11 +168,12 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
         },
       ],
       "fetchZaakDetailUrl": "http://bff-api-host/api/v1/services/erfpacht/zaak/1234-5678-9012-8888",
-      "formattedStatusDatum": "30-06-2026",
+      "formattedStatusDatum": "30 juni 2026",
       "link": {
         "title": "Wijzigen Erfpachtrecht",
         "to": "/erfpacht/zaak/1234-5678-9012-8888",
       },
+      "statusDatum": "2026-06-30",
       "statusOmschrijving": "Aanvraag beoordelen",
       "titelFormattedStatusDatum": "Datum status",
       "titelStatusOmschrijving": "Status",
@@ -187,8 +187,7 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "zaakUuid": "1234-5678-9012-8888",
     },
     {
-      "datePublished": "2026-07-15T00:00:00.000Z",
-      "datePublishedFormatted": "15 juli 2026",
+      "datePublished": "2026-07-14T22:00:00.000Z",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
         {
@@ -201,11 +200,12 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
         },
       ],
       "fetchZaakDetailUrl": "http://bff-api-host/api/v1/services/erfpacht/zaak/1234-5678-9012-9999",
-      "formattedStatusDatum": "15-07-2026",
+      "formattedStatusDatum": "15 juli 2026",
       "link": {
         "title": "Wijzigen Erfpachtrecht",
         "to": "/erfpacht/zaak/1234-5678-9012-9999",
       },
+      "statusDatum": "2026-07-15",
       "statusOmschrijving": "Aanvraag beoordelen",
       "titelFormattedStatusDatum": "Datum status",
       "titelStatusOmschrijving": "Status",
@@ -220,8 +220,7 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
       "zaakUuid": "1234-5678-9012-9999",
     },
     {
-      "datePublished": "2026-06-30T00:00:00.000Z",
-      "datePublishedFormatted": "30 juni 2026",
+      "datePublished": "2026-06-29T22:00:00.000Z",
       "displayStatus": "Aanvraag",
       "dossierLinks": [
         {
@@ -230,11 +229,12 @@ exports[`erfpacht-zaken > fetchErfpachtZaakInfo 1`] = `
         },
       ],
       "fetchZaakDetailUrl": "http://bff-api-host/api/v1/services/erfpacht/zaak/1234-5678-9012-8888",
-      "formattedStatusDatum": "30-06-2026",
+      "formattedStatusDatum": "30 juni 2026",
       "link": {
         "title": "Wijzigen Erfpachtrecht",
         "to": "/erfpacht/zaak/1234-5678-9012-8888",
       },
+      "statusDatum": "2026-06-30",
       "statusOmschrijving": "Aanvraag beoordelen",
       "titelFormattedStatusDatum": "Datum status",
       "titelStatusOmschrijving": "Status",
