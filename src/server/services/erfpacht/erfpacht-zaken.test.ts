@@ -41,8 +41,7 @@ describe('erfpacht-zaken', () => {
     expect(transformedResponse).toMatchInlineSnapshot(`
       [
         {
-          "datePublished": "2026-07-15T00:00:00.000Z",
-          "datePublishedFormatted": "15 juli 2026",
+          "datePublished": "2026-02-05T00:00:00.000Z",
           "displayStatus": "Aanvraag",
           "dossierLinks": [
             {
@@ -60,6 +59,7 @@ describe('erfpacht-zaken', () => {
             "title": "Wijzigen Erfpachtrecht",
             "to": "/erfpacht/zaak/1234-5678-9012-9999",
           },
+          "statusDatum": "2026-02-05",
           "statusOmschrijving": "Informatie opgevraagd",
           "titelFormattedStatusDatum": "Datum status",
           "titelStatusOmschrijving": "Status",
