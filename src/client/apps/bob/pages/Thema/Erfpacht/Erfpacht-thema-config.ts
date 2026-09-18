@@ -197,7 +197,7 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
     },
     colWidths: {
       large: ['25%', '25%', '25%', '25%'],
-      small: ['auto', 'auto', 'auto', '0'],
+      small: ['auto', '0', 'auto', 'auto'],
     },
     enableMobileListView: true,
   };
