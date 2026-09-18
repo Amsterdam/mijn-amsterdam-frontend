@@ -152,9 +152,11 @@ export function Dashboard() {
                 />
               </Grid.Cell>
             ))}
-            <Grid.Cell span="all">
-              <MaRouterLink href="/alle-tips">Toon alle tips</MaRouterLink>
-            </Grid.Cell>
+            {visibleTips.length > 0 && (
+              <Grid.Cell span="all">
+                <MaRouterLink href="/alle-tips">Toon alle tips</MaRouterLink>
+              </Grid.Cell>
+            )}
           </Grid.Subgrid>
         )}
         {!isPhoneScreen && (
