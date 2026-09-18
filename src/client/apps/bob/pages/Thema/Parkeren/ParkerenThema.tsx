@@ -67,6 +67,8 @@ export function ParkerenThema() {
 
   useHTMLDocumentTitle(themaConfig.route);
 
+  const profileType = useProfileTypeValue();
+
   const tables = Object.entries(tableConfig).map(
     ([
       kind,
@@ -84,7 +86,7 @@ export function ParkerenThema() {
       );
     }
   );
-  const profileType = useProfileTypeValue();
+
   const pageContentTop = (
     <PageContentTop
       hasMijnParkerenVergunningen={hasMijnParkerenVergunningen}
@@ -122,5 +124,4 @@ export function ParkerenThema() {
     />
   );
 }
-
 export const forTesting = { PageContentTop };

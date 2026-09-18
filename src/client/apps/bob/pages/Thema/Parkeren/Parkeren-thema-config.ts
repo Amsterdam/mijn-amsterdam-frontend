@@ -3,12 +3,13 @@ import { generatePath } from 'react-router';
 
 import { IS_PRODUCTION } from '../../../../../../universal/config/env.ts';
 import { entries } from '../../../../../../universal/helpers/utils.ts';
-import { propagateFeatureToggles } from '../../../config/feature-toggles.ts';
 import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
 } from '../../../../../../universal/types/thema-types.ts';
+import { propagateFeatureToggles } from '../../../config/feature-toggles.ts';
+import { getBelastingenSSOUrl } from '../Belastingen/Belastingen-thema-config.ts';
 import type { ListPageParamKind as ListPageParamKindVergunningen } from '../Vergunningen/Vergunningen-thema-config.ts';
 import { tableConfig as tableConfigVergunningen } from '../Vergunningen/Vergunningen-thema-config.ts';
 
@@ -42,6 +43,16 @@ export const themaConfig: ParkerenThemaConfig = {
     {
       to: 'https://www.amsterdam.nl/parkeren/parkeren-gehandicapten/',
       title: 'Parkeren voor gehandicapten',
+    },
+    {
+      to: getBelastingenSSOUrl('private'),
+      title: 'Parkeerbon betalen',
+      profileTypes: ['private'],
+    },
+    {
+      to: getBelastingenSSOUrl('commercial'),
+      title: 'Parkeerbon betalen',
+      profileTypes: ['commercial'],
     },
   ],
   uitlegPageSections: [
