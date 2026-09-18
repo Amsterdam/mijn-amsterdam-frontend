@@ -13,19 +13,18 @@ import type {
   AfisFactuurTermijn,
   EmandateStatusCode,
 } from '../../../../../../server/services/afis/afis-types.ts';
-import { IS_PRODUCTION } from '../../../../../../universal/config/env.ts';
-import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
-import {
-  isEnabled,
-  propagateFeatureToggles,
-} from '../../../config/feature-toggles.ts';
 import type {
   PageConfig,
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
 } from '../../../../../../universal/types/thema-types.ts';
+import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
+import {
+  isEnabled,
+  propagateFeatureToggles,
+} from '../../../config/feature-toggles.ts';
 
 const THEMA_ID = 'AFIS';
 const THEMA_TITLE = 'Facturen en betalen';
@@ -118,9 +117,9 @@ const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
   },
   colWidths: {
     large: ['0', '15%', '25%', '25%', '35%'],
-    small: ['25%', '0', '0', '0', '75%'],
+    small: ['auto', '0', 'auto', 'auto', '0'],
   },
-  enableMobileListView: !IS_PRODUCTION,
+  enableMobileListView: true,
 };
 
 const displayPropsFacturenAfgehandeldOfOvergedragen: DisplayProps<AfisFactuurFrontend> =
@@ -133,9 +132,9 @@ const displayPropsFacturenAfgehandeldOfOvergedragen: DisplayProps<AfisFactuurFro
     },
     colWidths: {
       large: ['0', '25%', '25%', '50%'],
-      small: ['100%', '0', '0', '0'],
+      small: ['0', '50%', '50%', '0'],
     },
-    enableMobileListView: !IS_PRODUCTION,
+    enableMobileListView: false,
   };
 
 export const displayPropsTermijnenTable: DisplayProps<AfisFactuurTermijn> = {
