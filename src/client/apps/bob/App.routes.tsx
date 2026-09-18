@@ -6,6 +6,7 @@ import { DashboardRoutes } from './pages/Dashboard/Dashboard-routes.ts';
 import { GeneralInfoRoutes } from './pages/GeneralInfo/GeneralInfo-routes.ts';
 import { LandingRoutes } from './pages/Landing/Landing-routes.ts';
 import { MyNotificationsRoutes } from './pages/MyNotifications/MyNotifications-routes.ts';
+import { MyTipsRoutes } from './pages/MyTips/MyTips-routes.ts';
 import { NotFoundRoutes } from './pages/NotFound/NotFound-routes.ts';
 import { SearchRoutes } from './pages/Search/Search-routes.ts';
 import { MyAreaRoutes } from '../../components/MyArea/MyArea-routes.ts';
@@ -53,6 +54,7 @@ const routeComponents: ApplicationRouteConfig[] = [
   LandingRoutes,
   MyAreaRoutes,
   MyNotificationsRoutes,
+  MyTipsRoutes,
   NotFoundRoutes,
   ParkerenRoutes,
   ProfileRoutes,

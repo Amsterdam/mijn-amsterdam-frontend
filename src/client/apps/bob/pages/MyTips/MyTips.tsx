@@ -1,12 +1,11 @@
 import { useMemo } from 'react';
 
-import { OrderedList } from '@amsterdam/design-system-react';
+import { OrderedList, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath, useParams } from 'react-router';
 
-import { MY_NOTIFICATIONS_PAGE_DOCUMENT_TITLE } from './MyNotifications-config.ts';
-import { themaTitle } from './MyNotifications-config.ts';
-import { MyNotificationsRoute } from './MyNotifications-routes.ts';
-import { isError } from '../../../../../universal/helpers/api.ts';
+import { MY_TIPS_PAGE_DOCUMENT_TITLE } from './MyTips-config.ts';
+import { MyTipsRoute } from './MyTips-routes.ts';
+import { isError, isLoading } from '../../../../../universal/helpers/api.ts';
 import { ErrorAlert } from '../../../../components/Alert/Alert.tsx';
 import { LoadingContent } from '../../../../components/LoadingContent/LoadingContent.tsx';
 import { MyNotification } from '../../../../components/MyNotification/MyNotification.tsx';
@@ -14,18 +13,17 @@ import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
 import { PaginationV2 } from '../../../../components/Pagination/PaginationV2.tsx';
 import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
-import { useIsLoading } from '../../../../hooks/useIsLoading.ts';
 import { useAppStateNotifications } from '../../../../hooks/useNotifications.ts';
 
 const PAGE_SIZE = 12;
 
-export function MyNotificationsPage() {
+export function MyTipsPage() {
   useHTMLDocumentTitle({
-    documentTitle: MY_NOTIFICATIONS_PAGE_DOCUMENT_TITLE,
+    documentTitle: MY_TIPS_PAGE_DOCUMENT_TITLE,
   });
 
   const { NOTIFICATIONS } = useAppStateGetter();
-  const { notifications, notificationsTotal } = useAppStateNotifications();
+  const { tips, tipsTotal } = useAppStateNotifications();
   const { page = '1' } = useParams<{ page?: string }>();
 
   const currentPage = useMemo(() => {
@@ -35,47 +33,51 @@ export function MyNotificationsPage() {
     return parseInt(page, 10);
   }, [page]);
 
-  const notificationsPaginated = useMemo(() => {
+  const tipsPaginated = useMemo(() => {
     const startIndex = currentPage - 1;
     const start = startIndex * PAGE_SIZE;
     const end = start + PAGE_SIZE;
-    return notifications.slice(start, end);
-  }, [currentPage, notifications]);
+    return tips?.slice(start, end);
+  }, [currentPage, tips]);
 
   return (
-    <PageV2 heading={themaTitle}>
+    <PageV2 heading="Mijn tips">
       <PageContentCell>
         {isError(NOTIFICATIONS) && (
           <ErrorAlert className="ams-mb-m">
-            Niet alle berichten kunnen op dit moment worden getoond.
+            Niet alle tips kunnen op dit moment worden getoond.
           </ErrorAlert>
         )}
         <OrderedList markers={false}>
-          {useIsLoading(NOTIFICATIONS) && (
+          {isLoading(NOTIFICATIONS) && (
             <OrderedList.Item>
               <LoadingContent />
             </OrderedList.Item>
           )}
-          {!useIsLoading(NOTIFICATIONS) &&
-            notificationsPaginated.map((notification, index) => {
+          {!isLoading(NOTIFICATIONS) &&
+            tipsPaginated?.map((tip, index) => {
               return (
                 <OrderedList.Item
-                  key={`${notification.themaID}-${notification.id}-${index}`}
-                  className={`ams-mb-m ${notification.className}`}
+                  key={`${tip.themaID}-${tip.id}-${index}`}
+                  className="ams-mb-m"
                 >
                   <MyNotification
-                    notification={notification}
+                    notification={tip}
                     trackCategory="Dashboard / Actueel"
                   />
                 </OrderedList.Item>
               );
             })}
         </OrderedList>
-        {notificationsTotal > PAGE_SIZE && (
+        {!isLoading(NOTIFICATIONS) && tips?.length === 0 && (
+          <Paragraph>Op dit moment zijn er geen tips.</Paragraph>
+        )}
+        {tipsTotal != null && tipsTotal > PAGE_SIZE && (
           <PaginationV2
-            totalCount={notificationsTotal}
+            className="ams-mb-m"
+            totalCount={tipsTotal}
             pageSize={PAGE_SIZE}
-            path={generatePath(MyNotificationsRoute.route)}
+            path={generatePath(MyTipsRoute.route)}
             currentPage={currentPage}
           />
         )}
