@@ -7,6 +7,7 @@ import type {
   ErfpachtResponseFrontend,
 } from '../../../../../../server/services/erfpacht/erfpacht-types.ts';
 import type { ErfpachtZaakExcerptFrontend } from '../../../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
+import { dateSort } from '../../../../../../universal/helpers/date.ts';
 import type {
   PageConfig,
   ThemaConfigBase,
@@ -239,6 +240,7 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
         page: null,
       }),
       maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS,
+      sort: dateSort<ErfpachtZaakExcerptFrontend>('statusDatum'),
     },
     [listPageParamKind.erfpachtDossierDetailZaken]: {
       title: 'Wijzigingsaanvragen',
