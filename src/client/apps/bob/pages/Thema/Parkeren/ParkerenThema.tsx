@@ -65,7 +65,6 @@ export function ParkerenThema() {
     themaConfig,
   } = useParkerenData();
 
-
   useHTMLDocumentTitle(themaConfig.route);
 
   const profileType = useProfileTypeValue();
