@@ -22,7 +22,7 @@ export function useInkomenThemaData() {
   const { WPI_AANVRAGEN, WPI_SPECIFICATIES, WPI_TOZO, WPI_TONK, WPI_BBZ } =
     useAppStateGetter();
 
-  const profileType = useProfileType();
+  const { profileType } = useProfileType();
 
   const specificaties = useAddDocumentLinkComponents(
     WPI_SPECIFICATIES.content?.uitkeringsspecificaties ?? []
@@ -53,9 +53,9 @@ export function useInkomenThemaData() {
           displayDateEnd: defaultDateFormat(item.dateEnd || item.datePublished),
           displayDateStart: isBbzHistoric
             ? defaultDateFormat(
-              item.steps.find((s) => s.id === 'aanvraag')?.datePublished ||
-              item.dateStart
-            )
+                item.steps.find((s) => s.id === 'aanvraag')?.datePublished ||
+                  item.dateStart
+              )
             : defaultDateFormat(item.dateStart),
           status: isBbzHistoric
             ? '-'
