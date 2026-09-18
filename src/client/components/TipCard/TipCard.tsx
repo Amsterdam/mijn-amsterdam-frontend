@@ -60,7 +60,7 @@ export function TipCard({
         <IconButton
           className={styles.RemoveButton}
           color="inverse"
-          label="Verwijder tip"
+          label="Markeer tip als gelezen"
           size="large"
           onClick={() => onRead()}
         />

@@ -1,9 +1,13 @@
 import type { ComponentProps } from 'react';
 
 import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router';
 
-import { TipCard, tipCardColors } from '../../components/TipCard/TipCard.tsx';
+import {
+  TipCard,
+  tipCardColors,
+} from '../../../../components/TipCard/TipCard.tsx';
 
 type TipCardProps = ComponentProps<typeof TipCard>;
 
@@ -16,6 +20,7 @@ const tipCardProps: TipCardProps = {
     to: '/tip-1',
     title: 'Bekijk tip 1',
   },
+  onRead: () => { },
 };
 
 function renderTipCard(props: Partial<TipCardProps> = {}) {
@@ -45,12 +50,17 @@ describe('<TipCard />', () => {
     expect(screen.getByRole('link', { name: 'Toon tip' })).toBeInTheDocument();
   });
 
-  it('Displays the remove button', () => {
-    const screen = renderTipCard();
+  it('Calls onRead when the remove button is clicked', async () => {
+    const user = userEvent.setup();
+    const onRead = vi.fn();
 
-    expect(
-      screen.getByRole('button', { name: 'Verwijder tip' })
-    ).toBeInTheDocument();
+    const screen = renderTipCard({ onRead });
+
+    await user.click(
+      screen.getByRole('button', { name: 'Markeer tip als gelezen' })
+    );
+
+    expect(onRead).toHaveBeenCalledTimes(1);
   });
 
   test.each(tipCardColors)('Renders color variant %s', (backgroundColor) => {

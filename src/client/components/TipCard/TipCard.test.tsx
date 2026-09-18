@@ -44,7 +44,7 @@ describe('<TipCard />', () => {
     renderTipCard();
 
     expect(
-      screen.getByRole('button', { name: 'Verwijder tip' })
+      screen.getByRole('button', { name: 'Markeer tip als gelezen' })
     ).toBeInTheDocument();
   });
 
