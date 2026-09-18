@@ -5,13 +5,13 @@ import { generatePath } from 'react-router';
 import type { HLIRegelingFrontend } from '../../../../../../server/services/hli/hli-regelingen-types.ts';
 import { IS_PRODUCTION } from '../../../../../../universal/config/env.ts';
 import { dateSort } from '../../../../../../universal/helpers/date.ts';
+import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
+import { propagateFeatureToggles } from '../../../config/feature-toggles.ts';
 import type {
   PageConfig,
   ThemaConfigBase,
 } from '../../../../../../universal/types/thema-types.ts';
-import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
-import { propagateFeatureToggles } from '../../../config/feature-toggles.ts';
 
 const THEMA_TITLE = 'Stadspas en regelingen bij laag inkomen' as const;
 export const regelingenTitle = 'Regelingen bij laag inkomen' as const;
@@ -129,9 +129,8 @@ const displayPropsHuidigeRegelingen: DisplayProps<HLIRegelingFrontend> = {
   },
   colWidths: {
     large: ['60%', '40%'],
-    small: ['auto', 'auto'],
+    small: ['100%', '0'],
   },
-  enableMobileListView: true,
 };
 
 const displayPropsEerdereRegelingen: DisplayProps<HLIRegelingFrontend> = {
@@ -142,9 +141,8 @@ const displayPropsEerdereRegelingen: DisplayProps<HLIRegelingFrontend> = {
   },
   colWidths: {
     large: ['40%', '20%', '40%'],
-    small: ['auto', 'auto', 'auto'],
+    small: ['100%', '0', '0'],
   },
-  enableMobileListView: true,
 };
 
 type SpecificatieDisplayProps = {
@@ -162,7 +160,7 @@ const specificatieDisplayProps: DisplayProps<SpecificatieDisplayProps> = {
   },
   colWidths: {
     large: ['60%', '40%'],
-    small: ['auto', '40%'],
+    small: ['60%', '40%'],
   },
 };
 
@@ -180,9 +178,8 @@ export const stadspasDisplayProps: DisplayProps<StadspasDisplayProps> = {
   },
   colWidths: {
     large: ['40%', '20%', '40%'],
-    small: ['auto', 'auto', '0'],
+    small: ['80%', '20%', '0'],
   },
-  enableMobileListView: true,
 };
 
 export const listPageParamKind = {
