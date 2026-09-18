@@ -1,5 +1,5 @@
+import { featureToggle } from './MyTips-config.ts';
 import { MyTipsPage } from './MyTips.tsx';
-import { featureToggle } from './tips-config.ts';
 
 export const MyTipsRoute = {
   route: '/alle-tips/:page?',

@@ -3,14 +3,14 @@ import { useMemo } from 'react';
 import { useAppStateStore } from './useAppStateStore.ts';
 import type { MyNotification } from '../../universal/types/App.types.ts';
 import { WelcomeNotification } from '../apps/bob/config/staticData.tsx';
+import { featureToggle } from '../apps/bob/pages/MyTips/MyTips-config.ts';
 import { getRedactedClass } from '../helpers/cobrowse.ts';
-import { featureToggle } from '../pages/Tips/tips-config.ts';
 
 export function useAppStateNotifications(top?: number) {
   const { isReady, NOTIFICATIONS } = useAppStateStore();
   const notifications_: MyNotification[] = NOTIFICATIONS?.content ?? [];
   // Merge the WelcomeNotification when AppState is ready.
-  const notificationsWithWecomeNotification = useMemo(
+  const notificationsWithWelcomeNotification = useMemo(
     () =>
       (isReady ? [...notifications_, WelcomeNotification] : notifications_).map(
         (n) => ({
@@ -26,14 +26,14 @@ export function useAppStateNotifications(top?: number) {
   if (!featureToggle.newTipsDesign) {
     return {
       notifications: top
-        ? notificationsWithWecomeNotification.slice(0, top)
-        : notificationsWithWecomeNotification,
-      notificationsTotal: notificationsWithWecomeNotification.length,
+        ? notificationsWithWelcomeNotification.slice(0, top)
+        : notificationsWithWelcomeNotification,
+      notificationsTotal: notificationsWithWelcomeNotification.length,
     };
   }
 
   // Seperate notifications and tips
-  const notifications = notificationsWithWecomeNotification.filter(
+  const notifications = notificationsWithWelcomeNotification.filter(
     (notification) => !notification.isTip
   );
   const tips = notifications_.filter((notification) => notification.isTip);

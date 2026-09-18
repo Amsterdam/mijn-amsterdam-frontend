@@ -9,7 +9,7 @@ import { DashboardHeader } from './DashboardHeader.tsx';
 import { WelcomeHeading } from './WelcomHeading.tsx';
 import { isLoading } from '../../../../../universal/helpers/api.ts';
 import { LoadingContent } from '../../../../components/LoadingContent/LoadingContent.tsx';
-import { MaLink, MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
+import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import { MyAreaDashboard } from '../../../../components/MyArea/MyAreaDashboard.tsx';
 import { MyNotification } from '../../../../components/MyNotification/MyNotification.tsx';
 import { MyThemasPanel } from '../../../../components/MyThemasPanel/MyThemasPanel.tsx';
@@ -24,8 +24,8 @@ import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
 import { useAppStateNotifications } from '../../../../hooks/useNotifications.ts';
 import { useActiveThemaMenuItems } from '../../../../hooks/useThemaMenuItems.ts';
-import { featureToggle } from '../../../../pages/Tips/tips-config.ts';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
+import { featureToggle } from '../MyTips/MyTips-config.ts';
 import { AfsprakenDashboard } from '../Thema/KlantContact/Afspraken/Afspraken.tsx';
 import { useKlantcontactData } from '../Thema/KlantContact/useKlantcontactData.hook.tsx';
 
@@ -153,7 +153,7 @@ export function Dashboard() {
               </Grid.Cell>
             ))}
             <Grid.Cell span="all">
-              <MaLink href="/alle-tips">Toon alle tips</MaLink>
+              <MaRouterLink href="/alle-tips">Toon alle tips</MaRouterLink>
             </Grid.Cell>
           </Grid.Subgrid>
         )}

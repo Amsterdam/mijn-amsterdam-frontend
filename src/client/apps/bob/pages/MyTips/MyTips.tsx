@@ -3,19 +3,25 @@ import { useMemo } from 'react';
 import { OrderedList } from '@amsterdam/design-system-react';
 import { generatePath, useParams } from 'react-router';
 
+import { MY_TIPS_PAGE_DOCUMENT_TITLE } from './MyTips-config.ts';
 import { MyTipsRoute } from './MyTips-routes.ts';
-import { isError, isLoading } from '../../../universal/helpers/api.ts';
-import { ErrorAlert } from '../../components/Alert/Alert.tsx';
-import { LoadingContent } from '../../components/LoadingContent/LoadingContent.tsx';
-import { MyNotification } from '../../components/MyNotification/MyNotification.tsx';
-import { PageContentCell, PageV2 } from '../../components/Page/Page.tsx';
-import { PaginationV2 } from '../../components/Pagination/PaginationV2.tsx';
-import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
-import { useAppStateNotifications } from '../../hooks/useNotifications.ts';
+import { isError, isLoading } from '../../../../../universal/helpers/api.ts';
+import { ErrorAlert } from '../../../../components/Alert/Alert.tsx';
+import { LoadingContent } from '../../../../components/LoadingContent/LoadingContent.tsx';
+import { MyNotification } from '../../../../components/MyNotification/MyNotification.tsx';
+import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
+import { PaginationV2 } from '../../../../components/Pagination/PaginationV2.tsx';
+import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
+import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
+import { useAppStateNotifications } from '../../../../hooks/useNotifications.ts';
 
 const PAGE_SIZE = 12;
 
 export function MyTipsPage() {
+  useHTMLDocumentTitle({
+    documentTitle: MY_TIPS_PAGE_DOCUMENT_TITLE,
+  });
+
   const { NOTIFICATIONS: TIPS } = useAppStateGetter();
   const { tips, tipsTotal } = useAppStateNotifications();
   const { page = '1' } = useParams<{ page?: string }>();
