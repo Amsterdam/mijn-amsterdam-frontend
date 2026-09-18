@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Grid, Heading, OrderedList } from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
@@ -59,6 +59,24 @@ export function Dashboard() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const [readTipIds, setReadTipIds] = useState<string[]>([]);
+
+  const visibleTips = tips
+    ?.map((tip, tipIndex) => ({
+      tip,
+      colorIndex: tipIndex % tipCardColors.length,
+    }))
+    .filter(({ tip }) => !readTipIds.includes(tip.id))
+    .slice(0, 3);
+
+  const markAsRead = (tipId: string) => {
+    setReadTipIds((currentIds) =>
+      currentIds.includes() ? currentIds : [...currentIds, tipId]
+    );
+
+    // TODO: MIJN-12460: Actually mark the tip as read.
+  };
 
   return (
     <>
@@ -122,13 +140,14 @@ export function Dashboard() {
         </PageContentCell>
         {featureToggle.newTipsDesign && hasTips && (
           <Grid.Subgrid as="ul" span="all" gapVertical="large">
-            {tips.map((tip, index) => (
-              <Grid.Cell as="li" span={4} key={tip.themaID}>
+            {visibleTips?.map(({ colorIndex, tip }) => (
+              <Grid.Cell as="li" span={4} key={tip.id}>
                 <TipCard
-                  backgroundColor={tipCardColors[index]}
+                  backgroundColor={tipCardColors[colorIndex]}
                   description={tip.description}
                   heading={tip.title}
                   link={tip.link}
+                  onClick={() => markAsRead(tip.id)}
                   tipReason={tip.tipReason}
                 />
               </Grid.Cell>

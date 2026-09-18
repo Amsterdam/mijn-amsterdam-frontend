@@ -10,14 +10,15 @@ import { MaLink } from '../MaLink/MaLink.tsx';
 export const tipCardColors = ['green', 'azure', 'purple'] as const;
 
 type TipCardProps = {
-  className?: string;
   backgroundColor: (typeof tipCardColors)[number];
-  heading: string;
+  className?: string;
   description?: string;
+  heading: string;
   link?: {
     title: string;
     to: string;
   };
+  onRead: void;
   tipReason?: string;
 };
 
@@ -30,9 +31,10 @@ const tipCardClassName: Record<TipCardProps['backgroundColor'], string> = {
 export function TipCard({
   backgroundColor,
   className,
-  heading,
   description,
+  heading,
   link,
+  onRead,
   tipReason,
 }: TipCardProps) {
   const [isTipShown, showTip] = useState(false);
@@ -60,6 +62,7 @@ export function TipCard({
           color="inverse"
           label="Verwijder tip"
           size="large"
+          onClick={onRead}
         />
       </div>
       {!isTipShown && (
