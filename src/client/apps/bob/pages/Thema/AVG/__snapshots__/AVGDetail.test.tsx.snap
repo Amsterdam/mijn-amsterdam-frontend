@@ -1,0 +1,469 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mams-content-wrapper"
+  >
+    <div
+      class="ams-grid ams-grid--padding-top--large"
+      id="page-breadcrumbs"
+    >
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <nav
+          aria-labelledby=":r0:"
+          class="ams-breadcrumb"
+        >
+          <h2
+            aria-hidden="true"
+            class="ams-visually-hidden"
+            id=":r0:"
+          >
+            Kruimelpad
+          </h2>
+          <ol
+            class="ams-breadcrumb__list"
+          >
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/avg"
+              >
+                AVG persoonsgegevens
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/avg/verzoek/abc"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  AVG verzoek
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <main
+      id="page-main-content"
+    >
+      <div
+        class="ams-grid"
+      >
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <h1
+            class="ams-heading ams-heading--1 ams-mb-s"
+          >
+            AVG verzoek
+          </h1>
+        </div>
+      </div>
+      <div
+        class="ams-grid ams-grid--padding-bottom--x-large"
+      >
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <section
+            aria-labelledby=":r1:"
+            class="ams-alert"
+          >
+            <div
+              class="ams-alert__severity-indicator"
+            >
+              <span
+                class="ams-icon ams-icon--inverse ams-icon--heading-3"
+                hidden=""
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    clip-rule="evenodd"
+                    d="M21.5 21.5h-19v-19h19zM11 10.177v6.922h2v-6.922zm1-3.275c-.69 0-1.19.48-1.19 1.16s.5 1.16 1.19 1.16 1.19-.48 1.19-1.16-.5-1.16-1.19-1.16"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </span>
+            </div>
+            <div
+              class="ams-alert__content"
+            >
+              <div
+                class="ams-row ams-row--align-between ams-row--align-vertical-start"
+              >
+                <h4
+                  class="ams-heading ams-heading--3"
+                  id=":r1:"
+                >
+                  Geen gegevens gevonden
+                </h4>
+              </div>
+              <p
+                class="ams-paragraph"
+              >
+                We kunnen op dit moment geen gegevens tonen.
+              </p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mams-content-wrapper"
+  >
+    <div
+      class="ams-grid ams-grid--padding-top--large"
+      id="page-breadcrumbs"
+    >
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <nav
+          aria-labelledby=":r2:"
+          class="ams-breadcrumb"
+        >
+          <h2
+            aria-hidden="true"
+            class="ams-visually-hidden"
+            id=":r2:"
+          >
+            Kruimelpad
+          </h2>
+          <ol
+            class="ams-breadcrumb__list"
+          >
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/avg"
+              >
+                AVG persoonsgegevens
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/avg/verzoek/223"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  AVG verzoek
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <main
+      id="page-main-content"
+    >
+      <div
+        class="ams-grid"
+      >
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <h1
+            class="ams-heading ams-heading--1 ams-mb-s"
+          >
+            AVG verzoek
+          </h1>
+        </div>
+      </div>
+      <div
+        class="ams-grid ams-grid--padding-bottom--x-large"
+      >
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <dl
+            class="_Datalist_240c86"
+          >
+            <dt
+              class="_Datalist__title_240c86"
+            >
+              Nummer
+            </dt>
+            <dd
+              class="_Datalist__description_240c86"
+            >
+              223
+            </dd>
+            <dt
+              class="_Datalist__title_240c86"
+            >
+              Type verzoek
+            </dt>
+            <dd
+              class="_Datalist__description_240c86"
+            >
+              Verwijderen gegevens
+            </dd>
+            <dt
+              class="_Datalist__title_240c86"
+            >
+              Onderwerp(en)
+            </dt>
+            <dd
+              class="_Datalist__description_240c86"
+            >
+              Vergunningen, Enzo
+            </dd>
+          </dl>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <section>
+            <h3
+              class="ams-heading ams-heading--2 ams-mb-m"
+            >
+              Status
+            </h3>
+            <ol
+              class="ams-progress-list ams-progress-list--heading-3"
+            >
+              <li
+                aria-label="Status Afgerond"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--completed"
+              >
+                <div
+                  class="ams-progress-list__indicator"
+                >
+                  <div
+                    class="ams-progress-list__marker"
+                  >
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    <span
+                      class="ams-visually-hidden"
+                    >
+                      Klaar: 
+                    </span>
+                    Ontvangen
+                  </h3>
+                  <div
+                    class="ams-progress-list__panel"
+                  >
+                    <time
+                      class="_StepStatusDate_5b0b8a"
+                      datetime="2023-03-18T00:00:00.000Z"
+                    >
+                      18 maart 2023
+                    </time>
+                  </div>
+                </div>
+              </li>
+              <li
+                aria-label="Status Afgerond"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--completed"
+              >
+                <div
+                  class="ams-progress-list__indicator"
+                >
+                  <div
+                    class="ams-progress-list__marker"
+                  >
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    <span
+                      class="ams-visually-hidden"
+                    >
+                      Klaar: 
+                    </span>
+                    In behandeling
+                  </h3>
+                  <div
+                    class="ams-progress-list__panel"
+                  >
+                    <time
+                      class="_StepStatusDate_5b0b8a"
+                      datetime="2023-05-30T00:00:00.000Z"
+                    >
+                      30 mei 2023
+                    </time>
+                  </div>
+                </div>
+              </li>
+              <li
+                aria-current="step"
+                aria-label="Huidige status"
+                class="_Step_5b0b8a ams-progress-list__step ams-progress-list__step--current"
+              >
+                <div
+                  class="ams-progress-list__indicator"
+                >
+                  <div
+                    class="ams-progress-list__marker"
+                  >
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    >
+                      <span
+                        class="ams-icon ams-icon--inverse"
+                        hidden=""
+                      >
+                        <svg
+                          aria-hidden="true"
+                          data-directional="true"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="m13.342 6.673 1.42-1.423L21.5 12l-6.738 6.75-1.42-1.423 4.312-4.32H2.5v-2.013h15.154z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    <span
+                      class="ams-visually-hidden"
+                    >
+                      Bezig: 
+                    </span>
+                    Extra informatie nodig
+                  </h3>
+                  <div
+                    class="ams-progress-list__panel"
+                  >
+                    <time
+                      class="_StepStatusDate_5b0b8a"
+                      datetime="2023-06-03T00:00:00.000Z"
+                    >
+                      03 juni 2023
+                    </time>
+                    <div>
+                      Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief waarin staat welke informatie wij nodig hebben.
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li
+                aria-label="Toekomstige status"
+                class="_Step_5b0b8a ams-progress-list__step"
+              >
+                <div
+                  class="ams-progress-list__indicator"
+                >
+                  <div
+                    class="ams-progress-list__marker"
+                  >
+                    <span
+                      class="ams-progress-list__marker-shape"
+                    />
+                  </div>
+                  <span
+                    class="ams-progress-list__connector"
+                  />
+                </div>
+                <div
+                  class="ams-progress-list__content"
+                >
+                  <h3
+                    class="ams-heading ams-heading--3 ams-progress-list__heading"
+                  >
+                    Afgehandeld
+                  </h3>
+                  <div
+                    class="ams-progress-list__panel"
+                  >
+                    <time
+                      class="_StepStatusDate_5b0b8a"
+                      datetime=""
+                    />
+                  </div>
+                </div>
+              </li>
+            </ol>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+</DocumentFragment>
+`;

@@ -36,10 +36,10 @@ import type { ApiResponse_DEPRECATED } from '../../../universal/helpers/api.ts';
 const DSO_API_RESULT = {
   _links: {
     self: {
-      href: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/',
+      href: 'https://api.data.amsterdam.nl/v1/sport/v1/openbaresportplek/',
     },
     next: {
-      href: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/?page=2',
+      href: 'https://api.data.amsterdam.nl/v1/sport/v1/openbaresportplek/?page=2',
     },
     previous: {
       href: null,
@@ -50,7 +50,7 @@ const DSO_API_RESULT = {
       {
         _links: {
           self: {
-            href: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/1/',
+            href: 'https://api.data.amsterdam.nl/v1/sport/v1/openbaresportplek/1/',
             title: 'NIEUWENDAM',
           },
         },
@@ -84,9 +84,9 @@ const DSO_API_RESULT = {
 
 const DSO_API_RESULT2 = {
   _links: {
-    self: { href: 'https://api.data.amsterdam.nl/v1/sport/sportveld/' },
+    self: { href: 'https://api.data.amsterdam.nl/v1/sport/v1/sportveld/' },
     next: {
-      href: 'https://api.data.amsterdam.nl/v1/sport/sportveld/?page=2&_pageSize=1',
+      href: 'https://api.data.amsterdam.nl/v1/sport/v1/sportveld/?page=2&_pageSize=1',
     },
     previous: { href: null },
   },
@@ -95,7 +95,7 @@ const DSO_API_RESULT2 = {
       {
         _links: {
           self: {
-            href: 'https://api.data.amsterdam.nl/v1/sport/sportveld/1/',
+            href: 'https://api.data.amsterdam.nl/v1/sport/v1/sportveld/1/',
             title: 'Sportpark Middenmeer-Voorland 02',
           },
         },

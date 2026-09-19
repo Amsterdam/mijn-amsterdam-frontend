@@ -21,7 +21,7 @@ import type {
   AfisFacturenOverviewResponse,
   AfisFactuurTermijn,
 } from './afis-types.ts';
-import { themaConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
