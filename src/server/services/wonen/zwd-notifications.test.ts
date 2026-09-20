@@ -52,7 +52,7 @@ describe('zwd-notifications', () => {
         themaTitle: 'Mijn gegevens',
         title: 'Aanvraag verduurzamingsadvies VVE in behandeling',
         description:
-          'Wij hebbben de aanvraag voor verduurzamingsadvies van de VVE VvE Prachtige Straat 13 in behandeling',
+          'Wij hebben de aanvraag voor verduurzamingsadvies van de VVE VvE Prachtige Straat 13 in behandeling',
         datePublished: '2026-06-03T09:50:53.447114Z',
         link: {
           to: '/persoonlijke-gegevens/vve',
