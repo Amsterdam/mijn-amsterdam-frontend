@@ -23,7 +23,7 @@ export function transformZWDCasesToNotifications(
         themaTitle: themaConfig.BRP.title,
         title: 'Aanvraag verduurzamingsadvies VVE ' + zaakStatusText,
         description:
-          'Wij hebbben de aanvraag voor verduurzamingsadvies van de VVE ' +
+          'Wij hebben de aanvraag voor verduurzamingsadvies van de VVE ' +
           zaak.homeownerAssociation.name +
           ' ' +
           zaakStatusText,
