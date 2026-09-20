@@ -1,4 +1,3 @@
-import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
 import { getFromEnv } from '../../helpers/env.ts';
@@ -9,7 +8,6 @@ export const featureToggle = {
       isEnabled: isEnabled('WONEN.vve'),
     },
   },
-  zwdCasesActive: !IS_PRODUCTION,
 } as const;
 
 export const ZWDApiReqestConfig: DataRequestConfig = {
