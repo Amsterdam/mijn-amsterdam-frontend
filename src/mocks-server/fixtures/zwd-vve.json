@@ -5,7 +5,7 @@
   "contacts": [],
   "district": "Zuidoost",
   "id": 11,
-  "is_priority_neighborhood": false,
+  "is_priority_neighborhood": true,
   "is_small": false,
   "kvk_nummer": null,
   "ligt_in_beschermd_gebied": "nee",
@@ -67,7 +67,7 @@
       "legacy_id": "V316",
       "prefixed_dossier_id": "623OUD",
       "request_date": "2016-12-07",
-      "status": "Afgesloten",
+      "status": "In behandeling",
       "updated": "2026-09-08T09:50:53.447114Z"
     }
   ]

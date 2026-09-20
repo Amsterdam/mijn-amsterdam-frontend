@@ -24,7 +24,7 @@ type VveDetailsProps = {
 
 const VVE_CASES_DISPLAYPROPS: DisplayProps<VveCaseDetail> = {
   title: 'Aanvraag',
-  formattedDateStart: 'Start Aanvraag',
+  formattedDateStart: 'Startdatum',
   displayStatus: 'Status',
 };
 

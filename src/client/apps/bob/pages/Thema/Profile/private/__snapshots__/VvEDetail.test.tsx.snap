@@ -203,7 +203,7 @@ exports[`VvEDetail > Matches snapshot with VvE cases 1`] = `
                   <th
                     class="ams-table__header-cell"
                   >
-                    Start Aanvraag
+                    Startdatum
                   </th>
                   <th
                     class="ams-table__header-cell"
