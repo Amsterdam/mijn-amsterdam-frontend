@@ -176,8 +176,15 @@ exports[`VvEDetail > Matches snapshot with VvE cases 1`] = `
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
+          <p
+            class="ams-paragraph"
+          >
+            Heb je vragen over de onderstaande aanvragen, neem contact op met je VvE bestuur.
+          </p>
           <div
             class="ams-table"
+            role="group"
+            tabindex="0"
           >
             <table
               class="ams-table__table _TableV2_1fc147"
@@ -196,7 +203,7 @@ exports[`VvEDetail > Matches snapshot with VvE cases 1`] = `
                   <th
                     class="ams-table__header-cell"
                   >
-                    Laatst bijgewerkt
+                    Start Aanvraag
                   </th>
                   <th
                     class="ams-table__header-cell"
@@ -213,19 +220,13 @@ exports[`VvEDetail > Matches snapshot with VvE cases 1`] = `
                 >
                   <td
                     class="ams-table__cell"
-                  >
-                    Verduurzamingsadvies
-                  </td>
+                  />
                   <td
                     class="ams-table__cell"
-                  >
-                    03 juni 2026
-                  </td>
+                  />
                   <td
                     class="ams-table__cell"
-                  >
-                    In behandeling
-                  </td>
+                  />
                 </tr>
               </tbody>
             </table>

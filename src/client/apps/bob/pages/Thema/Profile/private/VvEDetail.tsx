@@ -2,9 +2,10 @@ import { Column, Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { useProfileData } from './useProfileData.hook.tsx';
 import { useWonenThemaData } from './useWonenThemaData.hook.ts';
-import type { VvEDataFrontend } from '../../../../../../../server/services/wonen/zwd.types.ts';
-import { defaultDateFormat } from '../../../../../../../universal/helpers/date.ts';
-import type { ZaakAanvraagDetail } from '../../../../../../../universal/types/App.types.ts';
+import type {
+  VveCaseDetail,
+  VvEDataFrontend,
+} from '../../../../../../../server/services/wonen/zwd.types.ts';
 import {
   Datalist,
   type Row,
@@ -21,29 +22,11 @@ type VveDetailsProps = {
   vve: VvEDataFrontend;
 };
 
-  type VveCaseDetail = ZaakAanvraagDetail & {
-    startAanvraag: string;
-  };
-
 const VVE_CASES_DISPLAYPROPS: DisplayProps<VveCaseDetail> = {
   title: 'Aanvraag',
-  startAanvraag: 'Start Aanvraag',
+  formattedDateStart: 'Start Aanvraag',
   displayStatus: 'Status',
 };
-
-function TransformZWDCases(cases: VvEDataFrontend['cases']): VveCaseDetail[] {
-  return cases.map((c) => ({
-    id: String(c.id),
-    title: 'VvE verduurzamingsadvies',
-    steps: [],
-    link: {
-      to: themaConfig.BRP.detailPageVvE.route.path,
-      title: 'Bekijk details',
-    },
-    displayStatus: c.status,
-    startAanvraag: defaultDateFormat(c.created),
-  }));
-}
 
 function VveDetail({ vve }: VveDetailsProps) {
   const rows: Array<Row | RowSet> = [
@@ -117,7 +100,7 @@ function VveDetail({ vve }: VveDetailsProps) {
               </Paragraph>
             }
             displayProps={VVE_CASES_DISPLAYPROPS}
-            items={TransformZWDCases(vve.cases)}
+            items={vve.cases}
           />
         </PageContentCell>
       )}

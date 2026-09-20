@@ -1,13 +1,19 @@
 import { HttpStatusCode } from 'axios';
 
 import { featureToggle, ZWDApiReqestConfig } from './wonen-service-config.ts';
-import type { VvEDataFrontend, ZwdVveDataSource } from './zwd.types.ts';
+import type {
+  VveCaseDetail,
+  VvEDataFrontend,
+  ZwdVveDataSource,
+} from './zwd.types.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Profile/Profile-thema-config.ts';
 import {
   apiErrorResult,
   apiPostponeResult,
   apiSuccessResult,
   type ApiResponse,
 } from '../../../universal/helpers/api.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import { pick } from '../../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import type {
@@ -36,6 +42,33 @@ async function fetchZWDAPI<T>(dataRequestConfigSpecific: DataRequestConfig) {
   return requestData<T>(dataRequestConfigBase);
 }
 
+function TransformZWDCases(cases: ZwdVveDataSource['cases']): VveCaseDetail[] {
+  if (!cases || !cases.length) {
+    return [];
+  }
+
+  return cases.map((c) => ({
+    id: String(c.id),
+    title: 'VvE verduurzamingsadvies',
+    steps: [],
+    link: {
+      to: themaConfig.BRP.detailPageVvE.route.path,
+      title: 'Bekijk details',
+    },
+    displayStatus: c.status,
+    dateStart: c.created,
+    formattedDateStart: defaultDateFormat(c.created),
+    dateUpdated: c.updated,
+    datePublished: c.updated,
+    status: c.status,
+    adviceType: c.advice_type,
+    homeownerAssociation: {
+      name: c.homeowner_association.name,
+    },
+  }));
+}
+
+
 function transformZwdVvEResponse(
   responseData: ZwdVveDataSource,
   _headers: DataRequestHeaders,
@@ -57,9 +90,13 @@ function transformZwdVvEResponse(
     'ligt_in_beschermd_gebied',
     'beschermd_stadsdorpsgezicht',
     'is_priority_neighborhood',
-    'cases',
   ]);
-  const camelizedData: VvEDataFrontend = camelize(responseDataPicked);
+
+  const camelizedData: VvEDataFrontend = {
+    ...camelize(responseDataPicked),
+    cases: TransformZWDCases(responseData.cases),
+  };
+
   return camelizedData;
 }
 

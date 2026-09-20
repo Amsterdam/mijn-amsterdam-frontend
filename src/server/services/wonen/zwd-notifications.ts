@@ -1,6 +1,6 @@
 import { fetchVVEData } from './zwd.ts';
-import type { VvEDataFrontend } from './zwd.types.ts';
-import { themaConfig } from '../../../client/pages/Thema/Profile/Profile-thema-config.ts';
+import type { VveCaseDetail } from './zwd.types.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Profile/Profile-thema-config.ts';
 import {
   apiSuccessResult,
   type ApiResponse,
@@ -10,7 +10,7 @@ import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 
 export function transformZWDCasesToNotifications(
-  cases: VvEDataFrontend['cases']
+  cases: VveCaseDetail[]
 ): MyNotification[] {
   return cases
     .filter((zaak) => zaak.adviceType === 'Energieadvies')
@@ -27,7 +27,7 @@ export function transformZWDCasesToNotifications(
           zaak.homeownerAssociation.name +
           ' ' +
           zaakStatusText,
-        datePublished: zaak.updated,
+        datePublished: zaak.datePublished,
         link: {
           to: themaConfig.BRP.detailPageVvE.route.path,
           title: 'Bekijk uw aanvraag',

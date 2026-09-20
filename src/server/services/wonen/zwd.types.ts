@@ -1,5 +1,7 @@
 import type { CamelCasedPropertiesDeep } from 'type-fest';
 
+import type { ZaakAanvraagDetail } from '../../../universal/types/App.types.ts';
+
 export type ZwedVvEResponseType = {
   '@onformdata.context': string;
 };
@@ -64,7 +66,19 @@ export type VvEDataFrontend = Prettify<
       | 'ligt_in_beschermd_gebied'
       | 'beschermd_stadsdorpsgezicht'
       | 'is_priority_neighborhood'
-      | 'cases'
     >
-  >
+  > & { cases: VveCaseDetail[] }
 >;
+
+export type VveCaseDetail = ZaakAanvraagDetail & {
+  dateStart: string;
+  formattedDateStart: string;
+  dateUpdated: string;
+  datePublished: string;
+  status: string;
+  adviceType: string;
+  homeownerAssociation: {
+    name: string;
+  };
+};
+
