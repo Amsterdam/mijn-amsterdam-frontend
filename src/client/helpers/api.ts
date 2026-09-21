@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router';
 
-import { BFFApiUrls } from '../config/api.ts';
+import { BFFApiUrls } from '../apps/bob/config/api.ts';
 
 export function generateBffApiUrl(
   route: keyof typeof BFFApiUrls,

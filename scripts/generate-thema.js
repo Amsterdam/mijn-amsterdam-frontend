@@ -47,7 +47,7 @@ const options = {
   },
   basePath: {
     type: 'string',
-    default: 'src/client/pages/Thema',
+    default: 'src/client/apps/bob/pages/Thema',
   },
 };
 

@@ -3,12 +3,12 @@ import classNames from 'classnames';
 
 import styles from './MyThemasPanel.module.scss';
 import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
-import type { ThemaMenuItemTransformed } from '../../config/thema-types.ts';
-import { getRedactedClass } from '../../helpers/cobrowse.ts';
+import type { ThemaMenuItemTransformed } from '../../../universal/types/thema-types.ts';
 import {
   GENERAL_INFO_PAGE_DOCUMENT_TITLE,
   GeneralInfoRoute,
-} from '../../pages/GeneralInfo/GeneralInfo-routes.ts';
+} from '../../apps/bob/pages/GeneralInfo/GeneralInfo-routes.ts';
+import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import { LoadingContent } from '../LoadingContent/LoadingContent.tsx';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 
@@ -54,7 +54,11 @@ export function MyThemasPanel({
               className={getRedactedClass(id)}
               data-testid={IS_DEVELOPMENT && title}
             >
-              <LinkComponent maVariant="fatNoUnderline" href={to}>
+              <LinkComponent
+                className={classNames(styles.LinkListItem)}
+                maVariant="fatNoUnderline"
+                href={to}
+              >
                 <span className={styles.ThemaLink}>
                   {IconSVG && (
                     <Icon

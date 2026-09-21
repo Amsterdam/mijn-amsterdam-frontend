@@ -1,0 +1,309 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`BezwarenDetail > No result > Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mams-content-wrapper redacted"
+  >
+    <div
+      class="ams-grid ams-grid--padding-top--large"
+      id="page-breadcrumbs"
+    >
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <nav
+          aria-labelledby=":r0:"
+          class="ams-breadcrumb"
+        >
+          <h2
+            aria-hidden="true"
+            class="ams-visually-hidden"
+            id=":r0:"
+          >
+            Kruimelpad
+          </h2>
+          <ol
+            class="ams-breadcrumb__list"
+          >
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/bezwaren"
+              >
+                Bezwaren
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/bezwaren/abc"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Bezwaar
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <main
+      id="page-main-content"
+    >
+      <div
+        class="ams-grid"
+      >
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <h1
+            class="ams-heading ams-heading--1 ams-mb-s"
+          >
+            Bezwaar
+          </h1>
+        </div>
+      </div>
+      <div
+        class="ams-grid ams-grid--padding-bottom--x-large"
+      >
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <section
+            aria-labelledby=":r1:"
+            class="ams-alert"
+          >
+            <div
+              class="ams-alert__severity-indicator"
+            >
+              <span
+                class="ams-icon ams-icon--inverse ams-icon--heading-3"
+                hidden=""
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    clip-rule="evenodd"
+                    d="M21.5 21.5h-19v-19h19zM11 10.177v6.922h2v-6.922zm1-3.275c-.69 0-1.19.48-1.19 1.16s.5 1.16 1.19 1.16 1.19-.48 1.19-1.16-.5-1.16-1.19-1.16"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </span>
+            </div>
+            <div
+              class="ams-alert__content"
+            >
+              <div
+                class="ams-row ams-row--align-between ams-row--align-vertical-start"
+              >
+                <h4
+                  class="ams-heading ams-heading--3"
+                  id=":r1:"
+                >
+                  Geen gegevens gevonden
+                </h4>
+              </div>
+              <p
+                class="ams-paragraph"
+              >
+                We kunnen niet alle gegevens tonen. 
+              </p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mams-content-wrapper redacted"
+  >
+    <div
+      class="ams-grid ams-grid--padding-top--large"
+      id="page-breadcrumbs"
+    >
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <nav
+          aria-labelledby=":r2:"
+          class="ams-breadcrumb"
+        >
+          <h2
+            aria-hidden="true"
+            class="ams-visually-hidden"
+            id=":r2:"
+          >
+            Kruimelpad
+          </h2>
+          <ol
+            class="ams-breadcrumb__list"
+          >
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/bezwaren"
+              >
+                Bezwaren
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  BI.21.014121.001
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <main
+      id="page-main-content"
+    >
+      <div
+        class="ams-grid"
+      >
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <h1
+            class="ams-heading ams-heading--1 ams-mb-s"
+          >
+            BI.21.014121.001
+          </h1>
+        </div>
+      </div>
+      <div
+        class="ams-grid ams-grid--padding-bottom--x-large"
+      >
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        >
+          <dl
+            class="_Datalist_240c86"
+          >
+            <dt
+              class="_Datalist__title_240c86"
+            >
+              Onderwerp
+            </dt>
+            <dd
+              class="_Datalist__description_240c86"
+            >
+              Korte omschrijving van het bezwaar
+            </dd>
+            <dt
+              class="_Datalist__title_240c86"
+            >
+              Reden bezwaar
+            </dt>
+            <dd
+              class="_Datalist__description_240c86"
+            >
+              Lange uitleg over het bezwaar. Kan dus veel tekst hebben want is vrije invoer.
+            </dd>
+            <div
+              class="ams-grid _Datalist__row-wrapper_240c86"
+            >
+              <div
+                class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-3-medium ams-grid__cell--span-4-wide"
+              >
+                <dt
+                  class="_Datalist__title_240c86"
+                >
+                  Besluit waartegen u bezwaar maakt
+                </dt>
+                <dd
+                  class="_Datalist__description_240c86"
+                >
+                  F2021.0008
+                </dd>
+              </div>
+              <div
+                class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-3-medium ams-grid__cell--span-4-wide"
+              >
+                <dt
+                  class="_Datalist__title_240c86"
+                >
+                  Datum
+                </dt>
+                <dd
+                  class="_Datalist__description_240c86"
+                />
+              </div>
+            </div>
+            <div
+              class="ams-grid _Datalist__row-wrapper_240c86"
+            >
+              <div
+                class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-3-medium ams-grid__cell--span-4-wide"
+              >
+                <dt
+                  class="_Datalist__title_240c86"
+                >
+                  Resultaat bezwaar
+                </dt>
+                <dd
+                  class="_Datalist__description_240c86"
+                >
+                  Niet-ontvankelijk
+                </dd>
+              </div>
+            </div>
+          </dl>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+        />
+      </div>
+    </main>
+  </div>
+</DocumentFragment>
+`;

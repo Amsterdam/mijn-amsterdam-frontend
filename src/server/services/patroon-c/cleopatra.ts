@@ -10,8 +10,8 @@ import {
 
 import type { ApiPatternResponseA } from './api-service.ts';
 import { fetchService } from './api-service.ts';
-import * as MILIEUZONE from '../../../client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
-import * as OVERTREDINGEN from '../../../client/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
+import * as MILIEUZONE from '../../../client/apps/bob/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
+import * as OVERTREDINGEN from '../../../client/apps/bob/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
 import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
 import {
   apiSuccessResult,
