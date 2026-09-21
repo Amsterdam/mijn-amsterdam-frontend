@@ -151,6 +151,15 @@ export const displayPropsTermijnenTable: DisplayProps<AfisFactuurTermijn> = {
   },
 };
 
+export const displayPropsStopMandate: DisplayProps<AfisFactuur> = {
+  props: {
+    factuurNummerEl: 'Factuurnummer',
+    amountOriginalFormatted: 'Bedrag',
+    paymentDueDateFormatted: 'Vervaldatum',
+  },
+  enableMobileListView: true,
+};
+
 export const listPageTitle: Record<AfisFactuurStateFrontend, string> = {
   open: 'Openstaande facturen',
   afgehandeld: 'Afgehandelde facturen',
