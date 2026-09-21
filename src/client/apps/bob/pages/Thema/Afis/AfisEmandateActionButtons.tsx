@@ -226,7 +226,7 @@ function ApiDeactivateButton({
                 <br />
               </Paragraph>
               <DataView
-                className={styles.FacturenAlertTable}
+                className={styles.FacturenAlertDataView}
                 items={facturenByEmandateId}
                 displayProps={displayPropsStopMandate}
               />
