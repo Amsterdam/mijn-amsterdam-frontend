@@ -1,4 +1,4 @@
-import { useProfileType } from './useProfileType.ts';
+import { useProfileTypeValue } from './useProfileType.ts';
 import {
   isLoading,
   type ApiResponse_DEPRECATED,
@@ -7,7 +7,7 @@ import {
 export function useIsLoading(
   apiResponseData?: ApiResponse_DEPRECATED<unknown>
 ) {
-  const { profileType } = useProfileType();
+  const profileType = useProfileTypeValue();
 
   return isLoading(apiResponseData, profileType);
 }
