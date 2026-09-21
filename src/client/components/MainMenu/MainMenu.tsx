@@ -10,7 +10,7 @@ import {
 } from '../../apps/bob/pages/MyTips/MyTips-config.ts';
 import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
-import { useProfileType } from '../../hooks/useProfileType.ts';
+import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { MainHeaderSecondaryLinks } from '../MainHeader/MainHeader.tsx';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
@@ -20,7 +20,7 @@ export const MAIN_MENU_ID = 'main-menu';
 export function MainMenu() {
   const { items } = useActiveThemaMenuItems();
   const isPhoneScreen = useSmallScreen();
-  const { profileType } = useProfileType();
+  const profileType = useProfileTypeValue();
 
   const hasTips =
     themaConfig.profileTypes.includes(profileType) &&
