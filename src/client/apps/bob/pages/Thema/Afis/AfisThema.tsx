@@ -178,7 +178,7 @@ export function AfisThema() {
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
       pageLinks={pageLinks}
       pageContentTop={
-        <PageContentCell>
+        <PageContentCell spanWide={8}>
           {showMultipleVestigingenDisclaimer && (
             <AfisMultipleVestigingenDisclaimer className="ams-mb-m" />
           )}
