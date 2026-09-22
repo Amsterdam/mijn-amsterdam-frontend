@@ -109,7 +109,7 @@ describe('AfisEMandateDetail', () => {
     render(<Detail />);
 
     expect(
-      screen.getByText(/Wachten op bevestiging van de incassomachtiging/i)
+      screen.getByText(/U vraagt een incassomachtiging aan voor/i)
     ).toBeInTheDocument();
 
     const retryButton = screen.getByRole('button', {
