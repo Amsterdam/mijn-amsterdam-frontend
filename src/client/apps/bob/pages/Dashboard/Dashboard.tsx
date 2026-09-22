@@ -42,6 +42,8 @@ export function Dashboard() {
   const appState = useAppStateGetter();
   const { NOTIFICATIONS } = appState;
   const { notifications, tips, notificationsTotal } = useAppStateNotifications(
+    MAX_NOTIFICATIONS_VISIBLE
+  );
 
   const isLoadingNotifications = useIsLoading(NOTIFICATIONS);
 
