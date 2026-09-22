@@ -152,9 +152,11 @@ export const displayPropsTermijnenTable: DisplayProps<AfisFactuurTermijn> = {
 };
 
 export const displayPropsStopMandate: DisplayProps<AfisFactuurFrontend> = {
-  factuurNummerEl: 'Factuurnummer',
-  amountOriginalFormatted: 'Bedrag',
-  paymentDueDateFormatted: 'Vervaldatum',
+  props: {
+    factuurNummerEl: 'Factuurnummer',
+    amountOriginalFormatted: 'Bedrag',
+    paymentDueDateFormatted: 'Vervaldatum',
+  },
   enableMobileListView: true,
 };
 
