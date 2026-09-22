@@ -1,7 +1,7 @@
 import { themaConfig } from './Krefia-thema-config.ts';
 import { default as KrefiaIcon } from './KrefiaIcon.svg?react';
 import { KrefiaThema } from './KrefiaThema.tsx';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,

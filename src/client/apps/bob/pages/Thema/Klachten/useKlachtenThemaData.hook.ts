@@ -1,8 +1,9 @@
 import { tableConfig, themaConfig } from './Klachten-thema-config.ts';
 import type { KlachtFrontend } from '../../../../../../server/services/klachten/types.ts';
-import { isError, isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isError } from '../../../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
 
 export function useKlachtenThemaData() {
@@ -19,7 +20,7 @@ export function useKlachtenThemaData() {
 
   return {
     klachten,
-    isLoading: isLoading(KLACHTEN),
+    isLoading: useIsLoading(KLACHTEN),
     isError: isError(KLACHTEN),
     pageLinks: themaConfig.pageLinks,
     tableConfig,

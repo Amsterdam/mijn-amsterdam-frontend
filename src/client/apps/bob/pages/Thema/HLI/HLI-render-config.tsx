@@ -8,7 +8,7 @@ import { HLIRegelingenList } from './HLIRegelingenList.tsx';
 import { HLISpecificatieList } from './HLISpecificatieList.tsx';
 import { HLIStadspasDetail } from './HLIStadspasDetail.tsx';
 import { HLIThema } from './HLIThema.tsx';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import type {
   ThemaRenderRouteConfig,

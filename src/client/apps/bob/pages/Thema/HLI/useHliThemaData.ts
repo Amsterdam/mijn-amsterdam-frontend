@@ -12,12 +12,12 @@ import type { HLIRegelingFrontend } from '../../../../../../server/services/hli/
 import {
   hasFailedDependency,
   isError,
-  isLoading,
 } from '../../../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../../../components/Table/TableV2.tsx';
-import { useAddDocumentLinkComponents } from '../../../data-transform/useAddDocumentLinks.tsx';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
+import { useAddDocumentLinkComponents } from '../../../data-transform/useAddDocumentLinks.tsx';
 
 export function useHliThemaData() {
   const { HLI } = useAppStateGetter();
@@ -61,7 +61,7 @@ export function useHliThemaData() {
     themaId: themaConfig.id,
     title,
     hasKindtegoed,
-    isLoading: isLoading(HLI),
+    isLoading: useIsLoading(HLI),
     isError: isError(HLI, false),
     dependencyError,
     tableConfig,

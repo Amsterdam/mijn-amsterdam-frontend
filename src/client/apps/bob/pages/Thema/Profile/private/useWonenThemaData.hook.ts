@@ -1,5 +1,6 @@
-import { isError, isLoading } from '../../../../../../../universal/helpers/api.ts';
+import { isError } from '../../../../../../../universal/helpers/api.ts';
 import { useAppStateGetter } from '../../../../../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../../hooks/useThemaBreadcrumbs.ts';
 import { themaConfig } from '../Profile-thema-config.ts';
 
@@ -12,7 +13,7 @@ export function useWonenThemaData() {
   return {
     title: themaConfig.BRP.id,
     vve,
-    isLoading: isLoading(WONEN),
+    isLoading: useIsLoading(WONEN),
     isError: isError(WONEN),
     breadcrumbs,
   };

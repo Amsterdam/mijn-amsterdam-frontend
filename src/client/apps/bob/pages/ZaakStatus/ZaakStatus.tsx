@@ -5,7 +5,8 @@ import { useLocation, useNavigate } from 'react-router';
 
 import { ZAAK_STATUS_PAGE_DOCUMENT_TITLE } from './ZaakStatus-routes.ts';
 import styles from './ZaakStatus.module.scss';
-import { isError, isLoading } from '../../../../../universal/helpers/api.ts';
+import { isError } from '../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../helpers/api.ts';
 import type {
   AppStateBase,
   LinkProps,
