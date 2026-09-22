@@ -5,7 +5,7 @@ import { AfisFactuur } from './AfisFactuur.tsx';
 import { default as AfisIcon } from './AfisIcon.svg?react';
 import { AfisList } from './AfisList.tsx';
 import { AfisThema } from './AfisThema.tsx';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,

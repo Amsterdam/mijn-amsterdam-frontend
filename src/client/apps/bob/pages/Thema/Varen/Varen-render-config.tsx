@@ -4,7 +4,7 @@ import { VarenDetailPageContentExploitatieZaak } from './VarenDetailZaakExploita
 import { default as VarenIcon } from './VarenIcon.svg?react';
 import { VarenList } from './VarenList.tsx';
 import { VarenThema } from './VarenThema.tsx';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,

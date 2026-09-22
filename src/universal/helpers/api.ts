@@ -48,30 +48,6 @@ export type ApiResponse<T> =
 
 export type ApiResponsePromise<T> = Promise<ApiResponse<T>>;
 
-export function isLoading(
-  apiResponseData?: ApiResponse_DEPRECATED<unknown>,
-  profileType?: ProfileType
-) {
-  if (!apiResponseData) {
-    return true;
-  }
-
-  if (apiResponseData.status !== 'PRISTINE' || !apiResponseData.isActive) {
-    return false;
-  }
-
-  const { profileTypes } = apiResponseData;
-
-  if (!profileTypes || profileTypes.length === 0) {
-    return true;
-  }
-
-  if (!profileType) {
-    return true;
-  }
-
-  return profileTypes.includes(profileType);
-}
 export function isOk(apiResponseData?: ApiResponse_DEPRECATED<unknown>) {
   return apiResponseData?.status === 'OK';
 }

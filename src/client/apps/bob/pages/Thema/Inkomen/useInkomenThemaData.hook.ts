@@ -6,7 +6,8 @@ import {
   themaConfig,
 } from './Inkomen-thema-config.ts';
 import type { WpiRequestProcess } from '../../../../../../server/services/wpi/wpi-types.ts';
-import { isError, isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isError } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import {
   defaultDateFormat,
   dateSort,
