@@ -22,10 +22,6 @@ export function MyAreaDashboard() {
   // Check if the Map is nearly scrolled into view
   const mokum = isPrivate ? isMokum(BRP.content) : isMokum(KVK.content);
 
-  const paragraphText = mokum
-    ? 'Klik voor een overzicht van gemeentelijke informatie rond uw adres.'
-    : 'Uw adres kan niet worden getoond in Mijn Amsterdam.';
-
   return (
     <div ref={ref} className={styles.DashboardMapContainer}>
       <MyAreaLoader isDashboard={true} />
