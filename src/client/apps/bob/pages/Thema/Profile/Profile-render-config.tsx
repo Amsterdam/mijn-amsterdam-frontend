@@ -5,7 +5,7 @@ import { MijnGegevensThema } from './private/ProfilePrivate.tsx';
 import { VvEDetail } from './private/VvEDetail.tsx';
 import { themaConfig } from './Profile-thema-config.ts';
 import { default as ProfilePrivateIcon } from './ProfilePrivateIcon.svg?react';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import type { ThemaMenuItem } from '../../../../../../universal/types/thema-types.ts';
 
 export const ProfileRoutes = [

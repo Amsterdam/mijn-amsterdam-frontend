@@ -3,7 +3,7 @@ import { BodemDetail } from './BodemDetail.tsx';
 import { default as BodemIcon } from './BodemIcon.svg?react';
 import { BodemList } from './BodemList.tsx';
 import { BodemThema } from './BodemThema.tsx';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,

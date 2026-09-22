@@ -4,7 +4,7 @@ import { themaConfig } from './Parkeren-thema-config.ts';
 import { ParkerenDetail } from './ParkerenDetail.tsx';
 import { ParkerenList } from './ParkerenList.tsx';
 import { ParkerenThema } from './ParkerenThema.tsx';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import { type AppState } from '../../../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,

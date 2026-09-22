@@ -1,7 +1,7 @@
 import { themaConfig } from './Afval-thema-config.ts';
 import { default as AfvalIcon } from './AfvalIcon.svg?react';
 import { AfvalThemaPagina } from './AfvalThema.tsx';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,

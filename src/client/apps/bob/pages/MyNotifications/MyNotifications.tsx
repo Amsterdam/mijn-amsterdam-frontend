@@ -6,7 +6,7 @@ import { generatePath, useParams } from 'react-router';
 import { MY_NOTIFICATIONS_PAGE_DOCUMENT_TITLE } from './MyNotifications-config.ts';
 import { themaTitle } from './MyNotifications-config.ts';
 import { MyNotificationsRoute } from './MyNotifications-routes.ts';
-import { isError, isLoading } from '../../../../../universal/helpers/api.ts';
+import { isError } from '../../../../../universal/helpers/api.ts';
 import { ErrorAlert } from '../../../../components/Alert/Alert.tsx';
 import { LoadingContent } from '../../../../components/LoadingContent/LoadingContent.tsx';
 import { MyNotification } from '../../../../components/MyNotification/MyNotification.tsx';
@@ -14,6 +14,7 @@ import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
 import { PaginationV2 } from '../../../../components/Pagination/PaginationV2.tsx';
 import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
+import { useIsLoading } from '../../../../hooks/useIsLoading.ts';
 import { useAppStateNotifications } from '../../../../hooks/useNotifications.ts';
 
 const PAGE_SIZE = 12;
@@ -25,6 +26,9 @@ export function MyNotificationsPage() {
 
   const { NOTIFICATIONS } = useAppStateGetter();
   const { notifications, notificationsTotal } = useAppStateNotifications();
+  
+  const isLoadingNotifications = useIsLoading(NOTIFICATIONS);
+
   const { page = '1' } = useParams<{ page?: string }>();
 
   const currentPage = useMemo(() => {
@@ -50,12 +54,12 @@ export function MyNotificationsPage() {
           </ErrorAlert>
         )}
         <OrderedList markers={false}>
-          {isLoading(NOTIFICATIONS) && (
+          {isLoadingNotifications && (
             <OrderedList.Item>
               <LoadingContent />
             </OrderedList.Item>
           )}
-          {!isLoading(NOTIFICATIONS) &&
+          {!isLoadingNotifications &&
             notificationsPaginated.map((notification, index) => {
               return (
                 <OrderedList.Item
