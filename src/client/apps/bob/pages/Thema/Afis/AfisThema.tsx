@@ -23,7 +23,7 @@ function PageContentTop({
   urlNaarBelastingen: string;
 }) {
   return (
-    <PageContentCell spanWide={8}>
+    <>
       <Paragraph className="ams-mb-m">
         Hieronder ziet u een overzicht van uw facturen.
         <br />
@@ -38,7 +38,7 @@ function PageContentTop({
         </Link>
         .
       </Paragraph>
-    </PageContentCell>
+    </>
   );
 }
 
@@ -59,6 +59,31 @@ export function AfisDisclaimer() {
           maken onder vermelding van de gegevens op uw factuur.
         </UnorderedList.Item>
       </UnorderedList>
+    </Alert>
+  );
+}
+
+export function AfisMultipleVestigingenDisclaimer({
+  className,
+}: {
+  className?: string;
+}) {
+  return (
+    <Alert
+      className={className}
+      severity="warning"
+      heading="Inzage in uw facturen van de gemeente Amsterdam"
+      headingLevel={4}
+    >
+      <Paragraph>
+        Als bedrijf met meerdere vestigingen krijgt u binnenkort via deze pagina
+        inzage in de facturen die u van de gemeente Amsterdam ontvangt.
+        <br />U kunt hier dan bijvoorbeeld een kopie van een factuur opvragen en
+        controleren of een factuur al betaald is.
+        <br />
+        We zijn momenteel bezig met de technische uitwerking. Wij vragen u nog
+        even geduld. Bedankt voor uw begrip.
+      </Paragraph>
     </Alert>
   );
 }
@@ -98,6 +123,7 @@ export function AfisThema() {
     listPageTitle,
     pageLinks,
     belastingenLinkListItem,
+    showMultipleVestigingenDisclaimer,
     title,
     themaId,
     themaConfig,
@@ -152,7 +178,12 @@ export function AfisThema() {
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
       pageLinks={pageLinks}
       pageContentTop={
-        <PageContentTop urlNaarBelastingen={belastingenLinkListItem.to} />
+        <PageContentCell>
+          {showMultipleVestigingenDisclaimer && (
+            <AfisMultipleVestigingenDisclaimer className="ams-mb-m" />
+          )}
+          <PageContentTop urlNaarBelastingen={belastingenLinkListItem.to} />
+        </PageContentCell>
       }
       pageContentMain={
         <>

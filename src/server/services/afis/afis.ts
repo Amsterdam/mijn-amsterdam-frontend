@@ -13,6 +13,7 @@ import {
 import { omit } from '../../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { ONE_MINUTE_MS } from '../../config/app.ts';
+import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
 import { encryptPayloadAndSessionID } from '../../helpers/encrypt-decrypt.ts';
 import { getFromEnv } from '../../helpers/env.ts';
@@ -21,6 +22,7 @@ import {
   createSessionBasedCacheKey,
 } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
+import { fetchVestigingen } from '../hr-kvk/hr-kvk.ts';
 import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token.ts';
 
 export async function fetchAfisTokenHeader() {
@@ -138,6 +140,26 @@ export async function fetchIsKnownInAFIS(
     !response.content.businessPartnerId
   ) {
     return response;
+  }
+
+  // MIJN-13618: Hide facturen data for businesses when it is not possible to determine which vestiging is logged in. This is currently the case when there is more than one vestiging associated with the KVK number.
+  if (
+    isEnabled('AFIS.blockDataForMultipleKvKVestigingen') &&
+    profileIdentifierType === 'KVK'
+  ) {
+    const kvkVestigingen = await fetchVestigingen(authProfileAndToken);
+    if (kvkVestigingen.status !== 'OK') {
+      return response;
+    }
+    if (kvkVestigingen.content.length > 1) {
+      return apiSuccessResult({
+        ...response.content,
+        businessPartnerId: null,
+        businessPartnerIdEncrypted: null,
+        facturen: null,
+        showMultipleVestigingenDisclaimer: true,
+      });
+    }
   }
 
   const facturenResponse = await fetchAfisFacturenOverview(
