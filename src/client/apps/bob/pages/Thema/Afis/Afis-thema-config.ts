@@ -123,19 +123,19 @@ const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
 };
 
 const displayPropsFacturenAfgehandeldOfOvergedragen: DisplayProps<AfisFactuurFrontend> =
-  {
-    props: {
-      factuurNummer: 'Factuurnummer',
-      factuurNummerEl: 'Factuurnummer',
-      afzender: 'Afzender',
-      statusDescription: 'Status',
-    },
-    colWidths: {
-      large: ['0', '25%', '25%', '50%'],
-      small: ['0', '50%', '50%', '0'],
-    },
-    enableMobileListView: false,
-  };
+{
+  props: {
+    factuurNummer: 'Factuurnummer',
+    factuurNummerEl: 'Factuurnummer',
+    afzender: 'Afzender',
+    statusDescription: 'Status',
+  },
+  colWidths: {
+    large: ['0', '25%', '25%', '50%'],
+    small: ['0', '50%', '50%', '0'],
+  },
+  enableMobileListView: false,
+};
 
 export const displayPropsTermijnenTable: DisplayProps<AfisFactuurTermijn> = {
   props: {
@@ -151,12 +151,10 @@ export const displayPropsTermijnenTable: DisplayProps<AfisFactuurTermijn> = {
   },
 };
 
-export const displayPropsStopMandate: DisplayProps<AfisFactuur> = {
-  props: {
-    factuurNummerEl: 'Factuurnummer',
-    amountOriginalFormatted: 'Bedrag',
-    paymentDueDateFormatted: 'Vervaldatum',
-  },
+export const displayPropsStopMandate: DisplayProps<AfisFactuurFrontend> = {
+  factuurNummerEl: 'Factuurnummer',
+  amountOriginalFormatted: 'Bedrag',
+  paymentDueDateFormatted: 'Vervaldatum',
   enableMobileListView: true,
 };
 
@@ -249,13 +247,13 @@ export function getFacturenTableConfig(params?: FacturenTableConfigParams) {
 export const facturenTableConfig = getFacturenTableConfig();
 
 export const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetailsTransformed> =
-  {
-    fullName: 'Debiteurnaam',
-    businessPartnerId: 'Debiteurnummer',
-    email: 'E-mailadres factuur',
-    phone: 'Telefoonnummer',
-    fullAddress: 'Adres',
-  };
+{
+  fullName: 'Debiteurnaam',
+  businessPartnerId: 'Debiteurnummer',
+  email: 'E-mailadres factuur',
+  phone: 'Telefoonnummer',
+  fullAddress: 'Adres',
+};
 
 const displayPropsEMandates: DisplayProps<
   AfisEMandateFrontend & { displayStatusEl: ReactNode }
