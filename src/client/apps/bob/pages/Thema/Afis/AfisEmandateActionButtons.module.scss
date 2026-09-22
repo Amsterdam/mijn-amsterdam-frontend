@@ -10,6 +10,7 @@
     white-space: nowrap;
 
     // Prevents vertical overflow when there are 2 invoices or less
-    padding-block: 0.2rem;
+    // Also prevents most of the horizontal overflow on desktop by reducing horizontal space in between columns
+    padding: 0.2rem;
   }
 }
