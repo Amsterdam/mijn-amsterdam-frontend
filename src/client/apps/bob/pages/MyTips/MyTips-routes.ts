@@ -1,11 +1,11 @@
 import { generatePath } from 'react-router';
 
-import { featureToggle, themaTitle, themaId } from './MyTips-config.ts';
+import { themaTitle, themaId, themaConfig } from './MyTips-config.ts';
 import { MyTipsPage } from './MyTips.tsx';
 
 export const MyTipsRoute = {
   route: '/alle-tips/:page?',
-  isActive: featureToggle.newTipsDesign,
+  isActive: themaConfig.featureToggle.enableNewTipsDesign,
   Component: MyTipsPage,
 };
 

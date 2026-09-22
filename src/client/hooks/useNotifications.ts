@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { useAppStateStore } from './useAppStateStore.ts';
 import type { MyNotification } from '../../universal/types/App.types.ts';
 import { WelcomeNotification } from '../apps/bob/config/staticData.tsx';
-import { featureToggle } from '../apps/bob/pages/MyTips/MyTips-config.ts';
+import { themaConfig } from '../apps/bob/pages/MyTips/MyTips-config.ts';
 import { getRedactedClass } from '../helpers/cobrowse.ts';
 
 export function useAppStateNotifications(top?: number) {
@@ -23,7 +23,7 @@ export function useAppStateNotifications(top?: number) {
     [isReady]
   );
 
-  if (!featureToggle.newTipsDesign) {
+  if (!themaConfig.featureToggle.enableNewTipsDesign) {
     return {
       notifications: top
         ? notificationsWithWelcomeNotification.slice(0, top)

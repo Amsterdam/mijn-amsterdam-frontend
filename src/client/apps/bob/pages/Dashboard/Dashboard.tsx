@@ -25,7 +25,7 @@ import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts'
 import { useAppStateNotifications } from '../../../../hooks/useNotifications.ts';
 import { useActiveThemaMenuItems } from '../../../../hooks/useThemaMenuItems.ts';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
-import { featureToggle } from '../MyTips/MyTips-config.ts';
+import { themaConfig } from '../MyTips/MyTips-config.ts';
 import { AfsprakenDashboard } from '../Thema/KlantContact/Afspraken/Afspraken.tsx';
 import { useKlantcontactData } from '../Thema/KlantContact/useKlantcontactData.hook.tsx';
 
@@ -138,7 +138,7 @@ export function Dashboard() {
           </Heading>
           <MyThemasPanel isLoading={isMyThemasLoading} items={myThemaItems} />
         </PageContentCell>
-        {featureToggle.newTipsDesign && hasTips && (
+        {themaConfig.featureToggle.enableNewTipsDesign && hasTips && (
           <Grid.Subgrid as="ul" span="all" gapVertical="large">
             {visibleTips?.map(({ colorIndex, tip }) => (
               <Grid.Cell as="li" span={4} key={tip.id}>

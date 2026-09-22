@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { categoryMenuItems } from './MainMenu.constants.ts';
 import styles from './MainMenu.module.scss';
 import {
-  featureToggle,
   themaConfig,
   themaId,
 } from '../../apps/bob/pages/MyTips/MyTips-config.ts';
@@ -24,7 +23,7 @@ export function MainMenu() {
 
   const hasTips =
     themaConfig.profileTypes.includes(profileType) &&
-    featureToggle.newTipsDesign;
+    themaConfig.featureToggle.enableNewTipsDesign;
 
   const visibleCategoryMenuItems = categoryMenuItems.filter((item) => {
     if (hasTips) {
