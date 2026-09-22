@@ -20,6 +20,9 @@ export function generateBffApiUrlWithEncryptedPayloadQuery(
   return `${generateBffApiUrl(route, routeParams)}?${payloadParamName}=${encodeURIComponent(encryptedPayload)}`;
 }
 
+/**
+ * @deprecated Call isLoading through the client useIsLoading hook
+ */
 export function isLoading(
   apiResponseData?: ApiResponse_DEPRECATED<unknown>,
   profileType?: ProfileType
