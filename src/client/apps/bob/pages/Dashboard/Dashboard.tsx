@@ -65,13 +65,14 @@ export function Dashboard() {
 
   const [readTipIds, setReadTipIds] = useState<string[]>([]);
 
-  const visibleTips = tips
-    ?.map((tip, tipIndex) => ({
-      tip,
-      colorIndex: tipIndex % tipCardColors.length,
-    }))
-    .filter(({ tip }) => !readTipIds.includes(tip.id))
-    .slice(0, 3);
+  const visibleTips =
+    tips
+      ?.map((tip, tipIndex) => ({
+        tip,
+        colorIndex: tipIndex % tipCardColors.length,
+      }))
+      .filter(({ tip }) => !readTipIds.includes(tip.id))
+      .slice(0, 3) ?? [];
 
   const markAsRead = (tipId: string) => {
     setReadTipIds((currentIds) =>
