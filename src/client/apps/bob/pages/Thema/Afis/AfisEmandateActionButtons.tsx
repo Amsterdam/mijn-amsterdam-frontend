@@ -6,10 +6,13 @@ import {
   Button,
   Link,
   Paragraph,
-  Table,
 } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
 
-import { EMANDATE_STATUS_ACTIVE } from './Afis-thema-config.ts';
+import {
+  displayPropsStopMandate,
+  EMANDATE_STATUS_ACTIVE,
+} from './Afis-thema-config.ts';
 import styles from './AfisEmandateActionButtons.module.scss';
 import { useAfisFacturenData } from './useAfisThemaData.hook.tsx';
 import type {
@@ -18,6 +21,7 @@ import type {
   AfisEMandateStatusChangeResponse,
 } from '../../../../../../server/services/afis/afis-types.ts';
 import { delay } from '../../../../../../universal/helpers/utils.ts';
+import { DataView } from '../../../../../components/DataView/DataView.tsx';
 import { Modal } from '../../../../../components/Modal/Modal.tsx';
 import { Spinner } from '../../../../../components/Spinner/Spinner.tsx';
 import { trackLinkClick } from '../../../../../hooks/analytics.hook.ts';
@@ -214,7 +218,7 @@ function ApiDeactivateButton({
               headingLevel={4}
               severity="warning"
               heading="Let op"
-              className="ams-mb-m"
+              className={classNames('ams-mb-m', styles.FacturenAlert)}
             >
               <Paragraph className="ams-mb-s">
                 Als u de automatische incasso stopt, moet u zelf de openstaande
@@ -234,30 +238,11 @@ function ApiDeactivateButton({
                 .
                 <br />
               </Paragraph>
-              <Table className={styles.FacturenAlertTable}>
-                <Table.Header>
-                  <Table.Row>
-                    <Table.HeaderCell>Factuurnummer</Table.HeaderCell>
-                    <Table.HeaderCell>Bedrag</Table.HeaderCell>
-                    <Table.HeaderCell>Vervaldatum</Table.HeaderCell>
-                  </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                  {facturenByEmandateId.map((factuur) => {
-                    return (
-                      <Table.Row key={factuur.id}>
-                        <Table.Cell>{factuur.factuurNummerEl}</Table.Cell>
-                        <Table.Cell>
-                          {factuur.amountOriginalFormatted}
-                        </Table.Cell>
-                        <Table.Cell>
-                          {factuur.paymentDueDateFormatted}
-                        </Table.Cell>
-                      </Table.Row>
-                    );
-                  })}
-                </Table.Body>
-              </Table>
+              <DataView
+                className={styles.FacturenAlertDataView}
+                items={facturenByEmandateId}
+                displayProps={displayPropsStopMandate}
+              />
             </Alert>
           )}
           {!facturenByEmandateId.length && (
