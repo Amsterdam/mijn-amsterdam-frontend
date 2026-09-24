@@ -97,14 +97,11 @@ function AfisMultipleVestigingenDisclaimer({
       className={className}
       severity="warning"
       heading="Inzage in uw betaalvoorkeuren van de gemeente Amsterdam"
-      headingLevel={4}
+      headingLevel={2}
     >
       <Paragraph>
         Als bedrijf met meerdere vestigingen krijgt u binnenkort via deze pagina
         inzage in uw betaalvoorkeuren voor de gemeente Amsterdam.
-        <br />
-        We zijn momenteel bezig met de technische uitwerking. Wij vragen u nog
-        even geduld. Bedankt voor uw begrip.
       </Paragraph>
     </Alert>
   );

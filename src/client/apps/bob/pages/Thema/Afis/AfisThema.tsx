@@ -82,16 +82,13 @@ function AfisMultipleVestigingenDisclaimer({
       className={className}
       severity="warning"
       heading="Inzage in uw facturen van de gemeente Amsterdam"
-      headingLevel={4}
+      headingLevel={2}
     >
       <Paragraph>
         Als bedrijf met meerdere vestigingen krijgt u binnenkort via deze pagina
         inzage in de facturen die u van de gemeente Amsterdam ontvangt.
-        <br />U kunt hier dan bijvoorbeeld een kopie van een factuur opvragen en
-        controleren of een factuur al betaald is.
-        <br />
-        We zijn momenteel bezig met de technische uitwerking. Wij vragen u nog
-        even geduld. Bedankt voor uw begrip.
+        <br />U kunt dan bijvoorbeeld een kopie van een factuur opvragen. Of
+        controleren of een factuur al is betaald.
       </Paragraph>
     </Alert>
   );
@@ -107,7 +104,7 @@ export function AfisDisclaimerOvergedragenFacturen() {
         en daarmee uw aanspreekpunt. De status van uw factuur vindt u terug bij
         Mijn Belastingen - gemeente Amsterdam.
       </Paragraph>
-      <Heading level={4}>Heeft u vragen?</Heading>
+      <Heading level={2}>Heeft u vragen?</Heading>
       <Paragraph>
         Afdeling Incasso & Invordering is van maandag tot en met vrijdag tussen
         08.00 en 18.00 uur bereikbaar op{' '}
