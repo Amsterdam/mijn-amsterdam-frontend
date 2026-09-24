@@ -87,6 +87,29 @@ function AfisBusinessPartnerDetails({
   );
 }
 
+function AfisMultipleVestigingenDisclaimer({
+  className,
+}: {
+  className?: string;
+}) {
+  return (
+    <Alert
+      className={className}
+      severity="warning"
+      heading="Inzage in uw betaalvoorkeuren van de gemeente Amsterdam"
+      headingLevel={4}
+    >
+      <Paragraph>
+        Als bedrijf met meerdere vestigingen krijgt u binnenkort via deze pagina
+        inzage in uw betaalvoorkeuren voor de gemeente Amsterdam.
+        <br />
+        We zijn momenteel bezig met de technische uitwerking. Wij vragen u nog
+        even geduld. Bedankt voor uw begrip.
+      </Paragraph>
+    </Alert>
+  );
+}
+
 export function AfisBetaalVoorkeuren() {
   const {
     businessPartnerIdEncrypted,
@@ -97,6 +120,7 @@ export function AfisBetaalVoorkeuren() {
     themaConfig,
     themaId,
     belastingenLinkListItem,
+    showMultipleVestigingenDisclaimer,
   } = useAfisThemaData();
 
   useHTMLDocumentTitle(themaConfig.detailPageBetaalvoorkeuren.route);
@@ -163,6 +187,9 @@ export function AfisBetaalVoorkeuren() {
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
+      {showMultipleVestigingenDisclaimer && (
+        <AfisMultipleVestigingenDisclaimer className="ams-mb-m" />
+      )}
       <Paragraph className="ams-mb-m">
         Hieronder kunt u uw gegevens bekijken en een automatische incasso
         instellen per afdeling van de gemeente. Voor bijvoorbeeld een
@@ -254,7 +281,7 @@ export function AfisBetaalVoorkeuren() {
       breadcrumbs={breadcrumbs}
       pageLinks={pageLinks}
       pageContentTop={pageContentTop}
-      pageContentMain={pageContentMain}
+      pageContentMain={!showMultipleVestigingenDisclaimer && pageContentMain}
       maintenanceNotificationsPageSlug="afis"
     />
   );

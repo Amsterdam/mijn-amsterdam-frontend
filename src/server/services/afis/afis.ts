@@ -148,17 +148,17 @@ export async function fetchIsKnownInAFIS(
     profileIdentifierType === 'KVK'
   ) {
     const kvkVestigingen = await fetchVestigingen(authProfileAndToken);
-    if (kvkVestigingen.status !== 'OK') {
-      return response;
-    }
-    if (kvkVestigingen.content.length > 1) {
-      return apiSuccessResult({
-        ...response.content,
-        businessPartnerId: null,
-        businessPartnerIdEncrypted: null,
-        facturen: null,
-        showMultipleVestigingenDisclaimer: true,
-      });
+    if (kvkVestigingen.status !== 'OK' || kvkVestigingen.content.length > 1) {
+      return apiSuccessResult(
+        {
+          ...response.content,
+          businessPartnerId: null,
+          businessPartnerIdEncrypted: null,
+          facturen: null,
+          showMultipleVestigingenDisclaimer: true,
+        },
+        getFailedDependencies(kvkVestigingen)
+      );
     }
   }
 

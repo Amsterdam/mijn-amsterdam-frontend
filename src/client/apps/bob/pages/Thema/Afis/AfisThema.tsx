@@ -19,16 +19,31 @@ import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.
 
 function PageContentTop({
   urlNaarBelastingen,
+  showMultipleVestigingenDisclaimer,
 }: {
   urlNaarBelastingen: string;
+  showMultipleVestigingenDisclaimer: boolean;
 }) {
   return (
-    <>
+    <PageContentCell spanWide={8}>
+      {showMultipleVestigingenDisclaimer && (
+        <AfisMultipleVestigingenDisclaimer className="ams-mb-m" />
+      )}
       <Paragraph className="ams-mb-m">
-        Hieronder ziet u een overzicht van uw facturen.
-        <br />
+        {!showMultipleVestigingenDisclaimer && (
+          <>
+            Hieronder ziet u een overzicht van uw facturen.
+            <br />
+          </>
+        )}
         {getVragenOverFactuurText('Vraag over facturen en betaalvoorkeuren')}
       </Paragraph>
+      {/* {!showMultipleVestigingenDisclaimer && (
+        <Paragraph>Hieronder ziet u een overzicht van uw facturen.</Paragraph>
+      )}
+      <Paragraph className="ams-mb-m">
+        {getVragenOverFactuurText('Vraag over facturen en betaalvoorkeuren')}
+      </Paragraph> */}
       <Paragraph>
         U ziet hier niet de facturen over Gemeentebelastingen
         <br />
@@ -38,7 +53,7 @@ function PageContentTop({
         </Link>
         .
       </Paragraph>
-    </>
+    </PageContentCell>
   );
 }
 
@@ -63,7 +78,7 @@ export function AfisDisclaimer() {
   );
 }
 
-export function AfisMultipleVestigingenDisclaimer({
+function AfisMultipleVestigingenDisclaimer({
   className,
 }: {
   className?: string;
@@ -178,18 +193,18 @@ export function AfisThema() {
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
       pageLinks={pageLinks}
       pageContentTop={
-        <PageContentCell spanWide={8}>
-          {showMultipleVestigingenDisclaimer && (
-            <AfisMultipleVestigingenDisclaimer className="ams-mb-m" />
-          )}
-          <PageContentTop urlNaarBelastingen={belastingenLinkListItem.to} />
-        </PageContentCell>
+        <PageContentTop
+          urlNaarBelastingen={belastingenLinkListItem.to}
+          showMultipleVestigingenDisclaimer={showMultipleVestigingenDisclaimer}
+        />
       }
       pageContentMain={
-        <>
-          {pageContentSecondary}
-          <AfisFacturenTables />
-        </>
+        !showMultipleVestigingenDisclaimer && (
+          <>
+            {pageContentSecondary}
+            <AfisFacturenTables />
+          </>
+        )
       }
       maintenanceNotificationsPageSlug="afis"
     />
