@@ -3,6 +3,7 @@ import { IS_PRODUCTION } from '../../universal/config/env.ts';
 // Is mutated by the Appconfiguration. Locally this object will be used as is.
 export const featureToggle = {
   ['AFIS.EMandates']: true,
+  ['AFIS.blockDataForMultipleKvKVestigingen']: true,
   ['AMSAPP.notificationService']: true,
   ['BRP.aantalBewonersOpAdresTonen']: true,
   ['USER_FEEDBACK.fetchSurvey']: true,

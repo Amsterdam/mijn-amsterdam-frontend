@@ -45,8 +45,7 @@ export type BusinessPartnerId =
 
 export type AfisBusinessPartnerCommercialResponseSource = {
   Record:
-    | AfisBusinessPartnerRecordCommercial
-    | AfisBusinessPartnerRecordCommercial[];
+    AfisBusinessPartnerRecordCommercial | AfisBusinessPartnerRecordCommercial[];
 };
 
 export type AfisFacturenOverviewResponse = {
@@ -57,6 +56,7 @@ export type AfisThemaResponse = {
   isKnown: boolean;
   businessPartnerIdEncrypted: string | null;
   businessPartnerId?: string | null;
+  showMultipleVestigingenDisclaimer?: boolean;
   facturen: AfisFacturenOverviewResponse | null;
 };
 

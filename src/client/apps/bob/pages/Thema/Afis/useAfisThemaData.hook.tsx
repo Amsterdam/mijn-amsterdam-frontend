@@ -59,6 +59,8 @@ export function useAfisFacturenData(
     routeConfigListPage,
     businessPartnerIdEncrypted,
     businessPartnerId: AFIS.content?.businessPartnerId || null,
+    showMultipleVestigingenDisclaimer:
+      AFIS.content?.showMultipleVestigingenDisclaimer ?? false,
     dependencyErrors: {
       open: hasFailedDependency(AFIS, 'open'),
       afgehandeld: hasFailedDependency(AFIS, 'afgehandeld'),
@@ -83,6 +85,7 @@ export function useAfisThemaData() {
     tableConfig,
     businessPartnerIdEncrypted,
     businessPartnerId,
+    showMultipleVestigingenDisclaimer,
     isThemaPaginaError,
     isThemaPaginaLoading,
     dependencyErrors,
@@ -95,6 +98,7 @@ export function useAfisThemaData() {
     belastingenLinkListItem,
     businessPartnerIdEncrypted,
     businessPartnerId,
+    showMultipleVestigingenDisclaimer,
     facturenByState,
     facturenTableConfig: tableConfig,
     isThemaPaginaError,
