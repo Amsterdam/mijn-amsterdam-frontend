@@ -38,12 +38,6 @@ function PageContentTop({
         )}
         {getVragenOverFactuurText('Vraag over facturen en betaalvoorkeuren')}
       </Paragraph>
-      {/* {!showMultipleVestigingenDisclaimer && (
-        <Paragraph>Hieronder ziet u een overzicht van uw facturen.</Paragraph>
-      )}
-      <Paragraph className="ams-mb-m">
-        {getVragenOverFactuurText('Vraag over facturen en betaalvoorkeuren')}
-      </Paragraph> */}
       <Paragraph>
         U ziet hier niet de facturen over Gemeentebelastingen
         <br />
