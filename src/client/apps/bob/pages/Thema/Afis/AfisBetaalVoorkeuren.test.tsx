@@ -103,7 +103,9 @@ describe('<AfisBetaalVoorkeuren />', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Inzage in uw facturen van de gemeente Amsterdam')
+        screen.getByText(
+          'Inzage in uw betaalvoorkeuren van de gemeente Amsterdam'
+        )
       ).toBeInTheDocument();
     });
   });
@@ -116,7 +118,9 @@ describe('<AfisBetaalVoorkeuren />', () => {
     });
 
     expect(
-      screen.queryByText('Inzage in uw facturen van de gemeente Amsterdam')
+      screen.queryByText(
+        'Inzage in uw betaalvoorkeuren van de gemeente Amsterdam'
+      )
     ).not.toBeInTheDocument();
   });
 });
