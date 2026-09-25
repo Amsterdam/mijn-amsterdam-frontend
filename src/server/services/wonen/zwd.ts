@@ -16,6 +16,7 @@ import {
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import { pick } from '../../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { isFeatureEnabled } from '../../config/azure-appconfiguration.ts';
 import type {
   DataRequestConfig,
   DataRequestHeaders,
@@ -68,7 +69,6 @@ function TransformZWDCases(cases: ZwdVveDataSource['cases']): VveCaseDetail[] {
   }));
 }
 
-
 function transformZwdVvEResponse(
   responseData: ZwdVveDataSource,
   _headers: DataRequestHeaders,
@@ -94,7 +94,9 @@ function transformZwdVvEResponse(
 
   const camelizedData: VvEDataFrontend = {
     ...camelize(responseDataPicked),
-    cases: TransformZWDCases(responseData.cases),
+    cases: isFeatureEnabled('WONEN.vve.zaken')
+      ? TransformZWDCases(responseData.cases)
+      : [],
   };
 
   return camelizedData;
