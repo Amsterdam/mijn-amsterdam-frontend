@@ -91,7 +91,7 @@ export async function fetchErfpachtNotifications(
             isRecentNotification(zaakExcerpt.datePublished, new Date())
           : false // Do not include notifications without a datePublished.
     )
-    .map((zaakExcerpt) => createErfpachtNotification(zaakExcerpt));
+    .map(createErfpachtNotification);
 
   return apiSuccessResult({ notifications });
 }
