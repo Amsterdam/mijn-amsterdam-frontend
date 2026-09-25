@@ -3,7 +3,7 @@ import { HorecaDetail } from './HorecaDetail.tsx';
 import { default as HorecaIcon } from './HorecaIcon.svg?react';
 import { HorecaList } from './HorecaList.tsx';
 import { HorecaThema } from './HorecaThema.tsx';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,

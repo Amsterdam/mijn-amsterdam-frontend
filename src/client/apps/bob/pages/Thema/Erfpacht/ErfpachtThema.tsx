@@ -4,6 +4,7 @@ import {
   filterErfpachtFacturen,
   mapErfpachtFacturen,
 } from './Erfpacht-helpers.tsx';
+import { listPageParamKind } from './Erfpacht-thema-config.ts';
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook.tsx';
 import type { ErfpachtDossierFrontend } from '../../../../../../server/services/erfpacht/erfpacht-types.ts';
 import type { ErfpachtZaakExcerptFrontend } from '../../../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
@@ -30,11 +31,11 @@ export function ErfpachtThema() {
 
   useHTMLDocumentTitle(themaConfig.route);
 
-  const zakenTableConfig = tableConfig['erfpacht-zaken'];
+  const zakenTableConfig = tableConfig?.[listPageParamKind.erfpachtZaken];
   const zakenTable = (
     <ThemaPaginaDataView<ErfpachtDossierFrontend | ErfpachtZaakExcerptFrontend>
       title={zakenTableConfig.title}
-      zaken={zaken}
+      zaken={zaken.sort(zakenTableConfig.sort)}
       displayProps={zakenTableConfig.displayProps}
       maxItems={zakenTableConfig.maxItems}
       listPageRoute={zakenTableConfig.listPageRoute}

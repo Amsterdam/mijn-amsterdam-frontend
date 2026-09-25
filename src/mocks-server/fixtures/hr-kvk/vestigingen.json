@@ -5,9 +5,9 @@
         "_links": {
           "schema": "https://schemas.data.amsterdam.nl/datasets/hr_kvk/vestigingen/v2",
           "self": {
-            "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000006363571",
-            "title": "000006363571",
-            "vestigingsnummer": "000006363571"
+            "href": "https://api.data.amsterdam.nl/v1/hr_kvk/vestigingen/000007678487",
+            "title": "000007678487",
+            "vestigingsnummer": "000007678487"
           },
           "isEenUitoefeningVanHrMac": {
             "href": "https://api.data.amsterdam.nl/v1/hr_kvk/maatschappelijkeactiviteiten/34366966",
@@ -23,7 +23,7 @@
           "postHeeftBagLigplaats": null,
           "postHeeftBagStandplaats": null
         },
-        "vestigingsnummer": "000006363571",
+        "vestigingsnummer": "000007678487",
         "datumAanvangDatum": null,
         "datumAanvangJaar": 1976,
         "datumAanvangMaand": 0,

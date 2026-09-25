@@ -5,7 +5,7 @@ import {
   featureToggle,
 } from './Svwi-thema-config.ts';
 import { default as SvwiIcon } from './SvwiIcon.svg?react';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import { type AppState } from '../../../../../../universal/types/App.types.ts';
 import { type ThemaMenuItem } from '../../../../../../universal/types/thema-types.ts';
 

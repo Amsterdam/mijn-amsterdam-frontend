@@ -31,6 +31,7 @@ const mockFacturen: AfisFacturenOverviewResponse = {
         factuurNummer: 'F001',
         status: 'openstaand',
         statusDescription: 'openstaand',
+        eMandateId: null,
         paylink: 'https://payment.example.com/F001',
         documentDownloadLink: 'https://download.example.com/F001',
         factuurDocumentId: '1',
@@ -55,6 +56,7 @@ const mockFacturen: AfisFacturenOverviewResponse = {
         factuurNummer: 'F003',
         status: 'openstaand',
         statusDescription: 'openstaand',
+        eMandateId: null,
         paylink: 'https://payment.example.com/F003',
         documentDownloadLink: 'https://download.example.com/F003',
         factuurDocumentId: '2',
@@ -85,6 +87,7 @@ const mockFacturen: AfisFacturenOverviewResponse = {
         factuurNummer: 'F002',
         status: 'betaald',
         statusDescription: 'betaald',
+        eMandateId: null,
         paylink: null,
         documentDownloadLink: 'https://download.example.com/F002',
         factuurDocumentId: '3',
@@ -141,13 +144,13 @@ describe('<Afis />', () => {
   const routeEntry = generatePath(themaConfig.route.path);
   const routePath = themaConfig.route.path;
 
-  function Component() {
+  function Component({ state = testState }: { state?: AppState }) {
     return (
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
         component={AfisThema}
-        state={testState}
+        state={state}
       />
     );
   }
@@ -158,6 +161,27 @@ describe('<Afis />', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Company B')).toBeInTheDocument();
+    });
+  });
+
+  it('Shows multiple vestigingen disclaimer at the top content when enabled', async () => {
+    const stateWithMultipleVestigingen = {
+      ...testState,
+      AFIS: {
+        ...testState.AFIS,
+        content: {
+          ...testState.AFIS.content,
+          showMultipleVestigingenDisclaimer: true,
+        },
+      },
+    } as AppState;
+
+    const screen = render(<Component state={stateWithMultipleVestigingen} />);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('Inzage in uw facturen van de gemeente Amsterdam')
+      ).toBeInTheDocument();
     });
   });
 });

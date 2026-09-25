@@ -7,6 +7,7 @@ import {
   remoteApi,
   TEST_SESSION_ID,
 } from '../../../testing/utils.ts';
+import { featureToggle } from '../../config/feature-toggles.ts';
 import { decrypt } from '../../helpers/encrypt-decrypt.ts';
 
 const BASE_ROUTE = '/afis/RESTAdapter';
@@ -79,6 +80,16 @@ const RESPONSE_BODIES = {
 };
 
 describe('fetchIsKnownInAFIS ', () => {
+  const MULTIPLE_VESTIGINGEN_TOGGLE =
+    'AFIS.blockDataForMultipleKvKVestigingen' as const;
+  const ORIGINAL_MULTIPLE_VESTIGINGEN_TOGGLE_VALUE =
+    featureToggle[MULTIPLE_VESTIGINGEN_TOGGLE];
+
+  afterEach(() => {
+    featureToggle[MULTIPLE_VESTIGINGEN_TOGGLE] =
+      ORIGINAL_MULTIPLE_VESTIGINGEN_TOGGLE_VALUE;
+  });
+
   const TRANSFORMED_RESPONSES = {
     isKnown: {
       content: {
@@ -152,6 +163,11 @@ describe('fetchIsKnownInAFIS ', () => {
       remoteApi
         .post(ROUTES.businesspartnerKVK)
         .reply(200, RESPONSE_BODIES.KVKFound);
+      remoteApi.get(/\/vestigingen/).reply(200, {
+        _embedded: {
+          vestigingen: [{}],
+        },
+      });
       remoteApi.get(ROUTES.facturen).times(9).reply(200, {});
 
       const response = await fetchIsKnownInAFIS(
@@ -218,6 +234,69 @@ describe('fetchIsKnownInAFIS ', () => {
         }
       `);
       expect(response.status).toBe('OK');
+    });
+
+    it('sets showMultipleVestigingenDisclaimer true and businessPartnerIdEncrypted null when toggle is enabled and profile is KVK', async () => {
+      featureToggle[MULTIPLE_VESTIGINGEN_TOGGLE] = true;
+
+      remoteApi
+        .post(ROUTES.businesspartnerKVK)
+        .reply(200, RESPONSE_BODIES.KVKFound);
+      remoteApi.get(/\/vestigingen/).reply(200, {
+        _embedded: {
+          vestigingen: [{ vestigingsnummer: '111111111111' }, {}],
+        },
+      });
+
+      const response = await fetchIsKnownInAFIS(
+        getAuthProfileAndToken('commercial')
+      );
+
+      expect(response.status).toBe('OK');
+      expect(response.content?.showMultipleVestigingenDisclaimer).toBe(true);
+      expect(response.content?.businessPartnerIdEncrypted).toBeNull();
+    });
+
+    it('does not set showMultipleVestigingenDisclaimer when toggle is disabled', async () => {
+      featureToggle[MULTIPLE_VESTIGINGEN_TOGGLE] = false;
+
+      remoteApi
+        .post(ROUTES.businesspartnerKVK)
+        .reply(200, RESPONSE_BODIES.KVKFound);
+      remoteApi.get(ROUTES.facturen).times(9).reply(200, {});
+
+      const response = await fetchIsKnownInAFIS(
+        getAuthProfileAndToken('commercial')
+      );
+
+      expect(response.status).toBe('OK');
+      expect(response.content?.showMultipleVestigingenDisclaimer).not.toBe(
+        true
+      );
+      expect(response.content?.businessPartnerIdEncrypted).toEqual(
+        expect.any(String)
+      );
+    });
+
+    it('does not set showMultipleVestigingenDisclaimer for non-KVK profile when toggle is enabled', async () => {
+      featureToggle[MULTIPLE_VESTIGINGEN_TOGGLE] = true;
+
+      remoteApi
+        .post(ROUTES.businesspartnerBSN)
+        .reply(200, RESPONSE_BODIES.BSNFound);
+      remoteApi.get(ROUTES.facturen).times(9).reply(200, {});
+
+      const response = await fetchIsKnownInAFIS(
+        getAuthProfileAndToken('private')
+      );
+
+      expect(response.status).toBe('OK');
+      expect(response.content?.showMultipleVestigingenDisclaimer).not.toBe(
+        true
+      );
+      expect(response.content?.businessPartnerIdEncrypted).toEqual(
+        expect.any(String)
+      );
     });
   });
 });

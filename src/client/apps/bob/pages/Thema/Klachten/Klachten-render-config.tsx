@@ -3,7 +3,7 @@ import { KlachtenDetail } from './KlachtenDetail.tsx';
 import { default as KlachtenIcon } from './KlachtenIcon.svg?react';
 import { KlachtenList } from './KlachtenList.tsx';
 import { KlachtenThema } from './KlachtenThema.tsx';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,

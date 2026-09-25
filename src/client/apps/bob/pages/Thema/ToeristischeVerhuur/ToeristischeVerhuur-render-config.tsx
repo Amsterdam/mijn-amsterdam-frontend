@@ -3,7 +3,7 @@ import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail.tsx';
 import { default as ToeristischeVerhuurIcon } from './ToeristischeVerhuurIcon.svg?react';
 import { ToeristischeVerhuurList } from './ToeristischeVerhuurList.tsx';
 import { ToeristischeVerhuurThema } from './ToeristischeVerhuurThema.tsx';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
