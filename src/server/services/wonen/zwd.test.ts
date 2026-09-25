@@ -43,6 +43,7 @@ describe('zwd-vve service', () => {
       expect(response).toEqual({
         content: {
           name: 'VvE Test',
+          cases: [],
         },
         status: 'OK',
       });
@@ -50,6 +51,7 @@ describe('zwd-vve service', () => {
     it('should handle VVE data not found', async () => {
       remoteApi.get(/mijn-amsterdam/).reply(404, {
         name: 'VvE Test',
+        cases: [],
       });
       const response = await zwdVve.fetchVVEData(getAuthProfileAndToken());
       expect(response).toEqual({
