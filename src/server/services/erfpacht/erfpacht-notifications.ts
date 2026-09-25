@@ -34,13 +34,14 @@ export function getSubStatusNotificationTitle(
       return `Aanvraag ${caseType} gereed voor behandeling`;
     case ZAAK_STATUS_SOURCE.AANBIEDING:
       return `Aanvraag ${caseType} aanbieding verstuurd`;
+    case ZAAK_STATUS_SOURCE.AANVRAAG_AFGEROND:
+      return `Aanvraag ${caseType} afgerond`;
 
     case ZAAK_STATUS_SOURCE.INDICATIE_VERSTUURD:
     case ZAAK_STATUS_SOURCE.ACCEPTATIE_ONTVANGEN:
     case ZAAK_STATUS_SOURCE.BESLUIT_VERSTUURD:
     case ZAAK_STATUS_SOURCE.AKTE_GEPASSEERD:
     case ZAAK_STATUS_SOURCE.BEHANDELING:
-    case ZAAK_STATUS_SOURCE.AANVRAAG_AFGEROND:
       return `Aanvraag ${caseType} ${zaakOmschrijving}`;
     default:
       captureException(`Unknown status for ${caseType}: ${zaakOmschrijving}`, {
