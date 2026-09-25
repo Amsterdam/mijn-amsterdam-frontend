@@ -4,7 +4,10 @@ import {
   fetchErfpachtNotifications,
   forTesting,
 } from './erfpacht-notifications.ts';
-import { ZAAK_STATUS_FRONTEND } from './erfpacht-zaken-config.ts';
+import {
+  ZAAK_STATUS_FRONTEND,
+  type ZaakStatusTypeSource,
+} from './erfpacht-zaken-config.ts';
 import type { ErfpachtZaakExcerptFrontend } from './erfpacht-zaken-types.ts';
 import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import {
@@ -118,13 +121,14 @@ describe('erfpacht-notifications', () => {
       const { createErfpachtNotification } = forTesting;
 
       const result = createErfpachtNotification(
-        createZaakExcerpt({ displayStatus: 'Onbekend' })
+        createZaakExcerpt({
+          statusOmschrijving: 'Onbekend' as ZaakStatusTypeSource,
+        })
       );
 
       expect(result).toMatchObject({
-        description:
-          'Wij zijn bezig met het beoordelen van uw aanvraag Wijzigen Erfpachtrecht met zaaknummer ZAAK-2025-0000011488.',
-        title: 'Aanvraag Wijzigen Erfpachtrecht wordt beoordeeld',
+        description: '',
+        title: 'Aanvraag Wijzigen Erfpachtrecht onbekend',
       });
     });
   });
