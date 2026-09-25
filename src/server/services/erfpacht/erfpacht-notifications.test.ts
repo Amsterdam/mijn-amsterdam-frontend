@@ -72,64 +72,60 @@ describe('erfpacht-notifications', () => {
 
   describe('getTitleAndDescriptionForNotification', () => {
     test('maps each known status to the expected title and description', () => {
-      const { getTitleAndDescriptionForNotification } = forTesting;
+      const { createErfpachtNotification } = forTesting;
 
       expect(
-        getTitleAndDescriptionForNotification(
+        createErfpachtNotification(
           createZaakExcerpt({
             displayStatus: ZAAK_STATUS_FRONTEND.AANVRAAG,
             zaakNummer: 'ZAAK-1',
           })
         )
-      ).toMatchInlineSnapshot(`
-        {
-          "description": "Wij zijn bezig met het beoordelen van uw aanvraag.",
-          "title": "ZAAK-1: Aanvraag Beoordelen",
-        }
-      `);
+      ).toMatchObject({
+        description:
+          'Wij zijn bezig met het beoordelen van uw aanvraag Wijzigen Erfpachtrecht met zaaknummer ZAAK-1.',
+        title: 'Aanvraag Wijzigen Erfpachtrecht wordt beoordeeld',
+      });
 
       expect(
-        getTitleAndDescriptionForNotification(
+        createErfpachtNotification(
           createZaakExcerpt({
             displayStatus: ZAAK_STATUS_FRONTEND.IN_BEHANDELING,
             zaakNummer: 'ZAAK-3',
           })
         )
-      ).toMatchInlineSnapshot(`
-        {
-          "description": "Wij zijn bezig met het beoordelen van uw aanvraag.",
-          "title": "ZAAK-3: Aanvraag Beoordelen",
-        }
-      `);
+      ).toMatchObject({
+        description:
+          'Wij zijn bezig met het beoordelen van uw aanvraag Wijzigen Erfpachtrecht met zaaknummer ZAAK-3.',
+        title: 'Aanvraag Wijzigen Erfpachtrecht wordt beoordeeld',
+      });
 
       expect(
-        getTitleAndDescriptionForNotification(
+        createErfpachtNotification(
           createZaakExcerpt({
             displayStatus: ZAAK_STATUS_FRONTEND.AFGEHANDELD,
             zaakNummer: 'ZAAK-4',
           })
         )
-      ).toMatchInlineSnapshot(`
-        {
-          "description": "Wij zijn bezig met het beoordelen van uw aanvraag.",
-          "title": "ZAAK-4: Aanvraag Beoordelen",
-        }
-      `);
+      ).toMatchObject({
+        description:
+          'Wij zijn bezig met het beoordelen van uw aanvraag Wijzigen Erfpachtrecht met zaaknummer ZAAK-4.',
+        title: 'Aanvraag Wijzigen Erfpachtrecht wordt beoordeeld',
+      });
     });
 
     test('falls back to default title/description for unknown status', () => {
-      const { getTitleAndDescriptionForNotification } = forTesting;
+      const { createErfpachtNotification } = forTesting;
 
-      const result = getTitleAndDescriptionForNotification(
+      const result = createErfpachtNotification(
         createZaakExcerpt({ displayStatus: 'Onbekend' })
       );
 
-      expect(result).toMatchInlineSnapshot(`
-        {
-          "description": "Wij zijn bezig met het beoordelen van uw aanvraag.",
-          "title": "ZAAK-2025-0000011488: Aanvraag Beoordelen",
-        }
-      `);
+      expect(result).toMatchObject({
+        description:
+          'Wij zijn bezig met het beoordelen van uw aanvraag Wijzigen Erfpachtrecht met zaaknummer ZAAK-2025-0000011488.',
+        title: 'Aanvraag Wijzigen Erfpachtrecht wordt beoordeeld',
+      });
     });
   });
 
@@ -207,7 +203,7 @@ describe('erfpacht-notifications', () => {
           "notifications": [
             {
               "datePublished": "2026-07-15T00:00:00.000Z",
-              "description": "Wij zijn bezig met het beoordelen van uw aanvraag.",
+              "description": "Wij zijn bezig met het beoordelen van uw aanvraag Wijzigen Erfpachtrecht met zaaknummer ZAAK-2025-0000011488.",
               "id": "erfpacht-1234-5678-9012-9999-notification",
               "link": {
                 "title": "Bekijk uw aanvraag",
@@ -215,7 +211,7 @@ describe('erfpacht-notifications', () => {
               },
               "themaID": "ERFPACHT",
               "themaTitle": "Erfpacht",
-              "title": "ZAAK-2025-0000011488: Aanvraag Beoordelen",
+              "title": "Aanvraag Wijzigen Erfpachtrecht wordt beoordeeld",
             },
           ],
         },

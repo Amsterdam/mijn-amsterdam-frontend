@@ -1,7 +1,7 @@
 import {
-  getParentStatus,
-  getSubStepDescription,
+  getSubStatusDescription,
   ZAAK_STATUS_FRONTEND,
+  ZAAK_STATUS_SOURCE,
 } from './erfpacht-zaken-config.ts';
 import type { ErfpachtZaakExcerptFrontend } from './erfpacht-zaken-types.ts';
 import { fetchErfpachtZaakInfo } from './erfpacht-zaken.ts';
@@ -13,38 +13,65 @@ import {
 import { isRecentNotification } from '../../../universal/helpers/date.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { captureException } from '../monitoring.ts';
 
-function getTitleAndDescriptionForNotification(
-  zaakExcerpt: ErfpachtZaakExcerptFrontend
-): { title: string; description: string } {
-  const title = `${zaakExcerpt.zaakNummer}: ${zaakExcerpt.statusOmschrijving}`;
-  const description = getSubStepDescription({
-    statustoelichting: zaakExcerpt.statusOmschrijving,
-    datumStatusGezet: zaakExcerpt.formattedStatusDatum,
-  });
+export function getSubStatusNotificationTitle(
+  zaakExcerpt: Pick<ErfpachtZaakExcerptFrontend, 'statusOmschrijving'>
+): string {
+  const caseType = 'Wijzigen Erfpachtrecht';
+  const zaakOmschrijving = zaakExcerpt.statusOmschrijving.toLowerCase();
 
-  // We only want to show a notification for the parent status, not for the specific status.
-  // The specific status per zaak are fetched via an additional API call.
-  // It's too request-heavy to do this for all notifications, so we only show the parent status in the notification.
-  switch (getParentStatus(zaakExcerpt.statusOmschrijving)) {
-    case ZAAK_STATUS_FRONTEND.AANVRAAG:
-      return {
-        title,
-        description,
-      };
-    case ZAAK_STATUS_FRONTEND.IN_BEHANDELING:
-      return {
-        title,
-        description,
-      };
-    case ZAAK_STATUS_FRONTEND.AFGEHANDELD:
-      return {
-        title,
-        description,
-      };
+  switch (zaakOmschrijving) {
+    case ZAAK_STATUS_SOURCE.AANVRAAG:
+      return `Aanvraag ${caseType} ontvangen`;
+    case ZAAK_STATUS_SOURCE.AANVRAAG_BEOORDELEN:
+      return `Aanvraag ${caseType} wordt beoordeeld`;
+    case ZAAK_STATUS_SOURCE.INFORMATIE_OPGEVRAAGD:
+      return `Meer informatie nodig omtrent uw aanvraag ${caseType}`;
+    case ZAAK_STATUS_SOURCE.INFORMATIE_AANGELEVERD:
+      return `Informatie ontvangen omtrent uw aanvraag ${caseType}`;
+    case ZAAK_STATUS_SOURCE.AANVRAAG_GEREED_VOOR_BEHANDELING:
+      return `Aanvraag ${caseType} gereed voor behandeling`;
+    case ZAAK_STATUS_SOURCE.AANBIEDING:
+      return `Aanvraag ${caseType} aanbieding verstuurd`;
+
+    case ZAAK_STATUS_SOURCE.INDICATIE_VERSTUURD:
+    case ZAAK_STATUS_SOURCE.ACCEPTATIE_ONTVANGEN:
+    case ZAAK_STATUS_SOURCE.BESLUIT_VERSTUURD:
+    case ZAAK_STATUS_SOURCE.AKTE_GEPASSEERD:
+    case ZAAK_STATUS_SOURCE.BEHANDELING:
+    case ZAAK_STATUS_SOURCE.AANVRAAG_AFGEROND:
+      return `Aanvraag ${caseType} ${zaakOmschrijving}`;
+    default:
+      captureException(`Unknown status for ${caseType}: ${zaakOmschrijving}`, {
+        severity: 'warning',
+      });
+      return `Aanvraag ${caseType} ${zaakOmschrijving}`;
   }
+}
 
-  return { title, description };
+function createErfpachtNotification(
+  zaakExcerpt: ErfpachtZaakExcerptFrontend
+): MyNotification {
+  const title = getSubStatusNotificationTitle(zaakExcerpt);
+  const description = getSubStatusDescription(
+    zaakExcerpt.statusOmschrijving,
+    zaakExcerpt.zaakNummer
+  );
+
+  const notification: MyNotification = {
+    id: `erfpacht-${zaakExcerpt.zaakUuid}-notification`,
+    themaID: themaConfig.id,
+    themaTitle: themaConfig.title,
+    title,
+    description,
+    datePublished: zaakExcerpt.datePublished ?? '',
+    link: {
+      ...zaakExcerpt.link,
+      title: 'Bekijk uw aanvraag',
+    },
+  };
+  return notification;
 }
 
 export async function fetchErfpachtNotifications(
@@ -64,28 +91,11 @@ export async function fetchErfpachtNotifications(
             isRecentNotification(zaakExcerpt.datePublished, new Date())
           : false // Do not include notifications without a datePublished.
     )
-    .map((zaakExcerpt: ErfpachtZaakExcerptFrontend) => {
-      const { title, description } =
-        getTitleAndDescriptionForNotification(zaakExcerpt);
-
-      const notification: MyNotification = {
-        id: `erfpacht-${zaakExcerpt.zaakUuid}-notification`,
-        themaID: themaConfig.id,
-        themaTitle: themaConfig.title,
-        title,
-        description,
-        datePublished: zaakExcerpt.datePublished ?? '',
-        link: {
-          ...zaakExcerpt.link,
-          title: 'Bekijk uw aanvraag',
-        },
-      };
-      return notification;
-    });
+    .map((zaakExcerpt) => createErfpachtNotification(zaakExcerpt));
 
   return apiSuccessResult({ notifications });
 }
 
 export const forTesting = {
-  getTitleAndDescriptionForNotification,
+  createErfpachtNotification,
 };

@@ -2,7 +2,6 @@ import type {
   ZaakResultaatFrontend,
   ZaakResultaatSource,
   ZaakStatusFrontend,
-  ZaakStatusSource,
 } from './erfpacht-zaken-types.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 
@@ -64,32 +63,38 @@ export function getParentStatus(statustekst: ZaakStatusTypeSource): string {
   }
 }
 
-export function getSubStepDescription(substep: ZaakStatusSource): string {
-  switch (substep.statustoelichting.toLowerCase()) {
+export function getSubStatusDescription(
+  statustoelichting: ZaakStatusTypeSource,
+  zaakNummer?: string
+): string {
+  const aanvraagText = zaakNummer
+    ? `aanvraag Wijzigen Erfpachtrecht met zaaknummer ${zaakNummer}`
+    : 'aanvraag';
+  switch (statustoelichting.toLowerCase()) {
     case ZAAK_STATUS_SOURCE.AANVRAAG:
-      return 'Wij hebben uw aanvraag ontvangen en gaan deze beoordelen.';
+      return `Wij hebben uw ${aanvraagText} ontvangen en gaan deze beoordelen.`;
     case ZAAK_STATUS_SOURCE.AANVRAAG_BEOORDELEN:
-      return 'Wij zijn bezig met het beoordelen van uw aanvraag.';
+      return `Wij zijn bezig met het beoordelen van uw ${aanvraagText}.`;
     case ZAAK_STATUS_SOURCE.INFORMATIE_OPGEVRAAGD:
-      return 'Wij hebben aanvullende informatie nodig om uw aanvraag te kunnen beoordelen.';
+      return `Wij hebben aanvullende informatie nodig om uw ${aanvraagText} te kunnen beoordelen.`;
     case ZAAK_STATUS_SOURCE.INFORMATIE_AANGELEVERD:
-      return 'Wij hebben de aanvullende informatie ontvangen en gaan uw aanvraag verder beoordelen.';
+      return `Wij hebben de aanvullende informatie ontvangen en gaan uw ${aanvraagText} verder beoordelen.`;
     case ZAAK_STATUS_SOURCE.AANVRAAG_GEREED_VOOR_BEHANDELING:
-      return 'Uw aanvraag is gereed voor behandeling.';
-    case ZAAK_STATUS_SOURCE.INDICATIE_VERSTUURD:
-      return 'Wij hebben u een indicatie gestuurd naar aanleiding van uw aanvraag.';
-    case ZAAK_STATUS_SOURCE.AANBIEDING:
-      return 'Wij hebben u een aanbieding gestuurd naar aanleiding van uw aanvraag.';
-    case ZAAK_STATUS_SOURCE.ACCEPTATIE_ONTVANGEN:
-      return 'Wij hebben uw acceptatie ontvangen en gaan uw aanvraag verder behandelen.';
-    case ZAAK_STATUS_SOURCE.BESLUIT_VERSTUURD:
-      return 'Wij hebben het besluit naar de notaris gestuurd. U krijgt van de notaris een uitnodiging om de akte te tekenen.';
-    case ZAAK_STATUS_SOURCE.AKTE_GEPASSEERD:
-      return 'De akte is ondertekend.';
+      return `Uw ${aanvraagText} is gereed voor behandeling.`;
     case ZAAK_STATUS_SOURCE.BEHANDELING:
-      return 'Wij zijn bezig met het behandelen van uw aanvraag.';
+      return `Wij zijn bezig met het behandelen van uw ${aanvraagText}.`;
+    case ZAAK_STATUS_SOURCE.INDICATIE_VERSTUURD:
+      return `Wij hebben u een indicatie gestuurd naar aanleiding van uw ${aanvraagText}.`;
+    case ZAAK_STATUS_SOURCE.AANBIEDING:
+      return `Wij hebben u een aanbieding gestuurd naar aanleiding van uw ${aanvraagText}.`;
+    case ZAAK_STATUS_SOURCE.ACCEPTATIE_ONTVANGEN:
+      return `Wij hebben uw acceptatie ontvangen en gaan uw ${aanvraagText} verder behandelen.`;
+    case ZAAK_STATUS_SOURCE.BESLUIT_VERSTUURD:
+      return `Wij hebben het besluit van uw ${aanvraagText} naar de notaris gestuurd. U krijgt van de notaris een uitnodiging om de akte te tekenen.`;
+    case ZAAK_STATUS_SOURCE.AKTE_GEPASSEERD:
+      return `De akte van uw ${aanvraagText} is ondertekend.`;
     case ZAAK_STATUS_SOURCE.AANVRAAG_AFGEROND:
-      return 'Uw aanvraag is afgerond.';
+      return `Uw ${aanvraagText} is afgerond.`;
   }
   return '';
 }
