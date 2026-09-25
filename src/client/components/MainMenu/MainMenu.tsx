@@ -3,10 +3,8 @@ import classNames from 'classnames';
 
 import { categoryMenuItems } from './MainMenu.constants.ts';
 import styles from './MainMenu.module.scss';
-import {
-  themaConfig,
-  themaId,
-} from '../../apps/bob/pages/MyTips/MyTips-config.ts';
+import { themaConfig } from '../../apps/bob/pages/MyTips/MyTips-config.ts';
+import { myTipsMenuItem } from '../../apps/bob/pages/MyTips/MyTips-routes.ts';
 import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
@@ -26,11 +24,11 @@ export function MainMenu() {
     themaConfig.featureToggle.enableNewTipsDesign;
 
   const visibleCategoryMenuItems = categoryMenuItems.filter((item) => {
-    if (hasTips) {
-      return true;
+    if (item.id === myTipsMenuItem.id && !hasTips) {
+      return false;
     }
 
-    return item.id !== themaId;
+    return true;
   });
 
   return (
