@@ -84,13 +84,15 @@ export async function fetchErfpachtNotifications(
   }
 
   const notifications: MyNotification[] = zaakInfoResponse.content
-    .filter(
-      (zaakExcerpt) =>
-        zaakExcerpt.datePublished
-          ? zaakExcerpt.displayStatus !== ZAAK_STATUS_FRONTEND.AFGEHANDELD ||
-            isRecentNotification(zaakExcerpt.datePublished, new Date())
-          : false // Do not include notifications without a datePublished.
-    )
+    .filter((zaakExcerpt) => {
+      if (!zaakExcerpt.datePublished) {
+        return false;
+      }
+      return (
+        isRecentNotification(zaakExcerpt.datePublished) ||
+        zaakExcerpt.displayStatus !== ZAAK_STATUS_FRONTEND.AFGEHANDELD
+      );
+    })
     .map(createErfpachtNotification);
 
   return apiSuccessResult({ notifications });
