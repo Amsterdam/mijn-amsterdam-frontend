@@ -1,4 +1,4 @@
-import { Column, Link, Paragraph } from '@amsterdam/design-system-react';
+import { Heading, Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { useProfileData } from './useProfileData.hook.tsx';
 import { useWonenThemaData } from './useWonenThemaData.hook.ts';
@@ -60,43 +60,42 @@ function VveDetail({ vve }: VveDetailsProps) {
   return (
     <>
       <PageContentCell spanWide={8}>
-        <Column>
-          <Paragraph>
-            Hieronder staan de gegevens van uw Vereniging van Eigenaren (VvE){' '}
-            zoals wij die hebben. Geef aan ons door als gegevens niet kloppen.
-            Op{' '}
-            <Link
-              href="https://www.amsterdam.nl/stelselpedia/terugmelden/"
-              rel="noopener noreferrer"
-            >
-              Terugmelden op basisgegevens en stelselrelaties
-            </Link>{' '}
-            leest u hoe u dit doet.
-          </Paragraph>
-          {themaConfig.BRP.featureToggle.enableZWDZaken &&
-            vve.isPriorityNeighborhood && (
-              <Paragraph>
-                Wilt u VVE uw woning verduurzamen?{' '}
-                <Link
-                  href="https://duurzaamwonen.amsterdam/vve/gratis-verduurzamingsadvies-voor-vves"
-                  rel="external noopener"
-                >
-                  Vraag hier gratis advies aan.
-                </Link>
-              </Paragraph>
-            )}
-        </Column>
+        <Paragraph className="ams-mb-m">
+          Hieronder staan de gegevens van uw Vereniging van Eigenaren (VvE){' '}
+          zoals wij die hebben. Geef aan ons door als deze gegevens niet
+          kloppen. Op{' '}
+          <Link
+            href="https://www.amsterdam.nl/stelselpedia/terugmelden/"
+            rel="noopener noreferrer"
+          >
+            Terugmelden op basisgegevens en stelselrelaties
+          </Link>{' '}
+          leest u hoe u dit doet.
+        </Paragraph>
+        {themaConfig.BRP.featureToggle.enableZWDZaken &&
+          vve.isPriorityNeighborhood && (
+            <Paragraph>
+              Wilt u advies over hoe uw VvE kan verduurzamen.{' '}
+              <Link
+                href="https://duurzaamwonen.amsterdam/vve/gratis-verduurzamingsadvies-voor-vves"
+                rel="external noopener"
+              >
+                Vraag hier gratis advies aan.
+              </Link>
+            </Paragraph>
+          )}
       </PageContentCell>
       <PageContentCell>
         <Datalist rows={rows} />
       </PageContentCell>
       {themaConfig.BRP.featureToggle.enableZWDZaken && vve.cases.length > 0 && (
         <PageContentCell>
+          <Heading level={2}>Aanvragen</Heading>
           <DataView<VveCaseDetail>
             contentAfterTheCaption={
-              <Paragraph>
-                Heb je vragen over de onderstaande aanvragen, neem contact op
-                met je VvE bestuur.
+              <Paragraph className="ams-mb-m">
+                Heeft u vragen over de onderstaande aanvragen, neem contact op
+                met uw VvE bestuur.
               </Paragraph>
             }
             displayProps={VVE_CASES_DISPLAYPROPS}
