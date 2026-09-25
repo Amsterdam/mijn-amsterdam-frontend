@@ -41,24 +41,21 @@ describe('zwd-notifications', () => {
   });
 
   test('transformZWDCasesToNotifications maps case shape', () => {
-    const notifications = forTesting.transformZWDCasesToNotifications([
-      createZwdCase(),
-    ]);
+    const notification =
+      forTesting.transformZWDCasesToNotifications(createZwdCase());
 
-    expect(notifications).toEqual([
-      {
-        id: 'wonen-zwd-1-notification',
-        themaID: 'BRP',
-        themaTitle: 'Mijn gegevens',
-        title: 'Aanvraag verduurzamingsadvies VVE in behandeling',
-        description:
-          'Wij hebben de aanvraag voor verduurzamingsadvies van de VVE VvE Prachtige Straat 13 in behandeling',
-        datePublished: '2026-06-03T09:50:53.447114Z',
-        link: {
-          to: '/persoonlijke-gegevens/vve',
-          title: 'Bekijk uw aanvraag',
-        },
+    expect(notification).toEqual({
+      id: 'wonen-zwd-1-notification',
+      themaID: 'BRP',
+      themaTitle: 'Mijn gegevens',
+      title: 'Aanvraag verduurzamingsadvies VVE in behandeling',
+      description:
+        'Wij hebben de aanvraag voor verduurzamingsadvies van de VVE VvE Prachtige Straat 13 in behandeling',
+      datePublished: '2026-06-03T09:50:53.447114Z',
+      link: {
+        to: '/persoonlijke-gegevens/vve',
+        title: 'Bekijk uw aanvraag',
       },
-    ]);
+    });
   });
 });

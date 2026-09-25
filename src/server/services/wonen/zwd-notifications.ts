@@ -10,30 +10,26 @@ import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 
 export function transformZWDCasesToNotifications(
-  cases: VveCaseDetail[]
-): MyNotification[] {
-  return cases
-    .filter((zaak) => zaak.adviceType === 'Energieadvies')
-    .map((zaak) => {
-      const zaakStatusText = lowercaseFirstLetter(zaak.status);
+  zaak: VveCaseDetail
+): MyNotification {
+  const zaakStatusText = lowercaseFirstLetter(zaak.status);
 
-      return {
-        id: `wonen-zwd-${zaak.id}-notification`,
-        themaID: themaConfig.BRP.id,
-        themaTitle: themaConfig.BRP.title,
-        title: 'Aanvraag verduurzamingsadvies VVE ' + zaakStatusText,
-        description:
-          'Wij hebben de aanvraag voor verduurzamingsadvies van de VVE ' +
-          zaak.homeownerAssociation.name +
-          ' ' +
-          zaakStatusText,
-        datePublished: zaak.datePublished,
-        link: {
-          to: themaConfig.BRP.detailPageVvE.route.path,
-          title: 'Bekijk uw aanvraag',
-        },
-      };
-    });
+  return {
+    id: `wonen-zwd-${zaak.id}-notification`,
+    themaID: themaConfig.BRP.id,
+    themaTitle: themaConfig.BRP.title,
+    title: 'Aanvraag verduurzamingsadvies VVE ' + zaakStatusText,
+    description:
+      'Wij hebben de aanvraag voor verduurzamingsadvies van de VVE ' +
+      zaak.homeownerAssociation.name +
+      ' ' +
+      zaakStatusText,
+    datePublished: zaak.datePublished,
+    link: {
+      to: themaConfig.BRP.detailPageVvE.route.path,
+      title: 'Bekijk uw aanvraag',
+    },
+  };
 }
 
 export async function fetchZWDNotifications(
@@ -49,10 +45,14 @@ export async function fetchZWDNotifications(
     return vveResponse;
   }
 
+  const notifications = vveResponse.content
+    ? vveResponse.content.cases
+        .filter((zaak) => zaak.adviceType === 'Energieadvies')
+        .map(transformZWDCasesToNotifications)
+    : [];
+
   return apiSuccessResult({
-    notifications: vveResponse.content
-      ? transformZWDCasesToNotifications(vveResponse.content.cases)
-      : [],
+    notifications,
   });
 }
 
