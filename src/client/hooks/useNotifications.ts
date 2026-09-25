@@ -8,7 +8,10 @@ import { getRedactedClass } from '../helpers/cobrowse.ts';
 
 export function useAppStateNotifications(top?: number) {
   const { isReady, NOTIFICATIONS } = useAppStateStore();
-  const notifications_: MyNotification[] = NOTIFICATIONS?.content ?? [];
+  const notifications_: MyNotification[] = useMemo(
+    () => NOTIFICATIONS?.content ?? [],
+    [NOTIFICATIONS?.content]
+  );
   // Merge the WelcomeNotification when AppState is ready.
   const notificationsWithWelcomeNotification = useMemo(
     () =>
@@ -20,7 +23,7 @@ export function useAppStateNotifications(top?: number) {
             : getRedactedClass(n.themaID, 'content'),
         })
       ),
-    [isReady]
+    [isReady, notifications_]
   );
 
   if (!themaConfig.featureToggle.enableNewTipsDesign) {
