@@ -12,6 +12,7 @@ import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import { MyAreaDashboard } from '../../../../components/MyArea/MyAreaDashboard.tsx';
 import { MyNotification } from '../../../../components/MyNotification/MyNotification.tsx';
 import { MyThemasPanel } from '../../../../components/MyThemasPanel/MyThemasPanel.tsx';
+import { MyTipsPanel } from '../../../../components/MyTipsPanel/MyTipsPanel.tsx';
 import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
 import { getRedactedClass } from '../../../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../../../hooks/media.hook.ts';
@@ -36,12 +37,11 @@ export function Dashboard() {
 
   const appState = useAppStateGetter();
   const { NOTIFICATIONS } = appState;
-
-  const isLoadingNotifications = useIsLoading(NOTIFICATIONS);
-
-  const { notifications, total } = useAppStateNotifications(
+  const { notifications, tips, notificationsTotal } = useAppStateNotifications(
     MAX_NOTIFICATIONS_VISIBLE
   );
+
+  const isLoadingNotifications = useIsLoading(NOTIFICATIONS);
 
   const isPhoneScreen = useSmallScreen();
 
@@ -81,7 +81,7 @@ export function Dashboard() {
 
           <Heading level={2} className="ams-mb-m">
             Recente berichten{' '}
-            {total > notifications.length && (
+            {notificationsTotal > notifications.length && (
               <MaRouterLink
                 className={styles.LinkToNotifications}
                 href={myNotificationsMenuItem.to}
@@ -118,6 +118,7 @@ export function Dashboard() {
           </Heading>
           <MyThemasPanel isLoading={isMyThemasLoading} items={myThemaItems} />
         </PageContentCell>
+        <MyTipsPanel tips={tips ?? []} />
         {!isPhoneScreen && (
           <PageContentCell>
             <MyAreaDashboard />
