@@ -1,11 +1,11 @@
 import type { ComponentProps } from 'react';
 
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router';
 import { describe, expect, it } from 'vitest';
 
+import styles from './TipCard.module.scss';
 import { TipCard, tipCardColors } from './TipCard.tsx';
-
 type TipCardProps = ComponentProps<typeof TipCard>;
 
 describe('<TipCard />', () => {
@@ -14,6 +14,7 @@ describe('<TipCard />', () => {
     heading: 'Tip 1',
     description: 'Beschrijving tip 1',
     tipReason: 'Omdat dit voor u relevant kan zijn.',
+    onRead: vi.fn(),
     link: {
       to: '/tip-1',
       title: 'Bekijk tip 1',
@@ -40,7 +41,7 @@ describe('<TipCard />', () => {
     expect(screen.getByRole('link', { name: 'Toon tip' })).toBeInTheDocument();
   });
 
-  it('renders the remove button', () => {
+  it('renders the onRead button', () => {
     renderTipCard();
 
     expect(
@@ -48,14 +49,29 @@ describe('<TipCard />', () => {
     ).toBeInTheDocument();
   });
 
-  it.each(tipCardColors)(
-    'renders with background color %s',
-    (backgroundColor) => {
-      renderTipCard({ backgroundColor });
+  it('calls onRead when the onRead button is clicked', () => {
+    const onReadMock = vi.fn();
+    renderTipCard({ onRead: onReadMock });
 
-      expect(
-        screen.getByRole('heading', { name: 'Tip 1' })
-      ).toBeInTheDocument();
-    }
-  );
+    const removeButton = screen.getByRole('button', {
+      name: 'Markeer tip als gelezen',
+    });
+    fireEvent.click(removeButton);
+
+    expect(onReadMock).toHaveBeenCalledTimes(1);
+  });
+
+  describe('background color', () => {
+    it.each(tipCardColors)(
+      'applies the correct background class for %s',
+      (color) => {
+        renderTipCard({ backgroundColor: color });
+
+        const card = screen.getByRole('article');
+
+        expect(card).toHaveClass(styles.TipCard);
+        expect(card).toHaveClass(styles[`TipCard__${color}Background`]);
+      }
+    );
+  });
 });
