@@ -77,7 +77,7 @@ const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
 };
 
 export const listPageParamKind = {
-  pending: 'voorziening-in-aanvraag',
+  pending: 'voorziening-in-behandeling',
   actual: 'huidige-voorzieningen',
   historic: 'eerdere-en-afgewezen-voorzieningen',
 } as const;
@@ -95,7 +95,7 @@ export const tableConfig = {
   [listPageParamKind.pending]: {
     title: listPageTitle[listPageParamKind.pending],
     filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
-      regeling.isActual && !regeling.decision,
+      !regeling.decision,
     displayProps,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.actual,
@@ -119,7 +119,7 @@ export const tableConfig = {
   [listPageParamKind.historic]: {
     title: listPageTitle[listPageParamKind.historic],
     filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
-      !regeling.isActual,
+      !regeling.isActual && !!regeling.decision,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.historic,
       page: null,
