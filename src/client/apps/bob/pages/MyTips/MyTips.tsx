@@ -50,6 +50,15 @@ export function MyTipsPage() {
             Niet alle tips kunnen op dit moment worden getoond.
           </ErrorAlert>
         )}
+        {tipsTotal && tipsTotal > PAGE_SIZE && (
+          <PaginationV2
+            className="ams-mb-m"
+            totalCount={tipsTotal}
+            pageSize={PAGE_SIZE}
+            path={generatePath(MyTipsRoute.route)}
+            currentPage={currentPage}
+          />
+        )}
         <OrderedList markers={false}>
           {isNotificationsLoading && (
             <OrderedList.Item>
