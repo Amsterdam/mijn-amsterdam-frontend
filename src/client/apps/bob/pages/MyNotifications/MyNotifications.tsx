@@ -26,7 +26,7 @@ export function MyNotificationsPage() {
 
   const { NOTIFICATIONS } = useAppStateGetter();
   const { notifications, notificationsTotal } = useAppStateNotifications();
-  
+
   const isLoadingNotifications = useIsLoading(NOTIFICATIONS);
 
   const { page = '1' } = useParams<{ page?: string }>();
@@ -52,6 +52,15 @@ export function MyNotificationsPage() {
           <ErrorAlert className="ams-mb-m">
             Niet alle berichten kunnen op dit moment worden getoond.
           </ErrorAlert>
+        )}
+        {notificationsTotal > PAGE_SIZE && (
+          <PaginationV2
+            className="ams-mb-m"
+            totalCount={notificationsTotal}
+            pageSize={PAGE_SIZE}
+            path={generatePath(MyNotificationsRoute.route)}
+            currentPage={currentPage}
+          />
         )}
         <OrderedList markers={false}>
           {isLoadingNotifications && (
