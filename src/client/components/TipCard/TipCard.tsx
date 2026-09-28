@@ -38,7 +38,6 @@ export function TipCard({
   tipReason,
 }: TipCardProps) {
   const [isTipShown, showTip] = useState(false);
-  const [isTipReasonShown, showTipReason] = useState(false);
 
   return (
     <article
@@ -84,23 +83,11 @@ export function TipCard({
         </Paragraph>
       )}
       {isTipShown && link && (
-        <MaLink color="inverse" href={link.to}>
+        <MaLink className="ams-mb-xs" color="inverse" href={link.to}>
           {link.title}
         </MaLink>
       )}
-      {isTipShown && !isTipReasonShown && tipReason && (
-        <MaLink
-          color="inverse"
-          href="/"
-          onClick={(event) => {
-            event.preventDefault();
-            showTipReason(true);
-          }}
-        >
-          Waarom zie ik deze tip?
-        </MaLink>
-      )}
-      {isTipReasonShown && tipReason && (
+      {isTipShown && tipReason && (
         <Paragraph color="inverse">{tipReason}</Paragraph>
       )}
     </article>
