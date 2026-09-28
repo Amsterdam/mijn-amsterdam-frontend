@@ -76,19 +76,21 @@ export function ErfpachtDossierDetail() {
                 </CollapsiblePanel>
               </PageContentCell>
 
-              <PageContentCell>
-                <CollapsiblePanel title="Wijzigingsaanvragen">
-                  <ThemaPaginaDataView
-                    zaken={zaken}
-                    textNoContent="U heeft (nog) geen wijzigingsaanvragen."
-                    listPageRoute={generatePath(
-                      themaConfig.listPageDossierZaken.route.path,
-                      { dossierId: dossier.dossierId }
-                    )}
-                    displayProps={tableConfigZaken.displayProps}
-                  />
-                </CollapsiblePanel>
-              </PageContentCell>
+              {themaConfig.featureToggle.wijzigingsaanvragenActive && (
+                <PageContentCell>
+                  <CollapsiblePanel title="Wijzigingsaanvragen">
+                    <ThemaPaginaDataView
+                      zaken={zaken}
+                      textNoContent="U heeft (nog) geen wijzigingsaanvragen."
+                      listPageRoute={generatePath(
+                        themaConfig.listPageDossierZaken.route.path,
+                        { dossierId: dossier.dossierId }
+                      )}
+                      displayProps={tableConfigZaken.displayProps}
+                    />
+                  </CollapsiblePanel>
+                </PageContentCell>
+              )}
             </>
           )}
         </>
