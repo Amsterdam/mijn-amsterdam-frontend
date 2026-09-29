@@ -7,6 +7,7 @@ import type {
   WithListPage,
 } from '../../../../../../universal/types/thema-types.ts';
 import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
+import { isEnabled } from '../../../config/feature-toggles.ts';
 
 const THEMA_TITLE = 'Onderwijs en Jeugd';
 const THEMA_ID = 'JEUGD';
@@ -68,7 +69,7 @@ const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
   props: {
     detailLinkComponent: 'Voorziening',
     displayStatus: 'Status',
-    statusDateFormatted: 'Ontvangen op',
+    statusDateFormatted: 'Datum',
   },
   colWidths: {
     large: ['50%', '25%', '25%'],
@@ -77,17 +78,17 @@ const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
 };
 
 const displayPropsInBehandeling: DisplayProps<LeerlingenvervoerVoorzieningFrontend> =
-{
-  props: {
-    detailLinkComponent: 'Ontvangen op',
-    displayStatus: 'Status',
-    statusDateFormatted: 'Laatst bijgewerkt op',
-  },
-  colWidths: {
-    large: ['50%', '25%', '25%'],
-    small: ['100%', '0', '0'],
-  },
-};
+  {
+    props: {
+      detailLinkComponent: 'Ontvangen op',
+      displayStatus: 'Status',
+      statusDateFormatted: 'Laatst bijgewerkt op',
+    },
+    colWidths: {
+      large: ['50%', '25%', '25%'],
+      small: ['100%', '0', '0'],
+    },
+  };
 
 export const listPageParamKind = {
   pending: 'voorziening-in-behandeling',
@@ -104,19 +105,25 @@ export const listPageTitle = {
   [listPageParamKind.historic]: 'Eerdere en afgewezen voorzieningen',
 } as const;
 
+const hasPendingTable = isEnabled('JZD.llvInBehandeling');
+
 export const tableConfig = {
-  [listPageParamKind.pending]: {
-    title: listPageTitle[listPageParamKind.pending],
-    filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
-      !regeling.decision,
-    displayProps: displayPropsInBehandeling,
-    listPageRoute: generatePath(themaConfig.listPage.route.path, {
-      kind: listPageParamKind.actual,
-      page: null,
-    }),
-    maxItems: 5,
-    textNoContent: 'U heeft geen voorzieningen in behandeling.',
-  },
+  ...(hasPendingTable
+    ? {
+        [listPageParamKind.pending]: {
+          title: listPageTitle[listPageParamKind.pending],
+          filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
+            !regeling.decision,
+          displayProps: displayPropsInBehandeling,
+          listPageRoute: generatePath(themaConfig.listPage.route.path, {
+            kind: listPageParamKind.actual,
+            page: null,
+          }),
+          maxItems: 5,
+          textNoContent: 'U heeft geen voorzieningen in behandeling.',
+        },
+      }
+    : {}),
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
     filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>

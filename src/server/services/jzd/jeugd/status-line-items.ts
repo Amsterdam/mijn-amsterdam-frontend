@@ -1,3 +1,4 @@
+import { defaultDateFormat } from '../../../../universal/helpers/date.ts';
 import type {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
@@ -17,18 +18,17 @@ import {
 const ACTIE_IN_BEHANDELING_BIJ_GEMEENTE = 'In behandeling bij gemeente';
 const ACTIE_VERZOEK_MEER_INFORMATIE = 'Verzoek om meer informatie';
 
-function getInBehandelingBijGemeenteDate(
-  aanvraag: ZorgnedAanvraagTransformed
-) {
-  return (
-    aanvraag.procesAanvraagActies
-      ?.findLast(
-        (actie) =>
-          actie.omschrijving === ACTIE_IN_BEHANDELING_BIJ_GEMEENTE
-      )?.datum ||
-    aanvraag.datumBesluit ||
-    ''
-  );
+function getInBehandelingBijGemeenteDate(aanvraag: ZorgnedAanvraagTransformed) {
+  const latestActionDate = aanvraag.procesAanvraagActies
+    ?.filter(
+      (actie) => actie.omschrijving === ACTIE_IN_BEHANDELING_BIJ_GEMEENTE
+    )
+    .map((actie) => actie.datum)
+    .filter((datum): datum is string => typeof datum === 'string')
+    .toSorted()
+    .at(-1);
+
+  return latestActionDate || aanvraag.datumBesluit || '';
 }
 
 function hasInBehandelingBijGemeenteAction(
@@ -50,18 +50,21 @@ function hasMoreInformationFollowUp(aanvraag: ZorgnedAanvraagTransformed) {
   );
 }
 
-const MELDING_ONTVANGEN = {
+const ONTVANGEN = {
   ...AANVRAAG,
-  status: 'Melding ontvangen',
+  status: 'Ontvangen',
   datePublished: (aanvraag: ZorgnedAanvraagTransformed) =>
     aanvraag.datumAanvraag,
-  description: () => '<p>Uw melding is ontvangen.</p>',
+  hideDateInProgressList: true,
+  description: (aanvraag: ZorgnedAanvraagTransformed) =>
+    '<p>Ontvangen op ' + defaultDateFormat(aanvraag.datumAanvraag) + '</p>',
 };
 
 const BEHANDELING_INDICATIEADVISEUR = {
   ...IN_BEHANDELING,
   status: 'Behandeling bij indicatieadviseur',
   datePublished: getInBehandelingBijGemeenteDate,
+  hideDateInProgressList: true,
   description: () =>
     '<p>Uw melding wordt behandeld door een indicatieadviseur.</p>',
   isActive: (aanvraag: ZorgnedAanvraagTransformed) =>
@@ -95,7 +98,7 @@ Antwoordnummer 9087<br />
 };
 
 const transformers: ZorgnedStatusLineItemTransformerConfig[] = [
-  MELDING_ONTVANGEN,
+  ONTVANGEN,
   BEHANDELING_INDICATIEADVISEUR,
   getTransformerConfigBesluit(isDecisionStatusActive, false),
   EINDE_RECHT,
@@ -104,7 +107,6 @@ const transformers: ZorgnedStatusLineItemTransformerConfig[] = [
 export const jeugdStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   {
     productgroep: 'leerlingenvervoer',
-    regelingIdentificatie: 'LLV',
     statusLineItems: {
       transformers,
     },

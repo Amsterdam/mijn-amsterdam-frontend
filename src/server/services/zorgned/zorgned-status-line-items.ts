@@ -79,7 +79,7 @@ function getStatusLineItemTransformers<T extends ZorgnedAanvraagTransformed>(
 
 function buildStatusLineItem<T extends ZorgnedAanvraagTransformed>(
   statusItem: ZorgnedStatusLineItemTransformerConfig<T>,
-  index: number,
+  idPath: string,
   aanvraagTransformed: T,
   allAanvragenTransformed: T[],
   today: Date
@@ -93,14 +93,18 @@ function buildStatusLineItem<T extends ZorgnedAanvraagTransformed>(
 
   const isVisible =
     typeof statusItem.isVisible === 'function'
-      ? statusItem.isVisible(aanvraagTransformed, today, allAanvragenTransformed)
+      ? statusItem.isVisible(
+          aanvraagTransformed,
+          today,
+          allAanvragenTransformed
+        )
       : (statusItem.isVisible ?? true);
 
   const substeps = statusItem.substeps
     ?.map((substep, subIndex) =>
       buildStatusLineItem(
         substep,
-        Number(`${index}.${subIndex}`),
+        `${idPath}.${subIndex}`,
         aanvraagTransformed,
         allAanvragenTransformed,
         today
@@ -109,8 +113,13 @@ function buildStatusLineItem<T extends ZorgnedAanvraagTransformed>(
     .filter(Boolean) as StatusLineItem[] | undefined;
 
   const stepData: StatusLineItem = {
-    id: `status-step-${index}`,
-    status: statusItem.status,
+    id: `status-step-${idPath}`,
+    status: parseLabelContent<T>(
+      statusItem.status,
+      aanvraagTransformed,
+      today,
+      allAanvragenTransformed
+    ),
     description: parseLabelContent<T>(
       statusItem.description,
       aanvraagTransformed,
@@ -118,13 +127,22 @@ function buildStatusLineItem<T extends ZorgnedAanvraagTransformed>(
       allAanvragenTransformed
     ),
     datePublished,
+    hideDateInProgressList: statusItem.hideDateInProgressList,
     isActive:
       typeof statusItem.isActive === 'function'
-        ? statusItem.isActive(aanvraagTransformed, today, allAanvragenTransformed)
+        ? statusItem.isActive(
+            aanvraagTransformed,
+            today,
+            allAanvragenTransformed
+          )
         : statusItem.isActive,
     isChecked:
       typeof statusItem.isChecked === 'function'
-        ? statusItem.isChecked(aanvraagTransformed, today, allAanvragenTransformed)
+        ? statusItem.isChecked(
+            aanvraagTransformed,
+            today,
+            allAanvragenTransformed
+          )
         : statusItem.isChecked,
     isVisible,
     documents: [], // NOTE: Assigned in specific service transformers.
@@ -161,7 +179,7 @@ export function getStatusLineItems<T extends ZorgnedAanvraagTransformed>(
     .map((statusItem, index) =>
       buildStatusLineItem(
         statusItem,
-        index,
+        `${index}`,
         aanvraagTransformed,
         allAanvragenTransformed,
         today

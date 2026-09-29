@@ -267,6 +267,33 @@ describe('zorgned-status-line-items', () => {
         expect(lineItems?.length).toBe(2);
       });
 
+      test('Resolves a dynamic status', () => {
+        const lineItemsWithDynamicStatus = getStatusLineItems(
+          'WMO',
+          [
+            {
+              ...lineItemsConfig1,
+              statusLineItems: {
+                transformers: [
+                  {
+                    ...transformerConfig,
+                    status: (currentAanvraag) =>
+                      `Ontvangen op ${currentAanvraag.datumAanvraag}`,
+                  },
+                ],
+              },
+            },
+          ],
+          aanvraag,
+          [],
+          new Date()
+        );
+
+        expect(lineItemsWithDynamicStatus?.[0].status).toBe(
+          'Ontvangen op 2024-01-01'
+        );
+      });
+
       const transformerMethods: Array<
         keyof ZorgnedStatusLineItemTransformerConfig
       > = ['datePublished', 'isChecked', 'isActive', 'description'];
