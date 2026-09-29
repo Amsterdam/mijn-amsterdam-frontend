@@ -7,6 +7,7 @@ import type {
   ErfpachtResponseFrontend,
 } from '../../../../../../server/services/erfpacht/erfpacht-types.ts';
 import type { ErfpachtZaakExcerptFrontend } from '../../../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
+import { dateSort } from '../../../../../../universal/helpers/date.ts';
 import type {
   PageConfig,
   ThemaConfigBase,
@@ -193,7 +194,7 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
       zaakNummer: firstZaak?.titelZaakNummer,
       dossierLinks: 'Erfpachtdossier(s)',
       displayStatus: 'Status',
-      datePublishedFormatted: firstZaak?.titelFormattedStatusDatum,
+      formattedStatusDatum: firstZaak?.titelFormattedStatusDatum,
     },
     colWidths: {
       large: ['25%', '25%', '25%', '25%'],
@@ -208,7 +209,7 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
       props: {
         zaakNummer: firstZaak?.titelZaakNummer,
         displayStatus: 'Status',
-        datePublishedFormatted: firstZaak?.titelFormattedStatusDatum,
+        formattedStatusDatum: firstZaak?.titelFormattedStatusDatum,
       },
       colWidths: {
         large: ['33%', '33%', '34%'],
@@ -242,6 +243,7 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
         page: null,
       }),
       maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS,
+      sort: dateSort<ErfpachtZaakExcerptFrontend>('statusDatum', 'desc'),
     },
     [listPageParamKind.erfpachtDossierDetailZaken]: {
       title: 'Wijzigingsaanvragen',

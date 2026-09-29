@@ -49,7 +49,7 @@ export const menuItem: ThemaMenuItem = {
     return (
       themaConfig.featureToggle.active &&
       !isLoading(appState.AFIS) &&
-      !!appState.AFIS.content?.isKnown
+      !!appState.AFIS?.content?.isKnown
     );
   },
   IconSVG: AfisIcon,

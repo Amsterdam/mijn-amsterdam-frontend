@@ -12,8 +12,7 @@ export type TextPartContentTransformer<T> = (
 ) => TextPartContent;
 
 export type TextPartContents<T> =
-  | TextPartContent
-  | TextPartContentTransformer<T>;
+  TextPartContent | TextPartContentTransformer<T>;
 
 export type LeveringsVormConfig = Record<
   LeveringsVormTransformed,
@@ -27,20 +26,17 @@ export type ZorgnedStatusLineItemTransformerConfig<
   datePublished: TextPartContents<T>;
   description: TextPartContents<T>;
   isChecked:
-    | ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean)
-    | boolean;
+  ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean) | boolean;
   isActive:
-    | ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean)
-    | boolean;
+  ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean) | boolean;
   isVisible?:
-    | ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean)
-    | boolean;
+  ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean) | boolean;
+  substeps?: ZorgnedStatusLineItemTransformerConfig<T>[];
 };
 
 type ZorgnedLineItemsFilter = (
   aanvraag:
-    | ZorgnedAanvraagTransformed
-    | ZorgnedAanvraagWithRelatedPersonsTransformed,
+    ZorgnedAanvraagTransformed | ZorgnedAanvraagWithRelatedPersonsTransformed,
   allAanvragen:
     | ZorgnedAanvraagTransformed[]
     | ZorgnedAanvraagWithRelatedPersonsTransformed[]
@@ -54,6 +50,7 @@ export interface ZorgnedStatusLineItemsConfig<
     transformers: ZorgnedStatusLineItemTransformerConfig<T>[];
   };
   productgroep: string;
+  regelingIdentificatie?: string;
   productsoortCodes?: ProductSoortCode[];
   productIdentificatie?: ProductIdentificatie[];
   filter?: ZorgnedLineItemsFilter;
@@ -136,6 +133,10 @@ export interface ZorgnedAanvraagSource {
   procesMelding?: ZorgnedProcesMelding;
   documenten: ZorgnedDocument[];
   identificatie: string;
+  regeling?: {
+    identificatie: string;
+    omschrijving: string;
+  };
   procesIdentificatie: string;
   casusIdentificatie: CasusIdentificatie | null;
 }
@@ -153,6 +154,14 @@ export type ZorgnedProcesAanvraag = {
   identificatie: ZorgnedAanvraagSource['identificatie']; // Is equal to ZorgnedAanvraagSource identificatie
   omschrijving: string;
   datumStart: string;
+  acties?: {
+    datum?: string;
+    omschrijving: string;
+    status?: {
+      identificatie: string;
+      omschrijving: string;
+    };
+  }[];
 };
 
 export interface ZorgnedResponseDataSource {
@@ -176,14 +185,20 @@ export interface ZorgnedAanvraagTransformed {
   procesIdentificatie: string;
   procesMeldingIdentificatie: string | null;
   isActueel: boolean;
-  leverancier: string;
-  leverancierIdentificatie: string;
+  leverancier: string | null;
+  leverancierIdentificatie: string | null;
   leveringsVorm: LeveringsVormTransformed;
-  productsoortCode: ProductSoortCode;
+  productsoortCode: ProductSoortCode | null;
   productIdentificatie?: ProductIdentificatie;
-  beschiktProductIdentificatie: BeschiktProduct['identificatie'];
+  beschiktProductIdentificatie: BeschiktProduct['identificatie'] | null;
   beschikkingNummer: number | null;
-  resultaat: BeschikkingsResultaat;
+  regelingIdentificatie: string | null;
+  procesAanvraagActieOmschrijvingen?: string[];
+  procesAanvraagActies?: {
+    datum?: string;
+    omschrijving: string;
+  }[];
+  resultaat: BeschikkingsResultaat | null;
   titel: string;
 }
 
@@ -262,9 +277,7 @@ export interface ZorgnedPerson {
 }
 
 export type ZorgnedApiConfigKey =
-  | 'ZORGNED_WMO'
-  | 'ZORGNED_AV'
-  | 'ZORGNED_LEERLINGENVERVOER';
+  'ZORGNED_WMO' | 'ZORGNED_AV' | 'ZORGNED_LEERLINGENVERVOER';
 
 export interface ZorgnedAanvragenServiceOptions {
   zorgnedApiConfigKey: ZorgnedApiConfigKey;

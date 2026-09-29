@@ -37,7 +37,10 @@ function isProductWithDelivery(
 
   // This check matches the products that should / can / will receive a delivery of goods / service / product(eventually).
   if (leveringsVorm in PRODUCTS_WITH_DELIVERY) {
-    return PRODUCTS_WITH_DELIVERY[leveringsVorm].includes(productsoortCode);
+    return (
+      productsoortCode !== null &&
+      PRODUCTS_WITH_DELIVERY[leveringsVorm].includes(productsoortCode)
+    );
   }
 
   return false;

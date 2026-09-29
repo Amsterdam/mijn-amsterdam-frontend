@@ -1,12 +1,12 @@
 import { generatePath } from 'react-router';
 
 import type { LeerlingenvervoerVoorzieningFrontend } from '../../../../../../server/services/jzd/jeugd/jeugd.ts';
-import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
 import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
 } from '../../../../../../universal/types/thema-types.ts';
+import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
 
 const THEMA_TITLE = 'Onderwijs en Jeugd';
 const THEMA_ID = 'JEUGD';
@@ -68,7 +68,20 @@ const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
   props: {
     detailLinkComponent: 'Voorziening',
     displayStatus: 'Status',
-    statusDateFormatted: 'Datum',
+    statusDateFormatted: 'Ontvangen op',
+  },
+  colWidths: {
+    large: ['50%', '25%', '25%'],
+    small: ['100%', '0', '0'],
+  },
+};
+
+const displayPropsInBehandeling: DisplayProps<LeerlingenvervoerVoorzieningFrontend> =
+{
+  props: {
+    detailLinkComponent: 'Ontvangen op',
+    displayStatus: 'Status',
+    statusDateFormatted: 'Laatst bijgewerkt op',
   },
   colWidths: {
     large: ['50%', '25%', '25%'],
@@ -77,6 +90,7 @@ const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
 };
 
 export const listPageParamKind = {
+  pending: 'voorziening-in-behandeling',
   actual: 'huidige-voorzieningen',
   historic: 'eerdere-en-afgewezen-voorzieningen',
 } as const;
@@ -85,15 +99,28 @@ type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const listPageTitle = {
+  [listPageParamKind.pending]: 'Voorzieningen nog in behandeling',
   [listPageParamKind.actual]: 'Huidige voorzieningen',
   [listPageParamKind.historic]: 'Eerdere en afgewezen voorzieningen',
 } as const;
 
 export const tableConfig = {
+  [listPageParamKind.pending]: {
+    title: listPageTitle[listPageParamKind.pending],
+    filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
+      !regeling.decision,
+    displayProps: displayPropsInBehandeling,
+    listPageRoute: generatePath(themaConfig.listPage.route.path, {
+      kind: listPageParamKind.actual,
+      page: null,
+    }),
+    maxItems: 5,
+    textNoContent: 'U heeft geen voorzieningen in behandeling.',
+  },
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
     filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
-      regeling.isActual,
+      regeling.isActual && regeling.decision,
     displayProps,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.actual,
@@ -105,7 +132,7 @@ export const tableConfig = {
   [listPageParamKind.historic]: {
     title: listPageTitle[listPageParamKind.historic],
     filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
-      !regeling.isActual,
+      !regeling.isActual && !!regeling.decision,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.historic,
       page: null,
