@@ -166,22 +166,17 @@ describe('wmo-zorgned-service', () => {
       },
       documenten: [],
     });
+    const aanvraagCancelled = structuredClone(aanvraagNotCancelled) as any;
+    aanvraagCancelled.beschikking.beschikkingsNummer = 'cancelled';
+    aanvraagCancelled.beschikking.beschikteProducten[0].toegewezenProduct.datumEindeGeldigheid =
+      '2023-05-06';
 
-    const aanvraagCancelled = createAanvraag(
-      'cancelled',
-      '2023-05-06',
-      '2023-05-06'
-    );
-    const aanvraagNotCancelled = createAanvraag(
-      'not-cancelled',
-      '2023-05-06',
-      null
-    );
-    const aanvraagNotCancellable = createAanvraag(
-      'not-cancellable',
-      null,
-      null
-    );
+    const aanvraagNotCancellable = structuredClone(aanvraagNotCancelled) as any;
+    aanvraagNotCancellable.beschikking.beschikkingNummer = 'not-cancellable';
+    aanvraagNotCancellable.beschikking.beschikteProducten[0].toegewezenProduct.datumEindeGeldigheid =
+      null;
+    aanvraagNotCancellable.beschikking.beschikteProducten[0].toegewezenProduct.datumIngangGeldigheid =
+      null;
 
     remoteApi.post('/zorgned/aanvragen').reply(200, {
       _embedded: {

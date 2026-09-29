@@ -24,7 +24,6 @@ function getInBehandelingBijGemeenteDate(aanvraag: ZorgnedAanvraagTransformed) {
       (actie) => actie.omschrijving === ACTIE_IN_BEHANDELING_BIJ_GEMEENTE
     )
     .map((actie) => actie.datum)
-    .filter((datum): datum is string => typeof datum === 'string')
     .toSorted()
     .at(-1);
 
@@ -64,6 +63,7 @@ const BEHANDELING_INDICATIEADVISEUR = {
   ...IN_BEHANDELING,
   status: 'Behandeling bij indicatieadviseur',
   datePublished: getInBehandelingBijGemeenteDate,
+  // We hide the date within the Progress List as the date will change when the action is finished. Which is confusing for the user if we would show it.
   hideDateInProgressList: true,
   description: () =>
     '<p>Uw melding wordt behandeld door een indicatieadviseur.</p>',
