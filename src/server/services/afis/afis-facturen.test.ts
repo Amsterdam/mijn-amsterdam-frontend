@@ -950,7 +950,7 @@ describe('afis-facturen', async () => {
 
       test('open facturen with an inactive E-Mandate reference should have a status description that includes a warning about the mandate being stopped', () => {
         expect(response.content?.open?.facturen?.[0]?.statusDescription).toBe(
-          '€ 10,00 wordt automatisch van uw rekening afgeschreven. <br><strong>Let op! deze incassomachtiging is gestopt.</strong>'
+          '€ 10,00 wordt automatisch van uw rekening afgeschreven. <br><strong>Let op! De automatische incasso is gestopt. Betaal de factuur zelf via uw bank.</strong>'
         );
       });
 
