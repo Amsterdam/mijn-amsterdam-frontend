@@ -68,7 +68,7 @@ const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
   props: {
     detailLinkComponent: 'Voorziening',
     displayStatus: 'Status',
-    statusDateFormatted: 'Ontvangen op',
+    statusDateFormatted: 'Datum',
   },
   colWidths: {
     large: ['50%', '25%', '25%'],
