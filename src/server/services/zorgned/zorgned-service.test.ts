@@ -114,9 +114,11 @@ describe('zorgned-service', () => {
         'leveringsVorm',
         'prettyID',
         'procesAanvraagOmschrijving',
+        'procesIdentificatie',
+        'procesMeldingIdentificatie',
         'productIdentificatie',
         'productsoortCode',
-        'procesIdentificatie',
+        'regelingIdentificatie',
         'resultaat',
         'titel',
       ].join(',');
@@ -126,7 +128,7 @@ describe('zorgned-service', () => {
           ZORGNED_WMO_AANVRAGEN as unknown as ZorgnedResponseDataSource
         )
         .every((a) => {
-          expect(Object.keys(a).sort().join(',')).toMatchInlineSnapshot(keys);
+          expect(Object.keys(a).sort().join(',')).toBe(keys);
         });
     });
 
@@ -197,11 +199,12 @@ describe('zorgned-service', () => {
         prettyID: '300111429-116841',
         procesAanvraagOmschrijving: null,
         procesIdentificatie: null,
+        procesMeldingIdentificatie: null,
         productIdentificatie: 'WRA',
         productsoortCode: 'WRA',
+        regelingIdentificatie: 'WMO',
         resultaat: 'toegewezen',
         titel: 'ALLE DOCUMENTEN TEST: woonruimteaanpassing (in behandeling)',
-        procesMeldingIdentificatie: null,
       });
     });
 
@@ -495,13 +498,14 @@ describe('zorgned-service', () => {
             prettyID: '300967777-1',
             isActueel: true,
             leverancier: 'Gebr Koenen B.V.',
-            leverancierIdentificatie: '',
+            leverancierIdentificatie: null,
             leveringsVorm: 'ZIN',
             procesAanvraagOmschrijving: null,
             productIdentificatie: 'WRA',
             procesIdentificatie: null,
             procesMeldingIdentificatie: null,
             productsoortCode: 'WRA',
+            regelingIdentificatie: null,
             resultaat: 'toegewezen',
             titel: 'woonruimteaanpassing (in behandeling)',
           },
