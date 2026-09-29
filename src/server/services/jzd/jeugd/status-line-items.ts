@@ -19,13 +19,16 @@ const ACTIE_IN_BEHANDELING_BIJ_GEMEENTE = 'In behandeling bij gemeente';
 const ACTIE_VERZOEK_MEER_INFORMATIE = 'Verzoek om meer informatie';
 
 function getInBehandelingBijGemeenteDate(aanvraag: ZorgnedAanvraagTransformed) {
-  return (
-    aanvraag.procesAanvraagActies?.findLast(
+  const latestActionDate = aanvraag.procesAanvraagActies
+    ?.filter(
       (actie) => actie.omschrijving === ACTIE_IN_BEHANDELING_BIJ_GEMEENTE
-    )?.datum ||
-    aanvraag.datumBesluit ||
-    ''
-  );
+    )
+    .map((actie) => actie.datum)
+    .filter((datum): datum is string => typeof datum === 'string')
+    .toSorted()
+    .at(-1);
+
+  return latestActionDate || aanvraag.datumBesluit || '';
 }
 
 function hasInBehandelingBijGemeenteAction(
