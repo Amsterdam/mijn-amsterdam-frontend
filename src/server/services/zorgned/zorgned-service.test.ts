@@ -525,7 +525,7 @@ describe('zorgned-service', () => {
       expect('failedDependencies' in result).toBe(true);
       expect(
         'failedDependencies' in result &&
-        'relatedPersons' in result.failedDependencies!
+          'relatedPersons' in result.failedDependencies!
       ).toBe(true);
     });
 
@@ -545,7 +545,7 @@ describe('zorgned-service', () => {
       expect('failedDependencies' in result).toBe(true);
       expect(
         'failedDependencies' in result &&
-        'relatedPersons' in result.failedDependencies!
+          'relatedPersons' in result.failedDependencies!
       ).toBe(true);
     });
   });
@@ -818,19 +818,23 @@ describe('fetchRelatedPersons', async () => {
 
     it('does __not__ combine documents if 1 or more aanvragen within same casus have more than 1 beschiktproduct', () => {
       const responseSource2 = structuredClone(responseSource);
+      const aanvraag = responseSource2._embedded?.aanvraag?.[0];
+
+      if (!aanvraag?.beschikking) {
+        throw new Error('Expected the first aanvraag to have a beschikking');
+      }
+
       // Add another aanvraag with a different beschikt product in the same casus.
-      responseSource2._embedded.aanvraag[0].beschikking.beschikteProducten.push(
-        {
-          identificatie: '789-beschikt-product',
-          product: {
-            omschrijving: 'Een geleverde product of dienst',
-            productsoortCode: '',
-            identificatie: undefined,
-          },
-          resultaat: 'toegewezen',
-          toegewezenProduct: null,
-        }
-      );
+      aanvraag.beschikking.beschikteProducten.push({
+        identificatie: '789-beschikt-product',
+        product: {
+          omschrijving: 'Een geleverde product of dienst',
+          productsoortCode: '',
+          identificatie: undefined,
+        },
+        resultaat: 'toegewezen',
+        toegewezenProduct: null,
+      });
 
       const transformed =
         forTesting.consolidateCasusAanvragenWithSingleBeschiktProduct(

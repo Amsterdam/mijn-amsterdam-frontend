@@ -66,11 +66,11 @@ export interface LeerlingenvervoerVoorzieningFrontend extends ZaakAanvraagDetail
   isActual: boolean;
   itemTypeCode: ProductSoortCode | null;
   displayStatus:
-  | 'Ontvangen'
-  | 'Behandeling bij indicatieadviseur'
-  | 'Meer informatie nodig'
-  | 'Besluit genomen'
-  | 'Einde recht';
+    | 'Ontvangen'
+    | 'Behandeling bij indicatieadviseur'
+    | 'Meer informatie nodig'
+    | 'Besluit genomen'
+    | 'Einde recht';
   statusDate: string;
   statusDateFormatted: string;
 }
@@ -129,8 +129,7 @@ function transformVoorzieningenForFrontend(
           lineItems
         ) as LeerlingenvervoerVoorzieningFrontend['displayStatus'],
         statusDate,
-        statusDateFormatted:
-          statusDate === '-' ? '' : defaultDateFormat(statusDate),
+        statusDateFormatted: defaultDateFormat(statusDate),
       };
 
       voorzieningenFrontend.push(voorzieningFrontend);
