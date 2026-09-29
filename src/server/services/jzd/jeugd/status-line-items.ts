@@ -17,15 +17,11 @@ import {
 const ACTIE_IN_BEHANDELING_BIJ_GEMEENTE = 'In behandeling bij gemeente';
 const ACTIE_VERZOEK_MEER_INFORMATIE = 'Verzoek om meer informatie';
 
-function getInBehandelingBijGemeenteDate(
-  aanvraag: ZorgnedAanvraagTransformed
-) {
+function getInBehandelingBijGemeenteDate(aanvraag: ZorgnedAanvraagTransformed) {
   return (
-    aanvraag.procesAanvraagActies
-      ?.findLast(
-        (actie) =>
-          actie.omschrijving === ACTIE_IN_BEHANDELING_BIJ_GEMEENTE
-      )?.datum ||
+    aanvraag.procesAanvraagActies?.findLast(
+      (actie) => actie.omschrijving === ACTIE_IN_BEHANDELING_BIJ_GEMEENTE
+    )?.datum ||
     aanvraag.datumBesluit ||
     ''
   );
@@ -62,6 +58,7 @@ const BEHANDELING_INDICATIEADVISEUR = {
   ...IN_BEHANDELING,
   status: 'Behandeling bij indicatieadviseur',
   datePublished: getInBehandelingBijGemeenteDate,
+  hideDateInProgressList: true,
   description: () =>
     '<p>Uw melding wordt behandeld door een indicatieadviseur.</p>',
   isActive: (aanvraag: ZorgnedAanvraagTransformed) =>

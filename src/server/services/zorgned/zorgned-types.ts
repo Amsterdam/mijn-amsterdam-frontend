@@ -31,6 +31,7 @@ export type ZorgnedStatusLineItemTransformerConfig<
   ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean) | boolean;
   isVisible?:
   ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean) | boolean;
+  hideDateInProgressList?: boolean;
   substeps?: ZorgnedStatusLineItemTransformerConfig<T>[];
 };
 

@@ -103,6 +103,18 @@ describe('Steps', () => {
     );
   });
 
+  it('hides the date when requested without changing the step data', () => {
+    const step = createStep({
+      id: 'step-with-hidden-date',
+      hideDateInProgressList: true,
+    });
+
+    render(<Steps steps={[step]} />);
+
+    expect(screen.queryByText(defaultDateFormat(step.datePublished))).toBeNull();
+    expect(step.datePublished).toBe('2026-07-01T10:00:00.000Z');
+  });
+
   it('renders node alt document content directly', () => {
     const step = createStep({
       id: 'step-node-alt-content',
