@@ -50,6 +50,7 @@ export interface ZorgnedStatusLineItemsConfig<
     transformers: ZorgnedStatusLineItemTransformerConfig<T>[];
   };
   productgroep: string;
+  regelingIdentificatie?: string;
   productsoortCodes?: ProductSoortCode[];
   productIdentificatie?: ProductIdentificatie[];
   filter?: ZorgnedLineItemsFilter;
@@ -153,6 +154,14 @@ export type ZorgnedProcesAanvraag = {
   identificatie: ZorgnedAanvraagSource['identificatie']; // Is equal to ZorgnedAanvraagSource identificatie
   omschrijving: string;
   datumStart: string;
+  acties?: {
+    datum?: string;
+    omschrijving: string;
+    status?: {
+      identificatie: string;
+      omschrijving: string;
+    };
+  }[];
 };
 
 export interface ZorgnedResponseDataSource {
@@ -183,6 +192,8 @@ export interface ZorgnedAanvraagTransformed {
   productIdentificatie?: ProductIdentificatie;
   beschiktProductIdentificatie: BeschiktProduct['identificatie'] | null;
   beschikkingNummer: number | null;
+  regelingIdentificatie: string | null;
+  procesAanvraagActieOmschrijvingen?: string[];
   resultaat: BeschikkingsResultaat | null;
   titel: string;
 }

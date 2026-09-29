@@ -59,6 +59,13 @@ describe('wmo-zorgned-service', () => {
         leveringsVorm: '',
       })
     ).toBe(true);
+
+    expect(
+      forTesting.isProductWithDelivery({
+        productsoortCode: null,
+        leveringsVorm: 'ZIN',
+      })
+    ).toBe(false);
   });
 
   test('isActual', () => {
@@ -133,11 +140,15 @@ describe('wmo-zorgned-service', () => {
   });
 
   test('Should filter out cancelled aanvragen', async () => {
-    const aanvraagNotCancelled = {
+    const createAanvraag = (
+      beschikkingNummer: string,
+      datumIngangGeldigheid: string | null,
+      datumEindeGeldigheid: string | null
+    ) => ({
       identificatie: '123123123',
       datumAanvraag: '2025-11-25',
       beschikking: {
-        beschikkingNummer: 'not-cancelled',
+        beschikkingNummer,
         beschikteProducten: [
           {
             identificatie: '116841',
@@ -147,26 +158,30 @@ describe('wmo-zorgned-service', () => {
             },
             resultaat: 'toegewezen',
             toegewezenProduct: {
-              datumIngangGeldigheid: '2023-05-06',
-              datumEindeGeldigheid: null,
+              datumIngangGeldigheid,
+              datumEindeGeldigheid,
             },
           },
         ],
       },
       documenten: [],
-    };
+    });
 
-    const aanvraagCancelled = structuredClone(aanvraagNotCancelled) as any;
-    aanvraagCancelled.beschikking.beschikkingsNummer = 'cancelled';
-    aanvraagCancelled.beschikking.beschikteProducten[0].toegewezenProduct.datumEindeGeldigheid =
-      '2023-05-06';
-
-    const aanvraagNotCancellable = structuredClone(aanvraagNotCancelled) as any;
-    aanvraagNotCancellable.beschikking.beschikkingNummer = 'not-cancellable';
-    aanvraagNotCancellable.beschikking.beschikteProducten[0].toegewezenProduct.datumEindeGeldigheid =
-      null;
-    aanvraagNotCancellable.beschikking.beschikteProducten[0].toegewezenProduct.datumIngangGeldigheid =
-      null;
+    const aanvraagCancelled = createAanvraag(
+      'cancelled',
+      '2023-05-06',
+      '2023-05-06'
+    );
+    const aanvraagNotCancelled = createAanvraag(
+      'not-cancelled',
+      '2023-05-06',
+      null
+    );
+    const aanvraagNotCancellable = createAanvraag(
+      'not-cancellable',
+      null,
+      null
+    );
 
     remoteApi.post('/zorgned/aanvragen').reply(200, {
       _embedded: {

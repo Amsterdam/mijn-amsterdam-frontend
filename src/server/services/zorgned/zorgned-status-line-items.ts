@@ -25,17 +25,20 @@ export function isStatusLineItemTransformerMatch<
 
   const hasProductSoortCodeMatch =
     typeof config.productsoortCodes !== 'undefined'
-      ? config.productsoortCodes.includes(aanvraagTransformed.productsoortCode)
+      ? config.productsoortCodes.includes(
+          aanvraagTransformed.productsoortCode
+            ? aanvraagTransformed.productsoortCode
+            : ''
+        )
       : PASS_MATCH_DEFAULT;
 
   const hasProductIdentificatieMatch =
-    typeof config.productIdentificatie !== 'undefined'
-      ? typeof aanvraagTransformed.productIdentificatie !== 'undefined'
-        ? config.productIdentificatie.includes(
-            aanvraagTransformed.productIdentificatie
-          )
-        : false
-      : PASS_MATCH_DEFAULT;
+    typeof config.productIdentificatie === 'undefined'
+      ? PASS_MATCH_DEFAULT
+      : typeof aanvraagTransformed.productIdentificatie !== 'undefined' &&
+        config.productIdentificatie.includes(
+          aanvraagTransformed.productIdentificatie
+        );
 
   const isFilterMatch =
     typeof config.filter !== 'undefined'
@@ -129,15 +132,14 @@ export function getStatusLineItems<T extends ZorgnedAanvraagTransformed>(
                 allAanvragenTransformed
               )
             : statusItem.isChecked,
-        isVisible: statusItem.isVisible
-          ? typeof statusItem.isVisible === 'function'
+        isVisible:
+          typeof statusItem.isVisible === 'function'
             ? statusItem.isVisible(
                 aanvraagTransformed,
                 today,
                 allAanvragenTransformed
               )
-            : statusItem.isVisible
-          : true,
+            : (statusItem.isVisible ?? true),
         documents: [], // NOTE: Assigned in specific service transformers.
       };
 

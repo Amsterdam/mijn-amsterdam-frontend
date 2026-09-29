@@ -115,10 +115,10 @@ export function getZorgnedAanvraagID(
 
 function transformZorgnedAanvraag(
   aanvraag: ZorgnedAanvraagSource,
-  beschikking: Beschikking,
-  beschiktProduct: BeschiktProduct
+  beschikking?: Beschikking,
+  beschiktProduct?: BeschiktProduct
 ): ZorgnedAanvraagTransformed {
-  const toegewezenProduct = beschiktProduct.toegewezenProduct;
+  const toegewezenProduct = beschiktProduct?.toegewezenProduct;
   const toewijzingen = toegewezenProduct?.toewijzingen ?? [];
   const toewijzing = toewijzingen.at(-1);
   const leveringen = toewijzing?.leveringen ?? [];
@@ -128,32 +128,40 @@ function transformZorgnedAanvraag(
     (toegewezenProduct?.leveringsvorm?.toUpperCase() as LeveringsVormTransformed) ??
     '';
 
-  let productsoortCode = beschiktProduct.product.productsoortCode;
-  if (productsoortCode) {
-    productsoortCode = productsoortCode.toUpperCase();
-  }
+  const productsoortCode = beschiktProduct?.product.productsoortCode;
+  const productIdentificatie = beschiktProduct?.product.identificatie;
 
-  let productIdentificatie = beschiktProduct.product.identificatie;
-  if (productIdentificatie) {
-    productIdentificatie = productIdentificatie.toUpperCase();
-  }
+  const getAanvraagId = () => {
+    if (!beschikking || !beschiktProduct) {
+      return aanvraag.identificatie;
+    }
+
+    return getZorgnedAanvraagID(
+      beschikking.beschikkingNummer,
+      beschiktProduct.identificatie,
+      false
+    );
+  };
+
+  const aanvraagId = getAanvraagId();
+
+  const titel =
+    beschiktProduct?.product?.omschrijving ??
+    (aanvraag.regeling?.omschrijving
+      ? `Ontvangen op ${defaultDateFormat(aanvraag.datumAanvraag)}`
+      : '');
+
+  const procesAanvraagActieOmschrijvingen =
+    aanvraag.procesAanvraag?.acties?.map((actie) => actie.omschrijving);
 
   const aanvraagTransformed: ZorgnedAanvraagTransformed = {
-    id: getZorgnedAanvraagID(
-      beschikking.beschikkingNummer,
-      beschiktProduct.identificatie,
-      false
-    ),
-    prettyID: getZorgnedAanvraagID(
-      beschikking.beschikkingNummer,
-      beschiktProduct.identificatie,
-      false
-    ),
+    id: aanvraagId,
+    prettyID: aanvraagId,
     procesIdentificatie: aanvraag.procesIdentificatie ?? null,
     procesMeldingIdentificatie: aanvraag.procesMelding?.identificatie ?? null,
     datumAanvraag: aanvraag.datumAanvraag,
     datumBeginLevering: levering?.begindatum ?? null,
-    datumBesluit: aanvraag.beschikking.datumAfgifte ?? '', // See bug: MIJN-11809
+    datumBesluit: aanvraag?.beschikking?.datumAfgifte ?? '', // See bug: MIJN-11809
     datumEindeGeldigheid: toegewezenProduct?.datumEindeGeldigheid ?? null,
     datumEindeLevering: levering?.einddatum ?? null,
     datumIngangGeldigheid: toegewezenProduct?.datumIngangGeldigheid ?? null,
@@ -162,16 +170,20 @@ function transformZorgnedAanvraag(
     procesAanvraagOmschrijving: aanvraag.procesAanvraag?.omschrijving ?? null,
     documenten: transformDocumenten(aanvraag.documenten ?? []),
     isActueel: toegewezenProduct?.actueel ?? false,
-    leverancier: toegewezenProduct?.leverancier?.omschrijving ?? '',
+    leverancier: toegewezenProduct?.leverancier?.omschrijving ?? null,
     leverancierIdentificatie:
-      toegewezenProduct?.leverancier?.identificatie ?? '',
+      toegewezenProduct?.leverancier?.identificatie ?? null,
     leveringsVorm,
-    productsoortCode,
+    productsoortCode: productsoortCode ?? null,
     productIdentificatie,
-    beschiktProductIdentificatie: beschiktProduct.identificatie,
-    beschikkingNummer: aanvraag.beschikking.beschikkingNummer,
-    resultaat: beschiktProduct.resultaat,
-    titel: beschiktProduct.product.omschrijving ?? '',
+    beschiktProductIdentificatie: beschiktProduct?.identificatie ?? null,
+    beschikkingNummer: beschikking?.beschikkingNummer ?? null,
+    regelingIdentificatie: aanvraag.regeling?.identificatie ?? null,
+    ...(procesAanvraagActieOmschrijvingen && {
+      procesAanvraagActieOmschrijvingen,
+    }),
+    resultaat: beschiktProduct?.resultaat ?? null,
+    titel,
     betrokkenen: toegewezenProduct?.betrokkenen ?? [],
   };
 
@@ -196,28 +208,32 @@ export function transformZorgnedAanvragen(
   const aanvragenTransformed: ZorgnedAanvraagTransformed[] = [];
 
   for (const aanvraagSource of aanvragenSource) {
-    const beschikking = aanvraagSource.beschikking;
+    const beschikking = aanvraagSource?.beschikking;
 
-    if (!beschikking) {
-      continue;
+    const beschikteProducten = beschikking?.beschikteProducten;
+
+    const isLLV =
+      aanvraagSource.regeling?.identificatie?.toUpperCase() === 'LLV';
+
+    if (!beschikteProducten?.length && isLLV) {
+      const aanvraagTransformed = transformZorgnedAanvraag(aanvraagSource);
+      if (aanvraagTransformed) {
+        aanvragenTransformed.push(aanvraagTransformed);
+      }
     }
 
-    const beschikteProducten = beschikking.beschikteProducten;
+    if (beschikteProducten) {
+      for (const beschiktProduct of beschikteProducten) {
+        if (beschiktProduct) {
+          const aanvraagTransformed = transformZorgnedAanvraag(
+            aanvraagSource,
+            beschikking,
+            beschiktProduct
+          );
 
-    if (!beschikteProducten) {
-      continue;
-    }
-
-    for (const beschiktProduct of beschikteProducten) {
-      if (beschiktProduct) {
-        const aanvraagTransformed = transformZorgnedAanvraag(
-          aanvraagSource,
-          beschikking,
-          beschiktProduct
-        );
-
-        if (aanvraagTransformed) {
-          aanvragenTransformed.push(aanvraagTransformed);
+          if (aanvraagTransformed) {
+            aanvragenTransformed.push(aanvraagTransformed);
+          }
         }
       }
     }
@@ -279,13 +295,13 @@ function consolidateCasusAanvragenWithSingleBeschiktProduct(
     aanvragenByCasusID
   )) {
     const aanvragenWithBeschiktProduct = aanvragen.filter((aanvraag) => {
-      return aanvraag.beschikking?.beschikteProducten?.length > 0;
+      return (aanvraag?.beschikking?.beschikteProducten?.length ?? 0) > 0;
     });
 
     const beschiktProductIds = uniqueArray(
       aanvragenWithBeschiktProduct.flatMap(
         (aanvraag) =>
-          aanvraag.beschikking?.beschikteProducten?.map(
+          aanvraag?.beschikking?.beschikteProducten?.map(
             (bp) => bp.identificatie
           ) || []
       )
