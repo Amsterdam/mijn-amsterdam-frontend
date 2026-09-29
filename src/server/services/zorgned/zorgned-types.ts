@@ -22,7 +22,7 @@ export type LeveringsVormConfig = Record<
 export type ZorgnedStatusLineItemTransformerConfig<
   T extends ZorgnedAanvraagTransformed = ZorgnedAanvraagTransformed,
 > = {
-  status: string;
+  status: TextPartContents<T>;
   datePublished: TextPartContents<T>;
   description: TextPartContents<T>;
   isChecked:

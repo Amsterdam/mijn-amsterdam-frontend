@@ -114,7 +114,12 @@ function buildStatusLineItem<T extends ZorgnedAanvraagTransformed>(
 
   const stepData: StatusLineItem = {
     id: `status-step-${index}`,
-    status: statusItem.status,
+    status: parseLabelContent<T>(
+      statusItem.status,
+      aanvraagTransformed,
+      today,
+      allAanvragenTransformed
+    ),
     description: parseLabelContent<T>(
       statusItem.description,
       aanvraagTransformed,

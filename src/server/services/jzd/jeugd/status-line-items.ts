@@ -1,3 +1,4 @@
+import { defaultDateFormat } from '../../../../universal/helpers/date.ts';
 import type {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
@@ -46,12 +47,14 @@ function hasMoreInformationFollowUp(aanvraag: ZorgnedAanvraagTransformed) {
   );
 }
 
-const MELDING_ONTVANGEN = {
+const ONTVANGEN = {
   ...AANVRAAG,
-  status: 'Melding ontvangen',
+  status: 'Ontvangen',
   datePublished: (aanvraag: ZorgnedAanvraagTransformed) =>
     aanvraag.datumAanvraag,
-  description: () => '<p>Uw melding is ontvangen.</p>',
+  hideDateInProgressList: true,
+  description: (aanvraag: ZorgnedAanvraagTransformed) =>
+    '<p>Ontvangen op ' + defaultDateFormat(aanvraag.datumAanvraag) + '</p>',
 };
 
 const BEHANDELING_INDICATIEADVISEUR = {
@@ -92,7 +95,7 @@ Antwoordnummer 9087<br />
 };
 
 const transformers: ZorgnedStatusLineItemTransformerConfig[] = [
-  MELDING_ONTVANGEN,
+  ONTVANGEN,
   BEHANDELING_INDICATIEADVISEUR,
   getTransformerConfigBesluit(isDecisionStatusActive, false),
   EINDE_RECHT,
