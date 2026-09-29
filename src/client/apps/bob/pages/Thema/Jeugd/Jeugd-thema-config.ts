@@ -68,7 +68,20 @@ const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
   props: {
     detailLinkComponent: 'Voorziening',
     displayStatus: 'Status',
-    statusDateFormatted: 'Datum',
+    statusDateFormatted: 'Ontvangen op',
+  },
+  colWidths: {
+    large: ['50%', '25%', '25%'],
+    small: ['100%', '0', '0'],
+  },
+};
+
+const displayPropsInBehandeling: DisplayProps<LeerlingenvervoerVoorzieningFrontend> =
+{
+  props: {
+    detailLinkComponent: 'Ontvangen op',
+    displayStatus: 'Status',
+    statusDateFormatted: 'Laatst bijgewerkt op',
   },
   colWidths: {
     large: ['50%', '25%', '25%'],
@@ -96,13 +109,13 @@ export const tableConfig = {
     title: listPageTitle[listPageParamKind.pending],
     filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
       !regeling.decision,
-    displayProps,
+    displayProps: displayPropsInBehandeling,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.actual,
       page: null,
     }),
     maxItems: 5,
-    textNoContent: 'U heeft geen huidige voorzieningen in behandeling.',
+    textNoContent: 'U heeft geen voorzieningen in behandeling.',
   },
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
