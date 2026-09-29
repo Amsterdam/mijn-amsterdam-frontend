@@ -194,6 +194,10 @@ export interface ZorgnedAanvraagTransformed {
   beschikkingNummer: number | null;
   regelingIdentificatie: string | null;
   procesAanvraagActieOmschrijvingen?: string[];
+  procesAanvraagActies?: {
+    datum?: string;
+    omschrijving: string;
+  }[];
   resultaat: BeschikkingsResultaat | null;
   titel: string;
 }

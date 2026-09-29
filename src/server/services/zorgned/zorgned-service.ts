@@ -153,6 +153,9 @@ function transformZorgnedAanvraag(
 
   const procesAanvraagActieOmschrijvingen =
     aanvraag.procesAanvraag?.acties?.map((actie) => actie.omschrijving);
+  const procesAanvraagActies = aanvraag.procesAanvraag?.acties?.map(
+    ({ datum, omschrijving }) => ({ datum, omschrijving })
+  );
 
   const aanvraagTransformed: ZorgnedAanvraagTransformed = {
     id: aanvraagId,
@@ -182,6 +185,7 @@ function transformZorgnedAanvraag(
     ...(procesAanvraagActieOmschrijvingen && {
       procesAanvraagActieOmschrijvingen,
     }),
+    ...(procesAanvraagActies && { procesAanvraagActies }),
     resultaat: beschiktProduct?.resultaat ?? null,
     titel,
     betrokkenen: toegewezenProduct?.betrokkenen ?? [],

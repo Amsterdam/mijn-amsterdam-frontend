@@ -171,7 +171,7 @@ describe('fetchLeerlingenvervoer', () => {
           status: 'Melding ontvangen',
         },
         {
-          datePublished: '',
+          datePublished: '2025-03-27',
           documents: [],
           id: 'status-step-1',
           isActive: false,
@@ -253,6 +253,12 @@ describe('fetchLeerlingenvervoer', () => {
           resultaat: undefined,
           titel: 'Leerlingenvervoer',
           betrokkenen: [],
+          procesAanvraagActies: [
+            {
+              omschrijving: 'In behandeling bij gemeente',
+              datum: '2026-08-10',
+            },
+          ],
         },
       ],
       status: 'OK',
@@ -276,9 +282,9 @@ describe('fetchLeerlingenvervoer', () => {
     });
     expect(melding.isActive).toBe(false);
     expect(melding.datePublished).toBe('2026-05-19');
-    expect(behandeling.datePublished).toBe('');
-    expect(voorziening.statusDate).toBe('-');
-    expect(voorziening.statusDateFormatted).toBe('');
+    expect(behandeling.datePublished).toBe('2026-08-10');
+    expect(voorziening.statusDate).toBe('2026-08-10');
+    expect(voorziening.statusDateFormatted).toBe('10 augustus 2026');
   });
 
   test('Shows when submitted additional information is being processed', async () => {
@@ -317,6 +323,16 @@ describe('fetchLeerlingenvervoer', () => {
           resultaat: null,
           titel: 'Leerlingenvervoer',
           betrokkenen: [],
+          procesAanvraagActies: [
+            {
+              omschrijving: 'In behandeling bij gemeente',
+              datum: '2026-08-10',
+            },
+            {
+              omschrijving: 'In behandeling bij gemeente',
+              datum: '2026-08-12',
+            },
+          ],
         },
       ],
       status: 'OK',
@@ -327,6 +343,7 @@ describe('fetchLeerlingenvervoer', () => {
 
     expect(behandeling).toMatchObject({
       status: 'Behandeling bij indicatieadviseur',
+      datePublished: '2026-08-12',
       isActive: true,
       substeps: [
         {

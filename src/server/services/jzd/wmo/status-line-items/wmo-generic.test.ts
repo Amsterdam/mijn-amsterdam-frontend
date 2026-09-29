@@ -57,6 +57,11 @@ describe('wmo-generic', () => {
       documenten: [DOC_MEER_INFORMATIE],
       datumAanvraag: '2024-01-01',
     });
+    const aanvraagWithRequestAction = getAanvraagTransformed({
+      documenten: [],
+      datumAanvraag: '2024-01-01',
+      procesAanvraagActieOmschrijvingen: ['Verzoek om meer informatie'],
+    });
     const cancelledAanvraag = getAanvraagTransformed({
       datumIngangGeldigheid: '2024-06-14',
       datumEindeGeldigheid: '2024-06-14',
@@ -85,6 +90,10 @@ describe('wmo-generic', () => {
 
     it('hasMeerInformatieNodig is true when verzoek doc exists', () => {
       expect(hasMeerInformatieNodig(aanvraagWithRequest)).toBe(true);
+    });
+
+    it('hasMeerInformatieNodig is true when the request action exists without a document', () => {
+      expect(hasMeerInformatieNodig(aanvraagWithRequestAction)).toBe(true);
     });
 
     it('isDocumentDecisionDateActive is true after WCAG threshold', () => {

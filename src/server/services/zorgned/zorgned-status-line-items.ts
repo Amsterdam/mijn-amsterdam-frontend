@@ -77,6 +77,66 @@ function getStatusLineItemTransformers<T extends ZorgnedAanvraagTransformed>(
   );
 }
 
+function buildStatusLineItem<T extends ZorgnedAanvraagTransformed>(
+  statusItem: ZorgnedStatusLineItemTransformerConfig<T>,
+  index: number,
+  aanvraagTransformed: T,
+  allAanvragenTransformed: T[],
+  today: Date
+): StatusLineItem | null {
+  const datePublished = parseLabelContent<T>(
+    statusItem.datePublished,
+    aanvraagTransformed,
+    today,
+    allAanvragenTransformed
+  ) as string;
+
+  const isVisible =
+    typeof statusItem.isVisible === 'function'
+      ? statusItem.isVisible(aanvraagTransformed, today, allAanvragenTransformed)
+      : (statusItem.isVisible ?? true);
+
+  const substeps = statusItem.substeps
+    ?.map((substep, subIndex) =>
+      buildStatusLineItem(
+        substep,
+        Number(`${index}.${subIndex}`),
+        aanvraagTransformed,
+        allAanvragenTransformed,
+        today
+      )
+    )
+    .filter(Boolean) as StatusLineItem[] | undefined;
+
+  const stepData: StatusLineItem = {
+    id: `status-step-${index}`,
+    status: statusItem.status,
+    description: parseLabelContent<T>(
+      statusItem.description,
+      aanvraagTransformed,
+      today,
+      allAanvragenTransformed
+    ),
+    datePublished,
+    isActive:
+      typeof statusItem.isActive === 'function'
+        ? statusItem.isActive(aanvraagTransformed, today, allAanvragenTransformed)
+        : statusItem.isActive,
+    isChecked:
+      typeof statusItem.isChecked === 'function'
+        ? statusItem.isChecked(aanvraagTransformed, today, allAanvragenTransformed)
+        : statusItem.isChecked,
+    isVisible,
+    documents: [], // NOTE: Assigned in specific service transformers.
+  };
+
+  if (substeps?.length) {
+    stepData.substeps = substeps;
+  }
+
+  return stepData.isVisible ? stepData : null;
+}
+
 export function getStatusLineItems<T extends ZorgnedAanvraagTransformed>(
   serviceName: 'WMO' | 'HLI' | 'LLV',
   statusLineItemsConfig: ZorgnedStatusLineItemsConfig<T>[],
@@ -98,53 +158,15 @@ export function getStatusLineItems<T extends ZorgnedAanvraagTransformed>(
   }
 
   const statusLineItems: StatusLineItem[] = lineItemTransformer
-    .map((statusItem, index) => {
-      const datePublished = parseLabelContent<T>(
-        statusItem.datePublished,
+    .map((statusItem, index) =>
+      buildStatusLineItem(
+        statusItem,
+        index,
         aanvraagTransformed,
-        today,
-        allAanvragenTransformed
-      ) as string;
-
-      const stepData: StatusLineItem = {
-        id: `status-step-${index}`,
-        status: statusItem.status,
-        description: parseLabelContent<T>(
-          statusItem.description,
-          aanvraagTransformed,
-          today,
-          allAanvragenTransformed
-        ),
-        datePublished,
-        isActive:
-          typeof statusItem.isActive === 'function'
-            ? statusItem.isActive(
-                aanvraagTransformed,
-                today,
-                allAanvragenTransformed
-              )
-            : statusItem.isActive,
-        isChecked:
-          typeof statusItem.isChecked === 'function'
-            ? statusItem.isChecked(
-                aanvraagTransformed,
-                today,
-                allAanvragenTransformed
-              )
-            : statusItem.isChecked,
-        isVisible:
-          typeof statusItem.isVisible === 'function'
-            ? statusItem.isVisible(
-                aanvraagTransformed,
-                today,
-                allAanvragenTransformed
-              )
-            : (statusItem.isVisible ?? true),
-        documents: [], // NOTE: Assigned in specific service transformers.
-      };
-
-      return stepData.isVisible ? stepData : null;
-    })
+        allAanvragenTransformed,
+        today
+      )
+    )
     .filter(Boolean) as StatusLineItem[];
 
   return statusLineItems;
