@@ -26,11 +26,11 @@ export type ZorgnedStatusLineItemTransformerConfig<
   datePublished: TextPartContents<T>;
   description: TextPartContents<T>;
   isChecked:
-  ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean) | boolean;
+    ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean) | boolean;
   isActive:
-  ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean) | boolean;
+    ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean) | boolean;
   isVisible?:
-  ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean) | boolean;
+    ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean) | boolean;
   hideDateInProgressList?: boolean;
   substeps?: ZorgnedStatusLineItemTransformerConfig<T>[];
 };
@@ -127,7 +127,7 @@ export interface ZorgnedDocumentData {
 }
 
 export interface ZorgnedAanvraagSource {
-  beschikking: Beschikking;
+  beschikking?: Beschikking;
   datumAanvraag: string;
   // The following field seems to be always defined for RTM type aanvragen.
   procesAanvraag?: ZorgnedProcesAanvraag;

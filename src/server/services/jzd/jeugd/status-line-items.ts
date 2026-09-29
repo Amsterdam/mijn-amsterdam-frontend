@@ -107,7 +107,6 @@ const transformers: ZorgnedStatusLineItemTransformerConfig[] = [
 export const jeugdStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   {
     productgroep: 'leerlingenvervoer',
-    regelingIdentificatie: 'LLV',
     statusLineItems: {
       transformers,
     },

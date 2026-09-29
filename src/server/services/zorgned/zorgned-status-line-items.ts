@@ -79,7 +79,7 @@ function getStatusLineItemTransformers<T extends ZorgnedAanvraagTransformed>(
 
 function buildStatusLineItem<T extends ZorgnedAanvraagTransformed>(
   statusItem: ZorgnedStatusLineItemTransformerConfig<T>,
-  index: number,
+  idPath: string,
   aanvraagTransformed: T,
   allAanvragenTransformed: T[],
   today: Date
@@ -104,7 +104,7 @@ function buildStatusLineItem<T extends ZorgnedAanvraagTransformed>(
     ?.map((substep, subIndex) =>
       buildStatusLineItem(
         substep,
-        Number(`${index}.${subIndex}`),
+        `${idPath}.${subIndex}`,
         aanvraagTransformed,
         allAanvragenTransformed,
         today
@@ -113,7 +113,7 @@ function buildStatusLineItem<T extends ZorgnedAanvraagTransformed>(
     .filter(Boolean) as StatusLineItem[] | undefined;
 
   const stepData: StatusLineItem = {
-    id: `status-step-${index}`,
+    id: `status-step-${idPath}`,
     status: parseLabelContent<T>(
       statusItem.status,
       aanvraagTransformed,
@@ -179,7 +179,7 @@ export function getStatusLineItems<T extends ZorgnedAanvraagTransformed>(
     .map((statusItem, index) =>
       buildStatusLineItem(
         statusItem,
-        index,
+        `${index}`,
         aanvraagTransformed,
         allAanvragenTransformed,
         today

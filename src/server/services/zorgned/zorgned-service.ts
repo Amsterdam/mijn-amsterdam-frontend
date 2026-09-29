@@ -128,8 +128,10 @@ function transformZorgnedAanvraag(
     (toegewezenProduct?.leveringsvorm?.toUpperCase() as LeveringsVormTransformed) ??
     '';
 
-  const productsoortCode = beschiktProduct?.product.productsoortCode;
-  const productIdentificatie = beschiktProduct?.product.identificatie;
+  const productsoortCode =
+    beschiktProduct?.product.productsoortCode.toUpperCase();
+  const productIdentificatie =
+    beschiktProduct?.product.identificatie?.toUpperCase();
 
   const getAanvraagId = () => {
     if (!beschikking || !beschiktProduct) {
