@@ -128,7 +128,7 @@ function DatalistToekomstigePeriodes({ dossier }: ErfpachtDatalistProps) {
         titelCanon={periode.titelFinancieelToekomstigeCanon}
         titelCanonTenTijdeVanAfkoop={periode.titelCanonTenTijdeVanAfkoop}
         periode={periode}
-        isHuidigePeriode
+        isHuidigePeriode={false}
       />
     ));
 }

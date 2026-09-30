@@ -82,7 +82,7 @@ describe('DatalistFinancieelPeriode', () => {
         titelPeriodeVan="Periode Van"
         titelCanon="Canon"
         titelCanonTenTijdeVanAfkoop="Canon Afkoop"
-        isHuidigePeriode={true}
+        isHuidigePeriode={false}
       />
     );
 
