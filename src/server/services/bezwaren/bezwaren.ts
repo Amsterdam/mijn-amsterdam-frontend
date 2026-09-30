@@ -309,6 +309,9 @@ function transformBezwarenResults(
           startdatum: bezwaarBron.startdatum,
           // Wanneer het bezwaar is afgehandeld
           einddatum: bezwaarBron.einddatum,
+          einddatumFormatted: bezwaarBron.einddatum
+            ? defaultDateFormat(bezwaarBron.einddatum)
+            : null,
 
           title: `Bezwaar ${bezwaarBron.identificatie}`,
           omschrijving: bezwaarBron.omschrijving,

@@ -81,7 +81,7 @@ const displayPropsLopend: DisplayProps<BezwaarFrontend> = {
 const displayPropsEerder: DisplayProps<BezwaarFrontend> = {
   props: {
     detailLinkComponent: 'Zaaknummer',
-    datumResultaatFormatted: 'Datum besluit',
+    einddatumFormatted: 'Datum besluit',
     omschrijving: 'Onderwerp',
   },
   colWidths: {
