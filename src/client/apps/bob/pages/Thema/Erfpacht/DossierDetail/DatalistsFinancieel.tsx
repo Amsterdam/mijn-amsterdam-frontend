@@ -23,6 +23,7 @@ interface DatalistFinancieelPeriodeProps<T> {
   titelPeriodeVan: string;
   titelCanon: string;
   titelCanonTenTijdeVanAfkoop: string;
+  isHuidigePeriode: boolean;
 }
 
 function DatalistFinancieelPeriode({
@@ -31,6 +32,7 @@ function DatalistFinancieelPeriode({
   titelPeriodeVan,
   titelCanon,
   titelCanonTenTijdeVanAfkoop,
+  isHuidigePeriode,
 }: DatalistFinancieelPeriodeProps<
   ErfpachtDossierDetailHuidigePeriode | ErfpachtDossierDetailToekomstigePeriode
 >) {
@@ -106,6 +108,7 @@ function DatalistHuidigePeriode({ dossier }: ErfpachtDatalistProps) {
           dossier.financieel.huidigePeriode.titelCanonTenTijdeVanAfkoop
         }
         periode={dossier.financieel.huidigePeriode}
+        isHuidigePeriode
       />
     );
   }
@@ -125,6 +128,7 @@ function DatalistToekomstigePeriodes({ dossier }: ErfpachtDatalistProps) {
         titelCanon={periode.titelFinancieelToekomstigeCanon}
         titelCanonTenTijdeVanAfkoop={periode.titelCanonTenTijdeVanAfkoop}
         periode={periode}
+        isHuidigePeriode
       />
     ));
 }

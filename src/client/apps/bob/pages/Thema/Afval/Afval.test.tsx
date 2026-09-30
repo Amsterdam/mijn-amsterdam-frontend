@@ -218,7 +218,7 @@ describe('<AfvalThemaPagina />', () => {
   it('Does not show warning concercing woonfunctie', () => {
     (useProfileTypeValue as Mock).mockReturnValueOnce('private');
 
-    const testState2 = jsonCopy(testState) as any;
+    const testState2 = jsonCopy(testState);
     testState2.AFVAL.content = testState2.AFVAL.content?.map(
       (fractie: AfvalFractionData) => ({
         ...fractie,

@@ -40,8 +40,6 @@ describe('updateEmandateById', () => {
         dateValidToFormatted: '31-12-2025',
         link: { to: '/details', title: 'Details' },
         eMandateIdSource: null,
-        businessPartnerId: '',
-        history: [],
       },
       {
         id: '2',
@@ -57,8 +55,6 @@ describe('updateEmandateById', () => {
         dateValidToFormatted: '31-12-2025',
         link: { to: '/details', title: 'Details' },
         eMandateIdSource: null,
-        businessPartnerId: '',
-        history: [],
       },
     ];
     const updatedMandates = forTesting.updateEmandateById(

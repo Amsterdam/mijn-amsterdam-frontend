@@ -33,7 +33,7 @@ export function ErfpachtThema() {
 
   const zakenTableConfig = tableConfig?.[listPageParamKind.erfpachtZaken];
   const zakenTable = (
-    <ThemaPaginaDataView<ErfpachtZaakExcerptFrontend>
+    <ThemaPaginaDataView<ErfpachtDossierFrontend | ErfpachtZaakExcerptFrontend>
       title={zakenTableConfig.title}
       zaken={zaken.sort(zakenTableConfig.sort)}
       displayProps={zakenTableConfig.displayProps}
@@ -43,7 +43,7 @@ export function ErfpachtThema() {
   );
   const dossiersTableConfig = tableConfig['erfpacht-dossiers'];
   const dossiersTable = (
-    <ThemaPaginaDataView<ErfpachtDossierFrontend>
+    <ThemaPaginaDataView<ErfpachtDossierFrontend | ErfpachtZaakExcerptFrontend>
       title={dossiersTableConfig.title}
       zaken={dossiers}
       displayProps={dossiersTableConfig.displayProps}
