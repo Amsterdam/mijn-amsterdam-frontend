@@ -41,8 +41,7 @@ describe('erfpacht-zaken', () => {
     expect(transformedResponse).toMatchInlineSnapshot(`
       [
         {
-          "datePublished": "2026-07-15T00:00:00.000Z",
-          "datePublishedFormatted": "15 juli 2026",
+          "datePublished": "2026-02-05T00:00:00.000Z",
           "displayStatus": "Aanvraag",
           "dossierLinks": [
             {
@@ -60,6 +59,7 @@ describe('erfpacht-zaken', () => {
             "title": "Wijzigen Erfpachtrecht",
             "to": "/erfpacht/zaak/1234-5678-9012-9999",
           },
+          "statusDatum": "2026-02-05",
           "statusOmschrijving": "Informatie opgevraagd",
           "titelFormattedStatusDatum": "Datum status",
           "titelStatusOmschrijving": "Status",
@@ -156,11 +156,19 @@ describe('erfpacht-zaken', () => {
                 },
                 {
                   "datePublished": "2026-02-03T14:22:42.057Z",
-                  "description": "Wij hebben het besluit naar de notaris gestuurd. U krijgt van de notaris een uitnodiging om de akte te tekenen.",
+                  "description": "Wij hebben het besluit van uw aanvraag naar de notaris gestuurd. U krijgt van de notaris een uitnodiging om de akte te tekenen.",
                   "id": "3290200915",
                   "isActive": false,
                   "isChecked": true,
                   "status": "Besluit verstuurd",
+                },
+                {
+                  "datePublished": "2026-02-04T14:22:42.057Z",
+                  "description": "De akte van uw aanvraag is ondertekend.",
+                  "id": "1815972554",
+                  "isActive": false,
+                  "isChecked": true,
+                  "status": "Akte gepasseerd",
                 },
               ],
             },
@@ -398,11 +406,19 @@ describe('erfpacht-zaken', () => {
                 },
                 {
                   "datePublished": "2026-02-03T14:22:42.057Z",
-                  "description": "Wij hebben het besluit naar de notaris gestuurd. U krijgt van de notaris een uitnodiging om de akte te tekenen.",
+                  "description": "Wij hebben het besluit van uw aanvraag naar de notaris gestuurd. U krijgt van de notaris een uitnodiging om de akte te tekenen.",
                   "id": "3290200915",
                   "isActive": false,
                   "isChecked": true,
                   "status": "Besluit verstuurd",
+                },
+                {
+                  "datePublished": "2026-02-04T14:22:42.057Z",
+                  "description": "De akte van uw aanvraag is ondertekend.",
+                  "id": "1815972554",
+                  "isActive": false,
+                  "isChecked": true,
+                  "status": "Akte gepasseerd",
                 },
               ],
             },
@@ -515,11 +531,19 @@ describe('erfpacht-zaken', () => {
             },
             {
               "datePublished": "2026-02-03T14:22:42.057Z",
-              "description": "Wij hebben het besluit naar de notaris gestuurd. U krijgt van de notaris een uitnodiging om de akte te tekenen.",
+              "description": "Wij hebben het besluit van uw aanvraag naar de notaris gestuurd. U krijgt van de notaris een uitnodiging om de akte te tekenen.",
               "id": "3290200915",
               "isActive": false,
               "isChecked": true,
               "status": "Besluit verstuurd",
+            },
+            {
+              "datePublished": "2026-02-04T14:22:42.057Z",
+              "description": "De akte van uw aanvraag is ondertekend.",
+              "id": "1815972554",
+              "isActive": false,
+              "isChecked": true,
+              "status": "Akte gepasseerd",
             },
           ],
         },

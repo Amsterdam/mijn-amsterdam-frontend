@@ -1,4 +1,4 @@
-import { isLoading } from '../../../universal/helpers/api.ts';
+import { isLoading } from '../../helpers/api.ts';
 import { getFullName } from '../../../universal/helpers/brp.ts';
 import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';

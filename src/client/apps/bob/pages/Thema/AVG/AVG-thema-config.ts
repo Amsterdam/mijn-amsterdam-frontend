@@ -80,8 +80,9 @@ const displayPropsAanvragen: DisplayProps<AVGRequestFrontend> = {
   },
   colWidths: {
     large: ['15%', '35%', '50%'],
-    small: ['20%', '80%', '0'],
+    small: ['auto', 'auto', 'auto'],
   },
+  enableMobileListView: true,
 };
 
 export type ListPageParamKey = keyof typeof listPageParamKind;

@@ -11,6 +11,7 @@ export type ZaakInfoSource = {
   zaakUuid: string;
   zaakOmschrijving: string;
   statusOmschrijving: ZaakStatusTypeSource;
+  statusDatum: string;
   formattedStatusDatum: string;
   zaakUrl: string;
   zaakDossiers?: ErfpachtDossiersDetailSource['dossierNummer'][];
@@ -80,7 +81,6 @@ export type ZaakStatusFrontend =
 export type ErfpachtZaakExcerptFrontend = Prettify<
   ZaakInfoSource & {
     datePublished: string | null;
-    datePublishedFormatted: string | null;
     fetchZaakDetailUrl: string;
     link: LinkProps;
     displayStatus: string;

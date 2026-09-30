@@ -203,6 +203,8 @@ exports[`Stadspas detail page > Matches snapshot 1`] = `
           </h2>
           <div
             class="ams-table"
+            role="group"
+            tabindex="0"
           >
             <table
               class="ams-table__table _TableV2_1fc147 _Table_budgets_a66cfa"

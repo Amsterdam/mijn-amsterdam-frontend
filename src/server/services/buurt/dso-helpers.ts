@@ -25,8 +25,16 @@ export function dsoApiListUrl(
   datasetId?: DatasetId
 ) {
   return (datasetConfig: DatasetConfig) => {
-    const [datasetCategoryId, embeddedDatasetId] = dataset.split('/');
-    const apiUrl = `https://api.data.amsterdam.nl/v1/${datasetCategoryId}/${embeddedDatasetId}/?_fields=id,${
+    const [datasetCategoryId, datasetVersionId, embeddedDatasetId] =
+      dataset.split('/');
+
+    if (!datasetCategoryId || !datasetVersionId || !embeddedDatasetId) {
+      throw new Error(
+        `Invalid dataset path "${dataset}". Expected format: category/version/embedded.`
+      );
+    }
+
+    const apiUrl = `https://api.data.amsterdam.nl/v1/${datasetCategoryId}/${datasetVersionId}/${embeddedDatasetId}/?_fields=id,${
       datasetConfig.geometryKey || 'geometry'
     }`;
     const pageSizeParam = `&_pageSize=${pageSize}`;
@@ -116,8 +124,7 @@ export function transformGenericApiListResponse(
         featureGeometry.coordinates
       ) {
         const featureProperties = feature.properties as
-          | Record<string, unknown>
-          | undefined;
+          Record<string, unknown> | undefined;
         const id = config.idKeyList
           ? encodeURIComponent(
               String(

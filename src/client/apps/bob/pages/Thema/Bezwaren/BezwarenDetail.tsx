@@ -7,10 +7,7 @@ import styles from './BezwarenDetail.module.scss';
 import { useBezwarenDetailData } from './useBezwarenDetailData.hook.ts';
 import type { BezwaarFrontend } from '../../../../../../server/services/bezwaren/types.ts';
 import { entries } from '../../../../../../universal/helpers/utils.ts';
-import type {
-  Row,
-  RowSet,
-} from '../../../../../components/Datalist/Datalist.tsx';
+import type { Row, RowSet } from '../../../../../components/Datalist/Datalist.tsx';
 import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
 import { DocumentListV2 } from '../../../../../components/DocumentList/DocumentListV2.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';

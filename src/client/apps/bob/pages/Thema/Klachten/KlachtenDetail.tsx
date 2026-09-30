@@ -2,10 +2,7 @@ import { useParams } from 'react-router';
 
 import { useKlachtenThemaData } from './useKlachtenThemaData.hook.ts';
 import type { KlachtFrontend } from '../../../../../../server/services/klachten/types.ts';
-import type {
-  Row,
-  RowSet,
-} from '../../../../../components/Datalist/Datalist.tsx';
+import type { Row, RowSet } from '../../../../../components/Datalist/Datalist.tsx';
 import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';

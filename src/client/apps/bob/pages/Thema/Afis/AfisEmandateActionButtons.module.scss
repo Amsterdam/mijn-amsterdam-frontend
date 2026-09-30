@@ -1,7 +1,14 @@
-.FacturenAlertTable {
-  width: 100%;
-  td,
-  th {
-    padding: 0.2rem 0;
+.FacturenAlert {
+  overflow-x: auto;
+}
+
+.FacturenAlertDataView {
+  th,
+  td {
+    white-space: nowrap;
+
+    // Prevents vertical overflow when there are 2 invoices or less
+    // Also prevents most of the horizontal overflow on desktop by reducing horizontal space in between columns
+    padding: 0.2rem;
   }
 }

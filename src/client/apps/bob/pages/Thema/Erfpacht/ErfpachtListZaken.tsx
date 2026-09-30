@@ -20,7 +20,7 @@ export function ErfpachtZakenList() {
 
   return (
     <ListPagePaginated
-      items={zaken}
+      items={zaken.sort(tableConfigZaken?.sort)}
       themaId={themaId}
       title={tableConfigZaken?.title ?? 'Lopende zaken'}
       appRoute={tableConfigZaken?.listPageRoute ?? ''}

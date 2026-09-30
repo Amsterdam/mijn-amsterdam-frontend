@@ -89,12 +89,19 @@ export function useAfisEmandateFactuurReferenceContent(
       isVisible: !eMandate || eMandate?.status !== EMANDATE_STATUS_ACTIVE,
       label: <span className="ams-visually-hidden">Betalingswijze</span>,
       content: (
-        <Alert heading="Handmatig betalen" headingLevel={4} severity="warning">
+        <Alert
+          heading="Let op! Deze automatische incasso is gestopt. Betaal de factuur zelf via uw bank:"
+          headingLevel={4}
+          severity="warning"
+        >
           <Paragraph>
-            De incassomachtiging voor deze factuur is niet meer actief.
-            <br />
             Maak het bedrag van {factuur.amountOriginalFormatted} over onder
             vermelding van de gegevens op uw factuur.
+            <br />
+            <ul>
+              <li>Rekeningnummer: staat bovenaan de factuur.</li>
+              <li>Mededeling: factuurnummer invullen.</li>
+            </ul>
           </Paragraph>
         </Alert>
       ),

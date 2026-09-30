@@ -10,8 +10,8 @@ import { LogoDigiD } from '../../../../assets/images/LogoDigiD.tsx';
 import { LogoEherkenning } from '../../../../assets/images/LogoEherkenning.tsx';
 import { MaintenanceNotifications } from '../../../../components/MaintenanceNotifications/MaintenanceNotifications.tsx';
 import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
-import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
 import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api.ts';
+import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
 
 export function LandingPage() {
   useHTMLDocumentTitle({

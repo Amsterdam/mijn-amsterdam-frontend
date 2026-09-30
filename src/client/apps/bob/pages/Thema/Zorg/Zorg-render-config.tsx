@@ -3,7 +3,7 @@ import { ZorgDetail } from './ZorgDetail.tsx';
 import { default as ZorgIcon } from './ZorgIcon.svg?react';
 import { ZorgList } from './ZorgList.tsx';
 import { ZorgThema } from './ZorgThema.tsx';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,

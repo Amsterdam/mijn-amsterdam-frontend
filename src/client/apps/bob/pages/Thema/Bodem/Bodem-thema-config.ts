@@ -83,8 +83,9 @@ const displayPropsLopend: DisplayProps<LoodMetingFrontend> = {
   },
   colWidths: {
     large: ['25%', '25%', '50%'],
-    small: ['100%', '0', '0'],
+    small: ['auto', 'auto', 'auto'],
   },
+  enableMobileListView: true,
 };
 
 const displayPropsEerder: DisplayProps<LoodMetingFrontend> = {
@@ -95,8 +96,9 @@ const displayPropsEerder: DisplayProps<LoodMetingFrontend> = {
   },
   colWidths: {
     large: ['25%', '25%', '50%'],
-    small: ['100%', '0', '0'],
+    small: ['auto', 'auto', 'auto'],
   },
+  enableMobileListView: true,
 };
 
 export const tableConfig = {

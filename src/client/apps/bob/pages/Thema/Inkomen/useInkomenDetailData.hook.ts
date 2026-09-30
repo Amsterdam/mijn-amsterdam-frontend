@@ -1,8 +1,9 @@
 import { useParams } from 'react-router';
 
 import { themaConfig } from './Inkomen-thema-config.ts';
-import { isError, isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isError } from '../../../../../../universal/helpers/api.ts';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
 
 export function useInkomenDetailData(
@@ -19,7 +20,7 @@ export function useInkomenDetailData(
     themaid: themaConfig.id,
     zaak,
     zaken,
-    isLoading: isLoading(STATE),
+    isLoading: useIsLoading(STATE),
     isError: isError(STATE),
     breadcrumbs,
     themaConfig,

@@ -73,8 +73,9 @@ const displayPropsBezwaren: DisplayProps<BezwaarFrontend> = {
   },
   colWidths: {
     large: ['25%', '25%', '50%'],
-    small: ['50%', '0', '0'],
+    small: ['auto', 'auto', 'auto'],
   },
+  enableMobileListView: true,
 };
 
 export const listPageParamKind = {

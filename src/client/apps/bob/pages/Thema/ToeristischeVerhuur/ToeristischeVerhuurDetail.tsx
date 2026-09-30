@@ -6,10 +6,7 @@ import styles from './ToeristischeVerhuurDetail.module.scss';
 import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook.ts';
 import type { ToeristischeVerhuurVergunning } from '../../../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
 import { type VakantieverhuurVergunningFrontend } from '../../../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
-import type {
-  Row,
-  RowSet,
-} from '../../../../../components/Datalist/Datalist.tsx';
+import type { Row, RowSet } from '../../../../../components/Datalist/Datalist.tsx';
 import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
 import { DocumentListV2 } from '../../../../../components/DocumentList/DocumentListV2.tsx';
 import { MissingDocumentMailto } from '../../../../../components/DocumentList/MissingDocumentMailto/MissingDocumentMailto.tsx';

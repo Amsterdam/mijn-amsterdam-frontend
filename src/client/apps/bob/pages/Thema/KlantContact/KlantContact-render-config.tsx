@@ -3,12 +3,12 @@ import { ContactgegevenInstellen } from './Communicatievoorkeuren/Contactgegeven
 import { ContactmomentenListPage } from './Contactmomenten/ContactmomentenListPage.tsx';
 import { themaConfig } from './KlantContact-thema-config.ts';
 import { KlantContactThema } from './KlantContactThema.tsx';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
-import type {
-  ThemaRenderRouteConfig,
-  ThemaMenuItem,
-} from '../../../../../../universal/types/thema-types.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import { IconAfspraak } from '../../../../../assets/icons/index.tsx';
+import {
+  type ThemaMenuItem,
+  type ThemaRenderRouteConfig,
+} from '../../../../../../universal/types/thema-types.ts';
 
 export const KlantContactRoutes = [
   {

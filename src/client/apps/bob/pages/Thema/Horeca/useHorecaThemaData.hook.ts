@@ -1,8 +1,9 @@
 import { tableConfig, themaConfig } from './Horeca-thema-config.ts';
 import type { HorecaVergunningFrontend } from '../../../../../../server/services/horeca/decos-zaken.ts';
-import { isError, isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isError } from '../../../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
 
 export function useHorecaThemaData() {
@@ -16,7 +17,7 @@ export function useHorecaThemaData() {
 
   return {
     vergunningen,
-    isLoading: isLoading(HORECA),
+    isLoading: useIsLoading(HORECA),
     isError: isError(HORECA),
     tableConfig,
     themaId: themaConfig.id,

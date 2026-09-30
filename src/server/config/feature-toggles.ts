@@ -3,6 +3,7 @@ import { IS_PRODUCTION } from '../../universal/config/env.ts';
 // Is mutated by the Appconfiguration. Locally this object will be used as is.
 export const featureToggle = {
   ['AFIS.EMandates']: true,
+  ['AFIS.blockDataForMultipleKvKVestigingen']: true,
   ['AMSAPP.notificationService']: true,
   ['BRP.aantalBewonersOpAdresTonen']: true,
   ['USER_FEEDBACK.fetchSurvey']: true,
@@ -10,6 +11,7 @@ export const featureToggle = {
   ['MA_ADMIN.router']: !IS_PRODUCTION,
   ['WONEN.vve']: !IS_PRODUCTION,
   ['WONEN.vve.monumentstatus']: !IS_PRODUCTION,
+  ['WONEN.vve.zaken']: !IS_PRODUCTION,
   ['VERGUNNINGEN.VTHOnPowerbrowserActive']: !IS_PRODUCTION,
   ['KLANT_CONTACT.afspraken']: !IS_PRODUCTION,
   ['KLANT_CONTACT.communicatievoorkeuren']: !IS_PRODUCTION,

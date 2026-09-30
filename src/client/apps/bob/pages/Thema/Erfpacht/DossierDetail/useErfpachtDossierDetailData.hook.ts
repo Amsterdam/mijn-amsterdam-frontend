@@ -1,8 +1,8 @@
 import { generatePath, useParams } from 'react-router';
 
 import type { ErfpachtDossiersDetail } from '../../../../../../../server/services/erfpacht/erfpacht-types.ts';
-import { useBffApi } from '../../../../../../hooks/api/useBffApi.ts';
 import { BFFApiUrls } from '../../../../config/api.ts';
+import { useBffApi } from '../../../../../../hooks/api/useBffApi.ts';
 import { useErfpachtThemaData } from '../useErfpachtThemaData.hook.tsx';
 
 export function useDossierDetailData() {

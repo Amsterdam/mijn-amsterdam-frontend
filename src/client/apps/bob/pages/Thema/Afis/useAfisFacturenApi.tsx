@@ -15,10 +15,7 @@ import type {
 import { capitalizeFirstLetter } from '../../../../../../universal/helpers/text.ts';
 import { entries, omit } from '../../../../../../universal/helpers/utils.ts';
 import { DocumentLink } from '../../../../../components/DocumentList/DocumentLink.tsx';
-import {
-  MaLink,
-  MaRouterLink,
-} from '../../../../../components/MaLink/MaLink.tsx';
+import { MaLink, MaRouterLink } from '../../../../../components/MaLink/MaLink.tsx';
 import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../../../helpers/api.ts';
 import { parseHTML } from '../../../../../helpers/html-react-parse.tsx';
 import { useBffApi } from '../../../../../hooks/api/useBffApi.ts';

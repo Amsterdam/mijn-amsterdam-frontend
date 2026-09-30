@@ -10,9 +10,8 @@ import type {
   ContactmomentFrontend,
   Kanaal,
 } from '../../../../../../../server/services/klantcontact/klantcontact.types.ts';
-import type { ThemaMenuItemTransformed } from '../../../../../../../universal/types/thema-types.ts';
-import { IconAfspraak } from '../../../../../../assets/icons/index.tsx';
 import { MaRouterLink } from '../../../../../../components/MaLink/MaLink.tsx';
+import type { ThemaMenuItemTransformed } from '../../../../../../../universal/types/thema-types.ts';
 import { getRedactedClass } from '../../../../../../helpers/cobrowse.ts';
 import { useActiveThemaMenuItems } from '../../../../../../hooks/useThemaMenuItems.ts';
 import { themaConfig as themaAfis } from '../../Afis/Afis-thema-config.ts';
@@ -26,6 +25,8 @@ import {
 } from '../../Svwi/Svwi-thema-config.ts';
 import { themaConfig as themaZorg } from '../../Zorg/Zorg-thema-config.ts';
 import type { ContactmomentFrontendFinal } from '../KlantContact-thema-config.ts';
+import styles from './Contactmomenten.module.scss';
+import { IconAfspraak } from '../../../../../../assets/icons/index.tsx';
 
 // TODO: Use all the individual thema ID's imported from the Thema Config files.
 const SVWIv1ORv2 = featureToggleSvwi.svwiActive ? themaIdSvwi : themaInkomen.id;

@@ -4,7 +4,7 @@ import { DataTableBijzondereBepalingen } from './DossierDetail/DatalistBijzonder
 import { DatalistGeneral } from './DossierDetail/DatalistGeneral.tsx';
 import { DatalistJuridisch } from './DossierDetail/DatalistJuridisch.tsx';
 import { DatalistsFinancieel } from './DossierDetail/DatalistsFinancieel.tsx';
-import { useDossierDetailData } from './DossierDetail/useErfpachtDossierData.hook.ts';
+import { useDossierDetailData as useDossierDetailData } from './DossierDetail/useErfpachtDossierDetailData.hook.ts';
 import { CollapsiblePanel } from '../../../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';
@@ -76,19 +76,21 @@ export function ErfpachtDossierDetail() {
                 </CollapsiblePanel>
               </PageContentCell>
 
-              <PageContentCell>
-                <CollapsiblePanel title="Wijzigingsaanvragen">
-                  <ThemaPaginaDataView
-                    zaken={zaken}
-                    textNoContent="U heeft (nog) geen wijzigingsaanvragen."
-                    listPageRoute={generatePath(
-                      themaConfig.listPageDossierZaken.route.path,
-                      { dossierId: dossier.dossierId }
-                    )}
-                    displayProps={tableConfigZaken.displayProps}
-                  />
-                </CollapsiblePanel>
-              </PageContentCell>
+              {themaConfig.featureToggle.wijzigingsaanvragenActive && (
+                <PageContentCell>
+                  <CollapsiblePanel title="Wijzigingsaanvragen">
+                    <ThemaPaginaDataView
+                      zaken={zaken}
+                      textNoContent="U heeft (nog) geen wijzigingsaanvragen."
+                      listPageRoute={generatePath(
+                        themaConfig.listPageDossierZaken.route.path,
+                        { dossierId: dossier.dossierId }
+                      )}
+                      displayProps={tableConfigZaken.displayProps}
+                    />
+                  </CollapsiblePanel>
+                </PageContentCell>
+              )}
             </>
           )}
         </>

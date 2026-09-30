@@ -19,14 +19,23 @@ import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.
 
 function PageContentTop({
   urlNaarBelastingen,
+  showMultipleVestigingenDisclaimer,
 }: {
   urlNaarBelastingen: string;
+  showMultipleVestigingenDisclaimer: boolean;
 }) {
   return (
     <PageContentCell spanWide={8}>
+      {showMultipleVestigingenDisclaimer && (
+        <AfisMultipleVestigingenDisclaimer className="ams-mb-m" />
+      )}
       <Paragraph className="ams-mb-m">
-        Hieronder ziet u een overzicht van uw facturen.
-        <br />
+        {!showMultipleVestigingenDisclaimer && (
+          <>
+            Hieronder ziet u een overzicht van uw facturen.
+            <br />
+          </>
+        )}
         {getVragenOverFactuurText('Vraag over facturen en betaalvoorkeuren')}
       </Paragraph>
       <Paragraph>
@@ -63,6 +72,28 @@ export function AfisDisclaimer() {
   );
 }
 
+function AfisMultipleVestigingenDisclaimer({
+  className,
+}: {
+  className?: string;
+}) {
+  return (
+    <Alert
+      className={className}
+      severity="warning"
+      heading="Inzage in uw facturen van de gemeente Amsterdam"
+      headingLevel={2}
+    >
+      <Paragraph>
+        Als bedrijf met meerdere vestigingen krijgt u binnenkort via deze pagina
+        inzage in de facturen die u van de gemeente Amsterdam ontvangt.
+        <br />U kunt dan bijvoorbeeld een kopie van een factuur opvragen. Of
+        controleren of een factuur al is betaald.
+      </Paragraph>
+    </Alert>
+  );
+}
+
 export function AfisDisclaimerOvergedragenFacturen() {
   return (
     <Alert heading="Belangrijk om te weten" severity="warning" headingLevel={4}>
@@ -73,7 +104,7 @@ export function AfisDisclaimerOvergedragenFacturen() {
         en daarmee uw aanspreekpunt. De status van uw factuur vindt u terug bij
         Mijn Belastingen - gemeente Amsterdam.
       </Paragraph>
-      <Heading level={4}>Heeft u vragen?</Heading>
+      <Heading level={2}>Heeft u vragen?</Heading>
       <Paragraph>
         Afdeling Incasso & Invordering is van maandag tot en met vrijdag tussen
         08.00 en 18.00 uur bereikbaar op{' '}
@@ -98,6 +129,7 @@ export function AfisThema() {
     listPageTitle,
     pageLinks,
     belastingenLinkListItem,
+    showMultipleVestigingenDisclaimer,
     title,
     themaId,
     themaConfig,
@@ -152,13 +184,18 @@ export function AfisThema() {
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
       pageLinks={pageLinks}
       pageContentTop={
-        <PageContentTop urlNaarBelastingen={belastingenLinkListItem.to} />
+        <PageContentTop
+          urlNaarBelastingen={belastingenLinkListItem.to}
+          showMultipleVestigingenDisclaimer={showMultipleVestigingenDisclaimer}
+        />
       }
       pageContentMain={
-        <>
-          {pageContentSecondary}
-          <AfisFacturenTables />
-        </>
+        !showMultipleVestigingenDisclaimer && (
+          <>
+            {pageContentSecondary}
+            <AfisFacturenTables />
+          </>
+        )
       }
       maintenanceNotificationsPageSlug="afis"
     />

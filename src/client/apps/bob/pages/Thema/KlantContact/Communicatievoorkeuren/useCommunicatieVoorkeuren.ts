@@ -12,6 +12,7 @@ import {
   capitalizeFirstLetter,
   lowercaseFirstLetter,
 } from '../../../../../../../universal/helpers/text.ts';
+import { BFFApiUrls } from '../../../../config/api.ts';
 import {
   sendFormPostRequest,
   useBffApi,
@@ -20,7 +21,6 @@ import {
   useAppStateStore,
   type AppStateStore,
 } from '../../../../../../hooks/useAppStateStore.ts';
-import { BFFApiUrls } from '../../../../config/api.ts';
 import {
   type InstelAction,
   themaConfig,

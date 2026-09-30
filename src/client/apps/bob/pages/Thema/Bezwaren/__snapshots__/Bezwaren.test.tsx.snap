@@ -122,6 +122,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
                 >
                   <svg
                     aria-hidden="true"
+                    data-directional="true"
                     focusable="false"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -142,7 +143,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
           <section
-            aria-labelledby="ams-alert-heading"
+            aria-labelledby=":r3:"
             class="ams-alert ams-alert--error"
           >
             <div
@@ -174,7 +175,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
               >
                 <h4
                   class="ams-heading ams-heading--3"
-                  id="ams-alert-heading"
+                  id=":r3:"
                 >
                   Foutmelding
                 </h4>
@@ -315,6 +316,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
                 >
                   <svg
                     aria-hidden="true"
+                    data-directional="true"
                     focusable="false"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -341,6 +343,8 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
           </h2>
           <div
             class="ams-table"
+            role="group"
+            tabindex="0"
           >
             <table
               class="ams-table__table _TableV2_1fc147"
@@ -366,6 +370,8 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
           </h2>
           <div
             class="ams-table"
+            role="group"
+            tabindex="0"
           >
             <table
               class="ams-table__table _TableV2_1fc147"
@@ -509,6 +515,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
                 >
                   <svg
                     aria-hidden="true"
+                    data-directional="true"
                     focusable="false"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -535,6 +542,8 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
           </h2>
           <div
             class="ams-table"
+            role="group"
+            tabindex="0"
           >
             <table
               class="ams-table__table _TableV2_1fc147"
@@ -605,6 +614,8 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
           </h2>
           <div
             class="ams-table"
+            role="group"
+            tabindex="0"
           >
             <table
               class="ams-table__table _TableV2_1fc147"

@@ -88,7 +88,7 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
           <section
-            aria-labelledby="ams-alert-heading"
+            aria-labelledby=":r1:"
             class="ams-alert"
           >
             <div
@@ -120,7 +120,7 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
               >
                 <h4
                   class="ams-heading ams-heading--3"
-                  id="ams-alert-heading"
+                  id=":r1:"
                 >
                   Geen gegevens gevonden
                 </h4>
@@ -152,13 +152,13 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
         <nav
-          aria-labelledby=":r1:"
+          aria-labelledby=":r2:"
           class="ams-breadcrumb"
         >
           <h2
             aria-hidden="true"
             class="ams-visually-hidden"
-            id=":r1:"
+            id=":r2:"
           >
             Kruimelpad
           </h2>
@@ -379,6 +379,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                       >
                         <svg
                           aria-hidden="true"
+                          data-directional="true"
                           focusable="false"
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"

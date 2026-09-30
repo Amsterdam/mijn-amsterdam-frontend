@@ -791,7 +791,7 @@ export async function fetchAfisFacturenOverview(
             if (!hasActiveEmandate) {
               return {
                 ...factuur,
-                statusDescription: `${factuur.statusDescription} <br><strong>Let op! deze incassomachtiging is gestopt.</strong>`,
+                statusDescription: `${factuur.statusDescription} <br><strong>Let op! De automatische incasso is gestopt. Betaal de factuur zelf via uw bank.</strong>`,
               };
             }
           }

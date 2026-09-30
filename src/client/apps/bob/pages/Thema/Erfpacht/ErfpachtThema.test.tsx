@@ -3,7 +3,7 @@ import { generatePath } from 'react-router';
 
 import { themaConfig } from './Erfpacht-thema-config.ts';
 import { ErfpachtThema } from './ErfpachtThema.tsx';
-import ERFPACHT_DOSSIERS from '../../../../../../mocks-server/fixtures/erfpacht/erfpacht-v2-dossiers.json' with { type: 'json' };
+import ERFPACHT_DOSSIERS from '../../../../../../mocks-server/fixtures/erfpacht/erfpacht-v2-dossiers' with { type: 'json' };
 import { transformDossierResponse } from '../../../../../../server/services/erfpacht/erfpacht-dossiers.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { MockApp } from '../../MockApp.tsx';

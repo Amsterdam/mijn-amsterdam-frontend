@@ -44,3 +44,7 @@
 .LinkList {
   --ams-unordered-list-gap: 1rem;
 }
+
+.LinkListItem {
+  display: flex;
+}

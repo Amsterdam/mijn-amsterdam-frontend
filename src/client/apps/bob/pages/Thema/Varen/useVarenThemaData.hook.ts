@@ -4,9 +4,10 @@ import type {
   VarenVergunningFrontend,
   VarenZakenFrontend,
 } from '../../../../../../server/services/varen/config-and-types.ts';
-import { isError, isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isError } from '../../../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
 
 export function useVarenThemaData() {
@@ -39,7 +40,7 @@ export function useVarenThemaData() {
   return {
     varenRederRegistratie,
     tableConfig,
-    isLoading: isLoading(VAREN),
+    isLoading: useIsLoading(VAREN),
     isError: isError(VAREN),
     varenZaken,
     varenVergunningen,

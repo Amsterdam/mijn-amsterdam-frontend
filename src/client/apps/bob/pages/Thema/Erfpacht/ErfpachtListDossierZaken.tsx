@@ -1,4 +1,4 @@
-import { useDossierDetailData } from './DossierDetail/useErfpachtDossierData.hook.ts';
+import { useDossierDetailData } from './DossierDetail/useErfpachtDossierDetailData.hook.ts';
 import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
 import { ListPagePaginated } from '../../../../../components/ListPagePaginated/ListPagePaginated.tsx';
 import { MaRouterLink } from '../../../../../components/MaLink/MaLink.tsx';

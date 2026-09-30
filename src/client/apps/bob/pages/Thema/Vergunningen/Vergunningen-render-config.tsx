@@ -3,7 +3,7 @@ import { VergunningenDetail } from './VergunningenDetail.tsx';
 import { default as VergunningenIcon } from './VergunningenIcon.svg?react';
 import { VergunningenList } from './VergunningenList.tsx';
 import { VergunningenThema } from './VergunningenThema.tsx';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
