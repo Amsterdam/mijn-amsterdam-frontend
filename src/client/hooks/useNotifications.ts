@@ -14,32 +14,37 @@ export function useAppStateNotifications(top?: number) {
   );
   // Merge the WelcomeNotification when AppState is ready.
   const notificationsWithWelcomeNotification = useMemo(
-    () =>
-      (isReady ? [...notifications_, WelcomeNotification] : notifications_).map(
-        (n) => ({
-          ...n,
-          className: n.isTip
-            ? getRedactedClass(null, 'content') // Tips can contain information from multiple thema's. Redact by default
-            : getRedactedClass(n.themaID, 'content'),
-        })
-      ),
+    () => (isReady ? [...notifications_, WelcomeNotification] : notifications_),
     [isReady, notifications_]
+  );
+
+  const notificationsWithRedactionClass = useMemo(
+    () =>
+      notificationsWithWelcomeNotification.map((n) => ({
+        ...n,
+        className: n.isTip
+          ? getRedactedClass(null, 'content') // Tips can contain information from multiple thema's. Redact by default
+          : getRedactedClass(n.themaID, 'content'),
+      })),
+    [notificationsWithWelcomeNotification]
   );
 
   if (!themaConfig.featureToggle.enableNewTipsDesign) {
     return {
       notifications: top
-        ? notificationsWithWelcomeNotification.slice(0, top)
-        : notificationsWithWelcomeNotification,
-      notificationsTotal: notificationsWithWelcomeNotification.length,
+        ? notificationsWithRedactionClass.slice(0, top)
+        : notificationsWithRedactionClass,
+      notificationsTotal: notificationsWithRedactionClass.length,
     };
   }
 
   // Seperate notifications and tips
-  const notifications = notificationsWithWelcomeNotification.filter(
+  const notifications = notificationsWithRedactionClass.filter(
     (notification) => !notification.isTip
   );
-  const tips = notifications_.filter((notification) => notification.isTip);
+  const tips = notificationsWithRedactionClass.filter(
+    (notification) => notification.isTip
+  );
 
   return {
     notifications: top ? notifications.slice(0, top) : notifications,
