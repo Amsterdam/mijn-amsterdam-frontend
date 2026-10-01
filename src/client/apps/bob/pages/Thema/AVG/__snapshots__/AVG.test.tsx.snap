@@ -5,61 +5,11 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when API gives no res
   <div
     class="mams-content-wrapper"
   >
-    <div
-      class="ams-grid ams-grid--padding-top--large"
-      id="page-breadcrumbs"
-    >
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <nav
-          aria-labelledby=":r9:"
-          class="ams-breadcrumb"
-        >
-          <h2
-            aria-hidden="true"
-            class="ams-visually-hidden"
-            id=":r9:"
-          >
-            Kruimelpad
-          </h2>
-          <ol
-            class="ams-breadcrumb__list"
-          >
-            <li
-              class="ams-breadcrumb__item"
-            >
-              <a
-                class="ams-breadcrumb__link"
-                href="/"
-              >
-                Home
-              </a>
-            </li>
-            <li
-              class="ams-breadcrumb__item"
-            >
-              <a
-                class="ams-breadcrumb__link"
-                href="/avg"
-                tabindex="-1"
-              >
-                <span
-                  class="ams-visually-hidden"
-                >
-                  AVG persoonsgegevens
-                </span>
-              </a>
-            </li>
-          </ol>
-        </nav>
-      </div>
-    </div>
     <main
       id="page-main-content"
     >
       <div
-        class="ams-grid"
+        class="ams-grid ams-grid--padding-top--large"
       >
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
@@ -122,7 +72,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when API gives no res
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
         >
           <section
-            aria-labelledby=":ra:"
+            aria-labelledby=":r7:"
             class="ams-alert ams-alert--error"
           >
             <div
@@ -154,7 +104,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when API gives no res
               >
                 <h4
                   class="ams-heading ams-heading--3"
-                  id=":ra:"
+                  id=":r7:"
                 >
                   Foutmelding
                 </h4>
@@ -178,61 +128,11 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are no req
   <div
     class="mams-content-wrapper"
   >
-    <div
-      class="ams-grid ams-grid--padding-top--large"
-      id="page-breadcrumbs"
-    >
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <nav
-          aria-labelledby=":r8:"
-          class="ams-breadcrumb"
-        >
-          <h2
-            aria-hidden="true"
-            class="ams-visually-hidden"
-            id=":r8:"
-          >
-            Kruimelpad
-          </h2>
-          <ol
-            class="ams-breadcrumb__list"
-          >
-            <li
-              class="ams-breadcrumb__item"
-            >
-              <a
-                class="ams-breadcrumb__link"
-                href="/"
-              >
-                Home
-              </a>
-            </li>
-            <li
-              class="ams-breadcrumb__item"
-            >
-              <a
-                class="ams-breadcrumb__link"
-                href="/avg"
-                tabindex="-1"
-              >
-                <span
-                  class="ams-visually-hidden"
-                >
-                  AVG persoonsgegevens
-                </span>
-              </a>
-            </li>
-          </ol>
-        </nav>
-      </div>
-    </div>
     <main
       id="page-main-content"
     >
       <div
-        class="ams-grid"
+        class="ams-grid ams-grid--padding-top--large"
       >
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
@@ -356,61 +256,11 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
   <div
     class="mams-content-wrapper"
   >
-    <div
-      class="ams-grid ams-grid--padding-top--large"
-      id="page-breadcrumbs"
-    >
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <nav
-          aria-labelledby=":r7:"
-          class="ams-breadcrumb"
-        >
-          <h2
-            aria-hidden="true"
-            class="ams-visually-hidden"
-            id=":r7:"
-          >
-            Kruimelpad
-          </h2>
-          <ol
-            class="ams-breadcrumb__list"
-          >
-            <li
-              class="ams-breadcrumb__item"
-            >
-              <a
-                class="ams-breadcrumb__link"
-                href="/"
-              >
-                Home
-              </a>
-            </li>
-            <li
-              class="ams-breadcrumb__item"
-            >
-              <a
-                class="ams-breadcrumb__link"
-                href="/avg"
-                tabindex="-1"
-              >
-                <span
-                  class="ams-visually-hidden"
-                >
-                  AVG persoonsgegevens
-                </span>
-              </a>
-            </li>
-          </ol>
-        </nav>
-      </div>
-    </div>
     <main
       id="page-main-content"
     >
       <div
-        class="ams-grid"
+        class="ams-grid ams-grid--padding-top--large"
       >
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"

@@ -5,61 +5,11 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
   <div
     class="mams-content-wrapper redacted"
   >
-    <div
-      class="ams-grid ams-grid--padding-top--large"
-      id="page-breadcrumbs"
-    >
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <nav
-          aria-labelledby=":r0:"
-          class="ams-breadcrumb"
-        >
-          <h2
-            aria-hidden="true"
-            class="ams-visually-hidden"
-            id=":r0:"
-          >
-            Kruimelpad
-          </h2>
-          <ol
-            class="ams-breadcrumb__list"
-          >
-            <li
-              class="ams-breadcrumb__item"
-            >
-              <a
-                class="ams-breadcrumb__link"
-                href="/"
-              >
-                Home
-              </a>
-            </li>
-            <li
-              class="ams-breadcrumb__item"
-            >
-              <a
-                class="ams-breadcrumb__link"
-                href="/facturen-en-betalen"
-                tabindex="-1"
-              >
-                <span
-                  class="ams-visually-hidden"
-                >
-                  Facturen en betalen
-                </span>
-              </a>
-            </li>
-          </ol>
-        </nav>
-      </div>
-    </div>
     <main
       id="page-main-content"
     >
       <div
-        class="ams-grid"
+        class="ams-grid ams-grid--padding-top--large"
       >
         <div
           class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
@@ -191,7 +141,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
             Ga naar betaalvoorkeuren
           </a>
           <section
-            aria-labelledby=":r1:"
+            aria-labelledby=":r0:"
             class="ams-alert ams-alert--warning"
           >
             <div
@@ -223,7 +173,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
               >
                 <h4
                   class="ams-heading ams-heading--3"
-                  id=":r1:"
+                  id=":r0:"
                 >
                   Belangrijk om te weten
                 </h4>
