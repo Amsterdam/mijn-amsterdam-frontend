@@ -22,7 +22,7 @@ export const featureToggle = {
   ['WMO.fetchWmo.addMaVoorzieningenApiProps']: !IS_PRODUCTION,
   ['ERFPACHT.service']: !IS_PRODUCTION,
   ['ERFPACHT.wijzigingsaanvragen']: !IS_PRODUCTION,
-  ['USER_FEEDBACK.sevice.jira']: !IS_PRODUCTION,
+  ['USER_FEEDBACK.service.jira']: !IS_PRODUCTION,
   ['USER_FEEDBACK.router.protected']: !IS_PRODUCTION,
   ['USER_FEEDBACK.router.admin']: !IS_PRODUCTION,
 };
