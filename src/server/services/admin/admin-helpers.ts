@@ -1,3 +1,6 @@
+import type { Request } from 'express';
+
+import type { RequestWithSession } from './admin-types.ts';
 import { BFF_API_ADMIN_BASE_URL } from '../../config/app.ts';
 import { BFF_BASE_PATH_ADMIN } from '../../routing/bff-routes.ts';
 
@@ -6,4 +9,8 @@ export function getAdminRedirectUrl(url: string): string {
     url.startsWith(BFF_BASE_PATH_ADMIN)
     ? url
     : BFF_API_ADMIN_BASE_URL;
+}
+
+export function getUsernameFromSession(req: Request): string {
+  return (req as RequestWithSession).session.username;
 }

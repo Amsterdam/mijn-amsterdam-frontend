@@ -36,6 +36,7 @@ describe('User Feedback Functions', () => {
       expect(result).toStrictEqual({
         content: {
           id: 'survey123',
+          title: 'Survey 1',
           uniqueCode: 'x',
           questions: [
             {
