@@ -3,7 +3,11 @@ import type { DataRequestConfig } from '../../../config/source-api.ts';
 import { getFromEnv } from '../../../helpers/env.ts';
 
 function requiredEnv(key: string) {
-  return getFromEnv(key, true, isJiraTicketCreationEnabled) as string;
+  return getFromEnv(
+    key,
+    true,
+    isEnabled('USER_FEEDBACK.service.jira')
+  ) as string;
 }
 
 export const JIRA_BASE_URL = requiredEnv('BFF_JIRA_BASE_URL');
