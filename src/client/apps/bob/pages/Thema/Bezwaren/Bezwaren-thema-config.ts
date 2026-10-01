@@ -65,7 +65,7 @@ export const themaConfig: ThemaConfigBezwaren = {
   },
 } as const;
 
-const displayPropsBezwaren: DisplayProps<BezwaarFrontend> = {
+const displayPropsLopend: DisplayProps<BezwaarFrontend> = {
   props: {
     detailLinkComponent: 'Zaaknummer',
     ontvangstdatumFormatted: 'Ontvangen op',
@@ -78,6 +78,18 @@ const displayPropsBezwaren: DisplayProps<BezwaarFrontend> = {
   enableMobileListView: true,
 };
 
+const displayPropsEerder: DisplayProps<BezwaarFrontend> = {
+  props: {
+    detailLinkComponent: 'Zaaknummer',
+    einddatumFormatted: 'Datum besluit',
+    omschrijving: 'Onderwerp',
+  },
+  colWidths: {
+    large: ['25%', '25%', '50%'],
+    small: ['auto', 'auto', 'auto'],
+  },
+  enableMobileListView: true,
+};
 export const listPageParamKind = {
   lopend: 'lopende-bezwaren',
   afgehandeld: 'afgehandelde-bezwaren',
@@ -91,7 +103,7 @@ export const tableConfig = {
     title: 'Lopende bezwaren',
     filter: (bezwaar: BezwaarFrontend) =>
       bezwaar.displayStatus !== 'Afgehandeld',
-    displayProps: displayPropsBezwaren,
+    displayProps: displayPropsLopend,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
     textNoContent:
       'U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet is geregistreerd.',
@@ -104,7 +116,7 @@ export const tableConfig = {
     title: 'Afgehandelde bezwaren',
     filter: (bezwaar: BezwaarFrontend) =>
       bezwaar.displayStatus === 'Afgehandeld',
-    displayProps: displayPropsBezwaren,
+    displayProps: displayPropsEerder,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     textNoContent: 'U heeft nog geen afgehandelde bezwaren.',
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
