@@ -3,11 +3,7 @@ import type { DataRequestConfig } from '../../../config/source-api.ts';
 import { getFromEnv } from '../../../helpers/env.ts';
 
 function requiredEnv(key: string) {
-  return getFromEnv(
-    key,
-    true,
-    isEnabled('USER_FEEDBACK.sevice.jira')
-  ) as string;
+  return getFromEnv(key, true, isJiraTicketCreationEnabled) as string;
 }
 
 export const JIRA_BASE_URL = requiredEnv('BFF_JIRA_BASE_URL');
@@ -28,7 +24,7 @@ export const AUTH_FAILURE_MESSAGE =
 export const featureToggle = {
   service: {
     ticketCreation: {
-      enabled: isEnabled('USER_FEEDBACK.sevice.jira'),
+      enabled: isEnabled('USER_FEEDBACK.service.jira'),
     },
   },
 };
