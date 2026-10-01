@@ -72,11 +72,23 @@ export const themaConfig: AVGThemaConfig = {
   } as const,
 };
 
-const displayPropsAanvragen: DisplayProps<AVGRequestFrontend> = {
+const displayPropsLopend: DisplayProps<AVGRequestFrontend> = {
   props: {
     detailLinkComponent: 'Nummer',
+    type: 'Onderwerp',
     ontvangstDatumFormatted: 'Ontvangen op',
-    themas: 'Onderwerp(en)',
+  },
+  colWidths: {
+    large: ['15%', '35%', '50%'],
+    small: ['auto', 'auto', 'auto'],
+  },
+  enableMobileListView: true,
+};
+const displayPropsAfgehandeld: DisplayProps<AVGRequestFrontend> = {
+  props: {
+    detailLinkComponent: 'Nummer',
+    type: 'Onderwerp',
+    resultaat: 'Resultaat',
   },
   colWidths: {
     large: ['15%', '35%', '50%'],
@@ -88,30 +100,32 @@ const displayPropsAanvragen: DisplayProps<AVGRequestFrontend> = {
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
-const tableConfigBase = {
-  sort: dateSort('registratieDatum', 'desc'),
-  displayProps: displayPropsAanvragen,
-} as const;
+// const tableConfigBase = {
+//   sort: dateSort('registratieDatum', 'desc'),
+//   displayProps: displayPropsLopend,
+// } as const;
 
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
-    title: 'Lopende aanvragen',
+    title: 'Lopende verzoeken',
+    sort: dateSort('registratieDatum', 'desc'),
     filter: (avgVerzoek: AVGRequestFrontend) => !avgVerzoek.datumAfhandeling,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.inProgress,
       page: null,
     }),
-    ...tableConfigBase,
+    displayProps: displayPropsLopend,
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
   },
   [listPageParamKind.completed]: {
-    title: 'Afgehandelde aanvragen',
+    title: 'Afgehandelde verzoeken',
+    sort: dateSort('datumAfhandeling', 'desc'),
     filter: (avgVerzoek: AVGRequestFrontend) => avgVerzoek.datumAfhandeling,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.completed,
       page: null,
     }),
-    ...tableConfigBase,
+    displayProps: displayPropsAfgehandeld,
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   },
 } as const;
