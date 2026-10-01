@@ -1,0 +1,19 @@
+.UserFeedbackTable {
+  font-size: 1rem;
+  width: 100%;
+}
+
+.FreeTextBlock {
+  max-width: 500px;
+  display: block;
+}
+
+.LimitedText {
+  max-width: 300px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.MoreInfoButton {
+  white-space: nowrap;
+}
