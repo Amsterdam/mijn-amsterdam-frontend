@@ -501,7 +501,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
                     class="ams-table__header-cell"
                     style="width: 35%;"
                   >
-                    Onderwerp
+                    Type verzoek
                   </th>
                   <th
                     class="ams-table__header-cell"
@@ -575,7 +575,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
                     class="ams-table__header-cell"
                     style="width: 35%;"
                   >
-                    Onderwerp
+                    Type verzoek
                   </th>
                   <th
                     class="ams-table__header-cell"

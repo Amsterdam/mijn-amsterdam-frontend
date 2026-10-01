@@ -75,7 +75,7 @@ export const themaConfig: AVGThemaConfig = {
 const displayPropsLopend: DisplayProps<AVGRequestFrontend> = {
   props: {
     detailLinkComponent: 'Nummer',
-    type: 'Onderwerp',
+    type: 'Type verzoek',
     ontvangstDatumFormatted: 'Ontvangen op',
   },
   colWidths: {
@@ -87,7 +87,7 @@ const displayPropsLopend: DisplayProps<AVGRequestFrontend> = {
 const displayPropsAfgehandeld: DisplayProps<AVGRequestFrontend> = {
   props: {
     detailLinkComponent: 'Nummer',
-    type: 'Onderwerp',
+    type: 'Type verzoek',
     resultaat: 'Resultaat',
   },
   colWidths: {
