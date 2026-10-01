@@ -168,7 +168,7 @@ describe('fetchLeerlingenvervoer', () => {
           isActive: false,
           isChecked: true,
           isVisible: true,
-          status: 'Melding ontvangen',
+          status: 'Ontvangen',
         },
         {
           datePublished: '2025-03-27',
@@ -203,7 +203,7 @@ describe('fetchLeerlingenvervoer', () => {
     expect(first).toMatchObject(expected);
 
     const descriptions = first.steps.map((step) => step.description);
-    expect(descriptions[0]).toMatch(/Uw melding is ontvangen/);
+    expect(descriptions[0]).toMatch(/Ontvangen op 27 maart 2025/);
     expect(descriptions[1]).toMatch(
       /Uw melding wordt behandeld door een indicatieadviseur/
     );
