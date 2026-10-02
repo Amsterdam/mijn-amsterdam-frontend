@@ -251,13 +251,15 @@ export async function fetchStadspassenByAdministratienummer(
     ...(pashouderMain.sub_pashouders ?? []),
   ];
   const pasRequests = [];
+  const USE_CACHE = false;
 
   for (const pashouder of allPashouders) {
     for (const pas of pashouder.passen ?? []) {
       if (isVisiblePass(pas.actief, pas.expiry_date) && !pas.vervangen) {
         const request = fetchStadspasSource(
           pas.pasnummer,
-          administratienummer
+          administratienummer,
+          USE_CACHE
         ).then((response) => {
           if (response.content && response.status === 'OK') {
             const pasTransformed = transformStadspasResponse(
