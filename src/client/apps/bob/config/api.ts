@@ -76,7 +76,6 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BEZWAREN: 'Ingediende bezwaren',
   BODEM: 'Bodem: loodmetingen',
 
-  CMS_CONTENT: 'Uitleg Mijn Amsterdam',
   ERFPACHT: 'Erfpacht',
   HLI_regelingen: regelingenTitle,
   HLI_stadspas: 'Stadspas, saldo en transacties',

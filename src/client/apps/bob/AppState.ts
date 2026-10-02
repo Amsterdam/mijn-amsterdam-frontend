@@ -131,7 +131,6 @@ export const PRISTINE_APPSTATE = {
   MY_LOCATION: apiPristineResult(null),
 
   // CMS content
-  CMS_CONTENT: apiPristineResult(null),
   CMS_MAINTENANCE_NOTIFICATIONS: apiPristineResult([]),
 
   KLACHTEN: apiPristineResult([], { profileTypes: ['private'] }),
