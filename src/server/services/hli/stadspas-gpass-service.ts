@@ -222,11 +222,13 @@ export async function fetchStadspassenByAdministratienummer(
     formatUrl({ url }) {
       return `${url}/rest/sales/v1/pashouder`;
     },
+
     validateStatus: (statusCode) =>
       isSuccessStatus(statusCode) ||
       // 401 means there is no record available in the GPASS api for the requested administratienummer.
       statusCode === HttpStatusCode.Unauthorized,
     headers,
+    enableCache: false,
     params: {
       addsubs: true,
     },
