@@ -33,6 +33,7 @@ import {
 } from '../../../universal/helpers/api.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import { displayAmount } from '../../../universal/helpers/text.ts';
+import { hash } from '../../../universal/helpers/utils.ts';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
 import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
@@ -196,15 +197,26 @@ export async function fetchStadspasSource(
   return requestData<StadspasDetailSource>(dataRequestConfig);
 }
 
-function releaseStadspasSourceCache(
+function getGpassCacheKey(cacheKey: string): string {
+  return `GPASS-${cacheKey}`;
+}
+
+function createStadspasHouderCacheKey(administratienummer: string): string {
+  return `stadspas-houder-${hash(administratienummer)}`;
+}
+
+function releaseStadspasCaches(
   passNumber: number,
   administratienummer: string
 ): void {
-  const cacheKey = createStadspasSourceCacheKey(
-    passNumber,
-    administratienummer
+  deleteCacheEntry(
+    getGpassCacheKey(
+      createStadspasSourceCacheKey(passNumber, administratienummer)
+    )
   );
-  deleteCacheEntry(cacheKey);
+  deleteCacheEntry(
+    getGpassCacheKey(createStadspasHouderCacheKey(administratienummer))
+  );
 }
 
 export function createStadspasSourceCacheKey(
@@ -230,6 +242,7 @@ export async function fetchStadspassenByAdministratienummer(
     params: {
       addsubs: true,
     },
+    cacheKey_UNSAFE: createStadspasHouderCacheKey(administratienummer),
   });
 
   const stadspasHouderResponse =
@@ -554,11 +567,13 @@ export async function mutateGpassSetPasIsBlockedState(
     administratienummer
   );
 
-  if (
-    pasIsBlockedResponse.status !== 'OK' ||
-    // No need to toggle if the pass is already in the desired state.
-    pasIsBlockedResponse.content.isBlocked === isBlocked
-  ) {
+  if (pasIsBlockedResponse.status !== 'OK') {
+    return pasIsBlockedResponse;
+  }
+
+  // No need to toggle if the pass is already in the desired state.
+  if (pasIsBlockedResponse.content.isBlocked === isBlocked) {
+    releaseStadspasCaches(passNumber, administratienummer);
     return pasIsBlockedResponse;
   }
 
@@ -575,9 +590,7 @@ export async function mutateGpassSetPasIsBlockedState(
   const response = await requestData<PasBlockedResponse>(config);
 
   if (response.status === 'OK') {
-    // If the pass is successfully toggled, we can delete the cache entry.
-    // On reload, the pass will be fetched again with the new state.
-    releaseStadspasSourceCache(passNumber, administratienummer);
+    releaseStadspasCaches(passNumber, administratienummer);
   }
 
   return response;
