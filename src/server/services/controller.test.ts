@@ -10,14 +10,12 @@ import {
   vi,
 } from 'vitest';
 
-import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content.ts';
 import {
   addServiceResultHandler,
   loadServices,
   forTesting,
   servicesTipsByProfileType,
 } from './controller.ts';
-import type { RequestMock } from '../../testing/utils.ts';
 import { getReqMockWithOidc, ResponseMock } from '../../testing/utils.ts';
 import {
   apiErrorResult,
@@ -53,12 +51,6 @@ vi.mock('../config/azure-appconfiguration.ts', async (importOriginal) => {
     ...actual,
     isOpsEnabled: mocks.isOpsEnabled,
     ensureOpsFlagExists: mocks.ensureOpsFlagExists,
-  };
-});
-
-vi.mock('./cms/cms-content', () => {
-  return {
-    fetchMijnAmsterdamUitlegPage: vi.fn(),
   };
 });
 
@@ -293,59 +285,5 @@ describe('controller', () => {
       },
       { updateLastLoginDate: true }
     );
-  });
-});
-
-describe('request handlers', () => {
-  describe('CMS_CONTENT', async () => {
-    test('profileType: private', async () => {
-      const reqMock = await getReqMockWithOidc({
-        sid: 'x123y',
-        authMethod: 'digid',
-        profileType: 'private',
-        id: '9988',
-      });
-
-      await forTesting.CMS_CONTENT(reqMock);
-
-      expect(fetchMijnAmsterdamUitlegPage).toHaveBeenCalledWith(
-        'private',
-        false
-      );
-    });
-
-    test('profileType: commercial', async () => {
-      const reqMock = await getReqMockWithOidc({
-        sid: 'x123y',
-        authMethod: 'eherkenning',
-        profileType: 'commercial',
-        id: '9988',
-      });
-
-      await forTesting.CMS_CONTENT(reqMock);
-
-      expect(fetchMijnAmsterdamUitlegPage).toHaveBeenCalledWith(
-        'commercial',
-        false
-      );
-    });
-
-    test('arbitrary query params are passed', async () => {
-      const reqMock = await getReqMockWithOidc({
-        sid: 'x123y',
-        authMethod: 'eherkenning',
-        profileType: 'commercial',
-        id: '9988',
-      });
-
-      (reqMock as unknown as RequestMock).setQuery({ renewCache: 'true' });
-
-      await forTesting.CMS_CONTENT(reqMock);
-
-      expect(fetchMijnAmsterdamUitlegPage).toHaveBeenCalledWith(
-        'commercial',
-        true
-      );
-    });
   });
 });

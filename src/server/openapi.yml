@@ -203,8 +203,6 @@ components:
       properties:
         BRP:
           $ref: '#/components/schemas/ApiSearchConfigResult'
-        CMS_CONTENT:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
         CMS_MAINTENANCE_NOTIFICATIONS:
           $ref: '#/components/schemas/ApiSearchConfigResult'
         KVK:
@@ -268,8 +266,6 @@ components:
         BRP:
           type: object
         BELASTINGEN:
-          type: object
-        CMS_CONTENT:
           type: object
         CMS_MAINTENANCE_NOTIFICATIONS:
           type: object

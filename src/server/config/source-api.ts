@@ -269,10 +269,6 @@ const ApiConfig_ = {
       apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
     },
   },
-  CMS_CONTENT_GENERAL_INFO: {
-    cacheTimeout: 4 * ONE_HOUR_MS, // 4 hours
-    url: `${getFromEnv('BFF_CMS_BASE_URL')}/mijn-content/artikelen`,
-  },
   CMS_CONTENT_FOOTER: {
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/algemene_onderdelen/xxv/footer-xxv/?AppIdt=app-data`,
     cacheTimeout: 24 * ONE_HOUR_MS, // 24 hours
