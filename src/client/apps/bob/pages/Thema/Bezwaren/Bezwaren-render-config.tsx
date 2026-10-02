@@ -3,7 +3,7 @@ import { BezwarenDetail } from './BezwarenDetail.tsx';
 import { default as BezwarenIcon } from './BezwarenIcon.svg?react';
 import { BezwarenList } from './BezwarenList.tsx';
 import { BezwarenThema } from './BezwarenThema.tsx';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,

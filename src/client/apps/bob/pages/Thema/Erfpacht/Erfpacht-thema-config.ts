@@ -160,9 +160,10 @@ export const erfpachtFacturenTableConfig = getFacturenTableConfig({
       title: 'Openstaande erfpachtfacturen',
       displayProps: {
         colWidths: {
-          large: ['25%', '25%', '25%', '25%'],
-          small: ['100%', '0', '0', '0'],
+          large: ['0', '25%', '25%', '25%', '25%'],
+          small: ['auto', '0', 'auto', 'auto', '0'],
         },
+        enableMobileListView: true,
       },
     },
     overgedragen: {
@@ -197,8 +198,9 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
     },
     colWidths: {
       large: ['25%', '25%', '25%', '25%'],
-      small: ['100%', '0', '0', '0'],
+      small: ['auto', '0', 'auto', 'auto'],
     },
+    enableMobileListView: true,
   };
 
   // Wijzigingsaanvragen table on Dossier detail page
@@ -223,8 +225,9 @@ export function getTableConfig(erfpachtData: ErfpachtResponseFrontend | null) {
     },
     colWidths: {
       large: ['50%', '50%'],
-      small: ['50%', '50%'],
+      small: ['auto', 'auto'],
     },
+    enableMobileListView: true,
   };
 
   const titleDossiers =

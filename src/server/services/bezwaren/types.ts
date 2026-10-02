@@ -54,6 +54,7 @@ export type BezwaarFrontend = {
   datumResultaat: string | null;
   datumResultaatFormatted: string | null;
   einddatum: string | null;
+  einddatumFormatted: string | null;
   primairbesluit: string | null;
   primairbesluitdatum: string | null;
   primairbesluitdatumFormatted: string | null;

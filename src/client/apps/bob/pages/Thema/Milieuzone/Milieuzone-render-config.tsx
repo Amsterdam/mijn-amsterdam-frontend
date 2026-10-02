@@ -1,6 +1,6 @@
 import { themaConfig } from './Milieuzone-thema-config.ts';
 import { default as MilieuzoneIcon } from './MilieuzoneIcon.svg?react';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import { type AppState } from '../../../../../../universal/types/App.types.ts';
 import { type ThemaMenuItem } from '../../../../../../universal/types/thema-types.ts';
 

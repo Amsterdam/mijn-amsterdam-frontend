@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 
 import { tableConfig, themaConfig } from './Bodem-thema-config.ts';
-import { isError, isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isError } from '../../../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
 
 export function useBodemData() {
@@ -18,7 +19,7 @@ export function useBodemData() {
     themaId: themaConfig.id,
     title: themaConfig.title,
     tableConfig,
-    isLoading: isLoading(BODEM),
+    isLoading: useIsLoading(BODEM),
     isError: isError(BODEM),
     items,
     pageLinks: themaConfig.pageLinks,

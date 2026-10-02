@@ -9,7 +9,7 @@ import {
 import {
   getMainStepDescription,
   getParentStatus,
-  getSubStepDescription,
+  getSubStatusDescription,
   translateResultaat,
   ZAAK_STATUS_FRONTEND,
   type ZaakStatusTypeSource,
@@ -139,7 +139,7 @@ function transformErfpachtZaakDetailResponse(
             id: hash(substep.statustoelichting + substep.datumStatusGezet),
             status: substep.statustoelichting,
             datePublished: substep.datumStatusGezet,
-            description: getSubStepDescription(substep),
+            description: getSubStatusDescription(substep.statustoelichting),
             isActive: false,
             isChecked: true,
           };

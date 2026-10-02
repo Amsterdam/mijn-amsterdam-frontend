@@ -13,12 +13,12 @@ import { ErfpachtThema } from './ErfpachtThema.tsx';
 import { ErfpachtZaakDetail } from './ErfpachtZaakDetail.tsx';
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook.tsx';
 import { IS_PRODUCTION } from '../../../../../../universal/config/env.ts';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
 import { type AppState } from '../../../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
 } from '../../../../../../universal/types/thema-types.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import { AfisFactuur } from '../Afis/AfisFactuur.tsx';
 import { AfisList } from '../Afis/AfisList.tsx';
 

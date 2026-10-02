@@ -5,9 +5,10 @@ import {
   listPageParamKind,
   themaConfig,
 } from './Erfpacht-thema-config.ts';
-import { isError, isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isError } from '../../../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
 
 export function useErfpachtThemaData() {
@@ -37,7 +38,7 @@ export function useErfpachtThemaData() {
     relatieCode: erfpachtData?.relatieCode,
     dossiers,
     zaken,
-    isLoading: isLoading(ERFPACHT),
+    isLoading: useIsLoading(ERFPACHT),
     isError: isError(ERFPACHT),
     pageLinks: themaConfig.pageLinks,
     tableConfig,

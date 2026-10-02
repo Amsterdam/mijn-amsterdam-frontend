@@ -79,6 +79,9 @@ export async function handleAdministratienummerExchange(
         deliveryResponse.status === 'OK' &&
         deliveryResponse.content?.detail === 'Success'
       ) {
+        console.log(
+          `administratienummerEncrypted ${administratienummerEncrypted}`
+        );
         const renderProps: RenderProps = {
           ...baseRenderProps,
           redirectTimeout: IS_DEVELOPMENT ? DEV_REDIRECT_TIMEOUT_MS : 0, // In development we want to see the redirect happen, in production we want to redirect immediately.

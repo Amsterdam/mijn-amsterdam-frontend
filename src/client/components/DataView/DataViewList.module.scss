@@ -10,6 +10,10 @@
 .ListViewItem {
   gap: var(--ams-space-m);
   padding-bottom: var(--ams-space-m);
+
+  a {
+    display: flex;
+  }
 }
 
 .ListViewItemWithDivider {

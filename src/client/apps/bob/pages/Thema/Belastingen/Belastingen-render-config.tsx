@@ -3,8 +3,8 @@ import {
   themaConfig,
 } from './Belastingen-thema-config.ts';
 import { default as BelastingenIcon } from './BelastingenIcon.svg?react';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
 import { type ThemaMenuItem } from '../../../../../../universal/types/thema-types.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 
 export const menuItem: ThemaMenuItem = {
   title: themaConfig.title,

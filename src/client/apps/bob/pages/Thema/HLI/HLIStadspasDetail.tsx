@@ -19,26 +19,39 @@ import type {
   StadspasBudgetTransaction,
   StadspasFrontend,
 } from '../../../../../../server/services/hli/stadspas-types.ts';
-import { isError, isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isError } from '../../../../../../universal/helpers/api.ts';
 import { dateSort } from '../../../../../../universal/helpers/date.ts';
 import { capitalizeFirstLetter } from '../../../../../../universal/helpers/text.ts';
 import { ErrorAlert } from '../../../../../components/Alert/Alert.tsx';
-import { Datalist, type Row } from '../../../../../components/Datalist/Datalist.tsx';
+import {
+  Datalist,
+  type Row,
+} from '../../../../../components/Datalist/Datalist.tsx';
 import {
   LoadingContent,
   type BarConfig,
 } from '../../../../../components/LoadingContent/LoadingContent.tsx';
 import { MaRouterLink } from '../../../../../components/MaLink/MaLink.tsx';
-import { Modal, ModalAndButton } from '../../../../../components/Modal/Modal.tsx';
-import { PageContentCell, PageV2 } from '../../../../../components/Page/Page.tsx';
+import {
+  Modal,
+  ModalAndButton,
+} from '../../../../../components/Modal/Modal.tsx';
+import {
+  PageContentCell,
+  PageV2,
+} from '../../../../../components/Page/Page.tsx';
 import { Spinner } from '../../../../../components/Spinner/Spinner.tsx';
 import { TableV2 } from '../../../../../components/Table/TableV2.tsx';
-import { isEnabled } from '../../../config/feature-toggles.ts';
 import { useBffApi } from '../../../../../hooks/api/useBffApi.ts';
-import { useMediumScreen, useSmallScreen } from '../../../../../hooks/media.hook.ts';
+import {
+  useMediumScreen,
+  useSmallScreen,
+} from '../../../../../hooks/media.hook.ts';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
+import { isEnabled } from '../../../config/feature-toggles.ts';
 
 // TODO MIJN-13378: When GPASS behavior is adjusted we can remove the normalization logic
 const PC_BUDGET_CODE_PATTERN = /^\d{4}_AMSTEG_PC$/;
@@ -92,7 +105,7 @@ export function HLIStadspasDetail() {
   const stadspas = useStadspas(passNumber);
 
   const isErrorStadspas = isError(HLI);
-  const isLoadingStadspas = isLoading(HLI);
+  const isLoadingStadspas = useIsLoading(HLI);
   const noContent = !stadspas;
 
   const NAME: Row = {

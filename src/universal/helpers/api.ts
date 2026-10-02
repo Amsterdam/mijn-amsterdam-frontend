@@ -44,19 +44,10 @@ export type ApiResponse_DEPRECATED<T> =
   | ApiPostponeResponse<T>;
 
 export type ApiResponse<T> =
-  | ApiErrorResponse<null>
-  | ApiSuccessResponse<T>
-  | ApiPostponeResponse<null>;
+  ApiErrorResponse<null> | ApiSuccessResponse<T> | ApiPostponeResponse<null>;
 
 export type ApiResponsePromise<T> = Promise<ApiResponse<T>>;
 
-export function isLoading(apiResponseData?: ApiResponse_DEPRECATED<unknown>) {
-  // If no responseData was found, assumes it's still loading
-  return !!(
-    !apiResponseData ||
-    !!(apiResponseData?.status === 'PRISTINE' && apiResponseData.isActive)
-  );
-}
 export function isOk(apiResponseData?: ApiResponse_DEPRECATED<unknown>) {
   return apiResponseData?.status === 'OK';
 }

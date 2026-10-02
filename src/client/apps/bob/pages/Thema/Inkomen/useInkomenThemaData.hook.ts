@@ -6,19 +6,24 @@ import {
   themaConfig,
 } from './Inkomen-thema-config.ts';
 import type { WpiRequestProcess } from '../../../../../../server/services/wpi/wpi-types.ts';
-import { isError, isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isError } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import {
   defaultDateFormat,
   dateSort,
 } from '../../../../../../universal/helpers/date.ts';
 import { addLinkElementToProperty } from '../../../../../components/Table/TableV2.tsx';
-import { useAddDocumentLinkComponents } from '../../../data-transform/useAddDocumentLinks.tsx';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
+import { useProfileType } from '../../../../../hooks/useProfileType.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
+import { useAddDocumentLinkComponents } from '../../../data-transform/useAddDocumentLinks.tsx';
 
 export function useInkomenThemaData() {
   const { WPI_AANVRAGEN, WPI_SPECIFICATIES, WPI_TOZO, WPI_TONK, WPI_BBZ } =
     useAppStateGetter();
+
+  const { profileType } = useProfileType();
 
   const specificaties = useAddDocumentLinkComponents(
     WPI_SPECIFICATIES.content?.uitkeringsspecificaties ?? []
@@ -71,10 +76,10 @@ export function useInkomenThemaData() {
   ]);
 
   const isLoadingWpi =
-    isLoading(WPI_AANVRAGEN) ||
-    isLoading(WPI_TOZO) ||
-    isLoading(WPI_TONK) ||
-    isLoading(WPI_BBZ);
+    isLoading(WPI_AANVRAGEN, profileType) ||
+    isLoading(WPI_TOZO, profileType) ||
+    isLoading(WPI_TONK, profileType) ||
+    isLoading(WPI_BBZ, profileType);
 
   const isErrorWpi =
     isError(WPI_AANVRAGEN) ||
@@ -82,7 +87,7 @@ export function useInkomenThemaData() {
     isError(WPI_TONK) ||
     isError(WPI_BBZ);
 
-  const isLoadingWpiSpecificaties = isLoading(WPI_SPECIFICATIES);
+  const isLoadingWpiSpecificaties = useIsLoading(WPI_SPECIFICATIES);
   const isErrorWpiSpecificaties = isError(WPI_SPECIFICATIES);
 
   return {

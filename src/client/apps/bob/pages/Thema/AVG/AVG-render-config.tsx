@@ -3,7 +3,7 @@ import { AVGDetail } from './AVGDetail.tsx';
 import { default as AvgIcon } from './AvgIcon.svg?react';
 import { AVGList } from './AVGList.tsx';
 import { AVGThema } from './AVGThema.tsx';
-import { isLoading } from '../../../../../../universal/helpers/api.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
