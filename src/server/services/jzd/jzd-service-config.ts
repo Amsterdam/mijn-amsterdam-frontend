@@ -10,6 +10,7 @@ export const featureToggle = {
     },
   },
   service: {
+    llvInBehandeling: isEnabled('JZD.llvInBehandeling'),
     fetchCasusAanvragen: {
       isEnabled: true,
     },

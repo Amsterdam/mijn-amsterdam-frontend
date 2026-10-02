@@ -114,9 +114,11 @@ describe('zorgned-service', () => {
         'leveringsVorm',
         'prettyID',
         'procesAanvraagOmschrijving',
+        'procesIdentificatie',
+        'procesMeldingIdentificatie',
         'productIdentificatie',
         'productsoortCode',
-        'procesIdentificatie',
+        'regelingIdentificatie',
         'resultaat',
         'titel',
       ].join(',');
@@ -126,9 +128,7 @@ describe('zorgned-service', () => {
           ZORGNED_WMO_AANVRAGEN as unknown as ZorgnedResponseDataSource
         )
         .every((a) => {
-          expect(Object.keys(a).sort().join(',')).toMatchInlineSnapshot(
-            `"beschikkingNummer,beschiktProductIdentificatie,betrokkenen,datumAanvraag,datumBeginLevering,datumBesluit,datumEindeGeldigheid,datumEindeLevering,datumIngangGeldigheid,datumOpdrachtLevering,datumToewijzing,documenten,id,isActueel,leverancier,leverancierIdentificatie,leveringsVorm,prettyID,procesAanvraagOmschrijving,procesIdentificatie,procesMeldingIdentificatie,productIdentificatie,productsoortCode,resultaat,titel"`
-          );
+          expect(Object.keys(a).sort().join(',')).toBe(keys);
         });
     });
 
@@ -199,11 +199,12 @@ describe('zorgned-service', () => {
         prettyID: '300111429-116841',
         procesAanvraagOmschrijving: null,
         procesIdentificatie: null,
+        procesMeldingIdentificatie: null,
         productIdentificatie: 'WRA',
         productsoortCode: 'WRA',
+        regelingIdentificatie: 'WMO',
         resultaat: 'toegewezen',
         titel: 'ALLE DOCUMENTEN TEST: woonruimteaanpassing (in behandeling)',
-        procesMeldingIdentificatie: null,
       });
     });
 
@@ -497,13 +498,14 @@ describe('zorgned-service', () => {
             prettyID: '300967777-1',
             isActueel: true,
             leverancier: 'Gebr Koenen B.V.',
-            leverancierIdentificatie: '',
+            leverancierIdentificatie: null,
             leveringsVorm: 'ZIN',
             procesAanvraagOmschrijving: null,
             productIdentificatie: 'WRA',
             procesIdentificatie: null,
             procesMeldingIdentificatie: null,
             productsoortCode: 'WRA',
+            regelingIdentificatie: null,
             resultaat: 'toegewezen',
             titel: 'woonruimteaanpassing (in behandeling)',
           },
@@ -820,19 +822,23 @@ describe('fetchRelatedPersons', async () => {
 
     it('does __not__ combine documents if 1 or more aanvragen within same casus have more than 1 beschiktproduct', () => {
       const responseSource2 = structuredClone(responseSource);
+      const aanvraag = responseSource2._embedded?.aanvraag?.[0];
+
+      if (!aanvraag?.beschikking) {
+        throw new Error('Expected the first aanvraag to have a beschikking');
+      }
+
       // Add another aanvraag with a different beschikt product in the same casus.
-      responseSource2._embedded.aanvraag[0].beschikking.beschikteProducten.push(
-        {
-          identificatie: '789-beschikt-product',
-          product: {
-            omschrijving: 'Een geleverde product of dienst',
-            productsoortCode: '',
-            identificatie: undefined,
-          },
-          resultaat: 'toegewezen',
-          toegewezenProduct: null,
-        }
-      );
+      aanvraag.beschikking.beschikteProducten.push({
+        identificatie: '789-beschikt-product',
+        product: {
+          omschrijving: 'Een geleverde product of dienst',
+          productsoortCode: '',
+          identificatie: undefined,
+        },
+        resultaat: 'toegewezen',
+        toegewezenProduct: null,
+      });
 
       const transformed =
         forTesting.consolidateCasusAanvragenWithSingleBeschiktProduct(
