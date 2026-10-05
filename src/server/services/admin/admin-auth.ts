@@ -114,8 +114,7 @@ export async function handleCallback(req: Request, res: Response) {
     });
   }
 
-  const redirectToUrl = getAdminRedirectUrl(originalUrl);
-  res.redirect(redirectToUrl);
+  res.redirect(getAdminRedirectUrl(originalUrl));
 }
 
 export async function handleLogout(req: Request, res: Response) {
