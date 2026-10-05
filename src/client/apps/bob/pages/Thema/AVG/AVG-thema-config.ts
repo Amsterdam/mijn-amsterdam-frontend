@@ -100,11 +100,6 @@ const displayPropsAfgehandeld: DisplayProps<AVGRequestFrontend> = {
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
-// const tableConfigBase = {
-//   sort: dateSort('registratieDatum', 'desc'),
-//   displayProps: displayPropsLopend,
-// } as const;
-
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende verzoeken',
