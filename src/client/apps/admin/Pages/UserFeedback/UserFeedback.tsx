@@ -1,11 +1,7 @@
 import { useMemo } from 'react';
+import type { ReactNode } from 'react';
 
-import {
-  Link,
-  Pagination,
-  Paragraph,
-  Table,
-} from '@amsterdam/design-system-react';
+import { Link, Pagination, Paragraph } from '@amsterdam/design-system-react';
 import { useLocation } from 'react-router';
 
 import { TicketControls } from './TicketControls.tsx';
@@ -26,11 +22,25 @@ import styles from './UserFeedback.module.scss';
 import type { UserFeedbackHandoffConfigResponse } from '../../../../../server/services/user-feedback/user-feedback.types.ts';
 import type { SurveyOverviewFrontend } from '../../../../../server/services/user-feedback/user-feedback.types.ts';
 import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
+import { DataView } from '../../../../components/DataView/DataView.tsx';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import { ModalAndButton } from '../../../../components/Modal/Modal.tsx';
 import { PageContentCell } from '../../../../components/Page/Page.tsx';
 import { TextClamp } from '../../../../components/TextClamp/TextClamp.tsx';
 import { ThemaPagina } from '../../../../components/Thema/ThemaPagina.tsx';
+
+type UserFeedbackTableRow = {
+  title?: string;
+  id: number;
+  entry: ReactNode;
+  date: string;
+  score: ReactNode;
+  comment: ReactNode;
+  url: ReactNode;
+  email: ReactNode;
+  registration: ReactNode;
+  details: ReactNode;
+};
 
 function UserFeedbackTable({
   overview,
@@ -43,96 +53,96 @@ function UserFeedbackTable({
   const questionEntries = getQuestionEntries(questions);
   const getAdministrationMeta = useAdministrationStateContent();
 
-  return (
-    <Table className={styles.UserFeedbackTable}>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>ID</Table.HeaderCell>
-          <Table.HeaderCell>Datum</Table.HeaderCell>
-          <Table.HeaderCell>Score</Table.HeaderCell>
-          <Table.HeaderCell>Comment</Table.HeaderCell>
-          <Table.HeaderCell>Url</Table.HeaderCell>
-          <Table.HeaderCell>E-Mail</Table.HeaderCell>
-          <Table.HeaderCell>Registratie</Table.HeaderCell>
-          <Table.HeaderCell>Details</Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {overview.entries.map((entry) => {
-          const [scoreQuestion, commentQuestion, emailQuestion] =
-            questionEntries.map(([questionId]) => questionId);
-          const {
-            jiraTicketNumber,
-            jiraTicketUrl,
-            departmentName,
-            departmentEmail,
-          } = getAdministrationMeta(entry);
-          return (
-            <Table.Row key={entry.id}>
-              <Table.Cell>
-                <Link id={`entry-${entry.id}`} href={`#entry-${entry.id}`}>
-                  <strong>{entry.id}</strong>
-                </Link>
-              </Table.Cell>
+  const [scoreQuestion, commentQuestion, emailQuestion] = questionEntries.map(
+    ([questionId]) => questionId
+  );
+  const items: UserFeedbackTableRow[] = overview.entries.map((entry) => {
+    const { jiraTicketNumber, jiraTicketUrl, departmentName, departmentEmail } =
+      getAdministrationMeta(entry);
 
-              <Table.Cell>{entry.dateCreatedFormatted}</Table.Cell>
-              <Table.Cell>
-                <strong
-                  style={{
-                    color: getScoreColor(entry.answers[scoreQuestion]),
-                  }}
-                >
-                  {entry.answers[scoreQuestion] || '-'}
-                </strong>
-              </Table.Cell>
-              <Table.Cell>
-                <div className={styles.FreeTextBlock}>
-                  <TextClamp tagName="span" minHeight="15px" maxHeight="55px">
-                    {entry.answers[commentQuestion] || '-'}
-                  </TextClamp>
-                </div>
-              </Table.Cell>
-              <Table.Cell>
-                <span className={styles.LimitedText}>{entry.entryPoint}</span>
-              </Table.Cell>
-              <Table.Cell>{entry.answers[emailQuestion] || '-'}</Table.Cell>
-              <Table.Cell>
-                {jiraTicketNumber && jiraTicketUrl && (
-                  <Link href={jiraTicketUrl}>{jiraTicketNumber}</Link>
-                )}
-                {departmentName && departmentEmail ? (
-                  <span className={styles.DepartmentInfo}>
-                    Overgedragen aan: {departmentName} ({departmentEmail})
-                  </span>
-                ) : (
-                  '-'
-                )}
-              </Table.Cell>
-              <Table.Cell>
-                <ModalAndButton
-                  buttonClassName={styles.MoreInfoButton}
-                  buttonLabel="Details"
-                  buttonVariant="ma-link-like"
-                  modal={{ title: `Details voor inzending ${entry.id}` }}
-                >
-                  {entry.answers[commentQuestion] && (
-                    <TicketControls
-                      entry={{
-                        ...entry,
-                        administrationMeta: getAdministrationMeta(entry),
-                      }}
-                      survey={overview.survey}
-                      handoffConfig={handoffConfig}
-                    />
-                  )}
-                  <Datalist rows={getMoreInfoRows(entry)} />
-                </ModalAndButton>
-              </Table.Cell>
-            </Table.Row>
-          );
-        })}
-      </Table.Body>
-    </Table>
+    return {
+      id: entry.id,
+      entry: (
+        <Link id={`entry-${entry.id}`} href={`#entry-${entry.id}`}>
+          <strong>{entry.id}</strong>
+        </Link>
+      ),
+      date: entry.dateCreatedFormatted,
+      score: (
+        <strong
+          style={{
+            color: getScoreColor(entry.answers[scoreQuestion]),
+          }}
+        >
+          {entry.answers[scoreQuestion] || '-'}
+        </strong>
+      ),
+      comment: (
+        <div className={styles.FreeTextBlock}>
+          <TextClamp tagName="span" minHeight="15px" maxHeight="55px">
+            {entry.answers[commentQuestion] || '-'}
+          </TextClamp>
+        </div>
+      ),
+      url: <span className={styles.LimitedText}>{entry.entryPoint}</span>,
+      email: entry.answers[emailQuestion] || '-',
+      registration: (
+        <>
+          {jiraTicketNumber && jiraTicketUrl && (
+            <Link href={jiraTicketUrl}>{jiraTicketNumber}</Link>
+          )}
+          {departmentName && departmentEmail && (
+            <span className={styles.DepartmentInfo}>
+              Overgedragen aan: {departmentName} ({departmentEmail})
+            </span>
+          )}
+        </>
+      ),
+      details: (
+        <ModalAndButton
+          buttonClassName={styles.MoreInfoButton}
+          buttonLabel="Details"
+          buttonVariant="ma-link-like"
+          modal={{ title: `Details voor inzending ${entry.id}` }}
+        >
+          {entry.answers[commentQuestion] && (
+            <TicketControls
+              entry={{
+                ...entry,
+                administrationMeta: getAdministrationMeta(entry),
+              }}
+              survey={overview.survey}
+              handoffConfig={handoffConfig}
+            />
+          )}
+          <Datalist rows={getMoreInfoRows(entry)} />
+        </ModalAndButton>
+      ),
+    };
+  });
+
+  return (
+    <DataView<UserFeedbackTableRow>
+      className={styles.UserFeedbackTable}
+      items={items}
+      displayProps={{
+        props: {
+          entry: 'ID',
+          date: 'Datum',
+          score: 'Score',
+          comment: 'Comment',
+          url: 'Url',
+          email: 'E-Mail',
+          registration: 'Registratie',
+          details: 'Details',
+        },
+        enableMobileListView: true,
+        colWidths: {
+          large: ['6%', '11%', '7%', '20%', '17%', '14%', '17%', '8%'],
+          small: ['6%', '11%', '7%', '20%', '17%', '14%', '17%', '8%'],
+        },
+      }}
+    />
   );
 }
 
