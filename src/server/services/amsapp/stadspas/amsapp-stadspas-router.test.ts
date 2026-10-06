@@ -282,6 +282,10 @@ describe('hli/router-external-consumer', async () => {
 });
 
 describe('Budget transactions endpoint', async () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   test('Happy path without budgetcode filter', async () => {
     const resMock = ResponseMock.new();
 
