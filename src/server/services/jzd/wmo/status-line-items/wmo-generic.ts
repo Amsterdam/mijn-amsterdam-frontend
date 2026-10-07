@@ -75,9 +75,22 @@ export function getDocumentMeerInformatieDate(documents: GenericDocument[]) {
   );
 }
 
+function hasMeerInformatieActie(aanvraag: ZorgnedAanvraagTransformed) {
+  return (aanvraag.procesAanvraagActieOmschrijvingen ?? []).some((actie) => {
+    const normalizedActie = actie.trim().toLowerCase();
+    return (
+      normalizedActie === 'verzoek om meer informatie' ||
+      normalizedActie.startsWith('verzoek:') ||
+      normalizedActie.startsWith('verzoek ')
+    );
+  });
+}
+
 export function hasMeerInformatieNodig(aanvraag: ZorgnedAanvraagTransformed) {
-  return aanvraag.documenten.some((document) =>
-    document.title.startsWith(DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH)
+  return (
+    aanvraag.documenten.some((document) =>
+      document.title.startsWith(DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH)
+    ) || hasMeerInformatieActie(aanvraag)
   );
 }
 
@@ -99,7 +112,7 @@ export function isEindeGeldigheidVerstreken(
 ) {
   const isEindeGeldigheidVerstreken = datumEindeGeldigheid
     ? isSameDay(parseISO(datumEindeGeldigheid), compareDate) ||
-      isDateInPast(datumEindeGeldigheid, compareDate)
+    isDateInPast(datumEindeGeldigheid, compareDate)
     : false;
 
   return isEindeGeldigheidVerstreken;
@@ -185,13 +198,11 @@ export function getTransformerConfigBesluit(
     },
     description: (aanvraag) =>
       hasDecision(aanvraag)
-        ? `<p>${
-            aanvraag.resultaat === 'toegewezen'
-              ? `U krijgt ${
-                  useAsProduct ? 'een ' : ''
-                }${aanvraag.titel} ${aanvraag.datumIngangGeldigheid ? `per ${defaultDateFormat(aanvraag.datumIngangGeldigheid)}` : ''}`
-              : `U krijgt geen ${aanvraag.titel}`
-          }.</p>
+        ? `<p>${aanvraag.resultaat === 'toegewezen'
+          ? `U krijgt ${useAsProduct ? 'een ' : ''
+          }${aanvraag.titel} ${aanvraag.datumIngangGeldigheid ? `per ${defaultDateFormat(aanvraag.datumIngangGeldigheid)}` : ''}`
+          : `U krijgt geen ${aanvraag.titel}`
+        }.</p>
       ${decisionParagraph(aanvraag)}
       `
         : '',
@@ -208,10 +219,9 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
   isChecked: (aanvraag) => aanvraag.isActueel === false,
   isActive: (aanvraag) => aanvraag.isActueel === false,
   description: (aanvraag) =>
-    `<p>${
-      aanvraag.isActueel
-        ? `Als uw recht op ${aanvraag.titel} stopt, krijgt u hiervan bericht.`
-        : `Uw recht op ${aanvraag.titel} is beëindigd${aanvraag.datumEindeGeldigheid ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
+    `<p>${aanvraag.isActueel
+      ? `Als uw recht op ${aanvraag.titel} stopt, krijgt u hiervan bericht.`
+      : `Uw recht op ${aanvraag.titel} is beëindigd${aanvraag.datumEindeGeldigheid ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
     }</p>
     `,
 };
@@ -220,20 +230,18 @@ export const EINDE_RECHT_PGB: ZorgnedStatusLineItemTransformerConfig = {
   ...EINDE_RECHT,
   description: (aanvraag) =>
     `<p>
-      ${
-        aanvraag.datumEindeGeldigheid
-          ? aanvraag.isActueel
-            ? `Uw recht op ${aanvraag.titel} stopt op ${aanvraag.datumEindeGeldigheid ? `${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
-            : `Uw recht op ${aanvraag.titel} is beëindigd ${aanvraag.datumEindeGeldigheid ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
-          : ``
-      }
+      ${aanvraag.datumEindeGeldigheid
+      ? aanvraag.isActueel
+        ? `Uw recht op ${aanvraag.titel} stopt op ${aanvraag.datumEindeGeldigheid ? `${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
+        : `Uw recht op ${aanvraag.titel} is beëindigd ${aanvraag.datumEindeGeldigheid ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
+      : ``
+    }
     </p>
-    ${
-      aanvraag.isActueel && aanvraag.leveringsVorm === 'PGB'
-        ? `
+    ${aanvraag.isActueel && aanvraag.leveringsVorm === 'PGB'
+      ? `
           <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor ${aanvraag.datumEindeGeldigheid ? `${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : 'de einddatum'} doen.</p>
           <p>Kijk in uw besluit of op <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_PGB_BESLUIT}">amsterdam.nl/pgb</a> voor meer informatie.</p>`
-        : ''
+      : ''
     }
     `,
 };

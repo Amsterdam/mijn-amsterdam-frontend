@@ -49,6 +49,7 @@ export function getAanvraagTransformed(
     productsoortCode: 'WRA',
     beschiktProductIdentificatie: 'beschikt-product-1',
     beschikkingNummer: 1,
+    regelingIdentificatie: null,
     resultaat: 'toegewezen',
     titel: 'woonaanpassing',
     ...overrides,

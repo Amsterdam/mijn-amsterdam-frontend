@@ -59,6 +59,7 @@ describe('fetchLeerlingenvervoer', () => {
           leverancier: 'Munckhof',
           leveringsVorm: '',
           productsoortCode: 'LLV',
+          regelingIdentificatie: 'LLV',
           productIdentificatie: 'LLVAVG',
           resultaat: 'toegewezen',
           titel: 'aangepast groepsvervoer',
@@ -80,6 +81,7 @@ describe('fetchLeerlingenvervoer', () => {
           leverancier: '',
           leveringsVorm: '',
           productsoortCode: 'LLV',
+          regelingIdentificatie: 'LLV',
           productIdentificatie: 'LLVOVA',
           resultaat: 'toegewezen',
           titel: 'openbaar vervoer abonnement',
@@ -101,6 +103,7 @@ describe('fetchLeerlingenvervoer', () => {
           leverancier: '',
           leveringsVorm: '',
           productsoortCode: 'LLV',
+          regelingIdentificatie: 'LLV',
           productIdentificatie: 'LLVEV',
           resultaat: 'toegewezen',
           titel: 'eigen vervoer',
@@ -122,6 +125,7 @@ describe('fetchLeerlingenvervoer', () => {
           leverancier: 'Alphons Laudy (so)',
           leveringsVorm: 'ZIN',
           productsoortCode: 'LLV',
+          regelingIdentificatie: 'LLV',
           productIdentificatie: 'LLVAVG',
           resultaat: 'toegewezen',
           titel: 'aangepast groepsvervoer',
@@ -158,13 +162,13 @@ describe('fetchLeerlingenvervoer', () => {
       statusDateFormatted: '07 april 2025',
       steps: [
         {
-          datePublished: '',
+          datePublished: '2025-03-27',
           documents: [],
           id: 'status-step-0',
           isActive: false,
           isChecked: true,
           isVisible: true,
-          status: 'Aanvraag ontvangen',
+          status: 'Ontvangen',
         },
         {
           datePublished: '2025-03-27',
@@ -173,12 +177,12 @@ describe('fetchLeerlingenvervoer', () => {
           isActive: false,
           isChecked: true,
           isVisible: true,
-          status: 'In behandeling',
+          status: 'Behandeling bij indicatieadviseur',
         },
         {
           datePublished: '2025-04-07T09:44:48.697',
           documents: [],
-          id: 'status-step-3',
+          id: 'status-step-2',
           isActive: true,
           isChecked: true,
           isVisible: true,
@@ -187,7 +191,7 @@ describe('fetchLeerlingenvervoer', () => {
         {
           datePublished: '',
           documents: [],
-          id: 'status-step-4',
+          id: 'status-step-3',
           isActive: false,
           isChecked: false,
           isVisible: true,
@@ -199,8 +203,10 @@ describe('fetchLeerlingenvervoer', () => {
     expect(first).toMatchObject(expected);
 
     const descriptions = first.steps.map((step) => step.description);
-    expect(descriptions[0]).toMatch(/Uw aanvraag is ontvangen/);
-    expect(descriptions[1]).toMatch(/Uw aanvraag is in behandeling/);
+    expect(descriptions[0]).toMatch(/Ontvangen op 27 maart 2025/);
+    expect(descriptions[1]).toMatch(
+      /Uw melding wordt behandeld door een indicatieadviseur/
+    );
     expect(descriptions[2]).toMatch(
       /U krijgt aangepast groepsvervoer per 01 april 2025./
     );
@@ -210,6 +216,149 @@ describe('fetchLeerlingenvervoer', () => {
     expect(descriptions[3]).toMatch(
       /Als uw recht op aangepast groepsvervoer stopt, krijgt u hiervan bericht./
     );
+  });
+
+  test('Keeps the treatment status active when more information is needed', async () => {
+    (fetchAanvragen as Mock).mockResolvedValueOnce({
+      content: [
+        {
+          id: '3695853',
+          prettyID: '3695853',
+          datumAanvraag: '2026-05-19',
+          datumBeginLevering: null,
+          datumBesluit: '',
+          datumEindeGeldigheid: null,
+          datumEindeLevering: null,
+          datumIngangGeldigheid: null,
+          datumOpdrachtLevering: null,
+          datumToewijzing: null,
+          documenten: [
+            {
+              id: 'B4092578',
+              title: 'Verzoek: extra info voor beoordelen aanvraag LLV',
+              url: '',
+              datePublished: '2026-08-10T15:56:15.467',
+            },
+          ],
+          isActueel: false,
+          leverancier: '',
+          leveringsVorm: '',
+          productsoortCode: 'LLV',
+          regelingIdentificatie: 'LLV',
+          procesAanvraagActieOmschrijvingen: [
+            'Melding ontvangen',
+            'Verzoek om meer informatie',
+            'In behandeling bij gemeente',
+          ],
+          resultaat: undefined,
+          titel: 'Leerlingenvervoer',
+          betrokkenen: [],
+          procesAanvraagActies: [
+            {
+              omschrijving: 'In behandeling bij gemeente',
+              datum: '2026-08-10',
+            },
+          ],
+        },
+      ],
+      status: 'OK',
+    });
+
+    const response = await fetchLeerlingenvervoer(AUTH_PROFILE_AND_TOKEN);
+    const [voorziening] = response.content!;
+    const [melding, behandeling] = voorziening.steps;
+
+    expect(behandeling).toMatchObject({
+      status: 'Behandeling bij indicatieadviseur',
+      hideDatePublished: true,
+      isActive: true,
+      substeps: [
+        {
+          status: 'Meer informatie nodig',
+          datePublished: '',
+          isActive: true,
+          isChecked: true,
+        },
+      ],
+    });
+    expect(melding.isActive).toBe(false);
+    expect(melding.datePublished).toBe('2026-05-19');
+    expect(behandeling.datePublished).toBe('2026-08-10');
+    expect(voorziening.statusDate).toBe('2026-08-10');
+    expect(voorziening.statusDateFormatted).toBe('10 augustus 2026');
+  });
+
+  test('Shows when submitted additional information is being processed', async () => {
+    (fetchAanvragen as Mock).mockResolvedValueOnce({
+      content: [
+        {
+          id: '3695853',
+          prettyID: '3695853',
+          datumAanvraag: '2026-05-19',
+          datumBeginLevering: null,
+          datumBesluit: '',
+          datumEindeGeldigheid: null,
+          datumEindeLevering: null,
+          datumIngangGeldigheid: null,
+          datumOpdrachtLevering: null,
+          datumToewijzing: null,
+          documenten: [
+            {
+              id: 'B4092578',
+              title: 'Verzoek: extra info voor beoordelen aanvraag LLV',
+              url: '',
+              datePublished: '2026-08-10T15:56:15.467',
+            },
+          ],
+          isActueel: false,
+          leverancier: '',
+          leveringsVorm: '',
+          productsoortCode: null,
+          regelingIdentificatie: 'LLV',
+          procesAanvraagActieOmschrijvingen: [
+            'Melding ontvangen',
+            'Verzoek om meer informatie',
+            'In behandeling bij gemeente',
+            'In behandeling bij gemeente',
+          ],
+          resultaat: null,
+          titel: 'Leerlingenvervoer',
+          betrokkenen: [],
+          procesAanvraagActies: [
+            {
+              omschrijving: 'In behandeling bij gemeente',
+              datum: '2026-08-10',
+            },
+            {
+              omschrijving: 'In behandeling bij gemeente',
+              datum: '2026-08-12',
+            },
+          ],
+        },
+      ],
+      status: 'OK',
+    });
+
+    const response = await fetchLeerlingenvervoer(AUTH_PROFILE_AND_TOKEN);
+    const [, behandeling] = response.content![0].steps;
+
+    expect(behandeling).toMatchObject({
+      status: 'Behandeling bij indicatieadviseur',
+      datePublished: '2026-08-12',
+      isActive: true,
+      substeps: [
+        {
+          status: 'Meer informatie nodig',
+          isActive: false,
+          isChecked: true,
+        },
+        {
+          status: 'Meer informatie in behandeling',
+          isActive: true,
+          isChecked: true,
+        },
+      ],
+    });
   });
 
   test('Returns error response "as is" from fetchAanvragen', async () => {

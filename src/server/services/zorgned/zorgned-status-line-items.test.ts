@@ -1,5 +1,7 @@
 import { forTesting, getStatusLineItems } from './zorgned-status-line-items.ts';
 import type {
+  LeveringsVormTransformed,
+  ProductSoortCode,
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
   ZorgnedStatusLineItemTransformerConfig,
@@ -25,8 +27,41 @@ const transformerConfig4 = getTransformerConfig();
 
 const transformerConfigs = [transformerConfig, transformerConfig2];
 
+function createAanvraag(
+  overrides: Partial<ZorgnedAanvraagTransformed> = {}
+): ZorgnedAanvraagTransformed {
+  return {
+    betrokkenen: [],
+    datumAanvraag: '2024-01-01',
+    datumBeginLevering: null,
+    datumBesluit: '2024-06-01',
+    datumEindeGeldigheid: null,
+    datumEindeLevering: null,
+    datumIngangGeldigheid: null,
+    datumOpdrachtLevering: null,
+    datumToewijzing: null,
+    procesAanvraagOmschrijving: null,
+    documenten: [],
+    id: 'aanvraag-1',
+    prettyID: 'aanvraag-1',
+    procesIdentificatie: 'proces-1',
+    procesMeldingIdentificatie: null,
+    isActueel: false,
+    leverancier: null,
+    leverancierIdentificatie: null,
+    leveringsVorm: 'ZIN',
+    productsoortCode: null,
+    beschiktProductIdentificatie: null,
+    beschikkingNummer: null,
+    regelingIdentificatie: null,
+    resultaat: null,
+    titel: 'Test aanvraag',
+    ...overrides,
+  };
+}
+
 const lineItemsConfig1: ZorgnedStatusLineItemsConfig = {
-  leveringsVorm: 'FOO',
+  leveringsVorm: 'ZIN',
   productsoortCodes: ['BAR', 'FOO'],
   productgroep: 'Test line items 1',
   statusLineItems: {
@@ -78,10 +113,10 @@ describe('zorgned-status-line-items', () => {
     test('Get transformers', () => {
       const lineItemTransformers = forTesting.getStatusLineItemTransformers(
         lineItemConfigs,
-        {
-          leveringsVorm: 'FOO',
+        createAanvraag({
+          leveringsVorm: 'ZIN',
           productsoortCode: 'BAR',
-        } as ZorgnedAanvraagTransformed,
+        }),
         []
       );
 
@@ -91,12 +126,12 @@ describe('zorgned-status-line-items', () => {
     test('Get transformers: ProductIdentificatie', () => {
       const lineItemTransformers = forTesting.getStatusLineItemTransformers(
         lineItemConfigs,
-        {
-          leveringsVorm: 'BLA',
+        createAanvraag({
+          leveringsVorm: 'PGB',
           productsoortCode: 'ALB',
           productIdentificatie: 'BAR',
           betrokkenen: ['B'],
-        } as ZorgnedAanvraagTransformed,
+        }),
         []
       );
 
@@ -106,12 +141,12 @@ describe('zorgned-status-line-items', () => {
     test('Get transformers: filter match based on Betrokkenen', () => {
       const lineItemTransformers = forTesting.getStatusLineItemTransformers(
         lineItemConfigs,
-        {
+        createAanvraag({
           betrokkenen: ['B'],
           leveringsVorm: '',
           productsoortCode: '',
           productIdentificatie: 'BAR',
-        } as ZorgnedAanvraagTransformed,
+        }),
         []
       );
 
@@ -119,12 +154,12 @@ describe('zorgned-status-line-items', () => {
 
       const lineItemTransformers2 = forTesting.getStatusLineItemTransformers(
         lineItemConfigs,
-        {
+        createAanvraag({
           betrokkenen: ['A'],
           leveringsVorm: '',
           productsoortCode: '',
           productIdentificatie: 'BAR',
-        } as ZorgnedAanvraagTransformed,
+        }),
         []
       );
 
@@ -134,10 +169,10 @@ describe('zorgned-status-line-items', () => {
     test('Get transformers: No match for leveringsvorm and productsoortCode', () => {
       const lineItemTransformers = forTesting.getStatusLineItemTransformers(
         lineItemConfigs,
-        {
-          leveringsVorm: 'BLA',
+        createAanvraag({
+          leveringsVorm: 'PGB',
           productsoortCode: 'ALB',
-        } as ZorgnedAanvraagTransformed,
+        }),
         []
       );
 
@@ -147,10 +182,10 @@ describe('zorgned-status-line-items', () => {
     test('Get transformers: Only match productSoortCode', () => {
       const lineItemTransformers = forTesting.getStatusLineItemTransformers(
         lineItemConfigs,
-        {
-          leveringsVorm: 'X',
+        createAanvraag({
+          leveringsVorm: '',
           productsoortCode: 'NUB',
-        } as ZorgnedAanvraagTransformed,
+        }),
         []
       );
 
@@ -160,11 +195,11 @@ describe('zorgned-status-line-items', () => {
     test('Get transformers: No match for productSoortCode or productIdentificatie', () => {
       const lineItemTransformers = forTesting.getStatusLineItemTransformers(
         lineItemConfigs,
-        {
-          leveringsVorm: 'FOO',
+        createAanvraag({
+          leveringsVorm: 'ZIN',
           productsoortCode: '',
           productIdentificatie: 'FOO',
-        } as ZorgnedAanvraagTransformed,
+        }),
         []
       );
 
@@ -174,15 +209,15 @@ describe('zorgned-status-line-items', () => {
 
   describe('getStatusLineItems', () => {
     function getAanvraagTransformed(
-      leveringsVorm: string = 'FOO',
-      productsoortCode: string = 'BAR',
+      leveringsVorm: LeveringsVormTransformed = 'ZIN',
+      productsoortCode: ProductSoortCode | null = 'BAR',
       productIdentificatie: string = 'WORLD',
       datumBesluit: string = '2024-07-26',
       titel = 'Productaanvraag',
       datumIngangGeldigheid = '2024-04-12',
       datumEindeGeldigheid = '2025-04-12'
     ) {
-      return {
+      return createAanvraag({
         leveringsVorm,
         productsoortCode,
         productIdentificatie,
@@ -190,11 +225,11 @@ describe('zorgned-status-line-items', () => {
         titel,
         datumEindeGeldigheid,
         datumIngangGeldigheid,
-      } as ZorgnedAanvraagTransformed;
+      });
     }
 
     describe('Line item transformers not found', () => {
-      const aanvraag = getAanvraagTransformed('NO', 'MATCH');
+      const aanvraag = getAanvraagTransformed('PGB', 'MATCH');
 
       const lineItems = getStatusLineItems(
         'WMO',
@@ -207,7 +242,7 @@ describe('zorgned-status-line-items', () => {
       test('Get line items', () => {
         expect(lineItems).toBe(null);
         expect(logSpy).toHaveBeenCalledWith(
-          `No line item formatters found for Service: WMO, resultaat: undefined, leveringsVorm: NO, productsoortCode: MATCH, productIdentificatie: WORLD`
+          `No line item formatters found for Service: WMO, resultaat: null, leveringsVorm: PGB, productsoortCode: MATCH, productIdentificatie: WORLD`
         );
       });
     });
@@ -230,6 +265,33 @@ describe('zorgned-status-line-items', () => {
 
       test('Get line items length', () => {
         expect(lineItems?.length).toBe(2);
+      });
+
+      test('Resolves a dynamic status', () => {
+        const lineItemsWithDynamicStatus = getStatusLineItems(
+          'WMO',
+          [
+            {
+              ...lineItemsConfig1,
+              statusLineItems: {
+                transformers: [
+                  {
+                    ...transformerConfig,
+                    status: (currentAanvraag) =>
+                      `Ontvangen op ${currentAanvraag.datumAanvraag}`,
+                  },
+                ],
+              },
+            },
+          ],
+          aanvraag,
+          [],
+          new Date()
+        );
+
+        expect(lineItemsWithDynamicStatus?.[0].status).toBe(
+          'Ontvangen op 2024-01-01'
+        );
       });
 
       const transformerMethods: Array<
