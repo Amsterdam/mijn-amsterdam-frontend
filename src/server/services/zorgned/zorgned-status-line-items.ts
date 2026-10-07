@@ -126,7 +126,7 @@ function buildStatusLineItem<T extends ZorgnedAanvraagTransformed>(
     ),
     datePublished,
     ...(typeof statusItem.hideDateInProgressList !== 'undefined' && {
-      hideDateInProgressList: statusItem.hideDateInProgressList,
+      hideDatePublished: statusItem.hideDateInProgressList,
     }),
     isActive:
       typeof statusItem.isActive === 'function'

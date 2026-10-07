@@ -104,7 +104,7 @@ function Step({
           </Heading>
         </>
       )}
-      {!item.hideDateInProgressList && (
+      {!item.hideDatePublished && (
         <time className={styles.StepStatusDate} dateTime={item.datePublished}>
           {defaultDateFormat(item.datePublished)}
         </time>

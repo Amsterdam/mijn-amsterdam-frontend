@@ -106,7 +106,7 @@ describe('Steps', () => {
   it('hides the date when requested', () => {
     const step = createStep({
       id: 'step-with-hidden-date',
-      hideDateInProgressList: true,
+      hideDatePublished: true,
     });
 
     render(<Steps steps={[step]} />);

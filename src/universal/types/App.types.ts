@@ -121,7 +121,7 @@ export interface StatusLineItem<
   isActive: boolean;
   isChecked: boolean;
   isVisible?: boolean;
-  hideDateInProgressList?: boolean;
+  hideDatePublished?: boolean;
   altDocumentContent?: AltDocumentContent;
   actionButtonItems?: LinkProps[];
   substeps?: StatusLineItem<Substatus>[];
