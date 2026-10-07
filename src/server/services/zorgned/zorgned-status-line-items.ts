@@ -26,19 +26,17 @@ export function isStatusLineItemTransformerMatch<
   const hasProductSoortCodeMatch =
     typeof config.productsoortCodes !== 'undefined'
       ? config.productsoortCodes.includes(
-          aanvraagTransformed.productsoortCode
-            ? aanvraagTransformed.productsoortCode
-            : ''
-        )
+        aanvraagTransformed.productsoortCode ?? ''
+      )
       : PASS_MATCH_DEFAULT;
 
   const hasProductIdentificatieMatch =
     typeof config.productIdentificatie === 'undefined'
       ? PASS_MATCH_DEFAULT
       : typeof aanvraagTransformed.productIdentificatie !== 'undefined' &&
-        config.productIdentificatie.includes(
-          aanvraagTransformed.productIdentificatie
-        );
+      config.productIdentificatie.includes(
+        aanvraagTransformed.productIdentificatie
+      );
 
   const isFilterMatch =
     typeof config.filter !== 'undefined'
@@ -94,10 +92,10 @@ function buildStatusLineItem<T extends ZorgnedAanvraagTransformed>(
   const isVisible =
     typeof statusItem.isVisible === 'function'
       ? statusItem.isVisible(
-          aanvraagTransformed,
-          today,
-          allAanvragenTransformed
-        )
+        aanvraagTransformed,
+        today,
+        allAanvragenTransformed
+      )
       : (statusItem.isVisible ?? true);
 
   const substeps = statusItem.substeps
@@ -133,18 +131,18 @@ function buildStatusLineItem<T extends ZorgnedAanvraagTransformed>(
     isActive:
       typeof statusItem.isActive === 'function'
         ? statusItem.isActive(
-            aanvraagTransformed,
-            today,
-            allAanvragenTransformed
-          )
+          aanvraagTransformed,
+          today,
+          allAanvragenTransformed
+        )
         : statusItem.isActive,
     isChecked:
       typeof statusItem.isChecked === 'function'
         ? statusItem.isChecked(
-            aanvraagTransformed,
-            today,
-            allAanvragenTransformed
-          )
+          aanvraagTransformed,
+          today,
+          allAanvragenTransformed
+        )
         : statusItem.isChecked,
     isVisible,
     documents: [], // NOTE: Assigned in specific service transformers.
