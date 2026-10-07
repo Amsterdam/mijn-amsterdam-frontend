@@ -55,7 +55,7 @@ const ONTVANGEN = {
   status: 'Ontvangen',
   datePublished: (aanvraag: ZorgnedAanvraagTransformed) =>
     aanvraag.datumAanvraag,
-  hideDateInProgressList: true,
+  hideDatePublished: true,
   description: (aanvraag: ZorgnedAanvraagTransformed) =>
     '<p>Ontvangen op ' + defaultDateFormat(aanvraag.datumAanvraag) + '</p>',
 };
@@ -63,9 +63,10 @@ const ONTVANGEN = {
 const BEHANDELING_INDICATIEADVISEUR = {
   ...IN_BEHANDELING,
   status: 'Behandeling bij indicatieadviseur',
+  // This date changes when the melding is finished, we don't want to use this within notifications.
   datePublished: getInBehandelingBijGemeenteDate,
   // We hide the date within the Progress List as the date will change when the action is finished. Which is confusing for the user if we would show it.
-  hideDateInProgressList: true,
+  hideDatePublished: true,
   description: () =>
     '<p>Uw melding wordt behandeld door een indicatieadviseur.</p>',
   isActive: (aanvraag: ZorgnedAanvraagTransformed) =>

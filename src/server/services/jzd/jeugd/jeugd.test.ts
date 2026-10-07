@@ -270,7 +270,7 @@ describe('fetchLeerlingenvervoer', () => {
 
     expect(behandeling).toMatchObject({
       status: 'Behandeling bij indicatieadviseur',
-      hideDateInProgressList: true,
+      hideDatePublished: true,
       isActive: true,
       substeps: [
         {
