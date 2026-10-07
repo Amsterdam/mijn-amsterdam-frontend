@@ -199,22 +199,6 @@ export async function fetchStadspasSource(
   return requestData<StadspasDetailSource>(dataRequestConfig);
 }
 
-function releaseStadspasCaches(
-  passNumber: number,
-  administratienummer: string
-): void {
-  const cacheKey = getApiConfigBasedCacheKey(
-    'GPASS',
-    createStadspasSourceCacheKey(passNumber, administratienummer)
-  );
-
-  if (!cacheKey) {
-    return;
-  }
-
-  deleteCacheEntry(cacheKey);
-}
-
 export function createStadspasSourceCacheKey(
   passNumber: number,
   administratienummer: string
@@ -584,7 +568,14 @@ export async function mutateGpassSetPasIsBlockedState(
   const response = await requestData<PasBlockedResponse>(config);
 
   if (response.status === 'OK') {
-    releaseStadspasCaches(passNumber, administratienummer);
+    const cacheKey = getApiConfigBasedCacheKey(
+      'GPASS',
+      createStadspasSourceCacheKey(passNumber, administratienummer)
+    );
+
+    if (cacheKey) {
+      deleteCacheEntry(cacheKey);
+    }
   }
 
   return response;
