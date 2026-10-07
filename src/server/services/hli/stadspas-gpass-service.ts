@@ -33,7 +33,6 @@ import {
 } from '../../../universal/helpers/api.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import { displayAmount } from '../../../universal/helpers/text.ts';
-import { hash } from '../../../universal/helpers/utils.ts';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
 import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
@@ -201,10 +200,6 @@ function getGpassCacheKey(cacheKey: string): string {
   return `GPASS-${cacheKey}`;
 }
 
-function createStadspasHouderCacheKey(administratienummer: string): string {
-  return `stadspas-houder-${hash(administratienummer)}`;
-}
-
 function releaseStadspasCaches(
   passNumber: number,
   administratienummer: string
@@ -213,9 +208,6 @@ function releaseStadspasCaches(
     getGpassCacheKey(
       createStadspasSourceCacheKey(passNumber, administratienummer)
     )
-  );
-  deleteCacheEntry(
-    getGpassCacheKey(createStadspasHouderCacheKey(administratienummer))
   );
 }
 
@@ -242,7 +234,6 @@ export async function fetchStadspassenByAdministratienummer(
     params: {
       addsubs: true,
     },
-    cacheKey_UNSAFE: createStadspasHouderCacheKey(administratienummer),
   });
 
   const stadspasHouderResponse =
@@ -573,7 +564,6 @@ export async function mutateGpassSetPasIsBlockedState(
 
   // No need to toggle if the pass is already in the desired state.
   if (pasIsBlockedResponse.content.isBlocked === isBlocked) {
-    releaseStadspasCaches(passNumber, administratienummer);
     return pasIsBlockedResponse;
   }
 
