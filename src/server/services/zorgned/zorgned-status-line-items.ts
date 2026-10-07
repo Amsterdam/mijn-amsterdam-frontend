@@ -9,8 +9,6 @@ import { logger } from '../../logging.ts';
 
 // If a config property for the leveringsVorm, productSoortCodes or productIdentificatie is not found,
 // we set the match to true so the check doesn't influence the selection criteria and returns items by default.
-const PASS_MATCH_DEFAULT = true;
-
 export function isStatusLineItemTransformerMatch<
   T extends ZorgnedAanvraagTransformed,
 >(
@@ -19,34 +17,29 @@ export function isStatusLineItemTransformerMatch<
   config: ZorgnedStatusLineItemsConfig<T>
 ): boolean {
   const hasLeveringsVormMatch =
-    typeof config.leveringsVorm !== 'undefined'
-      ? aanvraagTransformed.leveringsVorm === config.leveringsVorm
-      : PASS_MATCH_DEFAULT;
+    typeof config.leveringsVorm === 'undefined' ||
+    aanvraagTransformed.leveringsVorm === config.leveringsVorm;
 
   const hasProductSoortCodeMatch =
-    typeof config.productsoortCodes !== 'undefined'
-      ? config.productsoortCodes.includes(
-        aanvraagTransformed.productsoortCode ?? ''
-      )
-      : PASS_MATCH_DEFAULT;
+    typeof config.productsoortCodes === 'undefined' ||
+    config.productsoortCodes.includes(
+      aanvraagTransformed.productsoortCode ?? ''
+    );
 
   const hasProductIdentificatieMatch =
-    typeof config.productIdentificatie === 'undefined'
-      ? PASS_MATCH_DEFAULT
-      : typeof aanvraagTransformed.productIdentificatie !== 'undefined' &&
-      config.productIdentificatie.includes(
-        aanvraagTransformed.productIdentificatie
-      );
+    typeof config.productIdentificatie === 'undefined' ||
+    typeof aanvraagTransformed.productIdentificatie === 'undefined' ||
+    config.productIdentificatie.includes(
+      aanvraagTransformed.productIdentificatie
+    );
 
   const isFilterMatch =
-    typeof config.filter !== 'undefined'
-      ? config.filter(aanvraagTransformed, allAanvragenTransformed)
-      : PASS_MATCH_DEFAULT;
+    typeof config.filter === 'undefined' ||
+    config.filter(aanvraagTransformed, allAanvragenTransformed);
 
   const hasResultaatMatch =
-    typeof config.resultaat !== 'undefined'
-      ? aanvraagTransformed.resultaat === config.resultaat
-      : PASS_MATCH_DEFAULT;
+    typeof config.resultaat === 'undefined' ||
+    aanvraagTransformed.resultaat === config.resultaat;
 
   return (
     isFilterMatch &&
