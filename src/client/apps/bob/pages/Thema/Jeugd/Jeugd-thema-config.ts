@@ -78,17 +78,17 @@ const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
 };
 
 const displayPropsInBehandeling: DisplayProps<LeerlingenvervoerVoorzieningFrontend> =
-  {
-    props: {
-      detailLinkComponent: 'Ontvangen op',
-      displayStatus: 'Status',
-      statusDateFormatted: 'Laatst bijgewerkt op',
-    },
-    colWidths: {
-      large: ['50%', '25%', '25%'],
-      small: ['100%', '0', '0'],
-    },
-  };
+{
+  props: {
+    detailLinkComponent: 'Ontvangen op',
+    displayStatus: 'Status',
+    statusDateFormatted: 'Laatst bijgewerkt op',
+  },
+  colWidths: {
+    large: ['50%', '25%', '25%'],
+    small: ['100%', '0', '0'],
+  },
+};
 
 export const listPageParamKind = {
   pending: 'voorziening-in-behandeling',
@@ -110,24 +110,24 @@ const hasPendingTable = isEnabled('JZD.llvInBehandeling');
 export const tableConfig = {
   ...(hasPendingTable
     ? {
-        [listPageParamKind.pending]: {
-          title: listPageTitle[listPageParamKind.pending],
-          filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
-            !regeling.decision,
-          displayProps: displayPropsInBehandeling,
-          listPageRoute: generatePath(themaConfig.listPage.route.path, {
-            kind: listPageParamKind.actual,
-            page: null,
-          }),
-          maxItems: 5,
-          textNoContent: 'U heeft geen voorzieningen in behandeling.',
-        },
-      }
+      [listPageParamKind.pending]: {
+        title: listPageTitle[listPageParamKind.pending],
+        filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
+          !regeling.decision,
+        displayProps: displayPropsInBehandeling,
+        listPageRoute: generatePath(themaConfig.listPage.route.path, {
+          kind: listPageParamKind.actual,
+          page: null,
+        }),
+        maxItems: 5,
+        textNoContent: 'U heeft geen voorzieningen in behandeling.',
+      },
+    }
     : {}),
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
     filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
-      regeling.isActual && regeling.decision,
+      regeling.isActual && !!regeling.decision,
     displayProps,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.actual,
