@@ -109,7 +109,7 @@ export function getMainStepDescription(
       return 'Zodra uw aanvraag is afgerond, ontvangt u van ons een bericht.';
     case statusFixed === ZAAK_STATUS_FRONTEND.IN_BEHANDELING &&
       !substeps?.length:
-      return 'Wij beoordelen uw aanvraag eerst. Zodra wij hier mee klaar zijn nemen we uw zaak in behandeling.';
+      return 'Wij beoordelen uw aanvraag eerst. Zodra wij hiermee klaar zijn nemen we uw zaak in behandeling.';
     default:
       return '';
   }
