@@ -36,7 +36,10 @@ import { displayAmount } from '../../../universal/helpers/text.ts';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
 import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
-import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import {
+  getApiConfig,
+  getApiConfigBasedCacheKey,
+} from '../../helpers/source-api-helpers.ts';
 import {
   deleteCacheEntry,
   isSuccessStatus,
@@ -196,19 +199,20 @@ export async function fetchStadspasSource(
   return requestData<StadspasDetailSource>(dataRequestConfig);
 }
 
-function getGpassCacheKey(cacheKey: string): string {
-  return `GPASS-${cacheKey}`;
-}
-
 function releaseStadspasCaches(
   passNumber: number,
   administratienummer: string
 ): void {
-  deleteCacheEntry(
-    getGpassCacheKey(
-      createStadspasSourceCacheKey(passNumber, administratienummer)
-    )
+  const cacheKey = getApiConfigBasedCacheKey(
+    'GPASS',
+    createStadspasSourceCacheKey(passNumber, administratienummer)
   );
+
+  if (!cacheKey) {
+    return;
+  }
+
+  deleteCacheEntry(cacheKey);
 }
 
 export function createStadspasSourceCacheKey(
