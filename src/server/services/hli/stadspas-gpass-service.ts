@@ -546,12 +546,11 @@ export async function mutateGpassSetPasIsBlockedState(
     administratienummer
   );
 
-  if (pasIsBlockedResponse.status !== 'OK') {
-    return pasIsBlockedResponse;
-  }
-
-  // No need to toggle if the pass is already in the desired state.
-  if (pasIsBlockedResponse.content.isBlocked === isBlocked) {
+  if (
+    pasIsBlockedResponse.status !== 'OK' ||
+    // No need to toggle if the pass is already in the desired state.
+    pasIsBlockedResponse.content.isBlocked === isBlocked
+  ) {
     return pasIsBlockedResponse;
   }
 
