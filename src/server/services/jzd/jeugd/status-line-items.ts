@@ -24,6 +24,7 @@ function getInBehandelingBijGemeenteDate(aanvraag: ZorgnedAanvraagTransformed) {
       (actie) => actie.omschrijving === ACTIE_IN_BEHANDELING_BIJ_GEMEENTE
     )
     .map((actie) => actie.datum)
+    .filter((datum): datum is string => datum !== undefined)
     .toSorted()
     .at(-1);
 
