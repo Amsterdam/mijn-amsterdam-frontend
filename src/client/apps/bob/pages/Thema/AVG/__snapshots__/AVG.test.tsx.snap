@@ -197,7 +197,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are no req
           <h2
             class="ams-heading ams-heading--2"
           >
-            Lopende aanvragen
+            Lopende verzoeken
           </h2>
           <div
             class="ams-table"
@@ -215,7 +215,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are no req
           <p
             class="ams-paragraph"
           >
-            U heeft (nog) geen lopende aanvragen
+            U heeft (nog) geen lopende verzoeken
           </p>
         </div>
         <div
@@ -224,7 +224,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are no req
           <h2
             class="ams-heading ams-heading--2"
           >
-            Afgehandelde aanvragen
+            Afgehandelde verzoeken
           </h2>
           <div
             class="ams-table"
@@ -242,7 +242,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are no req
           <p
             class="ams-paragraph"
           >
-            U heeft (nog) geen afgehandelde aanvragen
+            U heeft (nog) geen afgehandelde verzoeken
           </p>
         </div>
       </div>
@@ -325,7 +325,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
           <h2
             class="ams-heading ams-heading--2"
           >
-            Lopende aanvragen
+            Lopende verzoeken
           </h2>
           <div
             class="ams-table"
@@ -351,13 +351,13 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
                     class="ams-table__header-cell"
                     style="width: 35%;"
                   >
-                    Ontvangen op
+                    Type verzoek
                   </th>
                   <th
                     class="ams-table__header-cell"
                     style="width: 50%;"
                   >
-                    Onderwerp(en)
+                    Ontvangen op
                   </th>
                 </tr>
               </thead>
@@ -381,12 +381,12 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
                   <td
                     class="ams-table__cell"
                   >
-                    06 maart 2023
+                    Inzage
                   </td>
                   <td
                     class="ams-table__cell"
                   >
-                    Parkeren, Foo, Bar
+                    06 maart 2023
                   </td>
                 </tr>
               </tbody>
@@ -399,7 +399,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
           <h2
             class="ams-heading ams-heading--2"
           >
-            Afgehandelde aanvragen
+            Afgehandelde verzoeken
           </h2>
           <div
             class="ams-table"
@@ -425,13 +425,13 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
                     class="ams-table__header-cell"
                     style="width: 35%;"
                   >
-                    Ontvangen op
+                    Type verzoek
                   </th>
                   <th
                     class="ams-table__header-cell"
                     style="width: 50%;"
                   >
-                    Onderwerp(en)
+                    Resultaat
                   </th>
                 </tr>
               </thead>
@@ -455,13 +455,11 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
                   <td
                     class="ams-table__cell"
                   >
-                    09 maart 2022
+                    Verwijderen gegevens
                   </td>
                   <td
                     class="ams-table__cell"
-                  >
-                    Vergunningen, Enzo
-                  </td>
+                  />
                 </tr>
               </tbody>
             </table>

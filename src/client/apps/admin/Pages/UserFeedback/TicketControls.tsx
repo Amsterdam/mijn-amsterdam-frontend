@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import {
   ActionGroup,
@@ -126,7 +126,7 @@ export function TicketControls({
   const hasErrorHandingOff = ticketApi.handoffDepartmentApi.isError;
 
   return (
-    <div>
+    <Fragment>
       <ActionGroup
         className={classnames(styles.TicketControlButtons, 'ams-mb-l')}
       >
