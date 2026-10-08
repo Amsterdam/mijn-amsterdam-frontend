@@ -240,4 +240,53 @@ describe('<Dashboard />', () => {
       }
     );
   });
+
+  describe('Tips', () => {
+    it('Displays tips when there are tips', () => {
+      const state = {
+        NOTIFICATIONS: {
+          status: 'OK',
+          content: [
+            {
+              id: 'Tip1',
+              themaID: themaId,
+              themaTitle: 'Alle tips',
+              datePublished: '2026-01-01',
+              title: 'Tip: Op stap met uw Stadspas',
+              description: 'Haalt u alles uit uw Stadspas?',
+              isTip: true,
+              link: {
+                to: '/tip-1',
+                title: 'Bekijk tip',
+              },
+            },
+          ],
+        },
+      } as unknown as AppState;
+      const Component = createDashboardComponent(state);
+      render(<Component />);
+
+      expect(
+        screen.getByRole('heading', { name: 'Tip: Op stap met uw Stadspas' })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('link', { name: 'Toon alle tips' })
+      ).toBeInTheDocument();
+    });
+
+    it('Does not display all tips links when there are no tips', () => {
+      const state = {
+        NOTIFICATIONS: {
+          status: 'OK',
+          content: [],
+        },
+      } as unknown as AppState;
+      const Component = createDashboardComponent(state);
+      render(<Component />);
+
+      expect(
+        screen.queryByRole('link', { name: 'Toon alle tips' })
+      ).not.toBeInTheDocument();
+    });
+  });
 });

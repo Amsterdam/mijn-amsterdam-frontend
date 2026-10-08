@@ -2,6 +2,8 @@ import type {
   SurveyFrontend,
   SurveyOverviewFrontend,
 } from '../../../../../server/services/user-feedback/user-feedback.types.ts';
+import { UnorderedList } from '@amsterdam/design-system-react';
+
 import { defaultDateTimeFormat } from '../../../../../universal/helpers/date.ts';
 import type { Row } from '../../../../components/Datalist/Datalist.tsx';
 
@@ -53,13 +55,13 @@ export function getMoreInfoRows(
       label: 'Errors',
       content:
         entry.maErrors.length > 0 ? (
-          <ul>
+          <UnorderedList>
             {entry.maErrors.map((error, index) => (
-              <li key={`${entry.id}-${error.name}-${index}`}>
+              <UnorderedList.Item key={`${entry.id}-${error.name}-${index}`}>
                 {error.name} - {error.error}
-              </li>
+              </UnorderedList.Item>
             ))}
-          </ul>
+          </UnorderedList>
         ) : (
           '-'
         ),
@@ -68,11 +70,13 @@ export function getMoreInfoRows(
       label: "Thema's",
       content:
         entry.maThemas.length > 0 ? (
-          <ul>
+          <UnorderedList>
             {entry.maThemas.map((thema, index) => (
-              <li key={`${entry.id}-${thema}-${index}`}>{thema}</li>
+              <UnorderedList.Item key={`${entry.id}-${thema}-${index}`}>
+                {thema}
+              </UnorderedList.Item>
             ))}
-          </ul>
+          </UnorderedList>
         ) : (
           '-'
         ),
