@@ -108,7 +108,7 @@ function transformVoorzieningForFrontend(
     ),
     steps,
     // NOTE: Keep! This field is added specifically for the Tips api.
-    itemTypeCode: aanvraag.productsoortCode,
+    itemTypeCode: aanvraag.productsoortCode ?? '',
     decision:
       hasDecision(aanvraag) && aanvraag.resultaat
         ? capitalizeFirstLetter(aanvraag.resultaat)
