@@ -7,6 +7,7 @@ import {
   Paragraph,
   TextInput,
   Link,
+  ActionGroup,
 } from '@amsterdam/design-system-react';
 
 import { themaConfig } from './Account-thema-config.ts';
@@ -83,7 +84,7 @@ export function Account() {
           </Paragraph>
         </Field>
 
-        <div className={styles.AccountActions}>
+        <ActionGroup>
           <Button type="submit" disabled={isLoading}>
             Opslaan
           </Button>
@@ -96,7 +97,7 @@ export function Account() {
           >
             Verwijder token
           </Button>
-        </div>
+        </ActionGroup>
       </form>
 
       {/* {saveState === 'SUCCESS' && (
