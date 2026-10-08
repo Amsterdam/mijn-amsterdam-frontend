@@ -319,6 +319,8 @@ describe('useEmandateApis', () => {
     dateValidTo: '2025-12-31',
     dateValidToFormatted: '31-12-2025',
     eMandateIdSource: null,
+    businessPartnerId: '',
+    history: [],
   };
 
   beforeEach(() => {

@@ -19,6 +19,7 @@ import {
 } from '../auth/auth-helpers.ts';
 import type { AuthenticatedRequest } from '../auth/auth-types.ts';
 import { getFromEnv } from '../helpers/env.ts';
+import { IS_DB_ENABLED } from '../services/db/config.ts';
 import { captureException } from '../services/monitoring.ts';
 
 export async function handleIsAuthenticated(
@@ -180,4 +181,15 @@ export function requestID(_req: Request, res: Response, next: NextFunction) {
   const REQUEST_ID_BYTE_LENGTH = 18;
   res.locals.requestID = uid.sync(REQUEST_ID_BYTE_LENGTH);
   next();
+}
+
+export function checkIfDbEnabled(
+  _req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  if (!IS_DB_ENABLED) {
+    return sendServiceUnavailable(res, 'Database is disabled');
+  }
+  return next();
 }
