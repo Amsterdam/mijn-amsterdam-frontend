@@ -65,6 +65,25 @@ function isEindeRechtReached(aanvraag: ZorgnedRTMAanvraag): boolean {
   );
 }
 
+function getDecision(
+  aanvragen: ZorgnedRTMAanvraag[],
+  hasToegewezenRTM2: boolean
+): 'toegewezen' | 'afgewezen' | null {
+  if (hasToegewezenRTM2) {
+    return 'toegewezen';
+  }
+
+  if (aanvragen.some((aanvraag) => aanvraag.resultaat === 'afgewezen')) {
+    return 'afgewezen';
+  }
+
+  if (aanvragen.every((aanvraag) => aanvraag.resultaat === 'toegewezen')) {
+    return 'toegewezen';
+  }
+
+  return null;
+}
+
 function maybeWithAdditionalInfoForBetrokkenen(
   aanvraag: ZorgnedRTMAanvraag,
   descriptionStart: string
@@ -506,7 +525,9 @@ function transformRTMRegelingenFrontend(
       steps.findLast((step) => step.isActive)?.status ?? 'Onbekend';
 
     if (displayStatus === 'Besluit' && !hasToegewezenRTM2) {
-      displayStatus = capitalizeFirstLetter(mostRecentAanvraag.resultaat);
+      displayStatus = mostRecentAanvraag.resultaat
+        ? capitalizeFirstLetter(mostRecentAanvraag.resultaat)
+        : 'Onbekend';
     }
 
     const RTMRegeling: HLIRegelingFrontend = {
@@ -519,11 +540,7 @@ function transformRTMRegelingenFrontend(
       documents: [],
       isActual,
       // Decision cannot be reliably determined because there might be both toegewezen and afgewezen aanvragen for different betrokkenen.
-      decision:
-        aanvragen.every((a) => a.resultaat === 'toegewezen') ||
-        hasToegewezenRTM2
-          ? 'toegewezen'
-          : 'afgewezen',
+      decision: getDecision(aanvragen, hasToegewezenRTM2),
       betrokkenen,
       title,
       link: {
@@ -572,25 +589,32 @@ function removeSpecificatieDocuments(
 function collectProcesAanvragen(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ): ZorgnedRTMAanvraag[] {
-  const seenAanvragen = new Map<string, ZorgnedRTMAanvraag>();
+  const collectedAanvragen: ZorgnedRTMAanvraag[] = [];
 
   for (const aanvraag of aanvragen) {
     const id = aanvraag.beschiktProductIdentificatie;
-    if (seenAanvragen.has(id)) {
-      const existingAanvraag = seenAanvragen.get(id)!;
-      seenAanvragen.set(id, {
+    const existingIndex =
+      id === null
+        ? -1
+        : collectedAanvragen.findIndex(
+            (collected) => collected.beschiktProductIdentificatie === id
+          );
+
+    if (existingIndex === -1) {
+      collectedAanvragen.push(aanvraag);
+    } else {
+      const existingAanvraag = collectedAanvragen[existingIndex];
+      collectedAanvragen[existingIndex] = {
         ...existingAanvraag,
         procesAanvragen: [
           ...(existingAanvraag.procesAanvragen ?? []),
           aanvraag,
         ],
-      });
-    } else {
-      seenAanvragen.set(id, aanvraag);
+      };
     }
   }
 
-  return Array.from(seenAanvragen.values());
+  return collectedAanvragen;
 }
 
 // The RTM2 aanvraag is only present for the logged-in user so we know for sure they are a betrokkene.

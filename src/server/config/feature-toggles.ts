@@ -19,6 +19,7 @@ export const featureToggle = {
   ['MELDINGEN.newTipsDesign']: !IS_PRODUCTION,
   ['HLI.stadspas.securityCode']: true,
   ['HLI.stadspas.pcBudgetNormalization']: !IS_PRODUCTION,
+  ['JZD.llvInBehandeling']: !IS_PRODUCTION,
   ['WMO.fetchWmo.addMaVoorzieningenApiProps']: !IS_PRODUCTION,
   ['ERFPACHT.service']: !IS_PRODUCTION,
   ['ERFPACHT.wijzigingsaanvragen']: !IS_PRODUCTION,
