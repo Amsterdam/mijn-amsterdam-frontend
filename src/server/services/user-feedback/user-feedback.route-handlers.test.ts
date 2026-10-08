@@ -92,7 +92,17 @@ describe('User Feedback Route Handlers', () => {
           },
         ],
         currentPage: 1,
-        entries: [{ answers: { '3': '5' } }, { answers: { '3': '3' } }],
+        survey: {
+          questionTypes: {
+            '1': 'email',
+            '2': 'textarea',
+            '3': 'numeric',
+          },
+        },
+        entries: [
+          { answers: { '1': 'user@example.com', '3': '5' } },
+          { answers: { '1': 'other@example.com', '3': '3' } },
+        ],
       },
     };
     userFeedbackOverview.mockResolvedValue(mockOverview);
@@ -106,11 +116,13 @@ describe('User Feedback Route Handlers', () => {
         entries: [
           {
             answers: {
+              '1': 'user@example.com',
               '3': '5',
             },
           },
           {
             answers: {
+              '1': 'other@example.com',
               '3': '3',
             },
           },
@@ -121,6 +133,13 @@ describe('User Feedback Route Handlers', () => {
             url: '?page=1',
           },
         ],
+        survey: {
+          questionTypes: {
+            '1': 'email',
+            '2': 'textarea',
+            '3': 'numeric',
+          },
+        },
         score: '4.00',
       },
       status: 'OK',

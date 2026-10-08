@@ -109,19 +109,26 @@ export async function handleShowSurveyOverview(
   }
 
   const entries = feedbackOverview.content?.entries || [];
+  const scoreQuestionId = Object.entries(
+    feedbackOverview.content?.survey.questionTypes ?? {}
+  ).find(([, questionType]) =>
+    ['numeric', 'number'].includes(questionType)
+  )?.[0];
 
-  const score = (
-    entries.reduce((acc, entry) => {
-      if (!entry) {
-        return acc;
-      }
-      const rating = Object.values(entry.answers)[0] || '0';
-      if (isNaN(parseInt(rating, 10))) {
-        return acc;
-      }
-      return acc + parseInt(rating, 10);
-    }, 0) / (entries.length || 1)
-  ).toFixed(2);
+  const { total, count } = entries.reduce(
+    (acc, entry) => {
+      const rating = Number.parseInt(
+        scoreQuestionId ? entry.answers[scoreQuestionId] || '' : '',
+        10
+      );
+
+      return Number.isNaN(rating)
+        ? acc
+        : { total: acc.total + rating, count: acc.count + 1 };
+    },
+    { total: 0, count: 0 }
+  );
+  const score = (total / (count || 1)).toFixed(2);
 
   const pageLinks = range(1, feedbackOverview.content?.pageCount || 1).map(
     (page) => ({

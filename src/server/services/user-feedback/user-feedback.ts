@@ -232,12 +232,18 @@ export async function userFeedbackOverview(
       return [question.id, question.questionText];
     })
   );
+  const questionTypesById = Object.fromEntries(
+    survey.questions.map((question) => {
+      return [question.id, question.questionType];
+    })
+  );
 
   return apiSuccessResult(
     {
       survey: {
         title: survey.title,
         questions: questionsById,
+        questionTypes: questionTypesById,
       },
       entries: entriesWithMeta.toSorted((a, b) =>
         b.dateCreated.localeCompare(a.dateCreated)
