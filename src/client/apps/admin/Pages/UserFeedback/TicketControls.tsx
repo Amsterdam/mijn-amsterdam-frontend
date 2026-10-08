@@ -127,20 +127,17 @@ export function TicketControls({
 
   return (
     <Fragment>
-      <ActionGroup className="ams-mb-l">
-        {entry.administrationMeta?.jiraTicketNumber ? (
-          <>
-            <Button
-              title="Verwijder ticketreferentie. Ticket wordt -=NIET=- verwijderd in Jira."
-              variant="secondary"
-              onClick={handleDeleteTicket}
-              disabled={isDeleting}
-              icon={<CloseIcon />}
-            >
-              {entry.administrationMeta.jiraTicketNumber}
-            </Button>
-          </>
-        ) : (
+      <ActionGroup
+        className={classnames(styles.TicketControlButtons, 'ams-mb-l')}
+      >
+        <Button
+          icon={<PlusIcon />}
+          onClick={handleCreateTicket}
+          disabled={isCreating || !!entry.administrationMeta?.jiraTicketNumber}
+        >
+          Maak ticket
+        </Button>
+        {!!entry.administrationMeta?.jiraTicketNumber && (
           <Button
             title="Verwijder ticketreferentie. Ticket wordt -=NIET=- verwijderd in Jira."
             variant="primary"
@@ -151,7 +148,6 @@ export function TicketControls({
             Loskoppelen {entry.administrationMeta.jiraTicketNumber}
           </Button>
         )}
-
         {hasHandoffDestination ? (
           <Button
             variant="secondary"
