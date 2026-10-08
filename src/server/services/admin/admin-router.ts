@@ -58,17 +58,26 @@ maAdminAuthRouterPublic.get(routes.public.auth.CHECK, authCheckHandler);
 const maAdminRouterProtected = createBFFRouter({
   id: 'ma-admin-router-protected',
 });
-maAdminRouterProtected.use(checkIfDbEnabled);
 
 maAdminRouterProtected.get(
   routes.protected.visitors.STATS_TABLE,
+  checkIfDbEnabled,
   loginStatsTable
 );
-maAdminRouterProtected.get(routes.protected.visitors.STATS, loginStats);
+maAdminRouterProtected.get(
+  routes.protected.visitors.STATS,
+  checkIfDbEnabled,
+  loginStats
+);
 
-maAdminRouterProtected.get(routes.protected.ACCOUNT, getAccountDataHandler);
+maAdminRouterProtected.get(
+  routes.protected.ACCOUNT,
+  checkIfDbEnabled,
+  getAccountDataHandler
+);
 maAdminRouterProtected.put(
   routes.protected.ACCOUNT,
+  checkIfDbEnabled,
   express.json(),
   updateAccountDataHandler
 );

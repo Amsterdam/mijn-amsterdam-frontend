@@ -1,7 +1,12 @@
 import { useMemo } from 'react';
 import type { ReactNode } from 'react';
 
-import { Link, Pagination, Paragraph, UnorderedList } from '@amsterdam/design-system-react';
+import {
+  Link,
+  Pagination,
+  Paragraph,
+  UnorderedList,
+} from '@amsterdam/design-system-react';
 import { useLocation } from 'react-router';
 
 import { TicketControls } from './TicketControls.tsx';
@@ -66,7 +71,9 @@ function UserFeedbackTable({
     const { jiraTicketNumber, jiraTicketUrl, departmentName, departmentEmail } =
       getAdministrationMeta(entry);
     const score = scoreQuestion ? entry.answers[scoreQuestion] : undefined;
-    const comment = commentQuestion ? entry.answers[commentQuestion] : undefined;
+    const comment = commentQuestion
+      ? entry.answers[commentQuestion]
+      : undefined;
     const email = emailQuestion ? entry.answers[emailQuestion] : undefined;
 
     return {
@@ -93,9 +100,9 @@ function UserFeedbackTable({
       email: email || '-',
       errors:
         entry.maErrors.length > 0 ? (
-          <UnorderedList size='small'>
+          <UnorderedList id={styles.ErrorList} size="small">
             {entry.maErrors.map((error, index) => (
-              <UnorderedList.Item id={styles.ErrorListItem} key={`${entry.id}-${error.name}-${index}`}>
+              <UnorderedList.Item key={`${entry.id}-${error.name}-${index}`}>
                 {error.name}: {error.error}
               </UnorderedList.Item>
             ))}
@@ -156,28 +163,8 @@ function UserFeedbackTable({
         },
         enableMobileListView: true,
         colWidths: {
-          large: [
-            '5%',
-            '9%',
-            '6%',
-            '16%',
-            '14%',
-            '12%',
-            '12%',
-            '18%',
-            '8%',
-          ],
-          small: [
-            '5%',
-            '9%',
-            '6%',
-            '16%',
-            '14%',
-            '12%',
-            '20%',
-            '18%',
-            '8%',
-          ],
+          large: ['5%', '9%', '6%', '16%', '14%', '12%', '12%', '18%', '8%'],
+          small: ['5%', '9%', '6%', '16%', '14%', '12%', '20%', '18%', '8%'],
         },
       }}
     />

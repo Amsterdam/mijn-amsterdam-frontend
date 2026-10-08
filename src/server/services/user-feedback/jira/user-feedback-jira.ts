@@ -148,10 +148,6 @@ export async function createJiraTicketForFeedbackEntry(
 ): ApiResponsePromise<UserFeedbackAdministrationMeta> {
   const existingMeta = await getUserFeedbackMetaByEntryId(input.entryId);
 
-  if (existingMeta?.jiraTicketNumber) {
-    return apiSuccessResult(existingMeta);
-  }
-
   const accountData = await getAccountData(username);
 
   if (!accountData?.jiraApiToken) {
@@ -163,6 +159,20 @@ export async function createJiraTicketForFeedbackEntry(
   }
 
   const authHeader = getJiraAuthHeader(username, accountData.jiraApiToken);
+
+  if (existingMeta?.jiraTicketNumber) {
+    const addToSprintResponse = await addIssueToActiveSprint(
+      authHeader,
+      existingMeta.jiraTicketNumber
+    );
+
+    if (addToSprintResponse.status === 'ERROR') {
+      return addToSprintResponse;
+    }
+
+    return apiSuccessResult(existingMeta);
+  }
+
   const jiraAccountResponse = await fetchJiraAccountId(
     username,
     accountData.jiraApiToken
@@ -227,6 +237,14 @@ export async function createJiraTicketForFeedbackEntry(
   }
 
   const jiraTicketNumber = createIssueResponse.content.key;
+  const metaResponse = await upsertApiResponse(input.entryId, {
+    jiraTicketNumber,
+  });
+
+  if (metaResponse.status === 'ERROR') {
+    return metaResponse;
+  }
+
   const addToSprintResponse = await addIssueToActiveSprint(
     authHeader,
     jiraTicketNumber
@@ -236,9 +254,7 @@ export async function createJiraTicketForFeedbackEntry(
     return addToSprintResponse;
   }
 
-  return upsertApiResponse(input.entryId, {
-    jiraTicketNumber,
-  });
+  return metaResponse;
 }
 
 export async function upsertApiResponse(

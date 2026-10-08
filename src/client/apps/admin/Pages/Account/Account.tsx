@@ -6,7 +6,8 @@ import {
   Paragraph,
   TextInput,
   Link,
-  ActionGroup,
+  ErrorMessage,
+  Icon,
 } from '@amsterdam/design-system-react';
 import { CheckMarkIcon } from '@amsterdam/design-system-react-icons';
 import { useDebouncedCallback } from 'use-debounce';
@@ -92,21 +93,6 @@ export function Account() {
             </Link>
           </Paragraph>
         </Field>
-
-        <ActionGroup>
-          <Button type="submit" disabled={isLoading}>
-            Opslaan
-          </Button>
-          <Button
-            type="button"
-            variant="secondary"
-            className={styles.AccountDeleteButton}
-            disabled={isLoading}
-            onClick={handleDeleteToken}
-          >
-            Verwijder token
-          </Button>
-        </ActionGroup>
       </form>
     </PageContentCell>
   );

@@ -1,6 +1,9 @@
 import { UnorderedList } from '@amsterdam/design-system-react';
 
-import type { SurveyOverviewFrontend } from '../../../../../server/services/user-feedback/user-feedback.types.ts';
+import type {
+  SurveyFrontend,
+  SurveyOverviewFrontend,
+} from '../../../../../server/services/user-feedback/user-feedback.types.ts';
 import { defaultDateTimeFormat } from '../../../../../universal/helpers/date.ts';
 import type { Row } from '../../../../components/Datalist/Datalist.tsx';
 
@@ -24,10 +27,7 @@ export function calculateScore(
 
   const { total, count } = entries.reduce(
     (acc, entry) => {
-      const rating = Number.parseInt(
-        entry.answers[scoreQuestionId] || '',
-        10
-      );
+      const rating = Number.parseInt(entry.answers[scoreQuestionId] || '', 10);
 
       if (Number.isNaN(rating)) {
         return acc;

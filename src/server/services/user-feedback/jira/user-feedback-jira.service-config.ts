@@ -53,5 +53,6 @@ export const sourceApiConfigJiraAgile: DataRequestConfig = {
   postponeFetch: !featureToggle.service.ticketCreation.enabled,
 } as const;
 
-export const ALL_ISSUES_LINK =
-  'https://gemeente-amsterdam.atlassian.net/issues/?jql=labels%20%3D%20%22KTO-issues%22';
+export const ALL_ISSUES_LINK = `${JIRA_BASE_URL}/issues/?jql=${encodeURIComponent(
+  `labels = "${JIRA_LABEL_KTO_ISSUES_RAW.trim().replace(/\s+/g, '-')}"`
+)}`;

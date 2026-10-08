@@ -1,6 +1,6 @@
 import { themaConfig } from './Account-thema-config.ts';
 import { Account } from './Account.tsx';
-import type { ApplicationRouteConfig } from '../../../../../universal/types/App.types.ts';
+import type { ApplicationRouteConfig } from '../../../../../universal/types/thema-types.ts';
 
 export const AdminAccountRoutes = [
   {
