@@ -160,6 +160,10 @@ export type SurveyOverviewFrontend = FeedbackSurveyEntries & {
   survey: {
     title: SurveyFrontend['title'];
     questions: Record<SurveyQuestion['id'], SurveyQuestion['question_text']>;
+    questionTypes: Record<
+      SurveyQuestion['id'],
+      SurveyFrontend['questions'][number]['questionType']
+    >;
   };
 };
 

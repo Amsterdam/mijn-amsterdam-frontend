@@ -1,4 +1,7 @@
-import type { SurveyOverviewFrontend } from '../../../../../server/services/user-feedback/user-feedback.types.ts';
+import type {
+  SurveyFrontend,
+  SurveyOverviewFrontend,
+} from '../../../../../server/services/user-feedback/user-feedback.types.ts';
 import { defaultDateTimeFormat } from '../../../../../universal/helpers/date.ts';
 import type { Row } from '../../../../components/Datalist/Datalist.tsx';
 
@@ -14,17 +17,18 @@ export function getCurrentPage(search: string) {
 
 export function calculateScore(
   entries: SurveyOverviewFrontend['entries'],
-  questionIds: string[]
+  scoreQuestionId: string | undefined
 ) {
-  if (!entries.length || !questionIds.length) {
+  if (!entries.length || !scoreQuestionId) {
     return '0.00';
   }
 
-  const firstQuestionId = questionIds[0];
-
   const { total, count } = entries.reduce(
     (acc, entry) => {
-      const rating = Number.parseInt(entry.answers[firstQuestionId] || '', 10);
+      const rating = Number.parseInt(
+        entry.answers[scoreQuestionId] || '',
+        10
+      );
 
       if (Number.isNaN(rating)) {
         return acc;
@@ -103,6 +107,15 @@ export function getQuestionEntries(
   return Object.entries(questions).sort(
     ([questionA], [questionB]) => Number(questionA) - Number(questionB)
   );
+}
+
+export function getQuestionIdByType(
+  questionTypes: SurveyOverviewFrontend['survey']['questionTypes'],
+  expectedTypes: SurveyFrontend['questions'][number]['questionType'][]
+): string | undefined {
+  return Object.entries(questionTypes).find(([, questionType]) =>
+    expectedTypes.includes(questionType)
+  )?.[0];
 }
 
 type BuildHandoffMailBodyProps = {

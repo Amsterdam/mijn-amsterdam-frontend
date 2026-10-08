@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import type { ReactNode } from 'react';
 
-import { Link, Pagination, Paragraph } from '@amsterdam/design-system-react';
+import { Link, Pagination, Paragraph, UnorderedList } from '@amsterdam/design-system-react';
 import { useLocation } from 'react-router';
 
 import { TicketControls } from './TicketControls.tsx';
@@ -10,7 +10,7 @@ import {
   calculateScore,
   getCurrentPage,
   getMoreInfoRows,
-  getQuestionEntries,
+  getQuestionIdByType,
   getScoreColor,
 } from './UserFeedback.helpers.tsx';
 import {
@@ -38,6 +38,7 @@ type UserFeedbackTableRow = {
   comment: ReactNode;
   url: ReactNode;
   email: ReactNode;
+  errors: ReactNode;
   registration: ReactNode;
   details: ReactNode;
 };
@@ -49,43 +50,59 @@ function UserFeedbackTable({
   overview: SurveyOverviewFrontend;
   handoffConfig: UserFeedbackHandoffConfigResponse;
 }) {
-  const questions = overview?.survey?.questions ?? {};
-  const questionEntries = getQuestionEntries(questions);
+  const questionTypes = overview.survey.questionTypes;
+  const scoreQuestion = getQuestionIdByType(questionTypes, [
+    'numeric',
+    'number',
+  ]);
+  const commentQuestion = getQuestionIdByType(questionTypes, [
+    'textarea',
+    'text',
+  ]);
+  const emailQuestion = getQuestionIdByType(questionTypes, ['email']);
   const getAdministrationMeta = useAdministrationStateContent();
 
-  const [scoreQuestion, commentQuestion, emailQuestion] = questionEntries.map(
-    ([questionId]) => questionId
-  );
   const items: UserFeedbackTableRow[] = overview.entries.map((entry) => {
     const { jiraTicketNumber, jiraTicketUrl, departmentName, departmentEmail } =
       getAdministrationMeta(entry);
+    const score = scoreQuestion ? entry.answers[scoreQuestion] : undefined;
+    const comment = commentQuestion ? entry.answers[commentQuestion] : undefined;
+    const email = emailQuestion ? entry.answers[emailQuestion] : undefined;
 
     return {
       id: entry.id,
-      entry: (
-        <Link id={`entry-${entry.id}`} href={`#entry-${entry.id}`}>
-          <strong>{entry.id}</strong>
-        </Link>
-      ),
+      entry: entry.id,
       date: entry.dateCreatedFormatted,
       score: (
         <strong
           style={{
-            color: getScoreColor(entry.answers[scoreQuestion]),
+            color: getScoreColor(score),
           }}
         >
-          {entry.answers[scoreQuestion] || '-'}
+          {score || '-'}
         </strong>
       ),
       comment: (
         <div className={styles.FreeTextBlock}>
           <TextClamp tagName="span" minHeight="15px" maxHeight="55px">
-            {entry.answers[commentQuestion] || '-'}
+            {comment || '-'}
           </TextClamp>
         </div>
       ),
       url: <span className={styles.LimitedText}>{entry.entryPoint}</span>,
-      email: entry.answers[emailQuestion] || '-',
+      email: email || '-',
+      errors:
+        entry.maErrors.length > 0 ? (
+          <UnorderedList size='small'>
+            {entry.maErrors.map((error, index) => (
+              <UnorderedList.Item id={styles.ErrorListItem} key={`${entry.id}-${error.name}-${index}`}>
+                {error.name}: {error.error}
+              </UnorderedList.Item>
+            ))}
+          </UnorderedList>
+        ) : (
+          '-'
+        ),
       registration: (
         <>
           {jiraTicketNumber && jiraTicketUrl && (
@@ -105,7 +122,7 @@ function UserFeedbackTable({
           buttonVariant="ma-link-like"
           modal={{ title: `Details voor inzending ${entry.id}` }}
         >
-          {entry.answers[commentQuestion] && (
+          {comment && (
             <TicketControls
               entry={{
                 ...entry,
@@ -132,14 +149,35 @@ function UserFeedbackTable({
           score: 'Score',
           comment: 'Comment',
           url: 'Url',
-          email: 'E-Mail',
+          email: 'E-mail',
+          errors: 'Errors',
           registration: 'Registratie',
           details: 'Details',
         },
         enableMobileListView: true,
         colWidths: {
-          large: ['6%', '11%', '7%', '20%', '17%', '14%', '17%', '8%'],
-          small: ['6%', '11%', '7%', '20%', '17%', '14%', '17%', '8%'],
+          large: [
+            '5%',
+            '9%',
+            '6%',
+            '16%',
+            '14%',
+            '12%',
+            '12%',
+            '18%',
+            '8%',
+          ],
+          small: [
+            '5%',
+            '9%',
+            '6%',
+            '16%',
+            '14%',
+            '12%',
+            '20%',
+            '18%',
+            '8%',
+          ],
         },
       }}
     />
@@ -156,11 +194,11 @@ function UserFeedPageContent({
   handoffConfig: UserFeedbackHandoffConfigResponse;
 }) {
   const entries = overview?.entries ?? [];
-  const questionEntries = Object.entries(overview?.survey.questions ?? {}).sort(
-    ([questionA], [questionB]) => Number(questionA) - Number(questionB)
-  );
-  const questionIds = questionEntries.map(([questionId]) => questionId);
-  const score = calculateScore(entries, questionIds);
+  const scoreQuestion = getQuestionIdByType(overview.survey.questionTypes, [
+    'numeric',
+    'number',
+  ]);
+  const score = calculateScore(entries, scoreQuestion);
 
   const totalPages = useMemo(
     () => overview?.pageCount ?? 1,
@@ -210,6 +248,7 @@ export function UserFeedback() {
       isLoading={isPageLoading}
       id="admin-user-feedback"
       pageContentTop={null}
+      pageLinks={[]}
       pageContentMain={
         overview && handoffConfig ? (
           <UserFeedPageContent
