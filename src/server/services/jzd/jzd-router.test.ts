@@ -28,7 +28,7 @@ describe('handleVoorzieningenRequest', () => {
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   test('should return bad request for invalid input', async () => {

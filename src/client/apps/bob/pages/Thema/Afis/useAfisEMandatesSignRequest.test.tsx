@@ -299,12 +299,12 @@ describe('useAfisEMandatesSignRequest', () => {
     });
 
     afterEach(() => {
-      vi.clearAllMocks();
+      vi.restoreAllMocks();
       clearLocalStorage();
     });
 
     it('should not fetch if no payload is present', async () => {
-      const fetchMock = mockFetchOnce();
+      const fetchMock = vi.spyOn(window, 'fetch');
       const { result } = renderHook(() => useSignRequestStatusCheck(eMandate));
       expect(fetchMock).not.toHaveBeenCalled();
       expect(result.current).toEqual({
