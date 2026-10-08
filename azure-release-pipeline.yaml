@@ -8,11 +8,11 @@ resources:
   repositories:
     - repository: MamsFrontend
       type: github
-      endpoint: Amsterdam
+      endpoint: github.com_Amsterdam
       name: amsterdam/mijn-amsterdam-frontend
     - repository: MamsInfra
       type: git
-      name: MijnAmsterdam/mijn-amsterdam-infra
+      name: AMS-PRJ-MAMS/AMS-PRJ-MAMS
       ref: refs/heads/main
 
 stages:
