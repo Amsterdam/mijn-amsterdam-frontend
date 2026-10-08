@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import {
   ActionGroup,
@@ -119,7 +119,7 @@ export function TicketControls({
   const hasErrorHandingOff = ticketApi.handoffDepartmentApi.isError;
 
   return (
-    <div>
+    <Fragment>
       <ActionGroup className="ams-mb-l">
         {entry.administrationMeta?.jiraTicketNumber ? (
           <Button
@@ -155,16 +155,16 @@ export function TicketControls({
         )}
       </ActionGroup>
       {showDepartments && (
-        <div className="ams-mb-xl">
-          <Heading size="level-3" level={3} className="ams-mb-xs">
+        <div className="ams-prose ams-mb-xl">
+          <Heading size="level-3" level={3}>
             Afdeling kiezen
           </Heading>
-          <Paragraph className="ams-mb-s">
+          <Paragraph>
             Kies een afdeling om de inzending naar door te sturen. Er wordt een
             e-mail geopend in je standaard e-mailprogramma met de gegevens van
             de inzending.
           </Paragraph>
-          <UnorderedList className="ams-mb-s">
+          <UnorderedList>
             {handoffConfig.departments.map((department, index) => (
               <UnorderedList.Item key={`${department.email}-${index}`}>
                 <Link
@@ -216,6 +216,6 @@ export function TicketControls({
           )}
         </Paragraph>
       )}
-    </div>
+    </Fragment>
   );
 }
