@@ -36,7 +36,10 @@ import { displayAmount } from '../../../universal/helpers/text.ts';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
 import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
-import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import {
+  getApiConfig,
+  getApiConfigBasedCacheKey,
+} from '../../helpers/source-api-helpers.ts';
 import {
   deleteCacheEntry,
   isSuccessStatus,
@@ -194,17 +197,6 @@ export async function fetchStadspasSource(
     ),
   });
   return requestData<StadspasDetailSource>(dataRequestConfig);
-}
-
-function releaseStadspasSourceCache(
-  passNumber: number,
-  administratienummer: string
-): void {
-  const cacheKey = createStadspasSourceCacheKey(
-    passNumber,
-    administratienummer
-  );
-  deleteCacheEntry(cacheKey);
 }
 
 export function createStadspasSourceCacheKey(
@@ -575,9 +567,14 @@ export async function mutateGpassSetPasIsBlockedState(
   const response = await requestData<PasBlockedResponse>(config);
 
   if (response.status === 'OK') {
-    // If the pass is successfully toggled, we can delete the cache entry.
-    // On reload, the pass will be fetched again with the new state.
-    releaseStadspasSourceCache(passNumber, administratienummer);
+    const cacheKey = getApiConfigBasedCacheKey(
+      'GPASS',
+      createStadspasSourceCacheKey(passNumber, administratienummer)
+    );
+
+    if (cacheKey) {
+      deleteCacheEntry(cacheKey);
+    }
   }
 
   return response;
