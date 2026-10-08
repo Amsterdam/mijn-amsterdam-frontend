@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import {
+  ActionGroup,
   Button,
   Heading,
   Link,
@@ -126,28 +127,28 @@ export function TicketControls({
 
   return (
     <div>
-      <div className={classnames(styles.TicketControlButtons, 'ams-mb-l')}>
-        {entry.administrationMeta?.jiraTicketNumber ? (
-          <>
-            <Button
-              title="Verwijder ticketreferentie. Ticket wordt -=NIET=- verwijderd in Jira."
-              variant="secondary"
-              onClick={handleDeleteTicket}
-              disabled={isDeleting}
-              icon={<CloseIcon />}
-            >
-              {entry.administrationMeta.jiraTicketNumber}
-            </Button>
-          </>
-        ) : (
+      <ActionGroup
+        className={classnames(styles.TicketControlButtons, 'ams-mb-l')}
+      >
+        <Button
+          icon={<PlusIcon />}
+          onClick={handleCreateTicket}
+          disabled={isCreating || !!entry.administrationMeta?.jiraTicketNumber}
+        >
+          Maak ticket
+        </Button>
+        {!!entry.administrationMeta?.jiraTicketNumber && (
           <Button
-            icon={<PlusIcon />}
-            onClick={handleCreateTicket}
-            disabled={isCreating}
+            title="Verwijder ticketreferentie. Ticket wordt -=NIET=- verwijderd in Jira."
+            variant="primary"
+            onClick={handleDeleteTicket}
+            disabled={isDeleting}
+            icon={<CloseIcon />}
           >
-            Maak ticket
+            Loskoppelen {entry.administrationMeta.jiraTicketNumber}
           </Button>
         )}
+
         {hasHandoffDestination ? (
           <Button
             variant="secondary"
@@ -171,7 +172,7 @@ export function TicketControls({
             Stuur door
           </Button>
         )}
-      </div>
+      </ActionGroup>
       {showDepartments && (
         <div className="ams-mb-xl">
           <Heading size="level-3" level={3} className="ams-mb-xs">
@@ -206,34 +207,34 @@ export function TicketControls({
         hasErrorCreating ||
         hasErrorDeleting ||
         hasErrorHandingOff) && (
-        <Paragraph className="ams-mb-s">
-          {(isCreating || isDeleting || isHandingOff) && (
-            <>
-              <Spinner /> Bezig met {isCreating && 'aanmaken'}
-              {isDeleting && 'verwijderen'}
-              {isHandingOff && 'overdragen'} van ticket...
-            </>
-          )}
-          {hasErrorDeleting && (
-            <>
-              Fout bij het verwijderen van de ticketreferentie. Probeer het
-              opnieuw.
-            </>
-          )}
-          {hasErrorCreating && (
-            <>
-              Fout bij het aanmaken van de ticketreferentie. Probeer het
-              opnieuw.
-            </>
-          )}
-          {hasErrorHandingOff && (
-            <>
-              Fout bij het doorsturen van de ticketreferentie. Probeer het
-              opnieuw.
-            </>
-          )}
-        </Paragraph>
-      )}
+          <Paragraph className="ams-mb-s">
+            {(isCreating || isDeleting || isHandingOff) && (
+              <>
+                <Spinner /> Bezig met {isCreating && 'aanmaken'}
+                {isDeleting && 'verwijderen'}
+                {isHandingOff && 'overdragen'} van ticket...
+              </>
+            )}
+            {hasErrorDeleting && (
+              <>
+                Fout bij het verwijderen van de ticketreferentie. Probeer het
+                opnieuw.
+              </>
+            )}
+            {hasErrorCreating && (
+              <>
+                Fout bij het aanmaken van de ticketreferentie. Probeer het
+                opnieuw.
+              </>
+            )}
+            {hasErrorHandingOff && (
+              <>
+                Fout bij het doorsturen van de ticketreferentie. Probeer het
+                opnieuw.
+              </>
+            )}
+          </Paragraph>
+        )}
     </div>
   );
 }
