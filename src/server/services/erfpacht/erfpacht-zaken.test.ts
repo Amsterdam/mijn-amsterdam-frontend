@@ -208,7 +208,7 @@ describe('erfpacht-zaken', () => {
             },
             {
               "datePublished": "",
-              "description": "Wij beoordelen uw aanvraag eerst. Zodra wij hier mee klaar zijn nemen we uw zaak in behandeling.",
+              "description": "Wij beoordelen uw aanvraag eerst. Zodra wij hiermee klaar zijn nemen we uw zaak in behandeling.",
               "id": "1078733647",
               "isActive": false,
               "isChecked": false,
@@ -288,7 +288,7 @@ describe('erfpacht-zaken', () => {
           },
           {
             "datePublished": "",
-            "description": "Wij beoordelen uw aanvraag eerst. Zodra wij hier mee klaar zijn nemen we uw zaak in behandeling.",
+            "description": "Wij beoordelen uw aanvraag eerst. Zodra wij hiermee klaar zijn nemen we uw zaak in behandeling.",
             "id": "1078733647",
             "isActive": false,
             "isChecked": false,

@@ -1,7 +1,6 @@
 import type { IOptions } from 'sanitize-html';
 import sanitizeHtml from 'sanitize-html';
 
-import type { ApiResponse_DEPRECATED } from '../../../universal/helpers/api.ts';
 import { type ApiResponse } from '../../../universal/helpers/api.ts';
 import { ONE_HOUR_MS } from '../../config/app.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
@@ -51,49 +50,10 @@ export function sanitizeCmsContent(
   return sanitizeHtml(content, config);
 }
 
-interface CMSPageContent {
-  title: string;
-  content: string;
-}
-
-type CMSPart = 'footer' | 'info-page';
+type CMSPart = 'footer';
 
 function getCmsCacheKey(part: CMSPart): `cms-${CMSPart}-${string}` {
   return `cms-${part}-${Date.now()}`;
-}
-
-let infoPageCacheKey = getCmsCacheKey('info-page');
-
-export async function fetchMijnAmsterdamUitlegPage(
-  profileType: ProfileType = 'private',
-  renewCache: boolean = false
-): Promise<ApiResponse_DEPRECATED<CMSPageContent | null>> {
-  if (renewCache) {
-    infoPageCacheKey = getCmsCacheKey('info-page');
-  }
-  const requestConfig = getApiConfig('CMS_CONTENT_GENERAL_INFO', {
-    cacheKey_UNSAFE: infoPageCacheKey,
-    transformResponse: (responseData: {
-      applicatie: {
-        title: string;
-        inhoud: { inleiding: string; tekst: string };
-      };
-    }) => {
-      return {
-        title: responseData.applicatie.title,
-        content:
-          sanitizeCmsContent(responseData.applicatie.inhoud.inleiding) +
-          sanitizeCmsContent(responseData.applicatie.inhoud.tekst),
-      };
-    },
-    formatUrl({ url }) {
-      return profileType === 'commercial'
-        ? `${url}/overzicht-producten-ondernemers/?AppIdt=app-data`
-        : `${url}/ziet-amsterdam/?AppIdt=app-data`;
-    },
-  });
-
-  return requestData<CMSPageContent>(requestConfig);
 }
 
 type StaticSearchEntry = {
