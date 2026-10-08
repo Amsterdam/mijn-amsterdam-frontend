@@ -121,3 +121,10 @@ export type ApplicationRouteConfig = ThemaRenderRouteConfig & {
   public?: boolean;
   private?: boolean;
 };
+
+export type AdminThemaConfig<ID extends string = string> = {
+  id: ID;
+  title: string;
+  featureToggle: ThemaFeatureToggle;
+  route: ThemaRouteConfig;
+};
