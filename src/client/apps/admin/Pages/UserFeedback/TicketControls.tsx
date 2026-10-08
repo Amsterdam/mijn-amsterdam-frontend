@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react';
 
 import {
+  ActionGroup,
   Button,
   Heading,
   Link,
@@ -141,13 +142,16 @@ export function TicketControls({
           </>
         ) : (
           <Button
-            icon={<PlusIcon />}
-            onClick={handleCreateTicket}
-            disabled={isCreating}
+            title="Verwijder ticketreferentie. Ticket wordt -=NIET=- verwijderd in Jira."
+            variant="primary"
+            onClick={handleDeleteTicket}
+            disabled={isDeleting}
+            icon={<CloseIcon />}
           >
-            Maak ticket
+            Loskoppelen {entry.administrationMeta.jiraTicketNumber}
           </Button>
         )}
+
         {hasHandoffDestination ? (
           <Button
             variant="secondary"
@@ -171,7 +175,7 @@ export function TicketControls({
             Stuur door
           </Button>
         )}
-      </div>
+      </ActionGroup>
       {showDepartments && (
         <div className="ams-prose ams-mb-xl">
           <Heading size="level-3" level={3}>

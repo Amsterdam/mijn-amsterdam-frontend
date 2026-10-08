@@ -1,6 +1,16 @@
 .UserFeedbackTable {
   font-size: 1rem;
   width: 100%;
+
+  :global(.ams-table__table) {
+    width: 100%;
+    min-width: 75rem;
+    table-layout: fixed;
+  }
+
+  :global(.ams-table__cell) {
+    overflow-wrap: anywhere;
+  }
 }
 
 .FreeTextBlock {
@@ -13,7 +23,13 @@
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
+
+#ErrorListItem {
+  margin-inline-start: 0;
+}
+
 .MoreInfoButton {
   white-space: nowrap;
 }
