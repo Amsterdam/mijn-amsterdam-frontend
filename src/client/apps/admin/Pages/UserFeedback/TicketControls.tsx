@@ -235,6 +235,6 @@ export function TicketControls({
             )}
           </Paragraph>
         )}
-    </div>
+    </Fragment>
   );
 }
