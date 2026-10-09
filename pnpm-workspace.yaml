@@ -10,6 +10,7 @@ minimumReleaseAge: 1440 # 1440 minutes = 1 day
 minimumReleaseAgeExclude:
   - '@amsterdam/piwik-tracker-react@3.0.0' # We deployed this package ourselves and want to be the first that test it
   - '@amsterdam/piwik-tracker@3.0.0' # We deployed this package ourselves and want to be the first that test it
+  - concurrently@10.0.6
 packages:
   - .
 overrides:
