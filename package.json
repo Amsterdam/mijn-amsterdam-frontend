@@ -6,7 +6,7 @@
   },
   "engines": {
     "pnpm": ">=10.11.0",
-    "node": ">=22.4"
+    "node": ">=22.12"
   },
   "license": "Mozilla Public License 2.0",
   "type": "module",
