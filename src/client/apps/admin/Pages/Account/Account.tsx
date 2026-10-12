@@ -5,7 +5,6 @@ import {
   Label,
   Paragraph,
   TextInput,
-  Link,
   ErrorMessage,
   Icon,
   StandaloneLink,
