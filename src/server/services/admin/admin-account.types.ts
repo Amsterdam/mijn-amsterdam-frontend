@@ -19,6 +19,12 @@ export type AccountData = {
   jiraApiToken: ApiTokenDecrypted;
 };
 
+export type AccountApiData = {
+  username: string;
+  lastSignInDate: string;
+  jiraApiTokenSet: boolean;
+};
+
 export const accountUpdateInput = z
   .object({
     jiraApiToken: z
