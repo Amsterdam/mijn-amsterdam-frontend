@@ -91,9 +91,9 @@ export function getSubStatusDescription(
     case ZAAK_STATUS_SOURCE.ACCEPTATIE_ONTVANGEN:
       return `Wij hebben uw acceptatie ontvangen en gaan uw ${aanvraagText} verder behandelen.`;
     case ZAAK_STATUS_SOURCE.BESLUIT_VERSTUURD:
-      return `Wij hebben het besluit van uw ${aanvraagText} naar de notaris gestuurd. U krijgt van de notaris een uitnodiging om de akte te tekenen.`;
+      return `Wij hebben het besluit van uw ${aanvraagText} naar de notaris gestuurd. U ondertekent de akte bij de notaris.`;
     case ZAAK_STATUS_SOURCE.AKTE_GEPASSEERD:
-      return `De akte van uw ${aanvraagText} is ondertekend.`;
+      return `De notaris heeft de akte van uw ${aanvraagText} verwerkt.`;
     case ZAAK_STATUS_SOURCE.AANVRAAG_AFGEROND:
       return `Uw ${aanvraagText} is afgerond.`;
   }
