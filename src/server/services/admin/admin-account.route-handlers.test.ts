@@ -52,7 +52,7 @@ describe('admin-account-route-handlers', () => {
 
     mockedGetOrCreateAccountData.mockResolvedValue({
       username: 'alice@example.com',
-      jiraApiToken: 'token',
+      jiraApiTokenSet: true,
       lastSignInDate: '2026-08-06T08:00:00.000Z',
     });
 
@@ -64,10 +64,11 @@ describe('admin-account-route-handlers', () => {
     expect(res.send).toHaveBeenCalledWith(
       expect.objectContaining({
         status: 'OK',
-        content: expect.objectContaining({
+        content: {
           username: 'alice@example.com',
-          jiraApiToken: 'token',
-        }),
+          jiraApiTokenSet: true,
+          lastSignInDate: '2026-08-06T08:00:00.000Z',
+        },
       })
     );
   });
@@ -102,7 +103,7 @@ describe('admin-account-route-handlers', () => {
 
     mockedUpdateAccountData.mockResolvedValue({
       username: 'alice@example.com',
-      jiraApiToken: 'new-token',
+      jiraApiTokenSet: true,
       lastSignInDate: '2026-08-06T08:00:00.000Z',
     });
 
@@ -114,9 +115,11 @@ describe('admin-account-route-handlers', () => {
     expect(res.send).toHaveBeenCalledWith(
       expect.objectContaining({
         status: 'OK',
-        content: expect.objectContaining({
-          jiraApiToken: 'new-token',
-        }),
+        content: {
+          username: 'alice@example.com',
+          jiraApiTokenSet: true,
+          lastSignInDate: '2026-08-06T08:00:00.000Z',
+        },
       })
     );
   });

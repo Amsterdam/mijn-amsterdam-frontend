@@ -78,7 +78,7 @@ function UserFeedbackTable({
 
     return {
       id: entry.id,
-      entry: entry.id,
+      entry: <strong id={`entry-${entry.id.toString()}`}>{entry.id}</strong>,
       date: entry.dateCreatedFormatted,
       score: (
         <strong
@@ -226,6 +226,15 @@ export function UserFeedback() {
   const handoffConfig = handoffConfigApi.data?.content;
   const isPageLoading = isLoading || handoffConfigApi.isLoading;
   const isPageError = isError || handoffConfigApi.isError;
+
+  const idTicketRow = location?.hash;
+  const targetTicketRow = idTicketRow
+    ? document.getElementById(idTicketRow.replace('#', ''))
+    : null;
+
+  if (targetTicketRow) {
+    targetTicketRow.scrollIntoView({ behavior: 'smooth' });
+  }
 
   return (
     <ThemaPagina

@@ -2,6 +2,7 @@ import { eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/node-postgres';
 
 import type {
+  AccountApiData,
   AccountData,
   AccountRow,
   AccountUpdateInput,
@@ -31,6 +32,16 @@ function toAccountData(row: AccountRow): AccountData {
   };
 }
 
+function toAccountApiData(row: AccountRow): AccountApiData {
+  const jiraApiTokenSet = !!row.jiraApiToken;
+
+  return {
+    username: row.username,
+    lastSignInDate: defaultDateTimeFormat(row.lastSignInDate),
+    jiraApiTokenSet,
+  };
+}
+
 const accountSelect = {
   username: adminAccountsTable.username,
   jiraApiToken: adminAccountsTable.jiraApiToken,
@@ -55,7 +66,7 @@ export async function getAccountData(
 export async function getOrCreateAccountData(
   username: string,
   now: Date = new Date()
-): Promise<AccountData> {
+): Promise<AccountApiData> {
   const drizzleDb = getDrizzleDb();
 
   const [row] = await drizzleDb
@@ -72,14 +83,14 @@ export async function getOrCreateAccountData(
     })
     .returning(accountSelect);
 
-  return toAccountData(ensureRow(row));
+  return toAccountApiData(ensureRow(row));
 }
 
 export async function updateAccountData(
   username: string,
   updatePayload: AccountUpdateInput,
   now: Date = new Date()
-): Promise<AccountData> {
+): Promise<AccountApiData> {
   const drizzleDb = getDrizzleDb();
 
   const existing = await drizzleDb
@@ -100,7 +111,7 @@ export async function updateAccountData(
       })
       .returning(accountSelect);
 
-    return toAccountData(ensureRow(inserted));
+    return toAccountApiData(ensureRow(inserted));
   }
 
   const [updated] = await drizzleDb
@@ -111,5 +122,5 @@ export async function updateAccountData(
     .where(eq(adminAccountsTable.username, username))
     .returning(accountSelect);
 
-  return toAccountData(ensureRow(updated));
+  return toAccountApiData(ensureRow(updated));
 }
