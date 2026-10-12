@@ -156,7 +156,7 @@ describe('erfpacht-zaken', () => {
                 },
                 {
                   "datePublished": "2026-02-03T14:22:42.057Z",
-                  "description": "Wij hebben het besluit van uw aanvraag naar de notaris gestuurd. U krijgt van de notaris een uitnodiging om de akte te tekenen.",
+                  "description": "Wij hebben het besluit van uw aanvraag naar de notaris gestuurd. U ondertekent de akte bij de notaris.",
                   "id": "3290200915",
                   "isActive": false,
                   "isChecked": true,
@@ -164,7 +164,7 @@ describe('erfpacht-zaken', () => {
                 },
                 {
                   "datePublished": "2026-02-04T14:22:42.057Z",
-                  "description": "De akte van uw aanvraag is ondertekend.",
+                  "description": "De notaris heeft de akte van uw aanvraag verwerkt.",
                   "id": "1815972554",
                   "isActive": false,
                   "isChecked": true,
@@ -406,7 +406,7 @@ describe('erfpacht-zaken', () => {
                 },
                 {
                   "datePublished": "2026-02-03T14:22:42.057Z",
-                  "description": "Wij hebben het besluit van uw aanvraag naar de notaris gestuurd. U krijgt van de notaris een uitnodiging om de akte te tekenen.",
+                  "description": "Wij hebben het besluit van uw aanvraag naar de notaris gestuurd. U ondertekent de akte bij de notaris.",
                   "id": "3290200915",
                   "isActive": false,
                   "isChecked": true,
@@ -414,7 +414,7 @@ describe('erfpacht-zaken', () => {
                 },
                 {
                   "datePublished": "2026-02-04T14:22:42.057Z",
-                  "description": "De akte van uw aanvraag is ondertekend.",
+                  "description": "De notaris heeft de akte van uw aanvraag verwerkt.",
                   "id": "1815972554",
                   "isActive": false,
                   "isChecked": true,
@@ -531,7 +531,7 @@ describe('erfpacht-zaken', () => {
             },
             {
               "datePublished": "2026-02-03T14:22:42.057Z",
-              "description": "Wij hebben het besluit van uw aanvraag naar de notaris gestuurd. U krijgt van de notaris een uitnodiging om de akte te tekenen.",
+              "description": "Wij hebben het besluit van uw aanvraag naar de notaris gestuurd. U ondertekent de akte bij de notaris.",
               "id": "3290200915",
               "isActive": false,
               "isChecked": true,
@@ -539,7 +539,7 @@ describe('erfpacht-zaken', () => {
             },
             {
               "datePublished": "2026-02-04T14:22:42.057Z",
-              "description": "De akte van uw aanvraag is ondertekend.",
+              "description": "De notaris heeft de akte van uw aanvraag verwerkt.",
               "id": "1815972554",
               "isActive": false,
               "isChecked": true,

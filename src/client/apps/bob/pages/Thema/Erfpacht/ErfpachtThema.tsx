@@ -68,14 +68,10 @@ export function ErfpachtThema() {
                 Status aanvraag erfpachtwijziging
               </Heading>
               <Paragraph className="ams-mb-m">
-                Heeft u na 12 januari 2026 een wijziging voor uw erfpachtrecht
-                aangevraagd via het online formulier? Dan ziet u hieronder de
-                status van uw aanvraag. Aanvragen van vóór 12 januari 2026 of
-                aanvragen die via e-mail zijn ingediend, staan hier niet bij.
+                In het overzicht vindt u de aanvragen die na 12 januari 2026 via het online formulier zijn gedaan. Aanvragen per e-mail en aanvragen van vóór 12 januari 2026 staan niet in dit overzicht.
               </Paragraph>
               <Paragraph>
-                Als u een ontvangstbevestiging heeft gehad, is uw aanvraag door
-                ons ontvangen. Heeft u nog een vraag, stuur dan een e-mail naar{' '}
+                Als u een bevestiging heeft gekregen, hebben wij uw aanvraag ontvangen. Heeft u nog een vraag, stuur dan een e-mail naar{' '}
                 <Link rel="noreferrer" href="mailto:erfpacht@amsterdam.nl">
                   erfpacht@amsterdam.nl
                 </Link>
