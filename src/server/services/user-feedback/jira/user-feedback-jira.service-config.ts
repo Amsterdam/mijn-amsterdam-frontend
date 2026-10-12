@@ -53,6 +53,9 @@ export const sourceApiConfigJiraAgile: DataRequestConfig = {
   postponeFetch: !featureToggle.service.ticketCreation.enabled,
 } as const;
 
-export const ALL_ISSUES_LINK = `${JIRA_BASE_URL}/issues/?jql=${encodeURIComponent(
-  `labels = "${JIRA_LABEL_KTO_ISSUES_RAW.trim().replace(/\s+/g, '-')}"`
-)}`;
+export const ALL_ISSUES_LINK =
+  JIRA_BASE_URL && JIRA_LABEL_KTO_ISSUES_RAW
+    ? `${JIRA_BASE_URL}/issues/?jql=${encodeURIComponent(
+        `labels = "${JIRA_LABEL_KTO_ISSUES_RAW.trim().replace(/\s+/g, '-')}"`
+      )}`
+    : '';
