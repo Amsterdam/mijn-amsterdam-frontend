@@ -53,7 +53,7 @@ export const themaConfig: HorecaThemaConfig = {
   ],
   route: {
     path: '/horeca',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
+    documentTitle: `Overzicht | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   listPage: {
@@ -70,7 +70,7 @@ export const themaConfig: HorecaThemaConfig = {
       trackingUrl(params) {
         return `/horeca/${params?.caseType}`;
       },
-      documentTitle: `Horeca | ${THEMA_TITLE}`,
+      documentTitle: `Vergunning | ${THEMA_TITLE}`,
     },
   },
 };

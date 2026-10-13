@@ -43,7 +43,7 @@ export const themaConfig = {
   route: {
     path: '/regelingen-bij-laag-inkomen',
     trackingUrl: null,
-    documentTitle: `${THEMA_TITLE} | Overzicht`,
+    documentTitle: `Overzicht | ${THEMA_TITLE}`,
   },
   redactedScope: 'full',
   pageLinks: [

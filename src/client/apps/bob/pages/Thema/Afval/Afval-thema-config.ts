@@ -21,7 +21,7 @@ export const themaConfig: AfvalThemaConfig = {
   redactedScope: 'none',
   route: {
     path: '/afval',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
+    documentTitle: `Overzicht | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   featureToggle: {

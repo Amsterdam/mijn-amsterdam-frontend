@@ -89,7 +89,7 @@ export const themaConfig: VarenThemaConfig = {
   ],
   route: {
     path: '/varen',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
+    documentTitle: `Overzicht | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   listPage: {
