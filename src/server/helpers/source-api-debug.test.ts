@@ -1,7 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
 
-vi.mock('../debug.ts', () => ({ debugRequest: vi.fn(), debugResponse: vi.fn() }));
+vi.mock('../debug.ts', () => ({
+  debugRequest: vi.fn(),
+  debugResponse: vi.fn(),
+}));
 import * as debug from '../debug.ts';
+import { getFromEnv } from './env.ts';
 import { forTesting, addRequestDataDebugging } from './source-api-debug.ts';
 
 describe('source-api-debug', () => {
@@ -61,9 +65,14 @@ describe('source-api-debug', () => {
   });
 
   describe('addRequestDataDebugging', () => {
+    beforeEach(() => {
+      vi.clearAllMocks();
+    });
+
     afterEach(() => {
       vi.restoreAllMocks();
       vi.unstubAllEnvs();
+      getFromEnv.clear?.(); // Clear memoization of getFromEnv
     });
 
     it('debugs a matching request', () => {

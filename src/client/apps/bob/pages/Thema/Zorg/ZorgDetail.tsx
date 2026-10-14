@@ -60,10 +60,9 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
           {isReparatieverzoekAvailable && (
             <>
               <Paragraph className="ams-mb-m">
-                Is uw woonruimteaanpassing kapot? U kunt een reparatieverzoek
-                voor deze voorziening aanvragen. Klik op de knop hieronder om
-                het reparatieverzoek in te dienen. U wordt dan doorgestuurd naar
-                een formulier van de gemeente Amsterdam.
+                <strong>Reparatieverzoek aanvragen<br/></strong>
+                U kunt een reparatie verzoek voor deze voorziening aanvragen door het reparatieverzoek
+formulier in te vullen.
               </Paragraph>
               <MaButtonLink
                 href={voorziening?.maActieUrls?.reparatieverzoek}
@@ -74,7 +73,9 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
             </>
           )}
           {isPGBReparatieverzoek && (
+
             <Paragraph>
+              <strong>Reparatieverzoek aanvragen<br/></strong>
               Heeft u de woningaanpassing met een pgb aangeschaft? Dan moet u
               zelf de kosten voor reparatie en onderhoud betalen met uw pgb. Bij
               uw pgb is hiervoor een bedrag inbegrepen.

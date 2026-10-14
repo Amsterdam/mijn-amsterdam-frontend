@@ -6,6 +6,7 @@ export const featureToggle = {
   ['AFIS.blockDataForMultipleKvKVestigingen']: true,
   ['AMSAPP.notificationService']: true,
   ['BRP.aantalBewonersOpAdresTonen']: true,
+  ['BRP.verblijfplaatshistorie']: true,
   ['USER_FEEDBACK.fetchSurvey']: true,
   ['cobrowse']: false,
   ['MA_ADMIN.router']: !IS_PRODUCTION,
