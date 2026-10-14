@@ -4,6 +4,7 @@ import {
   themaConfig,
   vvVergunningPageLinkItem,
   bbVergunningPageLinkItem,
+  bbVergunningPageLinkItemOvergangsrecht,
 } from './ToeristischeVerhuur-thema-config.ts';
 import type { ToeristischeVerhuurVergunning } from '../../../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
 import {
@@ -69,10 +70,13 @@ export function useToeristischeVerhuurThemaData() {
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
   const extraPageLinks: LinkProps[] = [];
-  if (hasVergunningenVakantieVerhuur) {
-    extraPageLinks.push(vvVergunningPageLinkItem);
+  if (hasVergunningenVakantieVerhuur && hasVergunningBB) {
+    extraPageLinks.push(vvVergunningPageLinkItem, bbVergunningPageLinkItem, bbVergunningPageLinkItemOvergangsrecht);
   } else if (hasVergunningBB) {
-    extraPageLinks.push(bbVergunningPageLinkItem);
+    extraPageLinks.push(bbVergunningPageLinkItem, bbVergunningPageLinkItemOvergangsrecht);
+  }
+  else if (hasVergunningenVakantieVerhuur) {
+    extraPageLinks.push(vvVergunningPageLinkItem);
   }
 
   return {
@@ -95,6 +99,7 @@ export function useToeristischeVerhuurThemaData() {
     hasVergunningBB,
     breadcrumbs,
     pageLinks: [...extraPageLinks, ...themaConfig.pageLinks],
+    extraPageLinks,
     themaConfig,
   };
 }
