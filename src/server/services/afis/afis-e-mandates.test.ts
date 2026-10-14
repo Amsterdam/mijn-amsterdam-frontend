@@ -111,13 +111,13 @@ describe('afis-e-mandates service (with nock)', () => {
   });
   afterAll(() => {
     Mockdate.reset();
-    vi.restoreAllMocks();
   });
   beforeEach(() => {
     nock.cleanAll();
   });
   afterEach(() => {
     nock.cleanAll();
+    vi.restoreAllMocks();
   });
 
   describe('createAfisEMandate - Happy scenario', () => {

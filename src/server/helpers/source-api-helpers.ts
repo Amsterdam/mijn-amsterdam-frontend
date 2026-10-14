@@ -1,4 +1,3 @@
-import type { SomeOtherString } from '../../universal/helpers/types.ts';
 import { jsonCopy } from '../../universal/helpers/utils.ts';
 import {
   ApiConfig,
@@ -6,8 +5,8 @@ import {
   type SourceApiName,
 } from '../config/source-api.ts';
 
-function getApiConfigBasedCacheKey(
-  name: SourceApiName | SomeOtherString,
+export function getApiConfigBasedCacheKey(
+  name: SourceApiName,
   cacheKey_UNSAFE?: string
 ): string | null {
   if (!cacheKey_UNSAFE) {
@@ -27,7 +26,7 @@ export function getCustomApiConfig(
     );
   }
   // The name 'CUSTOM_API' is a placeholder and does not correspond to any real API config.
-  return getApiConfig('CUSTOM_API', ...configs);
+  return getApiConfig('CUSTOM_API' as SourceApiName, ...configs);
 }
 
 export function getCustomApiConfigWithCacheKey(
@@ -39,11 +38,11 @@ export function getCustomApiConfigWithCacheKey(
       'getCustomApiConfigWithCacheKey requires at least one config to have cacheKey_UNSAFE'
     );
   }
-  return getApiConfig(apiName, ...configs);
+  return getApiConfig(apiName as SourceApiName, ...configs);
 }
 
 export function getApiConfig(
-  name: SourceApiName | SomeOtherString,
+  name: SourceApiName,
   config: Omit<DataRequestConfig, 'httpsAgent'> = {},
   ...additionalConfigs: Omit<DataRequestConfig, 'httpsAgent'>[]
 ): Readonly<DataRequestConfig> {

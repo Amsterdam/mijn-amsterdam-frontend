@@ -1,3 +1,5 @@
+import { isEnabled } from '../../config/azure-appconfiguration.ts';
+
 export const featureToggle = {
   router: {
     protected: {
@@ -7,6 +9,9 @@ export const featureToggle = {
   service: {
     fetchAantalIngeschrevenPersonenOpAdres: {
       isEnabled: true,
+    },
+    fetchVerblijfplaatshistorie: {
+      isEnabled: isEnabled('BRP.verblijfplaatshistorie'),
     },
   },
 } as const;
