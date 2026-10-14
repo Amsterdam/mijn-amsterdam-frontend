@@ -125,7 +125,7 @@
     "zustand": "^5.0.15"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.63.5"
+    "@rollup/rollup-linux-x64-gnu": "4.64.1"
   },
   "devDependencies": {
     "vite": "^6.4.4",
