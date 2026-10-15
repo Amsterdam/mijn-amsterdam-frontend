@@ -1,3 +1,5 @@
+import { performance } from 'node:perf_hooks';
+
 import { HttpStatusCode } from 'axios';
 
 import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers.ts';
@@ -20,8 +22,14 @@ export async function fetchAfisDocument(
   _authProfileAndToken: AuthProfileAndToken,
   factuurDocumentId: AfisFactuur['factuurDocumentId']
 ): Promise<DocumentDownloadResponse> {
+  const documentIdRequestStartedAt = performance.now();
   const ArchiveDocumentIDResponse =
     await fetchAfisDocumentID(factuurDocumentId);
+  // eslint-disable-next-line no-console -- Temporary diagnostics for large AFIS downloads.
+  console.log(
+    `[AFIS document download] Document ID lookup: ${(performance.now() - documentIdRequestStartedAt).toFixed(1)} ms`
+  );
+
   if (ArchiveDocumentIDResponse.status !== 'OK') {
     return ArchiveDocumentIDResponse;
   }
@@ -34,6 +42,7 @@ export async function fetchAfisDocument(
     );
   }
 
+  let attachmentRequestStartedAt = 0;
   const config = await getAfisApiConfig({
     formatUrl: ({ url }) => {
       return `${url}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`;
@@ -48,19 +57,36 @@ export async function fetchAfisDocument(
     transformResponse: (
       data: AfisDocumentDownloadSource
     ): DocumentDownloadData => {
+      // eslint-disable-next-line no-console -- Temporary diagnostics for large AFIS downloads.
+      console.log(
+        `[AFIS document download] Attachment source response received and parsed: ${(performance.now() - attachmentRequestStartedAt).toFixed(1)} ms`
+      );
+
       if (typeof data?.Record?.attachment !== 'string') {
         throw new Error(
           'Afis document download - no valid response data provided'
         );
       }
 
+      const simulationStartedAt = performance.now();
       const data2 = {
         Record: {
-          attachment: Buffer.alloc(100 * 1024 * 1024).toString('base64'),
+          attachment: Buffer.alloc(3000 * 1024 * 1024).toString('base64'),
           attachmentname: 'grote-factuur.pdf',
         },
       };
+      // eslint-disable-next-line no-console -- Temporary diagnostics for large AFIS downloads.
+      console.log(
+        `[AFIS document download] Synthetic 100 MiB PDF encoded as base64: ${(performance.now() - simulationStartedAt).toFixed(1)} ms`
+      );
+
+      const decodingStartedAt = performance.now();
       const decodedDocument = Buffer.from(data2.Record.attachment, 'base64');
+      // eslint-disable-next-line no-console -- Temporary diagnostics for large AFIS downloads.
+      console.log(
+        `[AFIS document download] Base64 decode (${(decodedDocument.length / 1024 / 1024).toFixed(1)} MiB): ${(performance.now() - decodingStartedAt).toFixed(1)} ms`
+      );
+
       return {
         data: decodedDocument,
         mimetype: DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
@@ -69,7 +95,13 @@ export async function fetchAfisDocument(
     },
   });
 
-  return requestData<DocumentDownloadData>(config);
+  attachmentRequestStartedAt = performance.now();
+  const response = await requestData<DocumentDownloadData>(config);
+  // eslint-disable-next-line no-console -- Temporary diagnostics for large AFIS downloads.
+  console.log(
+    `[AFIS document download] Attachment request and transformation total: ${(performance.now() - attachmentRequestStartedAt).toFixed(1)} ms`
+  );
+  return response;
 }
 
 /** Retrieve an ArcDocID from the AFIS source API.

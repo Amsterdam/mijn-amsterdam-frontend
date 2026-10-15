@@ -1,3 +1,5 @@
+import { performance } from 'node:perf_hooks';
+
 import type { AxiosResponse } from 'axios';
 import type { Router } from 'express';
 
@@ -44,7 +46,8 @@ export function downloadDocumentRouteHandler(
   fetchDocument: FetchDocumentDownloadService,
   getRouteOrQueryParams: FetchRouteOrQueryParamsFN = (
     req: RequestWithRouteAndQueryParams<{ id: string }, { id: string }>
-  ) => req.query.id || req.params.id
+  ) => req.query.id || req.params.id,
+  timingLabel?: string
 ) {
   return async function handleDownloadRoute(
     req: RequestWithRouteAndQueryParams<
@@ -53,6 +56,7 @@ export function downloadDocumentRouteHandler(
     >,
     res: ResponseAuthenticated
   ) {
+    const requestStartedAt = performance.now();
     const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
       // TODO: params.id should be removed, BFF routes should use queryParams for handling route/service variables.
       getRouteOrQueryParams(req),
@@ -66,6 +70,20 @@ export function downloadDocumentRouteHandler(
         req.query as RecordStr2
       );
 
+      if (timingLabel) {
+        const data =
+          documentResponse.status === 'OK'
+            ? documentResponse.content.data
+            : undefined;
+        const byteLength = Buffer.isBuffer(data) ? data.length : undefined;
+        res.once('finish', () => {
+          // eslint-disable-next-line no-console -- Temporary diagnostics for large AFIS downloads.
+          console.log(
+            `[${timingLabel}] BFF response finished in ${(performance.now() - requestStartedAt).toFixed(1)} ms${byteLength === undefined ? '' : ` (${(byteLength / 1024 / 1024).toFixed(1)} MiB)`}`
+          );
+        });
+      }
+
       return sendDocumentDownloadResponse(res, documentResponse);
     }
 
@@ -77,10 +95,15 @@ export function attachDocumentDownloadRoute(
   router: Router,
   route: string,
   fetchDocumentService: FetchDocumentDownloadService,
-  getRouteOrQueryParams?: FetchRouteOrQueryParamsFN
+  getRouteOrQueryParams?: FetchRouteOrQueryParamsFN,
+  timingLabel?: string
 ) {
   router.get(
     route,
-    downloadDocumentRouteHandler(fetchDocumentService, getRouteOrQueryParams)
+    downloadDocumentRouteHandler(
+      fetchDocumentService,
+      getRouteOrQueryParams,
+      timingLabel
+    )
   );
 }
