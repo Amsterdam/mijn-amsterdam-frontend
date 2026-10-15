@@ -112,7 +112,10 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
           </Heading>
           <Paragraph>
             U kunt deze voorziening via dit{' '}
-            <MaLink href="#" rel="noopener noreferrer">
+            <MaLink
+              href={voorziening?.maActieUrls?.stopzetten}
+              rel="noopener noreferrer"
+            >
               formulier
             </MaLink>{' '}
             stopzetten. Na nadat u de voorziening heeft stop gezet ontvang u

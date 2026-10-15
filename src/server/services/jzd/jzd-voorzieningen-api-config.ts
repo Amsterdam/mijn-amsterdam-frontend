@@ -63,6 +63,16 @@ function maActieUrlsReparatieverzoek(
   };
 }
 
+function maActieUrlsStopzetten(zorgnedAanvraag: ZorgnedAanvraagTransformed) {
+  const baseUrl = IS_PRODUCTION
+    ? 'https://formulieren.amsterdam.nl'
+    : 'https://formulieren.acc.amsterdam.nl';
+  const guid = encodeURIComponent(`ID:${zorgnedAanvraag.id}`);
+  return {
+    stopzetten: `${baseUrl}/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/stopzettenvoorzieningen.aspx?GUID=${guid}`,
+  };
+}
+
 const REPARATIEVERZOEK_ACTIE_CONFIG: JzdApiConfig = {
   'include.every': {
     isActueel: true,
@@ -116,6 +126,7 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
     assign: {
       maCategorie: ['A-LLV'],
       maActies: ['stopzetten', 'stopzetten-tijdelijk'],
+      maActieUrls: maActieUrlsStopzetten,
     },
     'include.every': {
       isActueel: true,
@@ -176,6 +187,7 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
     assign: {
       maCategorie: ['C-01'],
       maActies: ['stopzetten'],
+      maActieUrls: maActieUrlsStopzetten,
     },
     'include.every': {
       leveringsVorm: 'PGB',
@@ -193,6 +205,7 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
     assign: {
       maCategorie: ['C-02'],
       maActies: ['stopzetten'],
+      maActieUrls: maActieUrlsStopzetten,
     },
     'include.every': {
       leveringsVorm: 'PGB',
@@ -229,6 +242,7 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
     assign: {
       maCategorie: ['C-03'],
       maActies: ['stopzetten', 'stopzetten-tijdelijk'],
+      maActieUrls: maActieUrlsStopzetten,
     },
     'include.every': {
       leveringsVorm: 'PGB',
@@ -246,6 +260,7 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
     assign: {
       maCategorie: ['D-01'],
       maActies: ['stopzetten'],
+      maActieUrls: maActieUrlsStopzetten,
     },
     'include.every': {
       leveringsVorm: 'ZIN',
@@ -273,6 +288,7 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
     assign: {
       maCategorie: ['D-02'],
       maActies: ['stopzetten'],
+      maActieUrls: maActieUrlsStopzetten,
     },
     'include.every': {
       leveringsVorm: 'PGB',
@@ -290,6 +306,7 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
     assign: {
       maCategorie: ['D-03'],
       maActies: ['stopzetten'],
+      maActieUrls: maActieUrlsStopzetten,
     },
     'include.every': {
       leveringsVorm: 'ZIN',
@@ -307,6 +324,7 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
     assign: {
       maCategorie: ['D-04'],
       maActies: ['stopzetten'],
+      maActieUrls: maActieUrlsStopzetten,
     },
     'include.every': {
       leveringsVorm: 'PGB',
@@ -324,6 +342,7 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
     assign: {
       maCategorie: ['D-05'],
       maActies: ['stopzetten'],
+      maActieUrls: maActieUrlsStopzetten,
     },
     'include.every': {
       isActueel: true,
@@ -340,6 +359,7 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
     assign: {
       maCategorie: ['D-06'],
       maActies: ['stopzetten'],
+      maActieUrls: maActieUrlsStopzetten,
     },
     'include.every': {
       isActueel: true,
