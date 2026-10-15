@@ -43,7 +43,7 @@ export const themaConfig: ThemaConfigBezwaren = {
   ],
   route: {
     path: '/bezwaren',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
+    documentTitle: `Overzicht | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   redactedScope: 'full',

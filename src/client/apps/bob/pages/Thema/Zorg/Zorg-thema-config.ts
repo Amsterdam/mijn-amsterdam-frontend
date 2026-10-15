@@ -40,7 +40,7 @@ export const themaConfig: ZorgThemaConfig = {
   ],
   route: {
     path: '/zorg-en-ondersteuning',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
+    documentTitle: `Overzicht | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   listPage: {
