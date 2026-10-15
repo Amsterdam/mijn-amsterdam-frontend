@@ -183,7 +183,7 @@ export function requestID(_req: Request, res: Response, next: NextFunction) {
   next();
 }
 
-export function checkIfDbEnabled(
+export function handleIsDBEnabled(
   _req: Request,
   res: Response,
   next: NextFunction
