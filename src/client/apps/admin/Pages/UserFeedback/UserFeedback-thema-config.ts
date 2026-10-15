@@ -13,7 +13,7 @@ export const themaConfig = {
   },
   route: {
     path: '/user-feedback',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
+    documentTitle: `Overzicht | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
 } as const satisfies AdminUserFeedbackThemaConfig;

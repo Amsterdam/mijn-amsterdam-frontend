@@ -13,7 +13,7 @@ export const themaConfig = {
   },
   route: {
     path: '/account',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
+    documentTitle: `Overzicht | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
 } as const satisfies AdminAccountThemaConfig;

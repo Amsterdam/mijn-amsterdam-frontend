@@ -3,14 +3,16 @@ import express from 'express';
 import {
   handleCreateJiraTicket,
   handleDeleteJiraTicketMeta,
-  handleFetchSurvey,
   handleShowSurveyOverview,
   handleHandoffFeedbackToDepartment,
   handleUserFeedbackHandoffConfig,
+} from './user-feedback.admin.route-handlers.ts';
+import {
+  handleFetchSurvey,
   handleUserFeedbackSubmission,
 } from './user-feedback.route-handlers.ts';
 import { featureToggle, routes } from './user-feedback.service-config.ts';
-import { checkIfDbEnabled } from '../../routing/route-handlers.ts';
+import { handleIsDBEnabled } from '../../routing/route-handlers.ts';
 import { createBFFRouter } from '../../routing/route-helpers.ts';
 
 const userFeedbackRouterProtected = createBFFRouter({
@@ -34,7 +36,7 @@ const userFeedbackRouterAdmin = createBFFRouter({
   isEnabled: featureToggle.router.admin.isEnabled,
 });
 
-userFeedbackRouterAdmin.use(checkIfDbEnabled);
+userFeedbackRouterAdmin.use(handleIsDBEnabled);
 
 userFeedbackRouterAdmin.get(
   routes.admin.USER_FEEDBACK_OVERVIEW,

@@ -18,7 +18,8 @@ import type { RequestWithSession } from './admin-types.ts';
 import { loginStats, loginStatsTable } from './admin-visitors.ts';
 import { IS_AP, OTAP_ENV } from '../../../universal/config/env.ts';
 import { getFromEnv } from '../../helpers/env.ts';
-import { checkIfDbEnabled } from '../../routing/route-handlers.ts';
+import { logger } from '../../logging.ts';
+import { handleIsDBEnabled } from '../../routing/route-handlers.ts';
 import { createBFFRouter } from '../../routing/route-helpers.ts';
 
 // Public routes that don't require authentication.
@@ -34,7 +35,7 @@ if (!IS_ADMIN_AUTHENTICATION_MIDDLEWARE_ENABLED) {
     );
   }
   maAdminAuthRouterPublic.use((req, _res, next) => {
-    console.info(
+    logger.info(
       'Admin authentication middleware is disabled. All admin routes will be accessible without authentication.'
     );
 
@@ -61,23 +62,23 @@ const maAdminRouterProtected = createBFFRouter({
 
 maAdminRouterProtected.get(
   routes.protected.visitors.STATS_TABLE,
-  checkIfDbEnabled,
+  handleIsDBEnabled,
   loginStatsTable
 );
 maAdminRouterProtected.get(
   routes.protected.visitors.STATS,
-  checkIfDbEnabled,
+  handleIsDBEnabled,
   loginStats
 );
 
 maAdminRouterProtected.get(
   routes.protected.ACCOUNT,
-  checkIfDbEnabled,
+  handleIsDBEnabled,
   getAccountDataHandler
 );
 maAdminRouterProtected.put(
   routes.protected.ACCOUNT,
-  checkIfDbEnabled,
+  handleIsDBEnabled,
   express.json(),
   updateAccountDataHandler
 );
