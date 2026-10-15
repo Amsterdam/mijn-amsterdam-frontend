@@ -69,12 +69,16 @@ export function useToeristischeVerhuurThemaData() {
 
   const breadcrumbs = useThemaBreadcrumbs(themaConfig.id);
 
-  const extraPageLinks: LinkProps[] = [];if (hasVergunningenVakantieVerhuur) {
-  extraPageLinks.push(vvVergunningPageLinkItem);
-}
-if (hasVergunningBB) {
-  extraPageLinks.push(bbVergunningPageLinkItem, bbVergunningPageLinkItemOvergangsrecht);
-}
+  const extraPageLinks: LinkProps[] = [];
+  if (hasVergunningenVakantieVerhuur) {
+    extraPageLinks.push(vvVergunningPageLinkItem);
+  }
+  if (hasVergunningBB) {
+    extraPageLinks.push(
+      bbVergunningPageLinkItem,
+      bbVergunningPageLinkItemOvergangsrecht
+    );
+  }
 
   return {
     vergunningen,
