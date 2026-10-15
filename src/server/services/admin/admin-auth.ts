@@ -119,7 +119,9 @@ export async function handleCallback(req: Request, res: Response) {
 
 export async function handleLogout(req: Request, res: Response) {
   function redirect() {
-    return res.redirect(BFF_ADMIN_AUTH_POST_LOGOUT_REDIRECT_URI ?? '/');
+    return res.redirect(
+      getAdminRedirectUrl(BFF_ADMIN_AUTH_POST_LOGOUT_REDIRECT_URI ?? '')
+    );
   }
   if (!req.session) {
     return redirect();

@@ -10,7 +10,7 @@ vi.mock('../db/config.ts', async (importOriginal) => {
 });
 
 vi.mock('./admin-account.model.ts', () => ({
-  getOrCreateAccountData: vi.fn(),
+  getAndUpsertAccountData: vi.fn(),
   updateAccountData: vi.fn(),
 }));
 
