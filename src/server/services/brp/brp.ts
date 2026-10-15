@@ -354,24 +354,29 @@ export async function fetchBrpByBsnTransformed(
     to: translateBSN(bsn),
   });
 
-  const verblijfplaatshistorieResponse =
-    await fetchBrpVerblijfplaatsHistoryByBsnTransformed(
-      sessionID,
-      translateBSN(bsn),
-      transformedContent.persoon.geboortedatum,
-      transformedContent.adres?.begindatumVerblijf
-    );
+  if (featureToggle.service.fetchVerblijfplaatshistorie.isEnabled) {
+    const verblijfplaatshistorieResponse =
+      await fetchBrpVerblijfplaatsHistoryByBsnTransformed(
+        sessionID,
+        translateBSN(bsn),
+        transformedContent.persoon.geboortedatum,
+        transformedContent.adres?.begindatumVerblijf
+      );
 
-  if (verblijfplaatshistorieResponse.status === 'OK') {
-    transformedContent.adresHistorisch = verblijfplaatshistorieResponse.content;
+    if (verblijfplaatshistorieResponse.status === 'OK') {
+      transformedContent.adresHistorisch =
+        verblijfplaatshistorieResponse.content;
+    }
+
+    return apiSuccessResult(
+      transformedContent,
+      getFailedDependencies({
+        adresHistorisch: verblijfplaatshistorieResponse,
+      })
+    );
   }
 
-  return apiSuccessResult(
-    transformedContent,
-    getFailedDependencies({
-      adresHistorisch: verblijfplaatshistorieResponse,
-    })
-  );
+  return apiSuccessResult(transformedContent);
 }
 
 export async function fetchBrpVerblijfplaatsHistoryByBsn(
