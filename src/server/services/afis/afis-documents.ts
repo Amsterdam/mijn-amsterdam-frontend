@@ -71,7 +71,7 @@ export async function fetchAfisDocument(
       const simulationStartedAt = performance.now();
       const data2 = {
         Record: {
-          attachment: Buffer.alloc(3000 * 1024 * 1024).toString('base64'),
+          attachment: Buffer.alloc(100 * 1024 * 1024).toString('base64'),
           attachmentname: 'grote-factuur.pdf',
         },
       };
