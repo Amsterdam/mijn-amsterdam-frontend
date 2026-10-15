@@ -28,7 +28,7 @@ export function isAuthenticatedAdmin(
   next();
 }
 
-export async function adminIndexHandler(req: Request, res: Response) {
+export async function adminIndexHandler(_req: Request, res: Response) {
   const links = [
     {
       title: 'Cache overzicht',
@@ -39,10 +39,7 @@ export async function adminIndexHandler(req: Request, res: Response) {
     {
       title: 'Login statistieken',
       to: generateFullApiAdminUrlBFF(
-        adminRoutesGeneric.protected.visitors.STATS,
-        {
-          authMethod: 'private',
-        }
+        adminRoutesGeneric.protected.visitors.STATS_PRIVATE
       ),
     },
     {

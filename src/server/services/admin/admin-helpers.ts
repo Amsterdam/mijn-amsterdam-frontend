@@ -1,17 +1,19 @@
 import type { Request } from 'express';
 
+import { BFF_ADMIN_FRONTEND_URL } from './admin-service-config.ts';
 import type { RequestWithSession } from './admin-types.ts';
-import { generateMaFrontendUrl } from '../../routing/route-helpers.ts';
 
 export function getAdminRedirectUrl(url: string): string {
-  const adminHomeUrl = generateMaFrontendUrl('/admin');
-  const isAdminPath = url.startsWith('/admin/')
+  const adminFrontendUrl = new URL(BFF_ADMIN_FRONTEND_URL);
+  const adminPath = adminFrontendUrl.pathname.replace(/\/+$/, '');
+  const requestedUrl = new URL(url, adminFrontendUrl);
+  const isWithinAdminFrontend =
+    requestedUrl.origin === adminFrontendUrl.origin &&
+    requestedUrl.pathname.startsWith(adminPath);
 
-  if (!isAdminPath) {
-    return adminHomeUrl;
+  if (!isWithinAdminFrontend) {
+    return adminFrontendUrl.href;
   }
-
-  const requestedUrl = new URL(url, adminHomeUrl);
 
   return requestedUrl.href;
 }
