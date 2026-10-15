@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 
 import {
-  getOrCreateAccountData,
+  getAndUpsertAccountData,
   updateAccountData,
 } from './admin-account.model.ts';
 import {
@@ -17,7 +17,7 @@ import {
 
 export async function getAccountDataHandler(req: Request, res: Response) {
   const username = getUsernameFromSession(req);
-  const accountData = await getOrCreateAccountData(username);
+  const accountData = await getAndUpsertAccountData(username);
 
   return sendResponse(res, apiSuccessResult(accountData));
 }

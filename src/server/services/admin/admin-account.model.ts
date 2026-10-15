@@ -63,7 +63,7 @@ export async function getAccountData(
   return row ? toAccountData(ensureRow(row)) : null;
 }
 
-export async function getOrCreateAccountData(
+export async function getAndUpsertAccountData(
   username: string,
   now: Date = new Date()
 ): Promise<AccountApiData> {
