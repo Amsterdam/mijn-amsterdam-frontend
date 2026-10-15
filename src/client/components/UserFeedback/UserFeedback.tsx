@@ -8,7 +8,7 @@ import {
 } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
-import { FeedbackForm1 } from './FeedbackForm1.tsx';
+import { FeedbackForm } from './FeedbackForm.tsx';
 import { Rating } from './Rating.tsx';
 import styles from './UserFeedback.module.scss';
 import type { SurveyFrontend } from '../../../server/services/user-feedback/user-feedback.types.ts';
@@ -100,7 +100,7 @@ export function UserFeedback({
         </>
       ) : (
         isRated && (
-          <FeedbackForm1
+          <FeedbackForm
             onSubmit={onSubmit_}
             questions={otherQuestions}
             formData={formData}
