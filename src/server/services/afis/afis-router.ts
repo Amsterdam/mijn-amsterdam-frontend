@@ -40,7 +40,9 @@ const routerProtected = createBFFRouter({ id: 'afis-router-protected' });
 attachDocumentDownloadRoute(
   routerProtected,
   routes.protected.AFIS_DOCUMENT_DOWNLOAD,
-  fetchAfisDocument
+  fetchAfisDocument,
+  undefined,
+  'AFIS document download'
 );
 
 const PAYLOAD_QUERY_PARAM_NAME = 'id';
