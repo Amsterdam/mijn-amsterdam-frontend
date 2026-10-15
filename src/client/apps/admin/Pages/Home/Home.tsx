@@ -47,6 +47,7 @@ export function Home() {
       id="admin-home"
       pageContentTop={null}
       pageContentMain={pageContentMain}
+      pageLinks={[]}
     />
   );
 }
