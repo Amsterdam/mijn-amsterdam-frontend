@@ -46,7 +46,7 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
   route: {
     path: '/toeristische-verhuur',
     get documentTitle() {
-      return `${THEMA_TITLE} | overzicht`;
+      return `Overzicht | ${THEMA_TITLE}`;
     },
     trackingUrl: null,
   },
@@ -66,7 +66,7 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
       path: '/toeristische-verhuur/vergunning/:caseType/:id',
       trackingUrl: (params) =>
         `/toeristische-verhuur/vergunning/${params?.caseType ?? ''}`,
-      documentTitle: `Toeristische verhuur | ${THEMA_TITLE}`,
+      documentTitle: `Vergunning | ${THEMA_TITLE}`,
     },
   },
   listPage: {

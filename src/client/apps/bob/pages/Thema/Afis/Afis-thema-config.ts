@@ -51,7 +51,7 @@ export const themaConfig = {
   ],
   route: {
     path: '/facturen-en-betalen',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
+    documentTitle: `Overzicht | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   uitlegPageSections: [

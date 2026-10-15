@@ -90,7 +90,7 @@ export const themaConfig = {
   ],
   route: {
     path: '/erfpacht',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
+    documentTitle: `Overzicht | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   detailPageDossier: {

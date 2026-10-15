@@ -30,7 +30,7 @@ export const themaConfig: BodemThemaConfig = {
   route: {
     path: '/bodem',
     get documentTitle() {
-      return `${THEMA_TITLE} | Overzicht`;
+      return `Overzicht | ${THEMA_TITLE}`;
     },
     trackingUrl: null,
   },
