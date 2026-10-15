@@ -23,7 +23,7 @@ const HANDOFF_DEPARTMENTS: UserFeedbackHandoffConfigResponse['departments'] =
     })
     .toArray();
 
-const HANDOFF_CC_EMAIL = 'mijnamsterdam@amsterdam.nl';
+const HANDOFF_CC_EMAIL = process.env.MA_DEV_HANDOFF_EMAIL ?? '';
 
 const NEWLINE_SEPARATOR = encodeURIComponent('\n');
 
