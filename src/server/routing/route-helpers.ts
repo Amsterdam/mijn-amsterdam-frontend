@@ -144,8 +144,7 @@ export function generateFullApiAdminUrlBFF(
   path: string,
   params?: PathParams | QueryAndOrPathParams
 ) {
-  const path_ = path.replace(/[{}]/g, '');
-  return generateFullApiUrlBFF(path_, params, BFF_API_ADMIN_BASE_URL);
+  return generateFullApiUrlBFF(path, params, BFF_API_ADMIN_BASE_URL);
 }
 
 /** Sets the right statuscode and sends a response. */
