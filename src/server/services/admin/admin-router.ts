@@ -18,6 +18,7 @@ import type { RequestWithSession } from './admin-types.ts';
 import { loginStats, loginStatsTable } from './admin-visitors.ts';
 import { IS_AP, OTAP_ENV } from '../../../universal/config/env.ts';
 import { getFromEnv } from '../../helpers/env.ts';
+import { logger } from '../../logging.ts';
 import { handleIsDBEnabled } from '../../routing/route-handlers.ts';
 import { createBFFRouter } from '../../routing/route-helpers.ts';
 
@@ -34,7 +35,7 @@ if (!IS_ADMIN_AUTHENTICATION_MIDDLEWARE_ENABLED) {
     );
   }
   maAdminAuthRouterPublic.use((req, _res, next) => {
-    console.info(
+    logger.info(
       'Admin authentication middleware is disabled. All admin routes will be accessible without authentication.'
     );
 
