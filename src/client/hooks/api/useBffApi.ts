@@ -19,6 +19,10 @@ export type RequestInitWithPayload<P> = RequestInit & {
 
 type UrlOrString = URL | string;
 
+function omitPayloadAndBody<P>(init?: RequestInitWithPayload<P>) {
+  return init ? omit(init, ['payload', 'body']) : {};
+}
+
 async function handleResponse<T>(
   fetchFn: () => Promise<Response>
 ): ApiFetchResponse<T> {
@@ -68,7 +72,7 @@ export async function sendFormPostRequest<T, P = any>(
   url: string | URL,
   init?: RequestInitWithPayload<P>
 ): ApiFetchResponse<T> {
-  const init_ = init ? omit(init, ['payload', 'body']) : {};
+  const init_ = omitPayloadAndBody(init);
   const body = init?.payload ? new URLSearchParams(init.payload) : init?.body;
   return handleResponse<T>(() =>
     fetch(url, {
@@ -93,7 +97,7 @@ export async function sendJSONPostRequest<T, P = any>(
   url: string | URL,
   init?: RequestInitWithPayload<P>
 ): ApiFetchResponse<T> {
-  const init_ = init ? omit(init, ['payload', 'body']) : {};
+  const init_ = omitPayloadAndBody(init);
   const body = init?.payload ? JSON.stringify(init.payload) : init?.body;
   return handleResponse<T>(() =>
     fetch(url, {
