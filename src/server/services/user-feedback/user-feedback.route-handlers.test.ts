@@ -2,6 +2,7 @@ import type { Request } from 'express';
 import type { MockInstance } from 'vitest';
 import { describe, expect, vi, beforeEach } from 'vitest';
 
+import * as routeHandlersAdmin from './user-feedback.admin.route-handlers.ts';
 import * as routeHandlers from './user-feedback.route-handlers.ts';
 import * as userFeedback from './user-feedback.ts';
 import {
@@ -10,12 +11,9 @@ import {
 } from '../../../testing/utils.ts';
 import type { ResponseAuthenticated } from '../../routing/route-helpers.ts';
 
-const {
-  handleFetchSurvey,
-  handleFetchSurveyOverview,
-  handleUserFeedbackSubmission,
-  handleShowSurveyOverview,
-} = routeHandlers;
+const { handleFetchSurvey, handleUserFeedbackSubmission } = routeHandlers;
+const { handleFetchSurveyOverview, handleShowSurveyOverview } =
+  routeHandlersAdmin;
 
 describe('User Feedback Route Handlers', () => {
   let req: Request;

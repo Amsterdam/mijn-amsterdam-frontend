@@ -3,10 +3,12 @@ import express from 'express';
 import {
   handleCreateJiraTicket,
   handleDeleteJiraTicketMeta,
-  handleFetchSurvey,
   handleShowSurveyOverview,
   handleHandoffFeedbackToDepartment,
   handleUserFeedbackHandoffConfig,
+} from './user-feedback.admin.route-handlers.ts';
+import {
+  handleFetchSurvey,
   handleUserFeedbackSubmission,
 } from './user-feedback.route-handlers.ts';
 import { featureToggle, routes } from './user-feedback.service-config.ts';
