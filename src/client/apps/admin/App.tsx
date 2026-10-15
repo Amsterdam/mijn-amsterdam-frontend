@@ -35,13 +35,13 @@ function AppLanding() {
     welcomeLoader.remove();
   }
 
-  return (
-    <>
-      <PageHeader
-        brandName="Mijn Amsterdam - backoffice"
-        logoLink="/admin"
-        menuItems={
-          isAuthenticated ? (
+  if (isAuthenticated) {
+    return (
+      <>
+        <PageHeader
+          brandName="Mijn Amsterdam - backoffice"
+          logoLink="/admin"
+          menuItems={
             <>
               <PageHeader.MenuLink
                 linkComponent={MaRouterLink}
@@ -54,26 +54,30 @@ function AppLanding() {
                 Uitloggen
               </PageHeader.MenuLink>
             </>
-          ) : (
-            <PageHeader.MenuLink fixed href={LOGIN_URL}>
-              Inloggen
-            </PageHeader.MenuLink>
-          )
+          }
+        />
+        <Grid>
+          <PageContentCell>
+            <AppTabs />
+          </PageContentCell>
+        </Grid>
+        <PrivateRoutes />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <PageHeader
+        brandName="Mijn Amsterdam - backoffice"
+        logoLink="/admin"
+        menuItems={
+          <PageHeader.MenuLink fixed href={LOGIN_URL}>
+            Inloggen
+          </PageHeader.MenuLink>
         }
       />
-
-      {isAuthenticated ? (
-        <>
-          <Grid>
-            <PageContentCell>
-              <AppTabs />
-            </PageContentCell>
-          </Grid>
-          <PrivateRoutes />
-        </>
-      ) : (
-        <PublicRoutes />
-      )}
+      <PublicRoutes />
     </>
   );
 }
