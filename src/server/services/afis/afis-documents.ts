@@ -53,7 +53,14 @@ export async function fetchAfisDocument(
           'Afis document download - no valid response data provided'
         );
       }
-      const decodedDocument = Buffer.from(data.Record.attachment, 'base64');
+
+      const data2 = {
+        Record: {
+          attachment: Buffer.alloc(100 * 1024 * 1024).toString('base64'),
+          attachmentname: 'grote-factuur.pdf',
+        },
+      };
+      const decodedDocument = Buffer.from(data2.Record.attachment, 'base64');
       return {
         data: decodedDocument,
         mimetype: DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
