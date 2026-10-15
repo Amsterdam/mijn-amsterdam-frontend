@@ -140,7 +140,6 @@ export function TicketControls({
         {!!entry.administrationMeta?.jiraTicketNumber && (
           <Button
             title="Verwijder ticketreferentie. Ticket wordt -=NIET=- verwijderd in Jira."
-            variant="primary"
             onClick={handleDeleteTicket}
             disabled={isDeleting}
             icon={<CloseIcon />}
@@ -206,34 +205,34 @@ export function TicketControls({
         hasErrorCreating ||
         hasErrorDeleting ||
         hasErrorHandingOff) && (
-          <Paragraph className="ams-mb-s">
-            {(isCreating || isDeleting || isHandingOff) && (
-              <>
-                <Spinner /> Bezig met {isCreating && 'aanmaken'}
-                {isDeleting && 'verwijderen'}
-                {isHandingOff && 'overdragen'} van ticket...
-              </>
-            )}
-            {hasErrorDeleting && (
-              <>
-                Fout bij het verwijderen van de ticketreferentie. Probeer het
-                opnieuw.
-              </>
-            )}
-            {hasErrorCreating && (
-              <>
-                Fout bij het aanmaken van de ticketreferentie. Probeer het
-                opnieuw.
-              </>
-            )}
-            {hasErrorHandingOff && (
-              <>
-                Fout bij het doorsturen van de ticketreferentie. Probeer het
-                opnieuw.
-              </>
-            )}
-          </Paragraph>
-        )}
+        <Paragraph className="ams-mb-s">
+          {(isCreating || isDeleting || isHandingOff) && (
+            <>
+              <Spinner /> Bezig met {isCreating && 'aanmaken'}
+              {isDeleting && 'verwijderen'}
+              {isHandingOff && 'overdragen'} van ticket...
+            </>
+          )}
+          {hasErrorDeleting && (
+            <>
+              Fout bij het verwijderen van de ticketreferentie. Probeer het
+              opnieuw.
+            </>
+          )}
+          {hasErrorCreating && (
+            <>
+              Fout bij het aanmaken van de ticketreferentie. Probeer het
+              opnieuw.
+            </>
+          )}
+          {hasErrorHandingOff && (
+            <>
+              Fout bij het doorsturen van de ticketreferentie. Probeer het
+              opnieuw.
+            </>
+          )}
+        </Paragraph>
+      )}
     </Fragment>
   );
 }
