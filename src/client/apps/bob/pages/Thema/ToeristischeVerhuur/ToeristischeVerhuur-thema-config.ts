@@ -39,9 +39,7 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
     {
       title: 'Vakantieverhuur melden of registratienummer aanvragen',
       to: 'https://www.toeristischeverhuur.nl/portaal/login',
-       },
-
-
+    },
   ],
   route: {
     path: '/toeristische-verhuur',
