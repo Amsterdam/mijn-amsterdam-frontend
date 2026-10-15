@@ -82,6 +82,11 @@ export const bbVergunningPageLinkItem = {
   to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-aanvragen-voor-bed-breakfast/',
 } as const;
 
+export const bbVergunningPageLinkItemOvergangsrecht = {
+  title: 'Overgangsrecht Bed & Breakfast stopt 1 juli 2026',
+  to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-aanvragen-voor-bed-breakfast/',
+} as const;
+
 export const vvVergunningPageLinkItem = {
   title: 'Meer informatie over particuliere vakantieverhuur',
   to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/',
