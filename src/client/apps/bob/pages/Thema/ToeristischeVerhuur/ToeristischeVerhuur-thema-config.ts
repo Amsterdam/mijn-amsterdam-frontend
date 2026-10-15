@@ -40,10 +40,7 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
       title: 'Vakantieverhuur melden of registratienummer aanvragen',
       to: 'https://www.toeristischeverhuur.nl/portaal/login',
        },
- {
-      title: 'Overgangsrecht Bed & Breakfast stopt 1 juli 2026',
-      to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/huisvestingsvergunning/overgangsrecht-bed-breakfast-stopt/'
-    },
+
 
   ],
   route: {
