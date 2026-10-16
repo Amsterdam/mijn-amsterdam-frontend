@@ -392,6 +392,7 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
     assign: {
       maCategorie: ['D-08'],
       maActies: ['stopzetten'],
+      maActieUrls: maActieUrlsStopzetten,
     },
     'include.every': {
       isActueel: true,
@@ -408,6 +409,7 @@ export const jzdVoorzieningenApiConfig: JzdApiConfig[] = [
     assign: {
       maCategorie: ['E-01'],
       maActies: ['stopzetten'],
+      maActieUrls: maActieUrlsStopzetten,
     },
     'include.every': {
       isActueel: true,
