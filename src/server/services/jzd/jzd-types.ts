@@ -7,6 +7,13 @@ export type WithMaApiProps<T> = {
   maActieUrls:
     Record<string, string> | Record<string, (voorziening: T) => string>;
 };
+
+export type VoorzieningActiePropsFrontend = {
+  maActieUrls: Record<string, string>;
+  maActies: string[];
+  supplier: string | null; // Leverancier
+};
+
 export type WithMaApiPropsAssignments<T> = {
   [Key in keyof WithMaApiProps<T>]:
     WithMaApiProps<T>[Key] | MaApiPropAssignFN<T, Key, WithMaApiProps<T>[Key]>;

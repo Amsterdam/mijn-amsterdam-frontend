@@ -1,6 +1,6 @@
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
 
-import type { WMOVoorzieningFrontend } from '../../../server/services/jzd/wmo/wmo-types.ts';
+import type { VoorzieningActiePropsFrontend } from '../../../server/services/jzd/jzd-types.ts';
 import { isVoorzieningActieAvailable } from '../../apps/bob/pages/Thema/Zorg/Zorg-helpers.ts';
 import { themaConfig } from '../../apps/bob/pages/Thema/Zorg/Zorg-thema-config.ts';
 import {
@@ -10,7 +10,7 @@ import {
 import { PageContentCell } from '../Page/Page.tsx';
 
 type JZDVoorzieningActiesProps = {
-  voorziening: WMOVoorzieningFrontend;
+  voorziening: VoorzieningActiePropsFrontend;
 };
 
 export function JZDVoorzieningActies({

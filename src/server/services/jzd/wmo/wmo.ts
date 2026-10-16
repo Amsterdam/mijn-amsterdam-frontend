@@ -118,6 +118,8 @@ function transformVoorzieningForFrontend(
     displayStatus: getLatestStatus(steps),
     statusDate: getLatestStatusDate(steps),
     statusDateFormatted: getLatestStatusDate(steps, true),
+    maActieUrls: {},
+    maActies: [],
   };
 
   if (disclaimer) {

@@ -1,7 +1,7 @@
-import type { WMOVoorzieningFrontend } from '../../../../../../server/services/jzd/wmo/wmo-types.ts';
+import type { VoorzieningActiePropsFrontend } from '../../../../../../server/services/jzd/jzd-types.ts';
 
 export function isVoorzieningActieAvailable(
-  voorziening: WMOVoorzieningFrontend,
+  voorziening: VoorzieningActiePropsFrontend,
   actie: string,
   withUrlCheck = true
 ): boolean {
