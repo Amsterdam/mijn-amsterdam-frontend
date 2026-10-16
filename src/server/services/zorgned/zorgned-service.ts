@@ -216,7 +216,7 @@ export function transformZorgnedAanvragen(
   for (const aanvraagSource of aanvragenSource) {
     const beschikking = aanvraagSource?.beschikking;
 
-    const beschikteProducten = beschikking?.beschikteProducten;
+    const beschikteProducten = beschikking?.beschikteProducten ?? [];
 
     const isLLV =
       aanvraagSource.regeling?.identificatie?.toUpperCase() === 'LLV';
@@ -228,18 +228,16 @@ export function transformZorgnedAanvragen(
       }
     }
 
-    if (beschikteProducten) {
-      for (const beschiktProduct of beschikteProducten) {
-        if (beschiktProduct) {
-          const aanvraagTransformed = transformZorgnedAanvraag(
-            aanvraagSource,
-            beschikking,
-            beschiktProduct
-          );
+    for (const beschiktProduct of beschikteProducten) {
+      if (beschiktProduct) {
+        const aanvraagTransformed = transformZorgnedAanvraag(
+          aanvraagSource,
+          beschikking,
+          beschiktProduct
+        );
 
-          if (aanvraagTransformed) {
-            aanvragenTransformed.push(aanvraagTransformed);
-          }
+        if (aanvraagTransformed) {
+          aanvragenTransformed.push(aanvraagTransformed);
         }
       }
     }
