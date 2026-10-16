@@ -1,13 +1,17 @@
 import { generatePath } from 'react-router';
 
 import type { WMOVoorzieningFrontend } from '../../../../../../server/services/jzd/wmo/wmo-types.ts';
-import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
 import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
 } from '../../../../../../universal/types/thema-types.ts';
+import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
+import {
+  isEnabled,
+  propagateFeatureToggles,
+} from '../../../config/feature-toggles.ts';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
@@ -16,12 +20,13 @@ type ZorgThemaConfig = ThemaConfigBase & WithListPage & WithDetailPage;
 
 const THEMA_TITLE = 'Zorg en ondersteuning';
 
-export const themaConfig: ZorgThemaConfig = {
+export const themaConfig = {
   id: 'ZORG',
   title: THEMA_TITLE,
-  featureToggle: {
+  featureToggle: propagateFeatureToggles({
     active: true,
-  },
+    stopzetten: { active: isEnabled('ZORGNED.voorziening.stopzetten') },
+  }),
   redactedScope: 'full',
   profileTypes: ['private'],
   uitlegPageSections: [
@@ -59,7 +64,7 @@ export const themaConfig: ZorgThemaConfig = {
       documentTitle: `Voorziening | ${THEMA_TITLE}`,
     },
   },
-};
+} as const satisfies ZorgThemaConfig;
 
 export const listPageParamKind = {
   actual: 'huidige-voorzieningen',

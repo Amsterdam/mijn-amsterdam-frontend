@@ -104,8 +104,7 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
         </PageContentCell>
       )}
 
-      {/* Todo: link toevoegen voor stopzetten niet via formulier */}
-      {isStopzettenAvailable && (
+      {themaConfig.featureToggle.stopzetten.active && isStopzettenAvailable && (
         <PageContentCell spanWide={7}>
           <Heading level={4} size="level-4">
             Voorziening stopzetten
@@ -123,29 +122,31 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
           </Paragraph>
         </PageContentCell>
       )}
-      {isStopzettenNietViaFormulierAvailable && (
-        <PageContentCell spanWide={7}>
-          <Heading level={4} size="level-4">
-            Voorziening stopzetten
-          </Heading>
-          <Paragraph>
-            Wilt u deze voorziening stopzetten neem dan contact op met{' '}
-            {voorziening.supplier} met het verzoek deze voorziening stop te
-            zetten. Deze geeft aan de gemeente door dat de voorziening door u is
-            stopgezet. Het stopzetten duurt ongeveer 2 weken. U krijgt altijd
-            een bevestiging van de inname. De contact gegevens van{' '}
-            {voorziening.supplier} vindt u bij{' '}
-            <MaLink
-              href="https://www.amsterdam.nl/zorg-en-ondersteuning/"
-              rel="noopener noreferrer"
-            >
-              zorg en ondersteuning
-            </MaLink>{' '}
-            op amsterdam.nl. Als u een wijziging doorvoert kan het enige tijd
-            duren voordat deze in dit overzicht zichtbaar is in Mijn Amsterdam.
-          </Paragraph>
-        </PageContentCell>
-      )}
+      {themaConfig.featureToggle.stopzetten.active &&
+        isStopzettenNietViaFormulierAvailable && (
+          <PageContentCell spanWide={7}>
+            <Heading level={4} size="level-4">
+              Voorziening stopzetten
+            </Heading>
+            <Paragraph>
+              Wilt u deze voorziening stopzetten neem dan contact op met{' '}
+              {voorziening.supplier} met het verzoek deze voorziening stop te
+              zetten. Deze geeft aan de gemeente door dat de voorziening door u
+              is stopgezet. Het stopzetten duurt ongeveer 2 weken. U krijgt
+              altijd een bevestiging van de inname. De contact gegevens van{' '}
+              {voorziening.supplier} vindt u bij{' '}
+              <MaLink
+                href="https://www.amsterdam.nl/zorg-en-ondersteuning/"
+                rel="noopener noreferrer"
+              >
+                zorg en ondersteuning
+              </MaLink>{' '}
+              op amsterdam.nl. Als u een wijziging doorvoert kan het enige tijd
+              duren voordat deze in dit overzicht zichtbaar is in Mijn
+              Amsterdam.
+            </Paragraph>
+          </PageContentCell>
+        )}
     </>
   );
 }
