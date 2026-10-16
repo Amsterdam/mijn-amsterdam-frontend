@@ -196,7 +196,7 @@ describe('Transform api items', () => {
                 status: 'Einde recht',
               },
             ],
-            supplier: 'RMC Amsterdam',
+            leverancier: 'RMC Amsterdam',
             title: 'Wmo product',
           },
         ],
@@ -240,7 +240,7 @@ describe('Transform api items', () => {
       expect(voorziening).toMatchObject({
         id: '357-883696',
         title: 'Wmo product',
-        supplier: 'RMC Amsterdam',
+        leverancier: 'RMC Amsterdam',
         link: { title: 'Meer informatie' },
         itemTypeCode: 'WRA',
       });
