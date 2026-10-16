@@ -251,7 +251,7 @@ describe('Transform api items', () => {
         'stopzettenvoorzieningen.aspx?GUID=ID%3A357-883696'
       );
       expect(voorziening.maActieUrls?.reparatieverzoek).toContain(
-        'GUID=ID%3A357-883696'
+        'reparatieverzoeken.aspx?GUID=ID%3A357-883696'
       );
       expect(voorziening.documents[0]?.url).toContain('id=123-123-123-123');
     });
