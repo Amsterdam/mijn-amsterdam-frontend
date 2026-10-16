@@ -184,7 +184,7 @@ describe('fetchLeerlingenvervoer', () => {
           isActive: false,
           isChecked: true,
           isVisible: true,
-          status: 'In behandeling bij indicatieadviseur',
+          status: 'In behandeling',
         },
         {
           datePublished: '2025-04-07T09:44:48.697',
@@ -212,7 +212,7 @@ describe('fetchLeerlingenvervoer', () => {
     const descriptions = first.steps.map((step) => step.description);
     expect(descriptions[0]).toMatch(/Ontvangen op 27 maart 2025/);
     expect(descriptions[1]).toMatch(
-      /Uw melding wordt behandeld door een indicatieadviseur/
+      /Uw melding is in behandeling bij de gemeente./
     );
     expect(descriptions[2]).toMatch(
       /U krijgt aangepast groepsvervoer per 01 april 2025./
@@ -279,8 +279,7 @@ describe('fetchLeerlingenvervoer', () => {
       '/jeugd/voorziening/in-behandeling/3695853'
     );
     expect(behandeling).toMatchObject({
-      status: 'In behandeling bij indicatieadviseur',
-      hideDatePublished: true,
+      status: 'In behandeling',
       isActive: true,
       substeps: [
         {
@@ -293,9 +292,9 @@ describe('fetchLeerlingenvervoer', () => {
     });
     expect(melding.isActive).toBe(false);
     expect(melding.datePublished).toBe('2026-05-19');
-    expect(behandeling.datePublished).toBe('2026-08-10');
-    expect(voorziening.statusDate).toBe('2026-08-10');
-    expect(voorziening.statusDateFormatted).toBe('10 augustus 2026');
+    expect(behandeling.datePublished).toBe('2026-05-19');
+    expect(voorziening.statusDate).toBe('2026-05-19');
+    expect(voorziening.statusDateFormatted).toBe('19 mei 2026');
   });
 
   test('Shows when submitted additional information is being processed', async () => {
@@ -353,17 +352,12 @@ describe('fetchLeerlingenvervoer', () => {
     const [, behandeling] = response.content![0].steps;
 
     expect(behandeling).toMatchObject({
-      status: 'In behandeling bij indicatieadviseur',
-      datePublished: '2026-08-12',
+      status: 'In behandeling',
+      datePublished: '2026-05-19',
       isActive: true,
       substeps: [
         {
           status: 'Meer informatie nodig',
-          isActive: false,
-          isChecked: true,
-        },
-        {
-          status: 'Meer informatie in behandeling',
           isActive: true,
           isChecked: true,
         },
