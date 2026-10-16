@@ -55,6 +55,7 @@ export function JeugdDetail() {
       pageContentMain={
         !!voorziening && <JeugdDetailContent voorziening={voorziening} />
       }
+      statusStepsCollapsible
       breadcrumbs={breadcrumbs}
     />
   );

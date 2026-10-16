@@ -33,6 +33,7 @@ export async function fetchZorgnedAanvragenJeugd(
 ): Promise<ApiResponse<ZorgnedAanvraagTransformed[]>> {
   return fetchAanvragen(bsn, {
     zorgnedApiConfigKey: 'ZORGNED_LEERLINGENVERVOER',
+    includeAanvragenWithoutBeschiktProduct: true,
   });
 }
 
@@ -67,8 +68,8 @@ export interface LeerlingenvervoerVoorzieningFrontend extends ZaakAanvraagDetail
   itemTypeCode: ProductSoortCode | null;
   displayStatus:
     | 'Ontvangen'
-    | 'Behandeling bij indicatieadviseur'
-    | 'Meer informatie nodig'
+    | 'In behandeling'
+    | 'Meer informtie nodig'
     | 'Besluit genomen'
     | 'Einde recht';
   statusDate: string;
@@ -105,7 +106,9 @@ function transformVoorzieningenForFrontend(
         link: {
           title: 'Meer informatie',
           to: generatePath(themaConfig.detailPage.route.path, {
-            voorziening: slug(aanvraag.titel),
+            voorziening: hasDecision(aanvraag)
+              ? slug(aanvraag.titel)
+              : 'in-behandeling',
             id,
           }),
         },

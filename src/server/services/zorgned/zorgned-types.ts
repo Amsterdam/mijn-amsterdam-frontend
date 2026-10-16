@@ -283,6 +283,7 @@ export type ZorgnedApiConfigKey =
 export interface ZorgnedAanvragenServiceOptions {
   zorgnedApiConfigKey: ZorgnedApiConfigKey;
   requestBodyParams?: Record<string, string>;
+  includeAanvragenWithoutBeschiktProduct?: boolean;
 }
 
 export type BSN = AuthProfile['id'];

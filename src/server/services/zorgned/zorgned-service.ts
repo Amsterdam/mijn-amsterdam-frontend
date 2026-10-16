@@ -207,7 +207,13 @@ export function sortZorgnedAanvragenByDateAndId<T extends object>(
 }
 
 export function transformZorgnedAanvragen(
-  responseData: ZorgnedResponseDataSource
+  responseData: ZorgnedResponseDataSource,
+  {
+    includeAanvragenWithoutBeschiktProduct = false,
+  }: Pick<
+    ZorgnedAanvragenServiceOptions,
+    'includeAanvragenWithoutBeschiktProduct'
+  > = {}
 ): ZorgnedAanvraagTransformed[] {
   const aanvragenSource = responseData?._embedded?.aanvraag ?? [];
 
@@ -216,30 +222,25 @@ export function transformZorgnedAanvragen(
   for (const aanvraagSource of aanvragenSource) {
     const beschikking = aanvraagSource?.beschikking;
 
-    const beschikteProducten = beschikking?.beschikteProducten;
+    const beschikteProducten = beschikking?.beschikteProducten ?? [];
 
-    const isLLV =
-      aanvraagSource.regeling?.identificatie?.toUpperCase() === 'LLV';
-
-    if (!beschikteProducten?.length && isLLV) {
+    if (!beschikteProducten.length && includeAanvragenWithoutBeschiktProduct) {
       const aanvraagTransformed = transformZorgnedAanvraag(aanvraagSource);
       if (aanvraagTransformed) {
         aanvragenTransformed.push(aanvraagTransformed);
       }
     }
 
-    if (beschikteProducten) {
-      for (const beschiktProduct of beschikteProducten) {
-        if (beschiktProduct) {
-          const aanvraagTransformed = transformZorgnedAanvraag(
-            aanvraagSource,
-            beschikking,
-            beschiktProduct
-          );
+    for (const beschiktProduct of beschikteProducten) {
+      if (beschiktProduct) {
+        const aanvraagTransformed = transformZorgnedAanvraag(
+          aanvraagSource,
+          beschikking,
+          beschiktProduct
+        );
 
-          if (aanvraagTransformed) {
-            aanvragenTransformed.push(aanvraagTransformed);
-          }
+        if (aanvraagTransformed) {
+          aanvragenTransformed.push(aanvraagTransformed);
         }
       }
     }
@@ -363,7 +364,8 @@ export async function fetchAanvragen(
   return fetchZorgnedByBSN(bsn, {
     ...options,
     path: '/aanvragen',
-    transform: transformZorgnedAanvragen,
+    transform: (responseData: ZorgnedResponseDataSource) =>
+      transformZorgnedAanvragen(responseData, options),
   });
 }
 

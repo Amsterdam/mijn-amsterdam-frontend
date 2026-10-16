@@ -136,12 +136,18 @@ function Step({
 }
 
 type StepsProps = {
+  collapsible?: boolean;
   steps: StatusLineItem[];
   title?: string;
   showSubstepHeading?: boolean;
 };
 
-export function Steps({ steps, title, showSubstepHeading = true }: StepsProps) {
+export function Steps({
+  collapsible = false,
+  steps,
+  title,
+  showSubstepHeading = true,
+}: StepsProps) {
   return (
     <section>
       {title && (
@@ -149,7 +155,7 @@ export function Steps({ steps, title, showSubstepHeading = true }: StepsProps) {
           {title}
         </Heading>
       )}
-      <ProgressList headingLevel={3} collapsible={false}>
+      <ProgressList headingLevel={3} collapsible={collapsible}>
         {steps
           .filter((step) => step.isVisible !== false)
           .map((item) => (
