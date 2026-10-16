@@ -21,13 +21,14 @@ function JeugdDetailContent({ voorziening }: ContentProps) {
   return (
     <PageContentCell>
       {!!rows.length && <Datalist rows={rows} />}
-      <JZDVoorzieningActies voorziening={voorziening} />
       {voorziening?.documents.length > 0 && (
         <DocumentListV2
           documents={voorziening.documents}
           columns={['Brieven', 'Verzenddatum']}
+          className="ams-mb-l"
         />
       )}
+      <JZDVoorzieningActies voorziening={voorziening} />
     </PageContentCell>
   );
 }
