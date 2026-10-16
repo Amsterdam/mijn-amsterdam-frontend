@@ -1,13 +1,13 @@
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
 
-import { isVoorzieningActieAvailable } from './Zorg-helpers.ts';
-import { themaConfig } from './Zorg-thema-config.ts';
-import type { WMOVoorzieningFrontend } from '../../../../../../server/services/jzd/wmo/wmo-types.ts';
+import type { WMOVoorzieningFrontend } from '../../../server/services/jzd/wmo/wmo-types.ts';
+import { isVoorzieningActieAvailable } from '../../apps/bob/pages/Thema/Zorg/Zorg-helpers.ts';
+import { themaConfig } from '../../apps/bob/pages/Thema/Zorg/Zorg-thema-config.ts';
 import {
   MaButtonLink,
   MaLink,
-} from '../../../../../components/MaLink/MaLink.tsx';
-import { PageContentCell } from '../../../../../components/Page/Page.tsx';
+} from '../MaLink/MaLink.tsx';
+import { PageContentCell } from '../Page/Page.tsx';
 
 type JZDVoorzieningActiesProps = {
   voorziening: WMOVoorzieningFrontend;

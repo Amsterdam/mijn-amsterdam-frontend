@@ -1,10 +1,10 @@
-import { JZDVoorzieningActies } from './JZDVoorzieningActies.tsx';
 import { useZorgDetailData } from './useZorgDetailData.hook.ts';
 import { themaConfig } from './Zorg-thema-config.ts';
 import type { WMOVoorzieningFrontend } from '../../../../../../server/services/jzd/wmo/wmo-types.ts';
 import { ErrorAlert } from '../../../../../components/Alert/Alert.tsx';
 import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
 import { DocumentListV2 } from '../../../../../components/DocumentList/DocumentListV2.tsx';
+import { JZDVoorzieningActies } from '../../../../../components/JZDVoorzieningActies/JZDVoorzieningActies.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
