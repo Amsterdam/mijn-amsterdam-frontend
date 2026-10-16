@@ -275,6 +275,9 @@ describe('fetchLeerlingenvervoer', () => {
     const [voorziening] = response.content!;
     const [melding, behandeling] = voorziening.steps;
 
+    expect(voorziening.link.to).toBe(
+      '/jeugd/voorziening/in-behandeling/3695853'
+    );
     expect(behandeling).toMatchObject({
       status: 'In behandeling bij indicatieadviseur',
       hideDatePublished: true,

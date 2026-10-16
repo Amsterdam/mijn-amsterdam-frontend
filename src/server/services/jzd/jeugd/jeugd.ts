@@ -106,7 +106,9 @@ function transformVoorzieningenForFrontend(
         link: {
           title: 'Meer informatie',
           to: generatePath(themaConfig.detailPage.route.path, {
-            voorziening: slug(aanvraag.titel),
+            voorziening: hasDecision(aanvraag)
+              ? slug(aanvraag.titel)
+              : 'in-behandeling',
             id,
           }),
         },
