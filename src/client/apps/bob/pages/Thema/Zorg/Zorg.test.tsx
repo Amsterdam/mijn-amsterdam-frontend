@@ -13,7 +13,7 @@ const testState: Pick<AppState, 'WMO'> = {
       {
         id: 'wmo-item-1',
         title: 'Wmo item 1',
-        supplier: 'Mantelzorg B.V',
+        leverancier: 'Mantelzorg B.V',
         dateDecision: '2020-07-24',
         dateDecisionFormatted: '24 juli 2020',
         statusDate: '2020-09-24',
@@ -23,6 +23,8 @@ const testState: Pick<AppState, 'WMO'> = {
           to: 'http://example.org/ding',
           title: 'Linkje!! naar wmo item 1',
         },
+        maActies: [],
+        maActieUrls: {},
         displayStatus: 'Levering gestart',
         decision: 'Klaar',
         documents: [],

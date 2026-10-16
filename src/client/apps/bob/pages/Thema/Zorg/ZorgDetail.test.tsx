@@ -15,7 +15,7 @@ const testState = {
       {
         id: 'wmo-item-1',
         title: 'Wmo item 1',
-        supplier: 'Mantelzorg B.V',
+        leverancier: 'Mantelzorg B.V',
         isActual: true,
         documents: [],
         link: {
@@ -38,7 +38,7 @@ const testState = {
         title: 'Hulp bij het huishouden (nog niet geleverd)',
         dateStart: '15 januari 2022',
         dateEnd: '',
-        supplier: 'Emile Thuiszorg',
+        leverancier: 'Emile Thuiszorg',
         isActual: true,
         documents: [],
         link: {
@@ -92,7 +92,7 @@ const testState = {
         title: 'Hulp bij het huishouden (geleverd)',
         dateStart: '15 december 2021',
         dateEnd: '',
-        supplier: 'Emile Thuiszorg',
+        leverancier: 'Emile Thuiszorg',
         isActual: true,
         documents: [],
         link: {
@@ -146,7 +146,7 @@ const testState = {
         title: 'Hulp bij het huishouden (tijdelijk gestopt)',
         dateStart: '15 december 2021',
         dateEnd: '',
-        supplier: 'Emile Thuiszorg',
+        leverancier: 'Emile Thuiszorg',
         isActual: true,
         documents: [],
         link: {
@@ -200,7 +200,7 @@ const testState = {
         title: 'Hulp bij het huishouden (gestopt)',
         dateStart: '15 december 2021',
         dateEnd: '22 januari 2022',
-        supplier: 'Emile Thuiszorg',
+        leverancier: 'Emile Thuiszorg',
         isActual: false,
         documents: [],
         link: {
@@ -252,7 +252,7 @@ const testState = {
       {
         id: 'wra-product-1',
         title: 'WRA product',
-        supplier: 'Mantelzorg B.V',
+        leverancier: 'Mantelzorg B.V',
         isActual: true,
         documents: [],
         link: {

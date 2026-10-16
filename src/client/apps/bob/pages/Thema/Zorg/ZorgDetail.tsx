@@ -1,13 +1,10 @@
-import { Paragraph } from '@amsterdam/design-system-react';
-
 import { useZorgDetailData } from './useZorgDetailData.hook.ts';
-import { isVoorzieningActieAvailable } from './Zorg-helpers.ts';
 import { themaConfig } from './Zorg-thema-config.ts';
 import type { WMOVoorzieningFrontend } from '../../../../../../server/services/jzd/wmo/wmo-types.ts';
 import { ErrorAlert } from '../../../../../components/Alert/Alert.tsx';
 import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
 import { DocumentListV2 } from '../../../../../components/DocumentList/DocumentListV2.tsx';
-import { MaButtonLink } from '../../../../../components/MaLink/MaLink.tsx';
+import { JZDVoorzieningActies } from '../../../../../components/JZDVoorzieningActies/JZDVoorzieningActies.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
@@ -21,19 +18,9 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
   if (voorziening?.decision) {
     rows.push({ content: voorziening?.decision, label: 'Resultaat' });
   }
-  if (voorziening?.supplier) {
-    rows.push({ content: voorziening?.supplier, label: 'Aanbieder' });
+  if (voorziening?.leverancier) {
+    rows.push({ content: voorziening?.leverancier, label: 'Aanbieder' });
   }
-
-  const isReparatieverzoekAvailable = isVoorzieningActieAvailable(
-    voorziening,
-    'reparatieverzoek'
-  );
-  const isPGBReparatieverzoek = isVoorzieningActieAvailable(
-    voorziening,
-    'pgb-reparatieverzoek',
-    false
-  );
 
   return (
     <>
@@ -52,37 +39,11 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
           <DocumentListV2
             documents={voorziening.documents}
             columns={['Bestanden', 'Verzenddatum']}
+            className="ams-mb-l"
           />
         )}
+        <JZDVoorzieningActies voorziening={voorziening} />
       </PageContentCell>
-      {(isReparatieverzoekAvailable || isPGBReparatieverzoek) && (
-        <PageContentCell spanWide={7}>
-          {isReparatieverzoekAvailable && (
-            <>
-              <Paragraph className="ams-mb-m">
-                <strong>Reparatieverzoek aanvragen<br/></strong>
-                U kunt een reparatie verzoek voor deze voorziening aanvragen door het reparatieverzoek
-formulier in te vullen.
-              </Paragraph>
-              <MaButtonLink
-                href={voorziening?.maActieUrls?.reparatieverzoek}
-                rel="noopener noreferrer"
-              >
-                Reparatieverzoek indienen
-              </MaButtonLink>
-            </>
-          )}
-          {isPGBReparatieverzoek && (
-
-            <Paragraph>
-              <strong>Reparatieverzoek aanvragen<br/></strong>
-              Heeft u de woningaanpassing met een pgb aangeschaft? Dan moet u
-              zelf de kosten voor reparatie en onderhoud betalen met uw pgb. Bij
-              uw pgb is hiervoor een bedrag inbegrepen.
-            </Paragraph>
-          )}
-        </PageContentCell>
-      )}
     </>
   );
 }

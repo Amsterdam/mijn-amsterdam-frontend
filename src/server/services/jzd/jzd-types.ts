@@ -1,18 +1,25 @@
 import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 
-export type WithMaApiProps = {
+export type WithMaApiProps<T> = {
   maCategorie: string[];
   maActies: string[];
   maProductgroep: string;
+  maActieUrls:
+    Record<string, string> | Record<string, (voorziening: T) => string>;
+};
+
+export type VoorzieningActiePropsFrontend = {
   maActieUrls: Record<string, string>;
+  maActies: string[];
+  leverancier: string | null;
 };
+
 export type WithMaApiPropsAssignments<T> = {
-  [Key in keyof WithMaApiProps]:
-    | WithMaApiProps[Key]
-    | MaApiPropAssignFN<T, Key, WithMaApiProps[Key]>;
+  [Key in keyof WithMaApiProps<T>]:
+    WithMaApiProps<T>[Key] | MaApiPropAssignFN<T, Key, WithMaApiProps<T>[Key]>;
 };
-export type ZorgnedAanvraagTransformedWithMaApiProps =
-  ZorgnedAanvraagTransformed & Partial<WithMaApiProps>;
+export type ZorgnedAanvraagTransformedWithMaApiProps = ZorgnedAanvraagTransformed &
+  Partial<WithMaApiProps<ZorgnedAanvraagTransformed>>;
 
 export type MaApiPropAssignFN<T, K, V> = (voorziening: T, key: K) => V;
 export type MaApiPropMatchFN<T> = (voorziening: T) => boolean;
