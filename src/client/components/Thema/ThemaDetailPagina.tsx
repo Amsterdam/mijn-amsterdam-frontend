@@ -35,6 +35,7 @@ interface ThemaDetailPaginaProps<T> {
   title?: string;
   className?: string;
   showStatusSteps?: boolean;
+  statusStepsCollapsible?: boolean;
   showStatusStepsSubstepHeading?: boolean;
 }
 
@@ -52,6 +53,7 @@ export function ThemaDetailPagina<T extends Partial<ZaakAanvraagDetail>>({
   reverseSteps = false,
   statusLabel = 'Status',
   showStatusSteps = true,
+  statusStepsCollapsible = false,
   showStatusStepsSubstepHeading = true,
 }: ThemaDetailPaginaProps<T>) {
   let statusItemSteps = zaak?.steps ?? [];
@@ -94,6 +96,7 @@ export function ThemaDetailPagina<T extends Partial<ZaakAanvraagDetail>>({
           <Steps
             title={statusLabel}
             steps={statusItemSteps}
+            collapsible={statusStepsCollapsible}
             showSubstepHeading={showStatusStepsSubstepHeading}
           />
         </PageContentCell>
