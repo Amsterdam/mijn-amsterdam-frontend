@@ -37,6 +37,7 @@ export const routes = {
   },
   // Privately accessible over private network
   private: {
+    STADSPAS_ADMINISTRATIENUMMER: `${AMSAPP_BASE_PATH}/stadspas/administratienummer`,
     STADSPAS_PASSEN: `${AMSAPP_BASE_PATH}/stadspas/passen/:administratienummerEncrypted`,
     STADSPAS_DISCOUNT_TRANSACTIONS: `${AMSAPP_BASE_PATH}/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
     STADSPAS_BUDGET_TRANSACTIONS: `${AMSAPP_BASE_PATH}/stadspas/budget/transactions/:transactionsKeyEncrypted`,
