@@ -1,13 +1,27 @@
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
 
 import type { VoorzieningActiePropsFrontend } from '../../../server/services/jzd/jzd-types.ts';
-import { isVoorzieningActieAvailable } from '../../apps/bob/pages/Thema/Zorg/Zorg-helpers.ts';
 import { themaConfig } from '../../apps/bob/pages/Thema/Zorg/Zorg-thema-config.ts';
 import {
   MaButtonLink,
   MaLink,
 } from '../MaLink/MaLink.tsx';
 import { PageContentCell } from '../Page/Page.tsx';
+
+
+function isVoorzieningActieAvailable(
+  voorziening: VoorzieningActiePropsFrontend,
+  actie: string,
+  withUrlCheck = true
+): boolean {
+  if (voorziening?.maActies?.includes(actie)) {
+    if (withUrlCheck) {
+      return !!voorziening?.maActieUrls?.[actie];
+    }
+    return true;
+  }
+  return false;
+}
 
 type JZDVoorzieningActiesProps = {
   voorziening: VoorzieningActiePropsFrontend;
