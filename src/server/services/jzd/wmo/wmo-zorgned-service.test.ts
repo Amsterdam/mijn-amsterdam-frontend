@@ -166,14 +166,15 @@ describe('wmo-zorgned-service', () => {
       },
       documenten: [],
     });
+    const datumIngangGeldigheid = '2023-05-06';
     const aanvraagCancelled = createAanvraag(
       'cancelled',
-      '2023-05-06',
-      '2023-05-06'
+      datumIngangGeldigheid,
+      datumIngangGeldigheid
     );
     const aanvraagNotCancelled = createAanvraag(
       'not-cancelled',
-      '2023-05-06',
+      datumIngangGeldigheid,
       '2023-05-07'
     );
     const aanvraagNotCancellable = createAanvraag(
