@@ -245,6 +245,11 @@ describe('Transform api items', () => {
       expect(voorziening.maActies).toEqual(
         expect.arrayContaining(['reparatieverzoek', 'stopzetten'])
       );
+      expect(voorziening.maActieUrls).toHaveProperty('stopzetten');
+      expect(voorziening.maActieUrls).toHaveProperty('reparatieverzoek');
+      expect(voorziening.maActieUrls?.stopzetten).toContain(
+        'stopzettenvoorzieningen.aspx?GUID=ID%3A357-883696'
+      );
       expect(voorziening.maActieUrls?.reparatieverzoek).toContain(
         'GUID=ID%3A357-883696'
       );
@@ -276,8 +281,11 @@ describe('Transform api items', () => {
       expect(voorziening.maActies).toEqual(
         expect.arrayContaining(['stopzetten'])
       );
+      expect(voorziening.maActieUrls?.stopzetten).toContain(
+        'stopzettenvoorzieningen.aspx?GUID=ID%3A357-883696'
+      );
       expect(voorziening.maActies).not.toContain('reparatieverzoek');
-      expect(voorziening.maActieUrls).toBeUndefined();
+      expect(voorziening.maActieUrls).not.toHaveProperty('reparatieverzoek');
     });
 
     it('assigns PGB-specific MA action for WRA/PGB voorziening', async () => {
@@ -304,8 +312,12 @@ describe('Transform api items', () => {
       expect(voorziening.maActies).toEqual(
         expect.arrayContaining(['pgb-reparatieverzoek', 'stopzetten'])
       );
+        expect(voorziening.maActieUrls).toHaveProperty('stopzetten');
+        expect(voorziening.maActieUrls?.stopzetten).toContain(
+          'stopzettenvoorzieningen.aspx?GUID=ID%3A357-883696'
+        );
       expect(voorziening.maActies).not.toContain('reparatieverzoek');
-      expect(voorziening.maActieUrls).toBeUndefined();
+      expect(voorziening.maActieUrls).not.toHaveProperty('reparatieverzoek');
     });
   });
 
