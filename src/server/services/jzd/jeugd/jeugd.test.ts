@@ -177,7 +177,7 @@ describe('fetchLeerlingenvervoer', () => {
           isActive: false,
           isChecked: true,
           isVisible: true,
-          status: 'Behandeling bij indicatieadviseur',
+          status: 'In behandeling bij indicatieadviseur',
         },
         {
           datePublished: '2025-04-07T09:44:48.697',
@@ -269,7 +269,7 @@ describe('fetchLeerlingenvervoer', () => {
     const [melding, behandeling] = voorziening.steps;
 
     expect(behandeling).toMatchObject({
-      status: 'Behandeling bij indicatieadviseur',
+      status: 'In behandeling bij indicatieadviseur',
       hideDatePublished: true,
       isActive: true,
       substeps: [
@@ -343,7 +343,7 @@ describe('fetchLeerlingenvervoer', () => {
     const [, behandeling] = response.content![0].steps;
 
     expect(behandeling).toMatchObject({
-      status: 'Behandeling bij indicatieadviseur',
+      status: 'In behandeling bij indicatieadviseur',
       datePublished: '2026-08-12',
       isActive: true,
       substeps: [
