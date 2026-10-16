@@ -136,6 +136,13 @@ describe('fetchLeerlingenvervoer', () => {
     });
 
     const response = await fetchLeerlingenvervoer(AUTH_PROFILE_AND_TOKEN);
+    expect(fetchAanvragen).toHaveBeenCalledWith(
+      AUTH_PROFILE_AND_TOKEN.profile.id,
+      {
+        zorgnedApiConfigKey: 'ZORGNED_LEERLINGENVERVOER',
+        includeAanvragenWithoutBeschiktProduct: true,
+      }
+    );
     const first = response.content![0];
 
     const expected = {

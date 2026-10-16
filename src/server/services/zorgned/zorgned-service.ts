@@ -207,7 +207,11 @@ export function sortZorgnedAanvragenByDateAndId<T extends object>(
 }
 
 export function transformZorgnedAanvragen(
-  responseData: ZorgnedResponseDataSource
+  responseData: ZorgnedResponseDataSource,
+  { includeAanvragenWithoutBeschiktProduct = false }: Pick<
+    ZorgnedAanvragenServiceOptions,
+    'includeAanvragenWithoutBeschiktProduct'
+  > = {}
 ): ZorgnedAanvraagTransformed[] {
   const aanvragenSource = responseData?._embedded?.aanvraag ?? [];
 
@@ -218,10 +222,7 @@ export function transformZorgnedAanvragen(
 
     const beschikteProducten = beschikking?.beschikteProducten ?? [];
 
-    const isLLV =
-      aanvraagSource.regeling?.identificatie?.toUpperCase() === 'LLV';
-
-    if (!beschikteProducten?.length && isLLV) {
+    if (!beschikteProducten.length && includeAanvragenWithoutBeschiktProduct) {
       const aanvraagTransformed = transformZorgnedAanvraag(aanvraagSource);
       if (aanvraagTransformed) {
         aanvragenTransformed.push(aanvraagTransformed);
@@ -361,7 +362,8 @@ export async function fetchAanvragen(
   return fetchZorgnedByBSN(bsn, {
     ...options,
     path: '/aanvragen',
-    transform: transformZorgnedAanvragen,
+    transform: (responseData) =>
+      transformZorgnedAanvragen(responseData, options),
   });
 }
 

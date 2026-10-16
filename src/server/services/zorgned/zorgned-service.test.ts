@@ -216,6 +216,42 @@ describe('zorgned-service', () => {
       ).toStrictEqual([]);
     });
 
+    test('includes applications without products only when configured', () => {
+      const response: ZorgnedResponseDataSource = {
+        _embedded: {
+          aanvraag: [
+            {
+              identificatie: 'aanvraag-1',
+              datumAanvraag: '2025-03-01',
+              documenten: [],
+              regeling: {
+                identificatie: 'OTHER',
+                omschrijving: 'Other regulation',
+              },
+              procesIdentificatie: '',
+              casusIdentificatie: null,
+              beschikking: {
+                beschikkingNummer: 1,
+                beschikteProducten: [],
+              },
+            },
+          ],
+        },
+      };
+
+      expect(forTesting.transformZorgnedAanvragen(response)).toHaveLength(0);
+
+      const transformed = forTesting.transformZorgnedAanvragen(response, {
+        includeAanvragenWithoutBeschiktProduct: true,
+      });
+
+      expect(transformed).toHaveLength(1);
+      expect(transformed[0]).toMatchObject({
+        id: 'aanvraag-1',
+        regelingIdentificatie: 'OTHER',
+      });
+    });
+
     test('should not mutate source or result arrays', () => {
       const response: ZorgnedResponseDataSource =
         ZORGNED_WMO_AANVRAGEN as unknown as ZorgnedResponseDataSource;

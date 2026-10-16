@@ -33,6 +33,7 @@ export async function fetchZorgnedAanvragenJeugd(
 ): Promise<ApiResponse<ZorgnedAanvraagTransformed[]>> {
   return fetchAanvragen(bsn, {
     zorgnedApiConfigKey: 'ZORGNED_LEERLINGENVERVOER',
+    includeAanvragenWithoutBeschiktProduct: true,
   });
 }
 
