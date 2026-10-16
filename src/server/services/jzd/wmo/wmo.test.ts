@@ -148,6 +148,8 @@ describe('Transform api items', () => {
               title: 'Meer informatie',
               to: '/zorg-en-ondersteuning/voorziening/wmo-product/357-883696',
             },
+            maActieUrls: {},
+            maActies: [],
             statusDate: '2022-10-18',
             statusDateFormatted: '18 oktober 2022',
             steps: [
