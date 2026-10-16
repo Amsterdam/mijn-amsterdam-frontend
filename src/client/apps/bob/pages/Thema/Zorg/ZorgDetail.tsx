@@ -40,8 +40,7 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
 
   const isStopzettenAvailable = isVoorzieningActieAvailable(
     voorziening,
-    'stopzetten',
-    false
+    'stopzetten'
   );
 
   const isStopzettenNietViaFormulierAvailable = isVoorzieningActieAvailable(
