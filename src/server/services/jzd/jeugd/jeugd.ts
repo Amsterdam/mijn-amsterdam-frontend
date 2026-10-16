@@ -15,10 +15,8 @@ import type {
   ZaakAanvraagDetail,
 } from '../../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../../auth/auth-types.ts';
-import {
-  getLatestStatus,
-  getLatestStatusDate,
-} from '../../../helpers/zaken.ts';
+import { getLatestStatus } from '../../../helpers/zaken.ts';
+import { getLatestStatusDate } from '../../../statusline.ts';
 import { fetchAanvragen } from '../../zorgned/zorgned-service.ts';
 import { getStatusLineItems } from '../../zorgned/zorgned-status-line-items.ts';
 import type {
@@ -26,7 +24,7 @@ import type {
   ProductSoortCode,
   ZorgnedAanvraagTransformed,
 } from '../../zorgned/zorgned-types.ts';
-import { routes } from '../jzd-service-config.ts';
+import { featureToggle, routes } from '../jzd-service-config.ts';
 import { hasDecision } from '../wmo/status-line-items/wmo-generic.ts';
 import { getDocuments } from '../wmo/wmo.ts';
 
@@ -35,6 +33,7 @@ export async function fetchZorgnedAanvragenJeugd(
 ): Promise<ApiResponse<ZorgnedAanvraagTransformed[]>> {
   return fetchAanvragen(bsn, {
     zorgnedApiConfigKey: 'ZORGNED_LEERLINGENVERVOER',
+    includeAanvragenWithoutBeschiktProduct: true,
   });
 }
 
@@ -48,9 +47,13 @@ export async function fetchLeerlingenvervoer(
     return aanvragenResponse;
   }
 
+  const aanvragen = featureToggle.service.llvInBehandeling
+    ? aanvragenResponse.content
+    : aanvragenResponse.content.filter((aanvraag) => !!aanvraag.resultaat);
+
   const voorzieningen = transformVoorzieningenForFrontend(
     authProfileAndToken.profile.sid,
-    aanvragenResponse.content,
+    aanvragen,
     new Date()
   );
   return apiSuccessResult(voorzieningen);
@@ -62,11 +65,11 @@ export interface LeerlingenvervoerVoorzieningFrontend extends ZaakAanvraagDetail
   decision: string;
   documents: GenericDocument[];
   isActual: boolean;
-  itemTypeCode: ProductSoortCode;
+  itemTypeCode: ProductSoortCode | null;
   displayStatus:
     | 'Ontvangen'
     | 'In behandeling'
-    | 'Meer informatie nodig'
+    | 'Meer informtie nodig'
     | 'Besluit genomen'
     | 'Einde recht';
   statusDate: string;
@@ -103,7 +106,9 @@ function transformVoorzieningenForFrontend(
         link: {
           title: 'Meer informatie',
           to: generatePath(themaConfig.detailPage.route.path, {
-            voorziening: slug(aanvraag.titel),
+            voorziening: hasDecision(aanvraag)
+              ? slug(aanvraag.titel)
+              : 'in-behandeling',
             id,
           }),
         },

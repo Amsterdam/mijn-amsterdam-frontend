@@ -23,8 +23,8 @@ const besluitGenomenState: AppState['JEUGD'] = {
       steps: [
         {
           id: 'status-step-0',
-          status: 'Aanvraag ontvangen',
-          description: '<p>Uw aanvraag is ontvangen.</p>',
+          status: 'Melding ontvangen',
+          description: '<p>Uw melding is ontvangen.</p>',
           datePublished: '',
           isActive: false,
           isChecked: true,
@@ -33,8 +33,8 @@ const besluitGenomenState: AppState['JEUGD'] = {
         },
         {
           id: 'status-step-1',
-          status: 'In behandeling',
-          description: '<p>Uw aanvraag is in behandeling.</p>',
+          status: 'Behandeling bij indicatieadviseur',
+          description: '<p>Uw melding wordt behandeld door een indicatieadviseur.</p>',
           datePublished: '2025-03-27',
           isActive: false,
           isChecked: true,
@@ -119,8 +119,10 @@ test('Static elements', async () => {
   const statusTreinContainer = within(
     statusTreinHeader.parentElement.parentElement
   );
-  statusTreinContainer.getByRole('heading', { name: /Aanvraag ontvangen/ });
-  statusTreinContainer.getByRole('heading', { name: /In behandeling/ });
+  statusTreinContainer.getByRole('heading', { name: /Melding ontvangen/ });
+  statusTreinContainer.getByRole('heading', {
+    name: /Behandeling bij indicatieadviseur/,
+  });
   statusTreinContainer.getByRole('heading', { name: /Besluit genomen/ });
   statusTreinContainer.getByRole('heading', { name: /Einde recht/ });
 });
