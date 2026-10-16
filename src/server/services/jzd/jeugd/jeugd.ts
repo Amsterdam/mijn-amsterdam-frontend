@@ -68,8 +68,8 @@ export interface LeerlingenvervoerVoorzieningFrontend extends ZaakAanvraagDetail
   itemTypeCode: ProductSoortCode | null;
   displayStatus:
     | 'Ontvangen'
-    | 'Behandeling bij indicatieadviseur'
-    | 'Meer informatie nodig'
+    | 'In behandeling'
+    | 'Meer informtie nodig'
     | 'Besluit genomen'
     | 'Einde recht';
   statusDate: string;

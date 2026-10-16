@@ -208,7 +208,9 @@ export function sortZorgnedAanvragenByDateAndId<T extends object>(
 
 export function transformZorgnedAanvragen(
   responseData: ZorgnedResponseDataSource,
-  { includeAanvragenWithoutBeschiktProduct = false }: Pick<
+  {
+    includeAanvragenWithoutBeschiktProduct = false,
+  }: Pick<
     ZorgnedAanvragenServiceOptions,
     'includeAanvragenWithoutBeschiktProduct'
   > = {}
@@ -362,7 +364,7 @@ export async function fetchAanvragen(
   return fetchZorgnedByBSN(bsn, {
     ...options,
     path: '/aanvragen',
-    transform: (responseData) =>
+    transform: (responseData: ZorgnedResponseDataSource) =>
       transformZorgnedAanvragen(responseData, options),
   });
 }
