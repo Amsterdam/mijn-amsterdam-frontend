@@ -25,7 +25,7 @@ export const themaConfig = {
   title: THEMA_TITLE,
   featureToggle: propagateFeatureToggles({
     active: true,
-    stopzetten: { active: isEnabled('ZORGNED.voorziening.stopzetten') },
+    stopzetten: { active: isEnabled('JZD.voorziening.stopzetten') },
   }),
   redactedScope: 'full',
   profileTypes: ['private'],
