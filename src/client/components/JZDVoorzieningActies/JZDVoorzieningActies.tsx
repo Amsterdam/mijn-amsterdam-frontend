@@ -111,11 +111,11 @@ export function JZDVoorzieningActies({
             </Heading>
             <Paragraph>
               Wilt u deze voorziening stopzetten neem dan contact op met{' '}
-              {voorziening.supplier} met het verzoek deze voorziening stop te
+              {voorziening.leverancier} met het verzoek deze voorziening stop te
               zetten. Deze geeft aan de gemeente door dat de voorziening door u
               is stopgezet. Het stopzetten duurt ongeveer 2 weken. U krijgt
               altijd een bevestiging van de inname. De contact gegevens van{' '}
-              {voorziening.supplier} vindt u bij{' '}
+              {voorziening.leverancier} vindt u bij{' '}
               <MaLink
                 href="https://www.amsterdam.nl/zorg-en-ondersteuning/"
                 rel="noopener noreferrer"

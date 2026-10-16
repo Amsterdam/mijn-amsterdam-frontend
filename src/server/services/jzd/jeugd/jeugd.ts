@@ -144,7 +144,7 @@ function transformVoorzieningenForFrontend(
         statusDateFormatted: defaultDateFormat(statusDate),
         maActieUrls: (aanvraag.maActieUrls as Record<string, string>) ?? {},
         maActies: aanvraag.maActies ?? [],
-        supplier: aanvraag.leverancier,
+        leverancier: aanvraag.leverancier,
       };
 
       voorzieningenFrontend.push(voorzieningFrontend);

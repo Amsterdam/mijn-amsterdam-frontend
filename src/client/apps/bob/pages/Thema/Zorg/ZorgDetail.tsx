@@ -18,8 +18,8 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
   if (voorziening?.decision) {
     rows.push({ content: voorziening?.decision, label: 'Resultaat' });
   }
-  if (voorziening?.supplier) {
-    rows.push({ content: voorziening?.supplier, label: 'Aanbieder' });
+  if (voorziening?.leverancier) {
+    rows.push({ content: voorziening?.leverancier, label: 'Aanbieder' });
   }
 
   return (

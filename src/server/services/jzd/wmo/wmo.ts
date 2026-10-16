@@ -95,7 +95,7 @@ function transformVoorzieningForFrontend(
   const voorzieningFrontend: WMOVoorzieningFrontend = {
     id,
     title: capitalizeFirstLetter(aanvraag.titel),
-    supplier: aanvraag.leverancier,
+    leverancier: aanvraag.leverancier,
     isActual: aanvraag.isActueel,
     link: {
       title: 'Meer informatie',

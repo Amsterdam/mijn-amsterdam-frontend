@@ -11,7 +11,7 @@ export type WithMaApiProps<T> = {
 export type VoorzieningActiePropsFrontend = {
   maActieUrls: Record<string, string>;
   maActies: string[];
-  supplier: string | null; // Leverancier
+  leverancier: string | null;
 };
 
 export type WithMaApiPropsAssignments<T> = {
