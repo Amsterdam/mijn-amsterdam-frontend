@@ -69,7 +69,7 @@ function VveDetail({ vve }: VveDetailsProps) {
             rel="noopener noreferrer"
           >
             Terugmelden op basisgegevens en stelselrelaties
-          </Link>{' '}
+          </Link>
           .
           <br />
           <br />
