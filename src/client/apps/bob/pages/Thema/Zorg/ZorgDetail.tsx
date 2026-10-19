@@ -39,9 +39,10 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
           <DocumentListV2
             documents={voorziening.documents}
             columns={['Bestanden', 'Verzenddatum']}
-            className="ams-mb-l"
           />
         )}
+      </PageContentCell>
+      <PageContentCell spanWide={7}>
         <JZDVoorzieningActies voorziening={voorziening} />
       </PageContentCell>
     </>

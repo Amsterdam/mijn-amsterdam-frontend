@@ -19,17 +19,20 @@ function JeugdDetailContent({ voorziening }: ContentProps) {
     rows.push({ content: voorziening?.decision, label: 'Resultaat' });
   }
   return (
-    <PageContentCell>
-      {!!rows.length && <Datalist rows={rows} />}
-      {voorziening?.documents.length > 0 && (
-        <DocumentListV2
-          documents={voorziening.documents}
-          columns={['Brieven', 'Verzenddatum']}
-          className="ams-mb-l"
-        />
-      )}
-      <JZDVoorzieningActies voorziening={voorziening} />
-    </PageContentCell>
+    <>
+      <PageContentCell>
+        {!!rows.length && <Datalist rows={rows} />}
+        {voorziening?.documents.length > 0 && (
+          <DocumentListV2
+            documents={voorziening.documents}
+            columns={['Brieven', 'Verzenddatum']}
+          />
+        )}
+      </PageContentCell>
+      <PageContentCell spanWide={7}>
+        <JZDVoorzieningActies voorziening={voorziening} />
+      </PageContentCell>
+    </>
   );
 }
 

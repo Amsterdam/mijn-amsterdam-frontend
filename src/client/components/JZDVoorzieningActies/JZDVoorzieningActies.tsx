@@ -2,11 +2,7 @@ import { Heading, Paragraph } from '@amsterdam/design-system-react';
 
 import type { VoorzieningActiePropsFrontend } from '../../../server/services/jzd/jzd-types.ts';
 import { themaConfig } from '../../apps/bob/pages/Thema/Zorg/Zorg-thema-config.ts';
-import {
-  MaButtonLink,
-  MaLink,
-} from '../MaLink/MaLink.tsx';
-import { PageContentCell } from '../Page/Page.tsx';
+import { MaButtonLink, MaLink } from '../MaLink/MaLink.tsx';
 
 
 function isVoorzieningActieAvailable(
@@ -52,7 +48,7 @@ export function JZDVoorzieningActies({
   return (
     <>
       {(isReparatieverzoekAvailable || isPGBReparatieverzoek) && (
-        <PageContentCell spanWide={7}>
+        <>
           {isReparatieverzoekAvailable && (
             <>
               <Heading level={4} size="level-4">
@@ -82,11 +78,11 @@ export function JZDVoorzieningActies({
               </Paragraph>
             </>
           )}
-        </PageContentCell>
+        </>
       )}
 
       {themaConfig.featureToggle.stopzetten.active && isStopzettenAvailable && (
-        <PageContentCell spanWide={7}>
+        <>
           <Heading level={4} size="level-4">
             Voorziening stopzetten
           </Heading>
@@ -101,11 +97,11 @@ export function JZDVoorzieningActies({
             stopzetten. Na nadat u de voorziening heeft stop gezet ontvang u
             hier van bericht.
           </Paragraph>
-        </PageContentCell>
+        </>
       )}
       {themaConfig.featureToggle.stopzetten.active &&
         isStopzettenNietViaFormulierAvailable && (
-          <PageContentCell spanWide={7}>
+          <>
             <Heading level={4} size="level-4">
               Voorziening stopzetten
             </Heading>
@@ -126,7 +122,7 @@ export function JZDVoorzieningActies({
               duren voordat deze in dit overzicht zichtbaar is in Mijn
               Amsterdam.
             </Paragraph>
-          </PageContentCell>
+          </>
         )}
     </>
   );
