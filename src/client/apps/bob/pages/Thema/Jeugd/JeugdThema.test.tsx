@@ -12,6 +12,9 @@ const jeugdState: AppState['JEUGD'] = {
     {
       id: '1610585298',
       title: 'Aangepast groepsvervoer',
+      maActies: ['stopzetten'],
+      maActieUrls: { stopzetten: '/url-to-stopzetten-formulier' },
+      leverancier: 'Leverancier',
       isActual: true,
       link: {
         title: 'Meer informatie',
@@ -80,6 +83,9 @@ const jeugdState: AppState['JEUGD'] = {
     {
       id: '2735835706',
       title: 'Openbaar vervoer abonnement',
+      maActies: ['stopzetten-niet-via-formulier'],
+      maActieUrls: {},
+      leverancier: null,
       isActual: true,
       link: {
         title: 'Meer informatie',
@@ -129,6 +135,9 @@ const jeugdState: AppState['JEUGD'] = {
     {
       id: '232024340',
       title: 'Aangepast groepsvervoer',
+      maActies: [],
+      maActieUrls: {},
+      leverancier: null,
       isActual: false,
       link: {
         title: 'Meer informatie',
