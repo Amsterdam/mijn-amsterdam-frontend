@@ -4,7 +4,6 @@ import {
   ActionGroup,
   Button,
   Heading,
-  Link,
   Paragraph,
   UnorderedList,
 } from '@amsterdam/design-system-react';
@@ -22,8 +21,8 @@ import type {
   SurveyOverviewFrontend,
   UserFeedbackHandoffConfigResponse,
 } from '../../../../../server/services/user-feedback/user-feedback.types.ts';
-import { Spinner } from '../../../../components/Spinner/Spinner.tsx';
 import { MaLinkLikeButton } from '../../../../components/MaLink/MaLink.tsx';
+import { Spinner } from '../../../../components/Spinner/Spinner.tsx';
 
 type TicketControlsProps = {
   entry: SurveyOverviewFrontend['entries'][number];
