@@ -78,17 +78,17 @@ const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
 };
 
 const displayPropsInBehandeling: DisplayProps<LeerlingenvervoerVoorzieningFrontend> =
-{
-  props: {
-    detailLinkComponent: 'Ontvangen op',
-    displayStatus: 'Status',
-    statusDateFormatted: 'Laatst bijgewerkt op',
-  },
-  colWidths: {
-    large: ['50%', '25%', '25%'],
-    small: ['100%', '0', '0'],
-  },
-};
+  {
+    props: {
+      detailLinkComponent: 'Ontvangen op',
+      displayStatus: 'Status',
+      statusDateFormatted: 'Laatst bijgewerkt op',
+    },
+    colWidths: {
+      large: ['50%', '25%', '25%'],
+      small: ['100%', '0', '0'],
+    },
+  };
 
 export const listPageParamKind = {
   pending: 'voorziening-in-behandeling',
@@ -100,7 +100,7 @@ type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const listPageTitle = {
-  [listPageParamKind.pending]: 'Voorzieningen nog in behandeling',
+  [listPageParamKind.pending]: 'Voorzieningen in behandeling',
   [listPageParamKind.actual]: 'Huidige voorzieningen',
   [listPageParamKind.historic]: 'Eerdere en afgewezen voorzieningen',
 } as const;
@@ -110,19 +110,19 @@ const hasPendingTable = isEnabled('JZD.llvInBehandeling');
 export const tableConfig = {
   ...(hasPendingTable
     ? {
-      [listPageParamKind.pending]: {
-        title: listPageTitle[listPageParamKind.pending],
-        filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
-          !regeling.decision,
-        displayProps: displayPropsInBehandeling,
-        listPageRoute: generatePath(themaConfig.listPage.route.path, {
-          kind: listPageParamKind.actual,
-          page: null,
-        }),
-        maxItems: 5,
-        textNoContent: 'U heeft geen voorzieningen in behandeling.',
-      },
-    }
+        [listPageParamKind.pending]: {
+          title: listPageTitle[listPageParamKind.pending],
+          filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
+            !regeling.decision,
+          displayProps: displayPropsInBehandeling,
+          listPageRoute: generatePath(themaConfig.listPage.route.path, {
+            kind: listPageParamKind.actual,
+            page: null,
+          }),
+          maxItems: 5,
+          textNoContent: 'U heeft geen voorzieningen in behandeling.',
+        },
+      }
     : {}),
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
