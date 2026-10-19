@@ -1,13 +1,16 @@
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
 
-import type { VoorzieningActiePropsFrontend } from '../../../server/services/jzd/jzd-types.ts';
+import type {
+  maActie,
+  VoorzieningActiePropsFrontend,
+} from '../../../server/services/jzd/jzd-types.ts';
 import { themaConfig } from '../../apps/bob/pages/Thema/Zorg/Zorg-thema-config.ts';
 import { MaButtonLink, MaLink } from '../MaLink/MaLink.tsx';
 
 
 function isVoorzieningActieAvailable(
   voorziening: VoorzieningActiePropsFrontend,
-  actie: string,
+  actie: maActie,
   withUrlCheck = true
 ): boolean {
   if (voorziening?.maActies?.includes(actie)) {

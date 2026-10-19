@@ -173,7 +173,7 @@ export function transformVoorzieningForFrontendWithMaApiProps(
       }
 
       return voorziening?.maActies?.some((action) =>
-        options.maActies?.includes(action as (typeof options.maActies)[number])
+        options.maActies?.includes(action)
       );
     })
     .filter((voorziening) => {

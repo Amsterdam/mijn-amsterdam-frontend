@@ -1,8 +1,18 @@
 import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 
+export const MA_ACTIE_VALUES = [
+  'reparatieverzoek',
+  'pgb-reparatieverzoek',
+  'stopzetten',
+  'stopzetten-tijdelijk',
+  'stopzetten-niet-via-formulier',
+] as const;
+
+export type maActie = (typeof MA_ACTIE_VALUES)[number];
+
 export type WithMaApiProps<T> = {
   maCategorie: string[];
-  maActies: string[];
+  maActies: maActie[];
   maProductgroep: string;
   maActieUrls:
     Record<string, string> | Record<string, (voorziening: T) => string>;
@@ -10,7 +20,7 @@ export type WithMaApiProps<T> = {
 
 export type VoorzieningActiePropsFrontend = {
   maActieUrls: Record<string, string>;
-  maActies: string[];
+  maActies: maActie[];
   leverancier: string | null;
 };
 
