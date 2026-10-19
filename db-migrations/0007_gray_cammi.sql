@@ -1,0 +1,1 @@
+ALTER TABLE "user_feedback_meta" DROP COLUMN "cc_email";
