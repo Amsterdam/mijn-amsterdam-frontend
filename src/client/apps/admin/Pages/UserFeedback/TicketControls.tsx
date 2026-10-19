@@ -23,6 +23,7 @@ import type {
   UserFeedbackHandoffConfigResponse,
 } from '../../../../../server/services/user-feedback/user-feedback.types.ts';
 import { Spinner } from '../../../../components/Spinner/Spinner.tsx';
+import { MaLinkLikeButton } from '../../../../components/MaLink/MaLink.tsx';
 
 type TicketControlsProps = {
   entry: SurveyOverviewFrontend['entries'][number];
@@ -184,8 +185,7 @@ export function TicketControls({
           <UnorderedList>
             {handoffConfig.departments.map((department, index) => (
               <UnorderedList.Item key={`${department.email}-${index}`}>
-                <Link
-                  href="#"
+                <MaLinkLikeButton
                   onClick={(event) => {
                     event.preventDefault();
                     handleHandoffToDepartment(department);
@@ -193,7 +193,7 @@ export function TicketControls({
                   title={department.email}
                 >
                   {department.name}
-                </Link>{' '}
+                </MaLinkLikeButton>{' '}
               </UnorderedList.Item>
             ))}
           </UnorderedList>
