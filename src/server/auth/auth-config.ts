@@ -156,4 +156,7 @@ export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
   get digid() {
     return oidcConfigDigid.clientID;
   },
+  get digidGemachtigd() {
+    return oidcConfigDigidGemachtigd.clientID;
+  },
 };
