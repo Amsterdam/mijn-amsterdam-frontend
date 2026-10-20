@@ -64,6 +64,27 @@ export function LandingPage() {
               {isRedirecting ? 'Bezig met inloggen...' : 'Inloggen met DigiD'}
             </span>
           </a>
+          <a
+            ref={loginButton}
+            role="button"
+            href={LOGIN_URL_DIGID}
+            onClick={() => setRedirecting(true)}
+            rel="noopener noreferrer"
+            className={classnames(
+              styles.LoginBtn,
+              styles['LoginBtn--digid'],
+              isRedirectingAny && styles.LoginBtnDisabled
+            )}
+          >
+            <span className={styles.LoginLogoWrap}>
+              <LogoDigiD />
+            </span>
+            <span className={styles.LoginButtonText}>
+              {isRedirecting
+                ? 'Bezig met inloggen...'
+                : 'Inloggen met DigiD als gemachtigde'}
+            </span>
+          </a>
         </Paragraph>
         <Paragraph className="ams-mb-l">
           Heeft u nog geen DigiD? Regel dit dan eerst.

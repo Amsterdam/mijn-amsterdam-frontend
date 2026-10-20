@@ -2,7 +2,7 @@ import type { Request } from 'express';
 import type { Session } from 'express-openid-connect';
 
 export interface AuthProfile {
-  authMethod: 'eherkenning' | 'digid';
+  authMethod: 'eherkenning' | 'digid' | 'digidGemachtigd';
   profileType: ProfileType;
   id: string; // User id (bsn/kvknr)
   sid: SessionID;

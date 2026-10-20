@@ -4,6 +4,7 @@ import { create } from 'zustand';
 
 import { useSessionStorage } from './storage.hook.ts';
 import { logger } from '../helpers/logging.ts';
+import type { AuthProfile } from '../../server/auth/auth-types.ts';
 
 const PROFILE_TYPE_STORAGE_KEY = 'profileType';
 
@@ -23,6 +24,11 @@ try {
 type ProfileTypeStore = {
   profileType: ProfileType;
   setProfileType: (profileType: ProfileType) => void;
+};
+
+type AuthMethodTypeStore = {
+  authMethod: AuthProfile['authMethod'];
+  setAuthMethodType: (authMethod: AuthProfile['authMethod']) => void;
 };
 
 export const useProfileTypeStore = create<ProfileTypeStore>((set) => ({
@@ -55,4 +61,35 @@ export function useProfileType() {
 
 export function useProfileTypeValue(): ProfileType {
   return useProfileTypeStore((state) => state.profileType);
+}
+
+const initialAuthType: AuthProfile['authMethod'] = 'digidGemachtigd';
+
+export const useAuthMethodTypeStore = create<AuthMethodTypeStore>((set) => ({
+  authMethod: initialAuthType,
+  setAuthMethodType: (authMethod: AuthProfile['authMethod']) =>
+    set({ authMethod }),
+}));
+
+export function useAuthMethod() {
+  const store = useAuthMethodTypeStore();
+  const { authMethod: stateValue, setAuthMethodType: setState } = store;
+
+  const [authMethod, setSessionState] = useSessionStorage(
+    'authMethod',
+    stateValue
+  );
+
+  // If we encounter a profileType stored in the SessionStorage, transfer it to the zustand on first load.
+  useEffect(() => {
+    if (authMethod !== stateValue && authMethod !== null) {
+      setState(authMethod);
+    }
+  }, []);
+
+  useEffect(() => {
+    setSessionState(stateValue);
+  }, [stateValue, setSessionState]);
+
+  return store;
 }

@@ -81,7 +81,7 @@ export const oidcConfigDigidGemachtigd: ConfigParams = {
       TMASessionID: session.sid,
       sid: UID.sync(BYTE_LENGTH),
       profileType: 'private',
-      authMethod: 'digid',
+      authMethod: 'digidGemachtigd',
     };
   },
 };
@@ -114,6 +114,7 @@ export const EH_ATTR_PRIMARY_ID_LEGACY =
   'urn:etoegang:1.9:EntityConcernedID:KvKnr';
 
 export const DIGID_ATTR_PRIMARY = 'sub';
+export const DIGID_ATTR_VRIJGEGEVEN_BSN = 'urn:nl-eid-gdi:1.0:id:BSN';
 
 export const OIDC_TOKEN_ID_ATTRIBUTE = {
   eherkenning: (tokenData: TokenData) => {
@@ -134,6 +135,7 @@ export const OIDC_TOKEN_ID_ATTRIBUTE = {
     return EH_ATTR_PRIMARY_ID_LEGACY;
   },
   digid: () => DIGID_ATTR_PRIMARY,
+  digidGemachtigd: () => DIGID_ATTR_VRIJGEGEVEN_BSN,
 };
 
 export type TokenIdAttribute =
