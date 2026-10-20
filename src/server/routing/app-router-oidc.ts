@@ -19,6 +19,7 @@ import {
 import {
   OIDC_SESSION_COOKIE_NAME,
   oidcConfigDigid,
+  oidcConfigDigidGemachtigd,
   oidcConfigEherkenning,
   openIdAuth,
 } from '../auth/auth-config.ts';
@@ -46,11 +47,17 @@ oidcRouter.use(nocache);
 
 function getOidcConfigByRequest(req: Request) {
   const isEherkenning = req.url.includes(AUTH_BASE_EHERKENNING);
+  // TODO: Check if someone is trying to login as gemachtigd
+  const isGemachtigd = true;
 
   let oidConfig: ConfigParams = oidcConfigDigid;
 
   if (isEherkenning) {
     oidConfig = oidcConfigEherkenning;
+  }
+
+  if (isGemachtigd) {
+    oidConfig = oidcConfigDigidGemachtigd;
   }
 
   return oidConfig;

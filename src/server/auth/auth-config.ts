@@ -72,6 +72,20 @@ export const oidcConfigDigid: ConfigParams = {
   },
 };
 
+export const oidcConfigDigidGemachtigd: ConfigParams = {
+  ...oidcConfigBase,
+  clientID: getFromEnv('BFF_OIDC_CLIENT_ID_DIGID_VRIJ_MACHTIGEN', true),
+  afterCallback: async (_, __, session) => {
+    return {
+      ...session,
+      TMASessionID: session.sid,
+      sid: UID.sync(BYTE_LENGTH),
+      profileType: 'private',
+      authMethod: 'digid',
+    };
+  },
+};
+
 export const oidcConfigEherkenning: ConfigParams = {
   ...oidcConfigBase,
   clientID: getFromEnv('BFF_OIDC_CLIENT_ID_EHERKENNING', true),
@@ -123,8 +137,7 @@ export const OIDC_TOKEN_ID_ATTRIBUTE = {
 };
 
 export type TokenIdAttribute =
-  | typeof DIGID_ATTR_PRIMARY
-  | typeof EH_ATTR_PRIMARY_ID;
+  typeof DIGID_ATTR_PRIMARY | typeof EH_ATTR_PRIMARY_ID;
 
 export const TOKEN_ID_ATTRIBUTE: Record<AuthMethod, TokenIdAttribute> = {
   eherkenning: EH_ATTR_PRIMARY_ID,
