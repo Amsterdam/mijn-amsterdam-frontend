@@ -81,7 +81,7 @@ export function JZDVoorzieningActies({
       )}
       {themaConfig.featureToggle.stopzetten.active && isStopzettenAvailable && (
         <>
-          <Heading level={4} size="level-4">
+          <Heading level={4}>
             Voorziening stopzetten
           </Heading>
           <Paragraph>
