@@ -54,11 +54,7 @@ export async function fetchLeerlingenvervoer(
   }
 
   const voorzieningenWithMaApiProps =
-    transformVoorzieningForFrontendWithMaApiProps(
-      aanvragenResponse.content,
-      undefined,
-      undefined
-    );
+    transformVoorzieningForFrontendWithMaApiProps(aanvragenResponse.content);
 
   const voorzieningen = transformVoorzieningenForFrontend(
     authProfileAndToken.profile.sid,
