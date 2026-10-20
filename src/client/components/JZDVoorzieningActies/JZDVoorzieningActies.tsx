@@ -50,37 +50,33 @@ export function JZDVoorzieningActies({
 
   return (
     <>
-      {(isReparatieverzoekAvailable || isPGBReparatieverzoek) && (
+      {isReparatieverzoekAvailable && (
         <>
-          {isReparatieverzoekAvailable && (
-            <>
-              <Heading level={4} size="level-4">
-                Reparatieverzoek aanvragen
-              </Heading>
-              <Paragraph className="ams-mb-m">
-                U kunt een reparatie verzoek voor deze voorziening aanvragen
-                door het reparatieverzoek formulier in te vullen.
-              </Paragraph>
-              <MaButtonLink
-                href={voorziening?.maActieUrls?.reparatieverzoek}
-                rel="noopener noreferrer"
-              >
-                Reparatieverzoek indienen
-              </MaButtonLink>
-            </>
-          )}
-          {isPGBReparatieverzoek && (
-            <>
-              <Heading level={4} size="level-4">
-                Reparatieverzoek aanvragen
-              </Heading>
-              <Paragraph>
-                Heeft u de woningaanpassing met een pgb aangeschaft? Dan moet u
-                zelf de kosten voor reparatie en onderhoud betalen met uw pgb.
-                Bij uw pgb is hiervoor een bedrag inbegrepen.
-              </Paragraph>
-            </>
-          )}
+          <Heading level={4} size="level-4">
+            Reparatieverzoek aanvragen
+          </Heading>
+          <Paragraph className="ams-mb-m">
+            U kunt een reparatie verzoek voor deze voorziening aanvragen door
+            het reparatieverzoek formulier in te vullen.
+          </Paragraph>
+          <MaButtonLink
+            href={voorziening?.maActieUrls?.reparatieverzoek}
+            rel="noopener noreferrer"
+          >
+            Reparatieverzoek indienen
+          </MaButtonLink>
+        </>
+      )}
+      {isPGBReparatieverzoek && (
+        <>
+          <Heading level={4} size="level-4">
+            Reparatieverzoek aanvragen
+          </Heading>
+          <Paragraph>
+            Heeft u de woningaanpassing met een pgb aangeschaft? Dan moet u zelf
+            de kosten voor reparatie en onderhoud betalen met uw pgb. Bij uw pgb
+            is hiervoor een bedrag inbegrepen.
+          </Paragraph>
         </>
       )}
 
