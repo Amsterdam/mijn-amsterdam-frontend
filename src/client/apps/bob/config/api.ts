@@ -36,6 +36,7 @@ export const BFFApiUrls = {
 
 // Urls directly used from front-end
 export const LOGIN_URL_DIGID = `${BFF_API_BASE_URL}/auth/digid/login`;
+export const LOGIN_URL_DIGID_GEMACHTIGD = `${BFF_API_BASE_URL}/auth/digid-gemachtigd/login`;
 export const LOGIN_URL_EHERKENNING = `${BFF_API_BASE_URL}/auth/eherkenning/login`;
 export const LOGOUT_URL = `${BFF_API_BASE_URL}/auth/logout`;
 export const AUTH_API_URL = `${BFF_API_BASE_URL}/auth/check`;

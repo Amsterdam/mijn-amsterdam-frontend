@@ -46,6 +46,7 @@ oidcRouter.use(nocache);
  */
 
 function getOidcConfigByRequest(req: Request) {
+  console.log(req.url);
   const isEherkenning = req.url.includes(AUTH_BASE_EHERKENNING);
   // TODO: Check if someone is trying to login as gemachtigd
   const isGemachtigd = true;

@@ -163,7 +163,11 @@ export const PROFILE_TYPES = [
   'private-attributes',
 ] as const;
 
-export const AUTH_METHODS = ['eherkenning', 'digid'] as const;
+export const AUTH_METHODS = [
+  'eherkenning',
+  'digid',
+  'digidGemachtigd',
+] as const;
 
 declare global {
   type ProfileType = (typeof PROFILE_TYPES)[number];

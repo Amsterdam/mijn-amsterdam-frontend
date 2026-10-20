@@ -67,7 +67,7 @@ export function LandingPage() {
           <a
             ref={loginButton}
             role="button"
-            href={LOGIN_URL_DIGID}
+            href={LOGIN_URL_DIGID + '?gemachtigd=true'}
             onClick={() => setRedirecting(true)}
             rel="noopener noreferrer"
             className={classnames(

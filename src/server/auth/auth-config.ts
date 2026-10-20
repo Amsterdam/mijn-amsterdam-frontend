@@ -139,11 +139,14 @@ export const OIDC_TOKEN_ID_ATTRIBUTE = {
 };
 
 export type TokenIdAttribute =
-  typeof DIGID_ATTR_PRIMARY | typeof EH_ATTR_PRIMARY_ID;
+  | typeof DIGID_ATTR_PRIMARY
+  | typeof EH_ATTR_PRIMARY_ID
+  | typeof DIGID_ATTR_VRIJGEGEVEN_BSN;
 
 export const TOKEN_ID_ATTRIBUTE: Record<AuthMethod, TokenIdAttribute> = {
   eherkenning: EH_ATTR_PRIMARY_ID,
   digid: DIGID_ATTR_PRIMARY,
+  digidGemachtigd: DIGID_ATTR_VRIJGEGEVEN_BSN,
 };
 
 export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
