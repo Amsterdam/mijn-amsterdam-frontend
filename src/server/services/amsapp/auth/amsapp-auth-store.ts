@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 
-import { AUTHORIZATION_CODE_TTL_MS } from './amsapp-auth-service-config.ts';
+import { AUTHORIZATION_CODE_TTL_MS } from './amsapp-auth-service-config.ts'
+import { trackEvent } from '../../monitoring.ts';
 
 export type AuthorizationCodeStatus = 'pending' | 'ready' | 'expired';
 
@@ -18,6 +19,26 @@ const authorizationCodeStore = new Map<string, AuthorizationCodeRecord>();
 
 function isExpired(record: AuthorizationCodeRecord) {
   return Date.now() > record.expiresAtMs;
+}
+
+function pruneExpiredMemoryRecords() {
+  let prunedCount = 0;
+
+  for (const [loginId, record] of authorizationCodeStore.entries()) {
+    if (!isExpired(record)) {
+      continue;
+    }
+
+    authorizationCodeStore.delete(loginId);
+    prunedCount += 1;
+  }
+
+  if (prunedCount > 0) {
+    trackEvent('amsapp-auth-code-expired', {
+      count: prunedCount,
+      storage: 'memory',
+    });
+  }
 }
 
 function getRecord(loginId: string) {
@@ -38,6 +59,8 @@ export function createLoginAttempt(codeChallenge: string) {
   const loginId = randomUUID();
   const createdAtMs = Date.now();
 
+  pruneExpiredMemoryRecords();
+
   authorizationCodeStore.set(loginId, {
     loginId,
     status: 'pending',
@@ -48,19 +71,36 @@ export function createLoginAttempt(codeChallenge: string) {
     expiresAtMs: createdAtMs + AUTHORIZATION_CODE_TTL_MS,
   });
 
+  trackEvent('amsapp-auth-code-created', {
+    storage: 'memory',
+    status: 'pending',
+  });
+
   return loginId;
 }
 
-export function markLoginReady(loginId: string, maSessionCookieValue: string) {
+export function markLoginReady(
+  loginId: string,
+  maSessionCookieValue: string
+) {
+  if (!maSessionCookieValue) {
+    return null;
+  }
+
   const record = getRecord(loginId);
 
-  if (!record || record.status !== 'pending' || !maSessionCookieValue) {
+  if (!record || record.status !== 'pending') {
     return null;
   }
 
   record.status = 'ready';
   record.authorizationCode = randomUUID();
   record.maSessionCookieValue = maSessionCookieValue;
+
+  trackEvent('amsapp-auth-code-ready', {
+    storage: 'memory',
+    status: record.status,
+  });
 
   return record;
 }
@@ -90,6 +130,9 @@ export function consumeByAuthorizationCode(authorizationCode: string) {
   }
 
   authorizationCodeStore.delete(record.loginId);
+  trackEvent('amsapp-auth-exchange-success', {
+    storage: 'memory',
+  });
   return record;
 }
 

@@ -7,6 +7,7 @@ import {
   handleAmsAppAuthLoginStart,
   handleAmsAppAuthTokenExchange,
 } from './amsapp-auth-route-handlers.ts';
+import { apiResponseErrors } from './amsapp-auth-service-config.ts';
 import {
   clearAmsAppAuthStore,
   createLoginAttempt,
@@ -38,7 +39,7 @@ describe('amsapp-auth-route-handlers', () => {
     const req = reqMock.get();
     const resMock = ResponseMock.new();
 
-    await handleAmsAppAuthLoginStart(req, resMock);
+    handleAmsAppAuthLoginStart(req, resMock);
 
     expect(resMock.redirect).toHaveBeenCalledOnce();
 
@@ -56,6 +57,45 @@ describe('amsapp-auth-route-handlers', () => {
     expect(storedLoginAttempt?.status).toBe('pending');
   });
 
+  test('login-start returns explicit invalid-input contract when query is missing', async () => {
+    const req = RequestMock.new().setQuery({}).get();
+    const resMock = ResponseMock.new();
+
+    handleAmsAppAuthLoginStart(req, resMock);
+
+    expect(resMock.status).toHaveBeenCalledWith(400);
+    expect(resMock.send).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: 'ERROR',
+        code: 400,
+        message: expect.stringContaining(
+          apiResponseErrors.INVALID_INPUT.message
+        ),
+      })
+    );
+  });
+
+  test('login-start intentionally rejects snake_case query contract', async () => {
+    const req = RequestMock.new()
+      .setQuery({
+        code_challenge: 'snake-case-not-supported',
+      })
+      .get();
+    const resMock = ResponseMock.new();
+
+    handleAmsAppAuthLoginStart(req, resMock);
+
+    expect(resMock.status).toHaveBeenCalledWith(400);
+    expect(resMock.send).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: 'ERROR',
+        message: expect.stringContaining(
+          apiResponseErrors.INVALID_INPUT.message
+        ),
+      })
+    );
+  });
+
   test('callback marks authorizationCode ready and returns deeplink', async () => {
     const loginId = createLoginAttempt('code-challenge-123');
     const reqMock = RequestMock.new()
@@ -68,7 +108,7 @@ describe('amsapp-auth-route-handlers', () => {
     const req = reqMock.get<{ loginId: string }>();
     const resMock = ResponseMock.new();
 
-    await handleAmsAppAuthCallback(req, resMock);
+    handleAmsAppAuthCallback(req, resMock);
 
     expect(resMock.render).toHaveBeenCalledOnce();
     const renderProps = resMock.render.mock.calls[0][1];
@@ -90,6 +130,46 @@ describe('amsapp-auth-route-handlers', () => {
     );
   });
 
+  test('callback renders explicit auth failure when user is not authenticated', async () => {
+    const loginId = createLoginAttempt('code-challenge-123');
+    const req = RequestMock.new()
+      .setParams({ loginId })
+      .get<{ loginId: string }>();
+    const resMock = ResponseMock.new();
+
+    handleAmsAppAuthCallback(req, resMock);
+
+    expect(resMock.render).toHaveBeenCalledOnce();
+    const renderProps = resMock.render.mock.calls[0][1];
+    expect(renderProps.error).toMatchObject({
+      code: '001',
+      message: expect.stringContaining(apiResponseErrors.DIGID_AUTH.message),
+    });
+  });
+
+  test('callback renders explicit missing-login error when loginId is unknown', async () => {
+    const reqMock = RequestMock.new()
+      .setParams({ loginId: 'missing-login-id' })
+      .setCookies({
+        [OIDC_SESSION_COOKIE_NAME]: 'ma-session-cookie-value',
+      });
+    await reqMock.createOIDCStub(DIGID_PROFILE);
+
+    const req = reqMock.get<{ loginId: string }>();
+    const resMock = ResponseMock.new();
+
+    handleAmsAppAuthCallback(req, resMock);
+
+    expect(resMock.render).toHaveBeenCalledOnce();
+    const renderProps = resMock.render.mock.calls[0][1];
+    expect(renderProps.error).toMatchObject({
+      code: '002',
+      message: expect.stringContaining(
+        apiResponseErrors.LOGIN_NOT_FOUND_OR_EXPIRED.message
+      ),
+    });
+  });
+
   test('token exchange validates PKCE and returns MA session cookie value', async () => {
     const codeVerifier = 'test';
     const codeChallenge = 'n4bQgYhMfWWaL-qgxVrQFaO_TxsrC4Is0V1sFbDwCgg'; // createHash('sha256').update(codeVerifier).digest('base64url');
@@ -105,7 +185,7 @@ describe('amsapp-auth-route-handlers', () => {
     } as Request;
     const resMock = ResponseMock.new();
 
-    await handleAmsAppAuthTokenExchange(req, resMock);
+    handleAmsAppAuthTokenExchange(req, resMock);
 
     expect(resMock.send).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -140,16 +220,45 @@ describe('amsapp-auth-route-handlers', () => {
     } as Request;
 
     const resMock = ResponseMock.new();
-    await handleAmsAppAuthTokenExchange(req, resMock);
+    handleAmsAppAuthTokenExchange(req, resMock);
+
+    expect(resMock.status).toHaveBeenCalledWith(400);
+    expect(resMock.send).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: 'ERROR',
+        message: expect.stringContaining(
+          apiResponseErrors.PKCE_MISMATCH.message
+        ),
+        code: 400,
+      })
+    );
+    expect(getByLoginId(loginId)?.status).toBe('ready');
+  });
+
+  test('token exchange returns explicit ApiError 005 contract for PKCE mismatch', async () => {
+    const loginId = createLoginAttempt('expected-code-challenge');
+    const readyRecord = markLoginReady(loginId, 'ma-session-cookie-value');
+
+    const req = {
+      body: {
+        authorizationCode: readyRecord?.authorizationCode,
+        codeVerifier: 'different-code-verifier',
+      },
+    } as Request;
+
+    const resMock = ResponseMock.new();
+    handleAmsAppAuthTokenExchange(req, resMock);
 
     expect(resMock.status).toHaveBeenCalledWith(400);
     expect(resMock.send).toHaveBeenCalledWith(
       expect.objectContaining({
         status: 'ERROR',
         code: 400,
+        message: expect.stringContaining(
+          apiResponseErrors.PKCE_MISMATCH.message
+        ),
       })
     );
-    expect(getByLoginId(loginId)?.status).toBe('ready');
   });
 
   test('token exchange is one-time use', async () => {
@@ -170,7 +279,7 @@ describe('amsapp-auth-route-handlers', () => {
     } as Request;
 
     const firstRes = ResponseMock.new();
-    await handleAmsAppAuthTokenExchange(firstReq, firstRes);
+    handleAmsAppAuthTokenExchange(firstReq, firstRes);
 
     const secondReq = {
       body: {
@@ -180,13 +289,61 @@ describe('amsapp-auth-route-handlers', () => {
     } as Request;
 
     const secondRes = ResponseMock.new();
-    await handleAmsAppAuthTokenExchange(secondReq, secondRes);
+    handleAmsAppAuthTokenExchange(secondReq, secondRes);
 
     expect(secondRes.status).toHaveBeenCalledWith(400);
     expect(secondRes.send).toHaveBeenCalledWith(
       expect.objectContaining({
         status: 'ERROR',
-        message: 'Bad request: Unknown or invalid authorizationCode',
+        message: expect.stringContaining(
+          apiResponseErrors.AUTHORIZATION_CODE_NOT_FOUND_OR_EXPIRED.message
+        ),
+        code: 400,
+      })
+    );
+  });
+
+  test('token exchange fails with explicit error for unknown authorizationCode', async () => {
+    const req = {
+      body: {
+        authorizationCode: 'missing-code',
+        codeVerifier: 'mobile-app-code-verifier',
+      },
+    } as Request;
+
+    const resMock = ResponseMock.new();
+    handleAmsAppAuthTokenExchange(req, resMock);
+
+    expect(resMock.status).toHaveBeenCalledWith(400);
+    expect(resMock.send).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: 'ERROR',
+        message: expect.stringContaining(
+          apiResponseErrors.AUTHORIZATION_CODE_NOT_FOUND_OR_EXPIRED.message
+        ),
+        code: 400,
+      })
+    );
+  });
+
+  test('token exchange intentionally rejects snake_case body contract', async () => {
+    const req = {
+      body: {
+        authorization_code: 'snake-case-not-supported',
+        code_verifier: 'snake-case-not-supported',
+      },
+    } as Request;
+
+    const resMock = ResponseMock.new();
+    handleAmsAppAuthTokenExchange(req, resMock);
+
+    expect(resMock.status).toHaveBeenCalledWith(400);
+    expect(resMock.send).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: 'ERROR',
+        message: expect.stringContaining(
+          apiResponseErrors.INVALID_INPUT.message
+        ),
         code: 400,
       })
     );

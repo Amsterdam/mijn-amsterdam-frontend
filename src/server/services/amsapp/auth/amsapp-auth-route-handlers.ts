@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 
+import { HttpStatusCode } from 'axios';
 import type { NextFunction, Request, Response } from 'express';
 import z from 'zod';
 
@@ -13,7 +14,10 @@ import {
   getByAuthorizationCode,
   markLoginReady,
 } from './amsapp-auth-store.ts';
-import { apiSuccessResult } from '../../../../universal/helpers/api.ts';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../../universal/helpers/api.ts';
 import { RETURNTO_AMSAPP_AUTH_CALLBACK } from '../../../auth/auth-after-redirect-returnto.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
@@ -25,9 +29,9 @@ import { ONE_SECOND_MS } from '../../../config/app.ts';
 import { handleServicesAll } from '../../../routing/app-router-protected.ts';
 import {
   generateFullApiUrlBFF,
-  sendBadRequest,
-  sendBadRequestInvalidInput,
+  sendResponse,
 } from '../../../routing/route-helpers.ts';
+import { trackEvent } from '../../monitoring.ts';
 import { baseRenderProps } from '../amsapp-service-config.ts';
 import type { ApiError, RenderProps } from '../amsapp-types.ts';
 
@@ -55,13 +59,48 @@ function getErrorRenderProps(loginId: string, error: ApiError): RenderProps {
     identifier: loginId,
     appHref: `${AMSAPP_AUTH_DEEP_LINK_BASE}/mislukt?errorMessage=${encodeURIComponent(error.message)}&errorCode=${error.code}`,
     promptOpenApp: error.code === apiResponseErrors.DIGID_AUTH.code,
+    redirectToLogout: false,
   };
 }
 
-export async function handleAmsAppAuthLoginStart(req: Request, res: Response) {
+function getApiErrorMessage(error: ApiError) {
+  return `ApiError ${error.code} - ${error.message}`;
+}
+
+function sendTokenExchangeError(
+  res: Response,
+  error: ApiError,
+  details?: string
+) {
+  return sendResponse(
+    res,
+    apiErrorResult(
+      details
+        ? `${getApiErrorMessage(error)}: ${details}`
+        : getApiErrorMessage(error),
+      null,
+      HttpStatusCode.BadRequest
+    )
+  );
+}
+
+function buildInputValidationDetails(error: z.ZodError) {
+  return error.issues
+    .map(
+      (issue) =>
+        `for property '${issue.path.join('.') || '.'}' with error '${issue.message}'`
+    )
+    .join(' - ');
+}
+
+export function handleAmsAppAuthLoginStart(req: Request, res: Response) {
   const result = loginStartQuerySchema.safeParse(req.query);
   if (!result.success) {
-    return sendBadRequestInvalidInput(res, result.error);
+    return sendTokenExchangeError(
+      res,
+      apiResponseErrors.INVALID_INPUT,
+      buildInputValidationDetails(result.error)
+    );
   }
 
   const loginId = createLoginAttempt(result.data.codeChallenge);
@@ -111,29 +150,48 @@ export async function handleAmsAppAuthCallback(
   return res.render('amsapp-open-app', renderProps);
 }
 
-export async function handleAmsAppAuthTokenExchange(
-  req: Request,
-  res: Response
-) {
+export function handleAmsAppAuthTokenExchange(req: Request, res: Response) {
   const result = tokenExchangeBodySchema.safeParse(req.body);
   if (!result.success) {
-    return sendBadRequestInvalidInput(res, result.error);
+    trackEvent('amsapp-auth-exchange-failure', {
+      reason: apiResponseErrors.INVALID_INPUT.code,
+    });
+    return sendTokenExchangeError(
+      res,
+      apiResponseErrors.INVALID_INPUT,
+      buildInputValidationDetails(result.error)
+    );
   }
 
   const record = getByAuthorizationCode(result.data.authorizationCode);
   if (!record || record.status !== 'ready') {
-    return sendBadRequest(res, 'Unknown or invalid authorizationCode');
+    trackEvent('amsapp-auth-exchange-failure', {
+      reason: apiResponseErrors.AUTHORIZATION_CODE_NOT_FOUND_OR_EXPIRED.code,
+    });
+    return sendTokenExchangeError(
+      res,
+      apiResponseErrors.AUTHORIZATION_CODE_NOT_FOUND_OR_EXPIRED
+    );
   }
 
   if (!isPkceMatch(result.data.codeVerifier, record.codeChallenge)) {
-    return sendBadRequest(res, 'Invalid codeVerifier for authorizationCode');
+    trackEvent('amsapp-auth-exchange-failure', {
+      reason: apiResponseErrors.PKCE_MISMATCH.code,
+    });
+    return sendTokenExchangeError(res, apiResponseErrors.PKCE_MISMATCH);
   }
 
   const consumedRecord = consumeByAuthorizationCode(
     result.data.authorizationCode
   );
   if (!consumedRecord?.maSessionCookieValue) {
-    return sendBadRequest(res, 'Unknown or invalid authorizationCode');
+    trackEvent('amsapp-auth-exchange-failure', {
+      reason: apiResponseErrors.AUTHORIZATION_CODE_NOT_FOUND_OR_EXPIRED.code,
+    });
+    return sendTokenExchangeError(
+      res,
+      apiResponseErrors.AUTHORIZATION_CODE_NOT_FOUND_OR_EXPIRED
+    );
   }
 
   return res.send(

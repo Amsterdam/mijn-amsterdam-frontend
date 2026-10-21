@@ -26,6 +26,18 @@ export const apiResponseErrors = {
     code: '002',
     message: 'Inlogsessie niet gevonden of verlopen',
   },
+  INVALID_INPUT: {
+    code: '003',
+    message: 'Ongeldige invoer',
+  },
+  AUTHORIZATION_CODE_NOT_FOUND_OR_EXPIRED: {
+    code: '004',
+    message: 'Authorization code niet gevonden of verlopen',
+  },
+  PKCE_MISMATCH: {
+    code: '005',
+    message: 'Code verifier komt niet overeen met code challenge',
+  },
 } as const;
 
 export const AMSAPP_AUTH_DEEP_LINK_BASE = 'amsterdam://mijn-amsterdam';
