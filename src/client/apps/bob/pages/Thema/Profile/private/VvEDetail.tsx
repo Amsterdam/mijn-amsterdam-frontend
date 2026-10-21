@@ -119,7 +119,7 @@ export function VvEDetail() {
     <ThemaDetailPagina
       themaId={themaConfig.BRP.id}
       title="Vereniging van Eigenaren"
-      zaak={{}} // empty object to prevent info block: "Geen gegevens gevonden"
+      zaak={{}} //empty object to prevent info block: "Geen gegevens gevonden"
       isError={isError}
       isLoading={isLoading}
       pageContentMain={vve && <VveDetail vve={vve} />}
