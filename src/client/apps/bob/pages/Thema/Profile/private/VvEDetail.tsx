@@ -61,9 +61,10 @@ function VveDetail({ vve }: VveDetailsProps) {
     <>
       <PageContentCell spanWide={8}>
         <Paragraph className="ams-mb-m">
-          De gegevens van de Vereniging van Eigenaren (VvE) van het pand waar u
-          woont. Mocht u denken dat er iets niet klopt, dan kunt u dit doorgeven
-          via{' '}
+          U woont in een gebouw met een Vereniging van Eigenaren (VvE). De
+          informatie over die VvE staat hieronder. Deze informatie is voor
+          woningeigenaren in uw VvE-gebouw. Klopt de informatie niet? Dan kunt u
+          dit doorgeven via{' '}
           <Link
             href="https://www.amsterdam.nl/stelselpedia/terugmelden/"
             rel="noopener noreferrer"
@@ -73,9 +74,7 @@ function VveDetail({ vve }: VveDetailsProps) {
           .
           <br />
           <br />
-          Als u een huurwoning heeft, hoeft u niets te doen met deze gegevens. U
-          kunt deze pagina beschouwen als informatie over het pand waarin u
-          woont.
+          Huurt u een woning in dit gebouw? Dan hoeft u niks te doen.
         </Paragraph>
         {themaConfig.BRP.featureToggle.enableZWDZaken &&
           vve.isPriorityNeighborhood && (
