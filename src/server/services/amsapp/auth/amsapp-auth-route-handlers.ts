@@ -145,6 +145,7 @@ export async function handleAmsAppAuthCallback(
     identifier: record.loginId,
     appHref: `${AMSAPP_AUTH_DEEP_LINK_BASE}/gelukt?authorizationCode=${record.authorizationCode}`,
     promptOpenApp: false,
+    redirectToLogout: false,
   };
 
   return res.render('amsapp-open-app', renderProps);
