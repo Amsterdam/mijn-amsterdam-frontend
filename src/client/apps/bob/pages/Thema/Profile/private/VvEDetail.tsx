@@ -61,16 +61,20 @@ function VveDetail({ vve }: VveDetailsProps) {
     <>
       <PageContentCell spanWide={8}>
         <Paragraph className="ams-mb-m">
-          Hieronder staan de gegevens van uw Vereniging van Eigenaren (VvE){' '}
-          zoals wij die hebben. Geef aan ons door als deze gegevens niet
-          kloppen. Op{' '}
+          U woont in een gebouw met een Vereniging van Eigenaren (VvE). De
+          informatie over die VvE staat hieronder. Deze informatie is voor
+          woningeigenaren in uw VvE-gebouw. Klopt de informatie niet? Dan kunt u
+          dit doorgeven via{' '}
           <Link
             href="https://www.amsterdam.nl/stelselpedia/terugmelden/"
             rel="noopener noreferrer"
           >
             Terugmelden op basisgegevens en stelselrelaties
-          </Link>{' '}
-          leest u hoe u dit doet.
+          </Link>
+          .
+          <br />
+          <br />
+          Huurt u een woning in dit gebouw? Dan hoeft u niks te doen.
         </Paragraph>
         {themaConfig.BRP.featureToggle.enableZWDZaken &&
           vve.isPriorityNeighborhood && (
@@ -115,7 +119,7 @@ export function VvEDetail() {
     <ThemaDetailPagina
       themaId={themaConfig.BRP.id}
       title="Vereniging van Eigenaren"
-      zaak={{}} // empty object to prevent info block: "Geen gegevens gevonden"
+      zaak={{}} //empty object to prevent info block: "Geen gegevens gevonden"
       isError={isError}
       isLoading={isLoading}
       pageContentMain={vve && <VveDetail vve={vve} />}

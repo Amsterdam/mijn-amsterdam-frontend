@@ -17,7 +17,7 @@ export const themaConfig: KrefiaThemaConfig = {
   redactedScope: 'none',
   route: {
     path: '/kredietbank-fibu',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
+    documentTitle: `Overzicht | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
 

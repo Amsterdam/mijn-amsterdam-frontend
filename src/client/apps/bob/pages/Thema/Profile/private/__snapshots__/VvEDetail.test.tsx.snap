@@ -90,7 +90,7 @@ exports[`VvEDetail > Matches snapshot with VvE cases 1`] = `
           <p
             class="ams-paragraph ams-mb-m"
           >
-            Hieronder staan de gegevens van uw Vereniging van Eigenaren (VvE) zoals wij die hebben. Geef aan ons door als deze gegevens niet kloppen. Op 
+            U woont in een gebouw met een Vereniging van Eigenaren (VvE). De informatie over die VvE staat hieronder. Deze informatie is voor woningeigenaren in uw VvE-gebouw. Klopt de informatie niet? Dan kunt u dit doorgeven via 
             <a
               class="ams-link"
               href="https://www.amsterdam.nl/stelselpedia/terugmelden/"
@@ -98,7 +98,10 @@ exports[`VvEDetail > Matches snapshot with VvE cases 1`] = `
             >
               Terugmelden op basisgegevens en stelselrelaties
             </a>
-             leest u hoe u dit doet.
+            .
+            <br />
+            <br />
+            Huurt u een woning in dit gebouw? Dan hoeft u niks te doen.
           </p>
         </div>
         <div

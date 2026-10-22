@@ -48,7 +48,7 @@ export const themaConfig: AVGThemaConfig = {
   redactedScope: 'none',
   route: {
     path: '/avg',
-    documentTitle: `${THEMA_TITLE} verzoeken | overzicht`,
+    documentTitle: ` Overzicht | ${THEMA_TITLE} verzoeken`,
     trackingUrl: null,
   },
 

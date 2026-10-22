@@ -4,6 +4,7 @@ import {
   themaConfig,
   vvVergunningPageLinkItem,
   bbVergunningPageLinkItem,
+  bbVergunningPageLinkItemOvergangsrecht,
 } from './ToeristischeVerhuur-thema-config.ts';
 import type { ToeristischeVerhuurVergunning } from '../../../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
 import {
@@ -71,8 +72,12 @@ export function useToeristischeVerhuurThemaData() {
   const extraPageLinks: LinkProps[] = [];
   if (hasVergunningenVakantieVerhuur) {
     extraPageLinks.push(vvVergunningPageLinkItem);
-  } else if (hasVergunningBB) {
-    extraPageLinks.push(bbVergunningPageLinkItem);
+  }
+  if (hasVergunningBB) {
+    extraPageLinks.push(
+      bbVergunningPageLinkItem,
+      bbVergunningPageLinkItemOvergangsrecht
+    );
   }
 
   return {
@@ -95,6 +100,7 @@ export function useToeristischeVerhuurThemaData() {
     hasVergunningBB,
     breadcrumbs,
     pageLinks: [...extraPageLinks, ...themaConfig.pageLinks],
+    extraPageLinks,
     themaConfig,
   };
 }

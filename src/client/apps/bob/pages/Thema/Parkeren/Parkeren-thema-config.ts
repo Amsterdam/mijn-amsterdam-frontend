@@ -32,7 +32,7 @@ export const themaConfig: ParkerenThemaConfig = {
   }),
   route: {
     path: '/parkeren',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
+    documentTitle: `Overzicht | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   pageLinks: [

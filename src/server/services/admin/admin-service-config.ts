@@ -19,6 +19,12 @@ export const GRAPH_ME_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 export const MSAL_AUTH_SCOPES = ['User.read'];
 export const OAUTH_ROLE_APPLICATION_ADMIN = 'ApplicationAdmin';
 
+export const BFF_ADMIN_FRONTEND_URL =
+  getFromEnv(
+    'BFF_ADMIN_FRONTEND_URL',
+    IS_ADMIN_ROUTER_ENABLED,
+    IS_ADMIN_ROUTER_ENABLED
+  ) ?? '';
 export const BFF_ADMIN_AUTH_REDIRECT_URI = getAdminAuthEnv('REDIRECT_URI');
 export const BFF_ADMIN_AUTH_POST_LOGOUT_REDIRECT_URI = getAdminAuthEnv(
   'POST_LOGOUT_REDIRECT_URI'
@@ -39,13 +45,16 @@ export const routes = {
       SIGNOUT: '/auth/signout',
       ACQUIRE_TOKEN: '/auth/acquireToken',
       CALLBACK: '/auth/callback',
+      CHECK: '/auth/check',
     },
   },
   protected: {
     visitors: {
       STATS: '/visitors{/:authMethod}',
+      STATS_PRIVATE: '/visitors/private',
       STATS_TABLE: '/visitors/table',
     },
+    ACCOUNT: '/account',
     CACHE_OVERVIEW: '/cache',
   },
 };

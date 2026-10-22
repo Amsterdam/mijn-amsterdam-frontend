@@ -2,6 +2,7 @@ import type { Request } from 'express';
 import type { MockInstance } from 'vitest';
 import { describe, expect, vi, beforeEach } from 'vitest';
 
+import * as routeHandlersAdmin from './user-feedback.admin.route-handlers.ts';
 import * as routeHandlers from './user-feedback.route-handlers.ts';
 import * as userFeedback from './user-feedback.ts';
 import {
@@ -10,12 +11,9 @@ import {
 } from '../../../testing/utils.ts';
 import type { ResponseAuthenticated } from '../../routing/route-helpers.ts';
 
-const {
-  handleFetchSurvey,
-  handleFetchSurveyOverview,
-  handleUserFeedbackSubmission,
-  handleShowSurveyOverview,
-} = routeHandlers;
+const { handleFetchSurvey, handleUserFeedbackSubmission } = routeHandlers;
+const { handleFetchSurveyOverview, handleShowSurveyOverview } =
+  routeHandlersAdmin;
 
 describe('User Feedback Route Handlers', () => {
   let req: Request;
@@ -92,7 +90,17 @@ describe('User Feedback Route Handlers', () => {
           },
         ],
         currentPage: 1,
-        entries: [{ answers: { '3': '5' } }, { answers: { '3': '3' } }],
+        survey: {
+          questionTypes: {
+            '1': 'email',
+            '2': 'textarea',
+            '3': 'numeric',
+          },
+        },
+        entries: [
+          { answers: { '1': 'user@example.com', '3': '5' } },
+          { answers: { '1': 'other@example.com', '3': '3' } },
+        ],
       },
     };
     userFeedbackOverview.mockResolvedValue(mockOverview);
@@ -100,8 +108,39 @@ describe('User Feedback Route Handlers', () => {
     await handleShowSurveyOverview(req, res);
 
     expect(userFeedbackOverview).toHaveBeenCalledWith('survey123', 'latest', 1);
-    expect(res.render).toHaveBeenCalledWith('user-feedback-overview', {
-      feedbackOverview: { ...mockOverview.content, score: '4.00' },
+    expect(res.send).toHaveBeenCalledWith({
+      content: {
+        currentPage: 1,
+        entries: [
+          {
+            answers: {
+              '1': 'user@example.com',
+              '3': '5',
+            },
+          },
+          {
+            answers: {
+              '1': 'other@example.com',
+              '3': '3',
+            },
+          },
+        ],
+        pageLinks: [
+          {
+            page: 1,
+            url: '?page=1',
+          },
+        ],
+        survey: {
+          questionTypes: {
+            '1': 'email',
+            '2': 'textarea',
+            '3': 'numeric',
+          },
+        },
+        score: '4.00',
+      },
+      status: 'OK',
     });
   });
 });

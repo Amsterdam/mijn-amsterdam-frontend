@@ -114,13 +114,14 @@ export async function handleCallback(req: Request, res: Response) {
     });
   }
 
-  const redirectToUrl = getAdminRedirectUrl(originalUrl);
-  res.redirect(redirectToUrl);
+  res.redirect(getAdminRedirectUrl(originalUrl));
 }
 
 export async function handleLogout(req: Request, res: Response) {
   function redirect() {
-    return res.redirect(BFF_ADMIN_AUTH_POST_LOGOUT_REDIRECT_URI ?? '/');
+    return res.redirect(
+      getAdminRedirectUrl(BFF_ADMIN_AUTH_POST_LOGOUT_REDIRECT_URI ?? '')
+    );
   }
   if (!req.session) {
     return redirect();
