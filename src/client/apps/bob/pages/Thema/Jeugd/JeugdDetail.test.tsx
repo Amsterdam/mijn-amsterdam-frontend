@@ -33,8 +33,8 @@ const besluitGenomenState: AppState['JEUGD'] = {
         },
         {
           id: 'status-step-1',
-          status: 'Behandeling bij indicatieadviseur',
-          description: '<p>Uw melding wordt behandeld door een indicatieadviseur.</p>',
+          status: 'In behandeling',
+          description: '<p>Uw aanvraag is in behandeling.</p>',
           datePublished: '2025-03-27',
           isActive: false,
           isChecked: true,
@@ -90,7 +90,10 @@ const basicAppState = {
 
 const createComponent = componentCreator({
   component: JeugdDetail,
-  routeEntry: generatePath(themaConfig.detailPage.route.path, { voorziening: slug(voorzieningTitle), id }),
+  routeEntry: generatePath(themaConfig.detailPage.route.path, {
+    voorziening: slug(voorzieningTitle),
+    id,
+  }),
   routePath: themaConfig.detailPage.route.path,
 });
 
@@ -121,7 +124,7 @@ test('Static elements', async () => {
   );
   statusTreinContainer.getByRole('heading', { name: /Melding ontvangen/ });
   statusTreinContainer.getByRole('heading', {
-    name: /Behandeling bij indicatieadviseur/,
+    name: /In behandeling/,
   });
   statusTreinContainer.getByRole('heading', { name: /Besluit genomen/ });
   statusTreinContainer.getByRole('heading', { name: /Einde recht/ });
