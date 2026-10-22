@@ -34,7 +34,8 @@ const jeugdState: AppState['JEUGD'] = {
         {
           id: 'status-step-1',
           status: 'Behandeling bij indicatieadviseur',
-          description: '<p>Uw melding wordt behandeld door een indicatieadviseur.</p>',
+          description:
+            '<p>Uw melding wordt behandeld door een indicatieadviseur.</p>',
           datePublished: '2025-03-27',
           isActive: false,
           isChecked: true,
@@ -105,7 +106,8 @@ const jeugdState: AppState['JEUGD'] = {
         {
           id: 'status-step-1',
           status: 'Behandeling bij indicatieadviseur',
-          description: '<p>Uw melding wordt behandeld door een indicatieadviseur.</p>',
+          description:
+            '<p>Uw melding wordt behandeld door een indicatieadviseur.</p>',
           datePublished: '2025-02-20',
           isActive: true,
           isChecked: true,
@@ -157,7 +159,8 @@ const jeugdState: AppState['JEUGD'] = {
         {
           id: 'status-step-1',
           status: 'Behandeling bij indicatieadviseur',
-          description: '<p>Uw melding wordt behandeld door een indicatieadviseur.</p>',
+          description:
+            '<p>Uw melding wordt behandeld door een indicatieadviseur.</p>',
           datePublished: '2019-07-12',
           isActive: false,
           isChecked: true,
@@ -221,7 +224,7 @@ test('Static elements', async () => {
 
   const mustHaveHeaders = ['Voorziening', 'Status', 'Datum'];
 
-  expectTableHeaders(screen, 'Huidige voorzieningen', mustHaveHeaders);
+  expectTableHeaders(screen, 'Huidige voorzieningen', ['Voorziening', 'Datum']);
   expectTableHeaders(
     screen,
     'Eerdere en afgewezen voorzieningen',
