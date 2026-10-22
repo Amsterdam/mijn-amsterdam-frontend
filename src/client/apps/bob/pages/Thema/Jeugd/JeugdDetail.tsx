@@ -1,6 +1,4 @@
-import { useParams } from 'react-router';
-
-import { useJeugdThemaData } from './useJeugdThemaData.ts';
+import { useJeugdDetailData } from './useJeugdDetailData.hook.ts';
 import type { LeerlingenvervoerVoorzieningFrontend } from '../../../../../../server/services/jzd/jeugd/jeugd.ts';
 import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
 import { DocumentListV2 } from '../../../../../components/DocumentList/DocumentListV2.tsx';
@@ -36,23 +34,20 @@ function JeugdDetailContent({ voorziening }: ContentProps) {
 
 export function JeugdDetail() {
   const {
-    voorzieningen,
+    voorziening,
+    title,
     themaId,
     isError,
     isLoading,
     breadcrumbs,
-    themaConfig,
-  } = useJeugdThemaData();
-  useHTMLDocumentTitle(themaConfig.detailPage.route);
-  const { id } = useParams<{
-    id: LeerlingenvervoerVoorzieningFrontend['id'];
-  }>();
-  const voorziening = voorzieningen.find((item) => item.id === id);
+    detailPageConfig,
+  } = useJeugdDetailData();
+  useHTMLDocumentTitle(detailPageConfig.route);
 
   return (
     <ThemaDetailPagina<LeerlingenvervoerVoorzieningFrontend>
       themaId={themaId}
-      title={voorziening?.title ?? 'Voorziening'}
+      title={title}
       zaak={voorziening}
       isError={isError}
       isLoading={isLoading}
