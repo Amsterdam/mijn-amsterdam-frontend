@@ -42,9 +42,7 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
           />
         )}
       </PageContentCell>
-      <PageContentCell spanWide={7}>
-        <JZDVoorzieningActies voorziening={voorziening} />
-      </PageContentCell>
+      <JZDVoorzieningActies voorziening={voorziening} />
     </>
   );
 }

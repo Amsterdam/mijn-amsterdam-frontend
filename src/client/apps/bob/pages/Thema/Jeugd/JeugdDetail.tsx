@@ -29,9 +29,7 @@ function JeugdDetailContent({ voorziening }: ContentProps) {
           />
         )}
       </PageContentCell>
-      <PageContentCell spanWide={7}>
-        <JZDVoorzieningActies voorziening={voorziening} />
-      </PageContentCell>
+      <JZDVoorzieningActies voorziening={voorziening} />
     </>
   );
 }

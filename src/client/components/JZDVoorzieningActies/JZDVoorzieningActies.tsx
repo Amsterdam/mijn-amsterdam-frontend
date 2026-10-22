@@ -6,6 +6,7 @@ import type {
 } from '../../../server/services/jzd/jzd-types.ts';
 import { themaConfig } from '../../apps/bob/pages/Thema/Zorg/Zorg-thema-config.ts';
 import { MaButtonLink, MaLink } from '../MaLink/MaLink.tsx';
+import { PageContentCell } from '../Page/Page.tsx';
 
 
 function isVoorzieningActieAvailable(
@@ -51,7 +52,7 @@ export function JZDVoorzieningActies({
   return (
     <>
       {isReparatieverzoekAvailable && (
-        <>
+        <VoorzieningActieContentCell>
           <Heading level={4}>Reparatieverzoek aanvragen</Heading>
           <Paragraph className="ams-mb-m">
             U kunt een reparatie verzoek voor deze voorziening aanvragen door
@@ -63,20 +64,20 @@ export function JZDVoorzieningActies({
           >
             Reparatieverzoek indienen
           </MaButtonLink>
-        </>
+        </VoorzieningActieContentCell>
       )}
       {isPGBReparatieverzoek && (
-        <>
+        <VoorzieningActieContentCell>
           <Heading level={4}>Reparatieverzoek aanvragen</Heading>
           <Paragraph>
             Heeft u de woningaanpassing met een pgb aangeschaft? Dan moet u zelf
             de kosten voor reparatie en onderhoud betalen met uw pgb. Bij uw pgb
             is hiervoor een bedrag inbegrepen.
           </Paragraph>
-        </>
+        </VoorzieningActieContentCell>
       )}
       {themaConfig.featureToggle.stopzetten.active && isStopzettenAvailable && (
-        <>
+        <VoorzieningActieContentCell>
           <Heading level={4}>Voorziening stopzetten</Heading>
           <Paragraph>
             U kunt deze voorziening via dit{' '}
@@ -89,11 +90,11 @@ export function JZDVoorzieningActies({
             stopzetten. Na nadat u de voorziening heeft stop gezet ontvang u
             hier van bericht.
           </Paragraph>
-        </>
+        </VoorzieningActieContentCell>
       )}
       {themaConfig.featureToggle.stopzetten.active &&
         isStopzettenNietViaFormulierAvailable && (
-          <>
+          <VoorzieningActieContentCell>
             <Heading level={4}>Voorziening stopzetten</Heading>
             <Paragraph>
               Wilt u deze voorziening stopzetten neem dan contact op met{' '}
@@ -112,8 +113,16 @@ export function JZDVoorzieningActies({
               duren voordat deze in dit overzicht zichtbaar is in Mijn
               Amsterdam.
             </Paragraph>
-          </>
+          </VoorzieningActieContentCell>
         )}
     </>
   );
+}
+
+function VoorzieningActieContentCell({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <PageContentCell spanWide={7}>{children}</PageContentCell>;
 }
