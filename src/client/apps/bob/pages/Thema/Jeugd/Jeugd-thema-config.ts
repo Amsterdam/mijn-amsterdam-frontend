@@ -66,6 +66,7 @@ export const themaConfig: ThemaConfigJeugd = {
 } as const;
 
 const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
+  enableMobileListView: true,
   props: {
     detailLinkComponent: 'Voorziening',
     displayStatus: 'Status',
@@ -79,6 +80,7 @@ const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
 
 const displayPropsInBehandeling: DisplayProps<LeerlingenvervoerVoorzieningFrontend> =
   {
+    enableMobileListView: true,
     props: {
       detailLinkComponent: 'Ontvangen op',
       displayStatus: 'Status',
