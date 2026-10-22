@@ -1,6 +1,8 @@
 import { randomUUID } from 'node:crypto';
 
-import { AUTHORIZATION_CODE_TTL_MS } from './amsapp-auth-service-config.ts'
+import { AUTHORIZATION_CODE_TTL_MS } from './amsapp-auth-service-config.ts';
+import { OIDC_SESSION_MAX_AGE_SECONDS } from '../../../auth/auth-config.ts';
+import { ONE_SECOND_MS } from '../../../config/app.ts';
 import { trackEvent } from '../../monitoring.ts';
 
 export type AuthorizationCodeStatus = 'pending' | 'ready' | 'expired';
@@ -16,6 +18,7 @@ export type AuthorizationCodeRecord = {
 };
 
 const authorizationCodeStore = new Map<string, AuthorizationCodeRecord>();
+const revokedSessionTokenStore = new Map<string, number>();
 
 function isExpired(record: AuthorizationCodeRecord) {
   return Date.now() > record.expiresAtMs;
@@ -41,6 +44,18 @@ function pruneExpiredMemoryRecords() {
   }
 }
 
+function pruneExpiredRevokedSessionTokens() {
+  const now = Date.now();
+
+  for (const [token, expiresAtMs] of revokedSessionTokenStore.entries()) {
+    if (now <= expiresAtMs) {
+      continue;
+    }
+
+    revokedSessionTokenStore.delete(token);
+  }
+}
+
 function getRecord(loginId: string) {
   const record = authorizationCodeStore.get(loginId) ?? null;
   if (!record) {
@@ -60,6 +75,7 @@ export function createLoginAttempt(codeChallenge: string) {
   const createdAtMs = Date.now();
 
   pruneExpiredMemoryRecords();
+  pruneExpiredRevokedSessionTokens();
 
   authorizationCodeStore.set(loginId, {
     loginId,
@@ -79,10 +95,7 @@ export function createLoginAttempt(codeChallenge: string) {
   return loginId;
 }
 
-export function markLoginReady(
-  loginId: string,
-  maSessionCookieValue: string
-) {
+export function markLoginReady(loginId: string, maSessionCookieValue: string) {
   if (!maSessionCookieValue) {
     return null;
   }
@@ -142,4 +155,46 @@ export function getByLoginId(loginId: string) {
 
 export function clearAmsAppAuthStore() {
   authorizationCodeStore.clear();
+  revokedSessionTokenStore.clear();
+}
+
+export function revokeSessionToken(sessionToken: string) {
+  if (!sessionToken) {
+    return 0;
+  }
+
+  pruneExpiredMemoryRecords();
+  pruneExpiredRevokedSessionTokens();
+
+  let removedRecords = 0;
+
+  for (const [loginId, record] of authorizationCodeStore.entries()) {
+    if (record.maSessionCookieValue !== sessionToken) {
+      continue;
+    }
+
+    authorizationCodeStore.delete(loginId);
+    removedRecords += 1;
+  }
+
+  revokedSessionTokenStore.set(
+    sessionToken,
+    Date.now() + OIDC_SESSION_MAX_AGE_SECONDS * ONE_SECOND_MS
+  );
+
+  trackEvent('amsapp-auth-session-revoked', {
+    storage: 'memory',
+    removedRecords,
+  });
+
+  return removedRecords;
+}
+
+export function isSessionTokenRevoked(sessionToken: string) {
+  if (!sessionToken) {
+    return false;
+  }
+
+  pruneExpiredRevokedSessionTokens();
+  return revokedSessionTokenStore.has(sessionToken);
 }

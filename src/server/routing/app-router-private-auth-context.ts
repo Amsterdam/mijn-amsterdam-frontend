@@ -9,6 +9,7 @@ import {
 } from '../auth/auth-config.ts';
 import { getAuth } from '../auth/auth-helpers.ts';
 import { featureToggle } from '../services/amsapp/auth/amsapp-auth-service-config.ts';
+import { isSessionTokenRevoked } from '../services/amsapp/auth/amsapp-auth-store.ts';
 
 export const AMSAPP_SESSION_TOKEN_HEADER = 'x-amsapp-session-token';
 
@@ -55,6 +56,32 @@ function appendSessionCookieHeader(req: Request, sessionToken: string) {
   req.headers.cookie = cookiePair;
 }
 
+function removeSessionCookieHeader(req: Request) {
+  const existingCookieHeader = req.headers.cookie;
+
+  if (!existingCookieHeader) {
+    return;
+  }
+
+  const remainingCookies = existingCookieHeader
+    .split(';')
+    .map((cookieEntry) => cookieEntry.trim())
+    .filter(
+      (cookieEntry) => !cookieEntry.startsWith(`${OIDC_SESSION_COOKIE_NAME}=`)
+    );
+
+  req.headers.cookie =
+    remainingCookies.length > 0 ? remainingCookies.join('; ') : undefined;
+}
+
+function removeSessionTokenFromRequest(req: Request) {
+  if (req.cookies?.[OIDC_SESSION_COOKIE_NAME]) {
+    req.cookies[OIDC_SESSION_COOKIE_NAME] = undefined;
+  }
+
+  removeSessionCookieHeader(req);
+}
+
 function applyAmsAppSessionTokenAsCookie(req: Request) {
   if (!featureToggle.amsAppUniversalAuthIsActive) {
     return;
@@ -62,6 +89,10 @@ function applyAmsAppSessionTokenAsCookie(req: Request) {
 
   const token = getHeaderValue(req, AMSAPP_SESSION_TOKEN_HEADER);
   if (!token || req.cookies?.[OIDC_SESSION_COOKIE_NAME]) {
+    return;
+  }
+
+  if (isSessionTokenRevoked(token)) {
     return;
   }
 
@@ -94,6 +125,14 @@ export async function privateNetworkAuthContextMiddleware(
     return next();
   }
   try {
+    const sessionTokenFromCookie = req.cookies?.[OIDC_SESSION_COOKIE_NAME];
+    if (
+      sessionTokenFromCookie &&
+      isSessionTokenRevoked(sessionTokenFromCookie)
+    ) {
+      removeSessionTokenFromRequest(req);
+    }
+
     applyAmsAppSessionTokenAsCookie(req);
 
     if (!req.cookies?.[OIDC_SESSION_COOKIE_NAME]) {

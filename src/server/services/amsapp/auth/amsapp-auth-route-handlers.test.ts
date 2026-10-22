@@ -5,6 +5,7 @@ import type { Request } from 'express';
 import {
   handleAmsAppAuthCallback,
   handleAmsAppAuthLoginStart,
+  handleAmsAppAuthLogout,
   handleAmsAppAuthTokenExchange,
 } from './amsapp-auth-route-handlers.ts';
 import { apiResponseErrors } from './amsapp-auth-service-config.ts';
@@ -12,6 +13,7 @@ import {
   clearAmsAppAuthStore,
   createLoginAttempt,
   getByLoginId,
+  isSessionTokenRevoked,
   markLoginReady,
 } from './amsapp-auth-store.ts';
 import { RequestMock, ResponseMock } from '../../../../testing/utils.ts';
@@ -345,6 +347,91 @@ describe('amsapp-auth-route-handlers', () => {
           apiResponseErrors.INVALID_INPUT.message
         ),
         code: 400,
+      })
+    );
+  });
+
+  test('logout invalidates session token and removes related authorization codes', async () => {
+    const codeVerifier = 'mobile-app-code-verifier';
+    const codeChallenge = createHash('sha256')
+      .update(codeVerifier)
+      .digest('base64url');
+
+    const sessionToken = 'ma-session-cookie-value';
+    const loginId = createLoginAttempt(codeChallenge);
+    const readyRecord = markLoginReady(loginId, sessionToken);
+
+    const req = {
+      headers: {
+        'x-amsapp-session-token': sessionToken,
+      },
+    } as unknown as Request;
+
+    const resMock = ResponseMock.new();
+    handleAmsAppAuthLogout(req, resMock);
+
+    expect(resMock.send).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: 'OK',
+        content: expect.objectContaining({
+          session: expect.objectContaining({
+            name: OIDC_SESSION_COOKIE_NAME,
+            invalidated: true,
+          }),
+        }),
+      })
+    );
+
+    expect(resMock.clearCookie).toHaveBeenCalledWith(
+      OIDC_SESSION_COOKIE_NAME,
+      expect.objectContaining({
+        path: '/',
+        secure: true,
+        sameSite: 'lax',
+        httpOnly: true,
+      })
+    );
+
+    expect(getByLoginId(loginId)).toBeNull();
+    expect(isSessionTokenRevoked(sessionToken)).toBe(true);
+
+    const exchangeReq = {
+      body: {
+        authorizationCode: readyRecord?.authorizationCode,
+        codeVerifier,
+      },
+    } as Request;
+
+    const exchangeRes = ResponseMock.new();
+    handleAmsAppAuthTokenExchange(exchangeReq, exchangeRes);
+
+    expect(exchangeRes.status).toHaveBeenCalledWith(400);
+    expect(exchangeRes.send).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: 'ERROR',
+        message: expect.stringContaining(
+          apiResponseErrors.AUTHORIZATION_CODE_NOT_FOUND_OR_EXPIRED.message
+        ),
+      })
+    );
+  });
+
+  test('logout returns invalid-input contract when session token is missing', async () => {
+    const req = {
+      headers: {},
+    } as Request;
+
+    const resMock = ResponseMock.new();
+    handleAmsAppAuthLogout(req, resMock);
+
+    expect(resMock.status).toHaveBeenCalledWith(400);
+    expect(resMock.send).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: 'ERROR',
+        code: 400,
+        message: expect.stringContaining(
+          apiResponseErrors.INVALID_INPUT.message
+        ),
       })
     );
   });

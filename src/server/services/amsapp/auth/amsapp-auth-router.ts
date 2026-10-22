@@ -1,6 +1,7 @@
 import {
   handleAmsAppAuthCallback,
   handleAmsAppAuthLoginStart,
+  handleAmsAppAuthLogout,
   handleAmsAppAuthServicesAllProxy,
   handleAmsAppAuthTokenExchange,
 } from './amsapp-auth-route-handlers.ts';
@@ -25,6 +26,12 @@ routerPrivate.post(
   routes.private.AMSAPP_AUTH_TOKEN,
   apiKeyVerificationHandler,
   handleAmsAppAuthTokenExchange
+);
+
+routerPrivate.post(
+  routes.private.AMSAPP_AUTH_LOGOUT,
+  apiKeyVerificationHandler,
+  handleAmsAppAuthLogout
 );
 
 if (featureToggle.amsAppUniversalAuthServicesAllAccessIsActive) {

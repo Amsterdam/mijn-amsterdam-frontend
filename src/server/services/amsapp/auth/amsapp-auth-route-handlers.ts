@@ -13,6 +13,7 @@ import {
   createLoginAttempt,
   getByAuthorizationCode,
   markLoginReady,
+  revokeSessionToken,
 } from './amsapp-auth-store.ts';
 import {
   apiErrorResult,
@@ -26,6 +27,7 @@ import {
 import { getAuth } from '../../../auth/auth-helpers.ts';
 import { authRoutes } from '../../../auth/auth-routes.ts';
 import { ONE_SECOND_MS } from '../../../config/app.ts';
+import { AMSAPP_SESSION_TOKEN_HEADER } from '../../../routing/app-router-private-auth-context.ts';
 import { handleServicesAll } from '../../../routing/app-router-protected.ts';
 import {
   generateFullApiUrlBFF,
@@ -91,6 +93,25 @@ function buildInputValidationDetails(error: z.ZodError) {
         `for property '${issue.path.join('.') || '.'}' with error '${issue.message}'`
     )
     .join(' - ');
+}
+
+function getSessionTokenFromRequest(req: Request) {
+  const cookieToken = req.cookies?.[OIDC_SESSION_COOKIE_NAME];
+  if (cookieToken) {
+    return cookieToken;
+  }
+
+  const headerValue = req.headers[AMSAPP_SESSION_TOKEN_HEADER];
+  if (typeof headerValue === 'string') {
+    return headerValue.trim() || null;
+  }
+
+  if (Array.isArray(headerValue)) {
+    const token = headerValue.find((value) => !!value)?.trim();
+    return token || null;
+  }
+
+  return null;
 }
 
 export function handleAmsAppAuthLoginStart(req: Request, res: Response) {
@@ -201,6 +222,35 @@ export function handleAmsAppAuthTokenExchange(req: Request, res: Response) {
         name: OIDC_SESSION_COOKIE_NAME,
         value: consumedRecord.maSessionCookieValue,
         expiresAt: Date.now() + OIDC_SESSION_MAX_AGE_SECONDS * ONE_SECOND_MS,
+      },
+    })
+  );
+}
+
+export function handleAmsAppAuthLogout(req: Request, res: Response) {
+  const sessionToken = getSessionTokenFromRequest(req);
+
+  if (!sessionToken) {
+    trackEvent('amsapp-auth-logout-failure', {
+      reason: apiResponseErrors.INVALID_INPUT.code,
+    });
+    return sendTokenExchangeError(res, apiResponseErrors.INVALID_INPUT);
+  }
+
+  revokeSessionToken(sessionToken);
+
+  res.clearCookie(OIDC_SESSION_COOKIE_NAME, {
+    path: '/',
+    secure: true,
+    sameSite: 'lax',
+    httpOnly: true,
+  });
+
+  return res.send(
+    apiSuccessResult({
+      session: {
+        name: OIDC_SESSION_COOKIE_NAME,
+        invalidated: true,
       },
     })
   );

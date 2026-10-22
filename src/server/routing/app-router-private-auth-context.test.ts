@@ -8,6 +8,10 @@ import { RequestMock, ResponseMock } from '../../testing/utils.ts';
 import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config.ts';
 import { getAuth } from '../auth/auth-helpers.ts';
 import type { AuthProfile } from '../auth/auth-types.ts';
+import {
+  clearAmsAppAuthStore,
+  revokeSessionToken,
+} from '../services/amsapp/auth/amsapp-auth-store.ts';
 
 const DIGID_PROFILE: AuthProfile = {
   sid: 'e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
@@ -35,6 +39,7 @@ function createPrivateAuthRequest(headers: Record<string, string>) {
 describe('app-router-private-auth-context', () => {
   beforeEach(() => {
     vi.resetAllMocks();
+    clearAmsAppAuthStore();
   });
 
   test('uses x-amsapp-session-token as __MA-appSession cookie', async () => {
@@ -63,6 +68,27 @@ describe('app-router-private-auth-context', () => {
 
     const req = createPrivateAuthRequest({
       authorization: `Bearer ${sessionToken}`,
+    });
+
+    const resMock = ResponseMock.new();
+    const next = vi.fn();
+
+    await privateNetworkAuthContextMiddleware(req, resMock, next);
+
+    expect(next).toHaveBeenCalledOnce();
+    expect(req.cookies?.[OIDC_SESSION_COOKIE_NAME]).toBeUndefined();
+    expect(getAuth(req)).toBeNull();
+  });
+
+  test('ignores revoked x-amsapp-session-token header', async () => {
+    const sessionToken = Buffer.from(JSON.stringify(DIGID_PROFILE)).toString(
+      'base64'
+    );
+
+    revokeSessionToken(sessionToken);
+
+    const req = createPrivateAuthRequest({
+      [AMSAPP_SESSION_TOKEN_HEADER]: sessionToken,
     });
 
     const resMock = ResponseMock.new();
