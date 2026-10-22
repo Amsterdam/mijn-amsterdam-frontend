@@ -114,7 +114,7 @@ function getSessionTokenFromRequest(req: Request) {
   return null;
 }
 
-export function handleAmsAppAuthLoginStart(req: Request, res: Response) {
+export async function handleAmsAppAuthLoginStart(req: Request, res: Response) {
   const result = loginStartQuerySchema.safeParse(req.query);
   if (!result.success) {
     return sendTokenExchangeError(
@@ -124,7 +124,7 @@ export function handleAmsAppAuthLoginStart(req: Request, res: Response) {
     );
   }
 
-  const loginId = createLoginAttempt(result.data.codeChallenge);
+  const loginId = await createLoginAttempt(result.data.codeChallenge);
 
   return res.redirect(
     generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_DIGID, [
@@ -150,7 +150,7 @@ export async function handleAmsAppAuthCallback(
   }
 
   const maSessionCookieValue = req.cookies?.[OIDC_SESSION_COOKIE_NAME] ?? '';
-  const record = markLoginReady(req.params.loginId, maSessionCookieValue);
+  const record = await markLoginReady(req.params.loginId, maSessionCookieValue);
   if (!record?.authorizationCode) {
     return res.render(
       'amsapp-open-app',
@@ -172,7 +172,10 @@ export async function handleAmsAppAuthCallback(
   return res.render('amsapp-open-app', renderProps);
 }
 
-export function handleAmsAppAuthTokenExchange(req: Request, res: Response) {
+export async function handleAmsAppAuthTokenExchange(
+  req: Request,
+  res: Response
+) {
   const result = tokenExchangeBodySchema.safeParse(req.body);
   if (!result.success) {
     trackEvent('amsapp-auth-exchange-failure', {
@@ -185,7 +188,7 @@ export function handleAmsAppAuthTokenExchange(req: Request, res: Response) {
     );
   }
 
-  const record = getByAuthorizationCode(result.data.authorizationCode);
+  const record = await getByAuthorizationCode(result.data.authorizationCode);
   if (!record || record.status !== 'ready') {
     trackEvent('amsapp-auth-exchange-failure', {
       reason: apiResponseErrors.AUTHORIZATION_CODE_NOT_FOUND_OR_EXPIRED.code,
@@ -203,7 +206,7 @@ export function handleAmsAppAuthTokenExchange(req: Request, res: Response) {
     return sendTokenExchangeError(res, apiResponseErrors.PKCE_MISMATCH);
   }
 
-  const consumedRecord = consumeByAuthorizationCode(
+  const consumedRecord = await consumeByAuthorizationCode(
     result.data.authorizationCode
   );
   if (!consumedRecord?.maSessionCookieValue) {
@@ -227,7 +230,7 @@ export function handleAmsAppAuthTokenExchange(req: Request, res: Response) {
   );
 }
 
-export function handleAmsAppAuthLogout(req: Request, res: Response) {
+export async function handleAmsAppAuthLogout(req: Request, res: Response) {
   const sessionToken = getSessionTokenFromRequest(req);
 
   if (!sessionToken) {
@@ -237,7 +240,7 @@ export function handleAmsAppAuthLogout(req: Request, res: Response) {
     return sendTokenExchangeError(res, apiResponseErrors.INVALID_INPUT);
   }
 
-  revokeSessionToken(sessionToken);
+  await revokeSessionToken(sessionToken);
 
   res.clearCookie(OIDC_SESSION_COOKIE_NAME, {
     path: '/',

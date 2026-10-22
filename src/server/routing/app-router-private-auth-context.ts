@@ -82,7 +82,7 @@ function removeSessionTokenFromRequest(req: Request) {
   removeSessionCookieHeader(req);
 }
 
-function applyAmsAppSessionTokenAsCookie(req: Request) {
+async function applyAmsAppSessionTokenAsCookie(req: Request) {
   if (!featureToggle.amsAppUniversalAuthIsActive) {
     return;
   }
@@ -92,7 +92,7 @@ function applyAmsAppSessionTokenAsCookie(req: Request) {
     return;
   }
 
-  if (isSessionTokenRevoked(token)) {
+  if (await isSessionTokenRevoked(token)) {
     return;
   }
 
@@ -128,12 +128,12 @@ export async function privateNetworkAuthContextMiddleware(
     const sessionTokenFromCookie = req.cookies?.[OIDC_SESSION_COOKIE_NAME];
     if (
       sessionTokenFromCookie &&
-      isSessionTokenRevoked(sessionTokenFromCookie)
+      (await isSessionTokenRevoked(sessionTokenFromCookie))
     ) {
       removeSessionTokenFromRequest(req);
     }
 
-    applyAmsAppSessionTokenAsCookie(req);
+    await applyAmsAppSessionTokenAsCookie(req);
 
     if (!req.cookies?.[OIDC_SESSION_COOKIE_NAME]) {
       return next();

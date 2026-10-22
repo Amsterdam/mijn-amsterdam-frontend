@@ -37,9 +37,9 @@ function createPrivateAuthRequest(headers: Record<string, string>) {
 }
 
 describe('app-router-private-auth-context', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.resetAllMocks();
-    clearAmsAppAuthStore();
+    await clearAmsAppAuthStore();
   });
 
   test('uses x-amsapp-session-token as __MA-appSession cookie', async () => {
@@ -85,7 +85,7 @@ describe('app-router-private-auth-context', () => {
       'base64'
     );
 
-    revokeSessionToken(sessionToken);
+    await revokeSessionToken(sessionToken);
 
     const req = createPrivateAuthRequest({
       [AMSAPP_SESSION_TOKEN_HEADER]: sessionToken,

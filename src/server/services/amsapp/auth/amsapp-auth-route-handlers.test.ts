@@ -29,9 +29,9 @@ const DIGID_PROFILE: AuthProfile = {
 };
 
 describe('amsapp-auth-route-handlers', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.resetAllMocks();
-    clearAmsAppAuthStore();
+    await clearAmsAppAuthStore();
   });
 
   test('login-start stores codeChallenge and redirects to DigiD login', async () => {
@@ -41,7 +41,7 @@ describe('amsapp-auth-route-handlers', () => {
     const req = reqMock.get();
     const resMock = ResponseMock.new();
 
-    handleAmsAppAuthLoginStart(req, resMock);
+    await handleAmsAppAuthLoginStart(req, resMock);
 
     expect(resMock.redirect).toHaveBeenCalledOnce();
 
@@ -54,7 +54,7 @@ describe('amsapp-auth-route-handlers', () => {
     const loginId = redirectUrl.searchParams.get('amsapp-login-id');
     expect(loginId).toBeTruthy();
 
-    const storedLoginAttempt = getByLoginId(loginId!);
+    const storedLoginAttempt = await getByLoginId(loginId!);
     expect(storedLoginAttempt?.codeChallenge).toBe('test-code-challenge');
     expect(storedLoginAttempt?.status).toBe('pending');
   });
@@ -63,7 +63,7 @@ describe('amsapp-auth-route-handlers', () => {
     const req = RequestMock.new().setQuery({}).get();
     const resMock = ResponseMock.new();
 
-    handleAmsAppAuthLoginStart(req, resMock);
+    await handleAmsAppAuthLoginStart(req, resMock);
 
     expect(resMock.status).toHaveBeenCalledWith(400);
     expect(resMock.send).toHaveBeenCalledWith(
@@ -85,7 +85,7 @@ describe('amsapp-auth-route-handlers', () => {
       .get();
     const resMock = ResponseMock.new();
 
-    handleAmsAppAuthLoginStart(req, resMock);
+    await handleAmsAppAuthLoginStart(req, resMock);
 
     expect(resMock.status).toHaveBeenCalledWith(400);
     expect(resMock.send).toHaveBeenCalledWith(
@@ -99,7 +99,7 @@ describe('amsapp-auth-route-handlers', () => {
   });
 
   test('callback marks authorizationCode ready and returns deeplink', async () => {
-    const loginId = createLoginAttempt('code-challenge-123');
+    const loginId = await createLoginAttempt('code-challenge-123');
     const reqMock = RequestMock.new()
       .setParams({ loginId })
       .setCookies({
@@ -110,7 +110,7 @@ describe('amsapp-auth-route-handlers', () => {
     const req = reqMock.get<{ loginId: string }>();
     const resMock = ResponseMock.new();
 
-    handleAmsAppAuthCallback(req, resMock);
+    await handleAmsAppAuthCallback(req, resMock);
 
     expect(resMock.render).toHaveBeenCalledOnce();
     const renderProps = resMock.render.mock.calls[0][1];
@@ -124,7 +124,7 @@ describe('amsapp-auth-route-handlers', () => {
     const authorizationCode = appHref.searchParams.get('authorizationCode');
     expect(authorizationCode).toBeTruthy();
 
-    const storedLoginAttempt = getByLoginId(loginId);
+    const storedLoginAttempt = await getByLoginId(loginId);
     expect(storedLoginAttempt?.status).toBe('ready');
     expect(storedLoginAttempt?.authorizationCode).toBe(authorizationCode);
     expect(storedLoginAttempt?.maSessionCookieValue).toBe(
@@ -133,13 +133,13 @@ describe('amsapp-auth-route-handlers', () => {
   });
 
   test('callback renders explicit auth failure when user is not authenticated', async () => {
-    const loginId = createLoginAttempt('code-challenge-123');
+    const loginId = await createLoginAttempt('code-challenge-123');
     const req = RequestMock.new()
       .setParams({ loginId })
       .get<{ loginId: string }>();
     const resMock = ResponseMock.new();
 
-    handleAmsAppAuthCallback(req, resMock);
+    await handleAmsAppAuthCallback(req, resMock);
 
     expect(resMock.render).toHaveBeenCalledOnce();
     const renderProps = resMock.render.mock.calls[0][1];
@@ -160,7 +160,7 @@ describe('amsapp-auth-route-handlers', () => {
     const req = reqMock.get<{ loginId: string }>();
     const resMock = ResponseMock.new();
 
-    handleAmsAppAuthCallback(req, resMock);
+    await handleAmsAppAuthCallback(req, resMock);
 
     expect(resMock.render).toHaveBeenCalledOnce();
     const renderProps = resMock.render.mock.calls[0][1];
@@ -176,8 +176,11 @@ describe('amsapp-auth-route-handlers', () => {
     const codeVerifier = 'test';
     const codeChallenge = 'n4bQgYhMfWWaL-qgxVrQFaO_TxsrC4Is0V1sFbDwCgg'; // createHash('sha256').update(codeVerifier).digest('base64url');
 
-    const loginId = createLoginAttempt(codeChallenge);
-    const readyRecord = markLoginReady(loginId, 'ma-session-cookie-value');
+    const loginId = await createLoginAttempt(codeChallenge);
+    const readyRecord = await markLoginReady(
+      loginId,
+      'ma-session-cookie-value'
+    );
 
     const req = {
       body: {
@@ -187,7 +190,7 @@ describe('amsapp-auth-route-handlers', () => {
     } as Request;
     const resMock = ResponseMock.new();
 
-    handleAmsAppAuthTokenExchange(req, resMock);
+    await handleAmsAppAuthTokenExchange(req, resMock);
 
     expect(resMock.send).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -202,7 +205,7 @@ describe('amsapp-auth-route-handlers', () => {
       })
     );
 
-    expect(getByLoginId(loginId)).toBeNull();
+    expect(await getByLoginId(loginId)).toBeNull();
   });
 
   test('token exchange fails for PKCE mismatch', async () => {
@@ -211,8 +214,11 @@ describe('amsapp-auth-route-handlers', () => {
       .update(codeVerifier)
       .digest('base64url');
 
-    const loginId = createLoginAttempt(codeChallenge);
-    const readyRecord = markLoginReady(loginId, 'ma-session-cookie-value');
+    const loginId = await createLoginAttempt(codeChallenge);
+    const readyRecord = await markLoginReady(
+      loginId,
+      'ma-session-cookie-value'
+    );
 
     const req = {
       body: {
@@ -222,7 +228,7 @@ describe('amsapp-auth-route-handlers', () => {
     } as Request;
 
     const resMock = ResponseMock.new();
-    handleAmsAppAuthTokenExchange(req, resMock);
+    await handleAmsAppAuthTokenExchange(req, resMock);
 
     expect(resMock.status).toHaveBeenCalledWith(400);
     expect(resMock.send).toHaveBeenCalledWith(
@@ -234,12 +240,15 @@ describe('amsapp-auth-route-handlers', () => {
         code: 400,
       })
     );
-    expect(getByLoginId(loginId)?.status).toBe('ready');
+    expect((await getByLoginId(loginId))?.status).toBe('ready');
   });
 
   test('token exchange returns explicit ApiError 005 contract for PKCE mismatch', async () => {
-    const loginId = createLoginAttempt('expected-code-challenge');
-    const readyRecord = markLoginReady(loginId, 'ma-session-cookie-value');
+    const loginId = await createLoginAttempt('expected-code-challenge');
+    const readyRecord = await markLoginReady(
+      loginId,
+      'ma-session-cookie-value'
+    );
 
     const req = {
       body: {
@@ -249,7 +258,7 @@ describe('amsapp-auth-route-handlers', () => {
     } as Request;
 
     const resMock = ResponseMock.new();
-    handleAmsAppAuthTokenExchange(req, resMock);
+    await handleAmsAppAuthTokenExchange(req, resMock);
 
     expect(resMock.status).toHaveBeenCalledWith(400);
     expect(resMock.send).toHaveBeenCalledWith(
@@ -269,8 +278,11 @@ describe('amsapp-auth-route-handlers', () => {
       .update(codeVerifier)
       .digest('base64url');
 
-    const loginId = createLoginAttempt(codeChallenge);
-    const readyRecord = markLoginReady(loginId, 'ma-session-cookie-value');
+    const loginId = await createLoginAttempt(codeChallenge);
+    const readyRecord = await markLoginReady(
+      loginId,
+      'ma-session-cookie-value'
+    );
     const authorizationCode = readyRecord?.authorizationCode;
 
     const firstReq = {
@@ -281,7 +293,7 @@ describe('amsapp-auth-route-handlers', () => {
     } as Request;
 
     const firstRes = ResponseMock.new();
-    handleAmsAppAuthTokenExchange(firstReq, firstRes);
+    await handleAmsAppAuthTokenExchange(firstReq, firstRes);
 
     const secondReq = {
       body: {
@@ -291,7 +303,7 @@ describe('amsapp-auth-route-handlers', () => {
     } as Request;
 
     const secondRes = ResponseMock.new();
-    handleAmsAppAuthTokenExchange(secondReq, secondRes);
+    await handleAmsAppAuthTokenExchange(secondReq, secondRes);
 
     expect(secondRes.status).toHaveBeenCalledWith(400);
     expect(secondRes.send).toHaveBeenCalledWith(
@@ -314,7 +326,7 @@ describe('amsapp-auth-route-handlers', () => {
     } as Request;
 
     const resMock = ResponseMock.new();
-    handleAmsAppAuthTokenExchange(req, resMock);
+    await handleAmsAppAuthTokenExchange(req, resMock);
 
     expect(resMock.status).toHaveBeenCalledWith(400);
     expect(resMock.send).toHaveBeenCalledWith(
@@ -337,7 +349,7 @@ describe('amsapp-auth-route-handlers', () => {
     } as Request;
 
     const resMock = ResponseMock.new();
-    handleAmsAppAuthTokenExchange(req, resMock);
+    await handleAmsAppAuthTokenExchange(req, resMock);
 
     expect(resMock.status).toHaveBeenCalledWith(400);
     expect(resMock.send).toHaveBeenCalledWith(
@@ -358,8 +370,8 @@ describe('amsapp-auth-route-handlers', () => {
       .digest('base64url');
 
     const sessionToken = 'ma-session-cookie-value';
-    const loginId = createLoginAttempt(codeChallenge);
-    const readyRecord = markLoginReady(loginId, sessionToken);
+    const loginId = await createLoginAttempt(codeChallenge);
+    const readyRecord = await markLoginReady(loginId, sessionToken);
 
     const req = {
       headers: {
@@ -368,7 +380,7 @@ describe('amsapp-auth-route-handlers', () => {
     } as unknown as Request;
 
     const resMock = ResponseMock.new();
-    handleAmsAppAuthLogout(req, resMock);
+    await handleAmsAppAuthLogout(req, resMock);
 
     expect(resMock.send).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -392,8 +404,8 @@ describe('amsapp-auth-route-handlers', () => {
       })
     );
 
-    expect(getByLoginId(loginId)).toBeNull();
-    expect(isSessionTokenRevoked(sessionToken)).toBe(true);
+    expect(await getByLoginId(loginId)).toBeNull();
+    expect(await isSessionTokenRevoked(sessionToken)).toBe(true);
 
     const exchangeReq = {
       body: {
@@ -403,7 +415,7 @@ describe('amsapp-auth-route-handlers', () => {
     } as Request;
 
     const exchangeRes = ResponseMock.new();
-    handleAmsAppAuthTokenExchange(exchangeReq, exchangeRes);
+    await handleAmsAppAuthTokenExchange(exchangeReq, exchangeRes);
 
     expect(exchangeRes.status).toHaveBeenCalledWith(400);
     expect(exchangeRes.send).toHaveBeenCalledWith(
@@ -422,7 +434,7 @@ describe('amsapp-auth-route-handlers', () => {
     } as Request;
 
     const resMock = ResponseMock.new();
-    handleAmsAppAuthLogout(req, resMock);
+    await handleAmsAppAuthLogout(req, resMock);
 
     expect(resMock.status).toHaveBeenCalledWith(400);
     expect(resMock.send).toHaveBeenCalledWith(
