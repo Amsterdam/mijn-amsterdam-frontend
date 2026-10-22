@@ -21,6 +21,7 @@ export const featureToggle = {
   ['HLI.stadspas.securityCode']: true,
   ['HLI.stadspas.pcBudgetNormalization']: !IS_PRODUCTION,
   ['WMO.fetchWmo.addMaVoorzieningenApiProps']: true,
+  ['JZD.voorziening.stopzetten']: !IS_PRODUCTION,
   ['ERFPACHT.service']: !IS_PRODUCTION,
   ['ERFPACHT.wijzigingsaanvragen']: !IS_PRODUCTION,
   ['USER_FEEDBACK.service.jira']: !IS_PRODUCTION,
