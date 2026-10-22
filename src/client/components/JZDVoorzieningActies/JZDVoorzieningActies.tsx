@@ -52,9 +52,7 @@ export function JZDVoorzieningActies({
     <>
       {isReparatieverzoekAvailable && (
         <>
-          <Heading level={4} size="level-4">
-            Reparatieverzoek aanvragen
-          </Heading>
+          <Heading level={4}>Reparatieverzoek aanvragen</Heading>
           <Paragraph className="ams-mb-m">
             U kunt een reparatie verzoek voor deze voorziening aanvragen door
             het reparatieverzoek formulier in te vullen.
@@ -69,9 +67,7 @@ export function JZDVoorzieningActies({
       )}
       {isPGBReparatieverzoek && (
         <>
-          <Heading level={4} size="level-4">
-            Reparatieverzoek aanvragen
-          </Heading>
+          <Heading level={4}>Reparatieverzoek aanvragen</Heading>
           <Paragraph>
             Heeft u de woningaanpassing met een pgb aangeschaft? Dan moet u zelf
             de kosten voor reparatie en onderhoud betalen met uw pgb. Bij uw pgb
@@ -81,9 +77,7 @@ export function JZDVoorzieningActies({
       )}
       {themaConfig.featureToggle.stopzetten.active && isStopzettenAvailable && (
         <>
-          <Heading level={4}>
-            Voorziening stopzetten
-          </Heading>
+          <Heading level={4}>Voorziening stopzetten</Heading>
           <Paragraph>
             U kunt deze voorziening via dit{' '}
             <MaLink
@@ -100,9 +94,7 @@ export function JZDVoorzieningActies({
       {themaConfig.featureToggle.stopzetten.active &&
         isStopzettenNietViaFormulierAvailable && (
           <>
-            <Heading level={4} size="level-4">
-              Voorziening stopzetten
-            </Heading>
+            <Heading level={4}>Voorziening stopzetten</Heading>
             <Paragraph>
               Wilt u deze voorziening stopzetten neem dan contact op met{' '}
               {voorziening.leverancier} met het verzoek deze voorziening stop te
