@@ -78,6 +78,19 @@ const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
   },
 };
 
+const displayPropsHuidigeVoorzieningen: DisplayProps<LeerlingenvervoerVoorzieningFrontend> =
+  {
+    enableMobileListView: true,
+    props: {
+      detailLinkComponent: 'Voorziening',
+      statusDateFormatted: 'Datum',
+    },
+    colWidths: {
+      large: ['75%', '25%'],
+      small: ['100%', '0', '0'],
+    },
+  };
+
 const displayPropsInBehandeling: DisplayProps<LeerlingenvervoerVoorzieningFrontend> =
   {
     enableMobileListView: true,
@@ -130,7 +143,7 @@ export const tableConfig = {
     title: listPageTitle[listPageParamKind.actual],
     filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
       regeling.isActual && !!regeling.decision,
-    displayProps,
+    displayProps: displayPropsHuidigeVoorzieningen,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.actual,
       page: null,
