@@ -3,17 +3,17 @@ import { Button } from '@amsterdam/design-system-react';
 import { UserFeedbackQuestion } from './UserFeedbackQuestion.tsx';
 import type { SurveyFrontend } from '../../../server/services/user-feedback/user-feedback.types.ts';
 
-type FeedbackForm1Props = {
+type FeedbackFormProps = {
   onSubmit?: (formData: FormData) => void;
   questions?: SurveyFrontend['questions'];
   formData?: FormData;
 };
 
-export function FeedbackForm1({
+export function FeedbackForm({
   onSubmit,
   questions,
   formData,
-}: FeedbackForm1Props) {
+}: FeedbackFormProps) {
   return (
     <form
       onSubmit={(event) => {

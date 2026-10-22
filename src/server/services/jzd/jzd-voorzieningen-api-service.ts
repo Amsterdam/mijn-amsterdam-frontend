@@ -68,11 +68,21 @@ function isMaApiPropertyConfigMatch<T extends ZorgnedAanvraagTransformed>(
   });
 }
 
+function isMaActieUrlCallbackRecord<T>(
+  value: unknown
+): value is Record<string, (voorziening: T) => string> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every((item) => typeof item === 'function')
+  );
+}
+
 function addMaApiPropsToVoorziening<T extends ZorgnedAanvraagTransformed>(
   apiPropsConfig: JzdApiConfig<T>[],
   voorziening: T
-): T & Partial<WithMaApiProps> {
-  const applyAssignments: Partial<WithMaApiProps> = {};
+): T & Partial<WithMaApiProps<T>> {
+  const applyAssignments: Partial<WithMaApiProps<T>> = {};
 
   apiPropsConfig.forEach((actionConfig) => {
     const includeType = actionConfig['include.every']
@@ -101,7 +111,19 @@ function addMaApiPropsToVoorziening<T extends ZorgnedAanvraagTransformed>(
           if (typeof value === 'function') {
             value_ = value(voorziening, key as never); // The "as never" is needed to satisfy the type checker, because the type of key is a string, but we know that it will always be a valid key of WithMaApiProps.
           }
-          if (Array.isArray(value_)) {
+          if (key === 'maActieUrls' && isMaActieUrlCallbackRecord<T>(value_)) {
+            const urls = Object.fromEntries(
+              Object.entries(value_).map(([action, getUrl]) => [
+                action,
+                getUrl(voorziening),
+              ])
+            );
+            applyAssignments.maActieUrls = {
+              ...(applyAssignments.maActieUrls as
+                Record<string, string> | undefined),
+              ...urls,
+            };
+          } else if (Array.isArray(value_)) {
             // Merge and deduplicate array values if the key already exists in the new assignments, otherwise just assign the value.
             const existingValue = (applyAssignments[key] ?? []) as string[];
             (applyAssignments[key] as string[]) = [
@@ -109,7 +131,10 @@ function addMaApiPropsToVoorziening<T extends ZorgnedAanvraagTransformed>(
               ...value_,
             ].filter((v, i, arr) => arr.indexOf(v) === i);
           } else if (value_ !== undefined && typeof value_ !== 'function') {
-            (applyAssignments[key] as string | Record<string, string>) = value_;
+            (applyAssignments[key] as
+              | string
+              | Record<string, string>
+              | Record<string, (voorziening: T) => string>) = value_;
           }
         }
       );
@@ -148,7 +173,7 @@ export function transformVoorzieningForFrontendWithMaApiProps(
       }
 
       return voorziening?.maActies?.some((action) =>
-        options.maActies?.includes(action as (typeof options.maActies)[number])
+        options.maActies?.includes(action)
       );
     })
     .filter((voorziening) => {

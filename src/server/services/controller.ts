@@ -14,11 +14,7 @@ import { omit } from '../../universal/helpers/utils.ts';
 import { getAuth } from '../auth/auth-helpers.ts';
 import type { AuthProfileAndToken } from '../auth/auth-types.ts';
 import { logger } from '../logging.ts';
-import {
-  queryParams,
-  sendMessage,
-  type RequestWithQueryParams,
-} from '../routing/route-helpers.ts';
+import { queryParams, sendMessage } from '../routing/route-helpers.ts';
 import { fetchIsKnownInAFIS } from './afis/afis.ts';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval.ts';
 import { featureToggle } from './amsapp/notifications/amsapp-notifications-service-config.ts';
@@ -28,7 +24,6 @@ import { fetchMyLocations } from './bag/my-locations.ts';
 import { fetchBezwaren } from './bezwaren/bezwaren.ts';
 import { fetchLoodmetingen } from './bodem/loodmetingen.ts';
 import { fetchBrp } from './brp/brp.ts';
-import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content.ts';
 import { fetchActiveMaintenanceNotifications } from './cms/cms-maintenance-notifications.ts';
 import { fetchErfpacht } from './erfpacht/erfpacht.ts';
 import { fetchHLI } from './hli/hli.ts';
@@ -126,13 +121,6 @@ export function addServiceResultHandler<
  * The service methods
  */
 // Public services
-const CMS_CONTENT = (req: RequestWithQueryParams<{ renewCache?: 'true' }>) => {
-  const auth = getAuth(req);
-  return fetchMijnAmsterdamUitlegPage(
-    auth?.profile.profileType,
-    req.query.renewCache === 'true'
-  );
-};
 const CMS_MAINTENANCE_NOTIFICATIONS = callPublicService(
   fetchActiveMaintenanceNotifications
 );
@@ -215,7 +203,6 @@ export const servicesByProfileType = {
     BEZWAREN,
     BODEM,
     BRP,
-    CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
     HLI,
@@ -244,7 +231,6 @@ export const servicesByProfileType = {
     KTO,
   },
   'private-attributes': {
-    CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     NOTIFICATIONS,
   },
@@ -254,7 +240,6 @@ export const servicesByProfileType = {
     AFVALPUNTEN,
     BEZWAREN,
     BODEM,
-    CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
     HORECA,
@@ -281,13 +266,7 @@ export type ServiceMap = Prettify<
 export type ServiceID = Extract<keyof ServiceMap, string>;
 export type ServicesType = ServiceMap;
 
-const tipsOmit = [
-  'AFVAL',
-  'AFVALPUNTEN',
-  'CMS_CONTENT',
-  'NOTIFICATIONS',
-  'KLANT_CONTACT',
-];
+const tipsOmit = ['AFVAL', 'AFVALPUNTEN', 'NOTIFICATIONS', 'KLANT_CONTACT'];
 
 export const servicesTipsByProfileType = {
   private: omit(
@@ -442,7 +421,6 @@ async function getServiceResultsForTips(req: Request) {
 }
 
 export const forTesting = {
-  CMS_CONTENT,
   getServiceResultsForTips,
   storeNotificationsForAmsAppUsers,
 };

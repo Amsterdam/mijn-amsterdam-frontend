@@ -6,12 +6,12 @@ import type {
   ToeristischeVerhuurVergunning,
 } from '../../../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
 import { entries } from '../../../../../../universal/helpers/utils.ts';
-import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
 import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
 } from '../../../../../../universal/types/thema-types.ts';
+import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
 import type { ListPageParamKind as ListPageParamKindVergunningen } from '../Vergunningen/Vergunningen-thema-config.ts';
 import {
   listPageParamKind as listPageParamKindVergunningen,
@@ -44,7 +44,7 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
   route: {
     path: '/toeristische-verhuur',
     get documentTitle() {
-      return `${THEMA_TITLE} | overzicht`;
+      return `Overzicht | ${THEMA_TITLE}`;
     },
     trackingUrl: null,
   },
@@ -64,7 +64,7 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
       path: '/toeristische-verhuur/vergunning/:caseType/:id',
       trackingUrl: (params) =>
         `/toeristische-verhuur/vergunning/${params?.caseType ?? ''}`,
-      documentTitle: `Toeristische verhuur | ${THEMA_TITLE}`,
+      documentTitle: `Vergunning | ${THEMA_TITLE}`,
     },
   },
   listPage: {
@@ -79,6 +79,11 @@ export const themaConfig: ToeristischeVerhuurThemaConfig = {
 
 export const bbVergunningPageLinkItem = {
   title: 'Meer informatie over bed & breakfast',
+  to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-aanvragen-voor-bed-breakfast/',
+} as const;
+
+export const bbVergunningPageLinkItemOvergangsrecht = {
+  title: 'Overgangsrecht Bed & Breakfast stopt 1 juli 2026',
   to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-aanvragen-voor-bed-breakfast/',
 } as const;
 

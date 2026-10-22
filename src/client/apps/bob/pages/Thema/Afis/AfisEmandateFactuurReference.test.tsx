@@ -114,7 +114,9 @@ describe('AfisEmandateFactuurReference', () => {
         screen.getByText('Niet actief - gestopt op 31 december 2022.')
       ).toBeInTheDocument();
       expect(
-        screen.getByRole('heading', { name: 'Handmatig betalen' })
+        screen.getByRole('heading', {
+          name: 'Let op! Deze automatische incasso is gestopt. Betaal de factuur zelf via uw bank:',
+        })
       ).toBeInTheDocument();
     });
   });

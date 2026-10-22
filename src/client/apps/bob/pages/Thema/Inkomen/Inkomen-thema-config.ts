@@ -47,7 +47,7 @@ export const themaConfig: InkomenThemaConfig = {
   profileTypes: ['private'],
   route: {
     path: '/inkomen',
-    documentTitle: `${THEMA_TITLE} | overzicht`,
+    documentTitle: `Overzicht | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
   redactedScope: 'full',

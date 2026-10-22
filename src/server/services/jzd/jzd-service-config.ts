@@ -1,5 +1,6 @@
 import z from 'zod';
 
+import { MA_ACTIE_VALUES } from './jzd-types.ts';
 import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import { ZodValidators } from '../../helpers/validation.ts';
 
@@ -39,16 +40,7 @@ export const routes = {
 
 export const voorzieningenRequestInput = z.object({
   bsn: ZodValidators.BSN.nonoptional(),
-  maActies: z
-    .array(
-      z.enum([
-        'reparatieverzoek',
-        'stopzetten',
-        'stopzetten-tijdelijk',
-        'stopzetten-niet-via-formulier',
-      ])
-    )
-    .optional(),
+  maActies: z.array(z.enum(MA_ACTIE_VALUES)).optional(),
   maProductgroep: z
     .array(
       z.enum([

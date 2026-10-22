@@ -25,6 +25,11 @@ import type {
   ZorgnedAanvraagTransformed,
 } from '../../zorgned/zorgned-types.ts';
 import { featureToggle, routes } from '../jzd-service-config.ts';
+import type {
+  VoorzieningActiePropsFrontend,
+  ZorgnedAanvraagTransformedWithMaApiProps,
+} from '../jzd-types.ts';
+import { transformVoorzieningForFrontendWithMaApiProps } from '../jzd-voorzieningen-api-service.ts';
 import { hasDecision } from '../wmo/status-line-items/wmo-generic.ts';
 import { getDocuments } from '../wmo/wmo.ts';
 
@@ -48,37 +53,41 @@ export async function fetchLeerlingenvervoer(
   }
 
   const aanvragen = featureToggle.service.llvInBehandeling
-    ? aanvragenResponse.content
-    : aanvragenResponse.content.filter((aanvraag) => !!aanvraag.resultaat);
+    ? transformVoorzieningForFrontendWithMaApiProps(aanvragenResponse.content)
+    : transformVoorzieningForFrontendWithMaApiProps(
+        aanvragenResponse.content.filter((aanvraag) => !!aanvraag.resultaat)
+      );
 
   const voorzieningen = transformVoorzieningenForFrontend(
     authProfileAndToken.profile.sid,
     aanvragen,
     new Date()
   );
+
   return apiSuccessResult(voorzieningen);
 }
 
-export interface LeerlingenvervoerVoorzieningFrontend extends ZaakAanvraagDetail {
-  dateDecision: string;
-  dateDecisionFormatted: string;
-  decision: string;
-  documents: GenericDocument[];
-  isActual: boolean;
-  itemTypeCode: ProductSoortCode | null;
-  displayStatus:
-    | 'Ontvangen'
-    | 'In behandeling'
-    | 'Meer informtie nodig'
-    | 'Besluit genomen'
-    | 'Einde recht';
-  statusDate: string;
-  statusDateFormatted: string;
-}
+export type LeerlingenvervoerVoorzieningFrontend = ZaakAanvraagDetail &
+  VoorzieningActiePropsFrontend & {
+    dateDecision: string;
+    dateDecisionFormatted: string;
+    decision: string;
+    documents: GenericDocument[];
+    isActual: boolean;
+    itemTypeCode: ProductSoortCode;
+    displayStatus:
+      | 'Ontvangen'
+      | 'In behandeling'
+      | 'Meer informatie nodig'
+      | 'Besluit genomen'
+      | 'Einde recht';
+    statusDate: string;
+    statusDateFormatted: string;
+  };
 
 function transformVoorzieningenForFrontend(
   sessionID: SessionID,
-  aanvragen: ZorgnedAanvraagTransformed[],
+  aanvragen: ZorgnedAanvraagTransformedWithMaApiProps[],
   now: Date
 ): LeerlingenvervoerVoorzieningFrontend[] {
   const voorzieningenFrontend: LeerlingenvervoerVoorzieningFrontend[] = [];
@@ -114,7 +123,7 @@ function transformVoorzieningenForFrontend(
         },
         steps: lineItems,
         // NOTE: Keep! This field is added specifically for the Tips api.
-        itemTypeCode: aanvraag.productsoortCode,
+        itemTypeCode: aanvraag.productsoortCode ?? '',
         decision:
           hasDecision(aanvraag) && aanvraag.resultaat
             ? capitalizeFirstLetter(aanvraag.resultaat)
@@ -133,6 +142,9 @@ function transformVoorzieningenForFrontend(
         ) as LeerlingenvervoerVoorzieningFrontend['displayStatus'],
         statusDate,
         statusDateFormatted: defaultDateFormat(statusDate),
+        maActieUrls: (aanvraag.maActieUrls as Record<string, string>) ?? {},
+        maActies: aanvraag.maActies ?? [],
+        leverancier: aanvraag.leverancier,
       };
 
       voorzieningenFrontend.push(voorzieningFrontend);

@@ -8,6 +8,7 @@ import {
   type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import type { SomeOtherString } from '../../../universal/helpers/types.ts';
+import { omit } from '../../../universal/helpers/utils.ts';
 
 type ApiFetchResponse<T> = Promise<ApiResponse<T>>;
 // Extend RequestInit to include a payload property. The body property always takes precedence over payload.
@@ -17,6 +18,10 @@ export type RequestInitWithPayload<P> = RequestInit & {
 };
 
 type UrlOrString = URL | string;
+
+function omitPayloadAndBody<P>(init?: RequestInitWithPayload<P>) {
+  return init ? omit(init, ['payload', 'body']) : {};
+}
 
 async function handleResponse<T>(
   fetchFn: () => Promise<Response>
@@ -67,15 +72,17 @@ export async function sendFormPostRequest<T, P = any>(
   url: string | URL,
   init?: RequestInitWithPayload<P>
 ): ApiFetchResponse<T> {
+  const init_ = omitPayloadAndBody(init);
+  const body = init?.payload ? new URLSearchParams(init.payload) : init?.body;
   return handleResponse<T>(() =>
     fetch(url, {
       method: 'POST',
-      body: init?.payload ? new URLSearchParams(init.payload) : init?.body,
+      body,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       credentials: 'include',
-      ...init,
+      ...init_,
     })
   );
 }
@@ -90,15 +97,17 @@ export async function sendJSONPostRequest<T, P = any>(
   url: string | URL,
   init?: RequestInitWithPayload<P>
 ): ApiFetchResponse<T> {
+  const init_ = omitPayloadAndBody(init);
+  const body = init?.payload ? JSON.stringify(init.payload) : init?.body;
   return handleResponse<T>(() =>
     fetch(url, {
       method: 'POST',
-      body: init?.payload ? JSON.stringify(init.payload) : init?.body,
+      body,
       headers: {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      ...init,
+      ...init_,
     })
   );
 }

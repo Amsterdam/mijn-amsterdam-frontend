@@ -126,6 +126,7 @@ export async function storeNotificationsResponses(
     'belasting',
     'fetchWior',
     'fetchKrefia',
+    'zwd',
   ] as const; // MIJN-12971 & MIJN-13488 & MIJN-13592: Temporary filter to not push notifications repeatedly for notifications that have a datePublished set to today everyday
   const responses = entries(serviceResponses)
     .filter(

@@ -25,9 +25,10 @@ export function MyNotificationsPage() {
   });
 
   const { NOTIFICATIONS } = useAppStateGetter();
+  const { notifications, notificationsTotal } = useAppStateNotifications();
+
   const isLoadingNotifications = useIsLoading(NOTIFICATIONS);
 
-  const { notifications, total } = useAppStateNotifications();
   const { page = '1' } = useParams<{ page?: string }>();
 
   const currentPage = useMemo(() => {
@@ -52,10 +53,10 @@ export function MyNotificationsPage() {
             Niet alle berichten kunnen op dit moment worden getoond.
           </ErrorAlert>
         )}
-        {total > PAGE_SIZE && (
+        {notificationsTotal > PAGE_SIZE && (
           <PaginationV2
             className="ams-mb-m"
-            totalCount={total}
+            totalCount={notificationsTotal}
             pageSize={PAGE_SIZE}
             path={generatePath(MyNotificationsRoute.route)}
             currentPage={currentPage}
@@ -82,9 +83,9 @@ export function MyNotificationsPage() {
               );
             })}
         </OrderedList>
-        {total > PAGE_SIZE && (
+        {notificationsTotal > PAGE_SIZE && (
           <PaginationV2
-            totalCount={total}
+            totalCount={notificationsTotal}
             pageSize={PAGE_SIZE}
             path={generatePath(MyNotificationsRoute.route)}
             currentPage={currentPage}
