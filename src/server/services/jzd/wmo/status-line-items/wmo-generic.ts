@@ -203,7 +203,7 @@ export function getTransformerConfigBesluit(
           }.</p>
       ${decisionParagraph(aanvraag)}
       `
-        : '',
+        : '<p>Er is nog geen besluit over uw melding. Zodra er een besluit is, kunt u het hier bekijken.</p>',
   };
 }
 
