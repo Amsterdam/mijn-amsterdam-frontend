@@ -65,12 +65,12 @@ function isEindeRechtReached(aanvraag: ZorgnedRTMAanvraag): boolean {
   );
 }
 
-type decision = 'toegewezen' | 'afgewezen' | null;
+type Decision = 'toegewezen' | 'afgewezen' | null;
 
 function getDecision(
   aanvragen: ZorgnedRTMAanvraag[],
   hasToegewezenRTM2: boolean
-): decision {
+): Decision {
   if (hasToegewezenRTM2) {
     return 'toegewezen';
   }
