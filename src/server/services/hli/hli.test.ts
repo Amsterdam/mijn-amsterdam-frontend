@@ -249,13 +249,17 @@ describe('HLI', () => {
       datumEindeLevering: null,
       datumOpdrachtLevering: null,
       datumToewijzing: null,
+      procesIdentificatie: '',
+      procesMeldingIdentificatie: null,
       leverancier: '',
+      leverancierIdentificatie: null,
       leveringsVorm: '',
       productsoortCode: '',
       bsnAanvrager: '123456789',
       beschiktProductIdentificatie: 'bpi-123',
       procesAanvraagOmschrijving: null,
       beschikkingNummer: null,
+      regelingIdentificatie: null,
     };
 
     const statusLineItems: StatusLineItem[] = [
@@ -276,6 +280,13 @@ describe('HLI', () => {
     expect(result.id).toBe('11231231');
     expect(result.title).toBe('Test Aanvraag');
     expect(result.displayStatus).toBe('Toegewezen');
+
+    const undecidedResult = transformRegelingForFrontend(
+      sessionID,
+      { ...aanvraag, resultaat: null },
+      statusLineItems
+    );
+    expect(undecidedResult.decision).toBeNull();
   });
 
   describe('transformRegelingenForFrontend', async () => {
@@ -309,12 +320,16 @@ describe('HLI', () => {
         datumEindeLevering: null,
         datumOpdrachtLevering: null,
         datumToewijzing: null,
+        procesIdentificatie: '',
+        procesMeldingIdentificatie: null,
         leverancier: '',
+        leverancierIdentificatie: null,
         leveringsVorm: '',
         productsoortCode: '',
         productIdentificatie: 'AV-UPCC',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
+        regelingIdentificatie: null,
       },
     ];
     const today = new Date();
@@ -373,8 +388,12 @@ describe('HLI', () => {
         datumEindeLevering: null,
         datumOpdrachtLevering: null,
         datumToewijzing: null,
+        procesIdentificatie: '',
+        procesMeldingIdentificatie: null,
         leverancier: '',
+        leverancierIdentificatie: null,
         leveringsVorm: '',
+        regelingIdentificatie: null,
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
@@ -404,8 +423,12 @@ describe('HLI', () => {
         datumEindeLevering: null,
         datumOpdrachtLevering: null,
         datumToewijzing: null,
+        procesIdentificatie: '',
+        procesMeldingIdentificatie: null,
         leverancier: '',
+        leverancierIdentificatie: null,
         leveringsVorm: '',
+        regelingIdentificatie: null,
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
@@ -435,8 +458,12 @@ describe('HLI', () => {
         datumEindeLevering: null,
         datumOpdrachtLevering: null,
         datumToewijzing: null,
+        procesIdentificatie: '',
+        procesMeldingIdentificatie: null,
         leverancier: '',
+        leverancierIdentificatie: null,
         leveringsVorm: '',
+        regelingIdentificatie: null,
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
@@ -466,8 +493,12 @@ describe('HLI', () => {
         datumEindeLevering: null,
         datumOpdrachtLevering: null,
         datumToewijzing: null,
+        procesIdentificatie: '',
+        procesMeldingIdentificatie: null,
         leverancier: '',
+        leverancierIdentificatie: null,
         leveringsVorm: '',
+        regelingIdentificatie: null,
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',
@@ -497,8 +528,12 @@ describe('HLI', () => {
         datumEindeLevering: null,
         datumOpdrachtLevering: null,
         datumToewijzing: null,
+        procesIdentificatie: '',
+        procesMeldingIdentificatie: null,
         leverancier: '',
+        leverancierIdentificatie: null,
         leveringsVorm: '',
+        regelingIdentificatie: null,
         productsoortCode: '',
         bsnAanvrager: '123456789',
         beschiktProductIdentificatie: 'bpi-123',

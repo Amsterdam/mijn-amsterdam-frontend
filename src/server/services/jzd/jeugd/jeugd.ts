@@ -15,10 +15,8 @@ import type {
   ZaakAanvraagDetail,
 } from '../../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../../auth/auth-types.ts';
-import {
-  getLatestStatus,
-  getLatestStatusDate,
-} from '../../../helpers/zaken.ts';
+import { getLatestStatus } from '../../../helpers/zaken.ts';
+import { getLatestStatusDate } from '../../../statusline.ts';
 import { fetchAanvragen } from '../../zorgned/zorgned-service.ts';
 import { getStatusLineItems } from '../../zorgned/zorgned-status-line-items.ts';
 import type {
@@ -26,7 +24,7 @@ import type {
   ProductSoortCode,
   ZorgnedAanvraagTransformed,
 } from '../../zorgned/zorgned-types.ts';
-import { routes } from '../jzd-service-config.ts';
+import { featureToggle, routes } from '../jzd-service-config.ts';
 import type {
   VoorzieningActiePropsFrontend,
   ZorgnedAanvraagTransformedWithMaApiProps,
@@ -40,6 +38,7 @@ export async function fetchZorgnedAanvragenJeugd(
 ): Promise<ApiResponse<ZorgnedAanvraagTransformed[]>> {
   return fetchAanvragen(bsn, {
     zorgnedApiConfigKey: 'ZORGNED_LEERLINGENVERVOER',
+    includeAanvragenWithoutBeschiktProduct: true,
   });
 }
 
@@ -53,12 +52,15 @@ export async function fetchLeerlingenvervoer(
     return aanvragenResponse;
   }
 
-  const voorzieningenWithMaApiProps =
-    transformVoorzieningForFrontendWithMaApiProps(aanvragenResponse.content);
+  const aanvragen = featureToggle.service.llvInBehandeling
+    ? transformVoorzieningForFrontendWithMaApiProps(aanvragenResponse.content)
+    : transformVoorzieningForFrontendWithMaApiProps(
+        aanvragenResponse.content.filter((aanvraag) => !!aanvraag.resultaat)
+      );
 
   const voorzieningen = transformVoorzieningenForFrontend(
     authProfileAndToken.profile.sid,
-    voorzieningenWithMaApiProps,
+    aanvragen,
     new Date()
   );
 
@@ -113,13 +115,15 @@ function transformVoorzieningenForFrontend(
         link: {
           title: 'Meer informatie',
           to: generatePath(themaConfig.detailPage.route.path, {
-            voorziening: slug(aanvraag.titel),
+            voorziening: hasDecision(aanvraag)
+              ? slug(aanvraag.titel)
+              : 'in-behandeling',
             id,
           }),
         },
         steps: lineItems,
         // NOTE: Keep! This field is added specifically for the Tips api.
-        itemTypeCode: aanvraag.productsoortCode,
+        itemTypeCode: aanvraag.productsoortCode ?? '',
         decision:
           hasDecision(aanvraag) && aanvraag.resultaat
             ? capitalizeFirstLetter(aanvraag.resultaat)

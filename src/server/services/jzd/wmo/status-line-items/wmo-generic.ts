@@ -75,9 +75,18 @@ export function getDocumentMeerInformatieDate(documents: GenericDocument[]) {
   );
 }
 
+function hasMeerInformatieActie(aanvraag: ZorgnedAanvraagTransformed) {
+  return (aanvraag.procesAanvraagActieOmschrijvingen ?? []).some((actie) => {
+    const normalizedActie = actie.trim().toLowerCase();
+    return normalizedActie === 'verzoek om meer informatie';
+  });
+}
+
 export function hasMeerInformatieNodig(aanvraag: ZorgnedAanvraagTransformed) {
-  return aanvraag.documenten.some((document) =>
-    document.title.startsWith(DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH)
+  return (
+    aanvraag.documenten.some((document) =>
+      document.title.startsWith(DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH)
+    ) || hasMeerInformatieActie(aanvraag)
   );
 }
 
@@ -194,7 +203,7 @@ export function getTransformerConfigBesluit(
           }.</p>
       ${decisionParagraph(aanvraag)}
       `
-        : '',
+        : '<p>Er is nog geen besluit over uw melding. Zodra er een besluit is, kunt u het hier bekijken.</p>',
   };
 }
 
