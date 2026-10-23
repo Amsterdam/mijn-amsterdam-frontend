@@ -30,18 +30,9 @@ function appendSessionCookieHeader(req: Request, sessionToken: string) {
   const cookiePair = `${OIDC_SESSION_COOKIE_NAME}=${encodeURIComponent(sessionToken)}`;
   const existingCookieHeader = req.headers.cookie;
 
-  if (typeof existingCookieHeader === 'string' && existingCookieHeader) {
-    req.headers.cookie = `${existingCookieHeader}; ${cookiePair}`;
-    return;
-  }
-
-  if (Array.isArray(existingCookieHeader) && existingCookieHeader.length > 0) {
-    const first = existingCookieHeader[0] ?? '';
-    req.headers.cookie = `${first}; ${cookiePair}`;
-    return;
-  }
-
-  req.headers.cookie = cookiePair;
+  req.headers.cookie = existingCookieHeader
+    ? `${existingCookieHeader}; ${cookiePair}`
+    : cookiePair;
 }
 
 function removeSessionCookieHeader(req: Request) {
