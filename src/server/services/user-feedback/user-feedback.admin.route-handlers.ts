@@ -1,0 +1,180 @@
+import type { Request, Response } from 'express';
+
+import {
+  createJiraTicketForFeedbackEntry,
+  upsertApiResponse,
+} from './jira/user-feedback-jira.ts';
+import { getUserFeedbackHandoffConfig } from './user-feedback-handoff.ts';
+import {
+  SURVEY_ID_INLINE_KTO,
+  SURVEY_VERSION_INLINE_KTO,
+} from './user-feedback.service-config.ts';
+import { userFeedbackOverview } from './user-feedback.ts';
+import {
+  createJiraTicketInput,
+  handoffDepartmentInput,
+  type Survey,
+  type CreateJiraTicketInput,
+  type HandoffDepartmentInput,
+} from './user-feedback.types.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import { pick, range } from '../../../universal/helpers/utils.ts';
+import {
+  sendBadRequestInvalidInput,
+  sendResponse,
+  type RequestWithRouteAndQueryParams,
+  type RequestWithQueryParams,
+} from '../../routing/route-helpers.ts';
+import { getUsernameFromSession } from '../admin/admin-helpers.ts';
+
+export async function handleFetchSurveyOverview(
+  req: RequestWithQueryParams<{
+    id?: Survey['unique_code'];
+    version?: string;
+    page?: string;
+  }>,
+  res: Response
+) {
+  const surveyOverview = await userFeedbackOverview(
+    req.query.id ?? SURVEY_ID_INLINE_KTO,
+    req.query.version ?? SURVEY_VERSION_INLINE_KTO,
+    parseInt(req.query.page || '1', 10)
+  );
+
+  return sendResponse(res, surveyOverview);
+}
+
+export async function handleUserFeedbackHandoffConfig(
+  _req: Request,
+  res: Response
+) {
+  const handoffConfig = await getUserFeedbackHandoffConfig();
+
+  return sendResponse(res, handoffConfig);
+}
+
+export async function handleShowSurveyOverview(
+  req: RequestWithQueryParams<{
+    id?: Survey['unique_code'];
+    version?: string;
+    page?: string;
+  }>,
+  res: Response
+) {
+  const currentPage = parseInt(req.query.page || '1', 10);
+  const feedbackOverview = await userFeedbackOverview(
+    req.query.id ?? SURVEY_ID_INLINE_KTO,
+    req.query.version ?? SURVEY_VERSION_INLINE_KTO,
+    currentPage
+  );
+
+  if (feedbackOverview.status === 'ERROR') {
+    return sendResponse(res, feedbackOverview);
+  }
+
+  const entries = feedbackOverview.content?.entries || [];
+  const scoreQuestionId = Object.entries(
+    feedbackOverview.content?.survey.questionTypes ?? {}
+  ).find(([, questionType]) =>
+    ['numeric', 'number'].includes(questionType)
+  )?.[0];
+
+  const { total, count } = entries.reduce(
+    (acc, entry) => {
+      const rating = Number.parseInt(
+        scoreQuestionId ? entry.answers[scoreQuestionId] || '' : '',
+        10
+      );
+
+      return Number.isNaN(rating)
+        ? acc
+        : { total: acc.total + rating, count: acc.count + 1 };
+    },
+    { total: 0, count: 0 }
+  );
+  const score = (total / (count || 1)).toFixed(2);
+
+  const pageLinks = range(1, feedbackOverview.content?.pageCount || 1).map(
+    (page) => ({
+      page,
+      url: `?page=${page}`,
+    })
+  );
+
+  return sendResponse(
+    res,
+    apiSuccessResult({
+      ...feedbackOverview.content,
+      score,
+      pageLinks,
+      currentPage,
+    })
+  );
+}
+
+export async function handleCreateJiraTicket(
+  req: RequestWithRouteAndQueryParams<{ entryId: string }>,
+  res: Response
+) {
+  let ticketInput: CreateJiraTicketInput;
+
+  try {
+    ticketInput = createJiraTicketInput.parse({
+      ...req.body,
+      entryId: Number.parseInt(req.params.entryId, 10),
+    });
+  } catch (error) {
+    return sendBadRequestInvalidInput(res, error);
+  }
+
+  const username = getUsernameFromSession(req);
+
+  const response = await createJiraTicketForFeedbackEntry(
+    ticketInput,
+    username
+  );
+
+  return sendResponse(res, response);
+}
+
+export async function handleDeleteJiraTicketMeta(
+  req: RequestWithRouteAndQueryParams<{ entryId: string }>,
+  res: Response
+) {
+  const entryId = Number.parseInt(req.params.entryId, 10);
+
+  if (Number.isNaN(entryId) || entryId <= 0) {
+    return sendBadRequestInvalidInput(res, 'Invalid entry id');
+  }
+
+  return sendResponse(
+    res,
+    await upsertApiResponse(entryId, {
+      jiraTicketNumber: null,
+    })
+  );
+}
+
+export async function handleHandoffFeedbackToDepartment(
+  req: RequestWithRouteAndQueryParams<{ entryId: string }>,
+  res: Response<{ username: string }>
+) {
+  let handoffInput: HandoffDepartmentInput;
+
+  try {
+    handoffInput = handoffDepartmentInput.parse({
+      ...req.body,
+      entryId: Number.parseInt(req.params.entryId, 10),
+    });
+  } catch (error) {
+    return sendBadRequestInvalidInput(res, error);
+  }
+
+  return sendResponse(
+    res,
+    await upsertApiResponse(
+      handoffInput.entryId,
+      pick(handoffInput, ['departmentName', 'departmentEmail'])
+    )
+  );
+}

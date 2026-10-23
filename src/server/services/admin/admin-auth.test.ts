@@ -7,7 +7,10 @@ import type { RequestWithSession } from './admin-types.ts';
 import { RequestMock, ResponseMock } from '../../../testing/utils.ts';
 import { apiErrorResult } from '../../../universal/helpers/api.ts';
 import { BFF_BASE_PATH_ADMIN } from '../../routing/bff-routes.ts';
-import { sendResponseHTML } from '../../routing/route-helpers.ts';
+import {
+  generateMaFrontendUrl,
+  sendResponseHTML,
+} from '../../routing/route-helpers.ts';
 
 vi.mock('./admin-service-config.ts', async (importOriginal) => {
   return {
@@ -72,7 +75,7 @@ describe('admin-auth handlers', () => {
       redirectUri: '/oauth/redirect',
       responseMode: 'form_post',
       scopes: ['User.read'],
-      state: 'eyJvcmlnaW5hbFVybCI6Ii9hcGkvdjEvYWRtaW4vc29tZS9vcmlnIn0=',
+      state: 'eyJvcmlnaW5hbFVybCI6Imh0dHA6Ly9mcm9udGVuZC1ob3N0L2FkbWluIn0=',
     });
 
     expect(res.redirect).toHaveBeenCalledWith('/oauth/redirect');
@@ -111,7 +114,7 @@ describe('admin-auth handlers', () => {
 
     expect(req.session.isAuthenticated).toBe(true);
     expect(req.session.username).toBe('bob');
-    expect(res.redirect).toHaveBeenCalledWith('/api/v1/admin/xyz');
+    expect(res.redirect).toHaveBeenCalledWith(generateMaFrontendUrl('/admin'));
   });
 
   it('handleCallback denies access when role missing', async () => {
@@ -191,6 +194,6 @@ describe('admin-auth handlers', () => {
     handleLogout(req, res);
 
     expect(req.session.destroy).toHaveBeenCalled();
-    expect(res.redirect).toHaveBeenCalledWith('/oauth/logout/redirect');
+    expect(res.redirect).toHaveBeenCalledWith(generateMaFrontendUrl('/admin'));
   });
 });

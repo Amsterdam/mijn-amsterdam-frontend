@@ -22,9 +22,14 @@ export const featureToggle = {
   ['MELDINGEN.newTipsDesign']: !IS_PRODUCTION,
   ['HLI.stadspas.securityCode']: true,
   ['HLI.stadspas.pcBudgetNormalization']: !IS_PRODUCTION,
-  ['WMO.fetchWmo.addMaVoorzieningenApiProps']: !IS_PRODUCTION,
+  ['JZD.llvInBehandeling']: !IS_PRODUCTION,
+  ['WMO.fetchWmo.addMaVoorzieningenApiProps']: true,
+  ['JZD.voorziening.stopzetten']: !IS_PRODUCTION,
   ['ERFPACHT.service']: !IS_PRODUCTION,
   ['ERFPACHT.wijzigingsaanvragen']: !IS_PRODUCTION,
+  ['USER_FEEDBACK.service.jira']: !IS_PRODUCTION,
+  ['USER_FEEDBACK.router.protected']: !IS_PRODUCTION,
+  ['USER_FEEDBACK.router.admin']: !IS_PRODUCTION,
 };
 // globalThis is used to make sure featureToggles imported from frontend *-thema-configs have access.
 globalThis.MA_FEATURETOGGLES = featureToggle;
