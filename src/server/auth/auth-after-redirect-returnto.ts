@@ -22,6 +22,8 @@ export const RETURNTO_MAMS_FRONTEND_ROUTE = 'mams-frontend-route';
 // Mijn Amsterdam return to url config
 
 export const RETURNTO_MAMS_LANDING_DIGID = 'mams-landing-digid';
+export const RETURNTO_MAMS_LANDING_DIGID_GEMACHTIGD =
+  'mams-landing-digidGemachtigd';
 export const RETURNTO_MAMS_LANDING_EHERKENNING = 'mams-landing-eherkenning';
 
 export function getReturnToUrl(
@@ -71,6 +73,10 @@ export function getReturnToUrl(
       return generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_EHERKENNING_LANDING);
     case RETURNTO_MAMS_LANDING_DIGID:
       return generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_DIGID_LANDING);
+    case RETURNTO_MAMS_LANDING_DIGID_GEMACHTIGD:
+      return generateFullApiUrlBFF(
+        authRoutes.AUTH_LOGIN_DIGID_GEMACHTIGD_LANDING
+      );
     default:
       return defaultReturnTo_;
   }

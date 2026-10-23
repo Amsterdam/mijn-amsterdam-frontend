@@ -3,7 +3,10 @@ import { useEffect } from 'react';
 import type { AuthProfile } from '../../../server/auth/auth-types.ts';
 import { clearSessionStorage } from '../storage.hook.ts';
 import { clearDeeplinkEntry } from '../useDeeplink.hook.ts';
-import { useProfileType } from '../useProfileType.ts';
+import {
+  useAuthMethodTypeStore,
+  useProfileType,
+} from '../useProfileType.ts';
 import { useBffApi, useBffApiStateStore } from './useBffApi.ts';
 
 export const ONE_SECOND_MS = 1000;
@@ -22,12 +25,32 @@ export function useSessionApi<T extends SessionData = SessionData>(
   const { data, fetch } = sessionApi;
   const sessionData = data?.content ?? null;
   const { setProfileType } = useProfileType();
+  const setAuthMethodType = useAuthMethodTypeStore(
+    (state) => state.setAuthMethodType
+  );
 
   useEffect(() => {
     if (sessionData?.profileType) {
       setProfileType(sessionData.profileType);
     }
   }, [setProfileType, sessionData?.profileType]);
+
+  useEffect(() => {
+    if (!sessionApi.isDirty) {
+      return;
+    }
+
+    setAuthMethodType(
+      sessionData?.isAuthenticated && sessionData.authMethod
+        ? sessionData.authMethod
+        : 'digid'
+    );
+  }, [
+    sessionApi.isDirty,
+    sessionData?.authMethod,
+    sessionData?.isAuthenticated,
+    setAuthMethodType,
+  ]);
 
   useEffect(() => {
     let fetchTimeout: ReturnType<typeof setTimeout>;
