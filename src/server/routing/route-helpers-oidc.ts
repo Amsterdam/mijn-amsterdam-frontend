@@ -25,10 +25,6 @@ function parseDevelopmentSessionCookie(sessionCookieValue: string) {
 }
 
 export async function ensureOIDCAuthContextStub(req: Request) {
-  if (IS_AP) {
-    return;
-  }
-
   if (getAuth(req)) {
     return;
   }
@@ -51,6 +47,10 @@ export async function createOIDCStub(
   authProfile: AuthProfile,
   expiresInSeconds: number = OIDC_SESSION_MAX_AGE_SECONDS
 ) {
+  if (IS_AP) {
+    return;
+  }
+
   const idAttr = TOKEN_ID_ATTRIBUTE[authProfile.authMethod];
 
   // 15 minutes In seconds
