@@ -95,7 +95,7 @@ function transformVoorzieningForFrontend(
   const voorzieningFrontend: WMOVoorzieningFrontend = {
     id,
     title: capitalizeFirstLetter(aanvraag.titel),
-    supplier: aanvraag.leverancier,
+    leverancier: aanvraag.leverancier,
     isActual: aanvraag.isActueel,
     link: {
       title: 'Meer informatie',
@@ -108,7 +108,7 @@ function transformVoorzieningForFrontend(
     ),
     steps,
     // NOTE: Keep! This field is added specifically for the Tips api.
-    itemTypeCode: aanvraag.productsoortCode,
+    itemTypeCode: aanvraag.productsoortCode ?? '',
     decision:
       hasDecision(aanvraag) && aanvraag.resultaat
         ? capitalizeFirstLetter(aanvraag.resultaat)
@@ -118,6 +118,8 @@ function transformVoorzieningForFrontend(
     displayStatus: getLatestStatus(steps),
     statusDate: getLatestStatusDate(steps),
     statusDateFormatted: getLatestStatusDate(steps, true),
+    maActieUrls: {},
+    maActies: [],
   };
 
   if (disclaimer) {

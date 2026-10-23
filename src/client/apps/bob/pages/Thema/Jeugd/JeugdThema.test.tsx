@@ -12,6 +12,9 @@ const jeugdState: AppState['JEUGD'] = {
     {
       id: '1610585298',
       title: 'Aangepast groepsvervoer',
+      maActies: ['stopzetten'],
+      maActieUrls: { stopzetten: '/url-to-stopzetten-formulier' },
+      leverancier: 'Leverancier',
       isActual: true,
       link: {
         title: 'Meer informatie',
@@ -20,8 +23,8 @@ const jeugdState: AppState['JEUGD'] = {
       steps: [
         {
           id: 'status-step-0',
-          status: 'Aanvraag ontvangen',
-          description: '<p>Uw aanvraag is ontvangen.</p>',
+          status: 'Melding ontvangen',
+          description: '<p>Uw melding is ontvangen.</p>',
           datePublished: '',
           isActive: false,
           isChecked: true,
@@ -30,8 +33,9 @@ const jeugdState: AppState['JEUGD'] = {
         },
         {
           id: 'status-step-1',
-          status: 'In behandeling',
-          description: '<p>Uw aanvraag is in behandeling.</p>',
+          status: 'Behandeling bij indicatieadviseur',
+          description:
+            '<p>Uw melding wordt behandeld door een indicatieadviseur.</p>',
           datePublished: '2025-03-27',
           isActive: false,
           isChecked: true,
@@ -80,6 +84,9 @@ const jeugdState: AppState['JEUGD'] = {
     {
       id: '2735835706',
       title: 'Openbaar vervoer abonnement',
+      maActies: ['stopzetten-niet-via-formulier'],
+      maActieUrls: {},
+      leverancier: null,
       isActual: true,
       link: {
         title: 'Meer informatie',
@@ -88,8 +95,8 @@ const jeugdState: AppState['JEUGD'] = {
       steps: [
         {
           id: 'status-step-0',
-          status: 'Aanvraag ontvangen',
-          description: '<p>Uw aanvraag is ontvangen.</p>',
+          status: 'Melding ontvangen',
+          description: '<p>Uw melding is ontvangen.</p>',
           datePublished: '',
           isActive: false,
           isChecked: true,
@@ -98,8 +105,9 @@ const jeugdState: AppState['JEUGD'] = {
         },
         {
           id: 'status-step-1',
-          status: 'In behandeling',
-          description: '<p>Uw aanvraag is in behandeling.</p>',
+          status: 'Behandeling bij indicatieadviseur',
+          description:
+            '<p>Uw melding wordt behandeld door een indicatieadviseur.</p>',
           datePublished: '2025-02-20',
           isActive: true,
           isChecked: true,
@@ -122,13 +130,16 @@ const jeugdState: AppState['JEUGD'] = {
       dateDecision: '',
       dateDecisionFormatted: '',
       documents: [],
-      displayStatus: 'In behandeling',
+      displayStatus: 'Behandeling bij indicatieadviseur',
       statusDate: '2025-02-20',
       statusDateFormatted: '20 februari 2025',
     },
     {
       id: '232024340',
       title: 'Aangepast groepsvervoer',
+      maActies: [],
+      maActieUrls: {},
+      leverancier: null,
       isActual: false,
       link: {
         title: 'Meer informatie',
@@ -137,8 +148,8 @@ const jeugdState: AppState['JEUGD'] = {
       steps: [
         {
           id: 'status-step-0',
-          status: 'Aanvraag ontvangen',
-          description: '<p>Uw aanvraag is ontvangen.</p>',
+          status: 'Melding ontvangen',
+          description: '<p>Uw melding is ontvangen.</p>',
           datePublished: '',
           isActive: false,
           isChecked: true,
@@ -147,8 +158,9 @@ const jeugdState: AppState['JEUGD'] = {
         },
         {
           id: 'status-step-1',
-          status: 'In behandeling',
-          description: '<p>Uw aanvraag is in behandeling.</p>',
+          status: 'Behandeling bij indicatieadviseur',
+          description:
+            '<p>Uw melding wordt behandeld door een indicatieadviseur.</p>',
           datePublished: '2019-07-12',
           isActive: false,
           isChecked: true,
@@ -212,7 +224,7 @@ test('Static elements', async () => {
 
   const mustHaveHeaders = ['Voorziening', 'Status', 'Datum'];
 
-  expectTableHeaders(screen, 'Huidige voorzieningen', mustHaveHeaders);
+  expectTableHeaders(screen, 'Huidige voorzieningen', ['Voorziening', 'Datum']);
   expectTableHeaders(
     screen,
     'Eerdere en afgewezen voorzieningen',

@@ -148,6 +148,8 @@ describe('Transform api items', () => {
               title: 'Meer informatie',
               to: '/zorg-en-ondersteuning/voorziening/wmo-product/357-883696',
             },
+            maActieUrls: {},
+            maActies: [],
             statusDate: '2022-10-18',
             statusDateFormatted: '18 oktober 2022',
             steps: [
@@ -194,7 +196,7 @@ describe('Transform api items', () => {
                 status: 'Einde recht',
               },
             ],
-            supplier: 'RMC Amsterdam',
+            leverancier: 'RMC Amsterdam',
             title: 'Wmo product',
           },
         ],
@@ -238,15 +240,20 @@ describe('Transform api items', () => {
       expect(voorziening).toMatchObject({
         id: '357-883696',
         title: 'Wmo product',
-        supplier: 'RMC Amsterdam',
+        leverancier: 'RMC Amsterdam',
         link: { title: 'Meer informatie' },
         itemTypeCode: 'WRA',
       });
       expect(voorziening.maActies).toEqual(
         expect.arrayContaining(['reparatieverzoek', 'stopzetten'])
       );
+      expect(voorziening.maActieUrls).toHaveProperty('stopzetten');
+      expect(voorziening.maActieUrls).toHaveProperty('reparatieverzoek');
+      expect(voorziening.maActieUrls?.stopzetten).toContain(
+        'stopzettenvoorzieningen.aspx?GUID=ID%3A357-883696'
+      );
       expect(voorziening.maActieUrls?.reparatieverzoek).toContain(
-        'GUID=ID%3A357-883696'
+        'reparatieverzoeken.aspx?GUID=ID%3A357-883696'
       );
       expect(voorziening.documents[0]?.url).toContain('id=123-123-123-123');
     });
@@ -276,8 +283,11 @@ describe('Transform api items', () => {
       expect(voorziening.maActies).toEqual(
         expect.arrayContaining(['stopzetten'])
       );
+      expect(voorziening.maActieUrls?.stopzetten).toContain(
+        'stopzettenvoorzieningen.aspx?GUID=ID%3A357-883696'
+      );
       expect(voorziening.maActies).not.toContain('reparatieverzoek');
-      expect(voorziening.maActieUrls).toBeUndefined();
+      expect(voorziening.maActieUrls).not.toHaveProperty('reparatieverzoek');
     });
 
     it('assigns PGB-specific MA action for WRA/PGB voorziening', async () => {
@@ -304,8 +314,12 @@ describe('Transform api items', () => {
       expect(voorziening.maActies).toEqual(
         expect.arrayContaining(['pgb-reparatieverzoek', 'stopzetten'])
       );
+        expect(voorziening.maActieUrls).toHaveProperty('stopzetten');
+        expect(voorziening.maActieUrls?.stopzetten).toContain(
+          'stopzettenvoorzieningen.aspx?GUID=ID%3A357-883696'
+        );
       expect(voorziening.maActies).not.toContain('reparatieverzoek');
-      expect(voorziening.maActieUrls).toBeUndefined();
+      expect(voorziening.maActieUrls).not.toHaveProperty('reparatieverzoek');
     });
   });
 

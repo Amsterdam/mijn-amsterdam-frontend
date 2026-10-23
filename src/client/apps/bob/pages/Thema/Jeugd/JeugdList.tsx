@@ -1,4 +1,4 @@
-import { useParams } from 'react-router';
+import { Navigate, generatePath, useParams } from 'react-router';
 
 import { themaConfig, type ListPageParamKind } from './Jeugd-thema-config.ts';
 import { useJeugdThemaData } from './useJeugdThemaData.ts';
@@ -19,6 +19,10 @@ export function JeugdList() {
   } = useJeugdThemaData();
   useHTMLDocumentTitle(themaConfig.listPage.route);
   const listPageTableConfig = tableConfig[kind];
+
+  if (!listPageTableConfig) {
+    return <Navigate to={generatePath(themaConfig.route.path)} replace />;
+  }
 
   return (
     <ListPagePaginated

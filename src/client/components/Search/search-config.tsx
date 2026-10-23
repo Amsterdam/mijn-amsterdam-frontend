@@ -362,8 +362,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     displayTitle: (wmoItem: WMOVoorzieningFrontend) => {
       return (term: string) => {
         const segments = [wmoItem.title];
-        if (wmoItem.supplier) {
-          segments.push(`door ${wmoItem.supplier}`);
+        if (wmoItem.leverancier) {
+          segments.push(`door ${wmoItem.leverancier}`);
         }
         return displayLinkToSearchResult(term, segments);
       };

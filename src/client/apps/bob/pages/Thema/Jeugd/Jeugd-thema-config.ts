@@ -1,12 +1,13 @@
 import { generatePath } from 'react-router';
 
 import type { LeerlingenvervoerVoorzieningFrontend } from '../../../../../../server/services/jzd/jeugd/jeugd.ts';
-import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
 import type {
   ThemaConfigBase,
   WithDetailPage,
   WithListPage,
 } from '../../../../../../universal/types/thema-types.ts';
+import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
+import { isEnabled } from '../../../config/feature-toggles.ts';
 
 const THEMA_TITLE = 'Onderwijs en Jeugd';
 const THEMA_ID = 'JEUGD';
@@ -65,6 +66,7 @@ export const themaConfig: ThemaConfigJeugd = {
 } as const;
 
 const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
+  enableMobileListView: true,
   props: {
     detailLinkComponent: 'Voorziening',
     displayStatus: 'Status',
@@ -76,7 +78,35 @@ const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
   },
 };
 
+const displayPropsHuidigeVoorzieningen: DisplayProps<LeerlingenvervoerVoorzieningFrontend> =
+  {
+    enableMobileListView: true,
+    props: {
+      detailLinkComponent: 'Voorziening',
+      statusDateFormatted: 'Datum',
+    },
+    colWidths: {
+      large: ['75%', '25%'],
+      small: ['100%', '0', '0'],
+    },
+  };
+
+const displayPropsInBehandeling: DisplayProps<LeerlingenvervoerVoorzieningFrontend> =
+  {
+    enableMobileListView: true,
+    props: {
+      detailLinkComponent: 'Ontvangen op',
+      displayStatus: 'Status',
+      statusDateFormatted: 'Laatst bijgewerkt op',
+    },
+    colWidths: {
+      large: ['50%', '25%', '25%'],
+      small: ['100%', '0', '0'],
+    },
+  };
+
 export const listPageParamKind = {
+  pending: 'voorziening-in-behandeling',
   actual: 'huidige-voorzieningen',
   historic: 'eerdere-en-afgewezen-voorzieningen',
 } as const;
@@ -85,16 +115,35 @@ type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const listPageTitle = {
+  [listPageParamKind.pending]: 'Voorzieningen in behandeling',
   [listPageParamKind.actual]: 'Huidige voorzieningen',
   [listPageParamKind.historic]: 'Eerdere en afgewezen voorzieningen',
 } as const;
 
+const hasPendingTable = isEnabled('JZD.llvInBehandeling');
+
 export const tableConfig = {
+  ...(hasPendingTable
+    ? {
+        [listPageParamKind.pending]: {
+          title: listPageTitle[listPageParamKind.pending],
+          filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
+            !regeling.decision,
+          displayProps: displayPropsInBehandeling,
+          listPageRoute: generatePath(themaConfig.listPage.route.path, {
+            kind: listPageParamKind.actual,
+            page: null,
+          }),
+          maxItems: 5,
+          textNoContent: 'U heeft geen voorzieningen in behandeling.',
+        },
+      }
+    : {}),
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
     filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
-      regeling.isActual,
-    displayProps,
+      regeling.isActual && !!regeling.decision,
+    displayProps: displayPropsHuidigeVoorzieningen,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.actual,
       page: null,
@@ -105,7 +154,7 @@ export const tableConfig = {
   [listPageParamKind.historic]: {
     title: listPageTitle[listPageParamKind.historic],
     filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
-      !regeling.isActual,
+      !regeling.isActual && !!regeling.decision,
     listPageRoute: generatePath(themaConfig.listPage.route.path, {
       kind: listPageParamKind.historic,
       page: null,

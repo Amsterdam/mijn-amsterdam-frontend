@@ -931,11 +931,7 @@
       ]
     },
     "WMO": {
-      "keywordsGeneratedFromProps": [
-        "supplier",
-        "title",
-        "voorzieningsoortcode"
-      ]
+      "keywordsGeneratedFromProps": ["leverancier", "title", "voorzieningsoortcode"]
     },
     "KREFIA": {
       "keywords": [

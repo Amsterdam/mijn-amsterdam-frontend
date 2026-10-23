@@ -23,8 +23,8 @@ const besluitGenomenState: AppState['JEUGD'] = {
       steps: [
         {
           id: 'status-step-0',
-          status: 'Aanvraag ontvangen',
-          description: '<p>Uw aanvraag is ontvangen.</p>',
+          status: 'Melding ontvangen',
+          description: '<p>Uw melding is ontvangen.</p>',
           datePublished: '',
           isActive: false,
           isChecked: true,
@@ -79,6 +79,9 @@ const besluitGenomenState: AppState['JEUGD'] = {
       displayStatus: 'Besluit genomen',
       statusDate: '2025-04-07T09:44:48.697',
       statusDateFormatted: '07 april 2025',
+      maActies: ['stopzetten'],
+      maActieUrls: { stopzetten: '/formulierurl' },
+      leverancier: 'Aanbieder',
     },
   ],
   status: 'OK',
@@ -90,7 +93,10 @@ const basicAppState = {
 
 const createComponent = componentCreator({
   component: JeugdDetail,
-  routeEntry: generatePath(themaConfig.detailPage.route.path, { voorziening: slug(voorzieningTitle), id }),
+  routeEntry: generatePath(themaConfig.detailPage.route.path, {
+    voorziening: slug(voorzieningTitle),
+    id,
+  }),
   routePath: themaConfig.detailPage.route.path,
 });
 
@@ -119,8 +125,10 @@ test('Static elements', async () => {
   const statusTreinContainer = within(
     statusTreinHeader.parentElement.parentElement
   );
-  statusTreinContainer.getByRole('heading', { name: /Aanvraag ontvangen/ });
-  statusTreinContainer.getByRole('heading', { name: /In behandeling/ });
+  statusTreinContainer.getByRole('heading', { name: /Melding ontvangen/ });
+  statusTreinContainer.getByRole('heading', {
+    name: /In behandeling/,
+  });
   statusTreinContainer.getByRole('heading', { name: /Besluit genomen/ });
   statusTreinContainer.getByRole('heading', { name: /Einde recht/ });
 });
