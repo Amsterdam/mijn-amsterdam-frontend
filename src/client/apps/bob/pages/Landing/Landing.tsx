@@ -1,6 +1,11 @@
 import { useRef, useState } from 'react';
 
-import { Heading, Link, Paragraph } from '@amsterdam/design-system-react';
+import {
+  ActionGroup,
+  Heading,
+  Link,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Landing-routes.ts';
@@ -10,7 +15,11 @@ import { LogoDigiD } from '../../../../assets/images/LogoDigiD.tsx';
 import { LogoEherkenning } from '../../../../assets/images/LogoEherkenning.tsx';
 import { MaintenanceNotifications } from '../../../../components/MaintenanceNotifications/MaintenanceNotifications.tsx';
 import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
-import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api.ts';
+import {
+  LOGIN_URL_DIGID,
+  LOGIN_URL_DIGID_GEMACHTIGD,
+  LOGIN_URL_EHERKENNING,
+} from '../../config/api.ts';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
 
 export function LandingPage() {
@@ -44,7 +53,7 @@ export function LandingPage() {
             Voor particulieren en eenmanszaken
           </Heading>
         )}
-        <Paragraph>
+        <ActionGroup>
           <a
             ref={loginButton}
             role="button"
@@ -67,12 +76,12 @@ export function LandingPage() {
           <a
             ref={loginButton}
             role="button"
-            href={LOGIN_URL_DIGID + '?gemachtigd=true'}
+            href={LOGIN_URL_DIGID_GEMACHTIGD}
             onClick={() => setRedirecting(true)}
             rel="noopener noreferrer"
             className={classnames(
               styles.LoginBtn,
-              styles['LoginBtn--digid'],
+              styles['LoginBtn--digid-gemachtigd'],
               isRedirectingAny && styles.LoginBtnDisabled
             )}
           >
@@ -85,7 +94,7 @@ export function LandingPage() {
                 : 'Inloggen met DigiD als gemachtigde'}
             </span>
           </a>
-        </Paragraph>
+        </ActionGroup>
         <Paragraph className="ams-mb-l">
           Heeft u nog geen DigiD? Regel dit dan eerst.
           <br />
