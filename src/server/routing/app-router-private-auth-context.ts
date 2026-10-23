@@ -1,7 +1,6 @@
 import type { NextFunction, Request, RequestHandler, Response } from 'express';
 
-import { ensureDevelopmentAuthContext } from './app-router-development.ts';
-import { IS_PRODUCTION } from '../../universal/config/env.ts';
+import { ensureOIDCAuthContextStub } from './route-helpers-oidc.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   oidcConfigDigid,
@@ -135,13 +134,14 @@ export async function privateNetworkAuthContextMiddleware(
 
     await applyAmsAppSessionTokenAsCookie(req);
 
-    if (!req.cookies?.[OIDC_SESSION_COOKIE_NAME]) {
+    const sessionTokenFromUpdatedCookie =
+      req.cookies?.[OIDC_SESSION_COOKIE_NAME];
+    if (!sessionTokenFromUpdatedCookie) {
       return next();
     }
 
-    if (!IS_PRODUCTION) {
-      await ensureDevelopmentAuthContext(req);
-    }
+    // WARNING: This is part of a proof of concept. This will be handled differently
+    await ensureOIDCAuthContextStub(req);
 
     if (!getAuth(req)) {
       await ensureOidcAuthContext(req, res);

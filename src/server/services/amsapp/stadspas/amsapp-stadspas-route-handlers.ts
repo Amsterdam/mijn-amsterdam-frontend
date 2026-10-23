@@ -15,7 +15,7 @@ import { getAuth } from '../../../auth/auth-helpers.ts';
 import type { AuthProfileAndToken } from '../../../auth/auth-types.ts';
 import { encrypt, decrypt } from '../../../helpers/encrypt-decrypt.ts';
 import { requestData } from '../../../helpers/source-api-request.ts';
-import { ensureDevelopmentAuthContext } from '../../../routing/app-router-development.ts';
+import { ensureOIDCAuthContextStub } from '../../../routing/route-helpers-oidc.ts';
 import {
   sendResponse,
   sendBadRequest,
@@ -40,7 +40,7 @@ export async function sendAdministratienummerResponse(
   req: Request,
   res: Response
 ) {
-  await ensureDevelopmentAuthContext(req);
+  await ensureOIDCAuthContextStub(req);
 
   const authProfileAndToken: AuthProfileAndToken | null = getAuth(req);
 
