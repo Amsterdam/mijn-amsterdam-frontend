@@ -2,7 +2,7 @@ import { differenceInSeconds } from 'date-fns';
 import type { Request } from 'express';
 import type { AccessToken } from 'express-openid-connect';
 
-import { IS_ACCEPTANCE, IS_PRODUCTION } from '../../universal/config/env.ts';
+import { IS_AP } from '../../universal/config/env.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
@@ -12,7 +12,6 @@ import { signDevelopmentToken } from '../auth/auth-helpers-development.ts';
 import { getAuth } from '../auth/auth-helpers.ts';
 import type { AuthProfile, MaSession } from '../auth/auth-types.ts';
 import { ONE_SECOND_MS } from '../config/app.ts';
-import { isEnabled } from '../config/azure-appconfiguration.ts';
 
 function parseDevelopmentSessionCookie(sessionCookieValue: string) {
   try {
@@ -26,12 +25,7 @@ function parseDevelopmentSessionCookie(sessionCookieValue: string) {
 }
 
 export async function ensureOIDCAuthContextStub(req: Request) {
-  // WARNING: This is part of a proof of concept. Using the AmsAppSessionToken will be handled differently and should not be relied upon in production or acceptance
-  if (IS_PRODUCTION) {
-    return;
-  }
-
-  if (IS_ACCEPTANCE && !isEnabled('AMSAPP.universalAuth')) {
+  if (IS_AP) {
     return;
   }
 

@@ -1,6 +1,7 @@
 import type { NextFunction, Request, RequestHandler, Response } from 'express';
 
 import { ensureOIDCAuthContextStub } from './route-helpers-oidc.ts';
+import { IS_AP } from '../../universal/config/env.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   oidcConfigDigid,
@@ -118,7 +119,9 @@ export async function privateNetworkAuthContextMiddleware(
     }
 
     // WARNING: This is part of a proof of concept. This will be handled differently
-    await ensureOIDCAuthContextStub(req);
+    if (!IS_AP) {
+      await ensureOIDCAuthContextStub(req);
+    }
 
     if (!getAuth(req)) {
       await ensureOidcAuthContext(req, res);
