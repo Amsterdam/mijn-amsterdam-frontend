@@ -81,7 +81,7 @@ export function LandingPage() {
             rel="noopener noreferrer"
             className={classnames(
               styles.LoginBtn,
-              styles['LoginBtn--digid-gemachtigd'],
+              styles['LoginBtn--digidGemachtigd'],
               isRedirectingAny && styles.LoginBtnDisabled
             )}
           >
