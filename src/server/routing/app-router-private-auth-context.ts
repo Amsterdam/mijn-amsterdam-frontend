@@ -81,9 +81,6 @@ async function applyAmsAppSessionTokenAsCookie(req: Request) {
 }
 
 async function ensureOidcAuthContext(req: Request, res: Response) {
-  if (!featureToggle.amsAppUniversalAuthIsActive) {
-    return;
-  }
   await new Promise<void>((resolve, reject) => {
     getOidcDigidAuthHandler()(req, res, (error?: unknown) => {
       if (error) {
