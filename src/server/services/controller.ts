@@ -363,8 +363,20 @@ export async function loadServicesSSE(req: Request, res: Response) {
 
   // Determine the services to be loaded for certain profile types
   const serviceMap = getServiceMap(profileType);
-  const serviceIds = Object.keys(serviceMap);
-  const servicePromises = loadServices(req, serviceMap, true);
+
+  let serviceMap_;
+  if (authProfileAndToken.profile.authMethod === 'digidGemachtigd') {
+    serviceMap_ = Object.fromEntries(
+      Object.entries(serviceMap).filter(
+        ([serviceID]) => serviceID === 'PARKEREN' || serviceID === 'VERGUNNING'
+      )
+    );
+  } else {
+    serviceMap_ = serviceMap;
+  }
+
+  const serviceIds = Object.keys(serviceMap_);
+  const servicePromises = loadServices(req, serviceMap_, true);
 
   // Add result handler that sends the service result via the EventSource stream
   servicePromises.forEach((servicePromise, index) =>
