@@ -13,7 +13,7 @@ import type {
   AuthProfile,
   AuthProfileAndToken,
 } from '../server/auth/auth-types.ts';
-import { createOIDCStub } from '../server/routing/app-router-development.ts';
+import { createOIDCStub } from '../server/routing/route-helpers-oidc.ts';
 import type {
   RecordStr2,
   RequestWithRouteAndQueryParams,
