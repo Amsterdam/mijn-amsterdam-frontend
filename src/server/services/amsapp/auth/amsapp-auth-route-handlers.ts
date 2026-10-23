@@ -67,7 +67,7 @@ function getErrorRenderProps(loginId: string, error: ApiError): RenderProps {
 }
 
 function getApiErrorMessage(error: ApiError) {
-  return `ApiError ${error.code} - ${error.message}`;
+  return `Bad request: ApiError ${error.code} - ${error.message}`;
 }
 
 function sendTokenExchangeError(
