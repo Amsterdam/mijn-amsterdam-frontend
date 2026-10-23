@@ -42,7 +42,7 @@ describe('app-router-private-auth-context', () => {
     await clearAmsAppAuthStore();
   });
 
-  test('uses x-amsapp-session-token as __MA-appSession cookie', async () => {
+  it('uses x-amsapp-session-token as __MA-appSession cookie', async () => {
     const sessionToken = Buffer.from(JSON.stringify(DIGID_PROFILE)).toString(
       'base64'
     );
@@ -61,7 +61,7 @@ describe('app-router-private-auth-context', () => {
     expect(getAuth(req)?.profile.id).toBe(DIGID_PROFILE.id);
   });
 
-  test('ignores bearer token and does not create session cookie', async () => {
+  it('ignores bearer token and does not create session cookie', async () => {
     const sessionToken = Buffer.from(JSON.stringify(DIGID_PROFILE)).toString(
       'base64'
     );
@@ -80,7 +80,7 @@ describe('app-router-private-auth-context', () => {
     expect(getAuth(req)).toBeNull();
   });
 
-  test('ignores revoked x-amsapp-session-token header', async () => {
+  it('ignores revoked x-amsapp-session-token header', async () => {
     const sessionToken = Buffer.from(JSON.stringify(DIGID_PROFILE)).toString(
       'base64'
     );
