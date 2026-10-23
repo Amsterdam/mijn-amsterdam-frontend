@@ -114,7 +114,6 @@ describe('amsapp-auth-route-handlers', () => {
 
     expect(resMock.render).toHaveBeenCalledOnce();
     const renderProps = resMock.render.mock.calls[0][1];
-    expect(renderProps.promptOpenApp).toBe(false);
 
     const appHref = new URL(renderProps.appHref);
     expect(`${appHref.protocol}//${appHref.host}${appHref.pathname}`).toBe(

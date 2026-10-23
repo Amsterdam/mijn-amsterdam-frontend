@@ -8,7 +8,6 @@ export type RenderProps = {
   nonce: string;
   redirectToLogout: boolean;
   redirectTimeout?: number;
-  promptOpenApp: boolean;
   showIdentifier?: boolean;
   urlToImage: string;
   urlToCSS: string;
