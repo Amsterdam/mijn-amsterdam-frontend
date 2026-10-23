@@ -23,18 +23,7 @@ function getOidcDigidAuthHandler() {
 }
 
 function getHeaderValue(req: Request, headerName: string): string | undefined {
-  const value = req.headers[headerName];
-
-  if (typeof value === 'string') {
-    return value.trim() || undefined;
-  }
-
-  if (Array.isArray(value)) {
-    const first = value.find((entry) => typeof entry === 'string' && entry);
-    return first?.trim() || undefined;
-  }
-
-  return undefined;
+  return req.get(headerName)?.trim() || undefined;
 }
 
 function appendSessionCookieHeader(req: Request, sessionToken: string) {

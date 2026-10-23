@@ -32,6 +32,7 @@ function createPrivateAuthRequest(headers: Record<string, string>) {
     headers,
     path: '/services/amsapp/auth/services/all',
     url: '/services/amsapp/auth/services/all',
+    get: vi.fn((name: string) => headers[name.toLowerCase()]),
   });
   return req;
 }
