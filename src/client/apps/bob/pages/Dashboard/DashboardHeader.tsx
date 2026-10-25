@@ -10,7 +10,10 @@ import {
   useAppStateReady,
 } from '../../../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../../../hooks/useIsLoading.ts';
-import { useProfileTypeValue } from '../../../../hooks/useProfileType.ts';
+import {
+  useAuthMethod,
+  useProfileTypeValue,
+} from '../../../../hooks/useProfileType.ts';
 
 const STADSDELEN = [
   'buiten-amsterdam',
@@ -30,6 +33,8 @@ function useStadsdeelFoto() {
   const isPhoneScreen = useSmallScreen();
   const [primaryLocation = null] = MY_LOCATION.content ?? [];
   const profileType = useProfileTypeValue();
+  const { authMethod } = useAuthMethod();
+  const isLoadingLocation = useIsLoading(MY_LOCATION);
 
   let stadsdeel =
     primaryLocation?.bagAddress?.gebiedenStadsdeelNaam?.toLowerCase();
@@ -40,7 +45,11 @@ function useStadsdeelFoto() {
 
   const size = isPhoneScreen ? 'small' : 'large';
 
-  return !useIsLoading(MY_LOCATION)
+  if (authMethod === 'digidGemachtigd') {
+    return `/img/stadsdeel-foto/${size}/buiten-amsterdam-${profileType}.jpg`;
+  }
+
+  return !isLoadingLocation
     ? `/img/stadsdeel-foto/${size}/${stadsdeel}.jpg`
     : null;
 }
