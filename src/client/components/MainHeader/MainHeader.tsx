@@ -13,7 +13,10 @@ import { DashboardRoute } from '../../apps/bob/pages/Dashboard/Dashboard-routes.
 import { SearchPageRoute } from '../../apps/bob/pages/Search/Search-routes.ts';
 import { themaConfig } from '../../apps/bob/pages/Thema/Profile/Profile-thema-config.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
-import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
+import {
+  useAuthMethod,
+  useProfileTypeValue,
+} from '../../hooks/useProfileType.ts';
 import { MainMenu } from '../MainMenu/MainMenu.tsx';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 import { Search } from '../Search/Search.tsx';
@@ -42,6 +45,7 @@ export function MainHeaderSecondaryLinks({
 }: MainHeaderSecondaryLinksProps) {
   const Wrap = wrapInListElement ? 'li' : React.Fragment;
   const profileType = useProfileTypeValue();
+  const { authMethod } = useAuthMethod();
 
   const profileData: ProfileData =
     profileType === 'private'
@@ -58,18 +62,20 @@ export function MainHeaderSecondaryLinks({
 
   return (
     <>
-      <Wrap>
-        <MaRouterLink
-          maVariant="noUnderline"
-          href={profileData.path}
-          className={linkClassName}
-          title={profileData.title}
-        >
-          <span className={styles.ProfileNameInner}>
-            {profileData.displayName}
-          </span>
-        </MaRouterLink>
-      </Wrap>
+      {authMethod !== 'digidGemachtigd' && (
+        <Wrap>
+          <MaRouterLink
+            maVariant="noUnderline"
+            href={profileData.path}
+            className={linkClassName}
+            title={profileData.title}
+          >
+            <span className={styles.ProfileNameInner}>
+              {profileData.displayName}
+            </span>
+          </MaRouterLink>
+        </Wrap>
+      )}
       <Wrap>
         <MaLink
           maVariant="noUnderline"
