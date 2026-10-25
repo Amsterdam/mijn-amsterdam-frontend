@@ -9,9 +9,9 @@ import {
   GeneralInfoRoute,
 } from '../../apps/bob/pages/GeneralInfo/GeneralInfo-routes.ts';
 import { getRedactedClass } from '../../helpers/cobrowse.ts';
+import { useAuthMethod } from '../../hooks/useProfileType.ts';
 import { LoadingContent } from '../LoadingContent/LoadingContent.tsx';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
-import { useAuthMethod } from '../../hooks/useProfileType.ts';
 
 type ThemaLinkLoaderProps = {
   width: number;
@@ -43,7 +43,7 @@ export function MyThemasPanel({
 }: MyThemasPanelProps) {
   const { authMethod } = useAuthMethod();
 
-  let filteredItems: ThemaMenuItemTransformed[];
+  let filteredItems: MyThemasPanelProps['items'];
   if (authMethod === 'digidGemachtigd') {
     filteredItems = items.filter(({ title }) => title !== 'Mijn gegevens');
   } else {
@@ -72,7 +72,7 @@ export function MyThemasPanel({
                 <span className={styles.ThemaLink}>
                   {IconSVG && (
                     <Icon
-                      svg={IconSVG}
+                      svg={<IconSVG />}
                       size="heading-3"
                       className={styles.ThemaLinkIcon}
                       square
