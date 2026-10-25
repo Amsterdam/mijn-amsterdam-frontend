@@ -11,6 +11,7 @@ import {
 import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import { LoadingContent } from '../LoadingContent/LoadingContent.tsx';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
+import { useAuthMethod } from '../../hooks/useProfileType.ts';
 
 type ThemaLinkLoaderProps = {
   width: number;
@@ -40,13 +41,22 @@ export function MyThemasPanel({
   items = [],
   isLoading = true,
 }: MyThemasPanelProps) {
+  const { authMethod } = useAuthMethod();
+
+  let filteredItems: ThemaMenuItemTransformed[];
+  if (authMethod === 'digidGemachtigd') {
+    filteredItems = items.filter(({ title }) => title !== 'Mijn gegevens');
+  } else {
+    filteredItems = items;
+  }
+
   return (
     <>
       <UnorderedList
         markers={false}
         className={classNames('ams-mb-m', styles.LinkList)}
       >
-        {items.map(({ id, to, title, IconSVG }) => {
+        {filteredItems.map(({ id, to, title, IconSVG }) => {
           const LinkComponent = to.startsWith('http') ? MaLink : MaRouterLink;
           return (
             <UnorderedList.Item
