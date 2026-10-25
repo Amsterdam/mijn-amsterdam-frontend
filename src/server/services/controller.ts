@@ -370,7 +370,7 @@ export async function loadServicesSSE(req: Request, res: Response) {
       Object.entries(serviceMap).filter(
         ([serviceID]) =>
           serviceID === 'PARKEREN' ||
-          serviceID === 'VERGUNNING' ||
+          serviceID === 'VERGUNNINGEN' ||
           serviceID === 'BRP'
       )
     );
