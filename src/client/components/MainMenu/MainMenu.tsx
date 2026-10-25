@@ -40,12 +40,20 @@ export function MainMenu() {
     return true;
   });
 
+  const visibleThemaItems = items.filter((item) => {
+    if (authMethod === 'digidGemachtigd' && item.title === 'Mijn gegevens') {
+      return false;
+    }
+
+    return true;
+  });
+
   return (
     <div id={MAIN_MENU_ID} className={styles.MainMenu}>
       <nav className={styles.NavSection}>
         <Heading level={2}>Thema&apos;s</Heading>
         <div>
-          {items.map((thema) => {
+          {visibleThemaItems.map((thema) => {
             const LinkComponent = thema.to.startsWith('http')
               ? MaLink
               : MaRouterLink;
