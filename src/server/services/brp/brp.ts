@@ -211,7 +211,7 @@ function transformBenkBrpResponse(
     persoon: {
       ...persoonBasis,
       aanschrijfwijze: persoon.adressering?.aanschrijfwijze?.naam ?? null,
-      bsn: persoon.burgerservicenummer ?? null,
+      bsn: IS_PRODUCTION ? null : (persoon.burgerservicenummer ?? null),
       gemeentenaamInschrijving:
         persoon.gemeenteVanInschrijving?.omschrijving ?? null,
       omschrijvingBurgerlijkeStaat:

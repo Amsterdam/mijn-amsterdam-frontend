@@ -43,6 +43,17 @@ vi.mock('../iam-oauth/oauth-token', () => ({
   fetchAuthTokenHeader: vi.fn(),
 }));
 
+const mocks = vi.hoisted(() => ({
+  IS_PRODUCTION: false,
+}));
+
+vi.mock('../../../universal/config/env', async (importOriginal) => ({
+  ...(await importOriginal()),
+  get IS_PRODUCTION() {
+    return mocks.IS_PRODUCTION;
+  },
+}));
+
 describe('brp.ts', () => {
   afterAll(() => {
     vi.resetAllMocks();
@@ -236,6 +247,28 @@ describe('brp.ts', () => {
   });
 
   describe('transformBenkBrpResponse', () => {
+    it('should only expose the BSN in non-production', () => {
+      const persoon = {
+        naam: { volledigeNaam: 'John Doe' },
+        burgerservicenummer: '123456789',
+        verblijfplaats: { type: 'VerblijfplaatsOnbekend' },
+        gemeenteVanInschrijving: { code: '0363' },
+      } as PersoonSource;
+
+      expect(transformBenkBrpResponse('xx-aa', persoon).persoon.bsn).toBe(
+        '123456789'
+      );
+
+      mocks.IS_PRODUCTION = true;
+      try {
+        expect(
+          transformBenkBrpResponse('xx-aa', persoon).persoon.bsn
+        ).toBeNull();
+      } finally {
+        mocks.IS_PRODUCTION = false;
+      }
+    });
+
     it('should transform response data correctly', () => {
       const responseData = {
         personen: [
