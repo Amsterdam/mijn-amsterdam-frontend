@@ -50,7 +50,7 @@ export function useProfileType() {
     if (profileType !== stateValue && profileType !== null) {
       setState(profileType);
     }
-  }, [profileType, setState, stateValue]);
+  }, []);
 
   useEffect(() => {
     setSessionState(stateValue);
