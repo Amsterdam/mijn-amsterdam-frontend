@@ -29,6 +29,8 @@ function DetailPageContent<
         switch (vergunning.caseType) {
           case 'GPK':
             return <GPK vergunning={vergunning} />;
+          case 'GPK Machtigen':
+            return <GPK vergunning={vergunning} />;
           case 'GPP':
             return <GPPContent vergunning={vergunning} />;
           case 'Parkeerontheffingen Blauwe zone particulieren':
