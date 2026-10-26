@@ -368,10 +368,7 @@ export async function loadServicesSSE(req: Request, res: Response) {
   if (authProfileAndToken.profile.authMethod === 'digidGemachtigd') {
     serviceMap_ = Object.fromEntries(
       Object.entries(serviceMap).filter(
-        ([serviceID]) =>
-          serviceID === 'PARKEREN' ||
-          serviceID === 'VERGUNNINGEN' ||
-          serviceID === 'BRP'
+        ([serviceID]) => serviceID === 'PARKEREN' || serviceID === 'BRP'
       )
     );
   } else {
