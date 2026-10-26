@@ -48,7 +48,7 @@ export async function fetchParkeren(authProfileAndToken: AuthProfileAndToken) {
     decosParkeerVergunningenResponse?.content
   ) {
     const filteredItems = decosParkeerVergunningenResponse.content.filter(
-      (item) => item.caseType === 'GPK'
+      (item) => item.caseType === 'GPK Machtigen'
     );
 
     filteredParkeerVergunningen = {
