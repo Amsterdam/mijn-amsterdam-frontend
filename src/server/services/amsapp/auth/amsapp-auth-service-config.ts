@@ -1,4 +1,3 @@
-import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { isEnabled } from '../../../config/azure-appconfiguration.ts';
 import { AMSAPP_BASE_PATH } from '../amsapp-constants.ts';
 
@@ -43,8 +42,5 @@ export const apiResponseErrors = {
 
 export const AMSAPP_AUTH_DEEP_LINK_BASE = 'amsterdam://mijn-amsterdam';
 
-const twentyMinutesInMs = 20 * 60 * 1000;
-const twoMinutesInMs = 2 * 60 * 1000;
-export const AUTHORIZATION_CODE_TTL_MS = IS_PRODUCTION
-  ? twoMinutesInMs
-  : twentyMinutesInMs; // In non-production environments, we set a longer TTL for easier testing.
+const TWO_MINUTES_MS = 2 * 60 * 1000;
+export const AUTHORIZATION_CODE_TTL_MS = TWO_MINUTES_MS;
