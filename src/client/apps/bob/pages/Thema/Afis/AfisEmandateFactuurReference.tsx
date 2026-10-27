@@ -1,4 +1,4 @@
-import { Alert, Paragraph } from '@amsterdam/design-system-react';
+import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
 import {
   EMANDATE_STATUS_ACTIVE,
@@ -6,11 +6,24 @@ import {
 } from './Afis-thema-config.ts';
 import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
 import type { AfisEMandateFrontend } from '../../../../../../server/services/afis/afis-types.ts';
+import { displayAmount } from '../../../../../../universal/helpers/text.ts';
 import type {
   Row,
   RowSet,
 } from '../../../../../components/Datalist/Datalist.tsx';
 import { MaRouterLink } from '../../../../../components/MaLink/MaLink.tsx';
+
+function getOpenstaandBedragFormatted(factuur: AfisFactuurFrontend): string {
+  if (!factuur.termijnen?.length) {
+    return factuur.amountOriginalFormatted;
+  }
+
+  const totalOpen = factuur.termijnen
+    .filter((termijn) => termijn.debtClearingDate === null)
+    .reduce((sum, termijn) => sum + parseFloat(termijn.amountOriginal), 0);
+
+  return displayAmount(totalOpen);
+}
 
 export function AfisEmandateFactuurReference({
   eMandate,
@@ -95,13 +108,20 @@ export function useAfisEmandateFactuurReferenceContent(
           severity="warning"
         >
           <Paragraph>
-            Maak het bedrag van {factuur.amountOriginalFormatted} over onder
-            vermelding van de gegevens op uw factuur.
+            Maak het bedrag van {getOpenstaandBedragFormatted(factuur)} over
+            onder vermelding van de gegevens op uw factuur.
             <br />
             <ul>
               <li>Rekeningnummer: staat bovenaan de factuur.</li>
               <li>Mededeling: factuurnummer invullen.</li>
             </ul>
+            <br />
+            Wilt u toch in delen betalen? Vraag dan een betalingsregeling aan
+            via:{' '}
+            <Link href="mailto:debiteurenadministratie@amsterdam.nl">
+              debiteurenadministratie@amsterdam.nl
+            </Link>
+            .
           </Paragraph>
         </Alert>
       ),
