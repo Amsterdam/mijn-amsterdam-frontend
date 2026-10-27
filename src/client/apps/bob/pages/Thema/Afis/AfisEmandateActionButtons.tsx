@@ -9,6 +9,7 @@ import {
 } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
+import { getOpenstaandBedragFormatted } from './Afis-helpers.ts';
 import {
   displayPropsStopMandate,
   EMANDATE_STATUS_ACTIVE,
@@ -201,9 +202,12 @@ function ApiDeactivateButton({
   const { facturenByState } = useAfisFacturenData();
   const confirmationModalProps = useMemo(() => {
     const openFacturen = facturenByState?.open?.facturen ?? [];
-    const facturenByEmandateId = openFacturen.filter(
-      (factuur) => factuur.eMandateId === eMandate.eMandateIdSource
-    );
+    const facturenByEmandateId = openFacturen
+      .filter((factuur) => factuur.eMandateId === eMandate.eMandateIdSource)
+      .map((factuur) => ({
+        ...factuur,
+        amountOriginalFormatted: getOpenstaandBedragFormatted(factuur),
+      }));
 
     return {
       title: 'Stopzetten incassomachtiging',
