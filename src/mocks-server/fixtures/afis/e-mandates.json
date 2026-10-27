@@ -84,6 +84,41 @@
             "SndIban": "NL99AMS7777888888"
           }
         }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "PayType": "N",
+            "SndType": "BUS3007",
+            "SndId": "0001500092",
+            "SndPostal": "1011 AA",
+            "SndCountry": "NL",
+            "RefType": "",
+            "RecType": "BUS0002",
+            "RecId": 1000,
+            "RecName1": "Gemeente Amsterdam",
+            "RecPostal": "1011 PN",
+            "RecStreet": "Amstel 1",
+            "RecHouse": "",
+            "RecCity": "Amsterdam",
+            "RecCountry": "NL",
+            "LifetimeFrom": "2025-09-01T00:00:00",
+            "LifetimeTo": "2025-11-05T00:00:00",
+            "SignDate": "2025-09-01T00:00:00",
+            "SignCity": "Amsterdam",
+            "Status": "6",
+            "IMandateId": 100000000081,
+            "SndIban": "NL91ABNA0417164300",
+            "SndBic": "ABNANL2A",
+            "SndStreet": "Teststraat",
+            "SndHouse": 12,
+            "SndCity": "Amsterdam",
+            "SndName2": "",
+            "SndName1": "M. Jansen",
+            "SndDebtorId": "ERFPACHT"
+          }
+        }
       }
     ]
   }
