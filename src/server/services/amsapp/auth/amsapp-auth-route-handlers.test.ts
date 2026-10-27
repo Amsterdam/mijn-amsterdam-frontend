@@ -493,7 +493,7 @@ describe('amsapp-auth-route-handlers', () => {
 
     const headerReq = RequestMock.new().get();
     headerReq.headers = { 'x-amsapp-session-token': sessionToken };
-    headerReq.get = vi.fn(() => sessionToken) as Request['get'];
+    headerReq.get = vi.fn().mockReturnValue(sessionToken);
     const next = vi.fn();
     await privateNetworkAuthContextMiddleware(
       headerReq,
