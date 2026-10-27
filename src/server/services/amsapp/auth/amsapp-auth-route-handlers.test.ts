@@ -1,6 +1,8 @@
 import { createHash } from 'node:crypto';
+import { promisify } from 'node:util';
 
 import type { Request } from 'express';
+import MockDate from 'mockdate';
 
 import {
   handleAmsAppAuthCallback,
@@ -13,13 +15,29 @@ import {
   clearAmsAppAuthStore,
   createLoginAttempt,
   getByLoginId,
-  isSessionTokenRevoked,
   markLoginReady,
 } from './amsapp-auth-store.ts';
 import { RequestMock, ResponseMock } from '../../../../testing/utils.ts';
 import { RETURNTO_AMSAPP_AUTH_CALLBACK } from '../../../auth/auth-after-redirect-returnto.ts';
-import { OIDC_SESSION_COOKIE_NAME } from '../../../auth/auth-config.ts';
-import type { AuthProfile } from '../../../auth/auth-types.ts';
+import {
+  OIDC_SESSION_COOKIE_NAME,
+  OIDC_SESSION_MAX_AGE_SECONDS,
+  oidcConfigDigid,
+  oidcSessionStore,
+  openIdAuth,
+} from '../../../auth/auth-config.ts';
+import { signDevelopmentToken } from '../../../auth/auth-helpers-development.ts';
+import { getAuth } from '../../../auth/auth-helpers.ts';
+import type {
+  AuthenticatedRequest,
+  AuthProfile,
+} from '../../../auth/auth-types.ts';
+import { ONE_MINUTE_MS, ONE_SECOND_MS } from '../../../config/app.ts';
+import { privateNetworkAuthContextMiddleware } from '../../../routing/app-router-private-auth-context.ts';
+import {
+  createDevelopmentSession,
+  ensureOIDCAuthContextStub,
+} from '../../../routing/route-helpers-oidc.ts';
 
 const DIGID_PROFILE: AuthProfile = {
   sid: 'e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
@@ -33,6 +51,8 @@ describe('amsapp-auth-route-handlers', () => {
     vi.resetAllMocks();
     await clearAmsAppAuthStore();
   });
+
+  afterEach(() => MockDate.reset());
 
   test('login-start stores codeChallenge and redirects to DigiD login', async () => {
     const reqMock = RequestMock.new().setQuery({
@@ -362,21 +382,18 @@ describe('amsapp-auth-route-handlers', () => {
     );
   });
 
-  test('logout invalidates session token and removes related authorization codes', async () => {
-    const codeVerifier = 'mobile-app-code-verifier';
-    const codeChallenge = createHash('sha256')
-      .update(codeVerifier)
-      .digest('base64url');
-
-    const sessionToken = 'ma-session-cookie-value';
-    const loginId = await createLoginAttempt(codeChallenge);
-    const readyRecord = await markLoginReady(loginId, sessionToken);
-
-    const req = {
-      headers: {
-        'x-amsapp-session-token': sessionToken,
-      },
-    } as unknown as Request;
+  test('logout deletes the backing session and prevents header and browser replay', async () => {
+    const sessionToken = await createDevelopmentSession(
+      RequestMock.new().get(),
+      DIGID_PROFILE
+    );
+    const req = RequestMock.new()
+      .setCookies({
+        [OIDC_SESSION_COOKIE_NAME]: sessionToken,
+      })
+      .get();
+    await ensureOIDCAuthContextStub(req);
+    expect(getAuth(req)?.profile.id).toBe(DIGID_PROFILE.id);
 
     const resMock = ResponseMock.new();
     await handleAmsAppAuthLogout(req, resMock);
@@ -403,28 +420,30 @@ describe('amsapp-auth-route-handlers', () => {
       })
     );
 
-    expect(await getByLoginId(loginId)).toBeNull();
-    expect(await isSessionTokenRevoked(sessionToken)).toBe(true);
+    expect(
+      await promisify(oidcSessionStore.get.bind(oidcSessionStore))(sessionToken)
+    ).toBeFalsy();
+    expect(getAuth(req)).toBeNull();
 
-    const exchangeReq = {
-      body: {
-        authorizationCode: readyRecord?.authorizationCode,
-        codeVerifier,
-      },
-    } as Request;
-
-    const exchangeRes = ResponseMock.new();
-    await handleAmsAppAuthTokenExchange(exchangeReq, exchangeRes);
-
-    expect(exchangeRes.status).toHaveBeenCalledWith(400);
-    expect(exchangeRes.send).toHaveBeenCalledWith(
-      expect.objectContaining({
-        status: 'ERROR',
-        message: expect.stringContaining(
-          apiResponseErrors.AUTHORIZATION_CODE_NOT_FOUND_OR_EXPIRED.message
-        ),
+    const browserReq = RequestMock.new()
+      .setCookies({
+        [OIDC_SESSION_COOKIE_NAME]: sessionToken,
       })
+      .get();
+    await ensureOIDCAuthContextStub(browserReq);
+    expect(getAuth(browserReq)).toBeNull();
+
+    const headerReq = RequestMock.new().get();
+    headerReq.headers = { 'x-amsapp-session-token': sessionToken };
+    headerReq.get = vi.fn(() => sessionToken) as Request['get'];
+    const next = vi.fn();
+    await privateNetworkAuthContextMiddleware(
+      headerReq,
+      ResponseMock.new(),
+      next
     );
+    expect(next).toHaveBeenCalledWith();
+    expect(getAuth(headerReq)).toBeNull();
   });
 
   test('logout returns invalid-input contract when session token is missing', async () => {
@@ -446,4 +465,127 @@ describe('amsapp-auth-route-handlers', () => {
       })
     );
   });
+
+  test.each(['logout', 'idle expiry', 'absolute expiry'])(
+    'real OIDC middleware manages a synthetic login without a provider: %s',
+    async (termination) => {
+      const startedAt = Date.parse('2026-01-01T12:00:00Z');
+      MockDate.set(startedAt);
+      const startedAtSeconds = Math.floor(startedAt / ONE_SECOND_MS);
+      const rollingDurationSeconds = OIDC_SESSION_MAX_AGE_SECONDS;
+      const rollingDurationMs = rollingDurationSeconds * ONE_SECOND_MS;
+      const absoluteDurationSeconds = rollingDurationSeconds * 2;
+      const renewalMarginMs = ONE_MINUTE_MS;
+      const renewalAt = startedAt + rollingDurationMs - renewalMarginMs;
+      const oidcMiddleware = openIdAuth({
+        ...oidcConfigDigid,
+        session: {
+          ...oidcConfigDigid.session,
+          store: oidcSessionStore,
+          signSessionStoreCookie: true,
+          rollingDuration: rollingDurationSeconds,
+          absoluteDuration: absoluteDurationSeconds,
+        },
+      });
+      async function restoreSession(cookieValue = '') {
+        const req = RequestMock.new()
+          .setCookies({
+            [OIDC_SESSION_COOKIE_NAME]: cookieValue,
+          })
+          .get() as AuthenticatedRequest;
+        Object.assign(req, {
+          method: 'GET',
+          url: '/session',
+          headers: {
+            cookie: `${OIDC_SESSION_COOKIE_NAME}=${encodeURIComponent(cookieValue)}`,
+          },
+          get: (name: string) =>
+            name === 'cookie' ? req.headers.cookie : undefined,
+        });
+        const res = Object.assign(ResponseMock.new(), {
+          cookie: vi.fn(),
+          writeHead: vi.fn(),
+        });
+        res.end = vi.fn(() => {
+          res.writeHead(200);
+          return res;
+        });
+        await new Promise<void>((resolve, reject) => {
+          oidcMiddleware(req, res, (error?: unknown) =>
+            error ? reject(error) : resolve()
+          );
+        });
+        return { req, res };
+      }
+
+      const initial = await restoreSession();
+      const idToken = await signDevelopmentToken(
+        'digid',
+        DIGID_PROFILE.id,
+        DIGID_PROFILE.sid
+      );
+      Object.assign(initial.req[OIDC_SESSION_COOKIE_NAME]!, {
+        ...DIGID_PROFILE,
+        TMASessionID: DIGID_PROFILE.sid,
+        id_token: idToken,
+        access_token: idToken,
+        token_type: 'Bearer',
+        expires_at: startedAtSeconds + rollingDurationSeconds,
+      });
+      await initial.res.end();
+      const signedCookie = initial.res.cookie.mock.calls[0][1] as string;
+      const sessionId = signedCookie.slice(0, signedCookie.lastIndexOf('.'));
+      const readSession = promisify(
+        oidcSessionStore.get.bind(oidcSessionStore)
+      );
+      const initialSession = await readSession(sessionId);
+      expect(initialSession?.header.exp).toBe(
+        startedAtSeconds + rollingDurationSeconds
+      );
+
+      MockDate.set(renewalAt);
+      const renewed = await restoreSession(signedCookie);
+      expect(renewed.req.oidc.isAuthenticated()).toBe(true);
+      expect(getAuth(renewed.req)?.profile).toEqual(DIGID_PROFILE);
+      expect(getAuth(renewed.req)?.token).toBe(idToken);
+      await renewed.res.end();
+      const renewedSession = await readSession(sessionId);
+      expect(renewedSession?.header.iat).toBe(initialSession?.header.iat);
+      expect(renewedSession?.header.exp).toBe(
+        Math.floor(renewalAt / ONE_SECOND_MS) + rollingDurationSeconds
+      );
+
+      if (termination === 'idle expiry') {
+        MockDate.set(renewalAt + rollingDurationMs);
+      }
+      if (termination === 'absolute expiry') {
+        const absoluteDeadlineAt =
+          startedAt + absoluteDurationSeconds * ONE_SECOND_MS;
+
+        MockDate.set(absoluteDeadlineAt - renewalMarginMs - 1);
+        const capped = await restoreSession(signedCookie);
+        expect(capped.req.oidc.isAuthenticated()).toBe(true);
+        await capped.res.end();
+        const cappedSession = await readSession(sessionId);
+        expect(cappedSession?.header.iat).toBe(initialSession?.header.iat);
+        expect(cappedSession?.header.exp).toBe(
+          startedAtSeconds + absoluteDurationSeconds
+        );
+        MockDate.set(absoluteDeadlineAt);
+      }
+      if (termination === 'logout') {
+        const logout = await restoreSession(signedCookie);
+        expect(getAuth(logout.req)?.profile.id).toBe(DIGID_PROFILE.id);
+        await handleAmsAppAuthLogout(logout.req, logout.res);
+        expect(await readSession(sessionId)).toBeTruthy();
+        await logout.res.end();
+        expect(await readSession(sessionId)).toBeFalsy();
+      }
+
+      const replay = await restoreSession(signedCookie);
+      expect(replay.req.oidc.isAuthenticated()).toBe(false);
+      expect(getAuth(replay.req)).toBeNull();
+      await replay.res.end();
+    }
+  );
 });

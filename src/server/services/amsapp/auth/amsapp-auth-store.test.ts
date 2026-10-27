@@ -45,9 +45,6 @@ describe('AMS app auth repository', () => {
       productionRepository.consumeByAuthorizationCode('code'),
     getByLoginId: () => productionRepository.getByLoginId('login-id'),
     clearAmsAppAuthStore: () => productionRepository.clearAmsAppAuthStore(),
-    revokeSessionToken: () => productionRepository.revokeSessionToken('token'),
-    isSessionTokenRevoked: () =>
-      productionRepository.isSessionTokenRevoked('token'),
   };
 
   test.each(Object.entries(productionOperations))(

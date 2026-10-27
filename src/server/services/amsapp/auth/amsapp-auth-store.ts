@@ -2,8 +2,6 @@ import { randomUUID } from 'node:crypto';
 
 import { AUTHORIZATION_CODE_TTL_MS } from './amsapp-auth-service-config.ts';
 import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
-import { OIDC_SESSION_MAX_AGE_SECONDS } from '../../../auth/auth-config.ts';
-import { ONE_SECOND_MS } from '../../../config/app.ts';
 import { trackEvent } from '../../monitoring.ts';
 
 export type AuthorizationCodeStatus = 'pending' | 'ready' | 'expired';
@@ -19,7 +17,6 @@ export type AuthorizationCodeRecord = {
 };
 
 const authorizationCodeStore = new Map<string, AuthorizationCodeRecord>();
-const revokedSessionTokenStore = new Map<string, number>();
 
 export interface AmsAppAuthRepository {
   createLoginAttempt(codeChallenge: string): Promise<string>;
@@ -35,8 +32,6 @@ export interface AmsAppAuthRepository {
   ): Promise<AuthorizationCodeRecord | null>;
   getByLoginId(loginId: string): Promise<AuthorizationCodeRecord | null>;
   clearAmsAppAuthStore(): Promise<void>;
-  revokeSessionToken(sessionToken: string): Promise<number>;
-  isSessionTokenRevoked(sessionToken: string): Promise<boolean>;
 }
 
 function isExpired(record: AuthorizationCodeRecord) {
@@ -63,18 +58,6 @@ function pruneExpiredMemoryRecords() {
   }
 }
 
-function pruneExpiredRevokedSessionTokens() {
-  const now = Date.now();
-
-  for (const [token, expiresAtMs] of revokedSessionTokenStore.entries()) {
-    if (now <= expiresAtMs) {
-      continue;
-    }
-
-    revokedSessionTokenStore.delete(token);
-  }
-}
-
 function getRecord(loginId: string) {
   const record = authorizationCodeStore.get(loginId) ?? null;
   if (!record) {
@@ -94,7 +77,6 @@ function createLoginAttempt_(codeChallenge: string) {
   const createdAtMs = Date.now();
 
   pruneExpiredMemoryRecords();
-  pruneExpiredRevokedSessionTokens();
 
   authorizationCodeStore.set(loginId, {
     loginId,
@@ -175,48 +157,6 @@ function getByLoginId_(loginId: string) {
 
 function clearAmsAppAuthStore_() {
   authorizationCodeStore.clear();
-  revokedSessionTokenStore.clear();
-}
-
-function revokeSessionToken_(sessionToken: string) {
-  if (!sessionToken) {
-    return 0;
-  }
-
-  pruneExpiredMemoryRecords();
-  pruneExpiredRevokedSessionTokens();
-
-  let removedRecords = 0;
-
-  for (const [loginId, record] of authorizationCodeStore.entries()) {
-    if (record.maSessionCookieValue !== sessionToken) {
-      continue;
-    }
-
-    authorizationCodeStore.delete(loginId);
-    removedRecords += 1;
-  }
-
-  revokedSessionTokenStore.set(
-    sessionToken,
-    Date.now() + OIDC_SESSION_MAX_AGE_SECONDS * ONE_SECOND_MS
-  );
-
-  trackEvent('amsapp-auth-session-revoked', {
-    storage: 'memory',
-    removedRecords,
-  });
-
-  return removedRecords;
-}
-
-function isSessionTokenRevoked_(sessionToken: string) {
-  if (!sessionToken) {
-    return false;
-  }
-
-  pruneExpiredRevokedSessionTokens();
-  return revokedSessionTokenStore.has(sessionToken);
 }
 
 async function postgresNotImplemented(): Promise<never> {
@@ -234,8 +174,6 @@ export function createAmsAppAuthRepository(
       consumeByAuthorizationCode: postgresNotImplemented,
       getByLoginId: postgresNotImplemented,
       clearAmsAppAuthStore: postgresNotImplemented,
-      revokeSessionToken: postgresNotImplemented,
-      isSessionTokenRevoked: postgresNotImplemented,
     };
   }
 
@@ -250,10 +188,6 @@ export function createAmsAppAuthRepository(
       consumeByAuthorizationCode_(authorizationCode),
     getByLoginId: async (loginId) => getByLoginId_(loginId),
     clearAmsAppAuthStore: async () => clearAmsAppAuthStore_(),
-    revokeSessionToken: async (sessionToken) =>
-      revokeSessionToken_(sessionToken),
-    isSessionTokenRevoked: async (sessionToken) =>
-      isSessionTokenRevoked_(sessionToken),
   };
 }
 
@@ -264,6 +198,4 @@ export const {
   consumeByAuthorizationCode,
   getByLoginId,
   clearAmsAppAuthStore,
-  revokeSessionToken,
-  isSessionTokenRevoked,
 } = createAmsAppAuthRepository(IS_PRODUCTION);

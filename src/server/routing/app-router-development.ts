@@ -1,10 +1,12 @@
+import { promisify } from 'node:util';
+
 import type { CookieOptions, Request, Response } from 'express';
 import UID from 'uid-safe';
 
 import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes.ts';
 import {
   ensureOIDCAuthContextStub,
-  createOIDCStub,
+  createDevelopmentSession,
 } from './route-helpers-oidc.ts';
 import {
   createBFFRouter,
@@ -18,6 +20,7 @@ import { getReturnToUrl } from '../auth/auth-after-redirect-returnto.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
+  oidcSessionStore,
 } from '../auth/auth-config.ts';
 import { getAuth, hasSessionCookie } from '../auth/auth-helpers.ts';
 import { authRoutes } from '../auth/auth-routes.ts';
@@ -114,11 +117,10 @@ authRouterDevelopment.get(
       sid: sessionID,
     };
 
-    await createOIDCStub(req, authProfile);
-
-    const appSessionCookieValue = Buffer.from(
-      JSON.stringify(authProfile)
-    ).toString('base64');
+    const appSessionCookieValue = await createDevelopmentSession(
+      req,
+      authProfile
+    );
 
     const appSessionCookieOptions: CookieOptions = {
       expires: new Date(
@@ -287,6 +289,12 @@ authRouterDevelopment.get(
     authRoutes.AUTH_LOGOUT_DIGID,
   ],
   async (req, res) => {
+    const sessionToken = req.cookies?.[OIDC_SESSION_COOKIE_NAME];
+    if (sessionToken) {
+      await promisify(oidcSessionStore.destroy.bind(oidcSessionStore))(
+        sessionToken
+      );
+    }
     res.clearCookie(OIDC_SESSION_COOKIE_NAME, {
       path: '/',
     });

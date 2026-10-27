@@ -12,6 +12,7 @@ import {
 } from '../../../../universal/helpers/api.ts';
 import { OIDC_SESSION_COOKIE_NAME } from '../../../auth/auth-config.ts';
 import type { AuthProfile } from '../../../auth/auth-types.ts';
+import { createDevelopmentSession } from '../../../routing/route-helpers-oidc.ts';
 import * as gpass from '../../hli/stadspas-gpass-service.ts';
 import type { Stadspas } from '../../hli/stadspas-types.ts';
 import * as stadspas from '../../hli/stadspas.ts';
@@ -193,9 +194,10 @@ describe('hli/router-external-consumer', async () => {
       });
 
       const reqMock = RequestMock.new().setCookies({
-        [OIDC_SESSION_COOKIE_NAME]: Buffer.from(
-          JSON.stringify(USER_PROFILE)
-        ).toString('base64'),
+        [OIDC_SESSION_COOKIE_NAME]: await createDevelopmentSession(
+          RequestMock.new().get(),
+          USER_PROFILE
+        ),
       });
       const req = reqMock.get();
       const resMock = ResponseMock.new();

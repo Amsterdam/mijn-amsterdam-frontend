@@ -1,3 +1,5 @@
+import { promisify } from 'node:util';
+
 import { differenceInSeconds } from 'date-fns';
 import type { Request } from 'express';
 import type { AccessToken } from 'express-openid-connect';
@@ -6,12 +8,56 @@ import { IS_AP } from '../../universal/config/env.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
+  OIDC_SESSION_ABSOLUTE_MAX_AGE_SECONDS,
+  oidcSessionStore,
   TOKEN_ID_ATTRIBUTE,
 } from '../auth/auth-config.ts';
 import { signDevelopmentToken } from '../auth/auth-helpers-development.ts';
 import { getAuth } from '../auth/auth-helpers.ts';
 import type { AuthProfile, MaSession } from '../auth/auth-types.ts';
 import { ONE_SECOND_MS } from '../config/app.ts';
+import { featureToggle } from '../services/amsapp/auth/amsapp-auth-service-config.ts';
+
+async function storeDevelopmentSession(
+  token: string,
+  profile: AuthProfile,
+  issuedAt = Math.floor(Date.now() / ONE_SECOND_MS)
+) {
+  const now = Math.floor(Date.now() / ONE_SECOND_MS);
+  const expiresAt = Math.min(
+    now + OIDC_SESSION_MAX_AGE_SECONDS,
+    issuedAt + OIDC_SESSION_ABSOLUTE_MAX_AGE_SECONDS
+  );
+  await promisify(oidcSessionStore.set.bind(oidcSessionStore))(token, {
+    header: { iat: issuedAt, uat: now, exp: expiresAt },
+    data: {
+      ...profile,
+      TMASessionID: 'xx-tma-sid-xx',
+      id_token: '',
+      access_token: '',
+      refresh_token: '',
+      token_type: '',
+      expires_at: '',
+    },
+    cookie: {
+      expires: expiresAt * ONE_SECOND_MS,
+      maxAge: expiresAt * ONE_SECOND_MS - Date.now(),
+    },
+  });
+  return expiresAt - now;
+}
+
+export async function createDevelopmentSession(
+  req: Request,
+  profile: AuthProfile
+) {
+  const token = Buffer.from(JSON.stringify(profile)).toString('base64');
+  if (featureToggle.amsAppUniversalAuthIsActive) {
+    await storeDevelopmentSession(token, profile);
+  }
+  await createOIDCStub(req, profile);
+  return token;
+}
 
 function parseDevelopmentSessionCookie(sessionCookieValue: string) {
   try {
@@ -25,12 +71,35 @@ function parseDevelopmentSessionCookie(sessionCookieValue: string) {
 }
 
 export async function ensureOIDCAuthContextStub(req: Request) {
-  if (getAuth(req)) {
+  if (IS_AP || getAuth(req)) {
     return;
   }
 
   const sessionCookieValue = req.cookies?.[OIDC_SESSION_COOKIE_NAME] ?? null;
   if (!sessionCookieValue) {
+    return;
+  }
+
+  if (featureToggle.amsAppUniversalAuthIsActive) {
+    const session = await promisify(
+      oidcSessionStore.get.bind(oidcSessionStore)
+    )(sessionCookieValue);
+    const now = Math.floor(Date.now() / ONE_SECOND_MS);
+    if (
+      !session ||
+      session.header.exp <= now ||
+      session.header.uat + OIDC_SESSION_MAX_AGE_SECONDS <= now ||
+      session.header.iat + OIDC_SESSION_ABSOLUTE_MAX_AGE_SECONDS <= now
+    ) {
+      return;
+    }
+    const profile = session.data as MaSession & AuthProfile;
+    const expiresInSeconds = await storeDevelopmentSession(
+      sessionCookieValue,
+      profile,
+      session.header.iat
+    );
+    await createOIDCStub(req, profile, expiresInSeconds);
     return;
   }
 
