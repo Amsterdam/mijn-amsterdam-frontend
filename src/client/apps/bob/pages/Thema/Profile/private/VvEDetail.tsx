@@ -23,9 +23,16 @@ type VveDetailsProps = {
 };
 
 const VVE_CASES_DISPLAYPROPS: DisplayProps<VveCaseDetail> = {
-  title: 'Aanvraag',
-  formattedDateStart: 'Startdatum',
-  displayStatus: 'Status',
+  props: {
+    title: 'Aanvraag',
+    caseId: 'Zaaknummer',
+    formattedDateStart: 'Startdatum',
+    displayStatus: 'Status',
+  },
+  colWidths: {
+    small: ['1fr', '0', '1fr', '1fr'],
+    large: ['1fr', '1fr', '1fr', '1fr'],
+  },
 };
 
 function VveDetail({ vve }: VveDetailsProps) {

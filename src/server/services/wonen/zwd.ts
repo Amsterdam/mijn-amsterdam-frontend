@@ -66,6 +66,7 @@ function TransformZWDCases(cases: ZwdVveDataSource['cases']): VveCaseDetail[] {
     homeownerAssociation: {
       name: c.homeowner_association.name,
     },
+    caseId: c.prefixed_dossier_id,
   }));
 }
 

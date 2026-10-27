@@ -207,6 +207,11 @@ exports[`VvEDetail > Matches snapshot with VvE cases 1`] = `
                   <th
                     class="ams-table__header-cell"
                   >
+                    Zaaknummer
+                  </th>
+                  <th
+                    class="ams-table__header-cell"
+                  >
                     Startdatum
                   </th>
                   <th
@@ -222,6 +227,9 @@ exports[`VvEDetail > Matches snapshot with VvE cases 1`] = `
                 <tr
                   class="ams-table__row"
                 >
+                  <td
+                    class="ams-table__cell"
+                  />
                   <td
                     class="ams-table__cell"
                   />
