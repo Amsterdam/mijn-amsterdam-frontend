@@ -35,6 +35,14 @@ import { fetchCommercial, fetchPrivate } from '../bag/my-locations.ts';
 //Alleen VvE Zaken met een startdatum vanaf 1 januari 2023 worden getoond
 const MINIMUM_ZWD_CASE_CREATED_DATE = '2023-01-01';
 
+const CASE_TITLES_BY_ADVICE_TYPE: Record<string, string> = {
+  Energieadvies: 'VvE verduurzamingsadvies',
+};
+
+function isAllowedAdviceType(adviceType: string): boolean {
+  return Object.hasOwn(CASE_TITLES_BY_ADVICE_TYPE, adviceType);
+}
+
 export function translateVerblijfObjectId(bagID: BAGID): BAGID {
   return translateValueFromEnv('BFF_BAG_TRANSLATIONS', bagID);
 }
@@ -56,11 +64,12 @@ function TransformZWDCases(cases: ZwdVveDataSource['cases']): VveCaseDetail[] {
     .filter(
       (c) =>
         isAfter(new Date(c.created), new Date(MINIMUM_ZWD_CASE_CREATED_DATE)) ||
-        isEqual(new Date(c.created), new Date(MINIMUM_ZWD_CASE_CREATED_DATE))
+        isEqual(new Date(c.created), new Date(MINIMUM_ZWD_CASE_CREATED_DATE)) ||
+        isAllowedAdviceType(c.advice_type)
     )
     .map((c) => ({
       id: c.prefixed_dossier_id,
-      title: 'VvE verduurzamingsadvies',
+      title: CASE_TITLES_BY_ADVICE_TYPE[c.advice_type],
       steps: [],
       link: {
         to: themaConfig.BRP.detailPageVvE.route.path,
