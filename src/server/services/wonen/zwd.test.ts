@@ -57,7 +57,7 @@ describe('zwd-vve service', () => {
             created: '2022-12-31T23:59:59.000Z',
             updated: '2023-01-02T09:00:00.000Z',
             status: 'In behandeling',
-            advice_type: 'Verduurzamingsadvies',
+            advice_type: 'Energieadvies',
             homeowner_association: { name: 'VvE Test' },
             prefixed_dossier_id: 'ZWD-OLD',
           },
@@ -66,7 +66,7 @@ describe('zwd-vve service', () => {
             created: '2023-01-01T00:00:00.000Z',
             updated: '2023-01-02T09:00:00.000Z',
             status: 'In behandeling',
-            advice_type: 'Verduurzamingsadvies',
+            advice_type: 'Energieadvies',
             homeowner_association: { name: 'VvE Test' },
             prefixed_dossier_id: 'ZWD-NEW',
           },
@@ -78,14 +78,14 @@ describe('zwd-vve service', () => {
       expect(response.status).toBe('OK');
       expect(response.content?.cases.map(({ id }) => id)).toEqual(['ZWD-NEW']);
     });
-    it('should expose older cases with an allowed advice type', async () => {
+    it('should expose cases with an allowed advice type', async () => {
       remoteApi.get(/mijn-amsterdam/).reply(200, {
         name: 'VvE Test',
         cases: [
           {
             id: 'ZWD-ENERGIE',
-            created: '2022-12-31T12:00:00.000Z',
-            updated: '2023-01-02T09:00:00.000Z',
+            created: '2026-01-01T09:00:00.000Z',
+            updated: '2026-01-02T09:00:00.000Z',
             status: 'In behandeling',
             advice_type: 'Energieadvies',
             homeowner_association: { name: 'VvE Test' },
@@ -93,8 +93,8 @@ describe('zwd-vve service', () => {
           },
           {
             id: 'ZWD-OTHER',
-            created: '2022-12-31T12:00:00.000Z',
-            updated: '2023-01-02T09:00:00.000Z',
+            created: '2026-12-31T09:00:00.000Z',
+            updated: '2026-12-31T09:00:00.000Z',
             status: 'In behandeling',
             advice_type: 'Ander advies',
             homeowner_association: { name: 'VvE Test' },

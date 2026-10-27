@@ -1,5 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import { isAfter, isEqual } from 'date-fns';
+import { isBefore } from 'date-fns';
 
 import { featureToggle, ZWDApiReqestConfig } from './wonen-service-config.ts';
 import type {
@@ -63,9 +63,8 @@ function TransformZWDCases(cases: ZwdVveDataSource['cases']): VveCaseDetail[] {
   return cases
     .filter(
       (c) =>
-        isAfter(new Date(c.created), new Date(MINIMUM_ZWD_CASE_CREATED_DATE)) ||
-        isEqual(new Date(c.created), new Date(MINIMUM_ZWD_CASE_CREATED_DATE)) ||
-        isAllowedAdviceType(c.advice_type)
+        isAllowedAdviceType(c.advice_type) &&
+        !isBefore(new Date(c.created), new Date(MINIMUM_ZWD_CASE_CREATED_DATE))
     )
     .map((c) => ({
       id: c.prefixed_dossier_id,
