@@ -78,6 +78,38 @@ describe('zwd-vve service', () => {
       expect(response.status).toBe('OK');
       expect(response.content?.cases.map(({ id }) => id)).toEqual(['ZWD-NEW']);
     });
+    it('should expose older cases with an allowed advice type', async () => {
+      remoteApi.get(/mijn-amsterdam/).reply(200, {
+        name: 'VvE Test',
+        cases: [
+          {
+            id: 'ZWD-ENERGIE',
+            created: '2022-12-31T12:00:00.000Z',
+            updated: '2023-01-02T09:00:00.000Z',
+            status: 'In behandeling',
+            advice_type: 'Energieadvies',
+            homeowner_association: { name: 'VvE Test' },
+            prefixed_dossier_id: 'ZWD-ENERGIE',
+          },
+          {
+            id: 'ZWD-OTHER',
+            created: '2022-12-31T12:00:00.000Z',
+            updated: '2023-01-02T09:00:00.000Z',
+            status: 'In behandeling',
+            advice_type: 'Ander advies',
+            homeowner_association: { name: 'VvE Test' },
+            prefixed_dossier_id: 'ZWD-OTHER',
+          },
+        ],
+      });
+
+      const response = await zwdVve.fetchVVEData(getAuthProfileAndToken());
+
+      expect(response.status).toBe('OK');
+      expect(
+        response.content?.cases.map(({ id, title }) => ({ id, title }))
+      ).toEqual([{ id: 'ZWD-ENERGIE', title: 'VvE verduurzamingsadvies' }]);
+    });
     it('should handle VVE data not found', async () => {
       remoteApi.get(/mijn-amsterdam/).reply(404, {
         name: 'VvE Test',
