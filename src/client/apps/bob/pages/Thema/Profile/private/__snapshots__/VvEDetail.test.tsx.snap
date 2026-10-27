@@ -229,16 +229,24 @@ exports[`VvEDetail > Matches snapshot with VvE cases 1`] = `
                 >
                   <td
                     class="ams-table__cell"
-                  />
+                  >
+                    VvE verduurzamingsadvies
+                  </td>
                   <td
                     class="ams-table__cell"
-                  />
+                  >
+                    ZWD-101
+                  </td>
                   <td
                     class="ams-table__cell"
-                  />
+                  >
+                    1 mei 2026
+                  </td>
                   <td
                     class="ams-table__cell"
-                  />
+                  >
+                    In behandeling
+                  </td>
                 </tr>
               </tbody>
             </table>
