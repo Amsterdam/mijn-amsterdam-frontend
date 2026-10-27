@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 
 import { VvEDetail } from './VvEDetail.tsx';
 import type { WonenDataFrontend } from '../../../../../../../server/services/wonen/wonen.types.ts';
@@ -9,7 +9,7 @@ import { themaConfig } from '../Profile-thema-config.ts';
 const routeEntry = themaConfig.BRP.detailPageVvE.route.path;
 const routePath = themaConfig.BRP.detailPageVvE.route.path;
 
-const wonenDataWithCases = {
+const wonenDataWithCases: WonenDataFrontend = {
   vve: {
     name: 'VvE Prachtige Straat 13',
     numberOfApartments: 21,
@@ -24,27 +24,22 @@ const wonenDataWithCases = {
     isPriorityNeighborhood: false,
     cases: [
       {
-        id: 101,
-        legacyId: 'L-101',
-        prefixedDossierId: 'ZWD-101',
-        adviceType: 'Verduurzamingsadvies',
-        applicationType: 'Aanvraag',
-        created: '2026-05-01T09:00:00.000Z',
-        requestDate: '2026-05-02',
-        endDate: '2026-06-02',
-        status: 'In behandeling',
-        updated: '2026-06-03T09:50:53.447114Z',
-        activationTeam: {
-          type: 'Team',
-          subject: 'Opstart',
-          meetingDate: '2026-06-04',
+        id: 'ZWD-101',
+        title: 'VvE verduurzamingsadvies',
+        steps: [],
+        link: {
+          to: '/persoonlijke-gegevens/vve',
+          title: 'Bekijk details',
         },
+        displayStatus: 'In behandeling',
+        dateStart: '2026-05-01T09:00:00.000Z',
+        formattedDateStart: '1 mei 2026',
+        dateUpdated: '2026-06-03T09:50:53.447114Z',
+        datePublished: '2026-06-03T09:50:53.447114Z',
+        status: 'In behandeling',
+        adviceType: 'Verduurzamingsadvies',
         homeownerAssociation: {
-          id: 555,
           name: 'VvE Prachtige Straat 13',
-          district: 'Centrum',
-          neighborhood: 'Grachtengordel',
-          numberOfApartments: 21,
         },
       },
     ],
@@ -82,5 +77,29 @@ describe('VvEDetail', () => {
   test('Matches snapshot with VvE cases', () => {
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('displays the VvE case application, case number, start date, and status', () => {
+    render(<Component />);
+
+    const table = screen.getByRole('table');
+    const row = within(table).getAllByRole('row')[1];
+
+    expect(
+      within(table)
+        .getAllByRole('columnheader')
+        .map((header) => header.textContent)
+    ).toEqual(['Aanvraag', 'Zaaknummer', 'Startdatum', 'Status']);
+
+    expect(
+      within(row)
+        .getAllByRole('cell')
+        .map((cell) => cell.textContent)
+    ).toEqual([
+      'VvE verduurzamingsadvies',
+      'ZWD-101',
+      '1 mei 2026',
+      'In behandeling',
+    ]);
   });
 });
