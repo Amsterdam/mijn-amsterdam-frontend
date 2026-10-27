@@ -6,7 +6,10 @@ import {
   handleAmsAppAuthTokenExchange,
 } from './amsapp-auth-route-handlers.ts';
 import { featureToggle, routes } from './amsapp-auth-service-config.ts';
-import { apiKeyVerificationHandler } from '../../../routing/route-handlers.ts';
+import {
+  apiKeyVerificationHandler,
+  handleIsAuthenticated,
+} from '../../../routing/route-handlers.ts';
 import { createBFFRouter } from '../../../routing/route-helpers.ts';
 
 const routerPublic = createBFFRouter({
@@ -38,6 +41,7 @@ if (featureToggle.amsAppUniversalAuthServicesAllAccessIsActive) {
   routerPrivate.get(
     routes.private.AMSAPP_AUTH_SERVICES_ALL,
     apiKeyVerificationHandler,
+    handleIsAuthenticated,
     handleAmsAppAuthServicesAllProxy
   );
 }

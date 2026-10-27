@@ -10,7 +10,8 @@ import {
   handleAmsAppAuthLogout,
   handleAmsAppAuthTokenExchange,
 } from './amsapp-auth-route-handlers.ts';
-import { apiResponseErrors } from './amsapp-auth-service-config.ts';
+import { amsappAuthRouter } from './amsapp-auth-router.ts';
+import { apiResponseErrors, routes } from './amsapp-auth-service-config.ts';
 import {
   clearAmsAppAuthStore,
   createLoginAttempt,
@@ -33,11 +34,13 @@ import type {
   AuthProfile,
 } from '../../../auth/auth-types.ts';
 import { ONE_MINUTE_MS, ONE_SECOND_MS } from '../../../config/app.ts';
+import * as envHelpers from '../../../helpers/env.ts';
 import { privateNetworkAuthContextMiddleware } from '../../../routing/app-router-private-auth-context.ts';
 import {
   createDevelopmentSession,
   ensureOIDCAuthContextStub,
 } from '../../../routing/route-helpers-oidc.ts';
+import * as serviceController from '../../controller.ts';
 
 const DIGID_PROFILE: AuthProfile = {
   sid: 'e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
@@ -53,6 +56,61 @@ describe('amsapp-auth-route-handlers', () => {
   });
 
   afterEach(() => MockDate.reset());
+
+  describe('private services-all authentication', () => {
+    afterEach(() => vi.restoreAllMocks());
+
+    test.each(['missing', 'unrestored', 'authenticated'])(
+      'requires an authenticated user session: %s',
+      async (sessionState) => {
+        const apiKey = 'services-all-test-api-key';
+        vi.spyOn(envHelpers, 'getFromEnv').mockReturnValue(apiKey);
+        const loadServices = vi
+          .spyOn(serviceController, 'loadServicesAll')
+          .mockResolvedValue({});
+        const reqMock = RequestMock.new().setUrl(
+          routes.private.AMSAPP_AUTH_SERVICES_ALL
+        );
+        if (sessionState !== 'missing') {
+          reqMock.setCookies({
+            [OIDC_SESSION_COOKIE_NAME]: 'session-token',
+          });
+        }
+        if (sessionState === 'authenticated') {
+          await reqMock.createOIDCStub(DIGID_PROFILE);
+        }
+        const req = reqMock.get();
+        Object.assign(req, {
+          method: 'GET',
+          headers: { 'x-api-key': apiKey },
+        });
+        const res = Object.assign(ResponseMock.new(), { json: vi.fn() });
+        await new Promise<void>((resolve, reject) => {
+          res.send.mockImplementation(() => {
+            resolve();
+            return res;
+          });
+          res.json.mockImplementation(() => {
+            resolve();
+            return res;
+          });
+          amsappAuthRouter.private(req, res, (error?: unknown) =>
+            error ? reject(error) : resolve()
+          );
+        });
+
+        if (sessionState === 'authenticated') {
+          expect(loadServices).toHaveBeenCalledWith(req, res);
+          expect(res.json).toHaveBeenCalledWith({});
+          expect(res.statusCode).toBe(200);
+        } else {
+          expect(res.status).toHaveBeenCalledWith(401);
+          expect(loadServices).not.toHaveBeenCalled();
+          expect(res.json).not.toHaveBeenCalled();
+        }
+      }
+    );
+  });
 
   test('login-start stores codeChallenge and redirects to DigiD login', async () => {
     const reqMock = RequestMock.new().setQuery({
