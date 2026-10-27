@@ -37,14 +37,21 @@ function transformBagAddressResponse(
 export async function fetchBAG(
   sourceAddress: Adres | null
 ): Promise<ApiResponse<BAGLocation>> {
-  if (!sourceAddress?.straatnaam || !sourceAddress.huisnummer) {
+  if (
+    !sourceAddress?.straatnaam ||
+    !sourceAddress.huisnummer ||
+    !sourceAddress.postcode ||
+    !sourceAddress?.woonplaatsNaam
+  ) {
     return apiErrorResult('Could not query BAG, no address supplied.', null);
   }
 
   const params: BAGQueryParams = {
     openbareruimteNaamNen: sourceAddress.straatnaam,
     huisnummer: sourceAddress.huisnummer,
+    postcode: sourceAddress.postcode,
     huisletter: sourceAddress.huisletter || undefined,
+    woonplaatsNaam: sourceAddress.woonplaatsNaam,
   };
 
   const config = getApiConfig('BAG', {
