@@ -80,7 +80,7 @@ describe('VvEDetail', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  test('displays the VvE case application, case number, start date, and status', () => {
+  it('displays the VvE case application, case number, start date, and status', () => {
     render(<Component />);
 
     const table = screen.getByRole('table');
