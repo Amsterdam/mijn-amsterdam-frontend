@@ -36,10 +36,6 @@ function appendSessionCookieHeader(req: Request, sessionToken: string) {
 }
 
 async function applyAmsAppSessionTokenAsCookie(req: Request) {
-  if (!featureToggle.amsAppUniversalAuthIsActive) {
-    return;
-  }
-
   const token = getHeaderValue(req, AMSAPP_SESSION_TOKEN_HEADER);
   if (!token || req.cookies?.[OIDC_SESSION_COOKIE_NAME]) {
     return;
