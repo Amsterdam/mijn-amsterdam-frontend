@@ -80,6 +80,5 @@ export type VveCaseDetail = ZaakAanvraagDetail & {
   homeownerAssociation: {
     name: string;
   };
-  caseId: string;
 };
 

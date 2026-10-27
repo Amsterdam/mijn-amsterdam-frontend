@@ -53,7 +53,7 @@ describe('zwd-vve service', () => {
         name: 'VvE Test',
         cases: [
           {
-            id: 1,
+            id: 'ZWD-OLD',
             created: '2022-12-31T23:59:59.000Z',
             updated: '2023-01-02T09:00:00.000Z',
             status: 'In behandeling',
@@ -62,7 +62,7 @@ describe('zwd-vve service', () => {
             prefixed_dossier_id: 'ZWD-OLD',
           },
           {
-            id: 2,
+            id: 'ZWD-NEW',
             created: '2023-01-01T00:00:00.000Z',
             updated: '2023-01-02T09:00:00.000Z',
             status: 'In behandeling',
@@ -76,9 +76,7 @@ describe('zwd-vve service', () => {
       const response = await zwdVve.fetchVVEData(getAuthProfileAndToken());
 
       expect(response.status).toBe('OK');
-      expect(response.content?.cases.map(({ caseId }) => caseId)).toEqual([
-        'ZWD-NEW',
-      ]);
+      expect(response.content?.cases.map(({ id }) => id)).toEqual(['ZWD-NEW']);
     });
     it('should handle VVE data not found', async () => {
       remoteApi.get(/mijn-amsterdam/).reply(404, {

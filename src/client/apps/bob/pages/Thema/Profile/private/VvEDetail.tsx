@@ -25,7 +25,7 @@ type VveDetailsProps = {
 const VVE_CASES_DISPLAYPROPS: DisplayProps<VveCaseDetail> = {
   props: {
     title: 'Aanvraag',
-    caseId: 'Zaaknummer',
+    id: 'Zaaknummer',
     formattedDateStart: 'Startdatum',
     displayStatus: 'Status',
   },

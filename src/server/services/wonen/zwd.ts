@@ -59,7 +59,7 @@ function TransformZWDCases(cases: ZwdVveDataSource['cases']): VveCaseDetail[] {
         isEqual(new Date(c.created), new Date(MINIMUM_ZWD_CASE_CREATED_DATE))
     )
     .map((c) => ({
-      id: String(c.id),
+      id: c.prefixed_dossier_id,
       title: 'VvE verduurzamingsadvies',
       steps: [],
       link: {
@@ -76,7 +76,6 @@ function TransformZWDCases(cases: ZwdVveDataSource['cases']): VveCaseDetail[] {
       homeownerAssociation: {
         name: c.homeowner_association.name,
       },
-      caseId: c.prefixed_dossier_id,
     }));
 }
 

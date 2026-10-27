@@ -9,7 +9,7 @@ import { themaConfig } from '../Profile-thema-config.ts';
 const routeEntry = themaConfig.BRP.detailPageVvE.route.path;
 const routePath = themaConfig.BRP.detailPageVvE.route.path;
 
-const wonenDataWithCases = {
+const wonenDataWithCases: WonenDataFrontend = {
   vve: {
     name: 'VvE Prachtige Straat 13',
     numberOfApartments: 21,
@@ -24,7 +24,7 @@ const wonenDataWithCases = {
     isPriorityNeighborhood: false,
     cases: [
       {
-        id: '101',
+        id: 'ZWD-101',
         title: 'VvE verduurzamingsadvies',
         steps: [],
         link: {
@@ -41,7 +41,6 @@ const wonenDataWithCases = {
         homeownerAssociation: {
           name: 'VvE Prachtige Straat 13',
         },
-        caseId: 'ZWD-101',
       },
     ],
   },
