@@ -48,6 +48,38 @@ describe('zwd-vve service', () => {
         status: 'OK',
       });
     });
+    it('should not expose cases created before 2023-01-01', async () => {
+      remoteApi.get(/mijn-amsterdam/).reply(200, {
+        name: 'VvE Test',
+        cases: [
+          {
+            id: 1,
+            created: '2022-12-31T23:59:59.000Z',
+            updated: '2023-01-02T09:00:00.000Z',
+            status: 'In behandeling',
+            advice_type: 'Verduurzamingsadvies',
+            homeowner_association: { name: 'VvE Test' },
+            prefixed_dossier_id: 'ZWD-OLD',
+          },
+          {
+            id: 2,
+            created: '2023-01-01T00:00:00.000Z',
+            updated: '2023-01-02T09:00:00.000Z',
+            status: 'In behandeling',
+            advice_type: 'Verduurzamingsadvies',
+            homeowner_association: { name: 'VvE Test' },
+            prefixed_dossier_id: 'ZWD-NEW',
+          },
+        ],
+      });
+
+      const response = await zwdVve.fetchVVEData(getAuthProfileAndToken());
+
+      expect(response.status).toBe('OK');
+      expect(response.content?.cases.map(({ caseId }) => caseId)).toEqual([
+        'ZWD-NEW',
+      ]);
+    });
     it('should handle VVE data not found', async () => {
       remoteApi.get(/mijn-amsterdam/).reply(404, {
         name: 'VvE Test',

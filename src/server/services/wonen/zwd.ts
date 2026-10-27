@@ -1,4 +1,5 @@
 import { HttpStatusCode } from 'axios';
+import { isBefore } from 'date-fns/isBefore';
 
 import { featureToggle, ZWDApiReqestConfig } from './wonen-service-config.ts';
 import type {
@@ -31,6 +32,9 @@ import {
 import type { BAGID, BAGLocation } from '../bag/bag.types.ts';
 import { fetchCommercial, fetchPrivate } from '../bag/my-locations.ts';
 
+//Alleen VvE Zaken met een startdatum vanaf 1 januari 2023 worden getoond
+const MINIMUM_ZWD_CASE_CREATED_DATE = '2023-01-01';
+
 export function translateVerblijfObjectId(bagID: BAGID): BAGID {
   return translateValueFromEnv('BFF_BAG_TRANSLATIONS', bagID);
 }
@@ -48,26 +52,31 @@ function TransformZWDCases(cases: ZwdVveDataSource['cases']): VveCaseDetail[] {
     return [];
   }
 
-  return cases.map((c) => ({
-    id: String(c.id),
-    title: 'VvE verduurzamingsadvies',
-    steps: [],
-    link: {
-      to: themaConfig.BRP.detailPageVvE.route.path,
-      title: 'Bekijk details',
-    },
-    displayStatus: c.status,
-    dateStart: c.created,
-    formattedDateStart: defaultDateFormat(c.created),
-    dateUpdated: c.updated,
-    datePublished: c.updated,
-    status: c.status,
-    adviceType: c.advice_type,
-    homeownerAssociation: {
-      name: c.homeowner_association.name,
-    },
-    caseId: c.prefixed_dossier_id,
-  }));
+  return cases
+    .filter(
+      (c) =>
+        !isBefore(new Date(c.created), new Date(MINIMUM_ZWD_CASE_CREATED_DATE))
+    )
+    .map((c) => ({
+      id: String(c.id),
+      title: 'VvE verduurzamingsadvies',
+      steps: [],
+      link: {
+        to: themaConfig.BRP.detailPageVvE.route.path,
+        title: 'Bekijk details',
+      },
+      displayStatus: c.status,
+      dateStart: c.created,
+      formattedDateStart: defaultDateFormat(c.created),
+      dateUpdated: c.updated,
+      datePublished: c.updated,
+      status: c.status,
+      adviceType: c.advice_type,
+      homeownerAssociation: {
+        name: c.homeowner_association.name,
+      },
+      caseId: c.prefixed_dossier_id,
+    }));
 }
 
 function transformZwdVvEResponse(
