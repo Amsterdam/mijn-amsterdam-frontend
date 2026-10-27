@@ -47,3 +47,7 @@ export function getOpenstaandBedragFormatted(
 
   return displayAmount(totalOpen);
 }
+
+export function isFactuurInTermijnen(factuur: AfisFactuurFrontend): boolean {
+  return factuur.status === 'factuur-in-termijnen';
+}

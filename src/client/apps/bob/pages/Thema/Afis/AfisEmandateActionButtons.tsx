@@ -9,7 +9,10 @@ import {
 } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
-import { getOpenstaandBedragFormatted } from './Afis-helpers.ts';
+import {
+  getOpenstaandBedragFormatted,
+  isFactuurInTermijnen,
+} from './Afis-helpers.ts';
 import {
   displayPropsStopMandate,
   EMANDATE_STATUS_ACTIVE,
@@ -208,6 +211,8 @@ function ApiDeactivateButton({
         ...factuur,
         amountOriginalFormatted: getOpenstaandBedragFormatted(factuur),
       }));
+    const hasFactuurInTermijnen =
+      facturenByEmandateId.some(isFactuurInTermijnen);
 
     return {
       title: 'Stopzetten incassomachtiging',
@@ -229,19 +234,20 @@ function ApiDeactivateButton({
                 facturen betalen. Hieronder ziet u welke facturen niet meer
                 automatisch van uw rekening worden afgeschreven.
               </Paragraph>
-              <Paragraph className="ams-mb-s">
-                Heeft u een erfpachtfactuur die in delen is opgesplitst? Dan
-                moet u het resterende bedrag in één keer betalen. Wilt u toch in
-                delen betalen? Vraag dan een betalingsregeling aan via{' '}
-                <Link
-                  rel="noreferrer"
-                  href="mailto:debiteurenadministratie@amsterdam.nl"
-                >
-                  debiteurenadministratie@amsterdam.nl
-                </Link>
-                .
-                <br />
-              </Paragraph>
+              {hasFactuurInTermijnen && (
+                <Paragraph className="ams-mb-s">
+                  Een factuur die in termijnen wordt betaald, betaalt u dan in
+                  één keer. Het bedrag in de lijst is wat nog openstaat. Wilt u
+                  toch in delen betalen? Vraag dan een betalingsregeling aan via{' '}
+                  <Link
+                    rel="noreferrer"
+                    href="mailto:debiteurenadministratie@amsterdam.nl"
+                  >
+                    debiteurenadministratie@amsterdam.nl
+                  </Link>
+                  .
+                </Paragraph>
+              )}
               <DataView
                 className={styles.FacturenAlertDataView}
                 items={facturenByEmandateId}
