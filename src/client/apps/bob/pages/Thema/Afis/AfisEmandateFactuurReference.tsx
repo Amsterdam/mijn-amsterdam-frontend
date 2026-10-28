@@ -46,11 +46,13 @@ export function useAfisEmandateFactuurReferenceContent(
   factuur?: AfisFactuurFrontend
 ): null | Array<RowSet | Row> {
   const { eMandates } = useAfisEMandatesApi();
-  const hasDeelBetalingen = isFactuurInTermijnen(factuur);
 
   if (!eMandateId || !factuur) {
     return null;
   }
+
+  const hasDeelBetalingen = isFactuurInTermijnen(factuur);
+
   let eMandate: AfisEMandateFrontend | null =
     eMandates.find(
       (mandate) =>
