@@ -27,7 +27,6 @@ import {
   oidcSessionStore,
   openIdAuth,
 } from '../../../auth/auth-config.ts';
-import { signDevelopmentToken } from '../../../auth/auth-helpers-development.ts';
 import { getAuth } from '../../../auth/auth-helpers.ts';
 import type {
   AuthenticatedRequest,
@@ -38,6 +37,7 @@ import * as envHelpers from '../../../helpers/env.ts';
 import { privateNetworkAuthContextMiddleware } from '../../../routing/app-router-private-auth-context.ts';
 import {
   createDevelopmentSession,
+  createDevelopmentSessionData,
   ensureOIDCAuthContextStub,
 } from '../../../routing/route-helpers-oidc.ts';
 import * as serviceController from '../../controller.ts';
@@ -577,19 +577,9 @@ describe('amsapp-auth-route-handlers', () => {
       }
 
       const initial = await restoreSession();
-      const idToken = await signDevelopmentToken(
-        'digid',
-        DIGID_PROFILE.id,
-        DIGID_PROFILE.sid
-      );
-      Object.assign(initial.req[OIDC_SESSION_COOKIE_NAME]!, {
-        ...DIGID_PROFILE,
-        TMASessionID: DIGID_PROFILE.sid,
-        id_token: idToken,
-        access_token: idToken,
-        token_type: 'Bearer',
-        expires_at: startedAtSeconds + rollingDurationSeconds,
-      });
+      const sessionData = await createDevelopmentSessionData(DIGID_PROFILE);
+      const idToken = sessionData.id_token;
+      Object.assign(initial.req[OIDC_SESSION_COOKIE_NAME]!, sessionData);
       await initial.res.end();
       const signedCookie = initial.res.cookie.mock.calls[0][1] as string;
       const sessionId = signedCookie.slice(0, signedCookie.lastIndexOf('.'));

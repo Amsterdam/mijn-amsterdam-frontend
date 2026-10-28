@@ -1,7 +1,7 @@
 import { promisify } from 'node:util';
 
 import { differenceInSeconds } from 'date-fns';
-import type { Request } from 'express';
+import type { Request, RequestHandler, Response } from 'express';
 import type { AccessToken } from 'express-openid-connect';
 
 import { IS_AP } from '../../universal/config/env.ts';
@@ -10,6 +10,8 @@ import {
   OIDC_SESSION_MAX_AGE_SECONDS,
   OIDC_SESSION_ABSOLUTE_MAX_AGE_SECONDS,
   oidcSessionStore,
+  oidcConfigDigid,
+  openIdAuth,
   TOKEN_ID_ATTRIBUTE,
 } from '../auth/auth-config.ts';
 import { signDevelopmentToken } from '../auth/auth-helpers-development.ts';
@@ -17,6 +19,46 @@ import { getAuth } from '../auth/auth-helpers.ts';
 import type { AuthProfile, MaSession } from '../auth/auth-types.ts';
 import { ONE_SECOND_MS } from '../config/app.ts';
 import { featureToggle } from '../services/amsapp/auth/amsapp-auth-service-config.ts';
+
+let oidcAuthHandler: RequestHandler | undefined;
+
+export async function ensureOIDCAuthContext(req: Request, res: Response) {
+  if (Object.hasOwn(req, OIDC_SESSION_COOKIE_NAME)) {
+    return;
+  }
+  oidcAuthHandler ??= openIdAuth({
+    ...oidcConfigDigid,
+    session: {
+      ...oidcConfigDigid.session,
+      store: oidcSessionStore,
+    },
+  });
+  await new Promise<void>((resolve, reject) => {
+    oidcAuthHandler!(req, res, (error?: unknown) =>
+      error ? reject(error) : resolve()
+    );
+  });
+}
+
+export async function createDevelopmentSessionData(profile: AuthProfile) {
+  if (IS_AP) {
+    throw new Error('Development sessions are only available in local/test');
+  }
+  const token = await signDevelopmentToken(
+    profile.authMethod,
+    profile.id,
+    'xx-tma-sid-xx'
+  );
+  return {
+    ...profile,
+    TMASessionID: 'xx-tma-sid-xx',
+    id_token: token,
+    access_token: token,
+    token_type: 'Bearer',
+    expires_at:
+      Math.floor(Date.now() / ONE_SECOND_MS) + OIDC_SESSION_MAX_AGE_SECONDS,
+  };
+}
 
 async function storeDevelopmentSession(
   token: string,

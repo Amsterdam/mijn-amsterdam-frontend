@@ -1,12 +1,10 @@
-import { promisify } from 'node:util';
-
-import type { CookieOptions, Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import UID from 'uid-safe';
 
 import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes.ts';
 import {
-  ensureOIDCAuthContextStub,
-  createDevelopmentSession,
+  ensureOIDCAuthContext,
+  createDevelopmentSessionData,
 } from './route-helpers-oidc.ts';
 import {
   createBFFRouter,
@@ -17,16 +15,16 @@ import {
 } from './route-helpers.ts';
 import { apiSuccessResult } from '../../universal/helpers/api.ts';
 import { getReturnToUrl } from '../auth/auth-after-redirect-returnto.ts';
+import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config.ts';
 import {
-  OIDC_SESSION_COOKIE_NAME,
-  OIDC_SESSION_MAX_AGE_SECONDS,
-  oidcSessionStore,
-} from '../auth/auth-config.ts';
-import { getAuth, hasSessionCookie } from '../auth/auth-helpers.ts';
+  destroySession,
+  getAuth,
+  hasSessionCookie,
+} from '../auth/auth-helpers.ts';
 import { authRoutes } from '../auth/auth-routes.ts';
 import type { AuthProfile } from '../auth/auth-types.ts';
 import { type AuthenticatedRequest } from '../auth/auth-types.ts';
-import { MA_FRONTEND_URL, ONE_SECOND_MS } from '../config/app.ts';
+import { MA_FRONTEND_URL } from '../config/app.ts';
 import { getFromEnv, getValueFromEnvByKey } from '../helpers/env.ts';
 import {
   type TestUserAccount,
@@ -47,13 +45,11 @@ function getPredefinedRedirectUrl<
 }
 
 authRouterDevelopment.use(async (req, res, next) => {
-  if (hasSessionCookie(req)) {
-    try {
-      await ensureOIDCAuthContextStub(req);
-    } catch (_error) {
-      res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-      return sendUnauthorized(res);
-    }
+  try {
+    await ensureOIDCAuthContext(req, res);
+  } catch (_error) {
+    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+    return sendUnauthorized(res);
   }
   next();
 });
@@ -117,25 +113,9 @@ authRouterDevelopment.get(
       sid: sessionID,
     };
 
-    const appSessionCookieValue = await createDevelopmentSession(
-      req,
-      authProfile
-    );
-
-    const appSessionCookieOptions: CookieOptions = {
-      expires: new Date(
-        new Date().getTime() + OIDC_SESSION_MAX_AGE_SECONDS * ONE_SECOND_MS
-      ),
-      httpOnly: true,
-      path: '/',
-      secure: false, // Not secure for local development
-      sameSite: 'lax',
-    };
-
-    res.cookie(
-      OIDC_SESSION_COOKIE_NAME,
-      appSessionCookieValue,
-      appSessionCookieOptions
+    Object.assign(
+      (req as AuthenticatedRequest)[OIDC_SESSION_COOKIE_NAME]!,
+      await createDevelopmentSessionData(authProfile)
     );
 
     const redirectUrl = getPredefinedRedirectUrl(req);
@@ -289,15 +269,7 @@ authRouterDevelopment.get(
     authRoutes.AUTH_LOGOUT_DIGID,
   ],
   async (req, res) => {
-    const sessionToken = req.cookies?.[OIDC_SESSION_COOKIE_NAME];
-    if (sessionToken) {
-      await promisify(oidcSessionStore.destroy.bind(oidcSessionStore))(
-        sessionToken
-      );
-    }
-    res.clearCookie(OIDC_SESSION_COOKIE_NAME, {
-      path: '/',
-    });
+    destroySession(req, res);
     const returnTo = getReturnToUrl(req.query, MA_FRONTEND_URL);
     return res.redirect(returnTo);
   }

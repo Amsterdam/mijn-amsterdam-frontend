@@ -1,5 +1,4 @@
 import { createHash } from 'node:crypto';
-import { promisify } from 'node:util';
 
 import { HttpStatusCode } from 'axios';
 import type { NextFunction, Request, Response } from 'express';
@@ -15,7 +14,6 @@ import {
   getByAuthorizationCode,
   markLoginReady,
 } from './amsapp-auth-store.ts';
-import { IS_AP } from '../../../../universal/config/env.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -24,7 +22,6 @@ import { RETURNTO_AMSAPP_AUTH_CALLBACK } from '../../../auth/auth-after-redirect
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
-  oidcSessionStore,
 } from '../../../auth/auth-config.ts';
 import { destroySession, getAuth } from '../../../auth/auth-helpers.ts';
 import { authRoutes } from '../../../auth/auth-routes.ts';
@@ -242,12 +239,6 @@ export async function handleAmsAppAuthLogout(req: Request, res: Response) {
     return sendTokenExchangeError(res, apiResponseErrors.INVALID_INPUT);
   }
 
-  if (!IS_AP) {
-    // The session is removed from the oidcSessionStore in oidc middleware after destroySession. Because local/test does not use the oidc middleware, the session would not be removed. Therefore we delete it here
-    await promisify(oidcSessionStore.destroy.bind(oidcSessionStore))(
-      sessionToken
-    );
-  }
   destroySession(req, res);
 
   return res.send(
