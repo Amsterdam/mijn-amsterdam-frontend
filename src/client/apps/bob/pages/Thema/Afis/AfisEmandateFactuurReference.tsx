@@ -1,6 +1,9 @@
 import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { getOpenstaandBedragFormatted } from './Afis-helpers.ts';
+import {
+  getOpenstaandBedragFormatted,
+  isFactuurInTermijnen,
+} from './Afis-helpers.ts';
 import {
   EMANDATE_STATUS_ACTIVE,
   type AfisFactuurFrontend,
@@ -43,6 +46,8 @@ export function useAfisEmandateFactuurReferenceContent(
   factuur?: AfisFactuurFrontend
 ): null | Array<RowSet | Row> {
   const { eMandates } = useAfisEMandatesApi();
+  const hasDeelBetalingen = isFactuurInTermijnen(factuur);
+
   if (!eMandateId || !factuur) {
     return null;
   }
@@ -103,13 +108,17 @@ export function useAfisEmandateFactuurReferenceContent(
               <li>Rekeningnummer: staat bovenaan de factuur.</li>
               <li>Mededeling: factuurnummer invullen.</li>
             </ul>
-            <br />
-            Wilt u toch in delen betalen? Vraag dan een betalingsregeling aan
-            via:{' '}
-            <Link href="mailto:debiteurenadministratie@amsterdam.nl">
-              debiteurenadministratie@amsterdam.nl
-            </Link>
-            .
+            {hasDeelBetalingen && (
+              <>
+                <br />
+                Wilt u toch in delen betalen? Vraag dan een betalingsregeling
+                aan via:{' '}
+                <Link href="mailto:debiteurenadministratie@amsterdam.nl">
+                  debiteurenadministratie@amsterdam.nl
+                </Link>
+                .
+              </>
+            )}
           </Paragraph>
         </Alert>
       ),
