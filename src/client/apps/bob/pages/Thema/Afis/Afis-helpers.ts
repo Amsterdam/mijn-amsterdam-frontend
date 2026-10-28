@@ -51,3 +51,23 @@ export function getOpenstaandBedragFormatted(
 export function isFactuurInTermijnen(factuur: AfisFactuurFrontend): boolean {
   return factuur.status === 'factuur-in-termijnen';
 }
+
+export function getFirstOpenTermijnFactuurDateFormatted(
+  factuur: AfisFactuurFrontend
+): AfisFactuurFrontend['paymentDueDateFormatted'] {
+  const openTermijnen =
+    factuur.termijnen?.filter((termijn) => termijn.debtClearingDate === null) ??
+    [];
+
+  if (!openTermijnen.length) {
+    return factuur.paymentDueDateFormatted;
+  }
+
+  const [firstOpenTermijnFactuur] = [...openTermijnen].sort(
+    (a, b) =>
+      new Date(a.paymentDueDate).getTime() -
+      new Date(b.paymentDueDate).getTime()
+  );
+
+  return firstOpenTermijnFactuur.paymentDueDateFormatted;
+}

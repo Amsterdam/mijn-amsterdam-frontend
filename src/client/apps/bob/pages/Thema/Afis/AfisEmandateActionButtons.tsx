@@ -10,6 +10,7 @@ import {
 import classNames from 'classnames';
 
 import {
+  getFirstOpenTermijnFactuurDateFormatted,
   getOpenstaandBedragFormatted,
   isFactuurInTermijnen,
 } from './Afis-helpers.ts';
@@ -210,6 +211,8 @@ function ApiDeactivateButton({
       .map((factuur) => ({
         ...factuur,
         amountOriginalFormatted: getOpenstaandBedragFormatted(factuur),
+        paymentDueDateFormatted:
+          getFirstOpenTermijnFactuurDateFormatted(factuur),
       }));
     const hasFactuurInTermijnen =
       facturenByEmandateId.some(isFactuurInTermijnen);
