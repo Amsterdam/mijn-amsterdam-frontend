@@ -1,15 +1,20 @@
+import { differenceInSeconds } from 'date-fns';
 import type { Request, RequestHandler, Response } from 'express';
+import type { AccessToken } from 'express-openid-connect';
 import { decodeJwt } from 'jose';
 
 import { IS_AP } from '../../universal/config/env.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
+  OIDC_SESSION_MAX_AGE_SECONDS,
   oidcSessionStore,
   oidcConfigDigid,
   openIdAuth,
+  TOKEN_ID_ATTRIBUTE,
 } from '../auth/auth-config.ts';
 import { signDevelopmentToken } from '../auth/auth-helpers-development.ts';
-import type { AuthProfile } from '../auth/auth-types.ts';
+import type { AuthProfile, MaSession } from '../auth/auth-types.ts';
+import { ONE_SECOND_MS } from '../config/app.ts';
 
 let oidcAuthHandler: RequestHandler | undefined;
 
