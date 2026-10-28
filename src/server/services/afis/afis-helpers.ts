@@ -93,4 +93,3 @@ export function formatBusinessPartnerId(
 ): string {
   return businessPartnerId.padStart(10, '0');
 }
-
