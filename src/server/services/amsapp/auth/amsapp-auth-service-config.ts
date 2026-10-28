@@ -42,5 +42,5 @@ export const apiResponseErrors = {
 
 export const AMSAPP_AUTH_DEEP_LINK_BASE = 'amsterdam://mijn-amsterdam';
 
-const TWO_MINUTES_MS = 2 * 60 * 1000;
-export const AUTHORIZATION_CODE_TTL_MS = TWO_MINUTES_MS;
+const FIFTEEN_MINUTES_MS = 15 * 60 * 1000;
+export const AUTHORIZATION_CODE_TTL_MS = FIFTEEN_MINUTES_MS;

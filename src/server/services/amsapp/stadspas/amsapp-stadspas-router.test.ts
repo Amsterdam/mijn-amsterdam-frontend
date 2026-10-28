@@ -2,6 +2,8 @@ import { HttpStatusCode } from 'axios';
 
 import { forTesting } from './amsapp-stadspas-route-handlers.ts';
 import {
+  createDevelopmentSessionMock,
+  getOidcSessionMock,
   remoteApi,
   RequestMock,
   ResponseMock,
@@ -10,9 +12,7 @@ import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../../universal/helpers/api.ts';
-import { OIDC_SESSION_COOKIE_NAME } from '../../../auth/auth-config.ts';
 import type { AuthProfile } from '../../../auth/auth-types.ts';
-import { createDevelopmentSession } from '../../../routing/route-helpers-oidc.ts';
 import * as gpass from '../../hli/stadspas-gpass-service.ts';
 import type { Stadspas } from '../../hli/stadspas-types.ts';
 import * as stadspas from '../../hli/stadspas.ts';
@@ -193,16 +193,11 @@ describe('hli/router-external-consumer', async () => {
         },
       });
 
-      const reqMock = RequestMock.new().setCookies({
-        [OIDC_SESSION_COOKIE_NAME]: await createDevelopmentSession(
-          RequestMock.new().get(),
-          USER_PROFILE
-        ),
-      });
-      const req = reqMock.get();
-      const resMock = ResponseMock.new();
+      const sessionToken = await createDevelopmentSessionMock(USER_PROFILE);
+      const { req, res: resMock } = await getOidcSessionMock(sessionToken);
 
       await forTesting.sendAdministratienummerEncryptedResponse(req, resMock);
+      await resMock.end();
 
       expect(resMock.send).toHaveBeenCalledWith({
         status: 'OK',

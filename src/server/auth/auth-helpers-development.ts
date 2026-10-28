@@ -34,7 +34,7 @@ async function signDevelopmentToken_(
     const accessToken = await new jose.SignJWT(data)
       .setProtectedHeader({ alg })
       .setIssuedAt()
-      .setExpirationTime('2h')
+      .setExpirationTime('8h')
       .sign(await getPrivateKeyForDevelopment());
     return accessToken;
   } catch (err) {

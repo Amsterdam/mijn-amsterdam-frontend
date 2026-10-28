@@ -82,7 +82,7 @@ export const oidcConfigDigid: ConfigParams = {
 export const oidcConfigEherkenning: ConfigParams = {
   ...oidcConfigBase,
   clientID: getFromEnv('BFF_OIDC_CLIENT_ID_EHERKENNING', true),
-  afterCallback: async (req, res, session) => {
+  afterCallback: async (_req, _res, session) => {
     return {
       ...session,
       TMASessionID: session.sid,

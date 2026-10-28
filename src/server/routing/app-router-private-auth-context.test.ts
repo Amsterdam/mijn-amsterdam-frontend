@@ -8,8 +8,13 @@ import {
   AMSAPP_SESSION_TOKEN_HEADER,
   privateNetworkAuthContextMiddleware,
 } from './app-router-private-auth-context.ts';
-import { createDevelopmentSession } from './route-helpers-oidc.ts';
-import { RequestMock, ResponseMock } from '../../testing/utils.ts';
+import {
+  createDevelopmentSessionMock,
+  createOidcResponseMock,
+  getOidcSessionMock,
+  RequestMock,
+  ResponseMock,
+} from '../../testing/utils.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
@@ -19,7 +24,7 @@ import {
 import { getAuth } from '../auth/auth-helpers.ts';
 import { authRoutes } from '../auth/auth-routes.ts';
 import type { AuthProfile } from '../auth/auth-types.ts';
-import { ONE_MINUTE_MS, ONE_SECOND_MS } from '../config/app.ts';
+import { ONE_MINUTE_SECONDS, ONE_SECOND_MS } from '../config/app.ts';
 
 const DIGID_PROFILE: AuthProfile = {
   sid: 'e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
@@ -46,20 +51,15 @@ function createPrivateAuthRequest(headers: Record<string, string>) {
 }
 
 describe('app-router-private-auth-context', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     vi.resetAllMocks();
-    await promisify(oidcSessionStore.destroy.bind(oidcSessionStore))(
-      Buffer.from(JSON.stringify(DIGID_PROFILE)).toString('base64')
-    );
+    MockDate.set('2026-01-01T12:00:00Z');
   });
 
   afterEach(() => MockDate.reset());
 
   it('uses x-amsapp-session-token as __MA-appSession cookie', async () => {
-    const sessionToken = await createDevelopmentSession(
-      RequestMock.new().get(),
-      DIGID_PROFILE
-    );
+    const sessionToken = await createDevelopmentSessionMock(DIGID_PROFILE);
 
     const req = createPrivateAuthRequest({
       [AMSAPP_SESSION_TOKEN_HEADER]: sessionToken,
@@ -110,10 +110,7 @@ describe('app-router-private-auth-context', () => {
   });
 
   it('does not authenticate a deleted session', async () => {
-    const sessionToken = await createDevelopmentSession(
-      RequestMock.new().get(),
-      DIGID_PROFILE
-    );
+    const sessionToken = await createDevelopmentSessionMock(DIGID_PROFILE);
 
     await promisify(oidcSessionStore.destroy.bind(oidcSessionStore))(
       sessionToken
@@ -134,17 +131,12 @@ describe('app-router-private-auth-context', () => {
   });
 
   it('invalidates the app credential when the local browser logs out', async () => {
-    const sessionToken = await createDevelopmentSession(
-      RequestMock.new().get(),
-      DIGID_PROFILE
-    );
-    const req = createPrivateAuthRequest({});
+    const sessionToken = await createDevelopmentSessionMock(DIGID_PROFILE);
+    const { req, res } = await getOidcSessionMock(sessionToken);
     Object.assign(req, {
       method: 'GET',
       url: authRoutes.AUTH_LOGOUT,
-      cookies: { [OIDC_SESSION_COOKIE_NAME]: sessionToken },
     });
-    const res = ResponseMock.new();
     await new Promise<void>((resolve, reject) => {
       res.redirect.mockImplementation(() => {
         resolve();
@@ -154,6 +146,7 @@ describe('app-router-private-auth-context', () => {
         reject(error ?? new Error('Logout route not handled'))
       );
     });
+    await res.end();
     expect(
       await promisify(oidcSessionStore.get.bind(oidcSessionStore))(sessionToken)
     ).toBeFalsy();
@@ -168,11 +161,8 @@ describe('app-router-private-auth-context', () => {
   });
 
   it('does not authenticate an expired session', async () => {
-    const sessionToken = await createDevelopmentSession(
-      RequestMock.new().get(),
-      DIGID_PROFILE
-    );
-    MockDate.set(Date.now() + OIDC_SESSION_MAX_AGE_SECONDS * 1000);
+    const sessionToken = await createDevelopmentSessionMock(DIGID_PROFILE);
+    MockDate.set(Date.now() + OIDC_SESSION_MAX_AGE_SECONDS * ONE_SECOND_MS);
     const req = createPrivateAuthRequest({
       [AMSAPP_SESSION_TOKEN_HEADER]: sessionToken,
     });
@@ -185,30 +175,34 @@ describe('app-router-private-auth-context', () => {
   });
 
   it('renews active sessions without exceeding the absolute lifetime', async () => {
-    MockDate.set('2026-01-01T12:00:00Z');
-    const sessionToken = await createDevelopmentSession(
-      RequestMock.new().get(),
-      DIGID_PROFILE
-    );
+    const sessionToken = await createDevelopmentSessionMock(DIGID_PROFILE);
     const readSession = promisify(oidcSessionStore.get.bind(oidcSessionStore));
     const initial = await readSession(sessionToken);
 
-    MockDate.set(Date.now() + 14 * ONE_MINUTE_MS);
+    const ONE_MINUTE_BEFORE_EXPIRY_SECONDS =
+      OIDC_SESSION_MAX_AGE_SECONDS - ONE_MINUTE_SECONDS;
+    MockDate.set(
+      Date.now() + ONE_MINUTE_BEFORE_EXPIRY_SECONDS * ONE_SECOND_MS
+    );
     const req = createPrivateAuthRequest({
       [AMSAPP_SESSION_TOKEN_HEADER]: sessionToken,
     });
     const next = vi.fn();
-    await privateNetworkAuthContextMiddleware(req, ResponseMock.new(), next);
+    const res = createOidcResponseMock();
+    await privateNetworkAuthContextMiddleware(req, res, next);
     expect(next).toHaveBeenCalledWith();
     expect(getAuth(req)?.profile.id).toBe(DIGID_PROFILE.id);
+    await res.end();
     const renewed = await readSession(sessionToken);
     expect(renewed!.header.iat).toBe(initial!.header.iat);
-    expect(renewed!.header.exp).toBe(initial!.header.exp + 14 * 60);
+    expect(renewed!.header.exp).toBe(
+      initial!.header.exp + ONE_MINUTE_BEFORE_EXPIRY_SECONDS
+    );
 
     renewed!.header.iat =
       Math.floor(Date.now() / ONE_SECOND_MS) -
       OIDC_SESSION_ABSOLUTE_MAX_AGE_SECONDS +
-      60;
+      ONE_MINUTE_SECONDS;
     await promisify(oidcSessionStore.set.bind(oidcSessionStore))(
       sessionToken,
       renewed!
@@ -216,17 +210,15 @@ describe('app-router-private-auth-context', () => {
     const lastRequest = createPrivateAuthRequest({
       [AMSAPP_SESSION_TOKEN_HEADER]: sessionToken,
     });
-    await privateNetworkAuthContextMiddleware(
-      lastRequest,
-      ResponseMock.new(),
-      next
-    );
+    const lastResponse = createOidcResponseMock();
+    await privateNetworkAuthContextMiddleware(lastRequest, lastResponse, next);
+    await lastResponse.end();
     const capped = await readSession(sessionToken);
     expect(capped!.header.exp).toBe(
-      Math.floor(Date.now() / ONE_SECOND_MS) + 60
+      Math.floor(Date.now() / ONE_SECOND_MS) + ONE_MINUTE_SECONDS
     );
 
-    MockDate.set(Date.now() + 60 * ONE_SECOND_MS);
+    MockDate.set(Date.now() + ONE_MINUTE_SECONDS * ONE_SECOND_MS);
     const expiredRequest = createPrivateAuthRequest({
       [AMSAPP_SESSION_TOKEN_HEADER]: sessionToken,
     });
@@ -244,20 +236,13 @@ describe('app-router-private-auth-context', () => {
       featureToggle: { amsAppUniversalAuthIsActive: false },
     }));
     try {
-      const { ensureOIDCAuthContextStub } =
-        await import('./route-helpers-oidc.ts');
       const { privateNetworkAuthContextMiddleware: middleware } =
         await import('./app-router-private-auth-context.ts');
-      const sessionToken = Buffer.from(JSON.stringify(DIGID_PROFILE)).toString(
-        'base64'
-      );
-      const browserReq = RequestMock.new()
-        .setCookies({
-          [OIDC_SESSION_COOKIE_NAME]: sessionToken,
-        })
-        .get();
-      await ensureOIDCAuthContextStub(browserReq);
+      const sessionToken = await createDevelopmentSessionMock(DIGID_PROFILE);
+      const { req: browserReq, res: browserRes } =
+        await getOidcSessionMock(sessionToken);
       expect(getAuth(browserReq)?.profile.id).toBe(DIGID_PROFILE.id);
+      await browserRes.end();
 
       const appReq = createPrivateAuthRequest({
         [AMSAPP_SESSION_TOKEN_HEADER]: sessionToken,

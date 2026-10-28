@@ -18,7 +18,13 @@ import {
   getByLoginId,
   markLoginReady,
 } from './amsapp-auth-store.ts';
-import { RequestMock, ResponseMock } from '../../../../testing/utils.ts';
+import {
+  createDevelopmentSessionMock,
+  createOidcResponseMock,
+  getOidcSessionMock,
+  RequestMock,
+  ResponseMock,
+} from '../../../../testing/utils.ts';
 import { RETURNTO_AMSAPP_AUTH_CALLBACK } from '../../../auth/auth-after-redirect-returnto.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
@@ -28,18 +34,11 @@ import {
   openIdAuth,
 } from '../../../auth/auth-config.ts';
 import { getAuth } from '../../../auth/auth-helpers.ts';
-import type {
-  AuthenticatedRequest,
-  AuthProfile,
-} from '../../../auth/auth-types.ts';
+import type { AuthProfile } from '../../../auth/auth-types.ts';
 import { ONE_MINUTE_MS, ONE_SECOND_MS } from '../../../config/app.ts';
 import * as envHelpers from '../../../helpers/env.ts';
 import { privateNetworkAuthContextMiddleware } from '../../../routing/app-router-private-auth-context.ts';
-import {
-  createDevelopmentSession,
-  createDevelopmentSessionData,
-  ensureOIDCAuthContextStub,
-} from '../../../routing/route-helpers-oidc.ts';
+import { createDevelopmentSessionData } from '../../../routing/route-helpers-oidc.ts';
 import * as serviceController from '../../controller.ts';
 
 const DIGID_PROFILE: AuthProfile = {
@@ -441,20 +440,12 @@ describe('amsapp-auth-route-handlers', () => {
   });
 
   test('logout deletes the backing session and prevents header and browser replay', async () => {
-    const sessionToken = await createDevelopmentSession(
-      RequestMock.new().get(),
-      DIGID_PROFILE
-    );
-    const req = RequestMock.new()
-      .setCookies({
-        [OIDC_SESSION_COOKIE_NAME]: sessionToken,
-      })
-      .get();
-    await ensureOIDCAuthContextStub(req);
+    const sessionToken = await createDevelopmentSessionMock(DIGID_PROFILE);
+    const { req, res: resMock } = await getOidcSessionMock(sessionToken);
     expect(getAuth(req)?.profile.id).toBe(DIGID_PROFILE.id);
 
-    const resMock = ResponseMock.new();
     await handleAmsAppAuthLogout(req, resMock);
+    await resMock.end();
 
     expect(resMock.send).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -483,13 +474,10 @@ describe('amsapp-auth-route-handlers', () => {
     ).toBeFalsy();
     expect(getAuth(req)).toBeNull();
 
-    const browserReq = RequestMock.new()
-      .setCookies({
-        [OIDC_SESSION_COOKIE_NAME]: sessionToken,
-      })
-      .get();
-    await ensureOIDCAuthContextStub(browserReq);
+    const { req: browserReq, res: browserRes } =
+      await getOidcSessionMock(sessionToken);
     expect(getAuth(browserReq)).toBeNull();
+    await browserRes.end();
 
     const headerReq = RequestMock.new().get();
     headerReq.headers = { 'x-amsapp-session-token': sessionToken };
@@ -497,7 +485,7 @@ describe('amsapp-auth-route-handlers', () => {
     const next = vi.fn();
     await privateNetworkAuthContextMiddleware(
       headerReq,
-      ResponseMock.new(),
+      createOidcResponseMock(),
       next
     );
     expect(next).toHaveBeenCalledWith();
@@ -546,34 +534,7 @@ describe('amsapp-auth-route-handlers', () => {
         },
       });
       async function restoreSession(cookieValue = '') {
-        const req = RequestMock.new()
-          .setCookies({
-            [OIDC_SESSION_COOKIE_NAME]: cookieValue,
-          })
-          .get() as AuthenticatedRequest;
-        Object.assign(req, {
-          method: 'GET',
-          url: '/session',
-          headers: {
-            cookie: `${OIDC_SESSION_COOKIE_NAME}=${encodeURIComponent(cookieValue)}`,
-          },
-          get: (name: string) =>
-            name === 'cookie' ? req.headers.cookie : undefined,
-        });
-        const res = Object.assign(ResponseMock.new(), {
-          cookie: vi.fn(),
-          writeHead: vi.fn(),
-        });
-        res.end = vi.fn(() => {
-          res.writeHead(200);
-          return res;
-        });
-        await new Promise<void>((resolve, reject) => {
-          oidcMiddleware(req, res, (error?: unknown) =>
-            error ? reject(error) : resolve()
-          );
-        });
-        return { req, res };
+        return getOidcSessionMock(cookieValue, oidcMiddleware);
       }
 
       const initial = await restoreSession();

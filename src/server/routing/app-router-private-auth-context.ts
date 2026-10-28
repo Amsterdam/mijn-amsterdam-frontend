@@ -21,6 +21,8 @@ function appendSessionCookieHeader(req: Request, sessionToken: string) {
 
 async function applyAmsAppSessionTokenAsCookie(req: Request) {
   const token = getHeaderValue(req, AMSAPP_SESSION_TOKEN_HEADER);
+  // Revisit precedence if header-first auth is necessary: replace the raw
+  // session cookie too, since OIDC reparses it and keeps the first duplicate.
   if (!token || req.cookies?.[OIDC_SESSION_COOKIE_NAME]) {
     return;
   }
