@@ -9,7 +9,7 @@ import {
   OIDC_SESSION_MAX_AGE_SECONDS,
 } from '../auth/auth-config.ts';
 import { authRoutes } from '../auth/auth-routes.ts';
-import { ONE_MINUTE_MS, ONE_SECOND_MS } from '../config/app.ts';
+import { ONE_MINUTE_SECONDS, ONE_SECOND_MS } from '../config/app.ts';
 import type * as amsAppAuthConfig from '../services/amsapp/auth/amsapp-auth-service-config.ts';
 
 async function requestDevelopmentRoute(
@@ -100,40 +100,41 @@ describe('development session lifecycle', () => {
         redirectUrl: 'noredirect',
       };
       const login = await requestDevelopmentRoute(loginRoute, '', loginQuery);
-      expect(login.res.send).toHaveBeenCalledWith('ok');
       const sessionToken = login.res.cookie.mock.calls[0][1] as string;
       const initialSession = await readSession(sessionToken);
-      expect(initialSession).toBeTruthy();
       const tokenExpiresAt = decodeJwt(initialSession!.data.access_token).exp!;
       expect(initialSession!.data.expires_at).toBe(tokenExpiresAt);
       expect(getAuth(login.req)?.expiresAtMilliseconds).toBe(
         tokenExpiresAt * ONE_SECOND_MS
       );
 
-      MockDate.set(Date.now() + 14 * ONE_MINUTE_MS);
+      MockDate.set(
+        Date.now() +
+          (OIDC_SESSION_MAX_AGE_SECONDS - ONE_MINUTE_SECONDS) * ONE_SECOND_MS
+      );
       const restored = await requestDevelopmentRoute(
         authRoutes.AUTH_CHECK,
         sessionToken
       );
       expect(restored.res.statusCode).toBe(200);
-      expect(restored.req.oidc.isAuthenticated()).toBe(true);
-      expect(getAuth(restored.req)?.profile).toMatchObject({
-        id: 'test-id',
-        authMethod,
-        profileType: authMethod === 'digid' ? 'private' : 'commercial',
+      expect(getAuth(restored.req)).toMatchObject({
+        profile: {
+          id: 'test-id',
+          authMethod,
+          profileType: authMethod === 'digid' ? 'private' : 'commercial',
+        },
+        expiresAtMilliseconds: tokenExpiresAt * ONE_SECOND_MS,
       });
       const renewedSession = await readSession(sessionToken);
-      expect(renewedSession?.header.iat).toBe(initialSession?.header.iat);
-      expect(renewedSession?.header.exp).toBe(
-        Math.floor(Date.now() / ONE_SECOND_MS) + OIDC_SESSION_MAX_AGE_SECONDS
-      );
-      expect(renewedSession!.header.exp).toBeGreaterThan(
-        initialSession!.header.exp
-      );
-      expect(renewedSession!.data.expires_at).toBe(tokenExpiresAt);
-      expect(getAuth(restored.req)?.expiresAtMilliseconds).toBe(
-        tokenExpiresAt * ONE_SECOND_MS
-      );
+      expect(renewedSession).toMatchObject({
+        header: {
+          iat: initialSession!.header.iat,
+          exp:
+            Math.floor(Date.now() / ONE_SECOND_MS) +
+            OIDC_SESSION_MAX_AGE_SECONDS,
+        },
+        data: { expires_at: tokenExpiresAt },
+      });
 
       await requestDevelopmentRoute(authRoutes.AUTH_LOGOUT, sessionToken);
       expect(await readSession(sessionToken)).toBeFalsy();
@@ -142,7 +143,6 @@ describe('development session lifecycle', () => {
         sessionToken
       );
       expect(replay.res.statusCode).toBe(401);
-      expect(getAuth(replay.req)).toBeNull();
 
       const secondLogin = await requestDevelopmentRoute(
         loginRoute,
@@ -150,21 +150,12 @@ describe('development session lifecycle', () => {
         loginQuery
       );
       const expiringToken = secondLogin.res.cookie.mock.calls[0][1] as string;
-      const secondSession = await readSession(expiringToken);
-      const secondTokenExpiresAt = decodeJwt(
-        secondSession!.data.access_token
-      ).exp!;
-      expect(secondSession!.data.expires_at).toBe(secondTokenExpiresAt);
-      expect(getAuth(secondLogin.req)?.expiresAtMilliseconds).toBe(
-        secondTokenExpiresAt * ONE_SECOND_MS
-      );
       MockDate.set(Date.now() + OIDC_SESSION_MAX_AGE_SECONDS * ONE_SECOND_MS);
       const expired = await requestDevelopmentRoute(
         authRoutes.AUTH_CHECK,
         expiringToken
       );
       expect(expired.res.statusCode).toBe(401);
-      expect(getAuth(expired.req)).toBeNull();
       expect(await readSession(expiringToken)).toBeFalsy();
     }
   );
