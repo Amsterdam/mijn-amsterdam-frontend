@@ -8,9 +8,9 @@ import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
   oidcSessionStore,
-  oidcConfigDigid,
   openIdAuth,
   TOKEN_ID_ATTRIBUTE,
+  oidcConfigBase,
 } from '../auth/auth-config.ts';
 import { signDevelopmentToken } from '../auth/auth-helpers-development.ts';
 import type { AuthProfile, MaSession } from '../auth/auth-types.ts';
@@ -23,9 +23,9 @@ export async function ensureOIDCAuthContext(req: Request, res: Response) {
     return;
   }
   oidcAuthHandler ??= openIdAuth({
-    ...oidcConfigDigid,
+    ...oidcConfigBase,
     session: {
-      ...oidcConfigDigid.session,
+      ...oidcConfigBase.session,
       store: oidcSessionStore,
     },
   });
