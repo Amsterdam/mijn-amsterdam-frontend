@@ -87,11 +87,7 @@ authRouterDevelopment.get(
       authMethod === 'digid' ? 'MA_TEST_ACCOUNTS' : 'MA_TEST_ACCOUNTS_EH';
 
     if (!req.query.username) {
-      return sendRenderedTestAccountTable(
-        res,
-        authMethod,
-        req.query as Record<string, string | undefined>
-      );
+      return sendRenderedTestAccountTable(res, authMethod, req.query);
     }
 
     const profileId = getValueFromEnvByKey(envKey, req.query.username);
@@ -113,8 +109,16 @@ authRouterDevelopment.get(
       sid: sessionID,
     };
 
+    const session =
+      OIDC_SESSION_COOKIE_NAME in req
+        ? req[OIDC_SESSION_COOKIE_NAME]
+        : undefined;
+    if (!session || typeof session !== 'object') {
+      throw new Error('OIDC session has not been initialized');
+    }
+
     Object.assign(
-      (req as AuthenticatedRequest)[OIDC_SESSION_COOKIE_NAME]!,
+      session,
       await createDevelopmentSessionData(authProfile)
     );
 

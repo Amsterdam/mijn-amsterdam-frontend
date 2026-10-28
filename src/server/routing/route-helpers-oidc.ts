@@ -1,20 +1,15 @@
-import { differenceInSeconds } from 'date-fns';
 import type { Request, RequestHandler, Response } from 'express';
-import type { AccessToken } from 'express-openid-connect';
 import { decodeJwt } from 'jose';
 
 import { IS_AP } from '../../universal/config/env.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
-  OIDC_SESSION_MAX_AGE_SECONDS,
   oidcSessionStore,
   oidcConfigDigid,
   openIdAuth,
-  TOKEN_ID_ATTRIBUTE,
 } from '../auth/auth-config.ts';
 import { signDevelopmentToken } from '../auth/auth-helpers-development.ts';
-import type { AuthProfile, MaSession } from '../auth/auth-types.ts';
-import { ONE_SECOND_MS } from '../config/app.ts';
+import type { AuthProfile } from '../auth/auth-types.ts';
 
 let oidcAuthHandler: RequestHandler | undefined;
 
@@ -46,7 +41,9 @@ function extractExpiresAtFromToken(token: string) {
 
 export async function createDevelopmentSessionData(profile: AuthProfile) {
   if (IS_AP) {
-    throw new Error('Development sessions are only available in local/test');
+    throw new Error(
+      'Development sessions are not available in this environment'
+    );
   }
   const token = await signDevelopmentToken(
     profile.authMethod,
