@@ -3,6 +3,7 @@ import type { ParsedQs } from 'qs';
 import { getReturnToUrlZaakStatus } from './auth-helpers.ts';
 import { authRoutes } from './auth-routes.ts';
 import { ZAAK_STATUS_ROUTE } from '../../client/apps/bob/pages/ZaakStatus/ZaakStatus-config.ts';
+import { featureToggle } from '../config/feature-toggles.ts';
 import {
   generateFullApiUrlBFF,
   generateMaFrontendUrl,
@@ -52,6 +53,9 @@ export function getReturnToUrl(
         }
       );
     case RETURNTO_AMSAPP_AUTH_CALLBACK:
+      if (!featureToggle['AMSAPP.universalAuth']) {
+        return defaultReturnTo_;
+      }
       return generateFullApiUrlBFF(
         amsappAuthRoutes.public.AMSAPP_AUTH_CALLBACK,
         {
