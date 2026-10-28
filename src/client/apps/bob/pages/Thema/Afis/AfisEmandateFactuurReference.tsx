@@ -1,6 +1,7 @@
 import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
 import {
+  getFirstOpenTermijnFactuurDateFormatted,
   getOpenstaandBedragFormatted,
   isFactuurInTermijnen,
 } from './Afis-helpers.ts';
@@ -103,12 +104,12 @@ export function useAfisEmandateFactuurReferenceContent(
           severity="warning"
         >
           <Paragraph>
-            Maak het bedrag van {getOpenstaandBedragFormatted(factuur)} over
-            onder vermelding van de gegevens op uw factuur.
+            Maak het bedrag van {getOpenstaandBedragFormatted(factuur)} vóór de
+            vervaldatum {getFirstOpenTermijnFactuurDateFormatted(factuur)}.
             <br />
             <ul>
-              <li>Rekeningnummer: staat bovenaan de factuur.</li>
-              <li>Mededeling: factuurnummer invullen.</li>
+              <li>Het rekeningnummer dat bovenaan de factuur staat.</li>
+              <li>Vermeld het factuurnummer dat op de factuur staat.</li>
             </ul>
             {hasDeelBetalingen && (
               <>
