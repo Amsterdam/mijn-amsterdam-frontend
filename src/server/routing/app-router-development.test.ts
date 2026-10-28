@@ -1,5 +1,6 @@
 import { promisify } from 'node:util';
 
+import { decodeJwt } from 'jose';
 import MockDate from 'mockdate';
 
 import { createOidcResponseMock, RequestMock } from '../../testing/utils.ts';
@@ -103,6 +104,11 @@ describe('development session lifecycle', () => {
       const sessionToken = login.res.cookie.mock.calls[0][1] as string;
       const initialSession = await readSession(sessionToken);
       expect(initialSession).toBeTruthy();
+      const tokenExpiresAt = decodeJwt(initialSession!.data.access_token).exp!;
+      expect(initialSession!.data.expires_at).toBe(tokenExpiresAt);
+      expect(getAuth(login.req)?.expiresAtMilliseconds).toBe(
+        tokenExpiresAt * ONE_SECOND_MS
+      );
 
       MockDate.set(Date.now() + 14 * ONE_MINUTE_MS);
       const restored = await requestDevelopmentRoute(
@@ -124,6 +130,10 @@ describe('development session lifecycle', () => {
       expect(renewedSession!.header.exp).toBeGreaterThan(
         initialSession!.header.exp
       );
+      expect(renewedSession!.data.expires_at).toBe(tokenExpiresAt);
+      expect(getAuth(restored.req)?.expiresAtMilliseconds).toBe(
+        tokenExpiresAt * ONE_SECOND_MS
+      );
 
       await requestDevelopmentRoute(authRoutes.AUTH_LOGOUT, sessionToken);
       expect(await readSession(sessionToken)).toBeFalsy();
@@ -140,6 +150,14 @@ describe('development session lifecycle', () => {
         loginQuery
       );
       const expiringToken = secondLogin.res.cookie.mock.calls[0][1] as string;
+      const secondSession = await readSession(expiringToken);
+      const secondTokenExpiresAt = decodeJwt(
+        secondSession!.data.access_token
+      ).exp!;
+      expect(secondSession!.data.expires_at).toBe(secondTokenExpiresAt);
+      expect(getAuth(secondLogin.req)?.expiresAtMilliseconds).toBe(
+        secondTokenExpiresAt * ONE_SECOND_MS
+      );
       MockDate.set(Date.now() + OIDC_SESSION_MAX_AGE_SECONDS * ONE_SECOND_MS);
       const expired = await requestDevelopmentRoute(
         authRoutes.AUTH_CHECK,

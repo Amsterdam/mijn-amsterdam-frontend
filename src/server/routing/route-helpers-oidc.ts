@@ -1,6 +1,7 @@
 import { differenceInSeconds } from 'date-fns';
 import type { Request, RequestHandler, Response } from 'express';
 import type { AccessToken } from 'express-openid-connect';
+import { decodeJwt } from 'jose';
 
 import { IS_AP } from '../../universal/config/env.ts';
 import {
@@ -35,6 +36,14 @@ export async function ensureOIDCAuthContext(req: Request, res: Response) {
   });
 }
 
+function extractExpiresAtFromToken(token: string) {
+  const { exp: expiresAt } = decodeJwt(token);
+  if (typeof expiresAt !== 'number') {
+    throw new Error('Development token is missing its expiry');
+  }
+  return expiresAt;
+}
+
 export async function createDevelopmentSessionData(profile: AuthProfile) {
   if (IS_AP) {
     throw new Error('Development sessions are only available in local/test');
@@ -44,14 +53,16 @@ export async function createDevelopmentSessionData(profile: AuthProfile) {
     profile.id,
     'xx-tma-sid-xx'
   );
+  if (!token) {
+    throw new Error('Failed to create development token');
+  }
   return {
     ...profile,
     TMASessionID: 'xx-tma-sid-xx',
     id_token: token,
     access_token: token,
     token_type: 'Bearer',
-    expires_at:
-      Math.floor(Date.now() / ONE_SECOND_MS) + OIDC_SESSION_MAX_AGE_SECONDS,
+    expires_at: extractExpiresAtFromToken(token),
   };
 }
 

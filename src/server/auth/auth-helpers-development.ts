@@ -1,6 +1,5 @@
 import type { AccessToken } from 'express-openid-connect';
 import * as jose from 'jose';
-import memoizee from 'memoizee';
 
 import {
   OIDC_TOKEN_AUD_ATTRIBUTE_VALUE,
@@ -19,7 +18,7 @@ export async function getPrivateKeyForDevelopment() {
   return jose.importJWK(DEV_JWK_PRIVATE);
 }
 
-async function signDevelopmentToken_(
+export async function signDevelopmentToken(
   authMethod: AuthProfile['authMethod'],
   userID: string,
   sessionID: SessionID
@@ -34,12 +33,10 @@ async function signDevelopmentToken_(
     const accessToken = await new jose.SignJWT(data)
       .setProtectedHeader({ alg })
       .setIssuedAt()
-      .setExpirationTime('8h')
+      .setExpirationTime('2h')
       .sign(await getPrivateKeyForDevelopment());
     return accessToken;
   } catch (err) {
     logger.error(err);
   }
 }
-
-export const signDevelopmentToken = memoizee(signDevelopmentToken_);
