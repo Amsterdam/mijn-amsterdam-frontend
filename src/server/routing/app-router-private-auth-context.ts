@@ -43,9 +43,9 @@ export async function privateNetworkAuthContextMiddleware(
   try {
     await applyAmsAppSessionTokenAsCookie(req);
 
-    const sessionTokenFromUpdatedCookie =
+    const sessionTokenFromCookie =
       req.cookies?.[OIDC_SESSION_COOKIE_NAME];
-    if (!sessionTokenFromUpdatedCookie) {
+    if (!sessionTokenFromCookie) {
       return next();
     }
 
