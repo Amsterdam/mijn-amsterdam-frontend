@@ -105,7 +105,7 @@ export function useAfisEmandateFactuurReferenceContent(
         >
           <Paragraph>
             Maak het bedrag van {getOpenstaandBedragFormatted(factuur)} vóór de
-            vervaldatum {getFirstOpenTermijnFactuurDateFormatted(factuur)}.
+            vervaldatum {getFirstOpenTermijnFactuurDateFormatted(factuur)} over.
             <br />
             <ul>
               <li>Het rekeningnummer dat bovenaan de factuur staat.</li>

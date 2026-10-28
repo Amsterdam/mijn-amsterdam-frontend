@@ -45,7 +45,7 @@ export function getOpenstaandBedragFormatted(
     .filter((termijn) => termijn.debtClearingDate === null)
     .reduce((sum, termijn) => sum + parseFloat(termijn.amountOriginal), 0);
 
-  return displayAmount(totalOpen);
+  return `€ ${displayAmount(totalOpen)}`;
 }
 
 export function isFactuurInTermijnen(factuur: AfisFactuurFrontend): boolean {
