@@ -15,6 +15,16 @@ import {
   MEER_INFORMATIE,
 } from '../wmo/status-line-items/wmo-generic.ts';
 
+export function getMeerInformatieDate(
+  aanvraag: ZorgnedAanvraagTransformed
+): string {
+  const actie = aanvraag?.procesAanvraagActies?.find(
+    (actie) => actie.omschrijving.toLowerCase() === 'verzoek om meer informatie'
+  );
+
+  return actie?.datum ?? '';
+}
+
 const ONTVANGEN = {
   ...AANVRAAG,
   status: 'Ontvangen',
@@ -34,7 +44,9 @@ const BEHANDELING_INDICATIEADVISEUR = {
   substeps: [
     {
       ...MEER_INFORMATIE,
-      datePublished: '',
+      datePublished: (aanvraag: ZorgnedAanvraagTransformed) =>
+        getMeerInformatieDate(aanvraag),
+      hideDatePublished: true,
       isActive: (aanvraag: ZorgnedAanvraagTransformed) =>
         hasMeerInformatieNodig(aanvraag) && !hasDecision(aanvraag),
       description: `
