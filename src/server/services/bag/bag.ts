@@ -54,6 +54,7 @@ export async function fetchBAG(
     huisnummer: sourceAddress.huisnummer,
     postcode: sourceAddress.postcode,
     huisletter: sourceAddress.huisletter || undefined,
+    huisnummertoevoeging: sourceAddress.huisnummertoevoeging || undefined,
   };
 
   const config = getApiConfig('BAG', {
