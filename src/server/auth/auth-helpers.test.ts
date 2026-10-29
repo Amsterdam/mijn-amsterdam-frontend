@@ -1,5 +1,6 @@
 import { millisecondsToSeconds } from 'date-fns';
 import type { Request } from 'express';
+import MockDate from 'mockdate';
 
 import { getReturnToUrl } from './auth-after-redirect-returnto.ts';
 import {
@@ -14,22 +15,45 @@ import {
   EH_ATTR_PRIMARY_ID,
   EH_ATTR_PRIMARY_ID_LEGACY,
   OIDC_SESSION_COOKIE_NAME,
+  OIDC_SESSION_MAX_AGE_SECONDS,
 } from './auth-config.ts';
 import {
   createLogoutHandler,
   getAuthProfile,
+  getSessionExpiresAt,
   hasSessionCookie,
   isSessionCookieName,
 } from './auth-helpers.ts';
 import type { MaSession, TokenData } from './auth-types.ts';
 import {
+  createDevelopmentSessionMock,
   getAuthProfileAndToken,
   getReqMockWithOidc,
   ResponseMock,
 } from '../../testing/utils.ts';
-import { ONE_MINUTE_SECONDS } from '../config/app.ts';
+import { ONE_MINUTE_SECONDS, ONE_SECOND_MS } from '../config/app.ts';
 
 describe('auth-helpers', () => {
+  describe('getSessionExpiresAt', () => {
+    afterEach(() => MockDate.reset());
+
+    test('returns the stored session expiry in milliseconds', async () => {
+      const startedAt = Date.parse('2026-01-01T12:00:00Z');
+      MockDate.set(startedAt);
+      const sessionToken = await createDevelopmentSessionMock(
+        getAuthProfileAndToken('private').profile
+      );
+
+      expect(await getSessionExpiresAt(sessionToken)).toBe(
+        startedAt + OIDC_SESSION_MAX_AGE_SECONDS * ONE_SECOND_MS
+      );
+    });
+
+    test('returns null when the session is missing', async () => {
+      expect(await getSessionExpiresAt('missing-session-token')).toBeNull();
+    });
+  });
+
   test('isSessionCookieName', () => {
     let name = '__MA-appSession';
     expect(isSessionCookieName(name)).toBe(true);

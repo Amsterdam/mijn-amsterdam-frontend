@@ -19,13 +19,13 @@ import {
   apiSuccessResult,
 } from '../../../../universal/helpers/api.ts';
 import { RETURNTO_AMSAPP_AUTH_CALLBACK } from '../../../auth/auth-after-redirect-returnto.ts';
+import { OIDC_SESSION_COOKIE_NAME } from '../../../auth/auth-config.ts';
 import {
-  OIDC_SESSION_COOKIE_NAME,
-  OIDC_SESSION_MAX_AGE_SECONDS,
-} from '../../../auth/auth-config.ts';
-import { destroySession, getAuth } from '../../../auth/auth-helpers.ts';
+  destroySession,
+  getAuth,
+  getSessionExpiresAt,
+} from '../../../auth/auth-helpers.ts';
 import { authRoutes } from '../../../auth/auth-routes.ts';
-import { ONE_SECOND_MS } from '../../../config/app.ts';
 import { AMSAPP_SESSION_TOKEN_HEADER } from '../../../routing/app-router-private-auth-context.ts';
 import { handleServicesAll } from '../../../routing/app-router-protected.ts';
 import {
@@ -208,7 +208,14 @@ export async function handleAmsAppAuthTokenExchange(
   const consumedRecord = await consumeByAuthorizationCode(
     result.data.authorizationCode
   );
-  if (!consumedRecord?.maSessionCookieValue) {
+  const sessionExpiresAt = consumedRecord?.maSessionCookieValue
+    ? await getSessionExpiresAt(consumedRecord.maSessionCookieValue)
+    : null;
+  if (
+    !consumedRecord?.maSessionCookieValue ||
+    sessionExpiresAt === null ||
+    sessionExpiresAt <= Date.now()
+  ) {
     trackEvent('amsapp-auth-exchange-failure', {
       reason: apiResponseErrors.AUTHORIZATION_CODE_NOT_FOUND_OR_EXPIRED.code,
     });
@@ -223,7 +230,7 @@ export async function handleAmsAppAuthTokenExchange(
       session: {
         name: OIDC_SESSION_COOKIE_NAME,
         value: consumedRecord.maSessionCookieValue,
-        expiresAt: Date.now() + OIDC_SESSION_MAX_AGE_SECONDS * ONE_SECOND_MS,
+        expiresAt: sessionExpiresAt,
       },
     })
   );

@@ -249,14 +249,14 @@ describe('amsapp-auth-route-handlers', () => {
   });
 
   test('token exchange validates PKCE and returns MA session cookie value', async () => {
+    const startedAt = Date.parse('2026-01-01T12:00:00Z');
+    MockDate.set(startedAt);
+    const sessionToken = await createDevelopmentSessionMock(DIGID_PROFILE);
     const codeVerifier = 'test';
     const codeChallenge = 'n4bQgYhMfWWaL-qgxVrQFaO_TxsrC4Is0V1sFbDwCgg'; // createHash('sha256').update(codeVerifier).digest('base64url');
 
     const loginId = await createLoginAttempt(codeChallenge);
-    const readyRecord = await markLoginReady(
-      loginId,
-      'ma-session-cookie-value'
-    );
+    const readyRecord = await markLoginReady(loginId, sessionToken);
 
     const req = {
       body: {
@@ -274,7 +274,7 @@ describe('amsapp-auth-route-handlers', () => {
         content: expect.objectContaining({
           session: expect.objectContaining({
             name: OIDC_SESSION_COOKIE_NAME,
-            value: 'ma-session-cookie-value',
+            value: sessionToken,
             expiresAt: expect.any(Number),
           }),
         }),
@@ -283,6 +283,44 @@ describe('amsapp-auth-route-handlers', () => {
 
     expect(await getByLoginId(loginId)).toBeNull();
   });
+
+  test.each(['missing', 'expired'])(
+    'token exchange rejects a %s backing session',
+    async (sessionState) => {
+      const startedAt = Date.parse('2026-01-01T12:00:00Z');
+      MockDate.set(startedAt);
+      const sessionToken =
+        sessionState === 'expired'
+          ? await createDevelopmentSessionMock(DIGID_PROFILE)
+          : 'missing-session-token';
+      MockDate.set(startedAt + OIDC_SESSION_MAX_AGE_SECONDS * ONE_SECOND_MS);
+      const codeVerifier = 'mobile-app-code-verifier';
+      const codeChallenge = createHash('sha256')
+        .update(codeVerifier)
+        .digest('base64url');
+      const loginId = await createLoginAttempt(codeChallenge);
+      const readyRecord = await markLoginReady(loginId, sessionToken);
+      const req = {
+        body: {
+          authorizationCode: readyRecord?.authorizationCode,
+          codeVerifier,
+        },
+      } as Request;
+      const resMock = ResponseMock.new();
+
+      await handleAmsAppAuthTokenExchange(req, resMock);
+
+      expect(resMock.status).toHaveBeenCalledWith(400);
+      expect(resMock.send).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: 'ERROR',
+          message: expect.stringContaining(
+            apiResponseErrors.AUTHORIZATION_CODE_NOT_FOUND_OR_EXPIRED.message
+          ),
+        })
+      );
+    }
+  );
 
   test('token exchange fails for PKCE mismatch', async () => {
     const codeVerifier = 'mobile-app-code-verifier';
