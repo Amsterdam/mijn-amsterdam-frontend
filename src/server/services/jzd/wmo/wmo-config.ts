@@ -2,6 +2,8 @@ import { parseISO } from 'date-fns';
 
 import type { BeschikkingsResultaat } from '../../zorgned/zorgned-types.ts';
 
+export const ACTIE_VERZOEK_MEER_INFORMATIE = 'verzoek om meer informatie';
+
 export const ZORGNED_WMO_API_CONFIG_KEY = 'ZORGNED_WMO' as const;
 export const DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH = 'Verzoek:' as const; // Documents starting with this token correspond to the 'meer informatie' step.
 export const DOCUMENT_TITLE_BESLUIT_STARTS_WITH = 'Besluit:' as const; // Documents starting with this token correspond to the 'besluit' step.

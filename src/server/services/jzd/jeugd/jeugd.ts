@@ -15,8 +15,10 @@ import type {
   ZaakAanvraagDetail,
 } from '../../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../../auth/auth-types.ts';
-import { getLatestStatus } from '../../../helpers/zaken.ts';
-import { getLatestStatusDate } from '../../../statusline.ts';
+import {
+  getLatestStatus,
+  getLatestStatusDate,
+} from '../../../helpers/zaken.ts';
 import { fetchAanvragen } from '../../zorgned/zorgned-service.ts';
 import { getStatusLineItems } from '../../zorgned/zorgned-status-line-items.ts';
 import type {
