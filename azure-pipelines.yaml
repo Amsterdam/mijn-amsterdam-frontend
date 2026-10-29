@@ -1,4 +1,4 @@
-name: '[$(dtapName)] - $(Build.DefinitionName)-$(Build.SourceBranchName)-$(Build.BuildId)'
+name: '[$(dtapName)-$(Build.BuildId)] - $(Build.DefinitionName) - $(Build.SourceBranchName)'
 
 trigger:
   batch: true
