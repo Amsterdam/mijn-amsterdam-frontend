@@ -6,7 +6,7 @@ import type { Adres } from '../brp/brp-types.ts';
 const ADDRESS = {
   straatnaam: 'straatje',
   huisnummer: 25,
-  woonplaatsNaam: 'Amsterdam',
+  postcode: '1111AA',
 } as unknown as Adres;
 
 const bagAddress = {
