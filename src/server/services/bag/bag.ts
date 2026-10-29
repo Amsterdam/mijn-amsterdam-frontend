@@ -38,11 +38,15 @@ export async function fetchBAG(
   sourceAddress: Adres | null
 ): Promise<ApiResponse<BAGLocation>> {
   if (
-    !sourceAddress?.straatnaam ||
+    !sourceAddress ||
+    !sourceAddress.straatnaam ||
     !sourceAddress.huisnummer ||
     !sourceAddress.postcode
   ) {
-    return apiErrorResult('Could not query BAG, no address supplied.', null);
+    return apiErrorResult(
+      'Could not query BAG, no complete address supplied.',
+      null
+    );
   }
 
   const params: BAGQueryParams = {

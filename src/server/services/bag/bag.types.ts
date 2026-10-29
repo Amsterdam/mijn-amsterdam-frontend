@@ -42,7 +42,6 @@ export type BAGQueryParams = {
   huisnummer?: string;
   huisletter?: string;
   huisnummertoevoeging?: string;
-  woonplaatsNaam?: string;
   identificatie?: BAGID;
 };
 
