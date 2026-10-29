@@ -11,6 +11,7 @@ import type {
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../../zorgned/zorgned-types.ts';
 import {
+  ACTIE_VERZOEK_MEER_INFORMATIE,
   DOCUMENT_PGB_BESLUIT,
   DOCUMENT_TITLE_BESLUIT_STARTS_WITH,
   DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH,
@@ -78,7 +79,7 @@ export function getDocumentMeerInformatieDate(documents: GenericDocument[]) {
 function hasMeerInformatieActie(aanvraag: ZorgnedAanvraagTransformed) {
   return (aanvraag.procesAanvraagActieOmschrijvingen ?? []).some((actie) => {
     const normalizedActie = actie.trim().toLowerCase();
-    return normalizedActie === 'verzoek om meer informatie';
+    return normalizedActie === ACTIE_VERZOEK_MEER_INFORMATIE;
   });
 }
 

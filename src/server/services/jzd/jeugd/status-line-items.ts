@@ -14,12 +14,14 @@ import {
   isDecisionStatusActive,
   MEER_INFORMATIE,
 } from '../wmo/status-line-items/wmo-generic.ts';
+import { ACTIE_VERZOEK_MEER_INFORMATIE } from '../wmo/wmo-config.ts';
 
 export function getMeerInformatieDate(
   aanvraag: ZorgnedAanvraagTransformed
 ): string {
   const actie = aanvraag?.procesAanvraagActies?.find(
-    (actie) => actie.omschrijving.toLowerCase() === 'verzoek om meer informatie'
+    (actie) =>
+      actie.omschrijving.toLowerCase() === ACTIE_VERZOEK_MEER_INFORMATIE
   );
 
   return actie?.datum ?? '';
