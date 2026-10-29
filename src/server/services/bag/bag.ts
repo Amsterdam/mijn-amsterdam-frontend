@@ -40,8 +40,7 @@ export async function fetchBAG(
   if (
     !sourceAddress?.straatnaam ||
     !sourceAddress.huisnummer ||
-    !sourceAddress.postcode ||
-    !sourceAddress?.woonplaatsNaam
+    !sourceAddress.postcode
   ) {
     return apiErrorResult('Could not query BAG, no address supplied.', null);
   }
@@ -51,7 +50,6 @@ export async function fetchBAG(
     huisnummer: sourceAddress.huisnummer,
     postcode: sourceAddress.postcode,
     huisletter: sourceAddress.huisletter || undefined,
-    woonplaatsNaam: sourceAddress.woonplaatsNaam,
   };
 
   const config = getApiConfig('BAG', {

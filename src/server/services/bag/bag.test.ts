@@ -7,7 +7,6 @@ const ADDRESS = {
   straatnaam: 'straatje',
   huisnummer: 25,
   postcode: '1111AA',
-  woonplaatsNaam: 'Amsterdam',
 } as unknown as Adres;
 
 const bagAddress = {
