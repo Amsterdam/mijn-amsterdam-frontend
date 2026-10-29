@@ -59,9 +59,7 @@ function getErrorRenderProps(loginId: string, error: ApiError): RenderProps {
     error,
     identifier: loginId,
     appHref: `${AMSAPP_AUTH_DEEP_LINK_BASE}/mislukt?errorMessage=${encodeURIComponent(error.message)}&errorCode=${error.code}`,
-    // If the Digid login failed we don't want the user to be redirected to logout. In this case we can open the app directly.
-    // If the error is not related to the Digid login, the user must always be redirected to logout. See the amsapp-open-app.pug for logic on how we handle the redirection to logout vs opening the app directly.
-    redirectToLogout: error.code !== apiResponseErrors.DIGID_AUTH.code,
+    redirectToLogout: false,
   };
 }
 
