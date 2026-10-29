@@ -274,8 +274,8 @@ function transformFactuur(
   const eMandateId = invoice.SEPAMandate?.toString() ?? null;
   const amountOriginal = getInvoiceAmount(invoice);
   const amountPayed = getInvoiceAmount(invoice, deelbetaling);
-  const amountPayedFormatted = `€ ${amountPayed ? displayAmount(parseFloat(amountPayed.toFixed(2))) : '0,00'}`;
-  const amountOriginalFormatted = `€ ${amountOriginal ? displayAmount(parseFloat(amountOriginal.toFixed(2))) : '0,00'}`;
+  const amountPayedFormatted = `€${amountPayed ? displayAmount(parseFloat(amountPayed.toFixed(2))) : '0,00'}`;
+  const amountOriginalFormatted = `€${amountOriginal ? displayAmount(parseFloat(amountOriginal.toFixed(2))) : '0,00'}`;
 
   let debtClearingDate = null;
   let debtClearingDateFormatted = null;
