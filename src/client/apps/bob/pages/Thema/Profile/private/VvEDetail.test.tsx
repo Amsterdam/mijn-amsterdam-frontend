@@ -89,17 +89,12 @@ describe('VvEDetail', () => {
       within(table)
         .getAllByRole('columnheader')
         .map((header) => header.textContent)
-    ).toEqual(['Aanvraag', 'Zaaknummer', 'Startdatum', 'Status']);
+    ).toEqual(['Aanvraag', 'Zaaknummer', 'Startdatum']);
 
     expect(
       within(row)
         .getAllByRole('cell')
         .map((cell) => cell.textContent)
-    ).toEqual([
-      'VvE verduurzamingsadvies',
-      'ZWD-101',
-      '1 mei 2026',
-      'In behandeling',
-    ]);
+    ).toEqual(['VvE verduurzamingsadvies', 'ZWD-101', '1 mei 2026']);
   });
 });
