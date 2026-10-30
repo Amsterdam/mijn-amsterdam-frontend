@@ -1,3 +1,4 @@
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { RETURNTO_AMSAPP_STADSPAS_APP_LANDING } from '../../auth/auth-after-redirect-returnto.ts';
 import { authRoutes } from '../../auth/auth-routes.ts';
 import { MA_FRONTEND_URL } from '../../config/app.ts';
@@ -7,6 +8,7 @@ import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 export const nonce = getFromEnv('BFF_AMSAPP_NONCE')!; // This nonce is whitelisted in the CSP config
 export const baseRenderProps = {
   nonce,
+  showIdentifier: !IS_PRODUCTION,
   urlToImage: `${MA_FRONTEND_URL}/img/logo-amsterdam.svg`,
   urlToCSS: `${MA_FRONTEND_URL}/css/amsapp-landing.css`,
   get logoutUrl() {

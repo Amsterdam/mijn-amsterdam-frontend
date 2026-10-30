@@ -35,6 +35,52 @@ import { captureMessage, captureException } from '../../monitoring.ts';
 import { baseRenderProps } from '../amsapp-service-config.ts';
 import type { ApiError, RenderProps } from '../amsapp-types.ts';
 
+export async function sendAdministratienummerResponse(
+  req: Request,
+  res: Response
+) {
+  const authProfileAndToken: AuthProfileAndToken | null = getAuth(req);
+
+  if (
+    !authProfileAndToken ||
+    !authProfileAndToken.profile.id ||
+    authProfileAndToken.profile.profileType !== 'private'
+  ) {
+    return sendBadRequest(
+      res,
+      `ApiError ${apiResponseErrors.DIGID_AUTH.code} - ${apiResponseErrors.DIGID_AUTH.message}`
+    );
+  }
+
+  const administratienummerResponse = await fetchAdministratienummer(
+    authProfileAndToken.profile.id
+  );
+
+  if (
+    administratienummerResponse.status === 'OK' &&
+    administratienummerResponse.content !== null
+  ) {
+    const [administratienummerEncrypted] = encrypt(
+      administratienummerResponse.content
+    );
+
+    return res.send(
+      apiSuccessResult({
+        administratienummerEncrypted,
+      })
+    );
+  }
+
+  if (!administratienummerResponse.content) {
+    return sendBadRequest(
+      res,
+      `ApiError ${apiResponseErrors.ADMINISTRATIENUMMER_NOT_FOUND.code} - ${apiResponseErrors.ADMINISTRATIENUMMER_NOT_FOUND.message}`
+    );
+  }
+
+  return sendResponse(res, administratienummerResponse);
+}
+
 export async function handleAdministratienummerExchange(
   req: Request<{ token: string }>,
   res: Response
@@ -216,7 +262,8 @@ export async function sendStadspasBlockRequest(
 }
 
 export const forTesting = {
-  sendAdministratienummerResponse: handleAdministratienummerExchange,
+  handleAdministratienummerExchange,
+  sendAdministratienummerEncryptedResponse: sendAdministratienummerResponse,
   sendStadspassenResponse,
   sendDiscountTransactionsResponse,
   sendBudgetTransactionsResponse,

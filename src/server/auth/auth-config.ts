@@ -7,10 +7,15 @@ import { BFF_OIDC_BASE_URL, BFF_OIDC_ISSUER_BASE_URL } from './auth-routes.ts';
 import { getSessionStore } from './auth-session-store.ts';
 import type { TokenData } from './auth-types.ts';
 import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
-import { ONE_HOUR_MS, ONE_MINUTE_SECONDS } from '../config/app.ts';
+import {
+  ONE_HOUR_MS,
+  ONE_HOUR_SECONDS,
+  ONE_MINUTE_SECONDS,
+} from '../config/app.ts';
 import { getFromEnv } from '../helpers/env.ts';
 
 export const OIDC_SESSION_MAX_AGE_SECONDS = ONE_MINUTE_SECONDS * 15; // 15 minutes
+export const OIDC_SESSION_ABSOLUTE_MAX_AGE_SECONDS = ONE_HOUR_SECONDS * 24 * 7; // 7 days
 export const OIDC_SESSION_COOKIE_NAME = '__MA-appSession';
 export const OIDC_COOKIE_ENCRYPTION_KEY = `${getFromEnv('BFF_GENERAL_ENCRYPTION_KEY', true, true)}`;
 export const OIDC_ID_TOKEN_EXP = '1 hours'; // Arbitrary, MA wants a token to be valid for a maximum of 1 hours.
@@ -21,6 +26,14 @@ export const OIDC_TOKEN_EXP = ONE_HOUR_MS * 3; // The TMA currently has a token 
 export const openIdAuth = auth;
 
 export const OIDC_SESSIONS_TABLE_NAME = 'oidcsessions';
+
+export const oidcSessionStore = getSessionStore(
+  openIdAuth as typeof expressSession,
+  {
+    tableName: OIDC_SESSIONS_TABLE_NAME,
+    maxAgeSeconds: OIDC_SESSION_MAX_AGE_SECONDS,
+  }
+);
 
 export const oidcConfigBase: ConfigParams = {
   authRequired: false,
@@ -40,13 +53,11 @@ export const oidcConfigBase: ConfigParams = {
   session: {
     rolling: true,
     rollingDuration: OIDC_SESSION_MAX_AGE_SECONDS,
+    absoluteDuration: OIDC_SESSION_ABSOLUTE_MAX_AGE_SECONDS,
     name: OIDC_SESSION_COOKIE_NAME,
     store:
       getFromEnv('MA_APP_MODE', false) !== 'unittest'
-        ? getSessionStore(openIdAuth as typeof expressSession, {
-            tableName: OIDC_SESSIONS_TABLE_NAME,
-            maxAgeSeconds: OIDC_SESSION_MAX_AGE_SECONDS,
-          })
+        ? oidcSessionStore
         : undefined,
   },
   routes: {
@@ -75,7 +86,7 @@ export const oidcConfigDigid: ConfigParams = {
 export const oidcConfigEherkenning: ConfigParams = {
   ...oidcConfigBase,
   clientID: getFromEnv('BFF_OIDC_CLIENT_ID_EHERKENNING', true),
-  afterCallback: async (req, res, session) => {
+  afterCallback: async (_req, _res, session) => {
     return {
       ...session,
       TMASessionID: session.sid,
@@ -123,8 +134,7 @@ export const OIDC_TOKEN_ID_ATTRIBUTE = {
 };
 
 export type TokenIdAttribute =
-  | typeof DIGID_ATTR_PRIMARY
-  | typeof EH_ATTR_PRIMARY_ID;
+  typeof DIGID_ATTR_PRIMARY | typeof EH_ATTR_PRIMARY_ID;
 
 export const TOKEN_ID_ATTRIBUTE: Record<AuthMethod, TokenIdAttribute> = {
   eherkenning: EH_ATTR_PRIMARY_ID,

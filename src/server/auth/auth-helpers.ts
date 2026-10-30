@@ -1,3 +1,5 @@
+import { promisify } from 'node:util';
+
 import type { Request, Response } from 'express';
 import * as jose from 'jose';
 import type { ParsedQs } from 'qs';
@@ -6,6 +8,7 @@ import { getReturnToUrl } from './auth-after-redirect-returnto.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_TOKEN_ID_ATTRIBUTE,
+  oidcSessionStore,
 } from './auth-config.ts';
 import type {
   AuthenticatedRequest,
@@ -84,6 +87,13 @@ export function getAuth(req: Request): AuthProfileAndToken | null {
     profile,
     expiresAtMilliseconds,
   };
+}
+
+export async function getSessionExpiresAt(sessionToken: string) {
+  const session = await promisify(oidcSessionStore.get.bind(oidcSessionStore))(
+    sessionToken
+  );
+  return session ? session.header.exp * ONE_SECOND_MS : null;
 }
 
 export function isSessionCookieName(cookieName: string) {

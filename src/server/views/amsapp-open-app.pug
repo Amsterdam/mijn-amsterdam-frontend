@@ -15,9 +15,10 @@ html(lang="nl")
       h1 Inloggen
       p Open de Amsterdam App om verder te gaan.
 
-      if !error && identifier
+      if showIdentifier
         strong Identifier:&nbsp;
         code #{identifier} &mdash;
+      if !error && identifier
         | &nbsp;Redirecting in&nbsp;
         span(id='redirect-interval-timer') #{redirectTimeout || 0}
         | &nbsp;seconds

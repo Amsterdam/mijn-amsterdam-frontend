@@ -2,6 +2,8 @@ import { HttpStatusCode } from 'axios';
 
 import { forTesting } from './amsapp-stadspas-route-handlers.ts';
 import {
+  createDevelopmentSessionMock,
+  getOidcSessionMock,
   remoteApi,
   RequestMock,
   ResponseMock,
@@ -72,7 +74,7 @@ describe('hli/router-external-consumer', async () => {
 
       const resMock = ResponseMock.new();
 
-      await forTesting.sendAdministratienummerResponse(
+      await forTesting.handleAdministratienummerExchange(
         reqMockWithTokenParams,
         resMock
       );
@@ -96,7 +98,7 @@ describe('hli/router-external-consumer', async () => {
         await createAuthenticatedRequestMock<typeof params>(params);
       const resMock = ResponseMock.new();
 
-      await forTesting.sendAdministratienummerResponse(
+      await forTesting.handleAdministratienummerExchange(
         reqMockWithTokenParams,
         resMock
       );
@@ -116,7 +118,7 @@ describe('hli/router-external-consumer', async () => {
       const resMock = ResponseMock.new();
       const reqMock = RequestMock.new().get<typeof params>();
 
-      await forTesting.sendAdministratienummerResponse(reqMock, resMock);
+      await forTesting.handleAdministratienummerExchange(reqMock, resMock);
 
       const renderSecondArg = resMock.render.mock.calls[0][1];
       expect(renderSecondArg.error).toStrictEqual({
@@ -132,7 +134,7 @@ describe('hli/router-external-consumer', async () => {
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(404);
       const resMock = ResponseMock.new();
 
-      await forTesting.sendAdministratienummerResponse(
+      await forTesting.handleAdministratienummerExchange(
         reqMockWithTokenParams,
         resMock
       );
@@ -151,7 +153,7 @@ describe('hli/router-external-consumer', async () => {
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
       const resMock = ResponseMock.new();
 
-      await forTesting.sendAdministratienummerResponse(
+      await forTesting.handleAdministratienummerExchange(
         reqMockWithTokenParams,
         resMock
       );
@@ -169,7 +171,7 @@ describe('hli/router-external-consumer', async () => {
     test('Unauthorized', async () => {
       const resMock = ResponseMock.new();
 
-      await forTesting.sendAdministratienummerResponse(
+      await forTesting.handleAdministratienummerExchange(
         RequestMock.new().get(),
         resMock
       );
@@ -181,6 +183,43 @@ describe('hli/router-external-consumer', async () => {
       });
       expect(renderSecondArg.appHref).toStrictEqual(
         'amsterdam://stadspas/mislukt?errorMessage=Niet%20ingelogd%20met%20Digid&errorCode=001'
+      );
+    });
+
+    test('Private encrypted administratienummer endpoint uses session cookie - OK', async () => {
+      remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
+        persoon: {
+          clientidentificatie: '123-123',
+        },
+      });
+
+      const sessionToken = await createDevelopmentSessionMock(USER_PROFILE);
+      const { req, res: resMock } = await getOidcSessionMock(sessionToken);
+
+      await forTesting.sendAdministratienummerEncryptedResponse(req, resMock);
+      await resMock.end();
+
+      expect(resMock.send).toHaveBeenCalledWith({
+        status: 'OK',
+        content: {
+          administratienummerEncrypted: 'test-encrypted-id',
+        },
+      });
+    });
+
+    test('Private encrypted administratienummer endpoint - unauthorized without cookie', async () => {
+      const req = RequestMock.new().get();
+      const resMock = ResponseMock.new();
+
+      await forTesting.sendAdministratienummerEncryptedResponse(req, resMock);
+
+      expect(resMock.status).toHaveBeenCalledWith(400);
+      expect(resMock.send).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: 'ERROR',
+          message: 'Bad request: ApiError 001 - Niet ingelogd met Digid',
+          code: 400,
+        })
       );
     });
   });
