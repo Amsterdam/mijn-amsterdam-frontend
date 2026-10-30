@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { create } from 'zustand';
 
 import { useSessionStorage } from './storage.hook.ts';
+import type { AuthProfile } from '../../server/auth/auth-types.ts';
 import { logger } from '../helpers/logging.ts';
 
 const PROFILE_TYPE_STORAGE_KEY = 'profileType';
@@ -23,6 +24,11 @@ try {
 type ProfileTypeStore = {
   profileType: ProfileType;
   setProfileType: (profileType: ProfileType) => void;
+};
+
+type AuthMethodTypeStore = {
+  authMethod: AuthProfile['authMethod'];
+  setAuthMethodType: (authMethod: AuthProfile['authMethod']) => void;
 };
 
 export const useProfileTypeStore = create<ProfileTypeStore>((set) => ({
@@ -55,4 +61,16 @@ export function useProfileType() {
 
 export function useProfileTypeValue(): ProfileType {
   return useProfileTypeStore((state) => state.profileType);
+}
+
+const initialAuthType: AuthProfile['authMethod'] = 'digid';
+
+export const useAuthMethodTypeStore = create<AuthMethodTypeStore>((set) => ({
+  authMethod: initialAuthType,
+  setAuthMethodType: (authMethod: AuthProfile['authMethod']) =>
+    set({ authMethod }),
+}));
+
+export function useAuthMethod() {
+  return useAuthMethodTypeStore();
 }

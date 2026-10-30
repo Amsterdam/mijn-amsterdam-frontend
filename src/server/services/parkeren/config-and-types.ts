@@ -11,6 +11,7 @@ import { type WithDateStart } from '../vergunningen/config-and-types.ts';
 
 export const caseTypeParkeren = {
   GPK: 'GPK',
+  GPKMachtigen: 'GPK Machtigen',
   GPP: 'GPP',
   BZP: 'Parkeerontheffingen Blauwe zone particulieren',
   BZB: 'Parkeerontheffingen Blauwe zone bedrijven',
@@ -65,6 +66,16 @@ export type GPK = DecosZaakBase &
   WithDateEnd &
   WithLocation & {
     caseType: GetCaseType<'GPK'>;
+    cardType: 'driver' | 'passenger';
+    cardNumber: number | null;
+    requestReason: string | null;
+  };
+
+export type GPKMachtigen = DecosZaakBase &
+  WithDateStart &
+  WithDateEnd &
+  WithLocation & {
+    caseType: GetCaseType<'GPKMachtigen'>;
     cardType: 'driver' | 'passenger';
     cardNumber: number | null;
     requestReason: string | null;
@@ -144,6 +155,7 @@ export type EigenParkeerplaatsOpheffen = DecosZaakBase &
 
 export type DecosParkeerVergunning =
   | GPK
+  | GPKMachtigen
   | GPP
   | BZB
   | BZP

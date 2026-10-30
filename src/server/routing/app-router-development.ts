@@ -36,6 +36,22 @@ import { countLoggedInVisit } from '../services/admin/admin-visitors.ts';
 
 export const authRouterDevelopment = createBFFRouter({ id: 'router-dev' });
 
+function getTestAccountsEnvKey(authMethod: AuthProfile['authMethod']) {
+  return authMethod === 'eherkenning'
+    ? 'MA_TEST_ACCOUNTS_EH'
+    : 'MA_TEST_ACCOUNTS';
+}
+
+function getTokenProfileId(
+  authMethod: AuthProfile['authMethod'],
+  profileId: string,
+  gemachtigdVoor?: string
+) {
+  return authMethod === 'digidGemachtigd' && gemachtigdVoor
+    ? gemachtigdVoor
+    : profileId;
+}
+
 export async function createOIDCStub(
   req: Request,
   authProfile: AuthProfile,
@@ -115,8 +131,7 @@ authRouterDevelopment.get(
     res: Response
   ) => {
     const authMethod = req.params.authMethod;
-    const envKey =
-      authMethod === 'digid' ? 'MA_TEST_ACCOUNTS' : 'MA_TEST_ACCOUNTS_EH';
+    const envKey = getTestAccountsEnvKey(authMethod);
     const accounts = getFromEnv(envKey, true, true)!;
 
     res.send(accounts);
@@ -130,6 +145,7 @@ authRouterDevelopment.get(
       { authMethod: AuthProfile['authMethod'] },
       {
         username: string;
+        gemachtigdVoor?: string;
         redirectUrl?: string;
         returnTo?: string;
       }
@@ -137,8 +153,7 @@ authRouterDevelopment.get(
     res: Response
   ) => {
     const authMethod = req.params.authMethod;
-    const envKey =
-      authMethod === 'digid' ? 'MA_TEST_ACCOUNTS' : 'MA_TEST_ACCOUNTS_EH';
+    const envKey = getTestAccountsEnvKey(authMethod);
 
     if (!req.query.username) {
       return sendRenderedTestAccountTable(res, authMethod, req.query);
@@ -157,9 +172,13 @@ authRouterDevelopment.get(
     const SESSION_ID_BYTE_LENGTH = 18;
     const sessionID = UID.sync(SESSION_ID_BYTE_LENGTH);
     const authProfile: AuthProfile = {
-      id: profileId,
+      id: getTokenProfileId(
+        authMethod,
+        profileId,
+        req.query.gemachtigdVoor
+      ),
       authMethod,
-      profileType: authMethod === 'digid' ? 'private' : 'commercial',
+      profileType: authMethod === 'eherkenning' ? 'commercial' : 'private',
       sid: sessionID,
     };
 
@@ -219,8 +238,7 @@ async function sendRenderedTestAccountTable(
   authMethod: AuthMethod,
   queryParams: Record<string, string> = {}
 ) {
-  const envKey =
-    authMethod === 'digid' ? 'MA_TEST_ACCOUNTS' : 'MA_TEST_ACCOUNTS_EH';
+  const envKey = getTestAccountsEnvKey(authMethod);
 
   const testAccountsBase = getTestAccountsBaseFromEnv(envKey);
   let testAccountsOverview: TestUserData | null = null;
@@ -306,10 +324,23 @@ function addLoginLinkToUsernameProp(
   authMethod: AuthProfile['authMethod'],
   queryParams: Record<string, string> = {}
 ) {
-  const authRoute = `${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}`;
+  let authRoute = authRoutes.AUTH_LOGIN_EHERKENNING;
+  if (authMethod === 'digid') {
+    authRoute = authRoutes.AUTH_LOGIN_DIGID;
+  } else if (authMethod === 'digidGemachtigd') {
+    authRoute = authRoutes.AUTH_LOGIN_DIGID_GEMACHTIGD;
+  }
+
   return testAccountData.accounts.map((account) => {
     const authLoginRoute = generateFullApiUrlBFF(authRoute, [
-      { username: account.username, ...queryParams },
+      {
+        username: account.username,
+        ...queryParams,
+        ...(authMethod === 'digidGemachtigd' &&
+        typeof account.gemachtigdVoor === 'string'
+          ? { gemachtigdVoor: account.gemachtigdVoor }
+          : {}),
+      },
     ]);
     return {
       ...account,
@@ -323,6 +354,7 @@ authRouterDevelopment.get(
     authRoutes.AUTH_LOGOUT,
     authRoutes.AUTH_LOGOUT_EHERKENNING,
     authRoutes.AUTH_LOGOUT_DIGID,
+    authRoutes.AUTH_LOGOUT_DIGID_GEMACHTIGD,
   ],
   async (req, res) => {
     res.clearCookie(OIDC_SESSION_COOKIE_NAME, {
@@ -338,6 +370,7 @@ authRouterDevelopment.get(
     authRoutes.AUTH_CHECK,
     authRoutes.AUTH_CHECK_EHERKENNING,
     authRoutes.AUTH_CHECK_DIGID,
+    authRoutes.AUTH_BASE_DIGID_GEMACHTIGD + '/check',
   ],
   async (req, res) => {
     if (hasSessionCookie(req)) {
@@ -358,6 +391,12 @@ authRouterDevelopment.get(
     return sendUnauthorized(res);
   }
 );
+
+export const forTesting = {
+  addLoginLinkToUsernameProp,
+  getTestAccountsEnvKey,
+  getTokenProfileId,
+};
 
 authRouterDevelopment.get(
   authRoutes.AUTH_TOKEN_DATA,

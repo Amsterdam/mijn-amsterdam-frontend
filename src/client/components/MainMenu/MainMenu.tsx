@@ -7,7 +7,10 @@ import { themaConfig } from '../../apps/bob/pages/MyTips/MyTips-config.ts';
 import { myTipsMenuItem } from '../../apps/bob/pages/MyTips/MyTips-routes.ts';
 import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
-import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
+import {
+  useAuthMethod,
+  useProfileTypeValue,
+} from '../../hooks/useProfileType.ts';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { MainHeaderSecondaryLinks } from '../MainHeader/MainHeader.tsx';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
@@ -19,12 +22,26 @@ export function MainMenu() {
   const isPhoneScreen = useSmallScreen();
   const profileType = useProfileTypeValue();
 
+  const { authMethod } = useAuthMethod();
+
   const hasTips =
     themaConfig.profileTypes.includes(profileType) &&
     themaConfig.featureToggle.enableNewTipsDesign;
 
   const visibleCategoryMenuItems = categoryMenuItems.filter((item) => {
     if (item.id === myTipsMenuItem.id && !hasTips) {
+      return false;
+    }
+
+    if (authMethod === 'digidGemachtigd' && item.title !== 'Home') {
+      return false;
+    }
+
+    return true;
+  });
+
+  const visibleThemaItems = items.filter((item) => {
+    if (authMethod === 'digidGemachtigd' && item.title === 'Mijn gegevens') {
       return false;
     }
 
@@ -36,7 +53,7 @@ export function MainMenu() {
       <nav className={styles.NavSection}>
         <Heading level={2}>Thema&apos;s</Heading>
         <div>
-          {items.map((thema) => {
+          {visibleThemaItems.map((thema) => {
             const LinkComponent = thema.to.startsWith('http')
               ? MaLink
               : MaRouterLink;

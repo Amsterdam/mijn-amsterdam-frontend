@@ -11,6 +11,7 @@ import {
   type GPP,
   type TouringcarDagontheffing,
   type TouringcarJaarontheffing,
+  type GPKMachtigen,
 } from './config-and-types.ts';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
 import {
@@ -53,6 +54,45 @@ const GPP: DecosZaakTransformer<GPP> = {
   async afterTransform(vergunning) {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
+  },
+};
+
+const GPKMachtigen: DecosZaakTransformer<GPKMachtigen> = {
+  isActive: true,
+  itemType: 'folders',
+  caseType: caseTypeParkeren.GPKMachtigen,
+  title: 'Europese gehandicaptenparkeerkaart Gemachtigde (GPK)',
+  isVerleend(decosZaak) {
+    return isZaakDecisionVerleend(decosZaak, [
+      'Verleend',
+      'Verleend Bestuurder, niet verleend Passagier',
+      'Verleend Passagier, niet verleend Bestuurder',
+    ]);
+  },
+  transformFields: {
+    ...SELECT_FIELDS_TRANSFORM_BASE,
+    dfunction: transformDecision({
+      Ingetrokken: [
+        'Ingetrokken i.v.m. overlijden of verhuizing',
+        'Ingetrokken verleende GPK wegens overlijden',
+      ],
+      '': ['Nog niet bekend'],
+      'Verleend Bestuurder, niet verleend Passagier': [
+        'Verleend Bestuurder met GPP (niet verleend passagier)',
+        // Decos cuts of the field at 50 chars, we sadly have to anticipate on this
+        'Verleend Bestuurder met GPP (niet verleend passagi',
+      ],
+      Verleend: ['Verleend met GPP', 'Verleend vervangend GPK'],
+      'Verleend Passagier, niet verleend Bestuurder': [
+        'Verleend Passagier met GPP (niet verleend Bestuurder)',
+        // Decos cuts of the field at 50 chars, we sadly have to anticipate on this
+        'Verleend Passagier met GPP (niet verleend Bestuurd',
+      ],
+    }),
+    date6: dateStart,
+    date7: dateEnd,
+    num3: { name: 'cardNumber' },
+    text7: { name: 'cardType' },
   },
 };
 
@@ -332,6 +372,7 @@ const TouringcarJaarontheffing: DecosZaakTransformer<TouringcarJaarontheffing> =
 export const decosCaseToZaakTransformers = {
   [GPP.caseType]: GPP,
   [GPK.caseType]: GPK,
+  [GPKMachtigen.caseType]: GPKMachtigen,
   [BZP.caseType]: BZP,
   [BZB.caseType]: BZB,
   [EigenParkeerplaats.caseType]: EigenParkeerplaats,

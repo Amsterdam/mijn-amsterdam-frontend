@@ -9,6 +9,7 @@ import {
   GeneralInfoRoute,
 } from '../../apps/bob/pages/GeneralInfo/GeneralInfo-routes.ts';
 import { getRedactedClass } from '../../helpers/cobrowse.ts';
+import { useAuthMethod } from '../../hooks/useProfileType.ts';
 import { LoadingContent } from '../LoadingContent/LoadingContent.tsx';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 
@@ -40,13 +41,22 @@ export function MyThemasPanel({
   items = [],
   isLoading = true,
 }: MyThemasPanelProps) {
+  const { authMethod } = useAuthMethod();
+
+  let filteredItems: MyThemasPanelProps['items'];
+  if (authMethod === 'digidGemachtigd') {
+    filteredItems = items.filter(({ title }) => title !== 'Mijn gegevens');
+  } else {
+    filteredItems = items;
+  }
+
   return (
     <>
       <UnorderedList
         markers={false}
         className={classNames('ams-mb-m', styles.LinkList)}
       >
-        {items.map(({ id, to, title, IconSVG }) => {
+        {filteredItems.map(({ id, to, title, IconSVG }) => {
           const LinkComponent = to.startsWith('http') ? MaLink : MaRouterLink;
           return (
             <UnorderedList.Item
@@ -62,7 +72,7 @@ export function MyThemasPanel({
                 <span className={styles.ThemaLink}>
                   {IconSVG && (
                     <Icon
-                      svg={IconSVG}
+                      svg={<IconSVG />}
                       size="heading-3"
                       className={styles.ThemaLinkIcon}
                       square
