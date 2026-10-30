@@ -131,9 +131,9 @@ describe('afis-facturen', async () => {
     expect(openFactuur).toStrictEqual({
       afzender: 'Bedrijf: Ok',
       amountOriginal: '343.00',
-      amountOriginalFormatted: '€ 343,00',
+      amountOriginalFormatted: '€343,00',
       amountPayed: '315.50',
-      amountPayedFormatted: '€ 315,50',
+      amountPayedFormatted: '€315,50',
       datePublished: '2023-11-21T00:00:00',
       datePublishedFormatted: '21 november 2023',
       debtClearingDate: null,
@@ -153,7 +153,7 @@ describe('afis-facturen', async () => {
       paymentDueDateFormatted: '21 december 2023',
       status: 'gedeeltelijke-betaling',
       statusDescription:
-        'Uw factuur van € 343,00 is nog niet volledig betaald. Maak het resterend bedrag van € 315,50 over onder vermelding van de gegevens op uw factuur.',
+        'Uw factuur van €343,00 is nog niet volledig betaald. Maak het resterend bedrag van €315,50 over onder vermelding van de gegevens op uw factuur.',
     });
 
     const automatischeIncassoFactuur = response.content?.facturen[1];
@@ -205,9 +205,9 @@ describe('afis-facturen', async () => {
     expect(geannuleerdeInvoice).toStrictEqual({
       afzender: 'Lisan al Gaib inc.',
       amountOriginal: '0.00',
-      amountOriginalFormatted: '€ 0,00',
+      amountOriginalFormatted: '€0,00',
       amountPayed: '0.00',
-      amountPayedFormatted: '€ 0,00',
+      amountPayedFormatted: '€0,00',
       datePublished: null,
       datePublishedFormatted: null,
       debtClearingDate: null,
@@ -226,7 +226,7 @@ describe('afis-facturen', async () => {
       paymentDueDate: '2023-12-21T00:00:00',
       paymentDueDateFormatted: '21 december 2023',
       status: 'geannuleerd',
-      statusDescription: '€ 0,00 geannuleerd op null',
+      statusDescription: '€0,00 geannuleerd op null',
     });
 
     const betaaldeInvoice = response.content?.facturen[1];
@@ -950,7 +950,7 @@ describe('afis-facturen', async () => {
 
       test('open facturen with an inactive E-Mandate reference should have a status description that includes a warning about the mandate being stopped', () => {
         expect(response.content?.open?.facturen?.[0]?.statusDescription).toBe(
-          '€ 10,00 wordt automatisch van uw rekening afgeschreven. <br><strong>Let op! De automatische incasso is gestopt. Betaal de factuur zelf via uw bank.</strong>'
+          '€10,00 wordt automatisch van uw rekening afgeschreven. <br><strong>Let op! De automatische incasso is gestopt. Betaal de factuur zelf via uw bank.</strong>'
         );
       });
 

@@ -10,6 +10,11 @@ import {
 import classNames from 'classnames';
 
 import {
+  getFirstOpenTermijnFactuurDateFormatted,
+  getOpenstaandBedragFormatted,
+  isFactuurInTermijnen,
+} from './Afis-helpers.ts';
+import {
   displayPropsStopMandate,
   EMANDATE_STATUS_ACTIVE,
 } from './Afis-thema-config.ts';
@@ -201,9 +206,16 @@ function ApiDeactivateButton({
   const { facturenByState } = useAfisFacturenData();
   const confirmationModalProps = useMemo(() => {
     const openFacturen = facturenByState?.open?.facturen ?? [];
-    const facturenByEmandateId = openFacturen.filter(
-      (factuur) => factuur.eMandateId === eMandate.eMandateIdSource
-    );
+    const facturenByEmandateId = openFacturen
+      .filter((factuur) => factuur.eMandateId === eMandate.eMandateIdSource)
+      .map((factuur) => ({
+        ...factuur,
+        amountOriginalFormatted: getOpenstaandBedragFormatted(factuur),
+        paymentDueDateFormatted:
+          getFirstOpenTermijnFactuurDateFormatted(factuur),
+      }));
+    const hasFactuurInTermijnen =
+      facturenByEmandateId.some(isFactuurInTermijnen);
 
     return {
       title: 'Stopzetten incassomachtiging',
@@ -225,19 +237,20 @@ function ApiDeactivateButton({
                 facturen betalen. Hieronder ziet u welke facturen niet meer
                 automatisch van uw rekening worden afgeschreven.
               </Paragraph>
-              <Paragraph className="ams-mb-s">
-                Heeft u een erfpachtfactuur die in delen is opgesplitst? Dan
-                moet u het resterende bedrag in één keer betalen. Wilt u toch in
-                delen betalen? Vraag dan een betalingsregeling aan via{' '}
-                <Link
-                  rel="noreferrer"
-                  href="mailto:debiteurenadministratie@amsterdam.nl"
-                >
-                  debiteurenadministratie@amsterdam.nl
-                </Link>
-                .
-                <br />
-              </Paragraph>
+              {hasFactuurInTermijnen && (
+                <Paragraph className="ams-mb-s">
+                  Een factuur die in termijnen wordt betaald, betaalt u dan in
+                  één keer. Het bedrag in de lijst is wat nog openstaat. Wilt u
+                  toch in delen betalen? Vraag dan een betalingsregeling aan via{' '}
+                  <Link
+                    rel="noreferrer"
+                    href="mailto:debiteurenadministratie@amsterdam.nl"
+                  >
+                    debiteurenadministratie@amsterdam.nl
+                  </Link>
+                  .
+                </Paragraph>
+              )}
               <DataView
                 className={styles.FacturenAlertDataView}
                 items={facturenByEmandateId}

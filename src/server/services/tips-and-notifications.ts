@@ -43,8 +43,6 @@ import { entries } from '../../universal/helpers/utils.ts';
 import { getFromEnv } from '../helpers/env.ts';
 import { fetchAdoptableTrashContainerTips } from './afval/adoptable-trash-containers.ts';
 import { fetchErfpachtNotifications } from './erfpacht/erfpacht-notifications.ts';
-import { fetchZWDNotifications } from './wonen/zwd-notifications.ts';
-import { isFeatureEnabled } from '../config/azure-appconfiguration.ts';
 
 // Every 3rd notification will be a tip if one is available.
 const INSERT_TIP_AT_EVERY_NTH_INDEX = 3;
@@ -113,9 +111,6 @@ export const notificationServices = {
     vergunningen: fetchVergunningenNotifications,
     parkeren: fetchParkeerVergunningenNotifications,
     erfpacht: fetchErfpachtNotifications,
-    ...(isFeatureEnabled('WONEN.vve.zaken') && {
-      zwd: fetchZWDNotifications,
-    }),
   },
 } as const satisfies NotificationServicesListByProfileType;
 

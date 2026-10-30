@@ -262,6 +262,10 @@ describe('fetchLeerlingenvervoer', () => {
           betrokkenen: [],
           procesAanvraagActies: [
             {
+              omschrijving: 'Verzoek om meer informatie',
+              datum: '2026-10-08',
+            },
+            {
               omschrijving: 'In behandeling bij gemeente',
               datum: '2026-08-10',
             },
@@ -284,7 +288,7 @@ describe('fetchLeerlingenvervoer', () => {
       substeps: [
         {
           status: 'Meer informatie nodig',
-          datePublished: '',
+          datePublished: '2026-10-08',
           isActive: true,
           isChecked: true,
         },
@@ -293,8 +297,8 @@ describe('fetchLeerlingenvervoer', () => {
     expect(melding.isActive).toBe(false);
     expect(melding.datePublished).toBe('2026-05-19');
     expect(behandeling.datePublished).toBe('2026-05-19');
-    expect(voorziening.statusDate).toBe('2026-05-19');
-    expect(voorziening.statusDateFormatted).toBe('19 mei 2026');
+    expect(voorziening.statusDate).toBe('2026-10-08');
+    expect(voorziening.statusDateFormatted).toBe('08 oktober 2026');
   });
 
   test('Shows when submitted additional information is being processed', async () => {

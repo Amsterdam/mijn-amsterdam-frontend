@@ -1,7 +1,11 @@
-import { EMANDATE_ENDDATE_INDICATOR } from './Afis-thema-config.ts';
+import {
+  EMANDATE_ENDDATE_INDICATOR,
+  type AfisFactuurFrontend,
+} from './Afis-thema-config.ts';
 import type { AfisEMandateFrontend } from '../../../../../../server/services/afis/afis-types.ts';
-import type { BFFApiUrls } from '../../../config/api.ts';
+import { displayAmount } from '../../../../../../universal/helpers/text.ts';
 import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../../../helpers/api.ts';
+import type { BFFApiUrls } from '../../../config/api.ts';
 
 export function generateApiUrl(
   businessPartnerIdEncrypted: string | null,
@@ -28,4 +32,42 @@ export function getEMandateValidityDate(eMandate: AfisEMandateFrontend) {
     dateValidTo = eMandate.dateValidTo;
   }
   return dateValidTo;
+}
+
+export function getOpenstaandBedragFormatted(
+  factuur: AfisFactuurFrontend
+): string {
+  if (!factuur.termijnen?.length) {
+    return factuur.amountOriginalFormatted;
+  }
+
+  const totalOpen = factuur.termijnen
+    .filter((termijn) => termijn.debtClearingDate === null)
+    .reduce((sum, termijn) => sum + parseFloat(termijn.amountOriginal), 0);
+
+  return `€${displayAmount(totalOpen)}`;
+}
+
+export function isFactuurInTermijnen(factuur: AfisFactuurFrontend): boolean {
+  return factuur.status === 'factuur-in-termijnen';
+}
+
+export function getFirstOpenTermijnFactuurDateFormatted(
+  factuur: AfisFactuurFrontend
+): AfisFactuurFrontend['paymentDueDateFormatted'] {
+  const openTermijnen =
+    factuur.termijnen?.filter((termijn) => termijn.debtClearingDate === null) ??
+    [];
+
+  if (!openTermijnen.length) {
+    return factuur.paymentDueDateFormatted;
+  }
+
+  const [firstOpenTermijnFactuur] = [...openTermijnen].sort(
+    (a, b) =>
+      new Date(a.paymentDueDate).getTime() -
+      new Date(b.paymentDueDate).getTime()
+  );
+
+  return firstOpenTermijnFactuur.paymentDueDateFormatted;
 }
