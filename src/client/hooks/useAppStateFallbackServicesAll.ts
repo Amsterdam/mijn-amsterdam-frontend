@@ -21,6 +21,7 @@ export function useAppStateFallbackService({
   });
 
   // If no EvenSource support or EventSource fails, the Fallback service endpoint is used for fetching all the data.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Preserve the existing hook dependency exclusion.
   useEffect(() => {
     if (!isEnabled || isReady) {
       return;
@@ -45,6 +46,5 @@ export function useAppStateFallbackService({
       });
       setAppState(createAllErrorState(appState, errorMessage), true);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [api.data, setAppState, isEnabled, api.isDirty, api.isError, isReady]);
 }

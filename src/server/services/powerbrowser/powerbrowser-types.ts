@@ -150,7 +150,7 @@ type CaseTypeLiteral<T extends PowerBrowserZaakBase> =
     : T['caseType'];
 
 export type PowerBrowserZaakTransformer<
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
   T extends PowerBrowserZaakBase = any,
   TF extends typeof SELECT_FIELDS_TRANSFORM_BASE & Record<string, string> =
     typeof SELECT_FIELDS_TRANSFORM_BASE & Record<string, string>,

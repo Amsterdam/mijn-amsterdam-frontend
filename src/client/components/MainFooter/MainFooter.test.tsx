@@ -33,7 +33,7 @@ vi.spyOn(Erfpacht, 'useErfpachtThemaData').mockImplementation(
   () =>
     ({
       relatieCode: '123',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
     }) as any
 );
 

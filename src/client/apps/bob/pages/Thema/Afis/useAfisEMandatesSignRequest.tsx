@@ -110,6 +110,7 @@ export function useSignRequestPayloadStorageCleanup(
 ) {
   const payloadStorage = useSignRequestPayloadStorage();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Preserve the existing hook dependency exclusion.
   useEffect(() => {
     if (EMandatesSource.length) {
       const obsoleteStatusCheckIds = EMandatesSource.filter(
@@ -127,7 +128,6 @@ export function useSignRequestPayloadStorageCleanup(
         payloadStorage.get(id)?.remove();
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [EMandatesSource]);
 }
 

@@ -1,5 +1,5 @@
+// biome-ignore-all lint/suspicious/noConsole: Preserve the existing file-level exception.
 // Logger is not emitting when called from the migrate pipeline so console.log is used instead
-/* eslint-disable no-console */
 import path, { resolve } from 'node:path';
 
 const JOB_SUCCESS_CODE = 0;

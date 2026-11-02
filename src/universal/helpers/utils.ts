@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// biome-ignore-all lint/suspicious/noExplicitAny: Preserve the existing file-level exception.
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
 export const entries = Object.entries as <T>(

@@ -1,5 +1,5 @@
+// biome-ignore-all assist/source/organizeImports: Preserve the existing file-level exception.
 /* Disable import order here, because this order matters with how we build our environment variables. */
-/* eslint-disable import/order */
 
 /* tslint:disable:no-implicit-dependencies */
 /* tslint:disable:no-submodule-imports */

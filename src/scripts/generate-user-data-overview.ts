@@ -1,3 +1,4 @@
+// biome-ignore-all lint: Preserve the existing file-level exception.
 /**
  * Script to fetch, transform and save testdata for every account.
 
@@ -33,7 +34,6 @@
  * ```
  */
 
-/* eslint-disable */
 import '../server/helpers/load-env.ts';
 
 import { differenceInYears, parseISO } from 'date-fns';

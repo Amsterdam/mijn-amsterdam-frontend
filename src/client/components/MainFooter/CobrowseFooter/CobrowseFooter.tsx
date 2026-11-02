@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { PageFooter } from '@amsterdam/design-system-react';
 
 // https://github.com/import-js/eslint-plugin-import/issues/2876
-// eslint-disable-next-line import/order
 import type { CobrowseWidget } from './lib/cobrowse-widget.d.ts';
 
 import './lib/cobrowse-widget.css';
@@ -26,6 +25,7 @@ export function CobrowseFooter() {
     (state) => state.setIsScreensharing
   );
   const isCobrowseEnabled = isEnabled('cobrowse');
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Preserve the existing hook dependency exclusion.
   useEffect(() => {
     if (!isCobrowseEnabled || !licenseKey || cobrowseWidget) {
       return;
@@ -40,7 +40,6 @@ export function CobrowseFooter() {
       });
       setCobrowseWidget(widget);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCobrowseEnabled]);
 
   return (

@@ -101,6 +101,7 @@ function LocationMap({ address, latlng, markerLabel }: LocationMapProps) {
 
   const hasLocationDataAndCenterMarker = !!centerMarker;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Exclude some dependencies to prevent unwanted re-fetches
   useEffect(() => {
     if (bagApi.isDirty || bagApi.isLoading || querySearchAddress === null) {
       return;
@@ -116,7 +117,6 @@ function LocationMap({ address, latlng, markerLabel }: LocationMapProps) {
     bagApiUrl.search = params.toString();
 
     bagApi.fetch(bagApiUrl);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- Exclude some dependencies to prevent unwanted re-fetches
   }, [querySearchAddress, bagApi.isDirty, bagApi.isLoading]);
 
   return (

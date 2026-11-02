@@ -596,6 +596,7 @@ export function useMapLocations(
     }
   }, [urlQueryCenter]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: mapOptions only need to be determined once; dependencies intentionally omitted to avoid unnecessary re-renders
   const mapCenter: LatLngLiteral = useMemo(() => {
     let center = customLocationMarker.latlng;
 
@@ -609,7 +610,6 @@ export function useMapLocations(
 
     return center;
     // Using memo here because we don't need the options to cause re-renders of the <Map/> component.
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- mapOptions only need to be determined once; dependencies intentionally omitted to avoid unnecessary re-renders
   }, []);
 
   return {
@@ -647,6 +647,7 @@ export function useSetMapCenterAtLocation(
    *
    * This is not nice UX therefor we set isReadyForSetViewUpdates after appState is ready and mapInstance exists.
    * */
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Preserve the existing hook dependency exclusion.
   useEffect(() => {
     if (mapInstance && isReadyForSetViewUpdates.current === true) {
       let centerMarker: MapLocationMarker = customLocationMarker;
@@ -659,7 +660,6 @@ export function useSetMapCenterAtLocation(
     }
     // Disable because we don't want to re-center the map everytime the zoom level changes.
     // Whenever centerMarker changes, and a new zoom level was provided at the same time, the effect will also take new zoom into account.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customLocationMarker, homeLocationMarker, mapInstance]);
 
   useEffect(() => {

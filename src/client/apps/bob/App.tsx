@@ -73,12 +73,12 @@ function AppAuthenticated() {
   const redirectAfterLogin = useDeeplinkRedirect();
   const isScreensharing = useCobrowseScreenshareState();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Preserve the existing hook dependency exclusion.
   useEffect(() => {
     if (redirectAfterLogin && redirectAfterLogin !== '/') {
       clearDeeplinkEntry();
       navigate(redirectAfterLogin);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [redirectAfterLogin]);
 
   const isBuurt = location.pathname === buurtRouteConfig.themaPage.path;

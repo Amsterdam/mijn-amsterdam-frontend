@@ -137,7 +137,7 @@ export type AddressBookEntry = {
 
 export type DecosFieldTransformer<T extends DecosZaakBase> = {
   name: keyof T;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
   transform?: (input: any) => DecosFieldValue;
 };
 
@@ -146,7 +146,7 @@ type CaseTypeLiteral<T extends DecosZaakBase> = unknown extends T['caseType']
     ? unknown
     : never
   : T['caseType'];
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
 export type DecosZaakTransformer<T extends DecosZaakBase = any> = {
   // the itemType: e.g. folders, containers, vergunningen etc
   itemType: string;

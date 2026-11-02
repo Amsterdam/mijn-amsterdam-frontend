@@ -1,5 +1,5 @@
+// biome-ignore-all lint: Preserve the existing file-level exception.
 /// <reference types="vitest" />
-/* eslint-disable */
 import { createHash } from 'node:crypto';
 
 import react from '@vitejs/plugin-react';
@@ -130,4 +130,3 @@ export default defineConfig({
     },
   },
 });
-/* eslint-enable */

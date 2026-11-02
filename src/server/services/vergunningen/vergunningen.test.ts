@@ -17,7 +17,7 @@ vi.mock('../../helpers/encrypt-decrypt');
 
 vi.mock(
   '../decos/decos-service',
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
   async (importOriginal: () => Promise<any>) => ({
     ...(await importOriginal()),
     fetchDecosZaken: vi.fn(),

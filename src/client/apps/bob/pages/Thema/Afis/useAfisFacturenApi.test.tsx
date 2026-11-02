@@ -1,4 +1,4 @@
-/* eslint-disable no-irregular-whitespace */
+// biome-ignore-all lint/suspicious/noIrregularWhitespace: Preserve the existing file-level exception.
 import { renderHook, waitFor } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 

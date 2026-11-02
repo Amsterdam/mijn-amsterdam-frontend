@@ -1,4 +1,4 @@
-/* eslint-disable import/order */
+// biome-ignore-all assist/source/organizeImports: Preserve the existing file-level exception.
 import {
   beforeEach,
   beforeAll,

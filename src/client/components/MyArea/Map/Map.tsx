@@ -13,7 +13,7 @@ export interface MaMapProps extends MapProps {
 export function MaMap({
   children,
   options,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // biome-ignore lint/correctness/noUnusedFunctionParameters: Preserve the existing lint exception.
   fullScreen,
   className,
   ...otherProps

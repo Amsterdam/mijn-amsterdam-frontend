@@ -162,7 +162,7 @@ export function useCommunicatieVoorkeurBevestigen() {
   const confirmSetting = useCallback(function confirmSetting(
     isChecked: boolean
   ) {
-    // eslint-disable-next-line no-console -- To be implemented
+    // biome-ignore lint/suspicious/noConsole: To be implemented
     console.info('Confirm setting:', isChecked);
   }, []);
   return {

@@ -345,7 +345,7 @@ describe('Displayed description of uw uitgaven text', () => {
       createStadspas({ budgets: [budget], balance: 5 }),
       false
     );
-    // prettier-ignore
+    // biome-ignore format: Preserve the existing test fixture layout.
     expect(result).toMatchInlineSnapshot(`
       <React.Fragment>
         <React.Fragment>

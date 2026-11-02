@@ -45,6 +45,7 @@ export function MaPolylineLayer({
     }
   }, [features, map]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Preserve the existing hook dependency exclusion.
   const layers = useMemo(() => {
     const layers: L.Layer[] = [];
 
@@ -66,7 +67,6 @@ export function MaPolylineLayer({
       layers.push(layer);
     }
     return layers;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [features]);
 
   useEffect(() => {

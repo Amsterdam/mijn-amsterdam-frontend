@@ -190,6 +190,7 @@ export function Search({
 
   useKeyDown(keyHandler);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Preserve the existing hook dependency exclusion.
   useEffect(() => {
     if (autoFocus) {
       // AutoFocus on the element doesn't seem to work properly with dynamic mounting
@@ -202,7 +203,6 @@ export function Search({
     return () => {
       onFinish('Unmount component');
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

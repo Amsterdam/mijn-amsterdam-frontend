@@ -68,7 +68,7 @@ import { isOpsEnabled } from '../config/azure-appconfiguration.ts';
 function callAuthenticatedService<T>(
   fetchService: (
     authProfileAndToken: AuthProfileAndToken,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
     ...args: any[]
   ) => Promise<T>
 ) {
@@ -81,7 +81,7 @@ function callAuthenticatedService<T>(
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
 function callPublicService<T>(fetchService: (...args: any[]) => Promise<T>) {
   return async (req: Request) => fetchService(queryParams(req));
 }

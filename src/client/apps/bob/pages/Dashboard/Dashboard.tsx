@@ -51,11 +51,11 @@ export function Dashboard() {
   const hasAfspraken = afspraken.length > 0;
 
   // We only want to run this on mount.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Preserve the existing hook dependency exclusion.
   useEffect(() => {
     if (location.search) {
       navigate(location.pathname, { replace: true });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

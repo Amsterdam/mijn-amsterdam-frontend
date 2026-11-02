@@ -43,7 +43,7 @@ export function createBFFRouter({
   return router;
 }
 
-/* eslint-disable @typescript-eslint/no-empty-object-type */
+// biome-ignore-start lint/complexity/noBannedTypes: Preserve the existing lint exception.
 export type RequestWithQueryParams<T extends RecordStr2> = Request<
   {},
   {},
@@ -55,7 +55,7 @@ export type RequestWithRouteAndQueryParams<
   T extends ParamsDictionary = RecordStr2,
   T2 extends ParamsDictionary = RecordStr2,
 > = Request<T, {}, {}, T2>;
-/* eslint-enable @typescript-eslint/no-empty-object-type */
+// biome-ignore-end lint/complexity/noBannedTypes: Preserve the existing lint exception.
 
 export type ResponseAuthenticated = Response & {
   locals: {
@@ -65,7 +65,7 @@ export type ResponseAuthenticated = Response & {
   };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
 export function queryParams<T extends Record<string, any>>(req: Request) {
   return req.query as T;
 }

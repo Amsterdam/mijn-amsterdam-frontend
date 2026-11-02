@@ -92,7 +92,7 @@ export async function createOIDCStub(
     expires_at: '',
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
   (req as any)[OIDC_SESSION_COOKIE_NAME] = maSession;
 
   req.oidc = {
@@ -100,7 +100,7 @@ export async function createOIDCStub(
       return true;
     },
     async fetchUserInfo() {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
       return {} as any; // UserInfoResponse;
     },
     user: {

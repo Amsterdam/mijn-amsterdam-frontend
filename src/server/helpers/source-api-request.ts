@@ -41,7 +41,7 @@ export function isSuccessStatus(statusCode: number): boolean {
   return statusCode >= 200 && statusCode < 300;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
 const cache = new memoryCache.Cache<string, any>();
 
 export function deleteCacheEntry(cacheKey: string) {

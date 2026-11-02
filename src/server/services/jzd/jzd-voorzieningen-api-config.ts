@@ -1,7 +1,7 @@
 import { parseISO } from 'date-fns/parseISO';
 import type z from 'zod';
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+// biome-ignore lint/style/useImportType: Preserve the existing lint exception.
 import { voorzieningenRequestInput } from './jzd-service-config.ts';
 import type {
   JzdApiConfig,
