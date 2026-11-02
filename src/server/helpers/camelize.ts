@@ -27,6 +27,7 @@ function camelCase(str: string) {
   return str.replace(/[_.-](\w|$)/g, (_, x) => x.toUpperCase());
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: Recursive heterogeneous values.
 function walk(obj: any, shallow = false): any {
   if (!obj || typeof obj !== 'object') {
     return obj;
@@ -51,6 +52,7 @@ function walk(obj: any, shallow = false): any {
     const uncapitalized = camel.charAt(0).toLowerCase() + camel.slice(1);
     res[uncapitalized] = shallow ? obj[key] : walk(obj[key]);
     return res;
+  // biome-ignore lint/suspicious/noExplicitAny: Dynamically transformed keys.
   }, {} as any);
 }
 

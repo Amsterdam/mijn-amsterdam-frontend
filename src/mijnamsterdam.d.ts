@@ -13,12 +13,16 @@ type SessionID = string;
 
 type ResolvedType<T> = T extends PromiseLike<infer U> ? U : T;
 
+// biome-ignore lint/suspicious/noExplicitAny: Generic arguments and return types.
 type ReturnTypeAsync<T extends (...args: any) => any> = T extends (
+  // biome-ignore lint/suspicious/noExplicitAny: Generic function arguments.
   ...args: any
 ) => Promise<infer R>
   ? R
+  // biome-ignore lint/suspicious/noExplicitAny: Generic function arguments.
   : T extends (...args: any) => infer R
     ? R
+    // biome-ignore lint/suspicious/noExplicitAny: Legacy non-function fallback.
     : any;
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;

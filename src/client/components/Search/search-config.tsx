@@ -114,6 +114,7 @@ export interface ApiSearchConfig {
 
 // Used any here because the shape of the items can differ greatly between different API's and it's not worth the effort to type them all at the moment.
 // There is a ticket on the backlog to add more specific types for the different API's and remove the any type: MIJN-11547
+// biome-ignore lint/suspicious/noExplicitAny: API item types await MIJN-11547.
 export type ApiBaseItem = any;
 
 export const API_SEARCH_CONFIG_DEFAULT: Optional<ApiSearchConfig, 'stateKey'> =

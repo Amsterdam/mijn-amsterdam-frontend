@@ -68,6 +68,7 @@ async function handleResponse<T>(
  * @param init Payload can be a regular object and will be converted to URLSearchParams. The provided body however, takes precedence over payload.
  * @returns
  */
+// biome-ignore lint/suspicious/noExplicitAny: Legacy generic payload default.
 export async function sendFormPostRequest<T, P = any>(
   url: string | URL,
   init?: RequestInitWithPayload<P>
@@ -93,6 +94,7 @@ export async function sendFormPostRequest<T, P = any>(
  * @param init Payload can be a regular object and will be converted to URLSearchParams. The provided body however, takes precedence over payload.
  * @returns
  */
+// biome-ignore lint/suspicious/noExplicitAny: Legacy generic payload default.
 export async function sendJSONPostRequest<T, P = any>(
   url: string | URL,
   init?: RequestInitWithPayload<P>
@@ -143,6 +145,7 @@ export type BffApiState<D> = {
   isLoading: boolean;
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: Legacy generic payload default.
 export type BFFApiHook<T, P = any> = BffApiState<ApiResponse<T>> & {
   fetch: (
     url?: UrlOrString | RequestInitWithPayload<P>,
@@ -194,6 +197,7 @@ export const useBffApiStateStore = create<BFFApiStore>((set, get) => ({
   has: (key) => key in get(),
 }));
 
+// biome-ignore lint/suspicious/noExplicitAny: Legacy generic payload default.
 export function useBffApi<T, P = any>(
   cacheKey: string | null | undefined,
   options?: BffApiOptions<T, P>

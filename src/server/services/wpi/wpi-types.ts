@@ -17,6 +17,7 @@ export interface WpiRequestStatus extends StatusLineItem {
   documents: WpiRequestStatusDocument[];
   datePublished: string;
   productSpecific?: 'lening' | 'uitkering';
+  // biome-ignore lint/suspicious/noExplicitAny: Additional WPI source fields.
   [key: string]: any;
 }
 

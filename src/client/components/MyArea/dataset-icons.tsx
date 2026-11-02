@@ -60,6 +60,7 @@ const DatasetIcon: React.FC<{
 
 export const datasetIcons: Record<
   string,
+  // biome-ignore lint/suspicious/noExplicitAny: Icons have differing props.
   ReactNode | Record<string, ReactElement<any>>
 > = {
   afvalcontainers: {
@@ -338,7 +339,9 @@ export const datasetIcons: Record<
 export function getIcon(id: string, childId?: string) {
   let icon;
 
+  // biome-ignore lint/suspicious/noExplicitAny: Legacy nested icon lookup.
   if (id && childId && datasetIcons[id] && (datasetIcons[id] as any)[childId]) {
+    // biome-ignore lint/suspicious/noExplicitAny: Legacy nested icon lookup.
     icon = (datasetIcons[id] as any)[childId];
   } else if (
     !childId &&
@@ -349,6 +352,7 @@ export function getIcon(id: string, childId?: string) {
     icon = datasetIcons[id];
   }
 
+  // biome-ignore lint/suspicious/noExplicitAny: Icons have differing props.
   return icon && (icon as ReactElement<any>);
 }
 

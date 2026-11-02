@@ -18,12 +18,14 @@ export type AppStateKey = keyof AppState;
 
 // Generic object interface
 export interface Unshaped {
+  // biome-ignore lint/suspicious/noExplicitAny: Legacy unshaped object values.
   [key: string]: any;
 }
 
 // Generic action for use with useReducer hooks
 export interface Action {
   type: string;
+  // biome-ignore lint/suspicious/noExplicitAny: Legacy reducer action payload.
   payload?: any;
 }
 

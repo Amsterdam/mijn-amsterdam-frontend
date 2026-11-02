@@ -62,7 +62,9 @@ export function MaPolylineLayer({
         options.weight = 2;
       }
 
+      // biome-ignore lint/suspicious/noExplicitAny: Leaflet coordinate mismatch.
       const layer = L.polyline(feature.geometry.coordinates as any, options);
+      // biome-ignore lint/suspicious/noExplicitAny: Leaflet feature extension.
       (layer as any).feature = feature;
       layers.push(layer);
     }

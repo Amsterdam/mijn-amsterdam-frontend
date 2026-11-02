@@ -37,6 +37,7 @@ export function setAdHocDependencyRequestCacheTtlMs(
 
 export type DataRequestHeaders = Record<string, AxiosHeaderValue | undefined>;
 
+// biome-ignore lint/suspicious/noExplicitAny: Legacy transformer input default.
 export type DataRequestResponseTransformer<S = any, T = unknown> = (
   data: S,
   headers: DataRequestHeaders,

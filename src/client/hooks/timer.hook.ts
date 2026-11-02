@@ -23,7 +23,9 @@ const DefaultConfig: CounterProps = {
 };
 
 // taken from https://overreacted.io/making-setinterval-declarative-with-react-hooks/
+// biome-ignore lint/suspicious/noExplicitAny: Legacy interval callback type.
 export function useInterval(callback: any, delay: number = ONE_SECOND_IN_MS) {
+  // biome-ignore lint/suspicious/noExplicitAny: Legacy callback reference type.
   const savedCallback: any = useRef();
 
   // Remember the latest callback.
