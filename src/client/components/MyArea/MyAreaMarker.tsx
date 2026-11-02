@@ -47,7 +47,7 @@ function MyAreaMarker({
       events.click = onClick;
     }
 
-    const marker: { options: MarkerOptions; events: any } = {
+    const marker: { options: MarkerOptions; events: typeof events } = {
       options: { icon },
       events,
     };
