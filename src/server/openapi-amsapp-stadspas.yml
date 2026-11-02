@@ -60,6 +60,75 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ErrorNotFound'
+  /private/api/v1/services/amsapp/auth/token:
+    post:
+      x-env-availability:
+        - test
+        - acceptance
+      security:
+        - ApiKeyAuth: []
+      description: |
+        Exchanges the one-time authorizationCode for a Mijn Amsterdam session cookie payload.
+        The authorizationCode is bound to the provided PKCE codeVerifier.
+      parameters:
+        - $ref: '#/components/parameters/xApiKeyHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AmsAppAuthTokenExchangeRequest'
+      responses:
+        '200':
+          description: Returns session cookie data for the mobile app
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmsAppAuthTokenExchangeResponse'
+        '400':
+          description: Returns bad request error (invalid input, expired code, or PKCE mismatch)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestAmsAppAuthTokenExchange'
+        '401':
+          description: Returns unauthorized error (invalid api key)
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorized'
+  /private/api/v1/services/amsapp/auth/logout:
+    post:
+      x-env-availability:
+        - test
+        - acceptance
+      security:
+        - ApiKeyAuth: []
+      description: |
+        Invalidates the provided Mijn Amsterdam session token and revokes any associated
+        authorization codes for that session.
+      parameters:
+        - $ref: '#/components/parameters/xApiKeyHeader'
+        - $ref: '#/components/parameters/xAmsAppSessionTokenHeader'
+      responses:
+        '200':
+          description: Returns successful logout response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmsAppAuthLogoutResponse'
+        '400':
+          description: Returns bad request error (missing or invalid session token)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestAmsAppAuthLogout'
+        '401':
+          description: Returns unauthorized error (invalid api key)
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorized'
   /private/api/v1/services/amsapp/stadspas/passen/{administratienummerEncrypted}:
     get:
       security:
@@ -239,6 +308,70 @@ components:
       in: header
       name: X-API-Key
   schemas:
+    AmsAppAuthTokenExchangeRequest:
+      type: object
+      required:
+        - authorizationCode
+        - codeVerifier
+      properties:
+        authorizationCode:
+          type: string
+        codeVerifier:
+          type: string
+
+    AmsAppAuthTokenExchangeResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - 'OK'
+        content:
+          type: object
+          properties:
+            session:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the MA session cookie.
+                value:
+                  type: string
+                expiresAt:
+                  type: number
+              required:
+                - name
+                - value
+                - expiresAt
+          required:
+            - session
+
+    AmsAppAuthLogoutResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - 'OK'
+        content:
+          type: object
+          properties:
+            session:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the MA session cookie.
+                invalidated:
+                  type: boolean
+                  enum:
+                    - true
+              required:
+                - name
+                - invalidated
+          required:
+            - session
+
     StadsTransactionsResponse:
       type: object
       properties:
@@ -446,6 +579,7 @@ components:
         * 002: Kon het administratienummer niet ophalen
         * 003: Geen administratienummer gevonden
         * 004: Verzenden van administratienummer naar de Amsterdam app niet gelukt
+        * 005: Could not decrypt url parameter 'administratienummerEncrypted'.
         * 000: Onbekende error
       properties:
         message:
@@ -509,12 +643,66 @@ components:
         message:
           type: string
           enum:
-            - "Bad request: ApiError 005 - Could not decrypt url parameter administratienummerEncrypted'"
+            - "Bad request: ApiError 005 - Could not decrypt url parameter 'administratienummerEncrypted'."
             - 'Bad request: ApiError 000 - Onbekende fout'
             - 'Bad request: Bad request: Failed to decrypt transactions key'
+
+    ErrorBadRequestAmsAppAuthTokenExchange:
+      type: object
+      description: |
+        * ApiError 003: Ongeldige invoer
+        * ApiError 004: Authorization code niet gevonden of verlopen
+        * ApiError 005: Code verifier komt niet overeen met code challenge
+      properties:
+        content:
+          nullable: true
+        code:
+          type: number
+          enum:
+            - 400
+        status:
+          type: string
+          enum:
+            - 'ERROR'
+        message:
+          type: string
+          description: |
+            One of the following error message formats:
+            * Bad request: ApiError 003 - Ongeldige invoer: <validation details>
+            * Bad request: ApiError 004 - Authorization code niet gevonden of verlopen
+            * Bad request: ApiError 005 - Code verifier komt niet overeen met code challenge
+          example: 'Bad request: ApiError 005 - Code verifier komt niet overeen met code challenge'
+
+    ErrorBadRequestAmsAppAuthLogout:
+      type: object
+      description: |
+        * ApiError 003: Ongeldige invoer
+      properties:
+        content:
+          nullable: true
+        code:
+          type: number
+          enum:
+            - 400
+        status:
+          type: string
+          enum:
+            - 'ERROR'
+        message:
+          type: string
+          description: |
+            Error message format:
+            * Bad request: ApiError 003 - Ongeldige invoer
+          example: 'Bad request: ApiError 003 - Ongeldige invoer'
   parameters:
     xApiKeyHeader:
       name: x-api-key
+      in: header
+      required: true
+      schema:
+        type: string
+    xAmsAppSessionTokenHeader:
+      name: x-amsapp-session-token
       in: header
       required: true
       schema:

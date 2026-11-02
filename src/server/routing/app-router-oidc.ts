@@ -79,7 +79,7 @@ oidcRouter.use(authConfigHandler);
 
 oidcRouter.get(
   authRoutes.AUTH_BASE_DIGID + AUTH_CALLBACK,
-  (req: Request, res: Response) => {
+  (_req: Request, res: Response) => {
     return res.oidc.callback({
       redirectUri: generateFullApiUrlBFF(authRoutes.AUTH_CALLBACK_DIGID),
     });

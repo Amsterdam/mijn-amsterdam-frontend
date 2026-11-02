@@ -8,6 +8,7 @@ export type RenderProps = {
   nonce: string;
   redirectToLogout: boolean;
   redirectTimeout?: number;
+  showIdentifier?: boolean;
   urlToImage: string;
   urlToCSS: string;
   error?: ApiError;

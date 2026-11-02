@@ -45,17 +45,20 @@ import { fetchWpiDocument } from '../services/wpi/api-service.ts';
 
 export const router = createBFFRouter({ id: 'router-protected' });
 
-router.get(
-  BffEndpoints.SERVICES_ALL,
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const response = await loadServicesAll(req, res);
-      return res.json(response);
-    } catch (error) {
-      next(error);
-    }
+export async function handleServicesAll(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const response = await loadServicesAll(req, res);
+    return res.json(response);
+  } catch (error) {
+    return next(error);
   }
-);
+}
+
+router.get(BffEndpoints.SERVICES_ALL, handleServicesAll);
 
 router.get(
   BffEndpoints.SERVICES_TIPS,
