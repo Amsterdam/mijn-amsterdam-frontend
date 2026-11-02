@@ -39,7 +39,7 @@ const appInsights = new ApplicationInsights({
     enableAutoRouteTracking: true,
     extensionConfig: {
       [reactPlugin.identifier]: { history: browserHistory },
-      ['AppInsightsCfgSyncPlugin']: {
+      AppInsightsCfgSyncPlugin: {
         cfgUrl: '', // this will block fetching from default cdn
       },
     },

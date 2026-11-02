@@ -44,7 +44,7 @@ function withClassNames(
 ) {
   const attribs_ = {
     ...attribs,
-    ['class']: classNames(attribs?.class ?? '', className),
+    class: classNames(attribs?.class ?? '', className),
   };
   return attributesToProps(attribs_);
 }

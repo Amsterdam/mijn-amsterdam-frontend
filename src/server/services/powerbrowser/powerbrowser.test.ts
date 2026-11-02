@@ -42,8 +42,8 @@ describe('Powerbrowser service', () => {
   };
 
   const documentNamesMA_PB = {
-    ['DocumentnaamMA']: ['DocumentnaamPB', 'AndersInPBMaarZelfdeInMA'],
-    ['NietDocumentnaamMA']: ['NietDocumentnaamPB'],
+    DocumentnaamMA: ['DocumentnaamPB', 'AndersInPBMaarZelfdeInMA'],
+    NietDocumentnaamMA: ['NietDocumentnaamPB'],
   };
 
   const zaakTransformer = {

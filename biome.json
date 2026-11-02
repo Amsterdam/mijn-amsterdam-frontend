@@ -3,7 +3,13 @@
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!drizzle", "!vendor", "!public/js/usabilla*.js", "!scripts"]
+    "includes": [
+      "**",
+      "!drizzle",
+      "!vendor",
+      "!public/js/usabilla*.js",
+      "!scripts"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -11,7 +17,7 @@
     "indentStyle": "space",
     "indentWidth": 2,
     "lineEnding": "lf",
-    "lineWidth": 120,
+    "lineWidth": 80,
     "attributePosition": "auto",
     "bracketSameLine": false,
     "bracketSpacing": true,
@@ -337,7 +343,10 @@
       }
     },
     {
-      "includes": ["src/**/*.{js,mjs,cjs,ts,jsx,tsx}", "!src/**/*.integration.test.{js,mjs,cjs,ts,jsx,tsx}"],
+      "includes": [
+        "src/**/*.{js,mjs,cjs,ts,jsx,tsx}",
+        "!src/**/*.integration.test.{js,mjs,cjs,ts,jsx,tsx}"
+      ],
       "linter": {
         "rules": {
           "style": {
