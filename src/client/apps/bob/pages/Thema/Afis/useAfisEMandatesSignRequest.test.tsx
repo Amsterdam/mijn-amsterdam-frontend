@@ -346,7 +346,7 @@ describe('useAfisEMandatesSignRequest', () => {
         }
       );
       // Wait for effect to finish
-      await act(async () => {});
+      await act(async () => undefined);
       expect(result.current.data).toEqual({
         content: {
           status: 'payment_started',
@@ -380,7 +380,7 @@ describe('useAfisEMandatesSignRequest', () => {
         }
       );
       // Wait for effect to finish
-      await act(async () => {});
+      await act(async () => undefined);
       expect(result.current.data).toEqual({
         content: {
           status: 'payment_cancelled',
@@ -416,7 +416,7 @@ describe('useAfisEMandatesSignRequest', () => {
         }
       );
       // Wait for effect to finish
-      await act(async () => {});
+      await act(async () => undefined);
       expect(result.current.data).toBeNull();
       expect(result.current.errorData).toBe('Network error');
       expect(result.current.isDirty).toBe(true);

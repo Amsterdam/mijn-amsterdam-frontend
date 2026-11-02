@@ -37,7 +37,6 @@ vi.mock('@azure/msal-node', () => {
   class ConfidentialClientApplication {
     getAuthCodeUrl = mocks.getAuthCodeUrl;
     acquireTokenByCode = mocks.acquireTokenByCode;
-    constructor() {}
   }
 
   return {

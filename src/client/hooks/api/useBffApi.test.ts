@@ -86,7 +86,7 @@ describe('useBffApi', () => {
       })
     );
     // Wait for effect to finish
-    await act(async () => {});
+    await act(async () => undefined);
     expect(result.current.data).toEqual(mockResponse);
     expect(result.current.isDirty).toBe(true);
     expect(result.current.isPristine).toBe(false);
