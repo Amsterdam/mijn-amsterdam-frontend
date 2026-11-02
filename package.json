@@ -41,11 +41,11 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "@amsterdam/design-system-assets": "2.6.0",
-    "@amsterdam/design-system-css": "4.4.0",
-    "@amsterdam/design-system-react": "4.4.0",
-    "@amsterdam/design-system-react-icons": "2.2.0",
-    "@amsterdam/design-system-tokens": "4.3.0",
+    "@amsterdam/design-system-assets": "2.7.0",
+    "@amsterdam/design-system-css": "4.5.0",
+    "@amsterdam/design-system-react": "4.5.0",
+    "@amsterdam/design-system-react-icons": "2.3.0",
+    "@amsterdam/design-system-tokens": "4.4.0",
     "@amsterdam/piwik-tracker-react": "3.0.0",
     "@amsterdam/react-maps": "^1.1.1",
     "@azure/app-configuration": "^1.13.0",
@@ -60,7 +60,7 @@
     "connect-pg-simple": "^10.0.0",
     "cookie-parser": "^1.4.7",
     "cookie-session": "^2.1.1",
-    "core-js": "^3.50.0",
+    "core-js": "^3.51.0",
     "cors": "^2.8.6",
     "cross-env": "^7.0.3",
     "date-fns": "^4.4.0",
@@ -111,7 +111,7 @@
     "react-test-renderer": "^18.3.1",
     "recoil": "^0.7.7",
     "sanitize-html": "^2.18.1",
-    "sass": "^1.105.1",
+    "sass": "^1.106.1",
     "slugme": "^1.1.1",
     "supercluster": "^7.1.5",
     "thenby": "^1.4.1",
@@ -122,10 +122,10 @@
     "use-debounce": "^10.1.1",
     "xlsx": "file:vendor/xlsx-0.20.2.tgz",
     "zod": "^4.6.7",
-    "zustand": "^5.0.15"
+    "zustand": "^5.0.16"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.64.5"
+    "@rollup/rollup-linux-x64-gnu": "4.65.1"
   },
   "devDependencies": {
     "vite": "^6.4.4",
