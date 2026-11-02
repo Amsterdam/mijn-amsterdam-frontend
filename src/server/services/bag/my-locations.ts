@@ -1,5 +1,5 @@
 import { fetchBAG, fetchBAGByQuery } from './bag.ts';
-import { type BAGLocationExtended } from './bag.types.ts';
+import type { BAGLocationExtended } from './bag.types.ts';
 import {
   DEFAULT_LAT,
   DEFAULT_LNG,
@@ -62,7 +62,7 @@ export async function fetchCommercial(
 
     const locations = await Promise.all(
       vestigingen
-        .map((vestiging) =>
+        .flatMap((vestiging) =>
           vestiging.bagIds.map((id) =>
             fetchBAGByQuery({ identificatie: id }).then((res) => {
               return res.content
@@ -75,7 +75,6 @@ export async function fetchCommercial(
             })
           )
         )
-        .flat()
     );
 
     return apiSuccessResult(locations.filter((location) => location !== null));

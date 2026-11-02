@@ -4,9 +4,9 @@ import { default as ToeristischeVerhuurIcon } from './ToeristischeVerhuurIcon.sv
 import { ToeristischeVerhuurList } from './ToeristischeVerhuurList.tsx';
 import { ToeristischeVerhuurThema } from './ToeristischeVerhuurThema.tsx';
 import { isLoading } from '../../../../../helpers/api.ts';
-import {
-  type ThemaMenuItem,
-  type ThemaRenderRouteConfig,
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
 } from '../../../../../../universal/types/thema-types.ts';
 
 export const ToeristischeVerhuurRoutes = [

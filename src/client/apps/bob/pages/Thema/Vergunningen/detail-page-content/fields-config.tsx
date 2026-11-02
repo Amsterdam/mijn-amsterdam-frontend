@@ -12,14 +12,14 @@ import type {
   WithDateEnd,
   WithTimeRange,
 } from '../../../../../../../server/services/vergunningen/config-and-types.ts';
-import { type ZaakFrontendCombined } from '../../../../../../../server/services/vergunningen/config-and-types.ts';
+import type { ZaakFrontendCombined } from '../../../../../../../server/services/vergunningen/config-and-types.ts';
 import { dateTimeFormatYear } from '../../../../../../../universal/helpers/date.ts';
 import type {
   Row,
   RowSet,
   WrappedRow,
 } from '../../../../../../components/Datalist/Datalist.tsx';
-import { type DatalistProps } from '../../../../../../components/Datalist/Datalist.tsx';
+import type { DatalistProps } from '../../../../../../components/Datalist/Datalist.tsx';
 import { AddressDisplayAndModal } from '../../../../../../components/LocationModal/LocationModal.tsx';
 
 type DataListRowOptions = {
@@ -295,14 +295,13 @@ export function getRows<T extends ZaakFrontendCombined>(
   keysOrTransformers: (VergunningDataListRow<T> | Row | RowSet)[]
 ): DatalistProps['rows'] {
   const rows = keysOrTransformers
-    .map((transformerOrRowType) => {
+    .flatMap((transformerOrRowType) => {
       if (typeof transformerOrRowType === 'function') {
         // transformerOrRowType is a transformer object
         return transformerOrRowType(vergunning);
       }
       return transformerOrRowType;
     })
-    .flat()
     .filter((row) => row !== null);
 
   return rows;

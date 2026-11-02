@@ -1,4 +1,4 @@
-import { type ZaakFrontendCombined } from './config-and-types.ts';
+import type { ZaakFrontendCombined } from './config-and-types.ts';
 import {
   getLifetimeTriggerDate,
   isExpiryNotificationDue,

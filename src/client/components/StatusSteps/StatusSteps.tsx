@@ -56,7 +56,7 @@ export function StatusStepDocuments({
 }: StatusStepDocumentsProps) {
   return (
     <>
-      {!!altDocumentContent && typeof altDocumentContent === 'string'
+      {altDocumentContent && typeof altDocumentContent === 'string'
         ? parseHTML(altDocumentContent)
         : altDocumentContent}
       {!!documents?.length && (

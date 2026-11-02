@@ -1,4 +1,4 @@
-import { type DecosVakantieverhuurVergunningaanvraag } from './toeristische-verhuur.types.ts';
+import type { DecosVakantieverhuurVergunningaanvraag } from './toeristische-verhuur.types.ts';
 import { caseTypeToeristischeVerhuur } from '../../../client/apps/bob/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import {
   SELECT_FIELDS_TRANSFORM_BASE,

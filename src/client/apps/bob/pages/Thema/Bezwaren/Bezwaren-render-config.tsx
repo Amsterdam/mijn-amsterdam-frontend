@@ -4,9 +4,9 @@ import { default as BezwarenIcon } from './BezwarenIcon.svg?react';
 import { BezwarenList } from './BezwarenList.tsx';
 import { BezwarenThema } from './BezwarenThema.tsx';
 import { isLoading } from '../../../../../helpers/api.ts';
-import {
-  type ThemaMenuItem,
-  type ThemaRenderRouteConfig,
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
 } from '../../../../../../universal/types/thema-types.ts';
 
 export const BezwarenRoutes = [

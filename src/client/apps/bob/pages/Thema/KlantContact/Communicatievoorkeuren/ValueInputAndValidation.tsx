@@ -24,7 +24,7 @@ import {
   useVerifyCommunicatievoorkeur,
 } from './useCommunicatieVoorkeuren.ts';
 import styles from './ValueInputAndValidation.module.scss';
-import { type ContactgegevenType } from '../../../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
+import type { ContactgegevenType } from '../../../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
 import { Spinner } from '../../../../../../components/Spinner/Spinner.tsx';
 
 const VERIFICATION_CODE_LENGTH = 6;

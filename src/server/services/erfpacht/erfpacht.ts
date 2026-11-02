@@ -66,7 +66,7 @@ export async function fetchErfpacht(
 
   const erfpachterResponse = await fetchErfpachter(authProfileAndToken);
 
-  if (!!erfpachterResponse.content?.isKnown && isNotCommercial) {
+  if (erfpachterResponse.content?.isKnown && isNotCommercial) {
     const dossierInfoRequest = fetchErfpachtDossierInfo(
       erfpachterResponse.content.relatieCode,
       authProfileAndToken

@@ -7,7 +7,7 @@ import {
   type VergunningExpirable,
 } from './Vergunningen-helpers.ts';
 import type { DecosZaakBase } from '../../../../../../server/services/decos/decos-types.ts';
-import { type DecosZaakFrontend } from '../../../../../../server/services/decos/decos-types.ts';
+import type { DecosZaakFrontend } from '../../../../../../server/services/decos/decos-types.ts';
 import type {
   CaseTypeVergunningenOrPB,
   WithDateRange,

@@ -14,13 +14,13 @@ import {
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
   DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
 } from './brp-service-config.ts';
-import {
-  type BrpFrontend,
-  type PersonenResponseSource,
-  type DatumSource,
-  type Adres,
-  type VerblijfplaatshistorieResponseSource,
-  type VerblijfplaatsSource,
+import type {
+  BrpFrontend,
+  PersonenResponseSource,
+  DatumSource,
+  Adres,
+  VerblijfplaatshistorieResponseSource,
+  VerblijfplaatsSource,
 } from './brp-types.ts';
 import type {
   PersonenResponseSourceError,
@@ -51,7 +51,7 @@ import {
 import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token.ts';
 import { getContextOperationId } from '../monitoring.ts';
-import { type BSN } from '../zorgned/zorgned-types.ts';
+import type { BSN } from '../zorgned/zorgned-types.ts';
 
 const TOKEN_VALIDITY_PERIOD = 1 * ONE_HOUR_MS;
 const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;

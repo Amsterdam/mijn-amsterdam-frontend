@@ -13,10 +13,10 @@ import type {
   DecosZaakSource,
   DecosZakenResponse,
 } from './decos-types.ts';
-import {
-  type DecosWorkflowResponse,
-  type DecosZaakBase,
-  type DecosZaakTransformer,
+import type {
+  DecosWorkflowResponse,
+  DecosZaakBase,
+  DecosZaakTransformer,
 } from './decos-types.ts';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import { jsonCopy, range } from '../../../universal/helpers/utils.ts';

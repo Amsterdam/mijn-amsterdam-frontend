@@ -1,8 +1,8 @@
 import { type ReactNode, useMemo } from 'react';
 
-import {
-  type AfisFacturenByStateFrontend,
-  type AfisFactuurFrontend,
+import type {
+  AfisFacturenByStateFrontend,
+  AfisFactuurFrontend,
 } from './Afis-thema-config.ts';
 import type {
   AfisThemaResponse,

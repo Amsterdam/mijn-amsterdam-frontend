@@ -6,7 +6,7 @@ import { describe, it, vi, expect } from 'vitest';
 import { useEmandateApis } from './useAfisEmandateActionsApi.tsx';
 import { useAfisEMandatesApi, forTesting } from './useAfisEmandatesApi.tsx';
 import type { EmandateStatusCode } from '../../../../../../server/services/afis/afis-types.ts';
-import { type AfisEMandateFrontend } from '../../../../../../server/services/afis/afis-types.ts';
+import type { AfisEMandateFrontend } from '../../../../../../server/services/afis/afis-types.ts';
 import { bffApiHost } from '../../../../../../testing/setup.ts';
 import { bffApi } from '../../../../../../testing/utils.ts';
 import { useBffApiStateStore } from '../../../../../hooks/api/useBffApi.ts';

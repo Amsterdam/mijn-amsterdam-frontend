@@ -9,7 +9,7 @@ import type {
   DecosZaakBase,
   DecosZaakTransformer,
 } from '../decos/decos-types.ts';
-import { type DecosZaakFrontend } from '../decos/decos-types.ts';
+import type { DecosZaakFrontend } from '../decos/decos-types.ts';
 import type {
   WithDateRange,
   WithLocation,

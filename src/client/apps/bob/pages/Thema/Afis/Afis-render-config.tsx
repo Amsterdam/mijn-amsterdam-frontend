@@ -6,9 +6,9 @@ import { default as AfisIcon } from './AfisIcon.svg?react';
 import { AfisList } from './AfisList.tsx';
 import { AfisThema } from './AfisThema.tsx';
 import { isLoading } from '../../../../../helpers/api.ts';
-import {
-  type ThemaMenuItem,
-  type ThemaRenderRouteConfig,
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
 } from '../../../../../../universal/types/thema-types.ts';
 
 export const AfisRoutes = [

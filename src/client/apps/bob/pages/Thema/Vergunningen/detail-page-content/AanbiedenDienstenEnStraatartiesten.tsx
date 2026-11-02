@@ -5,7 +5,7 @@ import type {
   AanbiedenDiensten,
   Straatartiesten,
 } from '../../../../../../../server/services/vergunningen/config-and-types.ts';
-import { type ZaakFrontendCombined } from '../../../../../../../server/services/vergunningen/config-and-types.ts';
+import type { ZaakFrontendCombined } from '../../../../../../../server/services/vergunningen/config-and-types.ts';
 import { Datalist } from '../../../../../../components/Datalist/Datalist.tsx';
 
 export function AanbiedenDienstenEnStraatartiestenContent({

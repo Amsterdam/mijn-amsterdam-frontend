@@ -11,7 +11,7 @@ import type {
   HLIRegelingFrontend,
   HLIRegelingSpecificatieFrontend,
 } from '../../../../../../server/services/hli/hli-regelingen-types.ts';
-import { type StadspasResponseFrontend } from '../../../../../../server/services/hli/stadspas-types.ts';
+import type { StadspasResponseFrontend } from '../../../../../../server/services/hli/stadspas-types.ts';
 import { entries } from '../../../../../../universal/helpers/utils.ts';
 import { MaRouterLink } from '../../../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';

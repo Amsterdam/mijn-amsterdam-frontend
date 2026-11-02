@@ -70,9 +70,9 @@ function transformLood365Response(
         let document = null;
 
         if (
-          !!location.Workorderid &&
-          !!location.Reportsenton &&
-          !!location.Reportavailable
+          location.Workorderid &&
+          location.Reportsenton &&
+          location.Reportavailable
         ) {
           const documentIDEncrypted = encryptSessionIdWithRouteIdParam(
             sessionID,

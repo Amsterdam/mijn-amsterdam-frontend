@@ -30,7 +30,7 @@ function mockCMSRequest() {
 }
 
 describe('App', () => {
-  const appLoadingIndicator = new RegExp('Welkom', 'i');
+  const appLoadingIndicator = /Welkom/i;
 
   it('Renders dirty App with loading indicator', () => {
     mockFooterRequest();

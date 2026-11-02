@@ -22,8 +22,8 @@ type CreateMainRouterOptions = {
 };
 
 export function createMainRouter({
-  isOT: isOT,
-  isAP: isAP,
+  isOT,
+  isAP,
 }: CreateMainRouterOptions) {
   const router = createBFFRouter({ id: 'router-main' });
 

@@ -250,11 +250,6 @@ describe('Bodem', () => {
         afgehandeld: /Afgehandeld/,
         afgewezen: /Afgewezen/,
       };
-
-      // Test if the patterns we use are correct in this scope.
-      // If we don't do this, we can run into the situation that these -
-      // fail and that the tests afterwards always succeed while the pattern is incorrect.
-      {
         within(lopendeAanvraagTable).getByRole('cell', {
           name: statusPatterns.ontvangen,
         });
@@ -270,7 +265,6 @@ describe('Bodem', () => {
         within(afgehandeldeAanvraagTable).getByRole('cell', {
           name: decisionPatterns.afgewezen,
         });
-      }
 
       const lopendeAanvraagRows = within(
         afgehandeldeAanvraagTable

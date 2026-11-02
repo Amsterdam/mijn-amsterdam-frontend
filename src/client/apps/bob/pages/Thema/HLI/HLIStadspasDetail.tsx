@@ -304,7 +304,7 @@ function determineUwUitgavenDescription(
         {extraInfo}
       </>
     );
-  } else if (stadspas.budgets && stadspas.balance > 0) {
+  }if (stadspas.budgets && stadspas.balance > 0) {
     return (
       <>
         {expenseInfoTextBase}

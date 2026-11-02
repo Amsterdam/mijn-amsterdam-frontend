@@ -1,4 +1,4 @@
-import { type Params } from 'react-router';
+import type { Params } from 'react-router';
 
 import type { SomeOtherString } from '../helpers/types.ts';
 import type { AppState, LinkProps, SVGComponent } from '../types/App.types.ts';

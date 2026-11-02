@@ -4,8 +4,8 @@ import { fetchAfspraken } from './klantcontact-afspraken.ts';
 import { fetchCommunicatievoorkeuren } from './klantcontact-communicatievoorkeuren.ts';
 import { fetchContactmomenten } from './klantcontact-contactmomenten.ts';
 import type {
-  ContactmomentFrontend as ContactmomentFrontend,
-  AfspraakFrontend as AfspraakFrontend,
+  ContactmomentFrontend,
+  AfspraakFrontend,
   KlantcontactResponseData,
 } from './klantcontact.types.ts';
 import {

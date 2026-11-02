@@ -8,7 +8,7 @@ import type {
   WithDetailPage,
   WithListPage,
 } from '../../../../../../universal/types/thema-types.ts';
-import { type DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
+import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,

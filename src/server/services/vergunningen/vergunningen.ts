@@ -1,9 +1,9 @@
 import createDebugger from 'debug';
 
-import {
-  type DecosVergunning,
-  type PBVergunning,
-  type ZaakFrontendCombined,
+import type {
+  DecosVergunning,
+  PBVergunning,
+  ZaakFrontendCombined,
 } from './config-and-types.ts';
 import { getStatusStepsDecos as getStatusStepsDefault } from './decos-status-steps.ts';
 import { decosZaakTransformers } from './decos-zaken.ts';

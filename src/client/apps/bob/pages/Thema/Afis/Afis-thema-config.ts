@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import merge from 'lodash.merge';
 import { generatePath, type Params } from 'react-router';

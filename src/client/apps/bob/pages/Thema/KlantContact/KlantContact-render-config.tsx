@@ -5,9 +5,9 @@ import { themaConfig } from './KlantContact-thema-config.ts';
 import { KlantContactThema } from './KlantContactThema.tsx';
 import { isLoading } from '../../../../../helpers/api.ts';
 import { IconAfspraak } from '../../../../../assets/icons/index.tsx';
-import {
-  type ThemaMenuItem,
-  type ThemaRenderRouteConfig,
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
 } from '../../../../../../universal/types/thema-types.ts';
 
 export const KlantContactRoutes = [

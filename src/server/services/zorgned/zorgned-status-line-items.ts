@@ -3,7 +3,7 @@ import type {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
 } from './zorgned-types.ts';
-import { type ZorgnedStatusLineItemTransformerConfig } from './zorgned-types.ts';
+import type { ZorgnedStatusLineItemTransformerConfig } from './zorgned-types.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 import { logger } from '../../logging.ts';
 

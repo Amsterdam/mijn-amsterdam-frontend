@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { type ReactElement } from 'react';
+import type { ReactElement } from 'react';
 
 import { Breadcrumb, Heading, Icon } from '@amsterdam/design-system-react';
 import { ChevronBackwardIcon } from '@amsterdam/design-system-react-icons';

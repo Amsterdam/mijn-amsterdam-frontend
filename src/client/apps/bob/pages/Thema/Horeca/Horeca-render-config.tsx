@@ -4,9 +4,9 @@ import { default as HorecaIcon } from './HorecaIcon.svg?react';
 import { HorecaList } from './HorecaList.tsx';
 import { HorecaThema } from './HorecaThema.tsx';
 import { isLoading } from '../../../../../helpers/api.ts';
-import {
-  type ThemaMenuItem,
-  type ThemaRenderRouteConfig,
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
 } from '../../../../../../universal/types/thema-types.ts';
 
 export const HorecaRoutes = [

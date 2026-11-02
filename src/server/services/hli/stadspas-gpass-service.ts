@@ -272,8 +272,7 @@ export async function fetchStadspassenByAdministratienummer(
 
   const stadspasResponses = await Promise.allSettled(pasRequests);
   const stadspassen = stadspasResponses
-    .map((stadspasResponse) => getSettledResult(stadspasResponse).content)
-    .flat()
+    .flatMap((stadspasResponse) => getSettledResult(stadspasResponse).content)
     .filter((stadspas) => stadspas !== null);
 
   return apiSuccessResult({ stadspassen, administratienummer });

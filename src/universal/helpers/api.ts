@@ -108,7 +108,7 @@ export function apiSuccessResult<T>(
 }
 
 export function getFailedDependencies<T extends object>(results: T) {
-  let failedDependencies: FailedDependencies | undefined = undefined;
+  let failedDependencies: FailedDependencies | undefined ;
 
   for (const [key, apiResult] of Object.entries(results)) {
     if (apiResult?.status === 'ERROR') {

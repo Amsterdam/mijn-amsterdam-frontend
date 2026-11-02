@@ -1,5 +1,5 @@
 import type { StadspasFrontend } from '../../../../../../server/services/hli/stadspas-types.ts';
-import { type PasblokkadeByPasnummer } from '../../../../../../server/services/hli/stadspas-types.ts';
+import type { PasblokkadeByPasnummer } from '../../../../../../server/services/hli/stadspas-types.ts';
 import {
   useBffApi,
   useBffApiStateStore,

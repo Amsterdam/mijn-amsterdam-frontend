@@ -7,7 +7,7 @@ import type {
   ZorgnedAanvraagTransformedWithMaApiProps,
   WithMaApiPropsAssignments,
 } from './jzd-types.ts';
-import { type FetchWmoVoorzieningenApiOptions } from './jzd-voorzieningen-api-config.ts';
+import type { FetchWmoVoorzieningenApiOptions } from './jzd-voorzieningen-api-config.ts';
 import {
   PICK_VOORZIENING_KEYS,
   jzdVoorzieningenApiConfig,
@@ -148,7 +148,7 @@ function serviceErrorResult(
   wmoVoorzieningenResponse: ApiResponse<ZorgnedAanvraagTransformed[]>,
   jeugdVoorzieningenResponse: ApiResponse<ZorgnedAanvraagTransformed[]>
 ) {
-  let code = undefined;
+  let code ;
   if (wmoVoorzieningenResponse.status === 'ERROR') {
     code = wmoVoorzieningenResponse.code;
   } else if (jeugdVoorzieningenResponse.status === 'ERROR') {

@@ -23,8 +23,7 @@ const RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS = ONE_HOUR_MS;
 export const FORCE_RENEW_CACHE_TTL_MS = 1;
 
 let adHocDependencyRequestCacheTtlMs: undefined | number;
-let resetAdHocDependencyRequestCacheTtlMsTimeout: NodeJS.Timeout | undefined =
-  undefined;
+let resetAdHocDependencyRequestCacheTtlMsTimeout: NodeJS.Timeout | undefined ;
 
 export function setAdHocDependencyRequestCacheTtlMs(
   cacheTtl: typeof adHocDependencyRequestCacheTtlMs

@@ -15,9 +15,9 @@ import type {
   StadspasBudget,
   StadspasFrontend,
 } from './stadspas-types.ts';
-import {
-  type PasblokkadeByPasnummer,
-  type StadspasResponseFrontend,
+import type {
+  PasblokkadeByPasnummer,
+  StadspasResponseFrontend,
 } from './stadspas-types.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/HLI/HLI-thema-config.ts';
 import {

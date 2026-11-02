@@ -10,9 +10,9 @@ import { InkomenThema } from './InkomenThema.tsx';
 import { FeatureToggle } from '../../../../../../universal/config/feature-toggles.ts';
 import { isLoading } from '../../../../../helpers/api.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
-import {
-  type ThemaMenuItem,
-  type ThemaRenderRouteConfig,
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
 } from '../../../../../../universal/types/thema-types.ts';
 
 export const InkomenRoutes = [

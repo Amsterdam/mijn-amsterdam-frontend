@@ -41,7 +41,7 @@ export function AfisFacturenTables({
           );
         }
         let contentAfterTheTitle = null;
-        if (state === 'overgedragen' && !!facturen.length) {
+        if (state === 'overgedragen' && facturen.length) {
           contentAfterTheTitle = <AfisDisclaimerOvergedragenFacturen />;
         } else if (state === 'afgehandeld') {
           contentAfterTheTitle = (

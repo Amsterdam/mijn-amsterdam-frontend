@@ -5,10 +5,10 @@ import { ParkerenDetail } from './ParkerenDetail.tsx';
 import { ParkerenList } from './ParkerenList.tsx';
 import { ParkerenThema } from './ParkerenThema.tsx';
 import { isLoading } from '../../../../../helpers/api.ts';
-import { type AppState } from '../../../../../../universal/types/App.types.ts';
-import {
-  type ThemaMenuItem,
-  type ThemaRenderRouteConfig,
+import type { AppState } from '../../../../../../universal/types/App.types.ts';
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
 } from '../../../../../../universal/types/thema-types.ts';
 
 export const ParkerenRoutes = [

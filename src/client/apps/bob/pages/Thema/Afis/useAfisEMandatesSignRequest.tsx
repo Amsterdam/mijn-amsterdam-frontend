@@ -152,7 +152,7 @@ export function useSignRequestStatusCheck(eMandate: AfisEMandateFrontend) {
 
   const statusResponse = api.data?.content?.status ?? '';
   const isUpdatingEMandateStatus =
-    !!payload && payloadStorage.get(eMandate.id)?.isReplacement()
+    payload && payloadStorage.get(eMandate.id)?.isReplacement()
       ? !payloadStorage.get(eMandate.id)?.isReplaced(eMandate.eMandateIdSource)
       : eMandate.status !== EMANDATE_STATUS_ACTIVE;
 

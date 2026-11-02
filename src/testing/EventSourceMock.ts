@@ -1,6 +1,6 @@
 export function newEventSourceMock() {
   function EventSourceMock() {
-    // @ts-ignore
+    // @ts-expect-error
     this.init();
   }
 

@@ -4,9 +4,9 @@ import { default as ZorgIcon } from './ZorgIcon.svg?react';
 import { ZorgList } from './ZorgList.tsx';
 import { ZorgThema } from './ZorgThema.tsx';
 import { isLoading } from '../../../../../helpers/api.ts';
-import {
-  type ThemaMenuItem,
-  type ThemaRenderRouteConfig,
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
 } from '../../../../../../universal/types/thema-types.ts';
 
 export const ZorgRoutes = [

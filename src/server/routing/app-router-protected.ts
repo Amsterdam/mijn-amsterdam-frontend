@@ -87,7 +87,7 @@ router.get(
       'adHocDependencyRequestCacheTtlMs' in req.query &&
       FeatureToggle.adHocDependencyRequestCacheTtlMs
     ) {
-      let adHocCacheTtlMs = undefined;
+      let adHocCacheTtlMs ;
 
       if (req.query.adHocDependencyRequestCacheTtlMs) {
         adHocCacheTtlMs = parseInt(

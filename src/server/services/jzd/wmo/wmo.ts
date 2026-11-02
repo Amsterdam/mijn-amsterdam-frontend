@@ -8,10 +8,10 @@ import {
 } from './status-line-items/wmo-generic.ts';
 import {
   getHulpmiddelenDisclaimer,
-  hulpmiddelenDisclaimerConfig as hulpmiddelenDisclaimerConfig,
+  hulpmiddelenDisclaimerConfig,
 } from './status-line-items/wmo-hulpmiddelen.ts';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items.ts';
-import { type WMOVoorzieningFrontend } from './wmo-types.ts';
+import type { WMOVoorzieningFrontend } from './wmo-types.ts';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service.ts';
 import { themaConfig } from '../../../../client/apps/bob/pages/Thema/Zorg/Zorg-thema-config.ts';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles.ts';
@@ -33,7 +33,7 @@ import {
 } from '../../../helpers/zaken.ts';
 import { generateFullApiUrlBFF } from '../../../routing/route-helpers.ts';
 import { getStatusLineItems } from '../../zorgned/zorgned-status-line-items.ts';
-import { type ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
+import type { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
 import type { ZorgnedAanvraagTransformedWithMaApiProps } from '../jzd-types.ts';
 import { transformVoorzieningForFrontendWithMaApiProps } from '../jzd-voorzieningen-api-service.ts';
 

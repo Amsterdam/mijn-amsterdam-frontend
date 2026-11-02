@@ -12,9 +12,9 @@ import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData.tsx';
 import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
 import { useSignRequestPayloadStorage } from './useAfisEMandatesSignRequest.tsx';
 import { useAfisThemaData } from './useAfisThemaData.hook.tsx';
-import {
-  type AfisBusinessPartnerDetailsTransformed,
-  type AfisEMandateFrontend,
+import type {
+  AfisBusinessPartnerDetailsTransformed,
+  AfisEMandateFrontend,
 } from '../../../../../../server/services/afis/afis-types.ts';
 import { entries } from '../../../../../../universal/helpers/utils.ts';
 import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';

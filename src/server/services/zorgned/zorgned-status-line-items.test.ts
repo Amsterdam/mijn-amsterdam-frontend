@@ -6,7 +6,7 @@ import type {
   ZorgnedStatusLineItemsConfig,
   ZorgnedStatusLineItemTransformerConfig,
 } from './zorgned-types.ts';
-import { type BeschikkingsResultaat } from './zorgned-types.ts';
+import type { BeschikkingsResultaat } from './zorgned-types.ts';
 import { logger } from '../../logging.ts';
 
 function getTransformerConfig() {

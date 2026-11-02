@@ -15,15 +15,15 @@ import {
   debugEmandates,
   getEmandateValidityDateFormatted,
 } from './afis-helpers.ts';
-import {
-  type AfisFactuurState,
-  type BusinessPartnerIdPayload,
-  type AfisEMandateUpdatePayload,
-  type EMandateSignRequestNotificationPayload,
-  type EMandateSignRequestPayload,
-  type EMandateSignRequestStatusPayload,
-  type EMandateUpdatePayload,
-  type POMEMandateSignRequestPayload,
+import type {
+  AfisFactuurState,
+  BusinessPartnerIdPayload,
+  AfisEMandateUpdatePayload,
+  EMandateSignRequestNotificationPayload,
+  EMandateSignRequestPayload,
+  EMandateSignRequestStatusPayload,
+  EMandateUpdatePayload,
+  POMEMandateSignRequestPayload,
 } from './afis-types.ts';
 import { IS_AP } from '../../../universal/config/env.ts';
 import {

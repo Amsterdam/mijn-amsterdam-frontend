@@ -110,7 +110,7 @@ export function getCustomTitleForDecosZaakWithLicensePlates(
     const plates = decosZaak.kentekens?.split(' | ');
     if (plates?.length === 1) {
       return `${decosZaak.title} (${decosZaak.kentekens})`;
-    } else if (!!plates && plates.length > 1) {
+    }if (plates && plates.length > 1) {
       return `${decosZaak.title} (${plates[0]}... +${plates.length - 1})`;
     }
   }

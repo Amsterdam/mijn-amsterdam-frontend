@@ -6,7 +6,7 @@ import {
 } from './AfisThema.tsx';
 import { useAfisListPageData } from './useAfisListPageData.tsx';
 import type { AfisFacturenThemaContextParams } from './useAfisThemaData.hook.tsx';
-import { type AfisFactuurStateFrontend } from '../../../../../../server/services/afis/afis-types.ts';
+import type { AfisFactuurStateFrontend } from '../../../../../../server/services/afis/afis-types.ts';
 import { ListPagePaginated } from '../../../../../components/ListPagePaginated/ListPagePaginated.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';

@@ -1,7 +1,7 @@
 import { Alert, Paragraph } from '@amsterdam/design-system-react';
 
 import { useVergunningenThemaData } from './useVergunningenThemaData.hook.ts';
-import { type ZaakFrontendCombined } from '../../../../../../server/services/vergunningen/config-and-types.ts';
+import type { ZaakFrontendCombined } from '../../../../../../server/services/vergunningen/config-and-types.ts';
 import { MaRouterLink } from '../../../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';

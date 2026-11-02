@@ -1,5 +1,5 @@
 import type { AxiosError, AxiosRequestConfig } from 'axios';
-import { type AxiosResponseHeaders } from 'axios';
+import type { AxiosResponseHeaders } from 'axios';
 import axios, { isAxiosError } from 'axios';
 import memoryCache from 'memory-cache';
 
@@ -92,7 +92,7 @@ function handleRequestDataError(
   let code: number = 500;
   let errorMessageInternal: string = '';
   let errorMessage: string = '';
-  let stack: string | undefined = undefined;
+  let stack: string | undefined ;
 
   if (fromAxios) {
     const error = error_ as AxiosError;

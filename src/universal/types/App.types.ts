@@ -4,7 +4,7 @@ import type {
   ServiceID,
   ServicesType,
 } from '../../server/services/controller.ts';
-import { type ApiResponse_DEPRECATED } from '../helpers/api.ts';
+import type { ApiResponse_DEPRECATED } from '../helpers/api.ts';
 import type { SomeOtherString } from '../helpers/types.ts';
 
 export type AppStateBase = {

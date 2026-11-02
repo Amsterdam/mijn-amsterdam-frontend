@@ -24,7 +24,7 @@ import {
   fetchCasusAanvragen,
 } from '../../zorgned/zorgned-service.ts';
 import type { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
-import { type BSN } from '../../zorgned/zorgned-types.ts';
+import type { BSN } from '../../zorgned/zorgned-types.ts';
 
 function isProductWithDelivery(
   wmoProduct: Pick<

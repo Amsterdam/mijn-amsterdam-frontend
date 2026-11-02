@@ -286,7 +286,7 @@ export function isDecisionStatusActive(aanvraag: ZorgnedAanvraagTransformed) {
       hasDecision(aanvraag) &&
       !isEindeGeldigheidVerstreken(aanvraag.datumEindeGeldigheid, new Date())
     );
-  } else if (aanvraag.resultaat === 'afgewezen') {
+  }if (aanvraag.resultaat === 'afgewezen') {
     return true;
   }
   return false;

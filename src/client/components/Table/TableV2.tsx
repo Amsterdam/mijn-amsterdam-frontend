@@ -10,7 +10,7 @@ import type {
   TableV2Props,
   WithDetailLinkComponent,
 } from './TableV2.types.ts';
-import { type ScreenSize, type TableV2ColWidths } from './TableV2.types.ts';
+import type { ScreenSize, TableV2ColWidths } from './TableV2.types.ts';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
 import { entries } from '../../../universal/helpers/utils.ts';
 import type { ZaakAanvraagDetail } from '../../../universal/types/App.types.ts';

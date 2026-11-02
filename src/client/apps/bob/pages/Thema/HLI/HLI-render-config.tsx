@@ -3,7 +3,7 @@ import { Navigate } from 'react-router';
 import { getThemaTitleWithAppState } from './helpers.ts';
 import { themaConfig } from './HLI-thema-config.ts';
 import { default as HLIIcon } from './HLIIcon.svg?react';
-import { HLIRegelingenDetail as HLIRegelingenDetail } from './HLIRegelingenDetail.tsx';
+import { HLIRegelingenDetail } from './HLIRegelingenDetail.tsx';
 import { HLIRegelingenList } from './HLIRegelingenList.tsx';
 import { HLISpecificatieList } from './HLISpecificatieList.tsx';
 import { HLIStadspasDetail } from './HLIStadspasDetail.tsx';

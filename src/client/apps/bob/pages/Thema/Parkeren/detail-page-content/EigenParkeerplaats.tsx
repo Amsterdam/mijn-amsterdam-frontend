@@ -20,7 +20,7 @@ export function EigenParkeerplaats({
 }) {
   const location = () => {
     const rows: Row[] = vergunning.locations
-      ?.map((location) => {
+      ?.flatMap((location) => {
         return [
           {
             label: 'Adres',
@@ -43,8 +43,7 @@ export function EigenParkeerplaats({
             ) : null,
           },
         ].filter((row) => row.content !== null);
-      })
-      .flat();
+      });
     return rows;
   };
 

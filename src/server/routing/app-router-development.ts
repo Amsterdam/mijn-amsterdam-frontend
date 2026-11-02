@@ -23,7 +23,7 @@ import {
 } from '../auth/auth-helpers.ts';
 import { authRoutes } from '../auth/auth-routes.ts';
 import type { AuthProfile } from '../auth/auth-types.ts';
-import { type AuthenticatedRequest } from '../auth/auth-types.ts';
+import type { AuthenticatedRequest } from '../auth/auth-types.ts';
 import { MA_FRONTEND_URL } from '../config/app.ts';
 import { getFromEnv, getValueFromEnvByKey } from '../helpers/env.ts';
 import {

@@ -4,9 +4,9 @@ import { default as AvgIcon } from './AvgIcon.svg?react';
 import { AVGList } from './AVGList.tsx';
 import { AVGThema } from './AVGThema.tsx';
 import { isLoading } from '../../../../../helpers/api.ts';
-import {
-  type ThemaMenuItem,
-  type ThemaRenderRouteConfig,
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
 } from '../../../../../../universal/types/thema-types.ts';
 
 export const AvgRoutes = [

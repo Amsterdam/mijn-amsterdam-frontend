@@ -20,7 +20,7 @@ import {
 } from './afis-e-mandates-config.ts';
 import { EMANDATE_STATUS_FRONTEND } from './afis-e-mandates-config.ts';
 import { EMANDATE_STATUS_SOURCE } from './afis-e-mandates-config.ts';
-import { type EmandateStatusFrontend } from './afis-e-mandates-config.ts';
+import type { EmandateStatusFrontend } from './afis-e-mandates-config.ts';
 import {
   debugEmandates,
   formatBusinessPartnerId,
@@ -33,26 +33,26 @@ import {
 } from './afis-helpers.ts';
 import { handleEmandateLifetimeUpdate } from './afis-route-handlers.ts';
 import { routes } from './afis-service-config.ts';
-import {
-  type AfisBusinessPartnerDetailsTransformed,
-  type AfisEMandateCreatePayload,
-  type AfisEMandatesResponseDataSource,
-  type AfisEMandateUpdatePayload,
-  type AfisEMandateFrontend,
-  type AfisEMandateSignRequestResponse,
-  type AfisEMandateSource,
-  type AfisEMandateCreditor,
-  type EMandateSignRequestPayload,
-  type BusinessPartnerIdPayload,
-  type POMSignRequestUrlResponseSource,
-  type POMSignRequestStatusResponseSource,
-  type AfisEMandateSignRequestStatusResponse,
-  type BusinessPartnerId,
-  type EMandateSignRequestNotificationPayload,
-  type AfisBusinessPartnerBankPayload,
-  type POMSignRequestUrlPayload,
-  type EMandateUpdatePayload,
-  type EMandateSignRequestStatusPayload,
+import type {
+  AfisBusinessPartnerDetailsTransformed,
+  AfisEMandateCreatePayload,
+  AfisEMandatesResponseDataSource,
+  AfisEMandateUpdatePayload,
+  AfisEMandateFrontend,
+  AfisEMandateSignRequestResponse,
+  AfisEMandateSource,
+  AfisEMandateCreditor,
+  EMandateSignRequestPayload,
+  BusinessPartnerIdPayload,
+  POMSignRequestUrlResponseSource,
+  POMSignRequestStatusResponseSource,
+  AfisEMandateSignRequestStatusResponse,
+  BusinessPartnerId,
+  EMandateSignRequestNotificationPayload,
+  AfisBusinessPartnerBankPayload,
+  POMSignRequestUrlPayload,
+  EMandateUpdatePayload,
+  EMandateSignRequestStatusPayload,
 } from './afis-types.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
 import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';

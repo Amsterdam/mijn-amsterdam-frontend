@@ -459,7 +459,7 @@ export function getQueryConfig(searchEntry: string): QueryConfig {
   return Object.fromEntries(
     Array.from(new URLSearchParams(searchEntry).entries())
       .map(([k, v]) => {
-        let value = undefined;
+        let value ;
         try {
           value = v ? JSON.parse(v) : undefined;
         } catch {
@@ -522,7 +522,7 @@ export function useMapLocations(
 
   const customLocationMarker = useMemo(() => {
     const customLocationMarker: MapLocationMarker =
-      !!queryCenterMarker && typeof queryCenterMarker === 'string'
+      queryCenterMarker && typeof queryCenterMarker === 'string'
         ? JSON.parse(queryCenterMarker)
         : centerMarker;
     const centerMarkerLabel = customLocationMarker?.label;
@@ -651,7 +651,7 @@ export function useSetMapCenterAtLocation(
   useEffect(() => {
     if (mapInstance && isReadyForSetViewUpdates.current === true) {
       let centerMarker: MapLocationMarker = customLocationMarker;
-      if (customLocationMarker.type === 'default' && !!homeLocationMarker) {
+      if (customLocationMarker.type === 'default' && homeLocationMarker) {
         centerMarker = homeLocationMarker;
       }
       if (centerMarker.latlng) {

@@ -4,7 +4,7 @@ import { DataTableBijzondereBepalingen } from './DossierDetail/DatalistBijzonder
 import { DatalistGeneral } from './DossierDetail/DatalistGeneral.tsx';
 import { DatalistJuridisch } from './DossierDetail/DatalistJuridisch.tsx';
 import { DatalistsFinancieel } from './DossierDetail/DatalistsFinancieel.tsx';
-import { useDossierDetailData as useDossierDetailData } from './DossierDetail/useErfpachtDossierDetailData.hook.ts';
+import { useDossierDetailData } from './DossierDetail/useErfpachtDossierDetailData.hook.ts';
 import { CollapsiblePanel } from '../../../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';

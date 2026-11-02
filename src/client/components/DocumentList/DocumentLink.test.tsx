@@ -36,7 +36,7 @@ beforeEach(() => {
 
 test('Displays file extension if specified', () => {
   const screen = render(<DocumentLink document={docx} />);
-  screen.getByText(new RegExp('docx'));
+  screen.getByText(/docx/);
 });
 
 test('Displays no file extension when not specified', () => {

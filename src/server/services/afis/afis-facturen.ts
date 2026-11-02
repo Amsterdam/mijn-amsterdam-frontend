@@ -746,18 +746,14 @@ export async function fetchAfisFacturenOverview(
     const facturenOpen = openFacturenContent?.facturen ?? [];
     const facturen = facturenOpen.sort(
       thenby
-        .firstBy(function (factuur: AfisFactuur) {
-          return factuur.status === 'herinnering' ? -1 : 1;
-        })
-        .thenBy(function (factuur: AfisFactuur) {
-          return [
+        .firstBy((factuur: AfisFactuur) => factuur.status === 'herinnering' ? -1 : 1)
+        .thenBy((factuur: AfisFactuur) => [
             'gedeeltelijke-betaling',
             'handmatig-betalen',
             'openstaand',
           ].includes(factuur.status)
             ? -1
-            : 1;
-        })
+            : 1)
         .thenBy(dateSort('paymentDueDate', 'asc'))
     );
 

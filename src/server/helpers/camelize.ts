@@ -24,9 +24,7 @@ export type Camelize<T, S = false> =
   T extends Array<infer U> ? Array<CamelizeObject<U, S>> : CamelizeObject<T, S>;
 
 function camelCase(str: string) {
-  return str.replace(/[_.-](\w|$)/g, function (_, x) {
-    return x.toUpperCase();
-  });
+  return str.replace(/[_.-](\w|$)/g, (_, x) => x.toUpperCase());
 }
 
 function walk(obj: any, shallow = false): any {

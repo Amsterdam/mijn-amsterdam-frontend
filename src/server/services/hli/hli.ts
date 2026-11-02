@@ -50,7 +50,7 @@ import {
 } from '../zorgned/zorgned-service.ts';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items.ts';
 import type { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types.ts';
-import { type ZorgnedPerson } from '../zorgned/zorgned-types.ts';
+import type { ZorgnedPerson } from '../zorgned/zorgned-types.ts';
 
 export type GetDisplayStatusFn<
   T extends ZaakDisplayStatus = ZaakDisplayStatus,

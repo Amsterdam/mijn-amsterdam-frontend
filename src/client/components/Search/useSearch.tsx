@@ -125,7 +125,7 @@ export function generateSearchIndexPageEntries(
     const hasProperAppState = !!stateSlice && !isError(stateSlice);
 
     const isEnabled =
-      !!apiConfig && 'isEnabled' in apiConfig ? apiConfig.isEnabled : true;
+      apiConfig && 'isEnabled' in apiConfig ? apiConfig.isEnabled : true;
 
     return (
       apiConfig.profileTypes?.includes(profileType) &&
@@ -371,7 +371,7 @@ export function useSearchIndex(extendedAMResults: boolean) {
   ]);
 
   useEffect(() => {
-    if (fuseInstance && !!term) {
+    if (fuseInstance && term) {
       const rawResults = fuseInstance.search(term).map((result) => result.item);
       setResults({ ma: rawResults });
     }

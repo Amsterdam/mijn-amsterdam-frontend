@@ -37,16 +37,12 @@ function setUpAPI(responses: {
 }) {
   remoteApi
     .get(
-      new RegExp(
-        '/salesforce/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/'
-      )
+      /\/salesforce\/contactmomenten\/services\/apexrest\/klantinteracties\/v1.0\/klantcontacten\//
     )
     .reply(200, responses.contactmomentenResponse);
   remoteApi
     .get(
-      new RegExp(
-        '/salesforce/contactmomenten/services/apexrest/klantinteracties/v1.0/appointments'
-      )
+      /\/salesforce\/contactmomenten\/services\/apexrest\/klantinteracties\/v1.0\/appointments/
     )
     .reply(200, responses.afsprakenResponse);
 }
