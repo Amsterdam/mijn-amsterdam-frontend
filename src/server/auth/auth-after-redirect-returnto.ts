@@ -3,16 +3,19 @@ import type { ParsedQs } from 'qs';
 import { getReturnToUrlZaakStatus } from './auth-helpers.ts';
 import { authRoutes } from './auth-routes.ts';
 import { ZAAK_STATUS_ROUTE } from '../../client/apps/bob/pages/ZaakStatus/ZaakStatus-config.ts';
+import { featureToggle } from '../config/feature-toggles.ts';
 import {
   generateFullApiUrlBFF,
   generateMaFrontendUrl,
 } from '../routing/route-helpers.ts';
+import { routes as amsappAuthRoutes } from '../services/amsapp/auth/amsapp-auth-service-config.ts';
 import { routes as amsappNotificationsRoutes } from '../services/amsapp/notifications/amsapp-notifications-service-config.ts';
 import { routes as amsappStadspasRoutes } from '../services/amsapp/stadspas/amsapp-stadspas-service-config.ts';
 
 // Return-to-key after login for getting the administration number of the stadspas.
 export const RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER =
   'amsapp-stadspas-administratienummer';
+export const RETURNTO_AMSAPP_AUTH_CALLBACK = 'amsapp-auth-callback';
 // Return-to-key after logout for redirecting to the landing page of the stadspas app.
 export const RETURNTO_AMSAPP_STADSPAS_APP_LANDING = 'amsapp-stadspas-landing';
 
@@ -46,6 +49,19 @@ export function getReturnToUrl(
           token:
             typeof queryParams['amsapp-session-token'] === 'string'
               ? queryParams['amsapp-session-token']
+              : '',
+        }
+      );
+    case RETURNTO_AMSAPP_AUTH_CALLBACK:
+      if (!featureToggle['AMSAPP.universalAuth']) {
+        return defaultReturnTo_;
+      }
+      return generateFullApiUrlBFF(
+        amsappAuthRoutes.public.AMSAPP_AUTH_CALLBACK,
+        {
+          loginId:
+            typeof queryParams['amsapp-login-id'] === 'string'
+              ? queryParams['amsapp-login-id']
               : '',
         }
       );

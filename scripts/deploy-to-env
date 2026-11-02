@@ -43,6 +43,25 @@ git checkout "$target_branch"
 git fetch origin "$target_branch" > /dev/null 2>&1
 git reset --hard "origin/$target_branch" > /dev/null 2>&1
 
+# Let the user decide if they want to merge or force push
+if ! git merge-base --is-ancestor "$current_branch" "$target_branch"; then
+  echo ""
+  echoGreen "Branches diverged for az-acceptance"
+  echoGreen "1) Try merge"
+  echoGreen "2) Overwrite az-acceptance with $current_branch"
+  read -r deploy_choice
+
+  if [[ "$deploy_choice" == "2" ]]; then
+    echoGreen "Force pushing $target_branch with $current_branch"
+    git reset --hard "$current_branch"
+    git push --force origin "$target_branch"
+    echoGreen "$current_branch was pushed onto $target_branch"
+
+    git checkout "$current_branch"
+    exit 0
+  fi
+fi
+
 set +e  # Temporarily allow errors to read out merge_exit_code
 git merge --no-edit "$current_branch"
 merge_exit_code=$?
@@ -59,7 +78,7 @@ else
   if [[ "$answer" == "Y" || "$answer" == "y" ]]; then
     echoGreen "Force pushing $target_branch with $current_branch"
     git reset --hard "$current_branch"
-    git push --force
+    git push --force origin "$target_branch"
     echoGreen "$current_branch was pushed onto $target_branch"
   else
     echoGreen "Aborting merge"

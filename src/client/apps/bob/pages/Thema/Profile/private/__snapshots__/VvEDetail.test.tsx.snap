@@ -214,11 +214,6 @@ exports[`VvEDetail > Matches snapshot with VvE cases 1`] = `
                   >
                     Startdatum
                   </th>
-                  <th
-                    class="ams-table__header-cell"
-                  >
-                    Status
-                  </th>
                 </tr>
               </thead>
               <tbody
@@ -241,11 +236,6 @@ exports[`VvEDetail > Matches snapshot with VvE cases 1`] = `
                     class="ams-table__cell"
                   >
                     1 mei 2026
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    In behandeling
                   </td>
                 </tr>
               </tbody>

@@ -4,6 +4,8 @@ import { IS_PRODUCTION } from '../../universal/config/env.ts';
 export const featureToggle = {
   ['AFIS.EMandates']: true,
   ['AFIS.blockDataForMultipleKvKVestigingen']: true,
+  ['AMSAPP.universalAuth']: !IS_PRODUCTION,
+  ['AMSAPP.universalAuth.servicesAllAccess']: !IS_PRODUCTION,
   ['AMSAPP.notificationService']: true,
   ['BRP.aantalBewonersOpAdresTonen']: true,
   ['BRP.verblijfplaatshistorie']: true,

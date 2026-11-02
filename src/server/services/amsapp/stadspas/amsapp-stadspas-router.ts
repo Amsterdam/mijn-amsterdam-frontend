@@ -2,6 +2,7 @@ import type { Request, Response } from 'express';
 
 import {
   handleAdministratienummerExchange,
+  sendAdministratienummerResponse,
   sendAppLandingResponse,
   sendStadspassenResponse,
   sendDiscountTransactionsResponse,
@@ -16,6 +17,7 @@ import {
   createBFFRouter,
   generateFullApiUrlBFF,
 } from '../../../routing/route-helpers.ts';
+import { featureToggle } from '../auth/amsapp-auth-service-config.ts';
 
 // PUBLIC INTERNET NETWORK ROUTER
 // ==============================
@@ -52,6 +54,14 @@ routerInternet.get(
 const routerPrivateNetwork = createBFFRouter({
   id: 'external-consumer-private-network-stadspas',
 });
+
+if (featureToggle.amsAppUniversalAuthIsActive) {
+  routerPrivateNetwork.get(
+    routes.private.STADSPAS_ADMINISTRATIENUMMER,
+    apiKeyVerificationHandler,
+    sendAdministratienummerResponse
+  );
+}
 
 routerPrivateNetwork.get(
   routes.private.STADSPAS_PASSEN,
