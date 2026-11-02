@@ -1,3 +1,4 @@
+// biome-ignore-all lint/suspicious/noExplicitAny: Test fixtures and mocks.
 import type { PartialDeep } from 'type-fest';
 import {
   afterAll,

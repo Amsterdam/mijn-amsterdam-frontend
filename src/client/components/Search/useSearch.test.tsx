@@ -1,3 +1,4 @@
+// biome-ignore-all lint/suspicious/noExplicitAny: Test fixtures and mocks.
 import type { ReactNode } from 'react';
 
 import { renderHook } from '@testing-library/react';

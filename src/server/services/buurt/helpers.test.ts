@@ -1,3 +1,4 @@
+// biome-ignore-all lint/suspicious/noExplicitAny: Test fixtures and mocks.
 import type { LatLngTuple } from 'leaflet';
 import { describe, expect, it, vi } from 'vitest';
 

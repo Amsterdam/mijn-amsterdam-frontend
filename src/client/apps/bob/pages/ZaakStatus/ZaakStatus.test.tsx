@@ -1,3 +1,4 @@
+// biome-ignore-all lint/suspicious/noExplicitAny: Test fixtures and mocks.
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { describe, expect, vi } from 'vitest';
