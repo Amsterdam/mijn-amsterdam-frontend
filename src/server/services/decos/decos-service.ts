@@ -431,7 +431,8 @@ async function fetchZakenByUserKey(
   const zaakTypeTransformersByItemType = zaakTypeTransformers.reduce<
     Record<DecosZaakTransformer['itemType'], DecosZaakTransformer[]>
   >((acc, transformer) => {
-    (acc[transformer.itemType] ||= []).push(transformer);
+    acc[transformer.itemType] ||= [];
+    acc[transformer.itemType].push(transformer);
     return acc;
   }, {});
 

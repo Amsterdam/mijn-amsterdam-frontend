@@ -40,8 +40,8 @@ describe('useAppState', () => {
   });
 
   test('Should start with the SSE endpoint', async () => {
-    const EventSourceMock = ((window as any).EventSource =
-      newEventSourceMock());
+    const EventSourceMock = newEventSourceMock();
+    (window as any).EventSource = EventSourceMock;
     const stateSliceMock = { BRP: { content: { hello: 'world' } } };
     renderHook(() => useAppStateRemote());
 
@@ -75,8 +75,8 @@ describe('useAppState', () => {
   });
 
   test('Should use Fallback service endpoint if EventSource fails to connect', async () => {
-    const EventSourceMock = ((window as any).EventSource =
-      newEventSourceMock());
+    const EventSourceMock = newEventSourceMock();
+    (window as any).EventSource = EventSourceMock;
 
     const stateSliceMock = { BRP: { content: { foo: 'blappie' } } };
     fetchMock.mockResolvedValueOnce(createFetchResponse(stateSliceMock));
@@ -98,8 +98,8 @@ describe('useAppState', () => {
   });
 
   test('Should respond with an appState error entry if Fallback service and SSE both fail.', async () => {
-    const EventSourceMock = ((window as any).EventSource =
-      newEventSourceMock());
+    const EventSourceMock = newEventSourceMock();
+    (window as any).EventSource = EventSourceMock;
     fetchMock.mockResolvedValue(createFetchResponse(null, false));
     renderHook(() => useAppStateRemote());
 

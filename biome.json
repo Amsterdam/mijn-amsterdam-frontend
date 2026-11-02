@@ -5,10 +5,10 @@
     "ignoreUnknown": true,
     "includes": [
       "**",
-      "!drizzle",
-      "!vendor",
+      "!drizzle/**",
+      "!vendor/**",
       "!public/js/usabilla*.js",
-      "!scripts"
+      "!scripts/**"
     ]
   },
   "formatter": {

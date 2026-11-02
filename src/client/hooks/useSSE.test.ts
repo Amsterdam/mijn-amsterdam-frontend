@@ -15,8 +15,8 @@ describe('useAppState', () => {
   vi.spyOn(console, 'error').mockImplementation(() => void 0);
 
   it('Should connect and respond with multiple messages.', async () => {
-    const EventSourceMock = ((window as any).EventSource =
-      newEventSourceMock());
+    const EventSourceMock = newEventSourceMock();
+    (window as any).EventSource = EventSourceMock;
     const onEventCallback = vi.fn();
     const hook = renderHook(() =>
       sseHook.useSSE({
@@ -44,8 +44,8 @@ describe('useAppState', () => {
   });
 
   it('Should connect fail, retry and respond with an error.', async () => {
-    const EventSourceMock = ((window as any).EventSource =
-      newEventSourceMock());
+    const EventSourceMock = newEventSourceMock();
+    (window as any).EventSource = EventSourceMock;
     const onEventCallback = vi.fn();
     renderHook(() =>
       sseHook.useSSE({
@@ -77,8 +77,8 @@ describe('useAppState', () => {
   });
 
   it('Should not connect if postponed.', () => {
-    const EventSourceMock = ((window as any).EventSource =
-      newEventSourceMock());
+    const EventSourceMock = newEventSourceMock();
+    (window as any).EventSource = EventSourceMock;
     const onEventCallback = vi.fn();
     renderHook(() =>
       sseHook.useSSE({
@@ -95,8 +95,8 @@ describe('useAppState', () => {
   });
 
   it('Should fail immediately if connection is closed but with error.', () => {
-    const EventSourceMock = ((window as any).EventSource =
-      newEventSourceMock());
+    const EventSourceMock = newEventSourceMock();
+    (window as any).EventSource = EventSourceMock;
     const onEventCallback = vi.fn();
     EventSourceMock.prototype.readyState = 2;
 
@@ -115,8 +115,8 @@ describe('useAppState', () => {
   });
 
   it('Should fail immediately if connection is open but with error.', () => {
-    const EventSourceMock = ((window as any).EventSource =
-      newEventSourceMock());
+    const EventSourceMock = newEventSourceMock();
+    (window as any).EventSource = EventSourceMock;
     const onEventCallback = vi.fn();
     EventSourceMock.prototype.readyState = 1;
 

@@ -232,7 +232,8 @@ export async function fetchAllKlachten(
       result.klachten.length < result.aantal &&
       result.klachten.length < MAX_KLACHTEN_COUNT
     ) {
-      const response = await fetchKlachten(authProfileAndToken, (page += 1));
+      page += 1;
+      const response = await fetchKlachten(authProfileAndToken, page);
 
       if (response.status === 'OK') {
         result.klachten = result.klachten.concat(response.content.klachten);
