@@ -21,7 +21,7 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "preset": "recommended",
+      "preset": "none",
       "complexity": {
         "noAdjacentSpacesInRegex": "error",
         "noBannedTypes": "error",
