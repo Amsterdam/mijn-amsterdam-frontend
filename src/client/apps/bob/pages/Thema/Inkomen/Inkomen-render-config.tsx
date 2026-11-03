@@ -1,5 +1,6 @@
 import { themaConfig } from './Inkomen-thema-config.ts';
 import { InkomenDetailBbz } from './InkomenDetailBbz.tsx';
+import { InkomenDetailBijzondereBijstand } from './InkomenDetailBijzondereBijstand.tsx';
 import { InkomenDetailTonk } from './InkomenDetailTonk.tsx';
 import { InkomenDetailTozo } from './InkomenDetailTozo.tsx';
 import { InkomenDetailUitkering } from './InkomenDetailUitkering.tsx';
@@ -8,12 +9,12 @@ import { InkomenList } from './InkomenList.tsx';
 import { InkomenListSpecificaties } from './InkomenListSpecificaties.tsx';
 import { InkomenThema } from './InkomenThema.tsx';
 import { FeatureToggle } from '../../../../../../universal/config/feature-toggles.ts';
-import { isLoading } from '../../../../../helpers/api.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
 } from '../../../../../../universal/types/thema-types.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 
 export const InkomenRoutes = [
   {
@@ -31,6 +32,10 @@ export const InkomenRoutes = [
   {
     route: themaConfig.detailPageUitkering.route.path,
     Component: InkomenDetailUitkering,
+  },
+  {
+    route: themaConfig.detailPageBijzondereBijstand.route.path,
+    Component: InkomenDetailBijzondereBijstand,
   },
   {
     route: themaConfig.detailPageBbz.route.path,

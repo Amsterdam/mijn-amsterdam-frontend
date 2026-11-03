@@ -4,16 +4,16 @@ import type {
   WpiIncomeSpecificationTransformed,
   WpiRequestProcess,
 } from '../../../../../../server/services/wpi/wpi-types.ts';
-import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
-import {
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-} from '../../../config/app.ts';
 import type {
   PageConfig,
   ThemaConfigBase,
   WithListPage,
 } from '../../../../../../universal/types/thema-types.ts';
+import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
+import {
+  MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+  MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
+} from '../../../config/app.ts';
 
 const THEMA_ID = 'INKOMEN';
 const THEMA_TITLE = 'Inkomen';
@@ -22,6 +22,8 @@ export const wpiLinks = {
   BIJSTANDSUITKERING:
     'https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/',
   BBZ: 'https://www.amsterdam.nl/ondernemen/ondersteuning/bijstand-lening-aanvragen-ondernemers/',
+  BIJZONDERE_BIJSTAND:
+    'https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/bijzondere-bijstand/',
 };
 
 type WithlistPageSpecificaties = PageConfig<'listPageSpecificaties'>;
@@ -29,6 +31,8 @@ type WithDetailPageBbz = PageConfig<'detailPageBbz'>;
 type WithDetailPageTonk = PageConfig<'detailPageTonk'>;
 type WithDetailPageTozo = PageConfig<'detailPageTozo'>;
 type WithDetailPageUitkering = PageConfig<'detailPageUitkering'>;
+type WithDetailPageBijzondereBijstand =
+  PageConfig<'detailPageBijzondereBijstand'>;
 
 type InkomenThemaConfig = ThemaConfigBase &
   WithListPage &
@@ -36,7 +40,8 @@ type InkomenThemaConfig = ThemaConfigBase &
   WithDetailPageBbz &
   WithDetailPageTonk &
   WithDetailPageTozo &
-  WithDetailPageUitkering;
+  WithDetailPageUitkering &
+  WithDetailPageBijzondereBijstand;
 
 export const themaConfig: InkomenThemaConfig = {
   id: THEMA_ID,
@@ -65,7 +70,7 @@ export const themaConfig: InkomenThemaConfig = {
     {
       title: THEMA_TITLE,
       listItems: [
-        'Uw aanvraag voor een bijstandsuitkering of bijstand voor zelfstandigen (Bbz)',
+        'Uw aanvraag voor een bijstandsuitkering, bijzondere bijstand of bijstand voor zelfstandigen (Bbz)',
         'De uitkeringsspecificaties en jaaropgaven van uw bijstandsuitkering of bijstand voor zelfstandigen (Bbz)',
         'Uw aanvraag voor de Tijdelijke overbruggingsregeling zelfstandig ondernemers (Tozo 1, 2, 3, 4 en 5)',
         'Uw aanvraag voor de Tijdelijke Ondersteuning Noodzakelijke Kosten (TONK)',
@@ -117,6 +122,13 @@ export const themaConfig: InkomenThemaConfig = {
       path: '/inkomen/bijstandsuitkering/:id',
       trackingUrl: '/inkomen/bijstandsuitkering',
       documentTitle: `Bijstandsuitkering | ${THEMA_TITLE}`,
+    },
+  },
+  detailPageBijzondereBijstand: {
+    route: {
+      path: '/inkomen/bijzondere-bijstand/:id',
+      trackingUrl: '/inkomen/bijzondere-bijstand',
+      documentTitle: `Bijzondere Bijstand | ${THEMA_TITLE}`,
     },
   },
 };
