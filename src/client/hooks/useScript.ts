@@ -1,5 +1,5 @@
 // Taken from https://gist.github.com/gragland/929e42759c0051ff596bc961fb13cd93
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const cachedScripts: string[] = [];
 
@@ -26,6 +26,14 @@ export function useScript({
     error: false,
   });
 
+  const datasetRef = useRef(dataset);
+  const onLoadCallbackRef = useRef(onLoadCallback);
+
+  useEffect(() => {
+    datasetRef.current = dataset;
+    onLoadCallbackRef.current = onLoadCallback;
+  }, [dataset, onLoadCallback]);
+
   useEffect(() => {
     if (!isEnabled) {
       return;
@@ -47,8 +55,8 @@ export function useScript({
       script.async = async;
       script.defer = defer;
 
-      if (dataset) {
-        for (const [name, value] of Object.entries(dataset)) {
+      if (datasetRef.current) {
+        for (const [name, value] of Object.entries(datasetRef.current)) {
           script.dataset[name] = value;
         }
       }
@@ -59,7 +67,7 @@ export function useScript({
           loaded: true,
           error: false,
         });
-        onLoadCallback?.();
+        onLoadCallbackRef.current?.();
       };
 
       const onScriptError = () => {
@@ -91,7 +99,7 @@ export function useScript({
         script.removeEventListener('error', onScriptError);
       };
     }
-  }, [src, isEnabled, defer, async, onLoadCallback, dataset]); // Only re-run effect if script src changes
+  }, [src, isEnabled, defer, async]);
 
   return [state.loaded, state.error];
 }
