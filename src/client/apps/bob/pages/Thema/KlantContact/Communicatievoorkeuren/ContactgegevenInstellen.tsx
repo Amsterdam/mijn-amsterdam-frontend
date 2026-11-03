@@ -67,7 +67,7 @@ export function ContactgegevenInstellen() {
               <ContactgegevenForm
                 value={valueLocal || currentValue || ''}
                 type={contactgegevenType}
-                onCallback={({ type, value }, success) => {
+                onCallback={({ value }, success) => {
                   setValueLocal(value ?? ''); // If we reload the page after setting the email in session storage, we can prefill the email field with the previously entered value.
                   if (success) {
                     navigateToStep('2');

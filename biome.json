@@ -45,7 +45,7 @@
         "noUselessCatch": "error",
         "noUselessEscapeInRegex": "error",
         "noUselessThisAlias": "error",
-        "noUselessTernary":"error",
+        "noUselessTernary": "error",
         "noUselessTypeConstraint": "error",
         "useLiteralKeys": "error"
       },
@@ -95,7 +95,7 @@
       "nursery": {
         "noOctal": "error",
         "useReactFunctionComponentDefinition": {
-          "level": "warn",
+          "level": "off",
           "options": { "namedComponents": "functionDeclaration" }
         }
       },
