@@ -205,10 +205,10 @@ describe('afis-e-mandates service (with nock)', () => {
 
       const bankCreateData =
         // Third to last call is the create bank account call
-        (requestDataMock.mock.calls.at(-3)?.at(-1) as DataRequestConfig).data;
+        (requestDataMock.mock.calls?.at(-3)?.at(-1) as DataRequestConfig)?.data;
 
       const emandateCreateData = // Last call is the create mandate call
-        (requestDataMock.mock.calls.at(-1)?.at(-1) as DataRequestConfig).data;
+        (requestDataMock.mock.calls?.at(-1)?.at(-1) as DataRequestConfig)?.data;
 
       expect(bankCreateData).toStrictEqual({
         BankAccount: '9343513650',

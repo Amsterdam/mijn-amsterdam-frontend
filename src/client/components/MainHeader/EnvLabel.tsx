@@ -22,7 +22,7 @@ export function EnvLabel({ showProfileName }: { showProfileName: boolean }) {
       {shortEnv[OTAP_ENV]}
       {showProfileName && (
         <>
-          {' @ '}
+          {' '}@{' '}
           <ProfileName fallbackName="[Error: Problem getting <ProfileName/>]" />
         </>
       )}

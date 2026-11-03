@@ -157,7 +157,7 @@ export function AutoLogoutDialog({
       clearInterval(intervalId.current);
       clearTimeout(timeoutId.current);
     };
-  }, [millisecondsBeforeAutoLogoutDialogOpens]);
+  }, [millisecondsBeforeAutoLogoutDialogOpens, logtime]);
 
   const maxCountInSeconds = Math.min(
     lastChanceBeforeAutoLogoutSeconds,

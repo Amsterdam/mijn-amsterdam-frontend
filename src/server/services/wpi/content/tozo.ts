@@ -32,10 +32,10 @@ const voorschotLabels: WpiRequestStatusLabels = {
         statusStep.about || requestProcess.about
       }: Wij hebben een voorschot betaald`;
     },
-    description: (requestProcess, statusStep) =>
+    description: (_requestProcess, _statusStep) =>
       `Wij hebben een voorschot naar uw rekening overgemaakt.`,
   },
-  description: (requestProcess, statusStep) =>
+  description: (_requestProcess, statusStep) =>
     `<p>
           Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
           voorwaarden in de brief.
@@ -46,7 +46,7 @@ const herstelTermijnLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess, statusStep) =>
       `${statusStep.about || requestProcess.about}: Meer informatie nodig`,
-    description: (requestProcess, statusStep) =>
+    description: (_requestProcess, _statusStep) =>
       `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
   },
   description: (requestProcess, statusStep) =>

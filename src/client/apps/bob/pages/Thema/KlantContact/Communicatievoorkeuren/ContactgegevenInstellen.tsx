@@ -79,7 +79,7 @@ export function ContactgegevenInstellen() {
               <ContactgegevenVerify
                 value={valueLocal}
                 type={contactgegevenType}
-                onVerified={({ otp, value, type }) => {
+                onVerified={(_onVerified) => {
                   setValueLocal('');
                   navigate(themaConfig.route.path);
                 }}

@@ -10,10 +10,10 @@ type CamelizeObject<T, S = false> = {
     : T[K] extends RegExp
       ? T[K]
       : T[K] extends Array<infer U>
-        ? U extends {} | undefined
+        ? U extends object | undefined
           ? Array<CamelizeObject<U>>
           : T[K]
-        : T[K] extends {} | undefined
+        : T[K] extends object | undefined
           ? S extends true
             ? T[K]
             : CamelizeObject<T[K]>

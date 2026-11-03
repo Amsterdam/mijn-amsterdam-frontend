@@ -57,7 +57,7 @@ export function useMainHeaderControl() {
     return () => {
       el?.removeEventListener('click', clickMainMenuButton);
     };
-  }, [ref.current, isMainMenuOpen, isSearchActive]);
+  }, [setSearchActive, toggleMainMenu, isMainMenuOpen, isSearchActive]);
 
   const closeMenuAndSearch = useCallback(() => {
     if (isMainMenuOpen) {
@@ -66,7 +66,7 @@ export function useMainHeaderControl() {
     if (isSearchActive) {
       setSearchActive(false);
     }
-  }, [ref.current, isMainMenuOpen, isSearchActive]);
+  }, [setSearchActive,isMainMenuOpen, isSearchActive]);
 
   const closeByEscapeKey = useCallback(
     (event: KeyboardEvent) => {
@@ -83,7 +83,7 @@ export function useMainHeaderControl() {
   // Close the main menu or search when the route changes
   useEffect(() => {
     closeMenuAndSearch();
-  }, [location.pathname]);
+  }, [location.pathname, closeMenuAndSearch]);
 
   // Close the main menu when a link in the main menu is clicked
   useEffect(() => {

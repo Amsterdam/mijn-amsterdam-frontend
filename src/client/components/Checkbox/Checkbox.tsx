@@ -45,14 +45,14 @@ export const Checkbox = forwardRef<
       if (ref.current) {
         ref.current.indeterminate = indeterminate ?? false;
       }
-    }, [ref, indeterminate]);
+    }, [indeterminate]);
 
     // Make the label aware of changes in the checked state
 
     // Make the component aware of changes in the checked prop
     useMemo(() => {
       setChecked(!!checkedProp);
-    }, [checkedProp, setChecked]);
+    }, [checkedProp]);
 
     return (
       <span

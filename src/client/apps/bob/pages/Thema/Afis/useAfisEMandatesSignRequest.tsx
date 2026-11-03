@@ -180,11 +180,11 @@ type CheckStatusProps = {
 
 export function CheckStatus({ eMandate }: CheckStatusProps) {
   const signRequestStatusCheckApi = useSignRequestStatusCheck(eMandate);
-  return signRequestStatusCheckApi.isRequestingStatusCheck ? (
-    <Paragraph>Controleren...</Paragraph>
-  ) : signRequestStatusCheckApi.isPendingActivation ? (
-    <>Wachten op activatie</>
-  ) : (
-    eMandate.displayStatus
-  );
+  if (signRequestStatusCheckApi.isRequestingStatusCheck) {
+    return <Paragraph>Controleren...</Paragraph>;
+  }
+  if (signRequestStatusCheckApi.isPendingActivation) {
+    return <>Wachten op activatie</>;
+  }
+  return <>{eMandate.displayStatus}</>;
 }

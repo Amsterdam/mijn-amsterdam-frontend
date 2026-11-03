@@ -346,7 +346,7 @@ export const DATASETS: DatasetCategories = {
 };
 
 export function getDatasetCategoryId(datasetId: DatasetId) {
-  const group = Object.entries(DATASETS).find(([categoryId, category]) =>
+  const group = Object.entries(DATASETS).find(([_categoryId, category]) =>
     Object.keys(category.datasets).includes(datasetId)
   );
   if (group) {

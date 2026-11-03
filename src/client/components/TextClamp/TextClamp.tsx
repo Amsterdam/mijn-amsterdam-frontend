@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import classNames from 'classnames';
 
