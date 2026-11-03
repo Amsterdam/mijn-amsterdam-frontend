@@ -76,11 +76,12 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       ? currentBbox
       : queryConfig?.bbox || currentBbox;
 
-    const datasetIds = queryConfig?.s
-      ? activeDatasetIds
-      : Array.isArray(queryConfig?.datasetIds)
-        ? queryConfig?.datasetIds
-        : activeDatasetIds;
+    let datasetIds = activeDatasetIds;
+    if (!queryConfig?.s && Array.isArray(queryConfig?.datasetIds)) {
+      datasetIds = queryConfig.datasetIds;
+    }
+
+    const datasetIds = (!queryConfig?.s && Array.isArray(queryConfig?.datasetIds)) ? queryConfig.datasetIds : activeDatasetIds;
 
     const filters = queryConfig?.s
       ? activeDatasetFilters

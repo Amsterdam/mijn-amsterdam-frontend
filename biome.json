@@ -35,6 +35,7 @@
         "noUselessCatch": "error",
         "noUselessEscapeInRegex": "error",
         "noUselessThisAlias": "error",
+        "noUselessTernary":"error",
         "noUselessTypeConstraint": "error",
         "useLiteralKeys": "error"
       },

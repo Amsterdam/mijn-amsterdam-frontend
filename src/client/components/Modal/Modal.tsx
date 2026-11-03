@@ -65,7 +65,7 @@ function FocusTrap({
   pollingQuerySelector: string;
   giveUpOnReadyPollingAfterMs: number;
 }) {
-  const [isReady, setIsReady] = useState(pollingQuerySelector ? false : true);
+  const [isReady, setIsReady] = useState(!pollingQuerySelector);
 
   useEffect(() => {
     let elementResolver: ReturnType<typeof getElementOnPageAsync> | null = null;

@@ -69,7 +69,7 @@ export async function cacheOverviewHandler(_req: Request, res: Response) {
 export async function authCheckHandler(req: Request, res: Response) {
   const reqWithSession = req as RequestWithSession;
   return res.json({
-    isAuthenticated: reqWithSession.session?.isAuthenticated ? true : false,
+    isAuthenticated: !!reqWithSession.session?.isAuthenticated,
     username: reqWithSession.session?.username ?? null,
   });
 }

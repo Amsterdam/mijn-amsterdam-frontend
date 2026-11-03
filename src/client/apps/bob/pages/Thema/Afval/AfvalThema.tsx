@@ -221,6 +221,17 @@ export function AfvalThemaPagina() {
     commercialLocation?.bagNummeraanduidingId ===
     privateLocation?.bagNummeraanduidingId;
 
+  function renderAddress() {
+    const address = MY_LOCATION.content?.[0]?.address;
+    if (address) {
+      return getFullAddress(address);
+    }
+    if (isLocationLoading) {
+      return <LoadingContent barConfig={[['20rem', '3rem', '0']]} />;
+    }
+    return 'Onbekend adres';
+  }
+
   return (
     <PageV2 heading={themaConfig.title}>
       <PageContentCell spanWide={8}>
@@ -314,15 +325,7 @@ export function AfvalThemaPagina() {
               label: 'Uw adres',
               content: (
                 <>
-                  <Paragraph className="ams-mb-m">
-                    {MY_LOCATION.content?.[0]?.address ? (
-                      getFullAddress(MY_LOCATION.content?.[0].address)
-                    ) : isLocationLoading ? (
-                      <LoadingContent barConfig={[['20rem', '3rem', '0']]} />
-                    ) : (
-                      'Onbekend adres'
-                    )}
-                  </Paragraph>
+                  <Paragraph className="ams-mb-m">{renderAddress()}</Paragraph>
                   {/* NOTE: Edge case: Een (niet zakelijke) burger kan ingeschreven zijn op een pand zonder woonfunctie. */}
                   {heeftGeenWoonfunctie && profileType === 'private' && (
                     <Paragraph className="ams-mb-m">

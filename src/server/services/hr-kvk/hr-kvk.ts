@@ -290,9 +290,15 @@ function transformVestigingen(
 ): Vestiging[] {
   return (
     responseData?._embedded?.vestigingen
-      ?.toSorted((a, b) =>
-        a.hoofdvestiging === 'Ja' ? -1 : b.hoofdvestiging === 'Ja' ? 1 : 0
-      )
+      ?.toSorted((a, b) => {
+        if (a.hoofdvestiging === 'Ja') {
+          return -1;
+        }
+        if (b.hoofdvestiging === 'Ja') {
+          return 1;
+        }
+        return 0;
+      })
       .map((vestiging) => transformVestiging(vestiging)) ?? []
   );
 }
