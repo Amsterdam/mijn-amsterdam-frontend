@@ -58,9 +58,6 @@ export type ToeristischeVerhuurVergunning =
   | BBVergunningFrontend
   | VakantieverhuurVergunningFrontend;
 
-type s1 = BBVergunningFrontend['steps'];
-type s2 = VakantieverhuurVergunningFrontend['steps'];
-
 export type ToeristischeVerhuur = {
   vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[];
   bbVergunningen: BBVergunningFrontend[];

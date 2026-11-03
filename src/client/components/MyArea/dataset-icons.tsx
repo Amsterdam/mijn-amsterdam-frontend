@@ -52,7 +52,7 @@ const DatasetIcon: React.FC<{
   color?: string;
   className?: string;
   children?: ReactNode;
-}> = ({ children, className, color = Colors.white }) => {
+}> = ({ children, className }) => {
   return (
     <div className={classnames(styles.DatasetIcon, className)}>{children}</div>
   );
@@ -357,7 +357,7 @@ export function getIcon(id: string, childId?: string) {
 }
 
 export function getIconChildIdFromValue(id: string, value: string) {
-  let childId: undefined | string ;
+  let childId: undefined | string;
   switch (id) {
     default:
       childId = value?.toLowerCase();
@@ -370,7 +370,7 @@ export function getIconChildIdFromValue(id: string, value: string) {
 export function getIconHtml(feature: MaPointFeature) {
   let datasetId = feature.properties.datasetId;
   const iconDefault = datasetIcons.default;
-  let childId: undefined | string ;
+  let childId: undefined | string;
   switch (datasetId) {
     case 'sport':
     case 'gymzaal':

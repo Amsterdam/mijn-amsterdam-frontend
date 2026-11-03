@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { ActionGroup, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
@@ -112,7 +112,7 @@ export function AutoLogoutDialog({
   const [originalTitle, setOriginalDocumentTitle] = useState(document.title);
   const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
 
-  function logtime() {
+  const logtime = useCallback(() => {
     logger.info(
       'Dialog opens in %s seconds, expires in %s seconds at %s',
       formattedTimeFromSeconds(
@@ -122,7 +122,7 @@ export function AutoLogoutDialog({
       formattedTimeFromSeconds(getExpiresInSeconds(expiresAtMilliseconds)),
       new Date(expiresAtMilliseconds)
     );
-  }
+  }, [expiresAtMilliseconds, lastChanceBeforeAutoLogoutSeconds]);
 
   const intervalId = useRef<number | undefined>(undefined);
   const timeoutId = useRef<number | undefined>(undefined);
