@@ -59,19 +59,17 @@ function DateAdjustModal({
         </ActionGroup>
       }
     >
-      
-        <Paragraph className="ams-mb-s">
-          Nieuwe einddatum incassomachtiging {eMandate.creditorName}
-        </Paragraph>
-        <form id="date-adjust-form" onSubmit={onSubmit}>
-          <DateInput
-            name="dateValidTo"
-            type="date"
-            min={tomorrow}
-            defaultValue={dateValidTo}
-          />
-        </form>
-      
+      <Paragraph className="ams-mb-s">
+        Nieuwe einddatum incassomachtiging {eMandate.creditorName}
+      </Paragraph>
+      <form id="date-adjust-form" onSubmit={onSubmit}>
+        <DateInput
+          name="dateValidTo"
+          type="date"
+          min={tomorrow}
+          defaultValue={dateValidTo}
+        />
+      </form>
     </Modal>
   );
 }

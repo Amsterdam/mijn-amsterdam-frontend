@@ -155,7 +155,7 @@ export function GeneralInfo() {
     .toSorted(compareThemas)
     .map((section, i) => {
       const themaMenuItem = themaMenuItems[section.id];
-      section.href = section.href || (themaMenuItem?.to);
+      section.href = section.href || themaMenuItem?.to;
 
       return (
         <InfoPageSection

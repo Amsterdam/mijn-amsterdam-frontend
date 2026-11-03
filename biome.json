@@ -13,7 +13,13 @@
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!drizzle", "!vendor", "!scripts"]
+    "includes": [
+      "**",
+      "!drizzle",
+      "!vendor",
+      "!scripts",
+      "!public/js/usabilla*.js"
+    ]
   },
   "formatter": {
     "enabled": true,

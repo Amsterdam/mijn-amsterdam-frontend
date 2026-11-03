@@ -188,38 +188,37 @@ function EMandate({ eMandate }: EMandateProps) {
             incassomachtiging...
           </Paragraph>
         )}
-        {!signRequestStatusCheckApi.isRequestingStatusCheck && (
-          signRequestStatusCheckApi.isPendingActivation ? (
-              <Alert headingLevel={4} heading="Status">
+        {!signRequestStatusCheckApi.isRequestingStatusCheck &&
+          (signRequestStatusCheckApi.isPendingActivation ? (
+            <Alert headingLevel={4} heading="Status">
+              <Paragraph>
+                U vraagt een incassomachtiging aan voor {eMandate.creditorName}.
+                Dit duurt enkele minuten.
+              </Paragraph>
+              <Paragraph>
+                Zodra de machtiging is bevestigd, worden{' '}
+                <strong>toekomstige facturen</strong> voor{' '}
+                {eMandate.creditorName} automatisch van uw rekening
+                afgeschreven.
+              </Paragraph>
+              {signRequestStatusCheckApi.isTakingLong && (
                 <Paragraph>
-                  U vraagt een incassomachtiging aan voor{' '}
-                  {eMandate.creditorName}. Dit duurt enkele minuten.
+                  <Button
+                    variant="secondary"
+                    onClick={() => signRequestStatusCheckApi.cancel()}
+                  >
+                    Duurt het erg lang? Probeer het opnieuw.
+                  </Button>
                 </Paragraph>
-                <Paragraph>
-                  Zodra de machtiging is bevestigd, worden{' '}
-                  <strong>toekomstige facturen</strong> voor{' '}
-                  {eMandate.creditorName} automatisch van uw rekening
-                  afgeschreven.
-                </Paragraph>
-                {signRequestStatusCheckApi.isTakingLong && (
-                  <Paragraph>
-                    <Button
-                      variant="secondary"
-                      onClick={() => signRequestStatusCheckApi.cancel()}
-                    >
-                      Duurt het erg lang? Probeer het opnieuw.
-                    </Button>
-                  </Paragraph>
-                )}
-              </Alert>
-            ) : (
-              <AfisEMandateActionButtons
-                redirectUrlApi={redirectUrlApi}
-                deactivateApi={deactivateApi}
-                eMandate={eMandate}
-              />
-            )
-        )}
+              )}
+            </Alert>
+          ) : (
+            <AfisEMandateActionButtons
+              redirectUrlApi={redirectUrlApi}
+              deactivateApi={deactivateApi}
+              eMandate={eMandate}
+            />
+          ))}
       </div>
       {!!eMandate.history.length &&
         (isWideScreen ? (
@@ -260,14 +259,16 @@ export function AfisEMandateDetail() {
       isError={hasEMandatesError}
       isLoading={isLoadingEMandates}
       breadcrumbs={breadcrumbs}
-      pageContentMain={!!eMandate && (
-            <>
-              {payloadStorage.hasPayloads() && (
-                <AfisEmandateRefetchInterval fetch={fetchEMandates} />
-              )}
-              <EMandate eMandate={eMandate} />
-            </>
-          )}
+      pageContentMain={
+        !!eMandate && (
+          <>
+            {payloadStorage.hasPayloads() && (
+              <AfisEmandateRefetchInterval fetch={fetchEMandates} />
+            )}
+            <EMandate eMandate={eMandate} />
+          </>
+        )
+      }
     />
   );
 }
