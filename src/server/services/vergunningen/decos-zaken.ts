@@ -1,41 +1,41 @@
-import {
-  type AanbiedenDiensten,
-  type ERVV,
-  type EvenementMelding,
-  type EvenementVergunning,
-  type Flyeren,
-  type RVVHeleStad,
-  type RVVSloterweg,
-  type TVMRVVObject,
-  type ZwaarVerkeer,
-  caseTypeVergunningen,
-  type Nachtwerkontheffing,
-  type WerkzaamhedenEnVervoerOpStraat,
-  type WVOSActiviteit,
-  type Straatartiesten,
-  type SplitsingsvergunningDecos,
-} from './config-and-types.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import {
-  SELECT_FIELDS_TRANSFORM_BASE,
-  transformDecision,
-  description,
-  dateStart,
   dateEnd,
-  timeEnd,
-  timeStart,
+  dateStart,
+  description,
   kentekens,
   location,
   MA_DECISION_ZIE_BESLUIT,
+  SELECT_FIELDS_TRANSFORM_BASE,
+  timeEnd,
+  timeStart,
+  transformDecision,
 } from '../decos/decos-field-transformers.ts';
 import {
   getCustomTitleForDecosZaakWithLicensePlates,
   getStatusDate,
 } from '../decos/decos-helpers.ts';
 import type {
-  DecosZaakTransformer,
   DecosFieldNameSource,
+  DecosZaakTransformer,
 } from '../decos/decos-types.ts';
+import {
+  type AanbiedenDiensten,
+  caseTypeVergunningen,
+  type ERVV,
+  type EvenementMelding,
+  type EvenementVergunning,
+  type Flyeren,
+  type Nachtwerkontheffing,
+  type RVVHeleStad,
+  type RVVSloterweg,
+  type SplitsingsvergunningDecos,
+  type Straatartiesten,
+  type TVMRVVObject,
+  type WerkzaamhedenEnVervoerOpStraat,
+  type WVOSActiviteit,
+  type ZwaarVerkeer,
+} from './config-and-types.ts';
 
 const Splitsingsvergunning: DecosZaakTransformer<SplitsingsvergunningDecos> = {
   isActive: true,

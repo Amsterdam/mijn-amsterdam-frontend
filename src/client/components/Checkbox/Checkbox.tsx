@@ -10,8 +10,8 @@ import {
 
 import classnames from 'classnames';
 
-import styles from './Checkbox.module.scss';
 import { IconCheckmark, IconIndeterminate } from '../../assets/icons/index.tsx';
+import styles from './Checkbox.module.scss';
 
 type CheckboxProps = {
   checked?: boolean;

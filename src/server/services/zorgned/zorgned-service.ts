@@ -1,32 +1,13 @@
 import { HttpStatusCode } from 'axios';
 import thenBy from 'thenby';
 
-import type {
-  BeschiktProduct,
-  LeveringsVormTransformed,
-  ZorgnedAanvraagTransformed,
-  ZorgnedAanvraagWithRelatedPersonsTransformed,
-  ZorgnedAanvragenServiceOptions,
-  ZorgnedApiConfigKey,
-  ZorgnedDocument,
-  ZorgnedDocumentResponseSource,
-  ZorgnedPerson,
-  ZorgnedPersoonsgegevensNAWResponse,
-  ZorgnedResponseDataSource,
-} from './zorgned-types.ts';
-import {
-  ZORGNED_GEMEENTE_CODE,
-  type Beschikking,
-  type BSN,
-  type ZorgnedAanvraagSource,
-} from './zorgned-types.ts';
 import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
 import {
+  type ApiResponse,
   apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
-  type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import { getFullName } from '../../../universal/helpers/brp.ts';
 import {
@@ -44,6 +25,25 @@ import {
   isSuccessStatus,
   requestData,
 } from '../../helpers/source-api-request.ts';
+import type {
+  BeschiktProduct,
+  LeveringsVormTransformed,
+  ZorgnedAanvraagTransformed,
+  ZorgnedAanvraagWithRelatedPersonsTransformed,
+  ZorgnedAanvragenServiceOptions,
+  ZorgnedApiConfigKey,
+  ZorgnedDocument,
+  ZorgnedDocumentResponseSource,
+  ZorgnedPerson,
+  ZorgnedPersoonsgegevensNAWResponse,
+  ZorgnedResponseDataSource,
+} from './zorgned-types.ts';
+import {
+  type Beschikking,
+  type BSN,
+  ZORGNED_GEMEENTE_CODE,
+  type ZorgnedAanvraagSource,
+} from './zorgned-types.ts';
 
 async function fetchZorgnedByBSN<S, T>(
   bsn: BSN,

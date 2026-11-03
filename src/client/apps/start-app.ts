@@ -1,5 +1,5 @@
-import { FEATURE_TOGGLES_API_URL } from './config.ts';
 import type { FeatureToggles } from '../../server/config/feature-toggles.ts';
+import { FEATURE_TOGGLES_API_URL } from './config.ts';
 
 export async function startApp(render: () => Promise<unknown>) {
   // biome-ignore lint/suspicious/noConsole: Preserve the existing lint exception.

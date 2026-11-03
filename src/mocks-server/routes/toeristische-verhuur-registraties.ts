@@ -1,7 +1,7 @@
-import BSN_RESPONSE from '../fixtures/registraties-toeristische-verhuur-bsn.json' with {
+import NORMAL_RESPONSE from '../fixtures/registraties-toeristische-verhuur.json' with {
   type: 'json',
 };
-import NORMAL_RESPONSE from '../fixtures/registraties-toeristische-verhuur.json' with {
+import BSN_RESPONSE from '../fixtures/registraties-toeristische-verhuur-bsn.json' with {
   type: 'json',
 };
 import { MOCK_BASE_PATH } from '../settings.ts';

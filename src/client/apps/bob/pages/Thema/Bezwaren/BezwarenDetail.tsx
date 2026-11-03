@@ -2,9 +2,6 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import { themaConfig } from './Bezwaren-thema-config.ts';
-import styles from './BezwarenDetail.module.scss';
-import { useBezwarenDetailData } from './useBezwarenDetailData.hook.ts';
 import type { BezwaarFrontend } from '../../../../../../server/services/bezwaren/types.ts';
 import { entries } from '../../../../../../universal/helpers/utils.ts';
 import type {
@@ -18,6 +15,9 @@ import { Steps } from '../../../../../components/StatusSteps/StatusSteps.tsx';
 import { TextClamp } from '../../../../../components/TextClamp/TextClamp.tsx';
 import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { themaConfig } from './Bezwaren-thema-config.ts';
+import styles from './BezwarenDetail.module.scss';
+import { useBezwarenDetailData } from './useBezwarenDetailData.hook.ts';
 
 type BezwaarDetailContentProps = {
   bezwaar: BezwaarFrontend;

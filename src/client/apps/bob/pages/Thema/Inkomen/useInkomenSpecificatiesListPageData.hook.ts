@@ -1,7 +1,7 @@
-import { useMemo, useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { parseISO } from 'date-fns';
-import { useParams, generatePath, useNavigate } from 'react-router';
+import { generatePath, useNavigate, useParams } from 'react-router';
 
 import {
   tableConfigSpecificaties,

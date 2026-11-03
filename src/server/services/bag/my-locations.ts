@@ -1,5 +1,3 @@
-import { fetchBAG, fetchBAGByQuery } from './bag.ts';
-import type { BAGLocationExtended } from './bag.types.ts';
 import {
   DEFAULT_LAT,
   DEFAULT_LNG,
@@ -15,8 +13,10 @@ import {
 import { isMokum } from '../../../universal/helpers/brp.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { fetchBrp } from '../brp/brp.ts';
-import { getVestigingBagIds } from '../hr-kvk/hr-kvk-helpers.ts';
 import { fetchKVK } from '../hr-kvk/hr-kvk.ts';
+import { getVestigingBagIds } from '../hr-kvk/hr-kvk-helpers.ts';
+import { fetchBAG, fetchBAGByQuery } from './bag.ts';
+import type { BAGLocationExtended } from './bag.types.ts';
 
 export async function fetchPrivate(
   authProfileAndToken: AuthProfileAndToken

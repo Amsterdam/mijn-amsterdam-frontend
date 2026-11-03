@@ -1,17 +1,17 @@
 import appInsights from 'applicationinsights';
 import {
   type ExceptionTelemetry,
+  SeverityLevel,
   type Telemetry,
   type TraceTelemetry,
-  SeverityLevel,
 } from 'applicationinsights/out/Declarations/Contracts/index.js';
 
+import { logger } from '../logging.ts';
 import {
+  shouldSendExceptionData,
   shouldSendRemoteDependencyData,
   shouldSendRequestData,
-  shouldSendExceptionData,
 } from './should-send-telemetry.ts';
-import { logger } from '../logging.ts';
 
 const logToApplicationInsights =
   process.env.APPLICATIONINSIGHTS_CONNECTION_STRING &&

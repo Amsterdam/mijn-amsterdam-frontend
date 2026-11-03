@@ -7,6 +7,7 @@ import { defineConfig } from 'drizzle-kit';
 const envConfig = dotenv.config({ path: '.env.local' });
 dotenvExpand.expand(envConfig);
 
+// biome-ignore lint/style/noDefaultExport: Not imported in project. Is for local db tool.
 export default defineConfig({
   dialect: 'postgresql',
   schema: './src/server/services/db/schema/*.ts',

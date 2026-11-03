@@ -4,10 +4,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { ActionGroup, Button, Dialog } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
-import styles from './Modal.module.scss';
 import { getElementOnPageAsync } from '../../helpers/utils.ts';
 import { useKeyUp } from '../../hooks/useKey.ts';
 import { MaLinkLikeButton } from '../MaLink/MaLink.tsx';
+import styles from './Modal.module.scss';
 
 function FocusTrapInner() {
   const element = document.getElementById('modal-dialog');

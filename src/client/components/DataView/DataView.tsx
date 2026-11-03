@@ -1,4 +1,3 @@
-import { DataViewList } from './DataViewList.tsx';
 import type {
   LinkProps,
   ZaakAanvraagDetail,
@@ -6,6 +5,7 @@ import type {
 import { useSmallScreen } from '../../hooks/media.hook.ts';
 import { TableV2 } from '../Table/TableV2.tsx';
 import type { TableV2Props } from '../Table/TableV2.types.ts';
+import { DataViewList } from './DataViewList.tsx';
 
 export function DataView<
   T extends {

@@ -1,14 +1,7 @@
-import { fetchAfisFacturenOverview } from './afis-facturen.ts';
-import { formatBusinessPartnerId, getAfisApiConfig } from './afis-helpers.ts';
-import type {
-  AfisBusinessPartnerCommercialResponseSource,
-  AfisThemaResponse,
-  AfisBusinessPartnerPrivateResponseSource,
-} from './afis-types.ts';
 import {
+  type ApiResponse,
   apiSuccessResult,
   getFailedDependencies,
-  type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import { omit } from '../../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
@@ -18,12 +11,19 @@ import type { DataRequestConfig } from '../../config/source-api.ts';
 import { encryptPayloadAndSessionID } from '../../helpers/encrypt-decrypt.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 import {
-  getApiConfig,
   createSessionBasedCacheKey,
+  getApiConfig,
 } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import { fetchVestigingen } from '../hr-kvk/hr-kvk.ts';
 import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token.ts';
+import { fetchAfisFacturenOverview } from './afis-facturen.ts';
+import { formatBusinessPartnerId, getAfisApiConfig } from './afis-helpers.ts';
+import type {
+  AfisBusinessPartnerCommercialResponseSource,
+  AfisBusinessPartnerPrivateResponseSource,
+  AfisThemaResponse,
+} from './afis-types.ts';
 
 export async function fetchAfisTokenHeader() {
   const tokenHeaderResponse = await fetchAuthTokenHeader(

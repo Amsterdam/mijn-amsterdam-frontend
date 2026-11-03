@@ -1,13 +1,9 @@
 import { generatePath, type Params } from 'react-router';
 
-import {
-  isVergunningExpirable,
-  isVergunningExpired,
-  type VergunningAanvraag,
-  type VergunningExpirable,
-} from './Vergunningen-helpers.ts';
-import type { DecosZaakBase } from '../../../../../../server/services/decos/decos-types.ts';
-import type { DecosZaakFrontend } from '../../../../../../server/services/decos/decos-types.ts';
+import type {
+  DecosZaakBase,
+  DecosZaakFrontend,
+} from '../../../../../../server/services/decos/decos-types.ts';
 import type {
   CaseTypeVergunningenOrPB,
   WithDateRange,
@@ -20,6 +16,12 @@ import type {
 } from '../../../../../../universal/types/thema-types.ts';
 import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app.ts';
+import {
+  isVergunningExpirable,
+  isVergunningExpired,
+  type VergunningAanvraag,
+  type VergunningExpirable,
+} from './Vergunningen-helpers.ts';
 
 type VergunningFrontendDisplayProps = DisplayProps<DecosZaakFrontend>;
 

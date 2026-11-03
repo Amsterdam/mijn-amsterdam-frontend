@@ -1,19 +1,19 @@
+import { decosCaseToZaakTransformers } from '../vergunningen/decos-zaken.ts';
 import {
-  isWaitingForPaymentConfirmation,
-  hasInvalidDecision,
-  isScheduledForRemoval,
-  isExcludedFromTransformation,
-  transformKenteken,
   getDecosZaakTypeFromSource,
-  transformBoolean,
+  hasInvalidDecision,
+  isExcludedFromTransformation,
   isExpired,
+  isScheduledForRemoval,
+  isWaitingForPaymentConfirmation,
+  transformBoolean,
+  transformKenteken,
 } from './decos-helpers.ts';
 import type {
   DecosZaakBase,
   DecosZaakSource,
   DecosZaakTransformer,
 } from './decos-types.ts';
-import { decosCaseToZaakTransformers } from '../vergunningen/decos-zaken.ts';
 
 describe('decos/helpers', () => {
   describe('isWaitingForPaymentConfirmation', () => {

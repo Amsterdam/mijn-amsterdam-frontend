@@ -1,10 +1,10 @@
-import type { SELECT_FIELDS_TRANSFORM_BASE } from './powerbrowser-field-transformers.ts';
 import type { OmitMapped } from '../../../universal/helpers/utils.ts';
 import type {
   GenericDocument,
   ZaakAanvraagDetail,
 } from '../../../universal/types/App.types.ts';
 import type { AuthProfile } from '../../auth/auth-types.ts';
+import type { SELECT_FIELDS_TRANSFORM_BASE } from './powerbrowser-field-transformers.ts';
 
 export type NestedType<T> =
   T extends PowerBrowserZaakTransformer<infer R> ? R : never;

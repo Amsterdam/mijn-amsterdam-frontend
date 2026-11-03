@@ -2,6 +2,8 @@
 import type { LatLngTuple } from 'leaflet';
 import { describe, expect, it, vi } from 'vitest';
 
+import { remoteApiHost } from '../../../testing/setup.ts';
+import type { ApiResponse_DEPRECATED } from '../../../universal/helpers/api.ts';
 import type {
   DatasetConfig,
   DatasetResponse,
@@ -9,8 +11,10 @@ import type {
   MaPointFeature,
   MaPolylineFeature,
 } from './datasets.ts';
-import { datasetEndpoints } from './datasets.ts';
-import { forTesting as datasetsForTesting } from './datasets.ts';
+import {
+  datasetEndpoints,
+  forTesting as datasetsForTesting,
+} from './datasets.ts';
 import {
   getDsoApiEmbeddedResponse,
   transformGenericApiListResponse,
@@ -23,16 +27,14 @@ import {
   filterDatasetFeatures,
   filterPointFeaturesWithinBoundingBox,
   filterPolylineFeaturesWithinBoundingBox,
-  forTesting as helpersForTesting,
   getDatasetEndpointConfig,
   getDynamicDatasetFilters,
   getPropertyFilters,
+  forTesting as helpersForTesting,
   isCoordWithingBoundingBox,
   recursiveCoordinateSwap,
   refineFilterSelection,
 } from './helpers.ts';
-import { remoteApiHost } from '../../../testing/setup.ts';
-import type { ApiResponse_DEPRECATED } from '../../../universal/helpers/api.ts';
 
 const DSO_API_RESULT = {
   _links: {

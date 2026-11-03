@@ -1,13 +1,13 @@
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
+} from '../../../../../../universal/types/thema-types.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import { themaConfig } from './Klachten-thema-config.ts';
 import { KlachtenDetail } from './KlachtenDetail.tsx';
 import { default as KlachtenIcon } from './KlachtenIcon.svg?react';
 import { KlachtenList } from './KlachtenList.tsx';
 import { KlachtenThema } from './KlachtenThema.tsx';
-import { isLoading } from '../../../../../helpers/api.ts';
-import type {
-  ThemaMenuItem,
-  ThemaRenderRouteConfig,
-} from '../../../../../../universal/types/thema-types.ts';
 
 export const KlachtenRoutes = [
   {

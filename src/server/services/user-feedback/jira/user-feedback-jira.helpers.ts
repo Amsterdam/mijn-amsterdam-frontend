@@ -1,9 +1,9 @@
+import { defaultDateTimeFormat } from '../../../../universal/helpers/date.ts';
+import type { CreateJiraTicketInput } from '../user-feedback.types.ts';
 import {
   JIRA_BASE_URL,
   MA_FRONTEND_URL,
 } from './user-feedback-jira.service-config.ts';
-import { defaultDateTimeFormat } from '../../../../universal/helpers/date.ts';
-import type { CreateJiraTicketInput } from '../user-feedback.types.ts';
 
 type DescriptionLine =
   | string

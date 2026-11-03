@@ -1,13 +1,13 @@
+import { logger } from '../../logging.ts';
 import { forTesting, getStatusLineItems } from './zorgned-status-line-items.ts';
 import type {
+  BeschikkingsResultaat,
   LeveringsVormTransformed,
   ProductSoortCode,
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
   ZorgnedStatusLineItemTransformerConfig,
 } from './zorgned-types.ts';
-import type { BeschikkingsResultaat } from './zorgned-types.ts';
-import { logger } from '../../logging.ts';
 
 function getTransformerConfig() {
   const transformerConfig: ZorgnedStatusLineItemTransformerConfig = {

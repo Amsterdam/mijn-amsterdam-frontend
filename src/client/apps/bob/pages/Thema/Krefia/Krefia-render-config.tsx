@@ -1,11 +1,11 @@
-import { themaConfig } from './Krefia-thema-config.ts';
-import { default as KrefiaIcon } from './KrefiaIcon.svg?react';
-import { KrefiaThema } from './KrefiaThema.tsx';
-import { isLoading } from '../../../../../helpers/api.ts';
 import type {
   ThemaMenuItem,
   ThemaRenderRouteConfig,
 } from '../../../../../../universal/types/thema-types.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
+import { themaConfig } from './Krefia-thema-config.ts';
+import { default as KrefiaIcon } from './KrefiaIcon.svg?react';
+import { KrefiaThema } from './KrefiaThema.tsx';
 
 export const KrefiaRoutes = [
   {

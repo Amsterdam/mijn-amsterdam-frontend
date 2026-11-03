@@ -5,9 +5,9 @@ import path from 'node:path';
 import type { FlatCache } from 'flat-cache';
 import { clearCacheById, create } from 'flat-cache';
 
-import { getDirname } from './dir.ts';
 import { IS_AP } from '../../universal/config/env.ts';
 import { ONE_SECOND_MS } from '../config/app.ts';
+import { getDirname } from './dir.ts';
 
 interface FileCacheProps {
   name: string;

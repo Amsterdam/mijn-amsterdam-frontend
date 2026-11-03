@@ -1,11 +1,11 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import type { RVVSloterweg } from './config-and-types.ts';
-import { getStatusStepsDecos } from './decos-status-steps.ts';
-import { getVergunningCTALinks } from './vergunningen-notifications-config.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 import { getDisplayStatus } from '../decos/decos-helpers.ts';
 import type { DecosZaakBase } from '../decos/decos-types.ts';
+import type { RVVSloterweg } from './config-and-types.ts';
+import { getStatusStepsDecos } from './decos-status-steps.ts';
+import { getVergunningCTALinks } from './vergunningen-notifications-config.ts';
 
 describe('vergunningen-status-steps', () => {
   describe('getStatusSteps', () => {

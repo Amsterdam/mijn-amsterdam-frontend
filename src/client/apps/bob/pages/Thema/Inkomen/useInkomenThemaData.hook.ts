@@ -1,23 +1,23 @@
 import { useMemo } from 'react';
 
-import {
-  listPageParamKind,
-  tableConfig,
-  themaConfig,
-} from './Inkomen-thema-config.ts';
 import type { WpiRequestProcess } from '../../../../../../server/services/wpi/wpi-types.ts';
 import { isError } from '../../../../../../universal/helpers/api.ts';
-import { isLoading } from '../../../../../helpers/api.ts';
 import {
-  defaultDateFormat,
   dateSort,
+  defaultDateFormat,
 } from '../../../../../../universal/helpers/date.ts';
 import { addLinkElementToProperty } from '../../../../../components/Table/TableV2.tsx';
+import { isLoading } from '../../../../../helpers/api.ts';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useProfileType } from '../../../../../hooks/useProfileType.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
 import { useAddDocumentLinkComponents } from '../../../data-transform/useAddDocumentLinks.tsx';
+import {
+  listPageParamKind,
+  tableConfig,
+  themaConfig,
+} from './Inkomen-thema-config.ts';
 
 export function useInkomenThemaData() {
   const { WPI_AANVRAGEN, WPI_SPECIFICATIES, WPI_TOZO, WPI_TONK, WPI_BBZ } =

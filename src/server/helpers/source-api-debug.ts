@@ -1,7 +1,7 @@
 import axios, { type AxiosRequestConfig } from 'axios';
 
-import { getFromEnv } from './env.ts';
 import { debugRequest, debugResponse } from '../debug.ts';
+import { getFromEnv } from './env.ts';
 
 function splitBy(str: string | undefined, delimiter: string) {
   return (str?.split(delimiter) ?? [])

@@ -1,3 +1,8 @@
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
+} from '../../../../../../universal/types/thema-types.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import { themaConfig } from './Afis-thema-config.ts';
 import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren.tsx';
 import { AfisEMandateDetail } from './AfisEMandateDetail.tsx';
@@ -5,11 +10,6 @@ import { AfisFactuur } from './AfisFactuur.tsx';
 import { default as AfisIcon } from './AfisIcon.svg?react';
 import { AfisList } from './AfisList.tsx';
 import { AfisThema } from './AfisThema.tsx';
-import { isLoading } from '../../../../../helpers/api.ts';
-import type {
-  ThemaMenuItem,
-  ThemaRenderRouteConfig,
-} from '../../../../../../universal/types/thema-types.ts';
 
 export const AfisRoutes = [
   {

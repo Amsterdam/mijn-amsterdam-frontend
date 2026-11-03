@@ -1,5 +1,11 @@
 import mockdate from 'mockdate';
 
+import { getAuthProfileAndToken } from '../../../testing/utils.ts';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import {
   fetchErfpachtNotifications,
   forTesting,
@@ -9,12 +15,6 @@ import {
   type ZaakStatusTypeSource,
 } from './erfpacht-zaken-config.ts';
 import type { ErfpachtZaakExcerptFrontend } from './erfpacht-zaken-types.ts';
-import { getAuthProfileAndToken } from '../../../testing/utils.ts';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-} from '../../../universal/helpers/api.ts';
-import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 
 const { fetchErfpachtZaakInfoMock } = vi.hoisted(() => ({
   fetchErfpachtZaakInfoMock: vi.fn(),

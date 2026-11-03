@@ -1,8 +1,9 @@
 // biome-ignore-all lint/suspicious/noExplicitAny: Test fixtures and mocks.
-import { transformSourceData } from './appState.tsx';
+
 import type { AppState } from '../../../../universal/types/App.types.ts';
 import * as Monitoring from '../../../helpers/monitoring.ts';
-import { PRISTINE_APPSTATE, createAllErrorState } from '../AppState.ts';
+import { createAllErrorState, PRISTINE_APPSTATE } from '../AppState.ts';
+import { transformSourceData } from './appState.tsx';
 
 describe('transformSourceData', () => {
   test('transformSourceData', () => {

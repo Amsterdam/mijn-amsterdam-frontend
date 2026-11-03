@@ -1,21 +1,21 @@
 import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
-import {
-  getFirstOpenTermijnFactuurDateFormatted,
-  getOpenstaandBedragFormatted,
-  isFactuurInTermijnen,
-} from './Afis-helpers.ts';
-import {
-  EMANDATE_STATUS_ACTIVE,
-  type AfisFactuurFrontend,
-} from './Afis-thema-config.ts';
-import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
 import type { AfisEMandateFrontend } from '../../../../../../server/services/afis/afis-types.ts';
 import type {
   Row,
   RowSet,
 } from '../../../../../components/Datalist/Datalist.tsx';
 import { MaRouterLink } from '../../../../../components/MaLink/MaLink.tsx';
+import {
+  getFirstOpenTermijnFactuurDateFormatted,
+  getOpenstaandBedragFormatted,
+  isFactuurInTermijnen,
+} from './Afis-helpers.ts';
+import {
+  type AfisFactuurFrontend,
+  EMANDATE_STATUS_ACTIVE,
+} from './Afis-thema-config.ts';
+import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
 
 export function AfisEmandateFactuurReference({
   eMandate,

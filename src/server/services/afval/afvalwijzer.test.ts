@@ -1,6 +1,6 @@
 import type { LatLngLiteral } from 'leaflet';
 
-import type { AfvalFractionData, AFVALSourceData } from './afval.types.ts';
+import type { AFVALSourceData, AfvalFractionData } from './afval.types.ts';
 import {
   exportedForTesting,
   transformAfvalDataResponse,

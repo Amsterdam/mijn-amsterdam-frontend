@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
-import { fetchSubsidieNotifications } from './subsidie.ts';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { fetchSubsidieNotifications } from './subsidie.ts';
 
 describe('Subsidie', () => {
   const authProfileAndToken = getAuthProfileAndToken();

@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router';
 
-import { Afspraken } from './Afspraken.tsx';
 import type { AfspraakFrontend } from '../../../../../../../server/services/klantcontact/klantcontact.types.ts';
+import { Afspraken } from './Afspraken.tsx';
 
 function createAfspraak(index: number): AfspraakFrontend {
   return {

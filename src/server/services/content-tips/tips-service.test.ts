@@ -10,7 +10,6 @@ import {
   vi,
 } from 'vitest';
 
-import { fetchContentTips, prefixTipNotification } from './tips-service.ts';
 import WPI_E from '../../../mocks-server/fixtures/wpi-e-aanvragen.json' with {
   type: 'json',
 };
@@ -19,6 +18,7 @@ import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { BrpFrontend } from '../brp/brp-types.ts';
 import type { WpiRequestProcess } from '../wpi/wpi-types.ts';
+import { fetchContentTips, prefixTipNotification } from './tips-service.ts';
 
 export function brpApiResponse<T>(
   brpData: PartialDeep<T, { recurseIntoArrays: true }>

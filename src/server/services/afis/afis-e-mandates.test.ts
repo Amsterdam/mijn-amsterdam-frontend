@@ -1,19 +1,7 @@
 import Mockdate from 'mockdate';
 import nock from 'nock';
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-import {
-  EMANDATE_STATUS_SOURCE,
-  EMandateCreditorsGemeenteAmsterdam,
-} from './afis-e-mandates-config.ts';
-import * as emandates from './afis-e-mandates.ts';
-import { routes } from './afis-service-config.ts';
-import type {
-  AfisEMandateCreditor,
-  AfisEMandateFrontend,
-  AfisEMandateSource,
-  AfisEMandatesResponseDataSource,
-} from './afis-types.ts';
 import { remoteApi } from '../../../testing/utils.ts';
 import type {
   AuthProfile,
@@ -22,6 +10,18 @@ import type {
 import type { DataRequestConfig } from '../../config/source-api.ts';
 import * as sourceApiRequest from '../../helpers/source-api-request.ts';
 import { decryptPayloadAndValidateSessionID } from '../shared/decrypt-route-param.ts';
+import * as emandates from './afis-e-mandates.ts';
+import {
+  EMANDATE_STATUS_SOURCE,
+  EMandateCreditorsGemeenteAmsterdam,
+} from './afis-e-mandates-config.ts';
+import { routes } from './afis-service-config.ts';
+import type {
+  AfisEMandateCreditor,
+  AfisEMandateFrontend,
+  AfisEMandateSource,
+  AfisEMandatesResponseDataSource,
+} from './afis-types.ts';
 
 const authProfile: AuthProfile = {
   sid: 'sid',

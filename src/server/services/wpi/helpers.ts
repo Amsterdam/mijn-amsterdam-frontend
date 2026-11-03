@@ -2,15 +2,6 @@ import { differenceInMonths, format } from 'date-fns';
 import type { LinkProps } from 'react-router';
 import { generatePath } from 'react-router';
 
-import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config.ts';
-import { requestProcess as bbzRequestProcessLabels } from './content/bbz.ts';
-import { requestProcess as tonkRequestProcessLabels } from './content/tonk.ts';
-import { requestProcess as tozoRequestProcessLabels } from './content/tozo.ts';
-import type {
-  WpiRequestProcess,
-  WpiRequestProcessLabels,
-  WpiRequestStatus,
-} from './wpi-types.ts';
 import { themaConfig as themaInkomen } from '../../../client/apps/bob/pages/Thema/Inkomen/Inkomen-thema-config.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import type {
@@ -20,6 +11,15 @@ import type {
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
 import { BffEndpoints } from '../../routing/bff-routes.ts';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config.ts';
+import { requestProcess as bbzRequestProcessLabels } from './content/bbz.ts';
+import { requestProcess as tonkRequestProcessLabels } from './content/tonk.ts';
+import { requestProcess as tozoRequestProcessLabels } from './content/tozo.ts';
+import type {
+  WpiRequestProcess,
+  WpiRequestProcessLabels,
+  WpiRequestStatus,
+} from './wpi-types.ts';
 
 export function transformRequestProcess(
   sessionID: SessionID,

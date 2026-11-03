@@ -1,6 +1,8 @@
 import { HttpStatusCode } from 'axios';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
+import { RequestMock, ResponseMock } from '../../../../testing/utils.ts';
+import * as notifications from './amsapp-notifications.ts';
 import * as model from './amsapp-notifications-model.ts';
 import {
   fetchAndStoreNotifications,
@@ -8,8 +10,6 @@ import {
   handleSendNotificationsResponse,
   handleUnregisterConsumer,
 } from './amsapp-notifications-route-handlers.ts';
-import * as notifications from './amsapp-notifications.ts';
-import { RequestMock, ResponseMock } from '../../../../testing/utils.ts';
 
 describe('amsapp notifications route handlers', () => {
   let res: ReturnType<typeof ResponseMock.new>;

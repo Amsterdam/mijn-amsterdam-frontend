@@ -3,11 +3,11 @@ import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { describe, expect, vi } from 'vitest';
 
-import { ZAAK_STATUS_ROUTE } from './ZaakStatus-config.ts';
-import { forTesting, ZaakStatus } from './ZaakStatus.tsx';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
 import { MockApp } from '../MockApp.tsx';
 import { themaConfig as themaVergunningen } from '../Thema/Vergunningen/Vergunningen-thema-config.ts';
+import { forTesting, ZaakStatus } from './ZaakStatus.tsx';
+import { ZAAK_STATUS_ROUTE } from './ZaakStatus-config.ts';
 
 const mocks = vi.hoisted(() => {
   return {

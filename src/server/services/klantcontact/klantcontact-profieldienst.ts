@@ -1,24 +1,24 @@
 import { HttpStatusCode } from 'axios';
 
+import type { ApiResponse } from '../../../universal/helpers/api.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
 import {
   getIdentificatieType,
   transformContactgegevenSource,
 } from './klantcontact-helpers.ts';
 import type {
-  ContactProfieldienstResponseSource,
   ContactgegevenFrontend,
   ContactgegevenPayloadSource,
   ContactgegevenSource,
   ContactgegevenType,
+  ContactProfieldienstResponseSource,
+  DienstverlenerSource,
   VerifyVerificationRequestPayload,
   VerifyVerificationRequestResponse,
 } from './klantcontact-profieldienst-types.ts';
-import type { DienstverlenerSource } from './klantcontact-profieldienst-types.ts';
 import { profieldienstRequestConfig } from './klantcontact-service-config.ts';
-import type { ApiResponse } from '../../../universal/helpers/api.ts';
-import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
-import { requestData } from '../../helpers/source-api-request.ts';
 
 const DEFAULT_DIENSTVERLENER = 'amsterdam';
 

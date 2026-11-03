@@ -1,15 +1,15 @@
 // biome-ignore-all lint/suspicious/noIrregularWhitespace: Preserve the existing file-level exception.
 import { renderHook, waitFor } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
+import type { AfisFactuur } from '../../../../../../server/services/afis/afis-types.ts';
+import { bffApi } from '../../../../../../testing/utils.ts';
 import type { AfisFactuurFrontend } from './Afis-thema-config.ts';
 import {
   forTesting,
   getDocumentLink,
   useAfisFacturenApi,
 } from './useAfisFacturenApi.tsx';
-import type { AfisFactuur } from '../../../../../../server/services/afis/afis-types.ts';
-import { bffApi } from '../../../../../../testing/utils.ts';
 
 describe('useAfisFacturenApi', () => {
   const mockFacturenResponse = {

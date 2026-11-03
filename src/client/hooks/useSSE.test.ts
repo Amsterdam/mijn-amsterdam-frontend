@@ -1,10 +1,10 @@
 // biome-ignore-all lint/suspicious/noExplicitAny: Test fixtures and mocks.
 import { act, renderHook } from '@testing-library/react';
-import { describe, expect, vi, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
+import { newEventSourceMock } from '../../testing/EventSourceMock.ts';
 import * as sseHook from './useSSE.ts';
 import { MAX_CONNECTION_RETRY_COUNT, SSE_ERROR_MESSAGE } from './useSSE.ts';
-import { newEventSourceMock } from '../../testing/EventSourceMock.ts';
 
 const sseMockResponse = JSON.stringify({
   FOO: { content: { hello: 'world' } },

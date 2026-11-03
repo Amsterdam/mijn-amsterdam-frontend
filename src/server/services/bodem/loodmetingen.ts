@@ -1,21 +1,14 @@
 import { generatePath } from 'react-router';
 
-import { getBodemStatusSteps } from './loodmeting-status-line-items.ts';
-import type {
-  Lood365Response,
-  LoodMetingDocument,
-  LoodMetingFrontend,
-  LoodMetingRequestsSource,
-  LoodMetingStatusLowerCase,
-  LoodMetingen,
-} from './types.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Bodem/Bodem-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
-import { defaultDateFormat } from '../../../universal/helpers/date.ts';
-import { isRecentNotification } from '../../../universal/helpers/date.ts';
+import {
+  defaultDateFormat,
+  isRecentNotification,
+} from '../../../universal/helpers/date.ts';
 import { sortAlpha } from '../../../universal/helpers/utils.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
@@ -33,6 +26,15 @@ import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token.ts';
 import { captureException } from '../monitoring.ts';
 import type { DocumentDownloadData } from '../shared/document-download-route-handler.ts';
 import { DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE } from '../shared/document-download-route-handler.ts';
+import { getBodemStatusSteps } from './loodmeting-status-line-items.ts';
+import type {
+  Lood365Response,
+  LoodMetingDocument,
+  LoodMetingen,
+  LoodMetingFrontend,
+  LoodMetingRequestsSource,
+  LoodMetingStatusLowerCase,
+} from './types.ts';
 
 export function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
   if (authProfileAndToken.profile.authMethod === 'digid') {

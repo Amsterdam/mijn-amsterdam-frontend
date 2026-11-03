@@ -1,14 +1,14 @@
+import {
+  dateFormat,
+  defaultDateFormat,
+} from '../../../universal/helpers/date.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
+import { isAmsterdamAddress } from '../buurt/helpers.ts';
 import type {
   DateSource,
   KvkResponseFrontend,
   Vestiging,
 } from './hr-kvk.types.ts';
-import {
-  defaultDateFormat,
-  dateFormat,
-} from '../../../universal/helpers/date.ts';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
-import { isAmsterdamAddress } from '../buurt/helpers.ts';
 
 export type KvkBagIds = Pick<
   Vestiging,

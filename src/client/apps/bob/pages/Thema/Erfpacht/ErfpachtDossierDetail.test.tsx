@@ -2,8 +2,6 @@ import { render, waitFor, within } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { generatePath } from 'react-router';
 
-import { themaConfig } from './Erfpacht-thema-config.ts';
-import { ErfpachtDossierDetail } from './ErfpachtDossierDetail.tsx';
 import ERFPACHT_DOSSIER_DETAIL from '../../../../../../mocks-server/fixtures/erfpacht/erfpacht-v2-dossierinfo-bsn.json' with {
   type: 'json',
 };
@@ -21,6 +19,8 @@ import type {
 import { bffApi } from '../../../../../../testing/utils.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { MockApp } from '../../MockApp.tsx';
+import { themaConfig } from './Erfpacht-thema-config.ts';
+import { ErfpachtDossierDetail } from './ErfpachtDossierDetail.tsx';
 
 function mockDetailFetch(
   content: unknown = transformErfpachtDossierProperties(

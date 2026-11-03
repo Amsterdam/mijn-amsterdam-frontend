@@ -9,15 +9,6 @@ import { matchPath, useLocation } from 'react-router';
 import { create } from 'zustand';
 
 import {
-  type ApiBaseItem,
-  type ApiSearchConfig,
-  type SearchEntry,
-  apiSearchConfigs,
-  displayLinkToSearchResult,
-  type RemoteApiSearchConfigs,
-} from './search-config.tsx';
-import styles from './Search.module.scss';
-import {
   apiErrorResult,
   apiSuccessResult,
   isError,
@@ -35,6 +26,15 @@ import {
 } from '../../hooks/useAppStateStore.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import { routeConfig as buurtRouteConfig } from '../MyArea/MyArea-thema-config.ts';
+import styles from './Search.module.scss';
+import {
+  type ApiBaseItem,
+  type ApiSearchConfig,
+  apiSearchConfigs,
+  displayLinkToSearchResult,
+  type RemoteApiSearchConfigs,
+  type SearchEntry,
+} from './search-config.tsx';
 
 export function generateSearchIndexPageEntry(
   item: ApiBaseItem,

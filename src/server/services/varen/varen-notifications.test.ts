@@ -1,6 +1,12 @@
 import MockDate from 'mockdate';
 import { describe, expect, it } from 'vitest';
 
+import { getAuthProfileAndToken } from '../../../testing/utils.ts';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api.ts';
+import * as decos from '../decos/decos-service.ts';
 import type {
   DecosVarenZaakVergunning,
   VarenRegistratieRederType,
@@ -8,12 +14,6 @@ import type {
   ZaakVergunningExploitatieType,
 } from './config-and-types.ts';
 import { fetchVarenNotifications } from './varen-notifications.ts';
-import { getAuthProfileAndToken } from '../../../testing/utils.ts';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-} from '../../../universal/helpers/api.ts';
-import * as decos from '../decos/decos-service.ts';
 
 const vergunning = {
   vesselLength: '2,31',

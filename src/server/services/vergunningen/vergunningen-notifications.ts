@@ -1,13 +1,3 @@
-import type { ZaakFrontendCombined } from './config-and-types.ts';
-import {
-  getLifetimeTriggerDate,
-  isExpiryNotificationDue,
-} from './vergunningen-helpers.ts';
-import {
-  getVergunningCTALinks,
-  type CaseType,
-} from './vergunningen-notifications-config.ts';
-import { fetchVergunningen } from './vergunningen.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 import {
   apiDependencyError,
@@ -17,6 +7,16 @@ import { isRecentNotification } from '../../../universal/helpers/date.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getStatusDate } from '../decos/decos-helpers.ts';
+import type { ZaakFrontendCombined } from './config-and-types.ts';
+import { fetchVergunningen } from './vergunningen.ts';
+import {
+  getLifetimeTriggerDate,
+  isExpiryNotificationDue,
+} from './vergunningen-helpers.ts';
+import {
+  type CaseType,
+  getVergunningCTALinks,
+} from './vergunningen-notifications-config.ts';
 
 function getNotificationBase<ID extends string>(
   vergunning: ZaakFrontendCombined,

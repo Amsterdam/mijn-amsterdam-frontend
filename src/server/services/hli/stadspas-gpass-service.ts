@@ -1,35 +1,15 @@
 import { HttpStatusCode } from 'axios';
 import * as date from 'date-fns';
 
-import { fetchAdministratienummer } from './hli-zorgned-service.ts';
-import { GPASS_API_TOKEN } from './stadspas-config-and-content.ts';
-import type {
-  SecurityCode,
-  Stadspas,
-  StadspasAanbiedingSource,
-  StadspasBudget,
-  StadspasBudgetTransaction,
-  StadspasDetailBudgetSource,
-  StadspasDiscountTransaction,
-  StadspasDiscountTransactions,
-  StadspasDiscountTransactionsResponseSource,
-  StadspasHouderSource,
-  StadspasOwner,
-  StadspasPasHouderResponse,
-  StadspasDetailSource,
-  StadspasTransactieSource,
-  StadspasTransactiesResponseSource,
-  StadspasTransactionQueryParams,
-} from './stadspas-types.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/HLI/HLI-thema-config.ts';
 import type {
   ApiResponse,
   ApiSuccessResponse,
 } from '../../../universal/helpers/api.ts';
 import {
+  apiErrorResult,
   apiSuccessResult,
   getSettledResult,
-  apiErrorResult,
 } from '../../../universal/helpers/api.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import { displayAmount } from '../../../universal/helpers/text.ts';
@@ -46,6 +26,26 @@ import {
   requestData,
 } from '../../helpers/source-api-request.ts';
 import type { BSN } from '../zorgned/zorgned-types.ts';
+import { fetchAdministratienummer } from './hli-zorgned-service.ts';
+import { GPASS_API_TOKEN } from './stadspas-config-and-content.ts';
+import type {
+  SecurityCode,
+  Stadspas,
+  StadspasAanbiedingSource,
+  StadspasBudget,
+  StadspasBudgetTransaction,
+  StadspasDetailBudgetSource,
+  StadspasDetailSource,
+  StadspasDiscountTransaction,
+  StadspasDiscountTransactions,
+  StadspasDiscountTransactionsResponseSource,
+  StadspasHouderSource,
+  StadspasOwner,
+  StadspasPasHouderResponse,
+  StadspasTransactieSource,
+  StadspasTransactiesResponseSource,
+  StadspasTransactionQueryParams,
+} from './stadspas-types.ts';
 
 // The first of August is the default yearly activation date for stadspassen.
 // This date is chosen to activate all new passes that are given out by Amsterdam.

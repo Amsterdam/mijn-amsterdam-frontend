@@ -4,23 +4,23 @@ import type { ReactNode } from 'react';
 import { renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
-import * as remoteConfig from './search-config.json' with { type: 'json' };
-import {
-  API_SEARCH_CONFIG_DEFAULT,
-  apiSearchConfigs,
-  displayLinkToSearchResult,
-} from './search-config.tsx';
-import type { ApiBaseItem, ApiSearchConfig } from './search-config.tsx';
-import {
-  generateSearchIndexPageEntries,
-  generateSearchIndexPageEntry,
-  useSearchIndex,
-} from './useSearch.tsx';
 import type { DecosZaakFrontend } from '../../../server/services/vergunningen/config-and-types.ts';
 import { bffApi } from '../../../testing/utils.ts';
 import type { AppState } from '../../../universal/types/App.types.ts';
 import { MockApp } from '../../apps/bob/pages/MockApp.tsx';
 import { routeConfig } from '../MyArea/MyArea-thema-config.ts';
+import * as remoteConfig from './search-config.json' with { type: 'json' };
+import type { ApiBaseItem, ApiSearchConfig } from './search-config.tsx';
+import {
+  API_SEARCH_CONFIG_DEFAULT,
+  apiSearchConfigs,
+  displayLinkToSearchResult,
+} from './search-config.tsx';
+import {
+  generateSearchIndexPageEntries,
+  generateSearchIndexPageEntry,
+  useSearchIndex,
+} from './useSearch.tsx';
 
 export function setupFetchStub(data: any) {
   return function fetchStub(_url: string) {

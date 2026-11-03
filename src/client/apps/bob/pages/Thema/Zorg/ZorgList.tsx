@@ -1,11 +1,11 @@
 import { useParams } from 'react-router';
 
-import { useZorgThemaData } from './useZorgThemaData.ts';
-import type { ListPageParamKind } from './Zorg-thema-config.ts';
-import { HistoricItemsMention } from './ZorgThema.tsx';
 import { ListPagePaginated } from '../../../../../components/ListPagePaginated/ListPagePaginated.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { useZorgThemaData } from './useZorgThemaData.ts';
+import type { ListPageParamKind } from './Zorg-thema-config.ts';
+import { HistoricItemsMention } from './ZorgThema.tsx';
 
 export function ZorgList() {
   const { kind = 'huidige-voorzieningen' } = useParams<{

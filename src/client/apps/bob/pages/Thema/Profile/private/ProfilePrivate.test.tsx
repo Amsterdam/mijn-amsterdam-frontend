@@ -1,8 +1,7 @@
-import { render, screen, cleanup, waitFor } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import type { PartialDeep } from 'type-fest';
 
-import { MijnGegevensThema } from './ProfilePrivate.tsx';
 import type {
   Adres,
   BrpFrontend,
@@ -13,6 +12,7 @@ import { bffApi } from '../../../../../../../testing/utils.ts';
 import type { AppState } from '../../../../../../../universal/types/App.types.ts';
 import { MockApp } from '../../../MockApp.tsx';
 import { themaConfig } from '../Profile-thema-config.ts';
+import { MijnGegevensThema } from './ProfilePrivate.tsx';
 
 const testState = (
   responseBRP: BrpFrontend | object = {},

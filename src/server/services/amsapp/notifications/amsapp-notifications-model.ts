@@ -2,14 +2,6 @@ import { addMonths } from 'date-fns';
 import { and, asc, eq, inArray, lte, sql } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/node-postgres';
 
-import type {
-  BSN,
-  ConsumerDetail,
-  ConsumerId,
-  ConsumerProfile,
-  NotificationsService,
-  ServiceId,
-} from './amsapp-notifications-types.ts';
 import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { decrypt, encrypt } from '../../../helpers/encrypt-decrypt.ts';
 import { hashWithPepper } from '../../../helpers/hash.ts';
@@ -20,6 +12,14 @@ import {
   notificationsConsumerDetailsTable,
   notificationsTable,
 } from '../../db/schema/amsapp-notifications.ts';
+import type {
+  BSN,
+  ConsumerDetail,
+  ConsumerId,
+  ConsumerProfile,
+  NotificationsService,
+  ServiceId,
+} from './amsapp-notifications-types.ts';
 
 export { NOTIFICATIONS_TABLE_NAME };
 

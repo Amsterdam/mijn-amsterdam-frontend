@@ -4,18 +4,18 @@ import type {
   KvkResponseFrontend,
   NatuurlijkPersoon,
   NietNatuurlijkPersoon,
+  Onderneming,
   Vestiging,
 } from '../../../../../../../server/services/hr-kvk/hr-kvk.types.ts';
-import type { Onderneming } from '../../../../../../../server/services/hr-kvk/hr-kvk.types.ts';
 import type { AppState } from '../../../../../../../universal/types/App.types.ts';
 import { ListExpandable } from '../../../../../../components/ListExpandable/ListExpandable.tsx';
 import { PreWrap } from '../../../../../../components/PreWrap/PreWrap.tsx';
-import type { ProfileLabels } from '../profileDataFormatter.ts';
-import { formatProfileSectionData } from '../profileDataFormatter.ts';
 import type {
   PanelConfig,
   ProfileSectionData,
 } from '../ProfileSectionPanel.tsx';
+import type { ProfileLabels } from '../profileDataFormatter.ts';
+import { formatProfileSectionData } from '../profileDataFormatter.ts';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading

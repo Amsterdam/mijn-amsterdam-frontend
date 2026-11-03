@@ -1,15 +1,13 @@
 import session from 'express-session';
 
-import { createBFFRouter } from './route-helpers.ts';
 import { IS_PRODUCTION } from '../../universal/config/env.ts';
 import {
+  BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET,
   BFF_ADMIN_AUTH_SESSION_COOKIE_NAME,
   IS_ADMIN_AUTHENTICATION_MIDDLEWARE_ENABLED,
-} from '../services/admin/admin-service-config.ts';
-import {
-  BFF_ADMIN_AUTH_EXPRESS_SESSION_SECRET,
   IS_ADMIN_ROUTER_ENABLED,
 } from '../services/admin/admin-service-config.ts';
+import { createBFFRouter } from './route-helpers.ts';
 
 type CreateAdminRouterOptions = {
   isAdminRouterEnabled: boolean;

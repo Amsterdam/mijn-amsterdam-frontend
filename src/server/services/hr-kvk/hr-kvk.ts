@@ -1,32 +1,13 @@
 import {
-  normalizeDatePropertyNames,
-  getFullDate,
-  getPartialDateFormatted,
-} from './hr-kvk-helpers.ts';
-import { featureToggle } from './hr-kvk-service-config.ts';
-import type {
-  NatuurlijkPersoon,
-  KvkResponseFrontend,
-  MACResponse,
-  MACResponseSource,
-  NatuurlijkPersoonSource,
-  NietNatuurlijkPersoonSource,
-  NietNatuurlijkPersoon,
-  Vestiging,
-  VestigingSource,
-  VestigingenResponseSource,
-  KVKNummer,
-} from './hr-kvk.types.ts';
-import {
   IS_DEVELOPMENT,
   IS_PRODUCTION,
 } from '../../../universal/config/env.ts';
 import {
+  type ApiResponse,
   apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
-  type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import { sortByNumber } from '../../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
@@ -36,6 +17,25 @@ import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import { isAmsterdamAddress } from '../buurt/helpers.ts';
 import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token.ts';
+import type {
+  KVKNummer,
+  KvkResponseFrontend,
+  MACResponse,
+  MACResponseSource,
+  NatuurlijkPersoon,
+  NatuurlijkPersoonSource,
+  NietNatuurlijkPersoon,
+  NietNatuurlijkPersoonSource,
+  Vestiging,
+  VestigingenResponseSource,
+  VestigingSource,
+} from './hr-kvk.types.ts';
+import {
+  getFullDate,
+  getPartialDateFormatted,
+  normalizeDatePropertyNames,
+} from './hr-kvk-helpers.ts';
+import { featureToggle } from './hr-kvk-service-config.ts';
 
 const TOKEN_VALIDITY_PERIOD = 1 * ONE_HOUR_MS;
 const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;

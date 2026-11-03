@@ -1,6 +1,8 @@
 import MockDate from 'mockdate';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { jsonCopy } from '../../../universal/helpers/utils.ts';
 import type { FetchConfig } from './api-service.ts';
 import { fetchBijstandsuitkering, fetchRequestProcess } from './api-service.ts';
 import type {
@@ -8,8 +10,6 @@ import type {
   WpiRequestProcessLabels,
   WpiRequestStatusLabels,
 } from './wpi-types.ts';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
-import { jsonCopy } from '../../../universal/helpers/utils.ts';
 
 function fakeStepLabels(): WpiRequestStatusLabels {
   return {

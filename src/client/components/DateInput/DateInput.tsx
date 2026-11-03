@@ -3,9 +3,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import classnames from 'classnames';
 import { format, getDaysInMonth, isValid, parseISO } from 'date-fns';
 
-import styles from './DateInput.module.scss';
 import { getMonth } from '../../../universal/helpers/date.ts';
 import { range } from '../../../universal/helpers/utils.ts';
+import styles from './DateInput.module.scss';
 
 const DATE_INPUT_FORMAT = 'yyyy-MM-dd';
 

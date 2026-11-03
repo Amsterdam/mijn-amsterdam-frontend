@@ -1,13 +1,16 @@
-import type { BAGQueryParams } from './bag.types.ts';
-import type { BAGLocation, BAGSourceData } from './bag.types.ts';
 import {
-  apiErrorResult,
   type ApiResponse,
+  apiErrorResult,
 } from '../../../universal/helpers/api.ts';
 import { getLatLngCoordinates } from '../../../universal/helpers/bag.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import type { Adres } from '../brp/brp-types.ts';
+import type {
+  BAGLocation,
+  BAGQueryParams,
+  BAGSourceData,
+} from './bag.types.ts';
 
 function transformBagAddressResponse(
   sourceAddress: Adres | null,

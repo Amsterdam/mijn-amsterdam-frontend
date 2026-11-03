@@ -1,5 +1,6 @@
 import nock from 'nock';
 
+import { remoteApiHost } from '../../../testing/setup.ts';
 import type { DatasetConfig } from './datasets.ts';
 import {
   fetchMeldingenBuurt,
@@ -7,7 +8,6 @@ import {
   transformMeldingenBuurtResponse,
 } from './datasets.ts';
 import type { DsoApiResponse } from './dso-helpers.ts';
-import { remoteApiHost } from '../../../testing/setup.ts';
 
 describe('Custom dataset tranformations', () => {
   it('Should group distance of hardlooproute', () => {

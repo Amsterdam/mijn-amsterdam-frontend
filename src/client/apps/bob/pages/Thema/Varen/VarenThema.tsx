@@ -9,13 +9,6 @@ import {
 } from '@amsterdam/design-system-react';
 import { LinkExternalIcon } from '@amsterdam/design-system-react-icons';
 
-import { CONTENT_EMPTY } from './helper.ts';
-import { useVarenThemaData } from './useVarenThemaData.hook.ts';
-import {
-  rederRegistratieLink,
-  SHOW_HISTORICAL_AANVRAGEN_STARTING_FROM_DATE,
-} from './Varen-thema-config.ts';
-import styles from './Varen.module.scss';
 import type { VarenRegistratieRederFrontend } from '../../../../../../server/services/varen/config-and-types.ts';
 import { toDateFormatted } from '../../../../../../universal/helpers/date.ts';
 import { entries } from '../../../../../../universal/helpers/utils.ts';
@@ -27,6 +20,13 @@ import { ParagaphSuppressed } from '../../../../../components/ParagraphSuppresse
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { CONTENT_EMPTY } from './helper.ts';
+import { useVarenThemaData } from './useVarenThemaData.hook.ts';
+import styles from './Varen.module.scss';
+import {
+  rederRegistratieLink,
+  SHOW_HISTORICAL_AANVRAGEN_STARTING_FROM_DATE,
+} from './Varen-thema-config.ts';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>

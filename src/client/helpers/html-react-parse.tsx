@@ -1,17 +1,17 @@
 import {
-  Paragraph,
   Heading,
-  UnorderedList,
-  OrderedList,
   Link,
+  OrderedList,
+  Paragraph,
+  UnorderedList,
 } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import {
   attributesToProps,
-  type HTMLReactParserOptions,
   type DOMNode,
-  type Element,
   domToReact,
+  type Element,
+  type HTMLReactParserOptions,
   htmlToDOM,
 } from 'html-react-parser';
 

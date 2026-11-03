@@ -1,5 +1,17 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import bezwarenApiResponse from '../../../mocks-server/fixtures/bezwaren.json' with {
+  type: 'json',
+};
+import bezwarenDocumenten from '../../../mocks-server/fixtures/bezwaren-documents.json' with {
+  type: 'json',
+};
+import bezwarenStatus from '../../../mocks-server/fixtures/bezwaren-status.json' with {
+  type: 'json',
+};
+import { remoteApiHost } from '../../../testing/setup.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { range } from '../../../universal/helpers/utils.ts';
 import {
   fetchBezwaarDetail,
   fetchBezwaarDocument,
@@ -8,18 +20,6 @@ import {
   forTesting,
 } from './bezwaren.ts';
 import type { BezwaarSourceStatus } from './types.ts';
-import bezwarenDocumenten from '../../../mocks-server/fixtures/bezwaren-documents.json' with {
-  type: 'json',
-};
-import bezwarenStatus from '../../../mocks-server/fixtures/bezwaren-status.json' with {
-  type: 'json',
-};
-import bezwarenApiResponse from '../../../mocks-server/fixtures/bezwaren.json' with {
-  type: 'json',
-};
-import { remoteApiHost } from '../../../testing/setup.ts';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
-import { range } from '../../../universal/helpers/utils.ts';
 
 const endpointBase = '/bezwaren/zgw/v1/zaken';
 

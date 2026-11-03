@@ -1,7 +1,5 @@
-import type { NextFunction, Response, Request } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 
-import { routes as adminRoutesGeneric } from './admin-service-config.ts';
-import type { AdminIndexLocals, RequestWithSession } from './admin-types.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import { DEFAULT_REQUEST_CONFIG } from '../../config/source-api.ts';
 import { cacheOverview } from '../../helpers/file-cache.ts';
@@ -10,6 +8,8 @@ import {
   sendResponse,
 } from '../../routing/route-helpers.ts';
 import { routes as adminRoutesAmsAppNotifications } from '../amsapp/notifications/amsapp-notifications-service-config.ts';
+import { routes as adminRoutesGeneric } from './admin-service-config.ts';
+import type { AdminIndexLocals, RequestWithSession } from './admin-types.ts';
 
 // custom middleware to check auth state
 export function isAuthenticatedAdmin(

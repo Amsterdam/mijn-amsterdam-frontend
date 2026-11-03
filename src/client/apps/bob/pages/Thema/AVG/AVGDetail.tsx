@@ -1,9 +1,9 @@
-import { useAVGDetailPage } from './useAVGDetailPage.hook.tsx';
 import type { AVGRequestFrontend } from '../../../../../../server/services/avg/types.ts';
 import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { useAVGDetailPage } from './useAVGDetailPage.hook.tsx';
 
 function getVerzoekRows(verzoek: AVGRequestFrontend) {
   return [

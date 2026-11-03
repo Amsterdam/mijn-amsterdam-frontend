@@ -1,11 +1,5 @@
-import { Paragraph, Link, Heading } from '@amsterdam/design-system-react';
+import { Heading, Link, Paragraph } from '@amsterdam/design-system-react';
 
-import {
-  filterErfpachtFacturen,
-  mapErfpachtFacturen,
-} from './Erfpacht-helpers.tsx';
-import { listPageParamKind } from './Erfpacht-thema-config.ts';
-import { useErfpachtThemaData } from './useErfpachtThemaData.hook.tsx';
 import type { ErfpachtDossierFrontend } from '../../../../../../server/services/erfpacht/erfpacht-types.ts';
 import type { ErfpachtZaakExcerptFrontend } from '../../../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
 import { MaRouterLink } from '../../../../../components/MaLink/MaLink.tsx';
@@ -15,6 +9,12 @@ import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPagina
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
 import * as afis from '../Afis/Afis-thema-config.ts';
 import { AfisFacturenTables } from '../Afis/AfisFacturenTables.tsx';
+import {
+  filterErfpachtFacturen,
+  mapErfpachtFacturen,
+} from './Erfpacht-helpers.tsx';
+import { listPageParamKind } from './Erfpacht-thema-config.ts';
+import { useErfpachtThemaData } from './useErfpachtThemaData.hook.tsx';
 
 export function ErfpachtThema() {
   const {

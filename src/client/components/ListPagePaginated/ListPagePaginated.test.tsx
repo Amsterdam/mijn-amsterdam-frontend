@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import { ListPagePaginated } from './ListPagePaginated.tsx';
 import type { DisplayProps } from '../Table/TableV2.types.ts';
+import { ListPagePaginated } from './ListPagePaginated.tsx';
 
 type TestItem = {
   id: number;

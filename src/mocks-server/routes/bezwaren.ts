@@ -1,10 +1,10 @@
+import BEZWAREN_LIST_RESPONSE from '../fixtures/bezwaren.json' with {
+  type: 'json',
+};
 import BEZWAREN_DOCUMENTEN_RESPONSE from '../fixtures/bezwaren-documents.json' with {
   type: 'json',
 };
 import BEZWAREN_STATUS_RESPONSE from '../fixtures/bezwaren-status.json' with {
-  type: 'json',
-};
-import BEZWAREN_LIST_RESPONSE from '../fixtures/bezwaren.json' with {
   type: 'json',
 };
 import { sendMockDocument } from '../helpers/send-mock-document.ts';

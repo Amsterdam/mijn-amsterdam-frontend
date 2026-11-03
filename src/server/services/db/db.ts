@@ -1,7 +1,7 @@
 import memoizee from 'memoizee';
 
-import { IS_DB_ENABLED } from './config.ts';
 import { logger } from '../../logging.ts';
+import { IS_DB_ENABLED } from './config.ts';
 
 export type DBAdapter = {
   id: string;

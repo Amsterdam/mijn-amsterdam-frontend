@@ -1,7 +1,7 @@
 import { useParams } from 'react-router';
 
-import { useZorgThemaData } from './useZorgThemaData.ts';
 import type { WMOVoorzieningFrontend } from '../../../../../../server/services/jzd/wmo/wmo-types.ts';
+import { useZorgThemaData } from './useZorgThemaData.ts';
 
 export function useZorgDetailData() {
   const {

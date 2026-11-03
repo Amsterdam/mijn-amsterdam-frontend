@@ -1,14 +1,14 @@
 import mockdate from 'mockdate';
 
+import { remoteApiHost } from '../../../testing/setup.ts';
+import { remoteApi } from '../../../testing/utils.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import {
   fetchActiveMaintenanceNotifications,
   fetchMaintenanceNotificationsDashboard,
   forTesting,
 } from './cms-maintenance-notifications.ts';
 import type { CMSEventData, CMSMaintenanceNotification } from './cms-types.ts';
-import { remoteApiHost } from '../../../testing/setup.ts';
-import { remoteApi } from '../../../testing/utils.ts';
-import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 
 type MockEventDataProps = {
   relUrl: string;

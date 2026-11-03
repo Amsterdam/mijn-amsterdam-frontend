@@ -1,10 +1,9 @@
 import type { ReactElement, ReactNode } from 'react';
 import { isValidElement } from 'react';
-
-import classnames from 'classnames';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import styles from './Datasets.module.scss';
+import classnames from 'classnames';
+
 import type { MaPointFeature } from '../../../server/services/buurt/datasets.ts';
 import { Colors } from '../../apps/bob/config/app.ts';
 import {
@@ -47,6 +46,7 @@ import {
   IconWior,
   IconZwembad,
 } from '../../assets/icons/map/index.tsx';
+import styles from './Datasets.module.scss';
 
 const DatasetIcon: React.FC<{
   color?: string;

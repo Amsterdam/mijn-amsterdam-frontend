@@ -5,13 +5,13 @@ vi.mock('../../helpers/file-cache.ts', () => ({
   cacheOverview: vi.fn(() => Promise.resolve(['file-a.json', 'file-b.json'])),
 }));
 
-import {
-  isAuthenticatedAdmin,
-  adminIndexHandler,
-  cacheOverviewHandler,
-} from './admin-route-handlers.ts';
 import { RequestMock, ResponseMock } from '../../../testing/utils.ts';
 import { DEFAULT_REQUEST_CONFIG } from '../../config/source-api.ts';
+import {
+  adminIndexHandler,
+  cacheOverviewHandler,
+  isAuthenticatedAdmin,
+} from './admin-route-handlers.ts';
 
 beforeEach(() => {
   vi.resetAllMocks();

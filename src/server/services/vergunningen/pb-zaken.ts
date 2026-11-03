@@ -1,14 +1,3 @@
-import {
-  caseTypePB,
-  type Omzettingsvergunning,
-  type Onttrekkingsvergunning,
-  type OnttrekkingsvergunningSloop,
-  type Samenvoegingsvergunning,
-  type OnttrekkingsvergunningTweedeWoning,
-  type VormenVanWoonruimte,
-  type LigplaatsBedrijfsvaartuigvergunning,
-  type LigplaatsWoonbootvergunning,
-} from './config-and-types.ts';
 import { SELECT_FIELDS_TRANSFORM_BASE } from '../powerbrowser/powerbrowser-field-transformers.ts';
 import {
   hasCaseTypeInFMT_CAPTION,
@@ -20,8 +9,19 @@ import type {
   PowerBrowserZaakTransformer,
 } from '../powerbrowser/powerbrowser-types.ts';
 import {
-  isValidVTHZaak,
+  caseTypePB,
+  type LigplaatsBedrijfsvaartuigvergunning,
+  type LigplaatsWoonbootvergunning,
+  type Omzettingsvergunning,
+  type Onttrekkingsvergunning,
+  type OnttrekkingsvergunningSloop,
+  type OnttrekkingsvergunningTweedeWoning,
+  type Samenvoegingsvergunning,
+  type VormenVanWoonruimte,
+} from './config-and-types.ts';
+import {
   isValidVTHDocument,
+  isValidVTHZaak,
   isVTHZaakVerleend,
   transformVTHZaakResult,
 } from './VTH/pb-zaken-vth-helpers.ts';

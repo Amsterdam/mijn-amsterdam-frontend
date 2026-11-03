@@ -3,12 +3,12 @@ import { userEvent } from '@testing-library/user-event';
 import type { Mock } from 'vitest';
 import { expect, vi } from 'vitest';
 
-import { DocumentLink } from './DocumentLink.tsx';
 import { bffApiHost } from '../../../testing/setup.ts';
 import { bffApi } from '../../../testing/utils.ts';
 import type { GenericDocument } from '../../../universal/types/App.types.ts';
 import * as Monitoring from '../../helpers/monitoring.ts';
 import { trackDownload } from '../../hooks/analytics.hook.ts';
+import { DocumentLink } from './DocumentLink.tsx';
 
 vi.mock('../../hooks/analytics.hook');
 

@@ -1,11 +1,10 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
-import { THEMA_DETAIL_TITLE_DEFAULT } from './ToeristischeVerhuur-thema-config.ts';
-import styles from './ToeristischeVerhuurDetail.module.scss';
-import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook.ts';
-import type { ToeristischeVerhuurVergunning } from '../../../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
-import type { VakantieverhuurVergunningFrontend } from '../../../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
+import type {
+  ToeristischeVerhuurVergunning,
+  VakantieverhuurVergunningFrontend,
+} from '../../../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
 import type {
   Row,
   RowSet,
@@ -19,6 +18,9 @@ import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
 import { useVergunningDocumentList } from '../Vergunningen/detail-page-content/useVergunningDocumentsList.hook.ts';
+import { THEMA_DETAIL_TITLE_DEFAULT } from './ToeristischeVerhuur-thema-config.ts';
+import styles from './ToeristischeVerhuurDetail.module.scss';
+import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook.ts';
 
 function getMailBody(vergunning: ToeristischeVerhuurVergunning) {
   return `\

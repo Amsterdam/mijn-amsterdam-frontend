@@ -13,12 +13,13 @@ import {
 import { omit } from '../../universal/helpers/utils.ts';
 import { getAuth } from '../auth/auth-helpers.ts';
 import type { AuthProfileAndToken } from '../auth/auth-types.ts';
+import { isOpsEnabled } from '../config/azure-appconfiguration.ts';
 import { logger } from '../logging.ts';
 import { queryParams, sendMessage } from '../routing/route-helpers.ts';
 import { fetchIsKnownInAFIS } from './afis/afis.ts';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval.ts';
-import { featureToggle } from './amsapp/notifications/amsapp-notifications-service-config.ts';
 import { storeNotificationsResponses } from './amsapp/notifications/amsapp-notifications.ts';
+import { featureToggle } from './amsapp/notifications/amsapp-notifications-service-config.ts';
 import { fetchAVG } from './avg/avg.ts';
 import { fetchMyLocations } from './bag/my-locations.ts';
 import { fetchBezwaren } from './bezwaren/bezwaren.ts';
@@ -34,8 +35,7 @@ import { fetchWmo } from './jzd/wmo/wmo.ts';
 import { fetchAllKlachten } from './klachten/klachten.ts';
 import { fetchKlantcontact } from './klantcontact/klantcontact.ts';
 import { fetchKrefia } from './krefia/krefia.ts';
-import { captureException } from './monitoring.ts';
-import { trackEvent } from './monitoring.ts';
+import { captureException, trackEvent } from './monitoring.ts';
 import { fetchParkeren } from './parkeren/parkeren.ts';
 import { fetchBelasting } from './patroon-c/belasting.ts';
 import { fetchMilieuzone, fetchOvertredingen } from './patroon-c/cleopatra.ts';
@@ -62,7 +62,6 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi/api-service.ts';
-import { isOpsEnabled } from '../config/azure-appconfiguration.ts';
 
 // Default service call just passing query params as arguments
 function callAuthenticatedService<T>(

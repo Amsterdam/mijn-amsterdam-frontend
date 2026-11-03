@@ -2,7 +2,6 @@ import type { ReactElement, ReactNode } from 'react';
 
 import escapeRegex from 'lodash.escaperegexp';
 
-import styles from './Search.module.scss';
 import type { AfisThemaResponse } from '../../../server/services/afis/afis-types.ts';
 import type { AVGRequestFrontend } from '../../../server/services/avg/types.ts';
 import type { BezwaarFrontend } from '../../../server/services/bezwaren/types.ts';
@@ -56,6 +55,7 @@ import { themaConfig as themaConfigKrefia } from '../../apps/bob/pages/Thema/Kre
 import { themaConfig } from '../../apps/bob/pages/Thema/Profile/Profile-thema-config.ts';
 import { themaConfig as toeristischeVerhuurThemaConfig } from '../../apps/bob/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import { themaConfig as themaConfigVaren } from '../../apps/bob/pages/Thema/Varen/Varen-thema-config.ts';
+import styles from './Search.module.scss';
 
 export interface SearchEntry {
   url: string;

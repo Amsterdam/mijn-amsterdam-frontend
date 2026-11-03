@@ -1,6 +1,12 @@
 import Mockdate from 'mockdate';
 import z from 'zod';
 
+import { bffApiHost } from '../../testing/setup.ts';
+import { RequestMock, ResponseMock } from '../../testing/utils.ts';
+import type { ApiResponse_DEPRECATED } from '../../universal/helpers/api.ts';
+import { apiErrorResult } from '../../universal/helpers/api.ts';
+import { oidcConfigDigid, oidcConfigEherkenning } from '../auth/auth-config.ts';
+import { MA_FRONTEND_URL } from '../config/app.ts';
 import {
   createBFFRouter,
   generateFullApiUrlBFF,
@@ -14,12 +20,6 @@ import {
   sendServiceUnavailable,
   sendUnauthorized,
 } from './route-helpers.ts';
-import { bffApiHost } from '../../testing/setup.ts';
-import { RequestMock, ResponseMock } from '../../testing/utils.ts';
-import type { ApiResponse_DEPRECATED } from '../../universal/helpers/api.ts';
-import { apiErrorResult } from '../../universal/helpers/api.ts';
-import { oidcConfigDigid, oidcConfigEherkenning } from '../auth/auth-config.ts';
-import { MA_FRONTEND_URL } from '../config/app.ts';
 
 const mocks = vi.hoisted(() => {
   return {

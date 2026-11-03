@@ -1,6 +1,5 @@
 import { useParams } from 'react-router';
 
-import { useKlachtenThemaData } from './useKlachtenThemaData.hook.ts';
 import type { KlachtFrontend } from '../../../../../../server/services/klachten/types.ts';
 import type {
   Row,
@@ -10,6 +9,7 @@ import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { useKlachtenThemaData } from './useKlachtenThemaData.hook.ts';
 
 type KlachtenDetailContentProps = {
   klacht: KlachtFrontend;

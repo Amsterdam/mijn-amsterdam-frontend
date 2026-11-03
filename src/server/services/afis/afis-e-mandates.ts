@@ -4,23 +4,45 @@ import { generatePath } from 'react-router';
 import slug from 'slugme';
 import thenBy from 'thenby';
 
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
+import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
+import {
+  type ApiResponse,
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api.ts';
+import {
+  isoDateFormat,
+  isoDateTimeFormatCompact,
+  toDateFormatted,
+} from '../../../universal/helpers/date.ts';
+import { omit, sortByNumber } from '../../../universal/helpers/utils.ts';
+import { MA_FRONTEND_URL } from '../../config/app.ts';
+import {
+  encrypt,
+  encryptPayloadAndSessionID,
+} from '../../helpers/encrypt-decrypt.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import { captureMessage } from '../monitoring.ts';
 import {
   createBusinessPartnerBankAccount,
   fetchAfisBusinessPartnerDetails,
   fetchCheckIfIBANexists,
 } from './afis-business-partner.ts';
+import type { EmandateStatusFrontend } from './afis-e-mandates-config.ts';
 import {
   AFIS_EMANDATE_COMPANY_NAME,
   AFIS_EMANDATE_RECURRING_DATE_END,
   AFIS_EMANDATE_SIGN_REQUEST_URL_VALIDITY_IN_DAYS,
   afisEMandatePostbodyStatic,
   EMANDATE_ENDDATE_INDICATOR,
+  EMANDATE_STATUS_FRONTEND,
+  EMANDATE_STATUS_SOURCE,
   EMandateCreditorsGemeenteAmsterdam,
   eMandateReceiver,
 } from './afis-e-mandates-config.ts';
-import { EMANDATE_STATUS_FRONTEND } from './afis-e-mandates-config.ts';
-import { EMANDATE_STATUS_SOURCE } from './afis-e-mandates-config.ts';
-import type { EmandateStatusFrontend } from './afis-e-mandates-config.ts';
 import {
   debugEmandates,
   formatBusinessPartnerId,
@@ -34,48 +56,26 @@ import {
 import { handleEmandateLifetimeUpdate } from './afis-route-handlers.ts';
 import { routes } from './afis-service-config.ts';
 import type {
+  AfisBusinessPartnerBankPayload,
   AfisBusinessPartnerDetailsTransformed,
   AfisEMandateCreatePayload,
-  AfisEMandatesResponseDataSource,
-  AfisEMandateUpdatePayload,
+  AfisEMandateCreditor,
   AfisEMandateFrontend,
   AfisEMandateSignRequestResponse,
-  AfisEMandateSource,
-  AfisEMandateCreditor,
-  EMandateSignRequestPayload,
-  BusinessPartnerIdPayload,
-  POMSignRequestUrlResponseSource,
-  POMSignRequestStatusResponseSource,
   AfisEMandateSignRequestStatusResponse,
+  AfisEMandateSource,
+  AfisEMandatesResponseDataSource,
+  AfisEMandateUpdatePayload,
   BusinessPartnerId,
+  BusinessPartnerIdPayload,
   EMandateSignRequestNotificationPayload,
-  AfisBusinessPartnerBankPayload,
-  POMSignRequestUrlPayload,
-  EMandateUpdatePayload,
+  EMandateSignRequestPayload,
   EMandateSignRequestStatusPayload,
+  EMandateUpdatePayload,
+  POMSignRequestStatusResponseSource,
+  POMSignRequestUrlPayload,
+  POMSignRequestUrlResponseSource,
 } from './afis-types.ts';
-import { themaConfig } from '../../../client/apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
-import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
-import {
-  apiErrorResult,
-  type ApiResponse,
-  apiSuccessResult,
-} from '../../../universal/helpers/api.ts';
-import {
-  isoDateFormat,
-  isoDateTimeFormatCompact,
-} from '../../../universal/helpers/date.ts';
-import { toDateFormatted } from '../../../universal/helpers/date.ts';
-import { omit, sortByNumber } from '../../../universal/helpers/utils.ts';
-import { MA_FRONTEND_URL } from '../../config/app.ts';
-import {
-  encrypt,
-  encryptPayloadAndSessionID,
-} from '../../helpers/encrypt-decrypt.ts';
-import { getApiConfig } from '../../helpers/source-api-helpers.ts';
-import { requestData } from '../../helpers/source-api-request.ts';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
-import { captureMessage } from '../monitoring.ts';
 
 export async function createEMandateFromStatusNotificationPayload(
   payload: EMandateSignRequestPayload & EMandateSignRequestNotificationPayload

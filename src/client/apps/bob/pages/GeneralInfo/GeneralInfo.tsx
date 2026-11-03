@@ -4,14 +4,13 @@ import {
   UnorderedList,
 } from '@amsterdam/design-system-react';
 
-import { GENERAL_INFO_PAGE_DOCUMENT_TITLE } from './GeneralInfo-routes.ts';
+import type {
+  InfoSection,
+  ThemaConfigBase,
+} from '../../../../../universal/types/thema-types.ts';
 import { MaLink, MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import { myAreaSectionProps } from '../../../../components/MyArea/InfoSection.tsx';
 import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
-import type {
-  ThemaConfigBase,
-  InfoSection,
-} from '../../../../../universal/types/thema-types.ts';
 import { getRedactedClass } from '../../../../helpers/cobrowse.ts';
 import {
   compareThemas,
@@ -40,6 +39,7 @@ import { themaConfig as toeristischeVerhuurThemaConfig } from '../Thema/Toeristi
 import { themaConfig as varenThemaConfig } from '../Thema/Varen/Varen-thema-config.ts';
 import { themaConfig as vergunningenThemaConfig } from '../Thema/Vergunningen/Vergunningen-thema-config.ts';
 import { themaConfig as zorgThemaConfig } from '../Thema/Zorg/Zorg-thema-config.ts';
+import { GENERAL_INFO_PAGE_DOCUMENT_TITLE } from './GeneralInfo-routes.ts';
 
 export type InfoSection_DEPRECATED = {
   id: string;

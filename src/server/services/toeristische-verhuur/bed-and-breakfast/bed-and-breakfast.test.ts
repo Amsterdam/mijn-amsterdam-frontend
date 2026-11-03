@@ -1,8 +1,8 @@
-import { fetchBedAndBreakfast } from './bed-and-breakfast.ts';
 import {
   getAuthProfileAndToken,
   remoteApi,
 } from '../../../../testing/utils.ts';
+import { fetchBedAndBreakfast } from './bed-and-breakfast.ts';
 
 vi.mock(
   '../../../../server/helpers/encrypt-decrypt',

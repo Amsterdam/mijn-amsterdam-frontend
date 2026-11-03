@@ -7,10 +7,10 @@ import { IS_AP } from '../../universal/config/env.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
+  oidcConfigBase,
   oidcSessionStore,
   openIdAuth,
   TOKEN_ID_ATTRIBUTE,
-  oidcConfigBase,
 } from '../auth/auth-config.ts';
 import { signDevelopmentToken } from '../auth/auth-helpers-development.ts';
 import type { AuthProfile, MaSession } from '../auth/auth-types.ts';

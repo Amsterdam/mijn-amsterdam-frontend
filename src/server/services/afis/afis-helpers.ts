@@ -1,18 +1,20 @@
 import { parseISO } from 'date-fns';
 import createDebugger from 'debug';
 
+import { toDateFormatted } from '../../../universal/helpers/date.ts';
+import type { DataRequestConfig } from '../../config/source-api.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import { fetchAfisTokenHeader } from './afis.ts';
 import {
   EMANDATE_ENDDATE_INDICATOR,
   EMANDATE_STATUS_FRONTEND,
   type EmandateStatusFrontend,
 } from './afis-e-mandates-config.ts';
-import type { AfisApiFeedResponseSource } from './afis-types.ts';
-import type { BusinessPartnerId } from './afis-types.ts';
-import { fetchAfisTokenHeader } from './afis.ts';
-import { toDateFormatted } from '../../../universal/helpers/date.ts';
-import type { DataRequestConfig } from '../../config/source-api.ts';
-import { getFromEnv } from '../../helpers/env.ts';
-import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import type {
+  AfisApiFeedResponseSource,
+  BusinessPartnerId,
+} from './afis-types.ts';
 
 export function getFeedEntryProperties<T>(
   response: AfisApiFeedResponseSource<T>

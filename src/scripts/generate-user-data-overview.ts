@@ -36,9 +36,11 @@
 
 import '../server/helpers/load-env.ts';
 
-import { differenceInYears, parseISO } from 'date-fns';
 import fs from 'node:fs';
+import path from 'node:path';
 import { parseArgs } from 'node:util';
+
+import { differenceInYears, parseISO } from 'date-fns';
 import * as XLSX from 'xlsx';
 
 import { themaConfig as themaAfis } from '../client/apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
@@ -53,13 +55,13 @@ import { themaConfig as themaHoreca } from '../client/apps/bob/pages/Thema/Horec
 import { themaConfig as themaInkomen } from '../client/apps/bob/pages/Thema/Inkomen/Inkomen-thema-config.ts';
 import { themaConfig as themaJeugd } from '../client/apps/bob/pages/Thema/Jeugd/Jeugd-thema-config.ts';
 import { themaConfig as themaKlachten } from '../client/apps/bob/pages/Thema/Klachten/Klachten-thema-config.ts';
+import { themaConfig as themaKlantContact } from '../client/apps/bob/pages/Thema/KlantContact/KlantContact-thema-config.ts';
 import { themaConfig as themaKrefia } from '../client/apps/bob/pages/Thema/Krefia/Krefia-thema-config.ts';
 import { themaConfig as themaMilieuzone } from '../client/apps/bob/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
 import { themaConfig as themaOvertredingen } from '../client/apps/bob/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
 import { themaConfig as themaParkeren } from '../client/apps/bob/pages/Thema/Parkeren/Parkeren-thema-config.ts';
 import { themaConfig as themaProfiles } from '../client/apps/bob/pages/Thema/Profile/Profile-thema-config.ts';
 import { themaConfig as themaSubsidies } from '../client/apps/bob/pages/Thema/Subsidies/Subsidies-thema-config.ts';
-import { themaConfig as themaKlantContact } from '../client/apps/bob/pages/Thema/KlantContact/KlantContact-thema-config.ts';
 import {
   themaId as themaIdSvwi,
   themaTitle as themaTitleSvwi,
@@ -68,10 +70,11 @@ import { themaConfig as themaToeristischeVerhuur } from '../client/apps/bob/page
 import { themaConfig as themaVaren } from '../client/apps/bob/pages/Thema/Varen/Varen-thema-config.ts';
 import { themaConfig as themaVergunningen } from '../client/apps/bob/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 import { themaConfig as themaZorg } from '../client/apps/bob/pages/Thema/Zorg/Zorg-thema-config.ts';
+import { parseValueMapString } from '../server/helpers/env.ts';
 import {
   getTestAccountsBaseFromEnvMap,
-  type OptionalTestUserAccountProperties,
   mergeWithDynamicTableHeaders,
+  type OptionalTestUserAccountProperties,
 } from '../server/helpers/test-accounts.ts';
 import type {
   Adres,
@@ -84,8 +87,6 @@ import { IS_PRODUCTION } from '../universal/config/env.ts';
 import { getFullAddress, isMokum } from '../universal/helpers/brp.ts';
 import { defaultDateFormat } from '../universal/helpers/date.ts';
 import type { AppState, MyNotification } from '../universal/types/App.types.ts';
-import path from 'node:path';
-import { parseValueMapString } from '../server/helpers/env.ts';
 
 /**
  * Extra hardcoded additions are to display certain services as if they were

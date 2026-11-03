@@ -2,19 +2,15 @@ import merge from 'lodash.merge';
 import Mockdate from 'mockdate';
 import type { PartialDeep } from 'type-fest';
 import {
-  describe,
-  it,
-  expect,
-  vi,
-  beforeEach,
-  beforeAll,
   afterAll,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
 } from 'vitest';
 
-import { routes } from '../jzd-service-config.ts';
-import type { HulpmiddelenDisclaimerConfig } from './status-line-items/wmo-hulpmiddelen.ts';
-import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen.ts';
-import { fetchWmo, forTesting } from './wmo.ts';
 import {
   getAuthProfileAndToken,
   remoteApi,
@@ -24,6 +20,10 @@ import type {
   ZorgnedAanvraagSource,
   ZorgnedAanvraagTransformed,
 } from '../../zorgned/zorgned-types.ts';
+import { routes } from '../jzd-service-config.ts';
+import type { HulpmiddelenDisclaimerConfig } from './status-line-items/wmo-hulpmiddelen.ts';
+import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen.ts';
+import { fetchWmo, forTesting } from './wmo.ts';
 
 vi.mock(
   '../../../../server/helpers/encrypt-decrypt',

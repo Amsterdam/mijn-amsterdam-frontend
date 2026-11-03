@@ -5,8 +5,6 @@ import type { LatLngBoundsLiteral, LatLngLiteral, LeafletEvent } from 'leaflet';
 import { useLocation } from 'react-router';
 import { create } from 'zustand';
 
-import { filterItemCheckboxState } from './LegendPanel/checkbox-helpers.ts';
-import styles from './MyAreaDatasets.module.scss';
 import type { BAGLocationExtended } from '../../../server/services/bag/bag.types.ts';
 import type {
   MaPointFeature,
@@ -37,6 +35,8 @@ import {
   useAppStateGetter,
   useAppStateReady,
 } from '../../hooks/useAppStateStore.ts';
+import { filterItemCheckboxState } from './LegendPanel/checkbox-helpers.ts';
+import styles from './MyAreaDatasets.module.scss';
 
 const NO_DATA_ERROR_RESPONSE = {
   errors: [

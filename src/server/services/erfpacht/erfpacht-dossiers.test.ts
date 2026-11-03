@@ -1,11 +1,5 @@
 import { describe, expect, test } from 'vitest';
 
-import {
-  fetchErfpachtDossierInfo,
-  fetchErfpachtDossiersDetail,
-  forTesting,
-} from './erfpacht-dossiers.ts';
-import type { ErfpachtDossiersDetailSource } from './erfpacht-types.ts';
 import ERFPACHT_DOSSIERINFO_DETAILS from '../../../mocks-server/fixtures/erfpacht/erfpacht-v2-dossierinfo-bsn.json' with {
   type: 'json',
 };
@@ -14,6 +8,12 @@ import ERFPACHT_DOSSIERS from '../../../mocks-server/fixtures/erfpacht/erfpacht-
 };
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import {
+  fetchErfpachtDossierInfo,
+  fetchErfpachtDossiersDetail,
+  forTesting,
+} from './erfpacht-dossiers.ts';
+import type { ErfpachtDossiersDetailSource } from './erfpacht-types.ts';
 
 describe('erfpacht-dossiers', () => {
   const authProfileAndToken: AuthProfileAndToken = getAuthProfileAndToken();

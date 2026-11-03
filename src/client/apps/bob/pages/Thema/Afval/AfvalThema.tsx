@@ -6,11 +6,9 @@ import {
   Paragraph,
 } from '@amsterdam/design-system-react';
 
-import { links, themaConfig } from './Afval-thema-config.ts';
-import styles from './Afval.module.scss';
 import type {
-  AfvalFractionInformationTransformed,
   AfvalFractionCode,
+  AfvalFractionInformationTransformed,
 } from '../../../../../../server/services/afval/afval.types.ts';
 import { isError } from '../../../../../../universal/helpers/api.ts';
 import { getFullAddress } from '../../../../../../universal/helpers/brp.ts';
@@ -37,6 +35,8 @@ import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
 import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useProfileTypeValue } from '../../../../../hooks/useProfileType.ts';
+import styles from './Afval.module.scss';
+import { links, themaConfig } from './Afval-thema-config.ts';
 
 interface InstructionCTAProps {
   fraction: AfvalFractionInformationTransformed;

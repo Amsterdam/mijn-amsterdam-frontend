@@ -9,13 +9,13 @@ import type {
 } from 'leaflet';
 import L from 'leaflet';
 
-import { getIconHtml } from './dataset-icons.tsx';
-import { processFeatures } from './MyArea.helpers.ts';
-import styles from './MyAreaDatasets.module.scss';
 import type {
   DatasetFeatureProperties,
   MaSuperClusterFeature,
 } from '../../../server/services/buurt/datasets.ts';
+import { getIconHtml } from './dataset-icons.tsx';
+import { processFeatures } from './MyArea.helpers.ts';
+import styles from './MyAreaDatasets.module.scss';
 
 const ICON_SIZE = 40;
 const ICON_ANCHOR = 20;

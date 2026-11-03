@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 
 import classNames from 'classnames';
 
-import styles from './DashboardHeader.module.scss';
 import { Search } from '../../../../components/Search/Search.tsx';
 import { useSmallScreen } from '../../../../hooks/media.hook.ts';
 import {
@@ -11,6 +10,7 @@ import {
 } from '../../../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../../../hooks/useIsLoading.ts';
 import { useProfileTypeValue } from '../../../../hooks/useProfileType.ts';
+import styles from './DashboardHeader.module.scss';
 
 const STADSDELEN = [
   'buiten-amsterdam',

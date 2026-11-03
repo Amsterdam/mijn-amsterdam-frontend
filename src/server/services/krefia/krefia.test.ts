@@ -4,21 +4,21 @@ import {
   describe,
   expect,
   it,
-  vi,
   type MockInstance,
+  vi,
 } from 'vitest';
 
-import {
-  fetchKrefia,
-  fetchKrefiaNotifications,
-  fetchAndTransformKrefia,
-} from './krefia.ts';
 import KrefiaData from '../../../mocks-server/fixtures/krefia.json' with {
   type: 'json',
 };
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import { omit } from '../../../universal/helpers/utils.ts';
 import { axiosRequest } from '../../helpers/source-api-request.ts';
+import {
+  fetchAndTransformKrefia,
+  fetchKrefia,
+  fetchKrefiaNotifications,
+} from './krefia.ts';
 
 describe('Kredietbank & FIBU service', () => {
   const KREFIA_DUMMY_RESPONSE = {

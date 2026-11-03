@@ -1,6 +1,13 @@
 import { Decimal } from 'decimal.js';
 import Mockdate from 'mockdate';
 
+import ARC_DOC from '../../../mocks-server/fixtures/afis/arc-doc-id.json' with {
+  type: 'json',
+};
+import DOCUMENT_DOWNLOAD_RESPONSE from '../../../mocks-server/fixtures/afis/document.json' with {
+  type: 'json',
+};
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import { fetchAfisDocument } from './afis-documents.ts';
 import {
   fetchAfisFacturen,
@@ -21,13 +28,6 @@ import AFIS_AFGEHANDELDE_FACTUREN from './test-fixtures/afgehandelde-facturen.js
 import AFIS_OPENSTAAANDE_FACTUREN from './test-fixtures/openstaande-facturen.json' with {
   type: 'json',
 };
-import ARC_DOC from '../../../mocks-server/fixtures/afis/arc-doc-id.json' with {
-  type: 'json',
-};
-import DOCUMENT_DOWNLOAD_RESPONSE from '../../../mocks-server/fixtures/afis/document.json' with {
-  type: 'json',
-};
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 
 const mocks = vi.hoisted(() => {
   const MOCK_VALUE_ENCRYPTED = 'xx-encrypted-xx';

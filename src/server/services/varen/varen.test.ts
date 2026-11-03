@@ -1,15 +1,6 @@
 import MockDate from 'mockdate';
 import { afterAll, describe, expect, it } from 'vitest';
 
-import type {
-  DecosVarenZaakVergunning,
-  ZaakVergunningExploitatieType,
-  VarenVergunningExploitatieType,
-  ZaakVergunningExploitatieWijzigingVaartuigNaamType,
-  VarenZakenFrontend,
-} from './config-and-types.ts';
-import { filterNonPassagiersvaart } from './varen-helper.ts';
-import { fetchVaren } from './varen.ts';
 import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import {
   apiErrorResult,
@@ -17,6 +8,15 @@ import {
 } from '../../../universal/helpers/api.ts';
 import { omit } from '../../../universal/helpers/utils.ts';
 import * as decos from '../decos/decos-service.ts';
+import type {
+  DecosVarenZaakVergunning,
+  VarenVergunningExploitatieType,
+  VarenZakenFrontend,
+  ZaakVergunningExploitatieType,
+  ZaakVergunningExploitatieWijzigingVaartuigNaamType,
+} from './config-and-types.ts';
+import { fetchVaren } from './varen.ts';
+import { filterNonPassagiersvaart } from './varen-helper.ts';
 
 const vergunning = {
   vesselLength: '2,31',

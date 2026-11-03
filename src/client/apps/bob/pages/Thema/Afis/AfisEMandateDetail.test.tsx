@@ -1,21 +1,21 @@
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { vi, describe, it, beforeEach, expect, type Mock } from 'vitest';
+import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
 
-import { eMandateTableConfig } from './Afis-thema-config.ts';
-import { AfisEMandateDetail } from './AfisEMandateDetail.tsx';
-import { useEmandateApis } from './useAfisEmandateActionsApi.tsx';
-import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
-import {
-  useSignRequestPayloadStorage,
-  useSignRequestStatusCheck,
-} from './useAfisEMandatesSignRequest.tsx';
 import type {
   AfisEMandateFrontend,
   AfisFacturenOverviewResponse,
 } from '../../../../../../server/services/afis/afis-types.ts';
 import { useWidescreen } from '../../../../../hooks/media.hook.ts';
 import { MockApp } from '../../MockApp.tsx';
+import { eMandateTableConfig } from './Afis-thema-config.ts';
+import { AfisEMandateDetail } from './AfisEMandateDetail.tsx';
+import {
+  useSignRequestPayloadStorage,
+  useSignRequestStatusCheck,
+} from './useAfisEMandatesSignRequest.tsx';
+import { useEmandateApis } from './useAfisEmandateActionsApi.tsx';
+import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
 
 vi.mock('./AfisEmandateActionButtons.tsx', () => ({
   AfisEMandateActionButtons: () => <div>ActionButtons</div>,

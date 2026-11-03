@@ -1,13 +1,13 @@
 import mockdate from 'mockdate';
 
+import { remoteApiHost } from '../../../testing/setup.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import { fetchKlantcontact } from './klantcontact.ts';
 import type {
   AfspraakResponseSource,
   AfspraakSource,
   ContactmomentResponseSource,
 } from './klantcontact.types.ts';
-import { remoteApiHost } from '../../../testing/setup.ts';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 
 const baseAfspraak: AfspraakSource = {
   subject: 'Blauwe zone',

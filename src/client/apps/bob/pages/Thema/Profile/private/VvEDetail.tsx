@@ -1,10 +1,8 @@
 import { Heading, Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { useProfileData } from './useProfileData.hook.tsx';
-import { useWonenThemaData } from './useWonenThemaData.hook.ts';
 import type {
-  VveCaseDetail,
   VvEDataFrontend,
+  VveCaseDetail,
 } from '../../../../../../../server/services/wonen/zwd.types.ts';
 import {
   Datalist,
@@ -17,6 +15,8 @@ import type { DisplayProps } from '../../../../../../components/Table/TableV2.ty
 import { ThemaDetailPagina } from '../../../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../../../hooks/useHTMLDocumentTitle.ts';
 import { themaConfig } from '../Profile-thema-config.ts';
+import { useProfileData } from './useProfileData.hook.tsx';
+import { useWonenThemaData } from './useWonenThemaData.hook.ts';
 
 type VveDetailsProps = {
   vve: VvEDataFrontend;

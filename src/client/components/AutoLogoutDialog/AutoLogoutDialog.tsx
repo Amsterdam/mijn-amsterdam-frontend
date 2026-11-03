@@ -4,11 +4,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { ActionGroup, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { differenceInMilliseconds } from 'date-fns';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 
 import 'react-circular-progressbar/dist/styles.css';
 
-import styles from './AutoLogoutDialog.module.scss';
 import { formattedTimeFromSeconds } from '../../../universal/helpers/date.ts';
 import {
   LOGIN_URL_DIGID,
@@ -23,6 +22,7 @@ import { useCounter } from '../../hooks/timer.hook.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import { MaButtonLink } from '../MaLink/MaLink.tsx';
 import { Modal } from '../Modal/Modal.tsx';
+import styles from './AutoLogoutDialog.module.scss';
 
 const TITLE = 'Wilt u ingelogd blijven op Mijn Amsterdam?';
 const ONE_MINUTE_SECONDS = 60;

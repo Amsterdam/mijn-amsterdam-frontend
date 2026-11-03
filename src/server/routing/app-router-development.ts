@@ -1,18 +1,6 @@
 import type { Request, Response } from 'express';
 import UID from 'uid-safe';
 
-import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes.ts';
-import {
-  ensureOIDCAuthContext,
-  createDevelopmentSessionData,
-} from './route-helpers-oidc.ts';
-import {
-  createBFFRouter,
-  generateFullApiUrlBFF,
-  generateMaFrontendUrl,
-  sendUnauthorized,
-  type RequestWithRouteAndQueryParams,
-} from './route-helpers.ts';
 import { apiSuccessResult } from '../../universal/helpers/api.ts';
 import { getReturnToUrl } from '../auth/auth-after-redirect-returnto.ts';
 import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config.ts';
@@ -22,18 +10,29 @@ import {
   hasSessionCookie,
 } from '../auth/auth-helpers.ts';
 import { authRoutes } from '../auth/auth-routes.ts';
-import type { AuthProfile } from '../auth/auth-types.ts';
-import type { AuthenticatedRequest } from '../auth/auth-types.ts';
+import type { AuthenticatedRequest, AuthProfile } from '../auth/auth-types.ts';
 import { MA_FRONTEND_URL } from '../config/app.ts';
 import { getFromEnv, getValueFromEnvByKey } from '../helpers/env.ts';
 import {
-  type TestUserAccount,
-  type TestUserData,
   fetchTestAccountOverviewFile,
   getTestAccountsBaseFromEnv,
   mergeWithDynamicTableHeaders,
+  type TestUserAccount,
+  type TestUserData,
 } from '../helpers/test-accounts.ts';
 import { countLoggedInVisit } from '../services/admin/admin-visitors.ts';
+import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes.ts';
+import {
+  createBFFRouter,
+  generateFullApiUrlBFF,
+  generateMaFrontendUrl,
+  type RequestWithRouteAndQueryParams,
+  sendUnauthorized,
+} from './route-helpers.ts';
+import {
+  createDevelopmentSessionData,
+  ensureOIDCAuthContext,
+} from './route-helpers-oidc.ts';
 
 export const authRouterDevelopment = createBFFRouter({ id: 'router-dev' });
 

@@ -11,12 +11,12 @@ import {
   isDateInPast,
 } from '../../../../../../universal/helpers/date.ts';
 import type { LinkProps } from '../../../../../../universal/types/App.types.ts';
-import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
 import type {
   PageConfig,
   ThemaConfigBase,
   WithListPage,
 } from '../../../../../../universal/types/thema-types.ts';
+import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_AFGEHANDELD = 3;

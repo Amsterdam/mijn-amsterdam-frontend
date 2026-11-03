@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 
 import { useLocation, useParams } from 'react-router';
 
-import { trackPageView } from './analytics.hook.ts';
 import type { ThemaRouteConfig } from '../../universal/types/thema-types.ts';
+import { trackPageView } from './analytics.hook.ts';
 
 type UseHTMLDocumentTitleParams = {
   documentTitle: ThemaRouteConfig['documentTitle'];

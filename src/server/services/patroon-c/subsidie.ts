@@ -2,11 +2,6 @@ import { URL, URLSearchParams } from 'node:url';
 
 import * as jose from 'jose';
 
-import {
-  fetchService,
-  fetchTipsAndNotifications,
-  type ApiPatternResponseA,
-} from './api-service.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Subsidies/Subsidies-thema-config.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
@@ -20,6 +15,11 @@ import {
   createSessionBasedCacheKey,
   getApiConfig,
 } from '../../helpers/source-api-helpers.ts';
+import {
+  type ApiPatternResponseA,
+  fetchService,
+  fetchTipsAndNotifications,
+} from './api-service.ts';
 
 async function getJWT() {
   const secret = new TextEncoder().encode(process.env.BFF_SISA_CLIENT_SECRET);

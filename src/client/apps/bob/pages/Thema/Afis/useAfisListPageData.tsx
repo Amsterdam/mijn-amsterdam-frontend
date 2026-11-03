@@ -1,11 +1,11 @@
+import type { AfisFactuurStateFrontend } from '../../../../../../server/services/afis/afis-types.ts';
+import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
 import { listPageTitle } from './Afis-thema-config.ts';
 import { useAfisFacturenApi } from './useAfisFacturenApi.tsx';
 import {
-  useAfisFacturenData,
   type AfisFacturenThemaContextParams,
+  useAfisFacturenData,
 } from './useAfisThemaData.hook.tsx';
-import type { AfisFactuurStateFrontend } from '../../../../../../server/services/afis/afis-types.ts';
-import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
 
 export function useAfisListPageData(
   state: AfisFactuurStateFrontend,

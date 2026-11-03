@@ -1,18 +1,12 @@
 import { HttpStatusCode } from 'axios';
 import { isBefore } from 'date-fns';
 
-import { featureToggle, ZWDApiReqestConfig } from './wonen-service-config.ts';
-import type {
-  VveCaseDetail,
-  VvEDataFrontend,
-  ZwdVveDataSource,
-} from './zwd.types.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Profile/Profile-thema-config.ts';
 import {
+  type ApiResponse,
   apiErrorResult,
   apiPostponeResult,
   apiSuccessResult,
-  type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import { pick } from '../../../universal/helpers/utils.ts';
@@ -31,6 +25,12 @@ import {
 } from '../../helpers/source-api-request.ts';
 import type { BAGID, BAGLocation } from '../bag/bag.types.ts';
 import { fetchCommercial, fetchPrivate } from '../bag/my-locations.ts';
+import { featureToggle, ZWDApiReqestConfig } from './wonen-service-config.ts';
+import type {
+  VvEDataFrontend,
+  VveCaseDetail,
+  ZwdVveDataSource,
+} from './zwd.types.ts';
 
 //Alleen VvE Zaken met een startdatum vanaf 1 januari 2023 worden getoond
 const MINIMUM_ZWD_CASE_CREATED_DATE = '2023-01-01';

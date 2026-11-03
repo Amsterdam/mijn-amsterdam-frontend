@@ -1,12 +1,12 @@
 import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { themaConfig } from './Afis-thema-config.ts';
-import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren.tsx';
 import type { AfisBusinessPartnerDetailsTransformed } from '../../../../../../server/services/afis/afis-types.ts';
 import { bffApi } from '../../../../../../testing/utils.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { MockApp } from '../../MockApp.tsx';
+import { themaConfig } from './Afis-thema-config.ts';
+import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren.tsx';
 
 const businessPartnerIdEncrypted = 'xxx-123-xxx';
 

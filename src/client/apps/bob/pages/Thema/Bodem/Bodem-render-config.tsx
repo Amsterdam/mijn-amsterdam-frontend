@@ -1,13 +1,13 @@
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
+} from '../../../../../../universal/types/thema-types.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import { themaConfig } from './Bodem-thema-config.ts';
 import { BodemDetail } from './BodemDetail.tsx';
 import { default as BodemIcon } from './BodemIcon.svg?react';
 import { BodemList } from './BodemList.tsx';
 import { BodemThema } from './BodemThema.tsx';
-import { isLoading } from '../../../../../helpers/api.ts';
-import type {
-  ThemaMenuItem,
-  ThemaRenderRouteConfig,
-} from '../../../../../../universal/types/thema-types.ts';
 
 export const BodemRoutes = [
   {

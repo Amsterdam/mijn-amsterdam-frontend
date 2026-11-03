@@ -1,6 +1,5 @@
 import { Alert, Paragraph } from '@amsterdam/design-system-react';
 
-import { useVergunningenThemaData } from './useVergunningenThemaData.hook.ts';
 import type { ZaakFrontendCombined } from '../../../../../../server/services/vergunningen/config-and-types.ts';
 import { MaRouterLink } from '../../../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
@@ -9,6 +8,7 @@ import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPagina
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
 import { themaConfig as ParkerenThemaConfig } from '../Parkeren/Parkeren-thema-config.ts';
 import { themaConfig as VergunningenThemaConfig } from '../Vergunningen/Vergunningen-thema-config.ts';
+import { useVergunningenThemaData } from './useVergunningenThemaData.hook.ts';
 
 export function VergunningenThema() {
   const {

@@ -3,8 +3,6 @@ import { useMemo } from 'react';
 import { OrderedList, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath, useParams } from 'react-router';
 
-import { MY_TIPS_PAGE_DOCUMENT_TITLE } from './MyTips-config.ts';
-import { MyTipsRoute } from './MyTips-routes.ts';
 import { isError } from '../../../../../universal/helpers/api.ts';
 import { ErrorAlert } from '../../../../components/Alert/Alert.tsx';
 import { LoadingContent } from '../../../../components/LoadingContent/LoadingContent.tsx';
@@ -15,6 +13,8 @@ import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
 import { useIsLoading } from '../../../../hooks/useIsLoading.ts';
 import { useAppStateNotifications } from '../../../../hooks/useNotifications.ts';
+import { MY_TIPS_PAGE_DOCUMENT_TITLE } from './MyTips-config.ts';
+import { MyTipsRoute } from './MyTips-routes.ts';
 
 const PAGE_SIZE = 12;
 

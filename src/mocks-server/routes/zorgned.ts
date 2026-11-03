@@ -1,9 +1,9 @@
 import { HttpStatusCode } from 'axios';
 
-import ZORGNED_AV_AANVRAGEN_RESPONSE_RTM from '../fixtures/zorgned-av-aanvragen-rtm.json' with {
+import ZORGNED_AV_AANVRAGEN_RESPONSE from '../fixtures/zorgned-av-aanvragen.json' with {
   type: 'json',
 };
-import ZORGNED_AV_AANVRAGEN_RESPONSE from '../fixtures/zorgned-av-aanvragen.json' with {
+import ZORGNED_AV_AANVRAGEN_RESPONSE_RTM from '../fixtures/zorgned-av-aanvragen-rtm.json' with {
   type: 'json',
 };
 import ZORGNED_AV_PERSOONSGEGEVENSNAW_RESPONSE from '../fixtures/zorgned-av-persoonsgegevensNAW.json' with {

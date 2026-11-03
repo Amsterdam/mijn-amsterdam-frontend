@@ -2,29 +2,29 @@ import { useCallback } from 'react';
 
 import { useParams } from 'react-router';
 
-import { ContactgegevenByTypeLabels } from './CommunicatieVoorkeuren-config.ts';
 import type {
-  ContactgegevenType,
   ContactgegevenFrontend,
+  ContactgegevenType,
   VerifyVerificationRequestResponse,
 } from '../../../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
 import {
   capitalizeFirstLetter,
   lowercaseFirstLetter,
 } from '../../../../../../../universal/helpers/text.ts';
-import { BFFApiUrls } from '../../../../config/api.ts';
 import {
   sendFormPostRequest,
   useBffApi,
 } from '../../../../../../hooks/api/useBffApi.ts';
 import {
-  useAppStateStore,
   type AppStateStore,
+  useAppStateStore,
 } from '../../../../../../hooks/useAppStateStore.ts';
+import { BFFApiUrls } from '../../../../config/api.ts';
 import {
   type InstelAction,
   themaConfig,
 } from '../KlantContact-thema-config.ts';
+import { ContactgegevenByTypeLabels } from './CommunicatieVoorkeuren-config.ts';
 
 type UpdateProps = {
   contactgegeven: Partial<Omit<ContactgegevenFrontend, 'type'>> & {

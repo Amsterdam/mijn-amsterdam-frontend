@@ -1,5 +1,5 @@
-import type { ErfpachtZaakExcerptFrontend } from './erfpacht-zaken-types.ts';
 import type { ZaakAanvraagDetail } from '../../../universal/types/App.types.ts';
+import type { ErfpachtZaakExcerptFrontend } from './erfpacht-zaken-types.ts';
 
 export type ErfpachtErpachterResponseSource = {
   erfpachter: boolean;

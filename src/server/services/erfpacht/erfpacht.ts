@@ -1,11 +1,3 @@
-import { fetchErfpachtDossierInfo } from './erfpacht-dossiers.ts';
-import { dataRequestConfig } from './erfpacht-service-config.ts';
-import type {
-  ErfpachtResponseFrontend,
-  ErfpachtErpachterResponse,
-  ErfpachtErpachterResponseSource,
-} from './erfpacht-types.ts';
-import { fetchErfpachtZaakInfo, getDossierLinks } from './erfpacht-zaken.ts';
 import {
   type ApiResponse,
   apiErrorResult,
@@ -16,6 +8,14 @@ import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
+import { fetchErfpachtDossierInfo } from './erfpacht-dossiers.ts';
+import { dataRequestConfig } from './erfpacht-service-config.ts';
+import type {
+  ErfpachtErpachterResponse,
+  ErfpachtErpachterResponseSource,
+  ErfpachtResponseFrontend,
+} from './erfpacht-types.ts';
+import { fetchErfpachtZaakInfo, getDossierLinks } from './erfpacht-zaken.ts';
 
 function transformIsErfpachterResponseSource(
   responseData: ErfpachtErpachterResponseSource,

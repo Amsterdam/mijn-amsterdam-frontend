@@ -3,9 +3,9 @@ import { useCallback, useEffect, useLayoutEffect } from 'react';
 import { create } from 'zustand';
 
 import {
+  type ApiResponse,
   apiErrorResult,
   apiSuccessResult,
-  type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import type { SomeOtherString } from '../../../universal/helpers/types.ts';
 import { omit } from '../../../universal/helpers/utils.ts';

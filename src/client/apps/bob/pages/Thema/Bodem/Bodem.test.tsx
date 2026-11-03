@@ -1,11 +1,11 @@
 import { render, within } from '@testing-library/react';
 
-import { themaConfig } from './Bodem-thema-config.ts';
-import { BodemThema } from './BodemThema.tsx';
 import type { LoodMetingFrontend } from '../../../../../../server/services/bodem/types.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { expectTableHeaders } from '../../../../../helpers/test-utils.ts';
 import { componentCreator } from '../../MockApp.tsx';
+import { themaConfig } from './Bodem-thema-config.ts';
+import { BodemThema } from './BodemThema.tsx';
 
 const metingen = [
   {

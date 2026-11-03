@@ -1,5 +1,5 @@
-import { ZAAK_STATUS_ROUTE } from './ZaakStatus-config.ts';
 import { ZaakStatus } from './ZaakStatus.tsx';
+import { ZAAK_STATUS_ROUTE } from './ZaakStatus-config.ts';
 
 export const ZaakStatusRoute = {
   route: ZAAK_STATUS_ROUTE,

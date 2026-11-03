@@ -1,10 +1,10 @@
-import type { ErfpachtDossiersDetailSource } from './erfpacht-types.ts';
-import type { ZaakStatusTypeSource } from './erfpacht-zaken-config.ts';
 import type { SomeOtherString } from '../../../universal/helpers/types.ts';
 import type {
   LinkProps,
   ZaakAanvraagDetail,
 } from '../../../universal/types/App.types.ts';
+import type { ErfpachtDossiersDetailSource } from './erfpacht-types.ts';
+import type { ZaakStatusTypeSource } from './erfpacht-zaken-config.ts';
 
 export type ZaakInfoSource = {
   zaakNummer: string;

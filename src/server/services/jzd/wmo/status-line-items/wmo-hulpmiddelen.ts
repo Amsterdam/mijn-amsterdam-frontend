@@ -1,3 +1,8 @@
+import type {
+  ProductSoortCode,
+  ZorgnedAanvraagTransformed,
+  ZorgnedStatusLineItemTransformerConfig,
+} from '../../../zorgned/zorgned-types.ts';
 import {
   AANVRAAG,
   EINDE_RECHT,
@@ -10,11 +15,6 @@ import {
   isOpdrachtGegevenVisible,
   MEER_INFORMATIE,
 } from './wmo-generic.ts';
-import type {
-  ProductSoortCode,
-  ZorgnedAanvraagTransformed,
-  ZorgnedStatusLineItemTransformerConfig,
-} from '../../../zorgned/zorgned-types.ts';
 
 export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
   AANVRAAG,

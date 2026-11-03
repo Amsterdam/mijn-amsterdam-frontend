@@ -1,5 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import type { Request, Response, NextFunction } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import express from 'express';
 import type { ParamsDictionary } from 'express-serve-static-core';
 import { generatePath } from 'react-router';

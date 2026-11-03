@@ -1,13 +1,13 @@
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
+} from '../../../../../../universal/types/thema-types.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import { themaConfig } from './Zorg-thema-config.ts';
 import { ZorgDetail } from './ZorgDetail.tsx';
 import { default as ZorgIcon } from './ZorgIcon.svg?react';
 import { ZorgList } from './ZorgList.tsx';
 import { ZorgThema } from './ZorgThema.tsx';
-import { isLoading } from '../../../../../helpers/api.ts';
-import type {
-  ThemaMenuItem,
-  ThemaRenderRouteConfig,
-} from '../../../../../../universal/types/thema-types.ts';
 
 export const ZorgRoutes = [
   {

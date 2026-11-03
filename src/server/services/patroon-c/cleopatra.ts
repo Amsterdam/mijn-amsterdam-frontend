@@ -1,21 +1,19 @@
 import {
-  importX509,
-  importJWK,
-  FlattenedEncrypt,
-  type JWK,
   calculateJwkThumbprint,
   exportJWK,
+  FlattenedEncrypt,
+  importJWK,
+  importX509,
+  type JWK,
   type KeyLike,
 } from 'jose';
 
-import type { ApiPatternResponseA } from './api-service.ts';
-import { fetchService } from './api-service.ts';
 import * as MILIEUZONE from '../../../client/apps/bob/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
 import * as OVERTREDINGEN from '../../../client/apps/bob/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
 import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
 import {
-  apiSuccessResult,
   type ApiResponse,
+  apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
@@ -25,6 +23,8 @@ import {
   createSessionBasedCacheKey,
   getApiConfig,
 } from '../../helpers/source-api-helpers.ts';
+import type { ApiPatternResponseA } from './api-service.ts';
+import { fetchService } from './api-service.ts';
 
 const alg = 'RSA-OAEP-256';
 

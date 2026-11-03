@@ -1,13 +1,13 @@
-import { themaConfig } from './AVG-thema-config.ts';
-import { AVGDetail } from './AVGDetail.tsx';
-import { default as AvgIcon } from './AvgIcon.svg?react';
-import { AVGList } from './AVGList.tsx';
-import { AVGThema } from './AVGThema.tsx';
-import { isLoading } from '../../../../../helpers/api.ts';
 import type {
   ThemaMenuItem,
   ThemaRenderRouteConfig,
 } from '../../../../../../universal/types/thema-types.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
+import { themaConfig } from './AVG-thema-config.ts';
+import { AVGDetail } from './AVGDetail.tsx';
+import { AVGList } from './AVGList.tsx';
+import { AVGThema } from './AVGThema.tsx';
+import { default as AvgIcon } from './AvgIcon.svg?react';
 
 export const AvgRoutes = [
   {

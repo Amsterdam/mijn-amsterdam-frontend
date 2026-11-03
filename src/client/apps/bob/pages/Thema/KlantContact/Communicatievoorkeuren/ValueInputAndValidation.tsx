@@ -1,8 +1,8 @@
 import {
+  type ChangeEventHandler,
   useCallback,
   useEffect,
   useState,
-  type ChangeEventHandler,
 } from 'react';
 
 import {
@@ -15,6 +15,8 @@ import {
 } from '@amsterdam/design-system-react';
 import OTPInput from 'react-otp-input';
 
+import type { ContactgegevenType } from '../../../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
+import { Spinner } from '../../../../../../components/Spinner/Spinner.tsx';
 import {
   ContactgegevenByTypeLabels,
   ContactgegevenTypeEnum,
@@ -24,8 +26,6 @@ import {
   useVerifyCommunicatievoorkeur,
 } from './useCommunicatieVoorkeuren.ts';
 import styles from './ValueInputAndValidation.module.scss';
-import type { ContactgegevenType } from '../../../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
-import { Spinner } from '../../../../../../components/Spinner/Spinner.tsx';
 
 const VERIFICATION_CODE_LENGTH = 6;
 

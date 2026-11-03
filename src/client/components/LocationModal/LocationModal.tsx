@@ -4,7 +4,6 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import type { LatLngLiteral } from 'leaflet';
 
-import styles from './LocationModal.module.scss';
 import type {
   BAGAdreseerbaarObject,
   BAGQueryParams,
@@ -23,6 +22,7 @@ import { ModalAndButton } from '../Modal/Modal.tsx';
 import { BaseLayerType } from '../MyArea/Map/BaseLayerToggle.tsx';
 import type { MapLocationMarker } from '../MyArea/MyArea.hooks.ts';
 import { MyAreaLoader } from '../MyArea/MyAreaLoader.tsx';
+import styles from './LocationModal.module.scss';
 
 const BAG_ADRESSEERBARE_OBJECTEN_URL =
   'https://api.data.amsterdam.nl/v1/benkagg/adresseerbareobjecten/';

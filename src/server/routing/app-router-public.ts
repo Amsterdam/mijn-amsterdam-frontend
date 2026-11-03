@@ -3,12 +3,6 @@ import type { NextFunction, Request, Response } from 'express';
 import express from 'express';
 import proxy from 'express-http-proxy';
 
-import { BffEndpoints } from './bff-routes.ts';
-import {
-  generateFullApiUrlBFF,
-  queryParams,
-  type RequestWithQueryParams,
-} from './route-helpers.ts';
 import { ZAAK_STATUS_ROUTE } from '../../client/apps/bob/pages/ZaakStatus/ZaakStatus-config.ts';
 import { IS_PRODUCTION, OTAP_ENV } from '../../universal/config/env.ts';
 import {
@@ -41,6 +35,12 @@ import {
 } from '../services/cms/cms-content.ts';
 import { fetchActiveMaintenanceNotifications } from '../services/cms/cms-maintenance-notifications.ts';
 import type { QueryParamsMaintenanceNotifications } from '../services/cms/cms-types.ts';
+import { BffEndpoints } from './bff-routes.ts';
+import {
+  generateFullApiUrlBFF,
+  queryParams,
+  type RequestWithQueryParams,
+} from './route-helpers.ts';
 
 export const router = express.Router();
 

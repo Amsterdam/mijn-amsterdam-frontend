@@ -1,5 +1,15 @@
 import Mockdate from 'mockdate';
 
+import WPI_AANVRAGEN from '../../../mocks-server/fixtures/wpi-aanvragen.json' with {
+  type: 'json',
+};
+import WPI_E from '../../../mocks-server/fixtures/wpi-e-aanvragen.json' with {
+  type: 'json',
+};
+import type { ApiResponse_DEPRECATED } from '../../../universal/helpers/api.ts';
+import type { AppState } from '../../../universal/types/App.types.ts';
+import type { BrpFrontend } from '../brp/brp-types.ts';
+import type { WpiRequestProcess } from '../wpi/wpi-types.ts';
 import {
   hasBijstandsuitkering,
   hasBnBVergunning,
@@ -23,16 +33,6 @@ import {
 } from './predicates.ts';
 import type { TipsPredicateFN } from './tip-types.ts';
 import { brpApiResponse } from './tips-service.test.ts';
-import WPI_AANVRAGEN from '../../../mocks-server/fixtures/wpi-aanvragen.json' with {
-  type: 'json',
-};
-import WPI_E from '../../../mocks-server/fixtures/wpi-e-aanvragen.json' with {
-  type: 'json',
-};
-import type { ApiResponse_DEPRECATED } from '../../../universal/helpers/api.ts';
-import type { AppState } from '../../../universal/types/App.types.ts';
-import type { BrpFrontend } from '../brp/brp-types.ts';
-import type { WpiRequestProcess } from '../wpi/wpi-types.ts';
 
 const TONK = {
   content: WPI_E.content.filter((c) => c.about === 'TONK'),

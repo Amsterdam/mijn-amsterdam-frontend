@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { Steps } from './StatusSteps.tsx';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
+import { Steps } from './StatusSteps.tsx';
 
 function createStep(overrides: Partial<StatusLineItem> = {}): StatusLineItem {
   return {

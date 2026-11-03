@@ -1,5 +1,17 @@
 import { generatePath } from 'react-router';
 
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Varen/Varen-thema-config.ts';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api.ts';
+import { toDateFormatted } from '../../../universal/helpers/date.ts';
+import { omit } from '../../../universal/helpers/utils.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import {
+  fetchDecosZaken,
+  transformDecosZaakFrontend,
+} from '../decos/decos-service.ts';
 import type {
   Varen,
   VarenRegistratieRederFrontend,
@@ -15,16 +27,6 @@ import {
 } from './decos-zaken.ts';
 import { filterNonPassagiersvaart } from './varen-helper.ts';
 import { getStatusSteps } from './varen-status-steps.ts';
-import { themaConfig } from '../../../client/apps/bob/pages/Thema/Varen/Varen-thema-config.ts';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-} from '../../../universal/helpers/api.ts';
-import { toDateFormatted } from '../../../universal/helpers/date.ts';
-import { omit } from '../../../universal/helpers/utils.ts';
-import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import { fetchDecosZaken } from '../decos/decos-service.ts';
-import { transformDecosZaakFrontend } from '../decos/decos-service.ts';
 
 function transformVarenRederFrontend(
   zaak: VarenRegistratieRederType | null | undefined

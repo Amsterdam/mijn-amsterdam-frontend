@@ -1,3 +1,4 @@
+import type { ZorgnedStatusLineItemTransformerConfig } from '../../../zorgned/zorgned-types.ts';
 import {
   AANVRAAG,
   EINDE_RECHT,
@@ -11,7 +12,6 @@ import {
   isOpdrachtGegevenVisible,
   MEER_INFORMATIE,
 } from './wmo-generic.ts';
-import type { ZorgnedStatusLineItemTransformerConfig } from '../../../zorgned/zorgned-types.ts';
 
 export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
   AANVRAAG,

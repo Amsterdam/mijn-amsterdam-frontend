@@ -7,8 +7,8 @@ import type {
 } from '../../../universal/types/App.types.ts';
 
 export type {
-  WithLocation,
   WithDateRange,
+  WithLocation,
 } from '../vergunningen/config-and-types.ts';
 
 type DecosDocumentBase = {

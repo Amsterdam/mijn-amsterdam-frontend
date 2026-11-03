@@ -1,5 +1,3 @@
-import { decosZaakTransformers } from './toeristische-verhuur-service-config.ts';
-import type { VakantieverhuurVergunningFrontend } from './toeristische-verhuur.types.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
@@ -8,6 +6,8 @@ import {
   transformDecosZaakFrontend,
 } from '../decos/decos-service.ts';
 import { getStatusStepsDecos } from '../vergunningen/decos-status-steps.ts';
+import type { VakantieverhuurVergunningFrontend } from './toeristische-verhuur.types.ts';
+import { decosZaakTransformers } from './toeristische-verhuur-service-config.ts';
 
 export async function fetchVakantieverhuurVergunningen(
   authProfileAndToken: AuthProfileAndToken

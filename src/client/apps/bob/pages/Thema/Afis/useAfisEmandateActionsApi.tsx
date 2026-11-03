@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
-import { useSignRequestPayloadStorage } from './useAfisEMandatesSignRequest.tsx';
 import type {
   AfisEMandateFrontend,
   AfisEMandateSignRequestResponse,
@@ -11,11 +9,13 @@ import type {
 import { entries } from '../../../../../../universal/helpers/utils.ts';
 import { logger } from '../../../../../helpers/logging.ts';
 import {
-  useBffApi,
+  type RequestInitWithPayload,
   sendFetchRequest,
   sendFormPostRequest,
-  type RequestInitWithPayload,
+  useBffApi,
 } from '../../../../../hooks/api/useBffApi.ts';
+import { useSignRequestPayloadStorage } from './useAfisEMandatesSignRequest.tsx';
+import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
 
 function useRedirectUrlApi(
   eMandate: AfisEMandateFrontend,

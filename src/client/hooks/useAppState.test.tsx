@@ -2,14 +2,14 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, vi } from 'vitest';
 
+import { newEventSourceMock } from '../../testing/EventSourceMock.ts';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
 import {
   addParamsToStreamEndpoint,
   useAppStateRemote,
 } from './useAppStateRemote.ts';
 import { useAppStateStore } from './useAppStateStore.ts';
 import { SSE_ERROR_MESSAGE } from './useSSE.ts';
-import { newEventSourceMock } from '../../testing/EventSourceMock.ts';
-import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
 
 vi.mock('./api/useTipsApi');
 vi.mock('./useProfileType');

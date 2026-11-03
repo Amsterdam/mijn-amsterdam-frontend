@@ -1,12 +1,5 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import {
-  listPageParamKind,
-  stadspasDisplayProps,
-  type StadspasDisplayProps,
-} from './HLI-thema-config.ts';
-import styles from './HLIThema.module.scss';
-import { useHliThemaData } from './useHliThemaData.ts';
 import type {
   HLIRegelingFrontend,
   HLIRegelingSpecificatieFrontend,
@@ -20,6 +13,13 @@ import { TableV2 } from '../../../../../components/Table/TableV2.tsx';
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import {
+  listPageParamKind,
+  type StadspasDisplayProps,
+  stadspasDisplayProps,
+} from './HLI-thema-config.ts';
+import styles from './HLIThema.module.scss';
+import { useHliThemaData } from './useHliThemaData.ts';
 
 export function HistoricItemsMention() {
   return (

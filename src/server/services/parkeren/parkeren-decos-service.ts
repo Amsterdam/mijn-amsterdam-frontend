@@ -1,5 +1,3 @@
-import type { ParkeerVergunningFrontend } from './config-and-types.ts';
-import { decosZaakTransformers } from './decos-zaken.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Parkeren/Parkeren-thema-config.ts';
 import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
@@ -9,6 +7,8 @@ import {
   transformDecosZaakFrontend,
 } from '../decos/decos-service.ts';
 import { getStatusStepsDecos } from '../vergunningen/decos-status-steps.ts';
+import type { ParkeerVergunningFrontend } from './config-and-types.ts';
+import { decosZaakTransformers } from './decos-zaken.ts';
 
 export async function fetchDecosParkeerVergunningen(
   authProfileAndToken: AuthProfileAndToken

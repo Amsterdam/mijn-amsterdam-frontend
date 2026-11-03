@@ -1,12 +1,12 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { useKrefiaThemaData } from './useKrefiaThemaData.hook.tsx';
 import type { KrefiaDeepLink } from '../../../../../../server/services/krefia/krefia.types.ts';
 import { entries } from '../../../../../../universal/helpers/utils.ts';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { useKrefiaThemaData } from './useKrefiaThemaData.hook.tsx';
 
 export function KrefiaThema() {
   const {

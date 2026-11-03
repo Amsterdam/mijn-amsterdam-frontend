@@ -1,6 +1,10 @@
 import mockdate from 'mockdate';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
+import type {
+  AfisEMandateFrontend,
+  AfisFactuurTermijn,
+} from '../../../../../../server/services/afis/afis-types.ts';
 import {
   generateApiUrl,
   getEMandateValidityDate,
@@ -8,13 +12,9 @@ import {
   isFactuurInTermijnen,
 } from './Afis-helpers.ts';
 import {
-  EMANDATE_ENDDATE_INDICATOR,
   type AfisFactuurFrontend,
+  EMANDATE_ENDDATE_INDICATOR,
 } from './Afis-thema-config.ts';
-import type {
-  AfisEMandateFrontend,
-  AfisFactuurTermijn,
-} from '../../../../../../server/services/afis/afis-types.ts';
 
 function createTermijn(
   overrides: Partial<AfisFactuurTermijn> = {}

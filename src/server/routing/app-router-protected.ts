@@ -1,13 +1,6 @@
 import { HttpStatusCode } from 'axios';
 import type { NextFunction, Request, Response } from 'express';
 
-import { BffEndpoints } from './bff-routes.ts';
-import {
-  createBFFRouter,
-  sendBadRequest,
-  sendResponse,
-  type RequestWithQueryParams,
-} from './route-helpers.ts';
 import type { streamEndpointQueryParamKeys } from '../../universal/config/app.ts';
 import { IS_PRODUCTION } from '../../universal/config/env.ts';
 import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
@@ -17,14 +10,14 @@ import { bezwarenRouter } from '../services/bezwaren/bezwaren-router.ts';
 import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen.ts';
 import { brpRouter } from '../services/brp/brp-router.ts';
 import {
-  NOTIFICATIONS,
   loadServicesAll,
   loadServicesSSE,
+  NOTIFICATIONS,
 } from '../services/controller.ts';
 import {
-  handleFetchDecosDocumentsList,
   fetchZaakByKey,
   fetchZakenByUserIDs,
+  handleFetchDecosDocumentsList,
 } from '../services/decos/decos-route-handlers.ts';
 import {
   fetchDecosDocument,
@@ -42,6 +35,13 @@ import {
 } from '../services/shared/documents-route-handlers.ts';
 import { userFeedbackRouter } from '../services/user-feedback/user-feedback.router.ts';
 import { fetchWpiDocument } from '../services/wpi/api-service.ts';
+import { BffEndpoints } from './bff-routes.ts';
+import {
+  createBFFRouter,
+  type RequestWithQueryParams,
+  sendBadRequest,
+  sendResponse,
+} from './route-helpers.ts';
 
 export const router = createBFFRouter({ id: 'router-protected' });
 

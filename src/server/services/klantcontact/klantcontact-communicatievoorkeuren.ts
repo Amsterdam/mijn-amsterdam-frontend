@@ -1,22 +1,22 @@
-import { getMostRecentByContactgegevenType } from './klantcontact-helpers.ts';
-import type {
-  CommunicatievoorkeurenResponseFrontend,
-  ContactgegevenType,
-} from './klantcontact-profieldienst-types.ts';
 import {
-  fetchDienstverlener,
-  fetchProfiel,
-} from './klantcontact-profieldienst.ts';
-import { featureToggle } from './klantcontact-service-config.ts';
-import {
+  type ApiResponse,
   apiErrorResult,
   apiPostponeResult,
-  type ApiResponse,
   apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
 import { getFullAddress } from '../../../universal/helpers/brp.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { fetchMyLocations } from '../bag/my-locations.ts';
+import { getMostRecentByContactgegevenType } from './klantcontact-helpers.ts';
+import {
+  fetchDienstverlener,
+  fetchProfiel,
+} from './klantcontact-profieldienst.ts';
+import type {
+  CommunicatievoorkeurenResponseFrontend,
+  ContactgegevenType,
+} from './klantcontact-profieldienst-types.ts';
+import { featureToggle } from './klantcontact-service-config.ts';
 
 export const ContactgegevenTypes = {
   Email: 'Email',

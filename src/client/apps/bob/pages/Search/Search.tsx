@@ -1,10 +1,10 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { SEARCH_PAGE_DOCUMENT_TITLE } from './Search-routes.ts';
 import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
 import { Search } from '../../../../components/Search/Search.tsx';
 import { useAppStateReady } from '../../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
+import { SEARCH_PAGE_DOCUMENT_TITLE } from './Search-routes.ts';
 
 export function SearchPage() {
   useHTMLDocumentTitle({

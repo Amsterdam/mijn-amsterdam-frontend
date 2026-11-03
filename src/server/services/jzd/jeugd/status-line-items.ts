@@ -1,8 +1,8 @@
 import { defaultDateFormat } from '../../../../universal/helpers/date.ts';
 import type {
   ZorgnedAanvraagTransformed,
-  ZorgnedStatusLineItemTransformerConfig,
   ZorgnedStatusLineItemsConfig,
+  ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types.ts';
 import {
   AANVRAAG,

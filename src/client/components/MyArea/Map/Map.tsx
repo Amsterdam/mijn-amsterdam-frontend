@@ -1,4 +1,4 @@
-import { type MapProps, Map } from '@amsterdam/react-maps';
+import { Map, type MapProps } from '@amsterdam/react-maps';
 import 'leaflet/dist/leaflet.css';
 import classnames from 'classnames';
 

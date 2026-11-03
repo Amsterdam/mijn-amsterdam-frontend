@@ -4,8 +4,8 @@ import mockdate from 'mockdate';
 import nock from 'nock';
 import { BrowserRouter } from 'react-router';
 
-import { AfspraakCard, AfspraakCardDashboard } from './AfspraakCard.tsx';
 import type { AfspraakFrontend } from '../../../server/services/klantcontact/klantcontact.types.ts';
+import { AfspraakCard, AfspraakCardDashboard } from './AfspraakCard.tsx';
 
 const address = { street: 'Amstel', houseNumber: 1 };
 
