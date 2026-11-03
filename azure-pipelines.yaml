@@ -96,6 +96,8 @@ variables:
     value: ${{ parameters.btdBuild }}
   - name: btdTest
     value: ${{ parameters.btdTest }}
+  - name: btdMigrate
+    value: ${{ parameters.btdMigrate }}
   - name: dtapName
     value: ${{ parameters.dtapName }}
   - name: btdDeploy
@@ -143,6 +145,7 @@ jobs:
       dtapName: ${{ variables.dtapName }}
       btdBuild: ${{ variables.btdBuild }}
       btdTest: ${{ variables.btdTest }}
+      btdMigrate: ${{ variables.btdMigrate }}
       btdDeploy: ${{ variables.btdDeploy }}
       # For selecting which app to build and deploy
       btdAppBFF: ${{ parameters.btdAppBFF }}
