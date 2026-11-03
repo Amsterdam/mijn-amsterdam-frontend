@@ -222,9 +222,10 @@ export function AfvalThemaPagina() {
     privateLocation?.bagNummeraanduidingId;
 
   function renderAddress() {
+    const includePostCodeWoonplaats = true;
     const address = MY_LOCATION.content?.[0]?.address;
     if (address) {
-      return getFullAddress(address);
+      return getFullAddress(address, includePostCodeWoonplaats);
     }
     if (isLocationLoading) {
       return <LoadingContent barConfig={[['20rem', '3rem', '0']]} />;
