@@ -6,14 +6,14 @@ on:
   pull_request:
 jobs:
   check-lint-format-import:
-    name: "Linter/Formatter/Import Check"
+    name: Biome
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
-      - name: Check formatting, lint, and imports
+      - name: Check
         run: |
           BIOME_VERSION=$(node -p "require('./package.json').devDependencies['@biomejs/biome']")
           npm exec --yes --package="@biomejs/biome@$BIOME_VERSION" -- biome ci . --error-on-warnings
