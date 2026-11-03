@@ -1,5 +1,8 @@
 import { useZaakDetailData } from './useErfpachtZaakData.hook.ts';
-import { Datalist, type Row } from '../../../../../components/Datalist/Datalist.tsx';
+import {
+  Datalist,
+  type Row,
+} from '../../../../../components/Datalist/Datalist.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { TableV2 } from '../../../../../components/Table/TableV2.tsx';
 import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';

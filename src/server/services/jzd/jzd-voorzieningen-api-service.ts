@@ -120,7 +120,8 @@ function addMaApiPropsToVoorziening<T extends ZorgnedAanvraagTransformed>(
             );
             applyAssignments.maActieUrls = {
               ...(applyAssignments.maActieUrls as
-                Record<string, string> | undefined),
+                | Record<string, string>
+                | undefined),
               ...urls,
             };
           } else if (Array.isArray(value_)) {
@@ -148,7 +149,7 @@ function serviceErrorResult(
   wmoVoorzieningenResponse: ApiResponse<ZorgnedAanvraagTransformed[]>,
   jeugdVoorzieningenResponse: ApiResponse<ZorgnedAanvraagTransformed[]>
 ) {
-  let code ;
+  let code;
   if (wmoVoorzieningenResponse.status === 'ERROR') {
     code = wmoVoorzieningenResponse.code;
   } else if (jeugdVoorzieningenResponse.status === 'ERROR') {

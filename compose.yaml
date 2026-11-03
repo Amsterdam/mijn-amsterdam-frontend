@@ -7,7 +7,7 @@ services:
     ports:
       - 5000:5000
     env_file: ".env.local"
-    profiles: [dev]
+    profiles: [ dev ]
 
   db:
     image: postgres:latest

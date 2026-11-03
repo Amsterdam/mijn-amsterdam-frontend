@@ -81,4 +81,3 @@ export type VveCaseDetail = ZaakAanvraagDetail & {
     name: string;
   };
 };
-

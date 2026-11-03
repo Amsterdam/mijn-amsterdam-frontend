@@ -1,5 +1,5 @@
 allowBuilds:
-  '@parcel/watcher': false
+  "@parcel/watcher": false
   core-js: false
   cpu-features: false
   es5-ext: false
@@ -10,4 +10,4 @@ minimumReleaseAge: 1440 # 1440 minutes = 1 day
 packages:
   - .
 overrides:
-  '@azure/app-configuration': '^1.12.1'
+  "@azure/app-configuration": "^1.12.1"

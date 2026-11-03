@@ -181,9 +181,7 @@ describe('app-router-private-auth-context', () => {
 
     const ONE_MINUTE_BEFORE_EXPIRY_SECONDS =
       OIDC_SESSION_MAX_AGE_SECONDS - ONE_MINUTE_SECONDS;
-    MockDate.set(
-      Date.now() + ONE_MINUTE_BEFORE_EXPIRY_SECONDS * ONE_SECOND_MS
-    );
+    MockDate.set(Date.now() + ONE_MINUTE_BEFORE_EXPIRY_SECONDS * ONE_SECOND_MS);
     const req = createPrivateAuthRequest({
       [AMSAPP_SESSION_TOKEN_HEADER]: sessionToken,
     });
@@ -236,8 +234,9 @@ describe('app-router-private-auth-context', () => {
       featureToggle: { amsAppUniversalAuthIsActive: false },
     }));
     try {
-      const { privateNetworkAuthContextMiddleware: middleware } =
-        await import('./app-router-private-auth-context.ts');
+      const { privateNetworkAuthContextMiddleware: middleware } = await import(
+        './app-router-private-auth-context.ts'
+      );
       const sessionToken = await createDevelopmentSessionMock(DIGID_PROFILE);
       const { req: browserReq, res: browserRes } =
         await getOidcSessionMock(sessionToken);

@@ -10,8 +10,5 @@
     "src/global.d.ts",
     "src/mijnamsterdam.d.ts"
   ],
-  "exclude": [
-    "**/*.test.ts",
-    "**/*.test.tsx"
-  ]
+  "exclude": ["**/*.test.ts", "**/*.test.tsx"]
 }

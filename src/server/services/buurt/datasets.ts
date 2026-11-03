@@ -62,7 +62,8 @@ export type DatasetFeatureProperties = {
   color?: string;
   zIndex?: ZIndexPaneValue;
   [propertyName: string /*DatasetPropertyName*/]:
-    DatasetPropertyValue | unknown;
+    | DatasetPropertyValue
+    | unknown;
 };
 
 export type DatasetClusterFeatureProperties = DatasetFeatureProperties & {

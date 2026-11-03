@@ -92,7 +92,7 @@ function handleRequestDataError(
   let code: number = 500;
   let errorMessageInternal: string = '';
   let errorMessage: string = '';
-  let stack: string | undefined ;
+  let stack: string | undefined;
 
   if (fromAxios) {
     const error = error_ as AxiosError;

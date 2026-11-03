@@ -1,5 +1,9 @@
-import BSN_RESPONSE from '../fixtures/registraties-toeristische-verhuur-bsn.json' with { type: 'json' };
-import NORMAL_RESPONSE from '../fixtures/registraties-toeristische-verhuur.json' with { type: 'json' };
+import BSN_RESPONSE from '../fixtures/registraties-toeristische-verhuur-bsn.json' with {
+  type: 'json',
+};
+import NORMAL_RESPONSE from '../fixtures/registraties-toeristische-verhuur.json' with {
+  type: 'json',
+};
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 

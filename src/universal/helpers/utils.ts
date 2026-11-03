@@ -118,7 +118,8 @@ export function hash(str: string) {
 export function deepOmitKeys(data: any, omitKeys: string[] = []): any {
   if (Array.isArray(data)) {
     return data.map((item) => deepOmitKeys(item, omitKeys));
-  }if (data !== null && typeof data === 'object') {
+  }
+  if (data !== null && typeof data === 'object') {
     const rdata: Record<string, any> = omit(data, omitKeys);
     for (const [key, value] of Object.entries(rdata)) {
       if (Array.isArray(value)) {

@@ -8,7 +8,6 @@
  * A redactedViews constructor parameter is added to sync the redactedViews class used
  */
 
-
 const translations = {
   nl: {
     request_share: 'Verzoek om deze pagina te delen',

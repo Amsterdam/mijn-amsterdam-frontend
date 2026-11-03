@@ -459,7 +459,7 @@ export function getQueryConfig(searchEntry: string): QueryConfig {
   return Object.fromEntries(
     Array.from(new URLSearchParams(searchEntry).entries())
       .map(([k, v]) => {
-        let value ;
+        let value;
         try {
           value = v ? JSON.parse(v) : undefined;
         } catch {

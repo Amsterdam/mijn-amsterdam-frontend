@@ -164,7 +164,8 @@ export function displayLinkToSearchResult(
                 {segment}
               </span>
             );
-          }if (typeof segment === 'string' && replaceTerm) {
+          }
+          if (typeof segment === 'string' && replaceTerm) {
             let segmentReplaced = segment;
             if (replaceTerm) {
               termSplitted.forEach((termPart) => {

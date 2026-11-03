@@ -117,10 +117,7 @@ authRouterDevelopment.get(
       throw new Error('OIDC session has not been initialized');
     }
 
-    Object.assign(
-      session,
-      await createDevelopmentSessionData(authProfile)
-    );
+    Object.assign(session, await createDevelopmentSessionData(authProfile));
 
     const redirectUrl = getPredefinedRedirectUrl(req);
 
@@ -160,9 +157,10 @@ async function sendRenderedTestAccountTable(
     authMethod === 'digid' ? 'MA_TEST_ACCOUNTS' : 'MA_TEST_ACCOUNTS_EH';
 
   const testAccountsBase = getTestAccountsBaseFromEnv(envKey);
-  const testAccountsOverview: TestUserData | null = await fetchTestAccountOverviewFile(
-      `${envKey}_OVERVIEW_URL`
-    ).catch(() => null  );
+  const testAccountsOverview: TestUserData | null =
+    await fetchTestAccountOverviewFile(`${envKey}_OVERVIEW_URL`).catch(
+      () => null
+    );
 
   const testAccountOverviewByUsername =
     testAccountsOverview?.accounts.reduce(

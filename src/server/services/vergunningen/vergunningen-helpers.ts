@@ -26,7 +26,8 @@ export function getCustomTitleForVergunningWithLicensePlates(
     const plates = vergunning.kentekens?.split(' | ');
     if (plates?.length === 1) {
       return `${vergunning.title} (${vergunning.kentekens})`;
-    }if (plates && plates?.length > 1) {
+    }
+    if (plates && plates?.length > 1) {
       return `${vergunning.title} (${plates[0]}... +${plates.length - 1})`;
     }
   }

@@ -42,7 +42,7 @@ export function getFullAddress(
     `${adres.straatnaam} ${adres.huisnummer || ''} ${
       adres.huisletter || ''
     } ${adres.huisnummertoevoeging || ''}`.trim() + postCodeWoonplaats
-  ); 
+  );
 }
 
 export function isMokum(

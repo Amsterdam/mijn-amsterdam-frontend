@@ -81,8 +81,9 @@ describe('Afvalwijzer service', () => {
       afvalwijzerFractieCode: 'Textiel',
       afvalwijzerWaar: 'Somewhere in a galaxy far away',
     };
-    expect(exportedForTesting.getBuurtLink(fractionData as AfvalFractionData))
-      .toMatchInlineSnapshot(`
+    expect(
+      exportedForTesting.getBuurtLink(fractionData as AfvalFractionData)
+    ).toMatchInlineSnapshot(`
         {
           "title": "Somewhere in a galaxy far away",
           "to": "/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Textiel"%3A1}}}}",
@@ -172,8 +173,9 @@ describe('Afvalwijzer service', () => {
       _embedded: { afvalwijzer: fractions as unknown as AfvalFractionData[] },
     };
 
-    expect(transformAfvalDataResponse(response, centroid))
-      .toMatchInlineSnapshot(`
+    expect(
+      transformAfvalDataResponse(response, centroid)
+    ).toMatchInlineSnapshot(`
         [
           {
             "buitenzetten": null,

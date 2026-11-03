@@ -1,9 +1,21 @@
-import PB_SEARCH_DOCUMENTS from '../fixtures/powerbrowser-attachments.json' with { type: 'json' };
-import PB_PERSONEN_ZAKEN from '../fixtures/powerbrowser-personen-zaken.json' with { type: 'json' };
-import PB_SEARCH_PERSON from '../fixtures/powerbrowser-search-person.json' with { type: 'json' };
-import PB_LINK_ZAAK_ADRES from '../fixtures/powerbrowser-zaak-adres.json' with { type: 'json' };
-import PB_ZAAK_STATUS from '../fixtures/powerbrowser-zaak-status.json' with { type: 'json' };
-import PB_ZAAK_WBTRANSPORT from '../fixtures/powerbrowser-zaak-wbtransport.json' with { type: 'json' };
+import PB_SEARCH_DOCUMENTS from '../fixtures/powerbrowser-attachments.json' with {
+  type: 'json',
+};
+import PB_PERSONEN_ZAKEN from '../fixtures/powerbrowser-personen-zaken.json' with {
+  type: 'json',
+};
+import PB_SEARCH_PERSON from '../fixtures/powerbrowser-search-person.json' with {
+  type: 'json',
+};
+import PB_LINK_ZAAK_ADRES from '../fixtures/powerbrowser-zaak-adres.json' with {
+  type: 'json',
+};
+import PB_ZAAK_STATUS from '../fixtures/powerbrowser-zaak-status.json' with {
+  type: 'json',
+};
+import PB_ZAAK_WBTRANSPORT from '../fixtures/powerbrowser-zaak-wbtransport.json' with {
+  type: 'json',
+};
 import { sendMockDocument } from '../helpers/send-mock-document.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';

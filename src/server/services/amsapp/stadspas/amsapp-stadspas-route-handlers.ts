@@ -182,7 +182,7 @@ export async function sendStadspassenResponse(
   res: Response
 ) {
   let apiResponseError: ApiError = apiResponseErrors.UNKNOWN;
-  let administratienummer: string | undefined ;
+  let administratienummer: string | undefined;
 
   try {
     const administratienummerEncrypted =

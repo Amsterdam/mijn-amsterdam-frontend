@@ -66,7 +66,7 @@ export function useMainHeaderControl() {
     if (isSearchActive) {
       setSearchActive(false);
     }
-  }, [setSearchActive,isMainMenuOpen, isSearchActive]);
+  }, [setSearchActive, isMainMenuOpen, isSearchActive]);
 
   const closeByEscapeKey = useCallback(
     (event: KeyboardEvent) => {

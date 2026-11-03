@@ -33,9 +33,11 @@ export function ProfileName({
 
     if (preferVoornaam && persoon.voornamen) {
       return persoon.voornamen;
-    }if (persoon.opgemaakteNaam) {
+    }
+    if (persoon.opgemaakteNaam) {
       return persoon.opgemaakteNaam;
-    }if (persoon.voornamen) {
+    }
+    if (persoon.voornamen) {
       return getFullName(persoon);
     }
   } else if (KVK.content?.onderneming?.handelsnaam) {

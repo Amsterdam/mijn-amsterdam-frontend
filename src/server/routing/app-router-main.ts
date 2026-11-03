@@ -21,10 +21,7 @@ type CreateMainRouterOptions = {
   isAP: boolean;
 };
 
-export function createMainRouter({
-  isOT,
-  isAP,
-}: CreateMainRouterOptions) {
+export function createMainRouter({ isOT, isAP }: CreateMainRouterOptions) {
   const router = createBFFRouter({ id: 'router-main' });
 
   // Some legacy routes that are not prefixed with /api/v1

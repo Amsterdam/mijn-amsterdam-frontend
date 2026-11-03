@@ -89,12 +89,7 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
     ) {
       setDetailPanelState(isNarrowScreen ? PanelState.Tip : PanelState.Closed);
     }
-  }, [
-    detailState, 
-    loadingFeature, 
-    setDetailPanelState, 
-    isNarrowScreen
-  ]);
+  }, [detailState, loadingFeature, setDetailPanelState, isNarrowScreen]);
 
   return (
     <div id="skip-to-id-LegendPanel">

@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: '4.0'
+  version: "4.0"
   title: Mijn Amsterdam BFF api definition
   description: The BFF api is used to do data fetching, data transformations, short-lived request/response caching, error handling and response formatting.
   contact:
@@ -15,13 +15,13 @@ paths:
     get:
       description: Redirects to Digid login
       responses:
-        '301':
+        "301":
           description: Ok
   /auth/digid/check:
     get:
       description: Endpoint for checking the Digid authorization status
       responses:
-        '200':
+        "200":
           description: Returns auth info
           content:
             application/json:
@@ -31,13 +31,13 @@ paths:
     get:
       description: Redirects to Eherkenning login
       responses:
-        '301':
+        "301":
           description: Ok
   /auth/eherkenning/check:
     get:
       description: Endpoint for checking the Eherkenning authorization status
       responses:
-        '200':
+        "200":
           description: Returns auth info
           content:
             application/json:
@@ -47,7 +47,7 @@ paths:
     get:
       description: Endpoint for checking the Eherkenning or Digid authorization status
       responses:
-        '200':
+        "200":
           description: Returns auth info
           content:
             application/json:
@@ -57,7 +57,7 @@ paths:
     get:
       description: Endpoint for inspecting the Digid/Eherkenning token data
       responses:
-        '200':
+        "200":
           description: Returns token-data
           content:
             application/json:
@@ -67,48 +67,48 @@ paths:
     get:
       description: Logs out the user / Destroys the session and redirects to front-end.
       responses:
-        '301':
+        "301":
           description: Ok
   /status/health:
     get:
       description: Endpoint for checking whether the server has started.
       responses:
-        '200':
+        "200":
           description: Returns "OK" when server is started.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HealthyResponse'
+                $ref: "#/components/schemas/HealthyResponse"
   /services/search-config:
     get:
       description: Provides information relevant to searching the site.
       responses:
-        '200':
+        "200":
           description: Returns an object with config data.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchConfigResponse'
+                $ref: "#/components/schemas/SearchConfigResponse"
   /services/stream:
     get:
       description: Streams data from the different services to the client using an event stream.
       responses:
-        '200':
+        "200":
           description: Returns an event stream with messages from the different services.
           content:
             text/event-stream:
               schema:
-                $ref: '#/components/schemas/StreamResponse'
+                $ref: "#/components/schemas/StreamResponse"
   /services/all:
     get:
       description: An endpoint used to retrieve information from all services. Used when client doesn't support or is able to connect to the EventSource.
       responses:
-        '200':
+        "200":
           description: Returns an object with all relevant data.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ServicesAllResponse'
+                $ref: "#/components/schemas/ServicesAllResponse"
 
   /map/datasets/{datasetId}/{id}:
     parameters:
@@ -127,32 +127,32 @@ paths:
     get:
       description: Endpoint used to retrieve points of interest for the users area
       responses:
-        '200':
+        "200":
           description: Returns a list of Features
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MapDatasetResponse'
+                $ref: "#/components/schemas/MapDatasetResponse"
   /status/cache:
     get:
       description: This endpoint gives an overview of the content inside the cache directory of the server.
       responses:
-        '200':
+        "200":
           description: Returns an object with cache overview
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CacheResponse'
+                $ref: "#/components/schemas/CacheResponse"
   /services/cms/maintenance-notifications:
     get:
       description: Endpoint used to retrieve maintenance notifications.
       responses:
-        '200':
+        "200":
           description: Returns a list of CmsMaintenanceNotification objects
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CmsMaintenanceResponse'
+                $ref: "#/components/schemas/CmsMaintenanceResponse"
 components:
   schemas:
     HealthyResponse:
@@ -172,9 +172,9 @@ components:
         staticSearchEntries:
           type: array
           items:
-            $ref: '#/components/schemas/SearchEntry'
+            $ref: "#/components/schemas/SearchEntry"
         apiSearchConfigs:
-          $ref: '#/components/schemas/ApiSearchConfig'
+          $ref: "#/components/schemas/ApiSearchConfig"
     SearchEntry:
       type: object
       properties:
@@ -202,47 +202,47 @@ components:
       type: object
       properties:
         BRP:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         CMS_MAINTENANCE_NOTIFICATIONS:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         KVK:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         KREFIA:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         WPI_AANVRAGEN:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         WPI_SPECIFICATIES:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         WPI_TOZO:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         WPI_TONK:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         WPI_BBZ:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         WMO:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         VERGUNNINGEN:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         MY_LOCATION:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         AFVAL:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         AFVALPUNTEN:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         BELASTINGEN:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         MILIEUZONE:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         OVERTREDINGEN:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         TOERISTISCHE_VERHUUR:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         ERFPACHT:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         SUBSIDIES:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
         NOTIFICATIONS:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
+          $ref: "#/components/schemas/ApiSearchConfigResult"
     ApiSearchConfigResult:
       type: object
       properties:
@@ -311,7 +311,7 @@ components:
               id:
                 type: string
               data:
-                $ref: '#/components/schemas/StreamItem'
+                $ref: "#/components/schemas/StreamItem"
           - type: object
             properties:
               id:
@@ -324,16 +324,16 @@ components:
       type: object
       properties:
         content:
-          $ref: '#/components/schemas/MapDataset'
+          $ref: "#/components/schemas/MapDataset"
         status:
           type: string
           enum:
-            - 'OK'
-            - 'ERROR'
+            - "OK"
+            - "ERROR"
         id:
           type: string
         failedDependencies:
-          $ref: '#/components/schemas/FailedDependencies'
+          $ref: "#/components/schemas/FailedDependencies"
     MapDataset:
       type: object
       properties:
@@ -371,20 +371,20 @@ components:
       type: object
       properties:
         content:
-          $ref: '#/components/schemas/CmsMaintenanceList'
+          $ref: "#/components/schemas/CmsMaintenanceList"
         status:
           type: string
           enum:
-            - 'OK'
-            - 'ERROR'
+            - "OK"
+            - "ERROR"
         id:
           type: string
         failedDependencies:
-          $ref: '#/components/schemas/FailedDependencies'
+          $ref: "#/components/schemas/FailedDependencies"
     CmsMaintenanceList:
       type: array
       items:
-        $ref: '#/components/schemas/CmsMaitenance'
+        $ref: "#/components/schemas/CmsMaitenance"
     CmsMaitenance:
       type: object
       properties:
@@ -419,7 +419,7 @@ components:
           status:
             type: string
             enum:
-              - 'ERROR'
+              - "ERROR"
           message:
             type: string
           id:
@@ -434,5 +434,5 @@ components:
         status:
           type: string
           enum:
-            - 'OK'
-            - 'ERROR'
+            - "OK"
+            - "ERROR"

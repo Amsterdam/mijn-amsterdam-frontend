@@ -314,10 +314,10 @@ describe('Transform api items', () => {
       expect(voorziening.maActies).toEqual(
         expect.arrayContaining(['pgb-reparatieverzoek', 'stopzetten'])
       );
-        expect(voorziening.maActieUrls).toHaveProperty('stopzetten');
-        expect(voorziening.maActieUrls?.stopzetten).toContain(
-          'stopzettenvoorzieningen.aspx?GUID=ID%3A357-883696'
-        );
+      expect(voorziening.maActieUrls).toHaveProperty('stopzetten');
+      expect(voorziening.maActieUrls?.stopzetten).toContain(
+        'stopzettenvoorzieningen.aspx?GUID=ID%3A357-883696'
+      );
       expect(voorziening.maActies).not.toContain('reparatieverzoek');
       expect(voorziening.maActieUrls).not.toHaveProperty('reparatieverzoek');
     });

@@ -362,11 +362,11 @@ export function useSearchIndex(extendedAMResults: boolean) {
       setFuseInstance(fuseInstance);
     }
   }, [
-    dynamicSearchEntries, 
-    staticSearchEntries, 
-    fuseInstance, 
-    isAppStateReady, 
-    setFuseInstance
+    dynamicSearchEntries,
+    staticSearchEntries,
+    fuseInstance,
+    isAppStateReady,
+    setFuseInstance,
   ]);
 
   useEffect(() => {

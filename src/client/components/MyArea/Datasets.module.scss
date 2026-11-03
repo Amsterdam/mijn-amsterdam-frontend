@@ -1,40 +1,40 @@
-@use 'sass:map';
+@use "sass:map";
 
 $colors: (
-  'grey': (
+  "grey": (
     background-color: var(--ams-color-interactive-disabled),
   ),
-  'lightBlue': (
+  "lightBlue": (
     background-color: var(--ams-color-feedback-info),
   ),
-  'yellow': (
+  "yellow": (
     background-color: var(--ams-color-highlight-yellow),
   ),
-  'valid': (
+  "valid": (
     background-color: var(--ams-color-highlight-green),
   ),
-  'orange': (
+  "orange": (
     background-color: var(--ams-color-highlight-orange),
   ),
-  'purple': (
+  "purple": (
     background-color: var(--ams-color-highlight-purple),
   ),
-  'lightGreen': (
+  "lightGreen": (
     background-color: var(--ams-color-highlight-lime),
   ),
-  'pink': (
+  "pink": (
     background-color: var(--ams-color-highlight-magenta),
   ),
-  'focus': (
+  "focus": (
     background-color: var(--ams-color-highlight-yellow),
   ),
-  'black': (
+  "black": (
     background-color: var(--ams-color-text),
   ),
-  'blue': (
+  "blue": (
     background-color: var(--ams-color-interactive),
   ),
-  'bluePrimary': (
+  "bluePrimary": (
     background-color: var(--ams-color-interactive),
   ),
 );
@@ -59,18 +59,18 @@ $colors: (
   border: 2px var(--ams-color-background) solid;
   width: 32px;
   height: 32px;
-  @include colorStyle('grey');
-  @include colorStyle('lightBlue');
-  @include colorStyle('yellow');
-  @include colorStyle('valid');
-  @include colorStyle('orange');
-  @include colorStyle('purple');
-  @include colorStyle('lightGreen');
-  @include colorStyle('pink');
-  @include colorStyle('focus');
-  @include colorStyle('black');
-  @include colorStyle('blue');
-  @include colorStyle('bluePrimary');
+  @include colorStyle("grey");
+  @include colorStyle("lightBlue");
+  @include colorStyle("yellow");
+  @include colorStyle("valid");
+  @include colorStyle("orange");
+  @include colorStyle("purple");
+  @include colorStyle("lightGreen");
+  @include colorStyle("pink");
+  @include colorStyle("focus");
+  @include colorStyle("black");
+  @include colorStyle("blue");
+  @include colorStyle("bluePrimary");
 }
 
 .DatasetIconCircle {

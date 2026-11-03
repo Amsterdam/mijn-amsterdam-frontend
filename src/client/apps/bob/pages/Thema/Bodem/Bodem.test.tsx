@@ -250,21 +250,21 @@ describe('Bodem', () => {
         afgehandeld: /Afgehandeld/,
         afgewezen: /Afgewezen/,
       };
-        within(lopendeAanvraagTable).getByRole('cell', {
-          name: statusPatterns.ontvangen,
-        });
+      within(lopendeAanvraagTable).getByRole('cell', {
+        name: statusPatterns.ontvangen,
+      });
 
-        within(lopendeAanvraagTable).getByRole('cell', {
-          name: statusPatterns.inBehandeling,
-        });
+      within(lopendeAanvraagTable).getByRole('cell', {
+        name: statusPatterns.inBehandeling,
+      });
 
-        within(afgehandeldeAanvraagTable).getByRole('cell', {
-          name: decisionPatterns.afgehandeld,
-        });
+      within(afgehandeldeAanvraagTable).getByRole('cell', {
+        name: decisionPatterns.afgehandeld,
+      });
 
-        within(afgehandeldeAanvraagTable).getByRole('cell', {
-          name: decisionPatterns.afgewezen,
-        });
+      within(afgehandeldeAanvraagTable).getByRole('cell', {
+        name: decisionPatterns.afgewezen,
+      });
 
       const lopendeAanvraagRows = within(
         afgehandeldeAanvraagTable

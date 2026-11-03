@@ -235,7 +235,6 @@ export function useBffApi<T, P = any>(
   const isDirty = rState?.isDirty === true;
   const isLoading = rState?.isLoading === true;
 
-
   const setApiState = useCallback(
     (partialState: Partial<BffApiState<ApiResponse<T | null> | null>>) => {
       if (cacheKey) {
@@ -313,11 +312,7 @@ export function useBffApi<T, P = any>(
     if (cacheKey && !storeHas(cacheKey)) {
       storeSet(cacheKey, initialState);
     }
-  }, [
-    cacheKey, 
-    storeSet, 
-    storeHas
-  ]);
+  }, [cacheKey, storeSet, storeHas]);
 
   // Fetch data immediately if required.
   useLayoutEffect(() => {
@@ -329,13 +324,7 @@ export function useBffApi<T, P = any>(
     ) {
       fetch();
     }
-  }, [
-    options?.fetchImmediately, 
-    fetch, 
-    isDirty, 
-    isLoading, 
-    cacheKey
-  ]);
+  }, [options?.fetchImmediately, fetch, isDirty, isLoading, cacheKey]);
 
   return Object.assign({}, rState, {
     fetch,

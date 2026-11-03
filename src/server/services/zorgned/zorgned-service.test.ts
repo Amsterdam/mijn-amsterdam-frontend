@@ -20,7 +20,9 @@ import {
   type ZorgnedAanvraagSource,
   type ZorgnedPersoonSource,
 } from './zorgned-types.ts';
-import ZORGNED_WMO_AANVRAGEN from '../../../mocks-server/fixtures/zorgned-wmo-aanvragen.json' with { type: 'json' };
+import ZORGNED_WMO_AANVRAGEN from '../../../mocks-server/fixtures/zorgned-wmo-aanvragen.json' with {
+  type: 'json',
+};
 import { remoteApiHost } from '../../../testing/setup.ts';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';

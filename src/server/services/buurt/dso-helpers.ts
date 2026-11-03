@@ -124,7 +124,8 @@ export function transformGenericApiListResponse(
         featureGeometry.coordinates
       ) {
         const featureProperties = feature.properties as
-          Record<string, unknown> | undefined;
+          | Record<string, unknown>
+          | undefined;
         const id = config.idKeyList
           ? encodeURIComponent(
               String(

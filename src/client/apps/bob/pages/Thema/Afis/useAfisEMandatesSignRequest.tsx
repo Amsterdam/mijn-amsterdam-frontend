@@ -31,9 +31,9 @@ export function useSignRequestPayloadStorage() {
     eMandateId: AfisEMandateFrontend['id'],
     property: keyof AfisEmandateStatusCheckPayload
   ): string | null {
-    const statusCheck = payloads.findLast(
-      (p) => p.eMandateId === eMandateId
-    ) as AfisEmandateStatusCheckPayload | undefined;
+    const statusCheck = payloads.findLast((p) => p.eMandateId === eMandateId) as
+      | AfisEmandateStatusCheckPayload
+      | undefined;
     return statusCheck ? statusCheck[property] : null;
   }
 

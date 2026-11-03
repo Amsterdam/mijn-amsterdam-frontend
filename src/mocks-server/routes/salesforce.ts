@@ -1,5 +1,9 @@
-import AFSPRAKEN_RESPONSE from '../fixtures/salesforce-afspraken-stadsloket.json' with { type: 'json' };
-import CONTACTMOMENTEN_RESPONSE from '../fixtures/salesforce-contactmomenten.json' with { type: 'json' };
+import AFSPRAKEN_RESPONSE from '../fixtures/salesforce-afspraken-stadsloket.json' with {
+  type: 'json',
+};
+import CONTACTMOMENTEN_RESPONSE from '../fixtures/salesforce-contactmomenten.json' with {
+  type: 'json',
+};
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 

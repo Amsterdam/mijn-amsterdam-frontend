@@ -234,7 +234,8 @@ function stripSetCookieFromResponse(cookieName: string) {
           (cookie: string) => !cookie.startsWith(`${cookieName}=`)
         );
         return originalSetHeader(name, filtered);
-      }if (typeof value === 'string') {
+      }
+      if (typeof value === 'string') {
         if (value.startsWith(`${cookieName}=`)) {
           return res;
         }

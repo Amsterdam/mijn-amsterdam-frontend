@@ -73,7 +73,8 @@ export interface WpiIncomeSpecification {
   url: string;
 }
 
-export interface WpiIncomeSpecificationTransformed extends WpiIncomeSpecification {
+export interface WpiIncomeSpecificationTransformed
+  extends WpiIncomeSpecification {
   datePublishedFormatted: string;
   category: string;
   download: string;

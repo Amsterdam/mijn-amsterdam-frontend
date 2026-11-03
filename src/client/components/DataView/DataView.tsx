@@ -8,8 +8,11 @@ import { TableV2 } from '../Table/TableV2.tsx';
 import type { TableV2Props } from '../Table/TableV2.types.ts';
 
 export function DataView<
-  T extends { title?: string; link?: LinkProps; themaId?: string } =
-    ZaakAanvraagDetail,
+  T extends {
+    title?: string;
+    link?: LinkProps;
+    themaId?: string;
+  } = ZaakAanvraagDetail,
 >({
   displayProps,
   items,

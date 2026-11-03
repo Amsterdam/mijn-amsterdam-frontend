@@ -52,7 +52,8 @@ export type LoodMetingStatus =
 export type LoodMetingDecision = 'Afgewezen' | 'Afgehandeld';
 export type LoodMetingen = LoodMetingFrontend[];
 
-export interface LoodMetingFrontend extends ZaakAanvraagDetail<LoodMetingStatus> {
+export interface LoodMetingFrontend
+  extends ZaakAanvraagDetail<LoodMetingStatus> {
   adres: string;
   datumAanvraag: string; // RequestedOn
   datumAanvraagFormatted: string;

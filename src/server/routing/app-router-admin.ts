@@ -35,14 +35,18 @@ export async function createAdminRouter({
     return router;
   }
 
-  const { isAuthenticatedAdmin } =
-    await import('../services/admin/admin-route-handlers.ts');
-  const { router: adminRouter } =
-    await import('../services/admin/admin-router.ts');
-  const { userFeedbackRouter } =
-    await import('../services/user-feedback/user-feedback.router.ts');
-  const { amsappNotificationsRouter } =
-    await import('../services/amsapp/notifications/amsapp-notifications-router.ts');
+  const { isAuthenticatedAdmin } = await import(
+    '../services/admin/admin-route-handlers.ts'
+  );
+  const { router: adminRouter } = await import(
+    '../services/admin/admin-router.ts'
+  );
+  const { userFeedbackRouter } = await import(
+    '../services/user-feedback/user-feedback.router.ts'
+  );
+  const { amsappNotificationsRouter } = await import(
+    '../services/amsapp/notifications/amsapp-notifications-router.ts'
+  );
 
   router.use(
     session({

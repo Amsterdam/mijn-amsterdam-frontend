@@ -2,8 +2,12 @@ import { describe, expect, test } from 'vitest';
 
 import { forTesting } from './erfpacht-dossiers.ts';
 import { fetchErfpacht } from './erfpacht.ts';
-import ERFPACHT_DOSSIERS from '../../../mocks-server/fixtures/erfpacht/erfpacht-v2-dossierinfo-bsn.json' with { type: 'json' };
-import ERFPACHT_ERFPACHTER from '../../../mocks-server/fixtures/erfpacht/erfpacht-v2-erfpachter.json' with { type: 'json' };
+import ERFPACHT_DOSSIERS from '../../../mocks-server/fixtures/erfpacht/erfpacht-v2-dossierinfo-bsn.json' with {
+  type: 'json',
+};
+import ERFPACHT_ERFPACHTER from '../../../mocks-server/fixtures/erfpacht/erfpacht-v2-erfpachter.json' with {
+  type: 'json',
+};
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 

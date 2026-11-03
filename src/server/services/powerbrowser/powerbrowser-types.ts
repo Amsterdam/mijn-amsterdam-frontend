@@ -152,8 +152,9 @@ type CaseTypeLiteral<T extends PowerBrowserZaakBase> =
 export type PowerBrowserZaakTransformer<
   // biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
   T extends PowerBrowserZaakBase = any,
-  TF extends typeof SELECT_FIELDS_TRANSFORM_BASE & Record<string, string> =
-    typeof SELECT_FIELDS_TRANSFORM_BASE & Record<string, string>,
+  TF extends typeof SELECT_FIELDS_TRANSFORM_BASE &
+    Record<string, string> = typeof SELECT_FIELDS_TRANSFORM_BASE &
+    Record<string, string>,
 > = {
   caseType: CaseTypeLiteral<T>;
   title: string;

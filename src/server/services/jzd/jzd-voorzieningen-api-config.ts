@@ -60,7 +60,7 @@ function maActieUrlsReparatieverzoek(
 ) {
   const guid = encodeURIComponent(`ID:${zorgnedAanvraag.id}`);
   return `${FORMULIEREN_BASE_URL}/reparatieverzoeken.aspx?GUID=${guid}`;
-};
+}
 
 function maActieUrlsStopzetten(zorgnedAanvraag: ZorgnedAanvraagTransformed) {
   const guid = encodeURIComponent(`ID:${zorgnedAanvraag.id}`);

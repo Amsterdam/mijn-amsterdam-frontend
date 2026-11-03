@@ -54,13 +54,12 @@ export function getVestigingBagIds(
     );
   }
 
-  const vestigingenWithBagIds = vestigingen
-    .flatMap((vestiging) => {
-      const bagIds = vestigingBagKeys
-        .map((key) => vestiging[key] ?? null)
-        .filter((x) => x !== null);
-      return { ...vestiging, bagIds };
-    });
+  const vestigingenWithBagIds = vestigingen.flatMap((vestiging) => {
+    const bagIds = vestigingBagKeys
+      .map((key) => vestiging[key] ?? null)
+      .filter((x) => x !== null);
+    return { ...vestiging, bagIds };
+  });
 
   return vestigingenWithBagIds;
 }

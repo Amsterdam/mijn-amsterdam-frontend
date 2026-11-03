@@ -39,14 +39,16 @@ async function captureException(error: unknown) {
 }
 
 async function runJob() {
-    // Keep this import first so environment variables are loaded before other modules.
-    await import('../server/helpers/load-env.ts');
+  // Keep this import first so environment variables are loaded before other modules.
+  await import('../server/helpers/load-env.ts');
 
   try {
     await trackEventStarted();
 
     const { unregisterExpiredConsumers, batchFetchAndStoreNotifications } =
-      await import('../server/services/amsapp/notifications/amsapp-notifications.ts');
+      await import(
+        '../server/services/amsapp/notifications/amsapp-notifications.ts'
+      );
     await unregisterExpiredConsumers(new Date());
     await batchFetchAndStoreNotifications();
 

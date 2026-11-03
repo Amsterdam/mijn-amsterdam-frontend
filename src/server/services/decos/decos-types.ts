@@ -90,7 +90,11 @@ export type DecosZaakDocument = GenericDocument & { key: string };
 export type DecosZaakID = string;
 export type DecosFieldNameSource = string;
 export type DecosFieldValue =
-  string | number | boolean | { [key: string]: DecosFieldValue }[] | null;
+  | string
+  | number
+  | boolean
+  | { [key: string]: DecosFieldValue }[]
+  | null;
 
 export type DecosZaakFieldsSource = {
   // caseType

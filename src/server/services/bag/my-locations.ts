@@ -61,20 +61,19 @@ export async function fetchCommercial(
     const vestigingen = getVestigingBagIds(KVK.content);
 
     const locations = await Promise.all(
-      vestigingen
-        .flatMap((vestiging) =>
-          vestiging.bagIds.map((id) =>
-            fetchBAGByQuery({ identificatie: id }).then((res) => {
-              return res.content
-                ? {
-                    ...res.content,
-                    profileType: 'commercial' as ProfileType,
-                    title: vestiging.naam,
-                  }
-                : null;
-            })
-          )
+      vestigingen.flatMap((vestiging) =>
+        vestiging.bagIds.map((id) =>
+          fetchBAGByQuery({ identificatie: id }).then((res) => {
+            return res.content
+              ? {
+                  ...res.content,
+                  profileType: 'commercial' as ProfileType,
+                  title: vestiging.naam,
+                }
+              : null;
+          })
         )
+      )
     );
 
     return apiSuccessResult(locations.filter((location) => location !== null));

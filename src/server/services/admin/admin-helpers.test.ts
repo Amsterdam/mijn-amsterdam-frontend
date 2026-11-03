@@ -34,8 +34,10 @@ describe('getAdminRedirectUrl', () => {
     const adminPath = adminFrontendUrl.pathname;
     const url = `${adminPath}/user-feedback?status=open#entry-123`;
     expect(getAdminRedirectUrl(url)).toBe(
-      new URL(`${adminPath}/user-feedback?status=open#entry-123`, adminFrontendUrl)
-        .href
+      new URL(
+        `${adminPath}/user-feedback?status=open#entry-123`,
+        adminFrontendUrl
+      ).href
     );
   });
 

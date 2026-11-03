@@ -19,11 +19,11 @@ type ReturnTypeAsync<T extends (...args: any) => any> = T extends (
   ...args: any
 ) => Promise<infer R>
   ? R
-  // biome-ignore lint/suspicious/noExplicitAny: Generic function arguments.
-  : T extends (...args: any) => infer R
+  : // biome-ignore lint/suspicious/noExplicitAny: Generic function arguments.
+    T extends (...args: any) => infer R
     ? R
-    // biome-ignore lint/suspicious/noExplicitAny: Legacy non-function fallback.
-    : any;
+    : // biome-ignore lint/suspicious/noExplicitAny: Legacy non-function fallback.
+      any;
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 

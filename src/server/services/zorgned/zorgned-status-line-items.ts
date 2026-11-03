@@ -85,10 +85,10 @@ function buildStatusLineItem<T extends ZorgnedAanvraagTransformed>(
   const isVisible =
     typeof statusItem.isVisible === 'function'
       ? statusItem.isVisible(
-        aanvraagTransformed,
-        today,
-        allAanvragenTransformed
-      )
+          aanvraagTransformed,
+          today,
+          allAanvragenTransformed
+        )
       : (statusItem.isVisible ?? true);
 
   const substeps = statusItem.substeps
@@ -124,18 +124,18 @@ function buildStatusLineItem<T extends ZorgnedAanvraagTransformed>(
     isActive:
       typeof statusItem.isActive === 'function'
         ? statusItem.isActive(
-          aanvraagTransformed,
-          today,
-          allAanvragenTransformed
-        )
+            aanvraagTransformed,
+            today,
+            allAanvragenTransformed
+          )
         : statusItem.isActive,
     isChecked:
       typeof statusItem.isChecked === 'function'
         ? statusItem.isChecked(
-          aanvraagTransformed,
-          today,
-          allAanvragenTransformed
-        )
+            aanvraagTransformed,
+            today,
+            allAanvragenTransformed
+          )
         : statusItem.isChecked,
     isVisible,
     documents: [], // NOTE: Assigned in specific service transformers.
