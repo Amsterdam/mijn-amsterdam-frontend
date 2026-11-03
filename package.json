@@ -34,8 +34,8 @@
     "lint": "biome lint src --error-on-warnings",
     "lint:fix": "biome lint src --write",
     "lint:plugins:test": "node --test biome-plugins/*.test.mjs",
-    "format": "biome format . --write",
-    "format:check": "biome format .",
+    "format": "biome format .",
+    "format:fix": "biome format . --write",
     "check": "biome check . --error-on-warnings",
     "check:fix": "biome check . --fix --error-on-warnings"
   },
