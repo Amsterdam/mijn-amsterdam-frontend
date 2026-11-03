@@ -104,7 +104,7 @@ describe('wpi/app-service', () => {
     };
 
     const getLabelsMock = vi.fn(
-      (requestProcess: WpiRequestProcess) => FakeRequestProcessLabels
+      (_requestProcess: WpiRequestProcess) => FakeRequestProcessLabels
     );
 
     const response = await fetchRequestProcess(
@@ -141,7 +141,7 @@ describe('wpi/app-service', () => {
     };
 
     const getLabelsMock = vi.fn(
-      (requestProcess: WpiRequestProcess) => FakeRequestProcessLabels
+      (_requestProcess: WpiRequestProcess) => FakeRequestProcessLabels
     );
 
     const response = await fetchRequestProcess(
@@ -174,15 +174,67 @@ describe('wpi/app-service', () => {
     contentBijstandsuitkering.steps[2].dateUserFeedbackExpected =
       '2022-04-27T15:05:52+02:00';
 
+    const contentBijzondereBijstand = jsonCopy(content[0]);
+    contentBijzondereBijstand.id = 'bijzondere-bijstand-id';
+    contentBijzondereBijstand.about = 'Bijzondere Bijstand';
+    contentBijzondereBijstand.title = 'Bijzondere Bijstand';
+    contentBijzondereBijstand.dateStart = '2022-04-01T00:00:00+02:00';
+    contentBijzondereBijstand.datePublished = '2022-04-01T00:00:00+02:00';
+    contentBijzondereBijstand.dateEnd = null;
+    contentBijzondereBijstand.decision = 'toekenning';
+    contentBijzondereBijstand.steps = [
+      {
+        id: 'aanvraag',
+        status: 'Aanvraag',
+        datePublished: '2022-04-01T00:00:00+02:00',
+        documents: [],
+        isActive: false,
+        isChecked: true,
+      },
+      {
+        id: 'inBehandeling',
+        status: 'In behandeling',
+        datePublished: '2022-04-01T00:00:00+02:00',
+        dateDecisionExpected: '2022-04-29T00:00:00+02:00',
+        documents: [],
+        isActive: false,
+        isChecked: true,
+      },
+      {
+        id: 'herstelTermijn',
+        status: 'Informatie nodig',
+        datePublished: '2022-04-15T00:00:00+02:00',
+        dateDecisionExpected: '2022-05-15T00:00:00+02:00',
+        dateUserFeedbackExpected: '2022-04-27T00:00:00+02:00',
+        documents: [],
+        isActive: false,
+        isChecked: true,
+      },
+      {
+        id: 'besluit',
+        status: 'Besluit',
+        datePublished: '2022-05-15T00:00:00+02:00',
+        decision: 'toekenning',
+        documents: [],
+        isActive: true,
+        isChecked: true,
+      },
+    ];
+
     remoteApi.post('/wpi/uitkering/aanvragen').reply(200, {
       status: 'OK',
-      content: [contentBijstandsuitkering, { about: 'FooBar' }, null],
+      content: [
+        contentBijstandsuitkering,
+        contentBijzondereBijstand,
+        { about: 'FooBar' },
+        null,
+      ],
     });
 
     const response = await fetchBijstandsuitkering(getAuthProfileAndToken());
 
     expect(response.status).toBe('OK');
-    expect(response.content?.length).toBe(1);
+    expect(response.content?.length).toBe(2);
 
     const [statusLine] = response.content || [];
     expect(statusLine.link).toMatchInlineSnapshot(`
@@ -219,5 +271,17 @@ describe('wpi/app-service', () => {
                 </p>
               "
     `);
+
+    const bijzondereBijstand = response.content?.[1];
+    expect(bijzondereBijstand?.link?.to).toBe(
+      '/inkomen/bijzondere-bijstand/bijzondere-bijstand-id'
+    );
+    expect(bijzondereBijstand?.steps[1].description).toContain(
+      'aanvraag voor bijzondere bijstand'
+    );
+    expect(bijzondereBijstand?.steps[1].description).toContain('29 april 2022');
+    expect(bijzondereBijstand?.steps[3].description).toContain(
+      'U heeft recht op bijzondere bijstand'
+    );
   });
 });

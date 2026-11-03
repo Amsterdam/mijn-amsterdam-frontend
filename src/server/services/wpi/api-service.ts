@@ -24,6 +24,10 @@ import {
   getNotifications as getBijstandsuitkeringNotifications,
 } from './content/bijstandsuitkering.ts';
 import {
+  requestProcess as bijzondereBijstandRequestProcessLabels,
+  getNotifications as getBijzondereBijstandNotifications,
+} from './content/bijzondere-bijstand.ts';
+import {
   getNotifications as getSpecificatieNotifications,
   transformIncomeSpecificationItem,
 } from './content/specificaties.ts';
@@ -123,7 +127,9 @@ export async function fetchBijstandsuitkering(
       response.content
         ?.filter((requestProcess) => requestProcess !== null)
         .filter(
-          (requestProcess) => requestProcess?.about === 'Bijstandsuitkering'
+          (requestProcess) =>
+            requestProcess?.about === 'Bijstandsuitkering' ||
+            requestProcess?.about === 'Bijzondere Bijstand'
         )
         .map((requestProcess) => addLink(requestProcess)) ?? []
     );
@@ -131,7 +137,10 @@ export async function fetchBijstandsuitkering(
 
   const response = await fetchRequestProcess(
     authProfileAndToken,
-    () => bijstandsuitkeringRequestProcessLabels,
+    (requestProcess) =>
+      requestProcess.about === 'Bijzondere Bijstand'
+        ? bijzondereBijstandRequestProcessLabels
+        : bijstandsuitkeringRequestProcessLabels,
     {
       apiConfigName: 'WPI_AANVRAGEN',
       filterResponse,
@@ -261,7 +270,23 @@ export async function fetchWpiNotifications(
       await fetchBijstandsuitkering(authProfileAndToken);
 
     if (status === 'OK' && Array.isArray(content)) {
-      notifications.push(...getBijstandsuitkeringNotifications(content));
+      notifications.push(
+        ...getBijstandsuitkeringNotifications(
+          content.filter(
+            (requestProcess) => requestProcess.about === 'Bijstandsuitkering'
+          )
+        )
+      );
+
+      const bijzondereBijstandAanvragen = content.filter(
+        (requestProcess) =>
+          requestProcess.about === 'Bijzondere Bijstand' &&
+          !!requestProcess.datePublished &&
+          isRequestProcessActual(requestProcess.datePublished, today)
+      );
+      notifications.push(
+        ...getBijzondereBijstandNotifications(bijzondereBijstandAanvragen)
+      );
     }
   }
 

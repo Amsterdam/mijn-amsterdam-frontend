@@ -191,6 +191,14 @@ export function addLink(requestProcess: WpiRequestProcess) {
         title,
       };
       break;
+    case 'Bijzondere Bijstand':
+      link = {
+        to: generatePath(themaInkomen.detailPageBijzondereBijstand.route.path, {
+          id,
+        }),
+        title,
+      };
+      break;
     case 'Bbz':
       link = {
         to: generatePath(themaInkomen.detailPageBbz.route.path, {
