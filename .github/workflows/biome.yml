@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: biomejs/setup-biome@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
       - name: Check formatting, lint, and imports
-        run: biome ci . --error-on-warnings
+        run: |
+          BIOME_VERSION=$(node -p "require('./package.json').devDependencies['@biomejs/biome']")
+          npm exec --yes --package="@biomejs/biome@$BIOME_VERSION" -- biome ci . --error-on-warnings
