@@ -75,7 +75,7 @@ export function useSignRequestPayloadStorage() {
         isTakingLong(): boolean {
           const activationDate = get(eMandateId, 'activationDate');
           return activationDate
-            ? new Date().getTime() - new Date(activationDate).getTime() >
+            ? Date.now()- new Date(activationDate).getTime() >
                 AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS
             : false;
         },

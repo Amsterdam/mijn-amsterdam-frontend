@@ -13,13 +13,7 @@
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
   "files": {
     "ignoreUnknown": true,
-    "includes": [
-      "**",
-      "!drizzle/**",
-      "!vendor/**",
-      "!public/js/usabilla*.js",
-      "!scripts/**"
-    ]
+    "includes": ["**", "!drizzle", "!vendor", "!scripts"]
   },
   "formatter": {
     "enabled": true,
@@ -47,7 +41,8 @@
         "noUselessThisAlias": "error",
         "noUselessTernary": "error",
         "noUselessTypeConstraint": "error",
-        "useLiteralKeys": "error"
+        "useLiteralKeys": "error",
+        "useDateNow": "error"
       },
       "correctness": {
         "noChildrenProp": "error",
@@ -371,7 +366,8 @@
                   }
                 ]
               }
-            }
+            },
+            "noNonNullAssertion": "off"
           }
         }
       }

@@ -17,12 +17,12 @@ export async function fetchParkeren(authProfileAndToken: AuthProfileAndToken) {
   const isProfileTypePrivate =
     authProfileAndToken.profile.profileType === 'private';
 
-  let shouldCheckForPermitsOrPermitRequests;
+  let shouldCheckForPermitsOrPermitRequests: boolean;
 
   if (isProfileTypePrivate) {
     const brpData = await fetchBrp(authProfileAndToken);
-    const livesOutsideAmsterdam = !isMokum(brpData?.content);
-    shouldCheckForPermitsOrPermitRequests = livesOutsideAmsterdam;
+    const livesInsideAmsterdam = isMokum(brpData?.content);
+    shouldCheckForPermitsOrPermitRequests = !livesInsideAmsterdam;
   } else {
     shouldCheckForPermitsOrPermitRequests = true;
   }

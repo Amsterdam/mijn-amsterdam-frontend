@@ -59,7 +59,7 @@ function DateAdjustModal({
         </ActionGroup>
       }
     >
-      <>
+      
         <Paragraph className="ams-mb-s">
           Nieuwe einddatum incassomachtiging {eMandate.creditorName}
         </Paragraph>
@@ -71,7 +71,7 @@ function DateAdjustModal({
             defaultValue={dateValidTo}
           />
         </form>
-      </>
+      
     </Modal>
   );
 }

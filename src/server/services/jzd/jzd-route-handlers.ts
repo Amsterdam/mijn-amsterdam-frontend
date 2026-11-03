@@ -80,7 +80,10 @@ export async function handleVoorzieningDetailRequest(
   res: Response
 ) {
   // Validate the request body so we can be sure it has the correct shape and values.
-  let validatedRequestBody;
+  let validatedRequestBody: {
+    bsn: string;
+    id: string;
+  };
   try {
     validatedRequestBody = voorzieningDetailRequestInput.parse(req.body);
   } catch (error) {

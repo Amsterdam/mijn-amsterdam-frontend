@@ -149,7 +149,7 @@ function serviceErrorResult(
   wmoVoorzieningenResponse: ApiResponse<ZorgnedAanvraagTransformed[]>,
   jeugdVoorzieningenResponse: ApiResponse<ZorgnedAanvraagTransformed[]>
 ) {
-  let code;
+  let code: number | undefined;
   if (wmoVoorzieningenResponse.status === 'ERROR') {
     code = wmoVoorzieningenResponse.code;
   } else if (jeugdVoorzieningenResponse.status === 'ERROR') {

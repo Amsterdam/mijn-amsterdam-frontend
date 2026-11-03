@@ -189,8 +189,7 @@ function EMandate({ eMandate }: EMandateProps) {
           </Paragraph>
         )}
         {!signRequestStatusCheckApi.isRequestingStatusCheck && (
-          <>
-            {signRequestStatusCheckApi.isPendingActivation ? (
+          signRequestStatusCheckApi.isPendingActivation ? (
               <Alert headingLevel={4} heading="Status">
                 <Paragraph>
                   U vraagt een incassomachtiging aan voor{' '}
@@ -219,8 +218,7 @@ function EMandate({ eMandate }: EMandateProps) {
                 deactivateApi={deactivateApi}
                 eMandate={eMandate}
               />
-            )}
-          </>
+            )
         )}
       </div>
       {!!eMandate.history.length &&
@@ -262,9 +260,7 @@ export function AfisEMandateDetail() {
       isError={hasEMandatesError}
       isLoading={isLoadingEMandates}
       breadcrumbs={breadcrumbs}
-      pageContentMain={
-        <>
-          {!!eMandate && (
+      pageContentMain={!!eMandate && (
             <>
               {payloadStorage.hasPayloads() && (
                 <AfisEmandateRefetchInterval fetch={fetchEMandates} />
@@ -272,8 +268,6 @@ export function AfisEMandateDetail() {
               <EMandate eMandate={eMandate} />
             </>
           )}
-        </>
-      }
     />
   );
 }
