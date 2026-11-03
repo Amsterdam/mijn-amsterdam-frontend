@@ -33,6 +33,7 @@
     "bff-api:job:notifications": "ts-node ./src/jobs/fetch-notifications-amsapp.ts",
     "lint": "biome lint src --error-on-warnings",
     "lint:fix": "biome lint src --write",
+    "lint:plugins:test": "node --test biome-plugins/*.test.mjs",
     "format": "biome format . --write",
     "format:check": "biome format .",
     "check": "biome check . --error-on-warnings",

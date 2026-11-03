@@ -1,5 +1,15 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.6.4/schema.json",
+  "plugins": [
+    {
+      "path": "./biome-plugins/no-deep-ternary.grit",
+      "includes": ["src/**"]
+    },
+    {
+      "path": "./biome-plugins/no-deep-ternary-iife.grit",
+      "includes": ["src/**"]
+    }
+  ],
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
   "files": {
     "ignoreUnknown": true,
@@ -97,7 +107,7 @@
         "noCommonJs": "warn",
         "noDefaultExport": "warn",
         "noNamespace": "error",
-        "noNestedTernary": "warn",
+        "noNestedTernary": "off",
         "noUselessElse": "error",
         "useArrayLiterals": "error",
         "useAsConstAssertion": "error",

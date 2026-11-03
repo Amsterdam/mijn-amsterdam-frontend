@@ -33,16 +33,16 @@ export function getFullAddress(
   if (!adres?.straatnaam) {
     return 'onbekend adres';
   }
-  return adres
-    ? `${adres.straatnaam} ${adres.huisnummer || ''} ${
-        adres.huisletter || ''
-      } ${adres.huisnummertoevoeging || ''}`.trim() +
-        (includePostCodeWoonplaats
-          ? `${separator}${adres.postcode || ''}${
-              adres.woonplaatsNaam ? ' ' + adres.woonplaatsNaam : ''
-            }` + (includeLand && adres.land ? `${separator}${adres.land}` : '')
-          : '')
-    : 'onbekend adres';
+  const postCodeWoonplaats = includePostCodeWoonplaats
+    ? `${separator}${adres.postcode || ''}${
+        adres.woonplaatsNaam ? ' ' + adres.woonplaatsNaam : ''
+      }` + (includeLand && adres.land ? `${separator}${adres.land}` : '')
+    : '';
+  return (
+    `${adres.straatnaam} ${adres.huisnummer || ''} ${
+      adres.huisletter || ''
+    } ${adres.huisnummertoevoeging || ''}`.trim() + postCodeWoonplaats
+  ); 
 }
 
 export function isMokum(

@@ -76,12 +76,10 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       ? currentBbox
       : queryConfig?.bbox || currentBbox;
 
-    let datasetIds = activeDatasetIds;
-    if (!queryConfig?.s && Array.isArray(queryConfig?.datasetIds)) {
-      datasetIds = queryConfig.datasetIds;
-    }
-
-    const datasetIds = (!queryConfig?.s && Array.isArray(queryConfig?.datasetIds)) ? queryConfig.datasetIds : activeDatasetIds;
+    const datasetIds =
+      !queryConfig?.s && Array.isArray(queryConfig?.datasetIds)
+        ? queryConfig.datasetIds
+        : activeDatasetIds;
 
     const filters = queryConfig?.s
       ? activeDatasetFilters
@@ -138,7 +136,20 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     const url = `${routeConfig.themaPage.path}?${params}`;
 
     navigate(url);
-  }, [search, activeDatasetIds, activeDatasetFilters, loadingFeature, map.getCenter, setLoadingFeature, setActiveDatasetIds, map.getBounds, setActiveFilters, navigate, map.getZoom, map.fitBounds]);
+  }, [
+    search,
+    activeDatasetIds,
+    activeDatasetFilters,
+    loadingFeature,
+    map.getCenter,
+    setLoadingFeature,
+    setActiveDatasetIds,
+    map.getBounds,
+    setActiveFilters,
+    navigate,
+    map.getZoom,
+    map.fitBounds,
+  ]);
 
   const fetch = useCallback(
     async (
@@ -230,10 +241,10 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       setErrorResults([]);
     }
   }, [
-    fetchDebounced, 
-    activeDatasetIds, 
-    activeDatasetFilters, 
-    setFeaturesLoadingDebounced
+    fetchDebounced,
+    activeDatasetIds,
+    activeDatasetFilters,
+    setFeaturesLoadingDebounced,
   ]);
 
   // Set the zIndex of the markerpane. These markers will be placed above eachother.
