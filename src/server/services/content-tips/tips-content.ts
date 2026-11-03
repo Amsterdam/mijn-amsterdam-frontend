@@ -2,7 +2,6 @@ import {
   hasBijstandsuitkering,
   hasBnBVergunning,
   hasOldestKidBornFrom2016,
-  hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
   hasTozo,
   hasVveInPriorityNeighborhood,
@@ -11,7 +10,6 @@ import {
   isLivingInAmsterdamLessThanNumberOfDays,
   isMarriedOrLivingTogether,
   isMokum,
-  isReceivingSubsidy,
   not,
   or,
   previouslyLivingInAmsterdam,
@@ -268,7 +266,7 @@ export const contentTips: ContentTipSource[] = [
     profileTypes: ['private'],
     description:
       'Heeft u moeite om sportactiviteiten voor uw kind te betalen? Regel de vergoeding via Stichting SINA (Samen is niet alleen).',
-    predicates: [not(hasStadspasGroeneStip), isReceivingSubsidy],
+    predicates: [],
     reason: 'u heeft een bijstand, TOZO of TONK en geen Stadspas Groene Stip',
     link: {
       title: 'Vraag direct vergoeding aan',
@@ -283,7 +281,7 @@ export const contentTips: ContentTipSource[] = [
     active: true,
     datePublished: '2023-07-28',
     title: 'Tip: Gratis openbaar vervoer voor kinderen',
-    predicates: [hasKidsBetweenAges({ from: 4, to: 11 }), isMokum],
+    predicates: [hasVveInPriorityNeighborhood],
     profileTypes: ['private'],
     isNotification: true,
     themaID: inkomenThemaConfig.id,
@@ -320,16 +318,16 @@ export const contentTips: ContentTipSource[] = [
   {
     id: 'mijn-58',
     owner: '',
-    dateActiveStart: '2024-07-01',
-    dateActiveEnd: '2025-01-04',
+    dateActiveStart: '2026-07-20',
+    dateActiveEnd: '2027-01-04',
     active: true,
     datePublished: '2024-07-01',
     title: 'Gratis openbaar vervoer voor kinderen',
     themaID: inkomenThemaConfig.id,
     profileTypes: ['private'],
     description:
-      'Je kunt van 20 juli 2024 tot en met 4 januari 2025 gratis reizen met het openbaar vervoer van GVB in Amsterdam. Hiervoor heb je een ov-chipkaart nodig. Gratis reizen kun je vanaf 1 juli 2024 aanvragen.',
-    predicates: [isBetweenAges({ from: 4, to: 11 }), isMokum],
+      'Je kunt van 20 juli 2026 tot en met 4 januari 2027 gratis reizen met het openbaar vervoer van GVB in Amsterdam. Hiervoor heb je een ov-chipkaart nodig. Gratis reizen kun je vanaf 1 juli 2026 aanvragen.',
+    predicates: [],
     reason:
       'Je ziet deze tip omdat je de leeftijd heb tussen de 4 en 12 jaar en woonachtig bent in Amsterdam',
     link: {
