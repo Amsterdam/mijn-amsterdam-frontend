@@ -1,14 +1,11 @@
-name: Biome
-
-on:
-  pull_request:
-  merge_group:
-
+name: "PR Biome linting, formatting, and import check"
 permissions:
   contents: read
-
+  pull-requests: read
+on:
+  pull_request:
 jobs:
-  biome:
+  check-biome:
     name: Biome
     runs-on: ubuntu-latest
     steps:
