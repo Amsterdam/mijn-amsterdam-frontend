@@ -46,6 +46,8 @@ describe('fetchPrivate', () => {
           adresseerbaarObjectIdentificatie: 'a',
           straatnaam: 'NewStreet',
           huisnummer: 10,
+          woonplaatsNaam: 'Amsterdam',
+          postcode: '1111AA',
         },
       })
     );
@@ -70,6 +72,8 @@ describe('fetchPrivate', () => {
           adresseerbaarObjectIdentificatie: 'a',
           huisnummer: 10,
           straatnaam: 'NewStreet',
+          postcode: '1111AA',
+          woonplaatsNaam: 'Amsterdam',
         },
         bagAddress: {
           adresseerbaarObjectPuntGeometrieWgs84: {
@@ -309,6 +313,8 @@ describe('fetchMyLocation', () => {
           adresseerbaarObjectIdentificatie: 'a',
           straatnaam: 'NewStreet',
           huisnummer: 10,
+          postcode: '1111AA',
+          woonplaatsNaam: 'Amsterdam',
         },
       })
     );
@@ -351,6 +357,8 @@ describe('fetchMyLocation', () => {
           address: {
             adresseerbaarObjectIdentificatie: 'a',
             huisnummer: 10,
+            postcode: '1111AA',
+            woonplaatsNaam: 'Amsterdam',
             straatnaam: 'NewStreet',
           },
           bagAddress: {

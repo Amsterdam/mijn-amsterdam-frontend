@@ -316,7 +316,7 @@ export function AfvalThemaPagina() {
                 <>
                   <Paragraph className="ams-mb-m">
                     {MY_LOCATION.content?.[0]?.address ? (
-                      getFullAddress(MY_LOCATION.content?.[0].address)
+                      getFullAddress(MY_LOCATION.content?.[0].address, true)
                     ) : isLocationLoading ? (
                       <LoadingContent barConfig={[['20rem', '3rem', '0']]} />
                     ) : (
