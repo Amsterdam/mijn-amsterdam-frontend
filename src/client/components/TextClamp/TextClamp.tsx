@@ -45,7 +45,7 @@ export function TextClamp({
       domNode.getBoundingClientRect().height - parseInt(maxHeight, 10) >
         TEXT_CLAMP_HEIGHT_DELTA_THRESHOLD
     );
-  }, []);
+  }, [maxHeight, hasOverflow]);
 
   const toggleClamp = () => {
     setIsClamped((isClamped) => !isClamped);

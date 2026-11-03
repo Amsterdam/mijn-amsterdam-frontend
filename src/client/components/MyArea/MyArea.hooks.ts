@@ -204,7 +204,7 @@ export function useFetchPanelFeature() {
 const selectedFeatureStyleSelector = styles['Feature--selected'];
 
 export function useSelectedFeatureCSS(
-  features: Array<MaSuperClusterFeature | MaPolylineFeature>
+  _features: Array<MaSuperClusterFeature | MaPolylineFeature>
 ) {
   const { loadingFeature } = useLoadingFeature();
   const map = useMapInstance();
@@ -226,7 +226,7 @@ export function useSelectedFeatureCSS(
         }
       }
     }
-  }, [map, loadingFeatureId, features]);
+  }, [map, loadingFeatureId]);
 }
 
 export function useOnMarkerClick() {

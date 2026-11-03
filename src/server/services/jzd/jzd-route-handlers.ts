@@ -35,7 +35,7 @@ export async function fetchZorgnedDocumentWMO(
 }
 
 export async function fetchZorgnedDocumentsWMO(
-  req: Request,
+  _req: Request,
   res: ResponseAuthenticated
 ) {
   const response = await fetchAllDocumentsRaw(res.locals.userID, {
@@ -46,7 +46,7 @@ export async function fetchZorgnedDocumentsWMO(
 }
 
 export async function fetchZorgnedAanvragenWMO(
-  req: Request,
+  _req: Request,
   res: ResponseAuthenticated
 ) {
   const response = await fetchAanvragenRaw(res.locals.userID, {

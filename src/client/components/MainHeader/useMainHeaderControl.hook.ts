@@ -83,7 +83,7 @@ export function useMainHeaderControl() {
   // Close the main menu or search when the route changes
   useEffect(() => {
     closeMenuAndSearch();
-  }, [location.pathname, closeMenuAndSearch]);
+  }, [closeMenuAndSearch]);
 
   // Close the main menu when a link in the main menu is clicked
   useEffect(() => {

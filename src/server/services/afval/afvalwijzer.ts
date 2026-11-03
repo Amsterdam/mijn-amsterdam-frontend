@@ -139,11 +139,6 @@ function transformFractionData(
         )
       : fractionData.afvalwijzerInstructie2;
 
-  const stadsdeelRegelsUrl = getText(
-    `particulier-${fractionData.gbdBuurtCode?.charAt(0)}`,
-    ''
-  );
-
   let titel = getText(fractionData.afvalwijzerFractieCode);
 
   if (

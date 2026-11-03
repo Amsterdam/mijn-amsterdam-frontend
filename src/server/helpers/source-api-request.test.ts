@@ -389,7 +389,7 @@ describe('requestData', () => {
   });
 
   test('OIDC Bearer token _is_ passed _and_ overridden', async () => {
-    const rs = await requestData(
+    await requestData(
       {
         url: DUMMY_URL,
         passthroughOIDCToken: true,

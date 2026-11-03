@@ -166,7 +166,7 @@ export function MyArea({
   useEffect(() => {
     updateViewportHeight();
     setIsReadyToRender(true);
-  }, [setIsReadyToRender]);
+  }, []);
 
   return (
     <div className={styles.Container}>

@@ -107,7 +107,7 @@ const BZP: DecosZaakTransformer<BZP> = {
     date7: dateEnd,
     text8: kentekens,
   },
-  async afterTransform(vergunning, decosZaakSource) {
+  async afterTransform(vergunning, _decosZaakSource) {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
   },

@@ -71,7 +71,7 @@ export async function handleUnblockStadspas(
 }
 
 export async function fetchZorgnedAVAanvragen(
-  req: Request,
+  _req: Request,
   res: ResponseAuthenticated
 ) {
   const response = await fetchAanvragenRaw(res.locals.userID, {

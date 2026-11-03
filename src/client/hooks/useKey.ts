@@ -19,7 +19,7 @@ export function useKey(
     return () => {
       window.removeEventListener(eventName, eventListener);
     };
-  }, []);
+  }, [eventName]);
 }
 
 export function useKeyUp(handler: (event: KeyboardEvent) => void) {

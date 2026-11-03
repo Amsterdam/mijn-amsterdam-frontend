@@ -232,7 +232,7 @@ export function Search({
     } else {
       setTerm('');
     }
-  }, []);
+  }, [termInitial, setTerm]);
 
   return (
     <div

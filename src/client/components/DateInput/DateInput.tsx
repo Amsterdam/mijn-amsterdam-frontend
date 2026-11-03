@@ -51,7 +51,7 @@ export function DateInput({
       const date = new Date(year, month, day);
       onChange(date);
     },
-    [onChange, setDateState]
+    [onChange]
   );
 
   const daysInMonthSelected = useMemo(() => {

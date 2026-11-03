@@ -78,7 +78,7 @@ router.get(
 
 router.get(
   BffEndpoints.SEARCH_CONFIG,
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (_req: Request, res: Response, next: NextFunction) => {
     try {
       const response = await fetchSearchConfig();
       return res.json(response);
@@ -267,10 +267,10 @@ if (!IS_PRODUCTION) {
 
 export const legacyRouter = express.Router();
 
-legacyRouter.get(BffEndpoints.LEGACY_LOGIN_API_LOGIN, (req, res) => {
+legacyRouter.get(BffEndpoints.LEGACY_LOGIN_API_LOGIN, (_req, res) => {
   return res.redirect(generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_DIGID));
 });
 
-legacyRouter.get(BffEndpoints.LEGACY_LOGIN_API1_LOGIN, (req, res) => {
+legacyRouter.get(BffEndpoints.LEGACY_LOGIN_API1_LOGIN, (_req, res) => {
   return res.redirect(generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_EHERKENNING));
 });

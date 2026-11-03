@@ -39,17 +39,8 @@ async function captureException(error: unknown) {
 }
 
 async function runJob() {
-  try {
     // Keep this import first so environment variables are loaded before other modules.
     await import('../server/helpers/load-env.ts');
-  } catch (error) {
-    // Without environment variables, capturing the exception is not possible
-    console.error(
-      'job-fetch-notifications-amsapp: Failed to load environment variables',
-      error
-    );
-    throw error;
-  }
 
   try {
     await trackEventStarted();

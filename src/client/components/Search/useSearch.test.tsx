@@ -120,7 +120,7 @@ describe('Search hooks and helpers', () => {
       },
     };
     const displayTitle = (item: any) => {
-      return (term: string) => {
+      return (_term: string) => {
         if ('somePropName' in item) {
           return 'FOUND-somePropName';
         }

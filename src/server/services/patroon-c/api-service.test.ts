@@ -4,8 +4,6 @@ import * as service from './api-service.ts';
 import { remoteApiHost } from '../../../testing/setup.ts';
 import { remoteApi } from '../../../testing/utils.ts';
 
-const REQUEST_ID = 'test-x';
-
 const apiUrlTest = `${remoteApiHost}/api`;
 
 describe('simple-connect/api-service', () => {

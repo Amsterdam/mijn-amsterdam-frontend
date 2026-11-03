@@ -104,7 +104,7 @@ describe('wpi/app-service', () => {
     };
 
     const getLabelsMock = vi.fn(
-      (requestProcess: WpiRequestProcess) => FakeRequestProcessLabels
+      (_requestProcess: WpiRequestProcess) => FakeRequestProcessLabels
     );
 
     const response = await fetchRequestProcess(
@@ -141,7 +141,7 @@ describe('wpi/app-service', () => {
     };
 
     const getLabelsMock = vi.fn(
-      (requestProcess: WpiRequestProcess) => FakeRequestProcessLabels
+      (_requestProcess: WpiRequestProcess) => FakeRequestProcessLabels
     );
 
     const response = await fetchRequestProcess(

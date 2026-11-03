@@ -160,17 +160,9 @@ async function sendRenderedTestAccountTable(
     authMethod === 'digid' ? 'MA_TEST_ACCOUNTS' : 'MA_TEST_ACCOUNTS_EH';
 
   const testAccountsBase = getTestAccountsBaseFromEnv(envKey);
-  let testAccountsOverview: TestUserData | null = null;
-  try {
-    testAccountsOverview = await fetchTestAccountOverviewFile(
+  const testAccountsOverview: TestUserData | null = await fetchTestAccountOverviewFile(
       `${envKey}_OVERVIEW_URL`
-    );
-  } catch (error) {
-    console.error(
-      'Error fetching test account overview file:',
-      (error as Error).toString()
-    );
-  }
+    ).catch(() => null  );
 
   const testAccountOverviewByUsername =
     testAccountsOverview?.accounts.reduce(

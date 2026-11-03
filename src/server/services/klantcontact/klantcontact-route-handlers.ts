@@ -45,7 +45,7 @@ export async function handleVerifyContactgegeven(
 }
 
 export async function handleFetchCommunicatievoorkeuren(
-  req: Request,
+  _req: Request,
   res: ResponseAuthenticated
 ) {
   const communicatievoorkeurenResponse = await fetchCommunicatievoorkeuren(

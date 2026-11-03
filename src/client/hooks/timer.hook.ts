@@ -16,8 +16,8 @@ const DefaultConfig: CounterProps = {
   incrementWith: 1,
   intervalMs: ONE_SECOND_IN_MS,
   maxCount: Infinity,
-  onMaxCount: (maxCount: number) => void 0,
-  onTick: (count: number) => void 0,
+  onMaxCount: (_maxCount: number) => void 0,
+  onTick: (_count: number) => void 0,
   startPaused: false,
   startCountAt: 0,
 };

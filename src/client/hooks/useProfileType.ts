@@ -16,7 +16,7 @@ try {
   if (storageValue) {
     initialProfileType = storageValue;
   }
-} catch (error) {
+} catch (_error) {
   logger.info("Can't use profileType session value");
 }
 
@@ -44,7 +44,7 @@ export function useProfileType() {
     if (profileType !== stateValue && profileType !== null) {
       setState(profileType);
     }
-  }, []);
+  }, [stateValue, setState, profileType]);
 
   useEffect(() => {
     setSessionState(stateValue);

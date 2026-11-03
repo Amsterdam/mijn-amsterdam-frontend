@@ -99,7 +99,7 @@ export function useInkomenSpecificatiesListPageData() {
         { replace: true }
       );
     },
-    [kind, location.pathname, navigate]
+    [kind, navigate]
   );
 
   function resetSearch() {

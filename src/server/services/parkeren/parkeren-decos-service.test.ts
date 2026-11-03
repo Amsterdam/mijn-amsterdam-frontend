@@ -34,7 +34,7 @@ describe('parkeren-decos-service', () => {
         apiSuccessResult(decosZaken)
       );
 
-      const result = await fetchDecosParkeerVergunningen(authProfileAndToken);
+      await fetchDecosParkeerVergunningen(authProfileAndToken);
 
       expect(fetchDecosZaken).toHaveBeenCalledWith(
         authProfileAndToken,

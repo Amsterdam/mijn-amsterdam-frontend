@@ -19,7 +19,7 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
   const isLandscape = useLandScape();
   const { loadingFeature, setLoadingFeature } = useLoadingFeature();
   const prevFilterPanelState = useRef<PanelState | null>(null);
-  const location = useLocation();
+  const _location = useLocation();
 
   useFetchPanelFeature();
 
@@ -90,11 +90,10 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
       setDetailPanelState(isNarrowScreen ? PanelState.Tip : PanelState.Closed);
     }
   }, [
-    detailState,
-    location.pathname,
-    loadingFeature,
-    setDetailPanelState,
-    isNarrowScreen,
+    detailState, 
+    loadingFeature, 
+    setDetailPanelState, 
+    isNarrowScreen
   ]);
 
   return (

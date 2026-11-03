@@ -235,7 +235,6 @@ export function useBffApi<T, P = any>(
   const isDirty = rState?.isDirty === true;
   const isLoading = rState?.isLoading === true;
 
-  const hasKeyInStore = !!cacheKey && storeHas(cacheKey);
 
   const setApiState = useCallback(
     (partialState: Partial<BffApiState<ApiResponse<T | null> | null>>) => {
@@ -315,14 +314,9 @@ export function useBffApi<T, P = any>(
       storeSet(cacheKey, initialState);
     }
   }, [
-    state,
-    url_,
-    cacheKey,
-    storeSet,
-    storeHas,
-    options?.fetchImmediately,
-    fetch,
-    storeGet,
+    cacheKey, 
+    storeSet, 
+    storeHas
   ]);
 
   // Fetch data immediately if required.
@@ -336,12 +330,11 @@ export function useBffApi<T, P = any>(
       fetch();
     }
   }, [
-    options?.fetchImmediately,
-    fetch,
-    hasKeyInStore,
-    isDirty,
-    isLoading,
-    cacheKey,
+    options?.fetchImmediately, 
+    fetch, 
+    isDirty, 
+    isLoading, 
+    cacheKey
   ]);
 
   return Object.assign({}, rState, {

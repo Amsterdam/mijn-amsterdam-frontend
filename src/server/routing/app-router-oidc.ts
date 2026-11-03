@@ -118,7 +118,7 @@ oidcRouter.get(
 
 oidcRouter.get(
   authRoutes.AUTH_BASE_EHERKENNING + AUTH_CALLBACK,
-  (req: Request, res: Response) => {
+  (_req: Request, res: Response) => {
     const callbackOptions = {
       redirectUri: generateFullApiUrlBFF(authRoutes.AUTH_CALLBACK_EHERKENNING),
     };

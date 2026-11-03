@@ -137,7 +137,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     const url = `${routeConfig.themaPage.path}?${params}`;
 
     navigate(url);
-  }, [search, activeDatasetIds, activeDatasetFilters, loadingFeature]);
+  }, [search, activeDatasetIds, activeDatasetFilters, loadingFeature, map.getCenter, setLoadingFeature, setActiveDatasetIds, map.getBounds, setActiveFilters, navigate, map.getZoom, map.fitBounds]);
 
   const fetch = useCallback(
     async (
@@ -190,7 +190,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
         navigate(url);
       }
     },
-    [search, location.pathname, navigate]
+    [search, navigate]
   );
 
   // This callback runs whenever the map zooms / pans
@@ -229,13 +229,10 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       setErrorResults([]);
     }
   }, [
-    fetchDebounced,
-    setClusterFeatures,
-    setPolylineFeatures,
-    setErrorResults,
-    activeDatasetIds,
-    activeDatasetFilters,
-    setFeaturesLoadingDebounced,
+    fetchDebounced, 
+    activeDatasetIds, 
+    activeDatasetFilters, 
+    setFeaturesLoadingDebounced
   ]);
 
   // Set the zIndex of the markerpane. These markers will be placed above eachother.

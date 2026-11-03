@@ -180,7 +180,7 @@ function useNavigateToPage(queryParams: URLSearchParams) {
         navigate(route);
       }
     }
-  }, [appState, id, getRoute]);
+  }, [appState, id, getRoute, navigate]);
 
   return {
     unResolvedState,

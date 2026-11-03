@@ -91,7 +91,7 @@ export function useScript({
         script.removeEventListener('error', onScriptError);
       };
     }
-  }, [src, isEnabled, defer, async]); // Only re-run effect if script src changes
+  }, [src, isEnabled, defer, async, onLoadCallback, dataset]); // Only re-run effect if script src changes
 
   return [state.loaded, state.error];
 }

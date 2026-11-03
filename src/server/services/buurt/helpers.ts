@@ -207,7 +207,7 @@ export function getDynamicDatasetFilters(datasetId: DatasetId) {
 
   // Only select property filters that don't have static values defined.
   return Object.fromEntries(
-    Object.entries(propertyFilters).filter(([propertyId, property]) => {
+    Object.entries(propertyFilters).filter(([_propertyId, property]) => {
       return !property.values?.length;
     })
   );
