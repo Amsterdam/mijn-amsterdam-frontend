@@ -255,6 +255,13 @@ export const isMokum: TipsPredicateFN = (appState) => {
   return appState.BRP?.content?.persoon?.mokum || false;
 };
 
+export const hasVveInPriorityNeighborhood: TipsPredicateFN = (appState) => {
+  return !!(
+    appState.WONEN?.status === 'OK' &&
+    appState.WONEN.content?.vve?.isPriorityNeighborhood
+  );
+};
+
 export function or(predicates: TipsPredicateFN[]): TipsPredicateFN {
   return (stateData, today) => {
     return predicates

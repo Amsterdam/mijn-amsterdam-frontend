@@ -5,6 +5,7 @@ import {
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
   hasTozo,
+  hasVveInPriorityNeighborhood,
   hasValidRecentStadspasRequest,
   hasVerhuurRegistrations,
   isLivingInAmsterdamLessThanNumberOfDays,
@@ -24,6 +25,7 @@ import { themaConfig as hliThemaConfig } from '../../../client/apps/bob/pages/Th
 import { themaConfig as inkomenThemaConfig } from '../../../client/apps/bob/pages/Thema/Inkomen/Inkomen-thema-config.ts';
 import { themaConfig as profileThemaConfig } from '../../../client/apps/bob/pages/Thema/Profile/Profile-thema-config.ts';
 import { themaConfig as toeristischeVerhuurThemaConfig } from '../../../client/apps/bob/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 
 const DAYS = 90;
 
@@ -375,6 +377,25 @@ export const contentTips: ContentTipSource[] = [
       title:
         'Bekijk hier een lijst van de belangrijkste dingen die je zelf kunt regelen',
       to: 'https://www.amsterdam.nl/jeugdhulp/word-18/',
+    },
+  },
+  {
+    id: 'mijn-67',
+    dateActiveStart: null,
+    dateActiveEnd: null,
+    active: !IS_PRODUCTION, //energielabels eerst invoegen, voordat dit actief wordt in productie
+    datePublished: '2026-11-03',
+    title: 'Gratis advies over verduurzaming',
+    themaID: profileThemaConfig.BRP.id,
+    profileTypes: ['private'],
+    description:
+      'Als u wilt kunt u gratis verduurzamingsadvies krijgen van een onafhankelijk extern bureau',
+    predicates: [hasVveInPriorityNeighborhood],
+    reason:
+      'U ziet deze tip omdat u huiseigenaar bent, uw VvE in een prioriteitsgebied ligt en gemiddeld energielabel E heeft.',
+    link: {
+      title: 'Meer informatie',
+      to: 'https://duurzaamwonen.amsterdam/vve/gratis-verduurzamingsadvies-voor-vves',
     },
   },
 ];

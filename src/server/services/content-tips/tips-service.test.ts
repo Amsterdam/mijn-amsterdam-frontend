@@ -102,6 +102,52 @@ describe('createTipsFromServiceResults', () => {
     ).toBe(2);
   });
 
+  it('should show tip mijn-67 for a VvE in a priority neighborhood', () => {
+    const tips = fetchContentTips(
+      {
+        WONEN: {
+          status: 'OK',
+          content: {
+            vve: {
+              isPriorityNeighborhood: true,
+            },
+          },
+        },
+      },
+      new Date('2026-11-03'),
+      'private'
+    );
+
+    expect(tips.find((tip) => tip.id === 'mijn-67')).toMatchObject({
+      title: 'Tip: Gratis verduurzamingsadvies',
+      description:
+        'Uw VvE staat in een prioriteitsgebied en heeft een gemiddeld energielabel E. Als u wilt kunt u gratis verduurzamingsadvies krijgen van een onafhankelijk extern bureau',
+      link: {
+        title: 'Meer informatie',
+        to: 'https://duurzaamwonen.amsterdam/vve/gratis-verduurzamingsadvies-voor-vves',
+      },
+    });
+  });
+
+  it('should not show tip mijn-67 outside a VvE priority neighborhood', () => {
+    const tips = fetchContentTips(
+      {
+        WONEN: {
+          status: 'OK',
+          content: {
+            vve: {
+              isPriorityNeighborhood: false,
+            },
+          },
+        },
+      },
+      new Date('2026-11-03'),
+      'private'
+    );
+
+    expect(tips.find((tip) => tip.id === 'mijn-67')).toBeUndefined();
+  });
+
   describe('prefixTipNotification', () => {
     const tip: MyNotification = {
       id: 'test',
