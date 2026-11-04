@@ -18,6 +18,7 @@
       "!drizzle",
       "!vendor",
       "!scripts",
+      "!**/*.svg",
       "!public/js/usabilla*.js"
     ]
   },
@@ -398,7 +399,9 @@
               ":PATH:"
             ]
           }
-        }
+        },
+        "useSortedAttributes": "off",
+        "useSortedInterfaceMembers": "off"
       }
     }
   }
