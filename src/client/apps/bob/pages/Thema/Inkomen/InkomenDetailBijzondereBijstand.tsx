@@ -1,10 +1,10 @@
 import { Paragraph, StandaloneLink } from '@amsterdam/design-system-react';
 
-import { wpiLinks } from './Inkomen-thema-config.ts';
-import { useInkomenDetailData } from './useInkomenDetailData.hook.ts';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { wpiLinks } from './Inkomen-thema-config.ts';
+import { useInkomenDetailData } from './useInkomenDetailData.hook.ts';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>
