@@ -1,9 +1,9 @@
 import { useParams } from 'react-router';
 
-import type { ListPageParamKind } from './Inkomen-thema-config.ts';
-import { useInkomenThemaData } from './useInkomenThemaData.hook.ts';
 import { ListPagePaginated } from '../../../../../components/ListPagePaginated/ListPagePaginated.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import type { ListPageParamKind } from './Inkomen-thema-config.ts';
+import { useInkomenThemaData } from './useInkomenThemaData.hook.ts';
 
 export function InkomenList() {
   const { kind = 'lopende-aanvragen' } = useParams<{

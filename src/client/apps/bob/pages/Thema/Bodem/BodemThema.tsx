@@ -1,12 +1,12 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { themaConfig } from './Bodem-thema-config.ts';
-import { useBodemData } from './useBodemData.hook.tsx';
 import type { LoodMetingFrontend } from '../../../../../../server/services/bodem/types.ts';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { themaConfig } from './Bodem-thema-config.ts';
+import { useBodemData } from './useBodemData.hook.tsx';
 
 export function BodemThema() {
   const { items, tableConfig, isLoading, isError, pageLinks, themaId, title } =

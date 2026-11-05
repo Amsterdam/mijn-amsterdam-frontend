@@ -1,10 +1,14 @@
-import { tableConfig, themaConfig } from './Jeugd-thema-config.ts';
-import { listPageParamKind, listPageTitle } from './Jeugd-thema-config.ts';
 import { isError } from '../../../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
+import {
+  listPageParamKind,
+  listPageTitle,
+  tableConfig,
+  themaConfig,
+} from './Jeugd-thema-config.ts';
 
 export function useJeugdThemaData() {
   const { JEUGD } = useAppStateGetter();

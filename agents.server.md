@@ -75,8 +75,8 @@ Tooling: Vitest (usually `node` env). Global setup: `src/testing/setup.ts`.
 
 - Default to inline test data in the test file.
 - Use local `test-fixtures/` only when fixture data is large:
-	- A single fixture is more than 20 lines.
-	- Total fixture data in a test file would exceed 60 lines.
+  - A single fixture is more than 20 lines.
+  - Total fixture data in a test file would exceed 60 lines.
 - Share a local fixture within one directory only when the same large payload is needed by 3 or more tests in that directory.
 
 ## Feature toggles
@@ -88,8 +88,8 @@ Tooling: Vitest (usually `node` env). Global setup: `src/testing/setup.ts`.
 
 Two common approaches:
 
-1) **Mock internal dependencies** using `vi.spyOn(depModule, 'fn').mockResolvedValue(...)`.
-2) **Exercise real code with upstream HTTP stubs** using `remoteApi`.
+1. **Mock internal dependencies** using `vi.spyOn(depModule, 'fn').mockResolvedValue(...)`.
+2. **Exercise real code with upstream HTTP stubs** using `remoteApi`.
 
 Prefer the simplest approach that proves the behavior.
 
@@ -112,4 +112,3 @@ Prefer the simplest approach that proves the behavior.
 - Assertions verify `status/content` shapes and key fields (avoid overly broad snapshots unless already the pattern).
 - Run the smallest relevant command (`pnpm bff-api:test:dirs <folder>`) and fix failures caused by the new test.
 - If routes/toggles/api config changed, `*-service-config.ts` is updated as the canonical source.
-

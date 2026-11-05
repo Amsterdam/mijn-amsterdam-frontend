@@ -1,7 +1,7 @@
 import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import {
-  httpsAgentBFF,
   type DataRequestConfig,
+  httpsAgentBFF,
 } from '../../config/source-api.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 

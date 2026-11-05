@@ -8,7 +8,6 @@ import { themaConfig } from '../../apps/bob/pages/Thema/Zorg/Zorg-thema-config.t
 import { MaButtonLink, MaLink } from '../MaLink/MaLink.tsx';
 import { PageContentCell } from '../Page/Page.tsx';
 
-
 function isVoorzieningActieAvailable(
   voorziening: VoorzieningActiePropsFrontend,
   actie: maActie,

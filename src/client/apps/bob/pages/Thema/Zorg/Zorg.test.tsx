@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { themaConfig } from './Zorg-thema-config.ts';
-import { ZorgThema } from './ZorgThema.tsx';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { MockApp } from '../../MockApp.tsx';
+import { themaConfig } from './Zorg-thema-config.ts';
+import { ZorgThema } from './ZorgThema.tsx';
 
 const testState: Pick<AppState, 'WMO'> = {
   WMO: {

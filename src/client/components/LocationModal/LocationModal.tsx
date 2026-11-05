@@ -4,7 +4,6 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import type { LatLngLiteral } from 'leaflet';
 
-import styles from './LocationModal.module.scss';
 import type {
   BAGAdreseerbaarObject,
   BAGQueryParams,
@@ -23,6 +22,7 @@ import { ModalAndButton } from '../Modal/Modal.tsx';
 import { BaseLayerType } from '../MyArea/Map/BaseLayerToggle.tsx';
 import type { MapLocationMarker } from '../MyArea/MyArea.hooks.ts';
 import { MyAreaLoader } from '../MyArea/MyAreaLoader.tsx';
+import styles from './LocationModal.module.scss';
 
 const BAG_ADRESSEERBARE_OBJECTEN_URL =
   'https://api.data.amsterdam.nl/v1/benkagg/adresseerbareobjecten/';
@@ -101,6 +101,7 @@ function LocationMap({ address, latlng, markerLabel }: LocationMapProps) {
 
   const hasLocationDataAndCenterMarker = !!centerMarker;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Exclude some dependencies to prevent unwanted re-fetches
   useEffect(() => {
     if (bagApi.isDirty || bagApi.isLoading || querySearchAddress === null) {
       return;
@@ -116,7 +117,6 @@ function LocationMap({ address, latlng, markerLabel }: LocationMapProps) {
     bagApiUrl.search = params.toString();
 
     bagApi.fetch(bagApiUrl);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- Exclude some dependencies to prevent unwanted re-fetches
   }, [querySearchAddress, bagApi.isDirty, bagApi.isLoading]);
 
   return (

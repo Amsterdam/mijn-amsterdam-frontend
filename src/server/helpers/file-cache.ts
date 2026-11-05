@@ -5,9 +5,9 @@ import path from 'node:path';
 import type { FlatCache } from 'flat-cache';
 import { clearCacheById, create } from 'flat-cache';
 
-import { getDirname } from './dir.ts';
 import { IS_AP } from '../../universal/config/env.ts';
 import { ONE_SECOND_MS } from '../config/app.ts';
+import { getDirname } from './dir.ts';
 
 interface FileCacheProps {
   name: string;
@@ -96,7 +96,7 @@ export class FileCache {
   }
 
   getKey<T = unknown>(key: string): T | undefined {
-    const now = new Date().getTime();
+    const now = Date.now();
     const value = this.cache.get<KeyData<T>>(key);
 
     if (value === undefined || (value.expire !== false && value.expire < now)) {
@@ -106,7 +106,7 @@ export class FileCache {
   }
 
   setKey(key: string, value: unknown) {
-    const now = new Date().getTime();
+    const now = Date.now();
     this.cache.set(key, {
       expire: this.expire === false ? false : now + this.expire,
       data: value,

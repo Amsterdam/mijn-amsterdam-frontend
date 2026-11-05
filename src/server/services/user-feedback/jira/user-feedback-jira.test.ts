@@ -18,8 +18,6 @@ vi.mock('../../../helpers/source-api-request.ts', () => ({
   requestData: mocks.requestData,
 }));
 
-import { AUTH_FAILURE_MESSAGE } from './user-feedback-jira.service-config.ts';
-import { createJiraTicketForFeedbackEntry } from './user-feedback-jira.ts';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -28,6 +26,8 @@ import type {
   CreateJiraTicketInput,
   UserFeedbackAdministrationMeta,
 } from '../user-feedback.types.ts';
+import { AUTH_FAILURE_MESSAGE } from './user-feedback-jira.service-config.ts';
+import { createJiraTicketForFeedbackEntry } from './user-feedback-jira.ts';
 
 const input: CreateJiraTicketInput = {
   entryId: 123,

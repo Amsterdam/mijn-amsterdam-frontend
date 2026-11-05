@@ -3,18 +3,6 @@ import { differenceInDays, format } from 'date-fns';
 import slug from 'slugme';
 import type Supercluster from 'supercluster';
 
-import type {
-  DsoApiResponse,
-  WFSApiResponse,
-  WFSFeatureSource,
-} from './dso-helpers.ts';
-import {
-  discoverSingleDsoApiEmbeddedResponse,
-  dsoApiListUrl,
-  getDsoApiEmbeddedResponse,
-  transformGenericApiListResponse,
-  transformGenericApiListResponse_,
-} from './dso-helpers.ts';
 import { featureToggle } from '../../../client/components/MyArea/MyArea-thema-config.ts';
 import { Colors } from '../../../universal/config/colors.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
@@ -28,9 +16,9 @@ import type {
 } from '../../../universal/config/myarea-datasets.ts';
 import { DATASETS } from '../../../universal/config/myarea-datasets.ts';
 import {
+  type ApiResponse,
   apiErrorResult,
   apiSuccessResult,
-  type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
 import { DAYS_IN_YEAR, ONE_SECOND_MS } from '../../config/app.ts';
@@ -43,6 +31,18 @@ import {
   getNextUrlFromLinkHeader,
   requestData,
 } from '../../helpers/source-api-request.ts';
+import type {
+  DsoApiResponse,
+  WFSApiResponse,
+  WFSFeatureSource,
+} from './dso-helpers.ts';
+import {
+  discoverSingleDsoApiEmbeddedResponse,
+  dsoApiListUrl,
+  getDsoApiEmbeddedResponse,
+  transformGenericApiListResponse,
+  transformGenericApiListResponse_,
+} from './dso-helpers.ts';
 
 const zIndexPane = {
   PARKEERZONES: '650',
@@ -62,7 +62,8 @@ export type DatasetFeatureProperties = {
   color?: string;
   zIndex?: ZIndexPaneValue;
   [propertyName: string /*DatasetPropertyName*/]:
-    DatasetPropertyValue | unknown;
+    | DatasetPropertyValue
+    | unknown;
 };
 
 export type DatasetClusterFeatureProperties = DatasetFeatureProperties & {

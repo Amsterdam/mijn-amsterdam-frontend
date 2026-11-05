@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 
-import { useAppStateStore } from './useAppStateStore.ts';
 import type { MyNotification } from '../../universal/types/App.types.ts';
 import { WelcomeNotification } from '../apps/bob/config/staticData.tsx';
 import { themaConfig } from '../apps/bob/pages/MyTips/MyTips-config.ts';
 import { getRedactedClass } from '../helpers/cobrowse.ts';
+import { useAppStateStore } from './useAppStateStore.ts';
 
 export function useAppStateNotifications(top?: number) {
   const { isReady, NOTIFICATIONS } = useAppStateStore();

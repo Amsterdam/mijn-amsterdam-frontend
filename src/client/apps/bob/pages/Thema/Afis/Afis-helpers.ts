@@ -1,11 +1,11 @@
-import {
-  EMANDATE_ENDDATE_INDICATOR,
-  type AfisFactuurFrontend,
-} from './Afis-thema-config.ts';
 import type { AfisEMandateFrontend } from '../../../../../../server/services/afis/afis-types.ts';
 import { displayAmount } from '../../../../../../universal/helpers/text.ts';
 import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../../../helpers/api.ts';
 import type { BFFApiUrls } from '../../../config/api.ts';
+import {
+  type AfisFactuurFrontend,
+  EMANDATE_ENDDATE_INDICATOR,
+} from './Afis-thema-config.ts';
 
 export function generateApiUrl(
   businessPartnerIdEncrypted: string | null,

@@ -3,7 +3,6 @@ import type { Request, RequestHandler, Response } from 'express';
 import nock from 'nock';
 import UID from 'uid-safe';
 
-import { bffApiHost, remoteApiHost } from './setup.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
@@ -13,16 +12,17 @@ import type {
   AuthProfile,
   AuthProfileAndToken,
 } from '../server/auth/auth-types.ts';
-import {
-  createDevelopmentSessionData,
-  createOIDCStub,
-  ensureOIDCAuthContext,
-} from '../server/routing/route-helpers-oidc.ts';
 import type {
   RecordStr2,
   RequestWithRouteAndQueryParams,
   ResponseAuthenticated,
 } from '../server/routing/route-helpers.ts';
+import {
+  createDevelopmentSessionData,
+  createOIDCStub,
+  ensureOIDCAuthContext,
+} from '../server/routing/route-helpers-oidc.ts';
+import { bffApiHost, remoteApiHost } from './setup.ts';
 
 const defaultReplyHeaders = {
   'access-control-allow-origin': '*',

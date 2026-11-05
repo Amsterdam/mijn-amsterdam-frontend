@@ -1,6 +1,6 @@
 export function newEventSourceMock() {
   function EventSourceMock() {
-    // @ts-ignore
+    // @ts-expect-error
     this.init();
   }
 
@@ -18,10 +18,12 @@ export function newEventSourceMock() {
   EventSourceMock.prototype.close = vi.fn(() => {
     EventSourceMock.prototype.evHandlers.close?.();
   });
+  // biome-ignore lint/suspicious/noExplicitAny: Mock accepts arbitrary errors.
   EventSourceMock.prototype.error = vi.fn((error: any) => {
     EventSourceMock.prototype.evHandlers.error?.(error);
   });
   EventSourceMock.prototype.addEventListener = vi.fn(
+    // biome-ignore lint/suspicious/noExplicitAny: Mock accepts varied events.
     (eventName: string, handler: (args: any) => void) => {
       EventSourceMock.prototype.evHandlers[eventName] = vi.fn(handler);
     }

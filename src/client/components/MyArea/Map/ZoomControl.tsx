@@ -3,8 +3,8 @@ import { memo } from 'react';
 import { Button } from '@amsterdam/design-system-react';
 import { useMapInstance } from '@amsterdam/react-maps';
 
-import styles from './ZoomControl.module.scss';
 import { IconEnlarge, IconMinimise } from '../../../assets/icons/index.tsx';
+import styles from './ZoomControl.module.scss';
 
 export const ZoomControl = memo(function ZoomControl() {
   const mapInstance = useMapInstance();

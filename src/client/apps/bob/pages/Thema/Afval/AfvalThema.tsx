@@ -6,11 +6,9 @@ import {
   Paragraph,
 } from '@amsterdam/design-system-react';
 
-import { links, themaConfig } from './Afval-thema-config.ts';
-import styles from './Afval.module.scss';
 import type {
-  AfvalFractionInformationTransformed,
   AfvalFractionCode,
+  AfvalFractionInformationTransformed,
 } from '../../../../../../server/services/afval/afval.types.ts';
 import { isError } from '../../../../../../universal/helpers/api.ts';
 import { getFullAddress } from '../../../../../../universal/helpers/brp.ts';
@@ -37,6 +35,8 @@ import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
 import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useProfileTypeValue } from '../../../../../hooks/useProfileType.ts';
+import styles from './Afval.module.scss';
+import { links, themaConfig } from './Afval-thema-config.ts';
 
 interface InstructionCTAProps {
   fraction: AfvalFractionInformationTransformed;
@@ -221,6 +221,18 @@ export function AfvalThemaPagina() {
     commercialLocation?.bagNummeraanduidingId ===
     privateLocation?.bagNummeraanduidingId;
 
+  function renderAddress() {
+    const includePostCodeWoonplaats = true;
+    const address = MY_LOCATION.content?.[0]?.address;
+    if (address) {
+      return getFullAddress(address, includePostCodeWoonplaats);
+    }
+    if (isLocationLoading) {
+      return <LoadingContent barConfig={[['20rem', '3rem', '0']]} />;
+    }
+    return 'Onbekend adres';
+  }
+
   return (
     <PageV2 heading={themaConfig.title}>
       <PageContentCell spanWide={8}>
@@ -314,15 +326,7 @@ export function AfvalThemaPagina() {
               label: 'Uw adres',
               content: (
                 <>
-                  <Paragraph className="ams-mb-m">
-                    {MY_LOCATION.content?.[0]?.address ? (
-                      getFullAddress(MY_LOCATION.content?.[0].address, true)
-                    ) : isLocationLoading ? (
-                      <LoadingContent barConfig={[['20rem', '3rem', '0']]} />
-                    ) : (
-                      'Onbekend adres'
-                    )}
-                  </Paragraph>
+                  <Paragraph className="ams-mb-m">{renderAddress()}</Paragraph>
                   {/* NOTE: Edge case: Een (niet zakelijke) burger kan ingeschreven zijn op een pand zonder woonfunctie. */}
                   {heeftGeenWoonfunctie && profileType === 'private' && (
                     <Paragraph className="ams-mb-m">

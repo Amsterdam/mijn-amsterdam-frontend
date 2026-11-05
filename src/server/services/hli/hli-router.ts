@@ -1,3 +1,5 @@
+import { createBFFRouter } from '../../routing/route-helpers.ts';
+import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler.ts';
 import {
   fetchZorgnedAVAanvragen,
   fetchZorgnedAVDocument,
@@ -6,8 +8,6 @@ import {
   handleUnblockStadspas,
 } from './hli-route-handlers.ts';
 import { featureToggle, routes } from './hli-service-config.ts';
-import { createBFFRouter } from '../../routing/route-helpers.ts';
-import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler.ts';
 
 const hliRouterProtected = createBFFRouter({
   id: 'protected-hli',

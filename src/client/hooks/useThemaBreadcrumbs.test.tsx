@@ -1,11 +1,11 @@
 import { renderHook } from '@testing-library/react';
 import { useLocation } from 'react-router';
 import type { Mock } from 'vitest';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import { useThemaBreadcrumbs } from './useThemaBreadcrumbs.ts';
 import type { ThemaMenuItemTransformed } from '../../universal/types/thema-types.ts';
 import { useThemasByProfileType } from '../apps/bob/config/menuItems.ts';
+import { useThemaBreadcrumbs } from './useThemaBreadcrumbs.ts';
 
 vi.mock('../apps/bob/config/menuItems.ts', () => ({
   useThemasByProfileType: vi.fn(),

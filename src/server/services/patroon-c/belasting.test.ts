@@ -1,7 +1,8 @@
+// biome-ignore-all lint/suspicious/noExplicitAny: Test fixtures and mocks.
 import { describe, expect, test } from 'vitest';
 
-import { fetchBelasting, fetchBelastingNotifications } from './belasting.ts';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { fetchBelasting, fetchBelastingNotifications } from './belasting.ts';
 
 const authProfileAndToken = getAuthProfileAndToken();
 

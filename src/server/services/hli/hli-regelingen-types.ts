@@ -1,10 +1,12 @@
-import { type StadspasResponseFrontend } from './stadspas-types.ts';
 import type {
   GenericDocument,
   ZaakAanvraagDetail,
 } from '../../../universal/types/App.types.ts';
-import type { BeschikkingsResultaat } from '../zorgned/zorgned-types.ts';
-import { type ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types.ts';
+import type {
+  BeschikkingsResultaat,
+  ZorgnedAanvraagWithRelatedPersonsTransformed,
+} from '../zorgned/zorgned-types.ts';
+import type { StadspasResponseFrontend } from './stadspas-types.ts';
 
 export type ZorgnedHLIRegeling =
   ZorgnedAanvraagWithRelatedPersonsTransformed & {

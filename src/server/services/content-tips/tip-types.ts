@@ -5,6 +5,7 @@ import type {
 } from '../../../universal/types/App.types.ts';
 
 export type ServiceResults = {
+  // biome-ignore lint/suspicious/noExplicitAny: Heterogeneous service content.
   [serviceId: string]: ApiResponse_DEPRECATED<any>;
 };
 

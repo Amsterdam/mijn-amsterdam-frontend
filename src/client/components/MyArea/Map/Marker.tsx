@@ -4,8 +4,8 @@ import { Marker as MarkerComponent } from '@amsterdam/react-maps';
 import type {
   LatLngLiteral,
   LeafletEventHandlerFn,
-  Marker as MarkerType,
   MarkerOptions,
+  Marker as MarkerType,
 } from 'leaflet';
 
 type Props = {

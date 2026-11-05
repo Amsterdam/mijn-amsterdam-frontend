@@ -1,11 +1,11 @@
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
+} from '../../../../../../universal/types/thema-types.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import { themaConfig } from './Afval-thema-config.ts';
 import { default as AfvalIcon } from './AfvalIcon.svg?react';
 import { AfvalThemaPagina } from './AfvalThema.tsx';
-import { isLoading } from '../../../../../helpers/api.ts';
-import {
-  type ThemaMenuItem,
-  type ThemaRenderRouteConfig,
-} from '../../../../../../universal/types/thema-types.ts';
 
 export const AfvalRoutes = [
   {

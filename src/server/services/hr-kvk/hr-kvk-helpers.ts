@@ -1,14 +1,14 @@
+import {
+  dateFormat,
+  defaultDateFormat,
+} from '../../../universal/helpers/date.ts';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
+import { isAmsterdamAddress } from '../buurt/helpers.ts';
 import type {
   DateSource,
   KvkResponseFrontend,
   Vestiging,
 } from './hr-kvk.types.ts';
-import {
-  defaultDateFormat,
-  dateFormat,
-} from '../../../universal/helpers/date.ts';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
-import { isAmsterdamAddress } from '../buurt/helpers.ts';
 
 export type KvkBagIds = Pick<
   Vestiging,
@@ -54,14 +54,12 @@ export function getVestigingBagIds(
     );
   }
 
-  const vestigingenWithBagIds = vestigingen
-    .map((vestiging) => {
-      const bagIds = vestigingBagKeys
-        .map((key) => vestiging[key] ?? null)
-        .filter((x) => x !== null);
-      return { ...vestiging, bagIds };
-    })
-    .flat();
+  const vestigingenWithBagIds = vestigingen.flatMap((vestiging) => {
+    const bagIds = vestigingBagKeys
+      .map((key) => vestiging[key] ?? null)
+      .filter((x) => x !== null);
+    return { ...vestiging, bagIds };
+  });
 
   return vestigingenWithBagIds;
 }

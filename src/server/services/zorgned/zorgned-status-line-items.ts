@@ -1,11 +1,11 @@
+import type { StatusLineItem } from '../../../universal/types/App.types.ts';
+import { logger } from '../../logging.ts';
 import { parseLabelContent } from './zorgned-helpers.ts';
 import type {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
+  ZorgnedStatusLineItemTransformerConfig,
 } from './zorgned-types.ts';
-import { type ZorgnedStatusLineItemTransformerConfig } from './zorgned-types.ts';
-import type { StatusLineItem } from '../../../universal/types/App.types.ts';
-import { logger } from '../../logging.ts';
 
 // If a config property for the leveringsVorm, productSoortCodes or productIdentificatie is not found,
 // we set the match to true so the check doesn't influence the selection criteria and returns items by default.
@@ -85,10 +85,10 @@ function buildStatusLineItem<T extends ZorgnedAanvraagTransformed>(
   const isVisible =
     typeof statusItem.isVisible === 'function'
       ? statusItem.isVisible(
-        aanvraagTransformed,
-        today,
-        allAanvragenTransformed
-      )
+          aanvraagTransformed,
+          today,
+          allAanvragenTransformed
+        )
       : (statusItem.isVisible ?? true);
 
   const substeps = statusItem.substeps
@@ -124,18 +124,18 @@ function buildStatusLineItem<T extends ZorgnedAanvraagTransformed>(
     isActive:
       typeof statusItem.isActive === 'function'
         ? statusItem.isActive(
-          aanvraagTransformed,
-          today,
-          allAanvragenTransformed
-        )
+            aanvraagTransformed,
+            today,
+            allAanvragenTransformed
+          )
         : statusItem.isActive,
     isChecked:
       typeof statusItem.isChecked === 'function'
         ? statusItem.isChecked(
-          aanvraagTransformed,
-          today,
-          allAanvragenTransformed
-        )
+            aanvraagTransformed,
+            today,
+            allAanvragenTransformed
+          )
         : statusItem.isChecked,
     isVisible,
     documents: [], // NOTE: Assigned in specific service transformers.

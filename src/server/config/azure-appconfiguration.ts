@@ -6,15 +6,15 @@ import {
   parseFeatureFlag,
 } from '@azure/app-configuration';
 
-import {
-  featureToggle,
-  type FeatureToggleKey,
-  type FeatureToggles,
-} from './feature-toggles.ts';
-import { opsFeatureToggle } from './ops-feature-toggles.ts';
 import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
 import { entries } from '../../universal/helpers/utils.ts';
 import { logger } from '../logging.ts';
+import {
+  type FeatureToggleKey,
+  type FeatureToggles,
+  featureToggle,
+} from './feature-toggles.ts';
+import { opsFeatureToggle } from './ops-feature-toggles.ts';
 
 const skipAppConfiguration = process.env.BFF_SKIP_APPCONFIG === 'true';
 let appConfigClient: AppConfigClient | null | undefined;

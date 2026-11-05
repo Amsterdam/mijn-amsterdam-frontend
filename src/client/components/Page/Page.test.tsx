@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
-import { PageV2 } from './Page.tsx';
 import { MockApp } from '../../apps/bob/pages/MockApp.tsx';
+import { PageV2 } from './Page.tsx';
 
 it('Renders without crashing', () => {
   render(

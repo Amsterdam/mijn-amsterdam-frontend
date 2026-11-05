@@ -1,11 +1,5 @@
 import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { AdresInOnderzoek } from './AdresInOnderzoek.tsx';
-import { panelConfig } from './ProfilePrivate.transform.tsx';
-import { ProfileSectionPanel } from '../ProfileSectionPanel.tsx';
-import { useProfileData } from './useProfileData.hook.tsx';
-import { useProfileThemaData } from './useProfileThemaData.hook.tsx';
-import { VertrokkenOnbekendWaarheen } from './VertrokkenOnbekendWaarheen.tsx';
 import {
   hasDutchAndOtherNationalities,
   isMokum,
@@ -14,6 +8,12 @@ import { PageContentCell } from '../../../../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
 import { ThemaPagina } from '../../../../../../components/Thema/ThemaPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../../../hooks/useHTMLDocumentTitle.ts';
+import { ProfileSectionPanel } from '../ProfileSectionPanel.tsx';
+import { AdresInOnderzoek } from './AdresInOnderzoek.tsx';
+import { panelConfig } from './ProfilePrivate.transform.tsx';
+import { useProfileData } from './useProfileData.hook.tsx';
+import { useProfileThemaData } from './useProfileThemaData.hook.tsx';
+import { VertrokkenOnbekendWaarheen } from './VertrokkenOnbekendWaarheen.tsx';
 
 function ProfilePrivateSectionPanels() {
   const { BRP, profileData, themaConfig } = useProfileData();

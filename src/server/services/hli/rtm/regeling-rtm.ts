@@ -27,13 +27,13 @@ import type {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedPerson,
 } from '../../zorgned/zorgned-types.ts';
+import { getDocumentsFrontend } from '../hli.ts';
 import type {
   HLIRegelingFrontend,
   HLIRegelingSpecificatieFrontend,
 } from '../hli-regelingen-types.ts';
 import { featureToggle } from '../hli-service-config.ts';
 import { fetchZorgnedAanvragenHLI } from '../hli-zorgned-service.ts';
-import { getDocumentsFrontend } from '../hli.ts';
 import { getBesluitDescription } from '../status-line-items/generic.ts';
 
 // Titel for RTM Specificatie documents in Zorgned

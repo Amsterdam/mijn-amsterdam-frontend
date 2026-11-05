@@ -1,8 +1,8 @@
 import { randomUUID } from 'node:crypto';
 
-import { AUTHORIZATION_CODE_TTL_MS } from './amsapp-auth-service-config.ts';
 import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { trackEvent } from '../../monitoring.ts';
+import { AUTHORIZATION_CODE_TTL_MS } from './amsapp-auth-service-config.ts';
 
 export type AuthorizationCodeStatus = 'pending' | 'ready' | 'expired';
 

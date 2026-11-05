@@ -5,16 +5,6 @@ import type { NextFunction, Request, Response } from 'express';
 import z from 'zod';
 
 import {
-  AMSAPP_AUTH_DEEP_LINK_BASE,
-  apiResponseErrors,
-} from './amsapp-auth-service-config.ts';
-import {
-  consumeByAuthorizationCode,
-  createLoginAttempt,
-  getByAuthorizationCode,
-  markLoginReady,
-} from './amsapp-auth-store.ts';
-import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../../universal/helpers/api.ts';
@@ -35,6 +25,16 @@ import {
 import { trackEvent } from '../../monitoring.ts';
 import { baseRenderProps } from '../amsapp-service-config.ts';
 import type { ApiError, RenderProps } from '../amsapp-types.ts';
+import {
+  AMSAPP_AUTH_DEEP_LINK_BASE,
+  apiResponseErrors,
+} from './amsapp-auth-service-config.ts';
+import {
+  consumeByAuthorizationCode,
+  createLoginAttempt,
+  getByAuthorizationCode,
+  markLoginReady,
+} from './amsapp-auth-store.ts';
 
 const loginStartQuerySchema = z.object({
   codeChallenge: z.string().min(1),

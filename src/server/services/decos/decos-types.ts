@@ -7,8 +7,8 @@ import type {
 } from '../../../universal/types/App.types.ts';
 
 export type {
-  WithLocation,
   WithDateRange,
+  WithLocation,
 } from '../vergunningen/config-and-types.ts';
 
 type DecosDocumentBase = {
@@ -90,7 +90,11 @@ export type DecosZaakDocument = GenericDocument & { key: string };
 export type DecosZaakID = string;
 export type DecosFieldNameSource = string;
 export type DecosFieldValue =
-  string | number | boolean | { [key: string]: DecosFieldValue }[] | null;
+  | string
+  | number
+  | boolean
+  | { [key: string]: DecosFieldValue }[]
+  | null;
 
 export type DecosZaakFieldsSource = {
   // caseType
@@ -137,7 +141,7 @@ export type AddressBookEntry = {
 
 export type DecosFieldTransformer<T extends DecosZaakBase> = {
   name: keyof T;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
   transform?: (input: any) => DecosFieldValue;
 };
 
@@ -146,7 +150,7 @@ type CaseTypeLiteral<T extends DecosZaakBase> = unknown extends T['caseType']
     ? unknown
     : never
   : T['caseType'];
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
 export type DecosZaakTransformer<T extends DecosZaakBase = any> = {
   // the itemType: e.g. folders, containers, vergunningen etc
   itemType: string;

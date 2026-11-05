@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// biome-ignore-all lint/suspicious/noExplicitAny: Preserve the existing file-level exception.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { range } from '../../../universal/helpers/utils.ts';

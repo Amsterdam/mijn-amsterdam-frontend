@@ -1,16 +1,16 @@
 import type { LatLngLiteral } from 'leaflet';
 
-import type {
-  AfvalFractionData,
-  AfvalFractionInformationTransformed,
-  AFVALSourceData,
-} from './afval.types.ts';
-import { labels } from './translations.ts';
 import { routeConfig as buurtRouteConfig } from '../../../client/components/MyArea/MyArea-thema-config.ts';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import { sanitizeCmsContent } from '../cms/cms-content.ts';
+import type {
+  AFVALSourceData,
+  AfvalFractionData,
+  AfvalFractionInformationTransformed,
+} from './afval.types.ts';
+import { labels } from './translations.ts';
 
 function formatKalenderOpmerking(
   fractionData: AfvalFractionData
@@ -138,11 +138,6 @@ function transformFractionData(
           `<a href="${afvalPuntKaartUrl}" rel="noopener noreferrer">een Afvalpunt</a>`
         )
       : fractionData.afvalwijzerInstructie2;
-
-  const stadsdeelRegelsUrl = getText(
-    `particulier-${fractionData.gbdBuurtCode?.charAt(0)}`,
-    ''
-  );
 
   let titel = getText(fractionData.afvalwijzerFractieCode);
 

@@ -1,5 +1,9 @@
-import LOODMETINGEN_RAPPORT_RESPONSE from '../fixtures/loodmeting-rapport.json' with { type: 'json' };
-import LOODMETINGEN_RESPONSE from '../fixtures/loodmetingen.json' with { type: 'json' };
+import LOODMETINGEN_RAPPORT_RESPONSE from '../fixtures/loodmeting-rapport.json' with {
+  type: 'json',
+};
+import LOODMETINGEN_RESPONSE from '../fixtures/loodmetingen.json' with {
+  type: 'json',
+};
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 

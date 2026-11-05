@@ -1,7 +1,6 @@
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
-import { jeugdStatusLineItemsConfig } from './status-line-items.ts';
 import { themaConfig } from '../../../../client/apps/bob/pages/Thema/Jeugd/Jeugd-thema-config.ts';
 import type { ApiResponse } from '../../../../universal/helpers/api.ts';
 import { apiSuccessResult } from '../../../../universal/helpers/api.ts';
@@ -34,6 +33,7 @@ import type {
 import { transformVoorzieningForFrontendWithMaApiProps } from '../jzd-voorzieningen-api-service.ts';
 import { hasDecision } from '../wmo/status-line-items/wmo-generic.ts';
 import { getDocuments } from '../wmo/wmo.ts';
+import { jeugdStatusLineItemsConfig } from './status-line-items.ts';
 
 export async function fetchZorgnedAanvragenJeugd(
   bsn: BSN

@@ -1,5 +1,4 @@
-import type { HTMLProps, ReactNode } from 'react';
-import { type ReactElement } from 'react';
+import type { HTMLProps, ReactElement, ReactNode } from 'react';
 
 import type {
   GridColumnNumber,

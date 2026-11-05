@@ -45,6 +45,7 @@ export function MaPolylineLayer({
     }
   }, [features, map]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Preserve the existing hook dependency exclusion.
   const layers = useMemo(() => {
     const layers: L.Layer[] = [];
 
@@ -61,12 +62,13 @@ export function MaPolylineLayer({
         options.weight = 2;
       }
 
+      // biome-ignore lint/suspicious/noExplicitAny: Leaflet coordinate mismatch.
       const layer = L.polyline(feature.geometry.coordinates as any, options);
+      // biome-ignore lint/suspicious/noExplicitAny: Leaflet feature extension.
       (layer as any).feature = feature;
       layers.push(layer);
     }
     return layers;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [features]);
 
   useEffect(() => {

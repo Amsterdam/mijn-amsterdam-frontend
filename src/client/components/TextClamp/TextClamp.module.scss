@@ -40,7 +40,7 @@
 
   &.isClamped {
     &::before {
-      content: '';
+      content: "";
       background: linear-gradient(
         to top,
         var(--clampedGradientBgColor, var(--ams-color-background)),

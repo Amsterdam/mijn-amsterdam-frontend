@@ -1,14 +1,15 @@
+// biome-ignore-all lint/suspicious/noExplicitAny: Test fixtures and mocks.
 import { render, renderHook } from '@testing-library/react';
-import { vi, describe, it, type Mock } from 'vitest';
+import { describe, it, type Mock, vi } from 'vitest';
 
+import type { AfisEMandateFrontend } from '../../../../../../server/services/afis/afis-types.ts';
+import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
 import type { AfisFactuurFrontend } from './Afis-thema-config.ts';
 import {
   AfisEmandateFactuurReference,
   useAfisEmandateFactuurReferenceContent,
 } from './AfisEmandateFactuurReference.tsx';
 import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
-import type { AfisEMandateFrontend } from '../../../../../../server/services/afis/afis-types.ts';
-import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
 
 // Simplify routing link used by the component for tests
 vi.mock('../../../../../components/MaLink/MaLink.tsx', () => ({

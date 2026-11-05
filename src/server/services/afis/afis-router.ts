@@ -1,21 +1,24 @@
 import express from 'express';
 
+import { IS_TAP } from '../../../universal/config/env.ts';
+import { conditional } from '../../helpers/middleware.ts';
+import { OAuthVerificationHandler } from '../../routing/route-handlers.ts';
+import { createBFFRouter } from '../../routing/route-helpers.ts';
+import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler.ts';
 import { fetchAfisBusinessPartnerDetails } from './afis-business-partner.ts';
 import { fetchAfisDocument } from './afis-documents.ts';
 import {
-  fetchEMandates,
   deactivateEmandate,
+  fetchEMandates,
   fetchEmandateSignRequestRedirectUrlFromPaymentProvider,
 } from './afis-e-mandates.ts';
 import {
+  type AfisFacturenRouteParams,
   handleAfisEMandateSignRequestStatus,
-  handleEmandateLifetimeUpdate,
-} from './afis-route-handlers.ts';
-import {
   handleAfisEMandateSignRequestStatusNotification,
   handleAfisRequestWithEncryptedPayloadQueryParam,
+  handleEmandateLifetimeUpdate,
   handleFetchAfisFacturen,
-  type AfisFacturenRouteParams,
 } from './afis-route-handlers.ts';
 import {
   OAUTH_ROLE_AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY,
@@ -26,11 +29,6 @@ import type {
   EMandateLifetimeChangePayload,
   EMandateSignRequestPayload,
 } from './afis-types.ts';
-import { IS_TAP } from '../../../universal/config/env.ts';
-import { conditional } from '../../helpers/middleware.ts';
-import { OAuthVerificationHandler } from '../../routing/route-handlers.ts';
-import { createBFFRouter } from '../../routing/route-helpers.ts';
-import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler.ts';
 
 const routerProtected = createBFFRouter({ id: 'afis-router-protected' });
 

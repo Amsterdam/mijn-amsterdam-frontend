@@ -1,8 +1,8 @@
-import { GenericBase } from './GenericBase.tsx';
-import { Url } from './Url.tsx';
 import type { Unshaped } from '../../../../../universal/types/App.types.ts';
 import type { Row } from '../../../Datalist/Datalist.tsx';
 import { Datalist } from '../../../Datalist/Datalist.tsx';
+import { GenericBase } from './GenericBase.tsx';
+import { Url } from './Url.tsx';
 
 interface MyArePanelContentBedrijvenInvesteringsZonesProps {
   panelItem: Unshaped;

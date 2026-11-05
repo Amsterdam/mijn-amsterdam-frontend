@@ -56,13 +56,13 @@ export function useMediaLayout(query: MediaQueryObject): boolean {
     // Inspired by https://github.com/kazzkiq/darkmode/pull/4/files
     try {
       mediaQuery.addEventListener('change', handler);
-    } catch (e) {
+    } catch (_e) {
       mediaQuery.addListener?.(handler);
     }
     return () => {
       try {
         mediaQuery.removeEventListener('change', handler);
-      } catch (e) {
+      } catch (_e) {
         mediaQuery.removeListener?.(handler);
       }
     };

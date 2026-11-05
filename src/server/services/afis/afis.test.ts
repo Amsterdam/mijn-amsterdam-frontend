@@ -1,7 +1,5 @@
 import { describe } from 'vitest';
 
-import { formatBusinessPartnerId } from './afis-helpers.ts';
-import { fetchIsKnownInAFIS } from './afis.ts';
 import {
   getAuthProfileAndToken,
   remoteApi,
@@ -9,6 +7,8 @@ import {
 } from '../../../testing/utils.ts';
 import { featureToggle } from '../../config/feature-toggles.ts';
 import { decrypt } from '../../helpers/encrypt-decrypt.ts';
+import { fetchIsKnownInAFIS } from './afis.ts';
+import { formatBusinessPartnerId } from './afis-helpers.ts';
 
 const BASE_ROUTE = '/afis/RESTAdapter';
 

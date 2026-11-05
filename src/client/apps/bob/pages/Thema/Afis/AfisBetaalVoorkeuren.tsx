@@ -6,15 +6,9 @@ import {
   Paragraph,
 } from '@amsterdam/design-system-react';
 
-import styles from './AfisBetaalVoorkeuren.module.scss';
-import { AfisEmandateRefetchInterval } from './AfisEmandateFetchInterval.tsx';
-import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData.tsx';
-import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
-import { useSignRequestPayloadStorage } from './useAfisEMandatesSignRequest.tsx';
-import { useAfisThemaData } from './useAfisThemaData.hook.tsx';
-import {
-  type AfisBusinessPartnerDetailsTransformed,
-  type AfisEMandateFrontend,
+import type {
+  AfisBusinessPartnerDetailsTransformed,
+  AfisEMandateFrontend,
 } from '../../../../../../server/services/afis/afis-types.ts';
 import { entries } from '../../../../../../universal/helpers/utils.ts';
 import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
@@ -24,6 +18,12 @@ import type { DisplayProps } from '../../../../../components/Table/TableV2.types
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import styles from './AfisBetaalVoorkeuren.module.scss';
+import { AfisEmandateRefetchInterval } from './AfisEmandateFetchInterval.tsx';
+import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData.tsx';
+import { useSignRequestPayloadStorage } from './useAfisEMandatesSignRequest.tsx';
+import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
+import { useAfisThemaData } from './useAfisThemaData.hook.tsx';
 
 type AfisBusinessPartnerProps = {
   businesspartner: Omit<

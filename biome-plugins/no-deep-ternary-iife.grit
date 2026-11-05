@@ -1,0 +1,49 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+pattern function_boundary() {
+  or {
+    JsArrowFunctionExpression(),
+    JsFunctionExpression(),
+    JsFunctionDeclaration(),
+    JsMethodObjectMember(),
+    JsMethodClassMember(),
+    JsGetterObjectMember(),
+    JsSetterObjectMember(),
+    JsGetterClassMember(),
+    JsSetterClassMember(),
+    JsConstructorClassMember()
+  }
+}
+
+pattern nested_ternary() {
+  JsConditionalExpression(test=$test, consequent=$consequent, alternate=$alternate) where {
+    or {
+      $test <: contains JsConditionalExpression() until function_boundary(),
+      $consequent <: contains JsConditionalExpression() until function_boundary(),
+      $alternate <: contains JsConditionalExpression() until function_boundary()
+    }
+  }
+}
+
+JsConditionalExpression(test=$condition, consequent=$when_true, alternate=$when_false) as $expression where {
+  or {
+    $condition <: contains nested_ternary() until function_boundary(),
+    $when_true <: contains nested_ternary() until function_boundary(),
+    $when_false <: contains nested_ternary() until function_boundary()
+  },
+  not $expression <: r"(?s).*(?:/\*|//).*",
+  not $expression <: within or {
+    JsReturnStatement(),
+    JsArrowFunctionExpression()
+  },
+  not $expression <: contains or {
+    JsAwaitExpression(),
+    JsYieldExpression(),
+    function_boundary(),
+    `eval($...)`,
+    JsCallExpression(callee=r"use[A-Z].*")
+  },
+  register_diagnostic(span=$expression, message="Ternary depth exceeds 2. Use an inline arrow IIFE with early returns, or extract a function when reused. Do not introduce let. Review TypeScript inference before applying this fix.", severity="error", fix_kind="unsafe"),
+  $expression => `(() => { if ($condition) { return $when_true; } return $when_false; })()`
+}

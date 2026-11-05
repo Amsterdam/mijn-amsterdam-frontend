@@ -1,4 +1,4 @@
-import React, { useState, type ReactNode } from 'react';
+import React, { type ReactNode, useState } from 'react';
 
 import { Button, UnorderedList } from '@amsterdam/design-system-react';
 import {

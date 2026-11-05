@@ -1,8 +1,8 @@
-import { fetchBedAndBreakfast } from './bed-and-breakfast.ts';
 import {
   getAuthProfileAndToken,
   remoteApi,
 } from '../../../../testing/utils.ts';
+import { fetchBedAndBreakfast } from './bed-and-breakfast.ts';
 
 vi.mock(
   '../../../../server/helpers/encrypt-decrypt',
@@ -253,7 +253,7 @@ describe('Regressietest fetchBedAndBreakfast personen', () => {
     for (const r of PowerBrowserPersonenRequests) {
       const method = r.req.method.toLowerCase();
       remoteApi.post('/powerbrowser/Token').reply(200);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
       (remoteApi as any)[method](r.req.url).query(true).reply(200, r.res);
     }
     const authProfileAndToken = getAuthProfileAndToken();
@@ -483,7 +483,7 @@ describe('fetchBB fetchBedAndBreakfast maatschap', () => {
     for (const r of PowerBrowserMaatschapRequests) {
       const method = r.req.method.toLowerCase();
       remoteApi.post('/powerbrowser/Token').reply(200);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
       (remoteApi as any)[method](r.req.url).query(true).reply(200, r.res);
     }
     const authProfileAndToken = getAuthProfileAndToken();

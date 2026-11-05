@@ -1,6 +1,6 @@
+import type { WithKentekens } from '../vergunningen/config-and-types.ts';
 import { transformKenteken, translateValue } from './decos-helpers.ts';
 import type { DecosFieldTransformerObject } from './decos-types.ts';
-import type { WithKentekens } from '../vergunningen/config-and-types.ts';
 
 export const MA_DECISION_ZIE_BESLUIT = 'Zie besluit';
 export const MA_DECISION_DEFAULT = MA_DECISION_ZIE_BESLUIT;

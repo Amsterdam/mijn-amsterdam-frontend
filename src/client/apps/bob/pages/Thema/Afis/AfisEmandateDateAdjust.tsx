@@ -8,12 +8,12 @@ import {
 } from '@amsterdam/design-system-react';
 import { addDays } from 'date-fns';
 
-import { getEMandateValidityDate } from './Afis-helpers.ts';
-import type { useEmandateApis } from './useAfisEmandateActionsApi.tsx';
 import type { AfisEMandateFrontend } from '../../../../../../server/services/afis/afis-types.ts';
 import { MaRouterLink } from '../../../../../components/MaLink/MaLink.tsx';
 import { Modal } from '../../../../../components/Modal/Modal.tsx';
 import { Spinner } from '../../../../../components/Spinner/Spinner.tsx';
+import { getEMandateValidityDate } from './Afis-helpers.ts';
+import type { useEmandateApis } from './useAfisEmandateActionsApi.tsx';
 
 type DateAdjustModalProps = {
   eMandate: AfisEMandateFrontend;
@@ -59,19 +59,17 @@ function DateAdjustModal({
         </ActionGroup>
       }
     >
-      <>
-        <Paragraph className="ams-mb-s">
-          Nieuwe einddatum incassomachtiging {eMandate.creditorName}
-        </Paragraph>
-        <form id="date-adjust-form" onSubmit={onSubmit}>
-          <DateInput
-            name="dateValidTo"
-            type="date"
-            min={tomorrow}
-            defaultValue={dateValidTo}
-          />
-        </form>
-      </>
+      <Paragraph className="ams-mb-s">
+        Nieuwe einddatum incassomachtiging {eMandate.creditorName}
+      </Paragraph>
+      <form id="date-adjust-form" onSubmit={onSubmit}>
+        <DateInput
+          name="dateValidTo"
+          type="date"
+          min={tomorrow}
+          defaultValue={dateValidTo}
+        />
+      </form>
     </Modal>
   );
 }

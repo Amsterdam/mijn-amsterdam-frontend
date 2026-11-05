@@ -6,16 +6,6 @@ import type {
 } from 'leaflet';
 
 import type {
-  DatasetConfig,
-  DatasetFeatureProperties,
-  DatasetFeatures,
-  DatasetResponse,
-  MaFeature,
-  MaPointFeature,
-} from './datasets.ts';
-import { datasetEndpoints } from './datasets.ts';
-import type { WFSFeatureSource } from './dso-helpers.ts';
-import type {
   DatasetFilterSelection,
   DatasetId,
   DatasetPropertyFilter,
@@ -32,6 +22,16 @@ import type {
 } from '../../../universal/helpers/api.ts';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
 import { jsonCopy } from '../../../universal/helpers/utils.ts';
+import type {
+  DatasetConfig,
+  DatasetFeatureProperties,
+  DatasetFeatures,
+  DatasetResponse,
+  MaFeature,
+  MaPointFeature,
+} from './datasets.ts';
+import { datasetEndpoints } from './datasets.ts';
+import type { WFSFeatureSource } from './dso-helpers.ts';
 
 export function getDatasetEndpointConfig(
   endpointIDs?: string[],
@@ -207,7 +207,7 @@ export function getDynamicDatasetFilters(datasetId: DatasetId) {
 
   // Only select property filters that don't have static values defined.
   return Object.fromEntries(
-    Object.entries(propertyFilters).filter(([propertyId, property]) => {
+    Object.entries(propertyFilters).filter(([_propertyId, property]) => {
       return !property.values?.length;
     })
   );

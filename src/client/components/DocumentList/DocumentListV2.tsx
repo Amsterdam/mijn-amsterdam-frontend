@@ -1,10 +1,10 @@
 import { Table } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
-import { DocumentLink } from './DocumentLink.tsx';
-import styles from './DocumentListV2.module.scss';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import type { GenericDocument } from '../../../universal/types/App.types.ts';
+import { DocumentLink } from './DocumentLink.tsx';
+import styles from './DocumentListV2.module.scss';
 
 interface DocumentListProps<T extends GenericDocument = GenericDocument> {
   documents: T[];

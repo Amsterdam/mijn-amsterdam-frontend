@@ -1,3 +1,7 @@
+import type {
+  ZorgnedAanvraagTransformed,
+  ZorgnedStatusLineItemTransformerConfig,
+} from '../../../zorgned/zorgned-types.ts';
 import {
   AANVRAAG,
   EINDE_RECHT,
@@ -11,10 +15,6 @@ import {
   isEindeGeldigheidVerstreken,
   MEER_INFORMATIE,
 } from './wmo-generic.ts';
-import type {
-  ZorgnedAanvraagTransformed,
-  ZorgnedStatusLineItemTransformerConfig,
-} from '../../../zorgned/zorgned-types.ts';
 
 function isActive(aanvraag: ZorgnedAanvraagTransformed, today: Date) {
   return (

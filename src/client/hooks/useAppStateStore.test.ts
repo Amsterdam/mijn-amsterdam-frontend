@@ -1,3 +1,4 @@
+// biome-ignore-all lint/suspicious/noExplicitAny: Test fixtures and mocks.
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 

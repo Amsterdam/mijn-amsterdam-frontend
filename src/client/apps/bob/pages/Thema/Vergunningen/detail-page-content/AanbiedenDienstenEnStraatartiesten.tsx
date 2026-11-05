@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react';
 
-import { commonTransformers, getRows } from './fields-config.tsx';
 import type {
   AanbiedenDiensten,
   Straatartiesten,
+  ZaakFrontendCombined,
 } from '../../../../../../../server/services/vergunningen/config-and-types.ts';
-import { type ZaakFrontendCombined } from '../../../../../../../server/services/vergunningen/config-and-types.ts';
 import { Datalist } from '../../../../../../components/Datalist/Datalist.tsx';
+import { commonTransformers, getRows } from './fields-config.tsx';
 
 export function AanbiedenDienstenEnStraatartiestenContent({
   vergunning,

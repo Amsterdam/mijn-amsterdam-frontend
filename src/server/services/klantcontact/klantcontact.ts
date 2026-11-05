@@ -1,21 +1,21 @@
 import { isAfter } from 'date-fns';
 
-import { fetchAfspraken } from './klantcontact-afspraken.ts';
-import { fetchCommunicatievoorkeuren } from './klantcontact-communicatievoorkeuren.ts';
-import { fetchContactmomenten } from './klantcontact-contactmomenten.ts';
-import type {
-  ContactmomentFrontend as ContactmomentFrontend,
-  AfspraakFrontend as AfspraakFrontend,
-  KlantcontactResponseData,
-} from './klantcontact.types.ts';
 import {
+  type ApiSuccessResponse,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
-  type ApiSuccessResponse,
 } from '../../../universal/helpers/api.ts';
 import { dateSort } from '../../../universal/helpers/date.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import type {
+  AfspraakFrontend,
+  ContactmomentFrontend,
+  KlantcontactResponseData,
+} from './klantcontact.types.ts';
+import { fetchAfspraken } from './klantcontact-afspraken.ts';
+import { fetchCommunicatievoorkeuren } from './klantcontact-communicatievoorkeuren.ts';
+import { fetchContactmomenten } from './klantcontact-contactmomenten.ts';
 
 export async function fetchKlantcontact(
   authProfileAndToken: AuthProfileAndToken

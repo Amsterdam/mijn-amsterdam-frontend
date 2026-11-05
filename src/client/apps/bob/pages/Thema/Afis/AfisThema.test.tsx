@@ -1,8 +1,6 @@
 import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { themaConfig } from './Afis-thema-config.ts';
-import { AfisThema } from './AfisThema.tsx';
 import type {
   AfisBusinessPartnerDetailsTransformed,
   AfisFacturenOverviewResponse,
@@ -10,6 +8,8 @@ import type {
 import { bffApi } from '../../../../../../testing/utils.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { MockApp } from '../../MockApp.tsx';
+import { themaConfig } from './Afis-thema-config.ts';
+import { AfisThema } from './AfisThema.tsx';
 
 const businessPartnerIdEncrypted = 'xxx-123-xxx';
 

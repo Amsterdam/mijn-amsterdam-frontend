@@ -1,12 +1,12 @@
-import { useTransformContactmomenten } from './Contactmomenten/useTransformContactmomenten.tsx';
-import { tableConfigs, themaConfig } from './KlantContact-thema-config.ts';
 import {
-  isError,
   hasFailedDependency,
+  isError,
 } from '../../../../../../universal/helpers/api.ts';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
+import { useTransformContactmomenten } from './Contactmomenten/useTransformContactmomenten.tsx';
+import { tableConfigs, themaConfig } from './KlantContact-thema-config.ts';
 
 export function useKlantcontactData() {
   const { KLANT_CONTACT } = useAppStateGetter();

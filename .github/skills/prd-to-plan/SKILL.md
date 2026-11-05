@@ -1,4 +1,5 @@
 ---
+
 name: prd-to-plan
 description: Turn a PRD into a multi-phase implementation plan using tracer-bullet vertical slices, saved as a local Markdown file in a date-prefixed folder under ./docs/plan/ (for example ./docs/plan/2026-06-02-feature-name/plan.md). Use when user wants to break down a PRD, create an implementation plan, plan phases from a PRD, or mentions "tracer bullets".
 ---

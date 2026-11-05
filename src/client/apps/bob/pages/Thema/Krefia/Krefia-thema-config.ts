@@ -1,6 +1,6 @@
 import type { KrefiaDeepLink } from '../../../../../../server/services/krefia/krefia.types.ts';
-import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
 import type { ThemaConfigBase } from '../../../../../../universal/types/thema-types.ts';
+import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
 
 const THEMA_ID = 'KREFIA';
 const THEMA_TITLE = 'Kredietbank & FIBU';

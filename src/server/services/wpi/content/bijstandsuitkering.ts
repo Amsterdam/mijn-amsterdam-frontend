@@ -46,12 +46,12 @@ export const requestProcess: WpiRequestProcessLabels = {
     notification: {
       title: (requestProcess) =>
         `${requestProcess.title}: Wij behandelen uw aanvraag`,
-      description: (requestProcess, statusStep) =>
+      description: (_requestProcess, statusStep) =>
         `Wij hebben uw aanvraag voor een bijstandsuitkering in behandeling genomen op ${defaultDateFormat(
           statusStep.datePublished
         )}.`,
     },
-    description: (requestProcess, statusStep) =>
+    description: (_requestProcess, statusStep) =>
       `
           <p>
             Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u
@@ -76,10 +76,10 @@ export const requestProcess: WpiRequestProcessLabels = {
     notification: {
       title: (requestProcess) =>
         `${requestProcess.title}: Meer informatie nodig`,
-      description: (requestProcess) =>
+      description: (_requestProcess) =>
         'Er is meer informatie en tijd nodig om uw aanvraag voor een bijstandsuitkering te behandelen.',
     },
-    description: (requestProcess, statusStep) =>
+    description: (_requestProcess, statusStep) =>
       `
           <p>
             Wij hebben meer informatie en tijd nodig om uw aanvraag te

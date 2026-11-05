@@ -1,10 +1,10 @@
+import type { FailedDependencies } from '../../../../universal/helpers/api.ts';
+import type { AppState } from '../../../../universal/types/App.types.ts';
 import {
   createErrorDisplayData,
   createFailedDependenciesError,
   getApiErrors,
 } from './api.ts';
-import type { FailedDependencies } from '../../../../universal/helpers/api.ts';
-import type { AppState } from '../../../../universal/types/App.types.ts';
 
 describe('Api utils', () => {
   test('createErrorDisplayData', () => {

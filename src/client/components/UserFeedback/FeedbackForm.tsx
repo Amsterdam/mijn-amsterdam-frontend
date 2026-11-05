@@ -1,7 +1,7 @@
 import { Button } from '@amsterdam/design-system-react';
 
-import { UserFeedbackQuestion } from './UserFeedbackQuestion.tsx';
 import type { SurveyFrontend } from '../../../server/services/user-feedback/user-feedback.types.ts';
+import { UserFeedbackQuestion } from './UserFeedbackQuestion.tsx';
 
 type FeedbackFormProps = {
   onSubmit?: (formData: FormData) => void;

@@ -1,13 +1,13 @@
+import type { AppState } from '../../../../../../universal/types/App.types.ts';
+import type { ThemaMenuItem } from '../../../../../../universal/types/thema-types.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import {
+  featureToggle,
   SVWI_ROUTE_DEFAULT,
   themaId,
   themaTitle,
-  featureToggle,
 } from './Svwi-thema-config.ts';
 import { default as SvwiIcon } from './SvwiIcon.svg?react';
-import { isLoading } from '../../../../../helpers/api.ts';
-import { type AppState } from '../../../../../../universal/types/App.types.ts';
-import { type ThemaMenuItem } from '../../../../../../universal/types/thema-types.ts';
 
 export const menuItem: ThemaMenuItem<typeof themaId> = {
   title: themaTitle,

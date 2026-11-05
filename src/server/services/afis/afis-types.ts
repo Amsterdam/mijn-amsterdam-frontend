@@ -45,7 +45,8 @@ export type BusinessPartnerId =
 
 export type AfisBusinessPartnerCommercialResponseSource = {
   Record:
-    AfisBusinessPartnerRecordCommercial | AfisBusinessPartnerRecordCommercial[];
+    | AfisBusinessPartnerRecordCommercial
+    | AfisBusinessPartnerRecordCommercial[];
 };
 
 export type AfisFacturenOverviewResponse = {

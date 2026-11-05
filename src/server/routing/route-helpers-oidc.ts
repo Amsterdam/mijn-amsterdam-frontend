@@ -7,10 +7,10 @@ import { IS_AP } from '../../universal/config/env.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
+  oidcConfigBase,
   oidcSessionStore,
   openIdAuth,
   TOKEN_ID_ATTRIBUTE,
-  oidcConfigBase,
 } from '../auth/auth-config.ts';
 import { signDevelopmentToken } from '../auth/auth-helpers-development.ts';
 import type { AuthProfile, MaSession } from '../auth/auth-types.ts';
@@ -92,7 +92,7 @@ export async function createOIDCStub(
     expires_at: '',
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
   (req as any)[OIDC_SESSION_COOKIE_NAME] = maSession;
 
   req.oidc = {
@@ -100,7 +100,7 @@ export async function createOIDCStub(
       return true;
     },
     async fetchUserInfo() {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
       return {} as any; // UserInfoResponse;
     },
     user: {

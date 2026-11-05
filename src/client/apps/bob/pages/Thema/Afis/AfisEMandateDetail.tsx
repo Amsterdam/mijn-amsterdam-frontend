@@ -5,18 +5,6 @@ import {
   Paragraph,
 } from '@amsterdam/design-system-react';
 
-import { EMANDATE_STATUS_ACTIVE, themaConfig } from './Afis-thema-config.ts';
-import { eMandateHistoryDisplayProps } from './Afis-thema-config.ts';
-import { AfisEMandateActionButtons } from './AfisEmandateActionButtons.tsx';
-import { DateAdjust } from './AfisEmandateDateAdjust.tsx';
-import styles from './AfisEMandateDetail.module.scss';
-import { AfisEmandateRefetchInterval } from './AfisEmandateFetchInterval.tsx';
-import { useEmandateApis } from './useAfisEmandateActionsApi.tsx';
-import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
-import {
-  useSignRequestPayloadStorage,
-  useSignRequestStatusCheck,
-} from './useAfisEMandatesSignRequest.tsx';
 import type { AfisEMandateFrontend } from '../../../../../../server/services/afis/afis-types.ts';
 import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
@@ -25,6 +13,21 @@ import { TableV2 } from '../../../../../components/Table/TableV2.tsx';
 import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useWidescreen } from '../../../../../hooks/media.hook.ts';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import {
+  EMANDATE_STATUS_ACTIVE,
+  eMandateHistoryDisplayProps,
+  themaConfig,
+} from './Afis-thema-config.ts';
+import styles from './AfisEMandateDetail.module.scss';
+import { AfisEMandateActionButtons } from './AfisEmandateActionButtons.tsx';
+import { DateAdjust } from './AfisEmandateDateAdjust.tsx';
+import { AfisEmandateRefetchInterval } from './AfisEmandateFetchInterval.tsx';
+import {
+  useSignRequestPayloadStorage,
+  useSignRequestStatusCheck,
+} from './useAfisEMandatesSignRequest.tsx';
+import { useEmandateApis } from './useAfisEmandateActionsApi.tsx';
+import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
 
 function EmandateHistorySectionSmallScreen({
   eMandateHistory,
@@ -185,40 +188,37 @@ function EMandate({ eMandate }: EMandateProps) {
             incassomachtiging...
           </Paragraph>
         )}
-        {!signRequestStatusCheckApi.isRequestingStatusCheck && (
-          <>
-            {signRequestStatusCheckApi.isPendingActivation ? (
-              <Alert headingLevel={4} heading="Status">
+        {!signRequestStatusCheckApi.isRequestingStatusCheck &&
+          (signRequestStatusCheckApi.isPendingActivation ? (
+            <Alert headingLevel={4} heading="Status">
+              <Paragraph>
+                U vraagt een incassomachtiging aan voor {eMandate.creditorName}.
+                Dit duurt enkele minuten.
+              </Paragraph>
+              <Paragraph>
+                Zodra de machtiging is bevestigd, worden{' '}
+                <strong>toekomstige facturen</strong> voor{' '}
+                {eMandate.creditorName} automatisch van uw rekening
+                afgeschreven.
+              </Paragraph>
+              {signRequestStatusCheckApi.isTakingLong && (
                 <Paragraph>
-                  U vraagt een incassomachtiging aan voor{' '}
-                  {eMandate.creditorName}. Dit duurt enkele minuten.
+                  <Button
+                    variant="secondary"
+                    onClick={() => signRequestStatusCheckApi.cancel()}
+                  >
+                    Duurt het erg lang? Probeer het opnieuw.
+                  </Button>
                 </Paragraph>
-                <Paragraph>
-                  Zodra de machtiging is bevestigd, worden{' '}
-                  <strong>toekomstige facturen</strong> voor{' '}
-                  {eMandate.creditorName} automatisch van uw rekening
-                  afgeschreven.
-                </Paragraph>
-                {signRequestStatusCheckApi.isTakingLong && (
-                  <Paragraph>
-                    <Button
-                      variant="secondary"
-                      onClick={() => signRequestStatusCheckApi.cancel()}
-                    >
-                      Duurt het erg lang? Probeer het opnieuw.
-                    </Button>
-                  </Paragraph>
-                )}
-              </Alert>
-            ) : (
-              <AfisEMandateActionButtons
-                redirectUrlApi={redirectUrlApi}
-                deactivateApi={deactivateApi}
-                eMandate={eMandate}
-              />
-            )}
-          </>
-        )}
+              )}
+            </Alert>
+          ) : (
+            <AfisEMandateActionButtons
+              redirectUrlApi={redirectUrlApi}
+              deactivateApi={deactivateApi}
+              eMandate={eMandate}
+            />
+          ))}
       </div>
       {!!eMandate.history.length &&
         (isWideScreen ? (
@@ -260,16 +260,14 @@ export function AfisEMandateDetail() {
       isLoading={isLoadingEMandates}
       breadcrumbs={breadcrumbs}
       pageContentMain={
-        <>
-          {!!eMandate && (
-            <>
-              {payloadStorage.hasPayloads() && (
-                <AfisEmandateRefetchInterval fetch={fetchEMandates} />
-              )}
-              <EMandate eMandate={eMandate} />
-            </>
-          )}
-        </>
+        !!eMandate && (
+          <>
+            {payloadStorage.hasPayloads() && (
+              <AfisEmandateRefetchInterval fetch={fetchEMandates} />
+            )}
+            <EMandate eMandate={eMandate} />
+          </>
+        )
       }
     />
   );

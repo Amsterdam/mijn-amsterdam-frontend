@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
 
-import { themaConfig } from './KlantContact-thema-config.ts';
-import { KlantContactThema } from './KlantContactThema.tsx';
 import type { AfspraakFrontend } from '../../../../../../server/services/klantcontact/klantcontact.types.ts';
 import { bffApi } from '../../../../../../testing/utils.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { componentCreator } from '../../MockApp.tsx';
+import { themaConfig } from './KlantContact-thema-config.ts';
+import { KlantContactThema } from './KlantContactThema.tsx';
 
 const createMijnContactThemaComponent = componentCreator({
   component: KlantContactThema,

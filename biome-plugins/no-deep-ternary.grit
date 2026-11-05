@@ -1,0 +1,88 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+pattern function_boundary() {
+  or {
+    JsArrowFunctionExpression(),
+    JsFunctionExpression(),
+    JsFunctionDeclaration(),
+    JsMethodObjectMember(),
+    JsMethodClassMember(),
+    JsGetterObjectMember(),
+    JsSetterObjectMember(),
+    JsGetterClassMember(),
+    JsSetterClassMember(),
+    JsConstructorClassMember()
+  }
+}
+
+pattern nested_ternary() {
+  JsConditionalExpression(test=$test, consequent=$consequent, alternate=$alternate) where {
+    or {
+      $test <: contains JsConditionalExpression() until function_boundary(),
+      $consequent <: contains JsConditionalExpression() until function_boundary(),
+      $alternate <: contains JsConditionalExpression() until function_boundary()
+    }
+  }
+}
+
+pattern depth_exceeded() {
+  JsConditionalExpression(test=$test, consequent=$consequent, alternate=$alternate) where {
+    or {
+      $test <: contains nested_ternary() until function_boundary(),
+      $consequent <: contains nested_ternary() until function_boundary(),
+      $alternate <: contains nested_ternary() until function_boundary()
+    }
+  }
+}
+
+pattern ternary_parts($condition, $when_true, $when_false) {
+  or {
+    JsConditionalExpression(test=$condition, consequent=$when_true, alternate=$when_false),
+    JsParenthesizedExpression(expression=JsConditionalExpression(test=$condition, consequent=$when_true, alternate=$when_false)),
+    JsParenthesizedExpression(expression=JsParenthesizedExpression(expression=JsConditionalExpression(test=$condition, consequent=$when_true, alternate=$when_false)))
+  }
+}
+
+pattern comment_free() { not r"(?s).*(?:/\*|//).*" }
+
+pattern inline_fixable() {
+  depth_exceeded() as $candidate where {
+    $candidate <: comment_free(),
+    not $candidate <: within or {
+      JsReturnStatement(),
+      JsArrowFunctionExpression()
+    },
+    not $candidate <: contains or {
+      JsAwaitExpression(),
+      JsYieldExpression(),
+      function_boundary(),
+      `eval($...)`,
+      JsCallExpression(callee=r"use[A-Z].*")
+    }
+  }
+}
+
+or {
+  or {
+    JsFunctionBody(statements=[JsReturnStatement(argument=$value)]),
+    JsBlockStatement(statements=[JsReturnStatement(argument=$value)])
+  } as $block where {
+    $value <: ternary_parts($condition, $when_true, $when_false),
+    $value <: contains depth_exceeded() until function_boundary(),
+    $block <: comment_free(),
+    register_diagnostic(span=$value, message="Ternary depth exceeds 2. Use direct early returns instead of introducing let.", severity="error", fix_kind="safe"),
+    $block => raw`{ if ($condition) { return $when_true; } return $when_false; }`
+  },
+  JsArrowFunctionExpression(body=$value) where {
+    $value <: ternary_parts($condition, $when_true, $when_false),
+    $value <: contains depth_exceeded() until function_boundary(),
+    $value <: comment_free(),
+    register_diagnostic(span=$value, message="Ternary depth exceeds 2. Use direct early returns in the existing arrow function instead of introducing let.", severity="error", fix_kind="safe"),
+    $value => raw`{ if ($condition) { return $when_true; } return $when_false; }`
+  },
+  depth_exceeded() as $expression where {
+    not $expression <: inline_fixable(),
+    register_diagnostic(span=$expression, message="Ternary depth exceeds 2. Prefer direct early returns, an inline arrow IIFE, or a shared function when reused. Preserve await, yield, comments, and hook scope. Do not introduce let.", severity="error")
+  }
+}

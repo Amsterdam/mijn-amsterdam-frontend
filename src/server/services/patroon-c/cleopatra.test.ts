@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import {
   fetchMilieuzone,
   fetchMilieuzoneNotifications,
@@ -7,7 +8,6 @@ import {
   fetchOvertredingenNotifications,
   getJSONRequestPayload,
 } from './cleopatra.ts';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 
 const mocks = vi.hoisted(() => {
   return {

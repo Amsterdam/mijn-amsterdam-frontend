@@ -1,18 +1,18 @@
 import { act, renderHook } from '@testing-library/react';
 import mockdate from 'mockdate';
 
-import { AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS } from './Afis-thema-config.ts';
-import {
-  useSignRequestPayloadStorage,
-  useSignRequestPayloadStorageCleanup,
-  useSignRequestStatusCheck,
-} from './useAfisEMandatesSignRequest.tsx';
 import type {
   AfisEMandateFrontend,
   POMSignRequestStatus,
 } from '../../../../../../server/services/afis/afis-types.ts';
 import { bffApiHost } from '../../../../../../testing/setup.ts';
 import { ONE_MINUTE_MS } from '../../../../../../universal/config/app.ts';
+import { AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS } from './Afis-thema-config.ts';
+import {
+  useSignRequestPayloadStorage,
+  useSignRequestPayloadStorageCleanup,
+  useSignRequestStatusCheck,
+} from './useAfisEMandatesSignRequest.tsx';
 
 function clearLocalStorage() {
   window.localStorage.removeItem('afis-emandate-status-check-payload');
@@ -346,7 +346,7 @@ describe('useAfisEMandatesSignRequest', () => {
         }
       );
       // Wait for effect to finish
-      await act(async () => {});
+      await act(async () => undefined);
       expect(result.current.data).toEqual({
         content: {
           status: 'payment_started',
@@ -380,7 +380,7 @@ describe('useAfisEMandatesSignRequest', () => {
         }
       );
       // Wait for effect to finish
-      await act(async () => {});
+      await act(async () => undefined);
       expect(result.current.data).toEqual({
         content: {
           status: 'payment_cancelled',
@@ -416,7 +416,7 @@ describe('useAfisEMandatesSignRequest', () => {
         }
       );
       // Wait for effect to finish
-      await act(async () => {});
+      await act(async () => undefined);
       expect(result.current.data).toBeNull();
       expect(result.current.errorData).toBe('Network error');
       expect(result.current.isDirty).toBe(true);

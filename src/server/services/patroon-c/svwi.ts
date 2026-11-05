@@ -1,9 +1,4 @@
 import {
-  fetchService,
-  fetchTipsAndNotifications,
-  type ApiPatternResponseA,
-} from './api-service.ts';
-import {
   featureToggle,
   SVWI_ROUTE_DEFAULT,
   themaId,
@@ -13,6 +8,11 @@ import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import {
+  type ApiPatternResponseA,
+  fetchService,
+  fetchTipsAndNotifications,
+} from './api-service.ts';
 
 type SVWIMessageSource = {
   id: string;

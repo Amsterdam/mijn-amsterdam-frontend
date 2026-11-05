@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
 import {
+  CharacterCount,
   Field,
   Paragraph,
   TextArea,
-  CharacterCount,
   TextInput,
 } from '@amsterdam/design-system-react';
 

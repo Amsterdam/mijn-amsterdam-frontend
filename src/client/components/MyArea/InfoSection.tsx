@@ -1,5 +1,5 @@
-import { routeConfig, themaId, themaTitle } from './MyArea-thema-config.ts';
 import type { InfoSection_DEPRECATED } from '../../apps/bob/pages/GeneralInfo/GeneralInfo.tsx';
+import { routeConfig, themaId, themaTitle } from './MyArea-thema-config.ts';
 
 export const myAreaSectionProps: InfoSection_DEPRECATED = {
   id: themaId,

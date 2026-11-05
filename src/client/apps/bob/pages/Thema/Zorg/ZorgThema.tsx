@@ -1,13 +1,13 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { useZorgThemaData } from './useZorgThemaData.ts';
-import { themaConfig } from './Zorg-thema-config.ts';
 import type { WMOVoorzieningFrontend } from '../../../../../../server/services/jzd/wmo/wmo-types.ts';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { useZorgThemaData } from './useZorgThemaData.ts';
+import { themaConfig } from './Zorg-thema-config.ts';
 
 export const WMO_HELPDESK_PHONENUMBER = '0800 0643' as const;
 export const WMO_HELPDESK_HREF_TEL_LINK =

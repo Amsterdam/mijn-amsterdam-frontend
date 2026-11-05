@@ -1,3 +1,4 @@
+// biome-ignore lint/suspicious/noExplicitAny: Legacy development JWK shape.
 export const DEV_JWK_PRIVATE: any = {
   p: '8b-T1GJux6AGYWz1FLaXdTVkXsVQ2_oNFMs-gJBRXMpDT_1g3LlrjtEd_Y2-HuaDbEAoS8ccGlC9IIjbYcunQBqD1whl3tiGFswzDk2DUaJjXZnPAjYHWUHa1cl3tkDEo9uzWJ0h201QH7bG0Ls2Jl1IPOtSzPcNHBO0iWg_WH0',
   kty: 'RSA',

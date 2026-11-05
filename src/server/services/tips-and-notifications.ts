@@ -1,17 +1,21 @@
+import { streamEndpointQueryParamKeys } from '../../universal/config/app.ts';
 import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
 import {
-  type ApiResponse_DEPRECATED,
   type ApiResponse,
+  type ApiResponse_DEPRECATED,
   apiErrorResult,
   getSettledResult,
 } from '../../universal/helpers/api.ts';
 import { dateSort } from '../../universal/helpers/date.ts';
+import { entries } from '../../universal/helpers/utils.ts';
 import {
-  NOTIFICATION_SORTPRIORITY,
   type MyNotification,
+  NOTIFICATION_SORTPRIORITY,
 } from '../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../auth/auth-types.ts';
+import { getFromEnv } from '../helpers/env.ts';
 import { fetchAfisNotifications } from './afis/afis-notifications.ts';
+import { fetchAdoptableTrashContainerTips } from './afval/adoptable-trash-containers.ts';
 import { fetchAVGNotifications } from './avg/avg.ts';
 import { fetchBezwarenNotifications } from './bezwaren/bezwaren.ts';
 import { fetchLoodMetingNotifications } from './bodem/loodmetingen.ts';
@@ -23,14 +27,17 @@ import {
   fetchContentTips,
   prefixTipNotification,
 } from './content-tips/tips-service.ts';
+import { fetchErfpachtNotifications } from './erfpacht/erfpacht-notifications.ts';
 import { fetchHorecaNotifications } from './horeca/horeca.ts';
 import { fetchKlachtenNotifications } from './klachten/klachten.ts';
 import { fetchKrefiaNotifications } from './krefia/krefia.ts';
 import { captureException } from './monitoring.ts';
 import { fetchParkeerVergunningenNotifications } from './parkeren/parkeren-notifications.ts';
 import { fetchBelastingNotifications } from './patroon-c/belasting.ts';
-import { fetchMilieuzoneNotifications } from './patroon-c/cleopatra.ts';
-import { fetchOvertredingenNotifications } from './patroon-c/cleopatra.ts';
+import {
+  fetchMilieuzoneNotifications,
+  fetchOvertredingenNotifications,
+} from './patroon-c/cleopatra.ts';
 import { fetchSubsidieNotifications } from './patroon-c/subsidie.ts';
 import { fetchSVWINotifications } from './patroon-c/svwi.ts';
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur-notifications.ts';
@@ -38,11 +45,6 @@ import { fetchVarenNotifications } from './varen/varen-notifications.ts';
 import { fetchVergunningenNotifications } from './vergunningen/vergunningen-notifications.ts';
 import { fetchWiorNotifications } from './wior.ts';
 import { fetchWpiNotifications } from './wpi/api-service.ts';
-import { streamEndpointQueryParamKeys } from '../../universal/config/app.ts';
-import { entries } from '../../universal/helpers/utils.ts';
-import { getFromEnv } from '../helpers/env.ts';
-import { fetchAdoptableTrashContainerTips } from './afval/adoptable-trash-containers.ts';
-import { fetchErfpachtNotifications } from './erfpacht/erfpacht-notifications.ts';
 
 // Every 3rd notification will be a tip if one is available.
 const INSERT_TIP_AT_EVERY_NTH_INDEX = 3;
@@ -206,7 +208,10 @@ export function sortNotificationsAndInsertTips(
     .toSorted((a, b) => {
       const aPriority = a.sortPriority ?? NOTIFICATION_SORTPRIORITY.default;
       const bPriority = b.sortPriority ?? NOTIFICATION_SORTPRIORITY.default;
-      return aPriority === bPriority ? 0 : aPriority > bPriority ? -1 : 1;
+      if (aPriority === bPriority) {
+        return 0;
+      }
+      return aPriority > bPriority ? -1 : 1;
     })
     // Put the alerts on the top regardless of the publication date
     .toSorted((a, b) => Number(b.isAlert) - Number(a.isAlert));

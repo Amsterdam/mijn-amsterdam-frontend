@@ -3,14 +3,14 @@ import { useRef } from 'react';
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
 import { NavLink } from 'react-router';
 
-import { routeConfig, themaTitle } from './MyArea-thema-config.ts';
-import styles from './MyAreaDashboard.module.scss';
-import { MyAreaLoader } from './MyAreaLoader.tsx';
 import { isMokum } from '../../../universal/helpers/brp.ts';
 import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../hooks/useIsLoading.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import { LoadingContent } from '../LoadingContent/LoadingContent.tsx';
+import { routeConfig, themaTitle } from './MyArea-thema-config.ts';
+import styles from './MyAreaDashboard.module.scss';
+import { MyAreaLoader } from './MyAreaLoader.tsx';
 
 export function MyAreaDashboard() {
   const profileType = useProfileTypeValue();

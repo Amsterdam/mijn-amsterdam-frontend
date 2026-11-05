@@ -1,6 +1,6 @@
-import { themaConfig } from './Home-thema-config.ts';
-import { Home, HomePublic } from './Home.tsx';
 import type { ApplicationRouteConfig } from '../../../../../universal/types/thema-types.ts';
+import { Home, HomePublic } from './Home.tsx';
+import { themaConfig } from './Home-thema-config.ts';
 
 export const AdminHomeRoutes = [
   {

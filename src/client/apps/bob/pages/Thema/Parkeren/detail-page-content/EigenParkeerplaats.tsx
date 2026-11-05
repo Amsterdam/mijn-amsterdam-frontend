@@ -19,32 +19,30 @@ export function EigenParkeerplaats({
   vergunning: DecosZaakFrontend<EigenParkeerplaats>;
 }) {
   const location = () => {
-    const rows: Row[] = vergunning.locations
-      ?.map((location) => {
-        return [
-          {
-            label: 'Adres',
-            content: (
-              <AddressDisplayAndModal
-                address={`${location.street} ${location.houseNumber}`}
-              />
-            ),
-          },
-          {
-            label: 'Soort plek',
-            content: location.type || null,
-          },
-          {
-            label: 'Parkeervak',
-            content: location.url ? (
-              <Link rel="noreferrer" href={location.url}>
-                Bekijk parkeervak
-              </Link>
-            ) : null,
-          },
-        ].filter((row) => row.content !== null);
-      })
-      .flat();
+    const rows: Row[] = vergunning.locations?.flatMap((location) => {
+      return [
+        {
+          label: 'Adres',
+          content: (
+            <AddressDisplayAndModal
+              address={`${location.street} ${location.houseNumber}`}
+            />
+          ),
+        },
+        {
+          label: 'Soort plek',
+          content: location.type || null,
+        },
+        {
+          label: 'Parkeervak',
+          content: location.url ? (
+            <Link rel="noreferrer" href={location.url}>
+              Bekijk parkeervak
+            </Link>
+          ) : null,
+        },
+      ].filter((row) => row.content !== null);
+    });
     return rows;
   };
 

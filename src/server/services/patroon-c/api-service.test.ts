@@ -1,10 +1,8 @@
 import { beforeEach, describe, expect, test } from 'vitest';
 
-import * as service from './api-service.ts';
 import { remoteApiHost } from '../../../testing/setup.ts';
 import { remoteApi } from '../../../testing/utils.ts';
-
-const REQUEST_ID = 'test-x';
+import * as service from './api-service.ts';
 
 const apiUrlTest = `${remoteApiHost}/api`;
 

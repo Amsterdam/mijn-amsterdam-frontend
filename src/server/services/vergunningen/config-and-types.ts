@@ -1,6 +1,8 @@
 import type { ZaakStatus } from '../../../universal/types/App.types.ts';
 import type { DecosZaakBase, DecosZaakFrontend } from '../decos/decos-types.ts';
+
 export type { DecosZaakFrontend } from '../decos/decos-types.ts';
+
 import type {
   PowerBrowserZaakBase,
   PowerBrowserZaakFrontend,

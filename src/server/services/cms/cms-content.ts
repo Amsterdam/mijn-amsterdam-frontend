@@ -1,7 +1,7 @@
 import type { IOptions } from 'sanitize-html';
 import sanitizeHtml from 'sanitize-html';
 
-import { type ApiResponse } from '../../../universal/helpers/api.ts';
+import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import { ONE_HOUR_MS } from '../../config/app.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';

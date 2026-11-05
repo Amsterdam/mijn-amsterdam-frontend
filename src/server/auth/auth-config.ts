@@ -3,9 +3,6 @@ import { auth } from 'express-openid-connect';
 import type expressSession from 'express-session';
 import UID from 'uid-safe';
 
-import { BFF_OIDC_BASE_URL, BFF_OIDC_ISSUER_BASE_URL } from './auth-routes.ts';
-import { getSessionStore } from './auth-session-store.ts';
-import type { TokenData } from './auth-types.ts';
 import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
 import {
   ONE_HOUR_MS,
@@ -13,6 +10,9 @@ import {
   ONE_MINUTE_SECONDS,
 } from '../config/app.ts';
 import { getFromEnv } from '../helpers/env.ts';
+import { BFF_OIDC_BASE_URL, BFF_OIDC_ISSUER_BASE_URL } from './auth-routes.ts';
+import { getSessionStore } from './auth-session-store.ts';
+import type { TokenData } from './auth-types.ts';
 
 export const OIDC_SESSION_MAX_AGE_SECONDS = ONE_MINUTE_SECONDS * 15; // 15 minutes
 export const OIDC_SESSION_ABSOLUTE_MAX_AGE_SECONDS = ONE_HOUR_SECONDS * 24 * 7; // 7 days
@@ -134,7 +134,8 @@ export const OIDC_TOKEN_ID_ATTRIBUTE = {
 };
 
 export type TokenIdAttribute =
-  typeof DIGID_ATTR_PRIMARY | typeof EH_ATTR_PRIMARY_ID;
+  | typeof DIGID_ATTR_PRIMARY
+  | typeof EH_ATTR_PRIMARY_ID;
 
 export const TOKEN_ID_ATTRIBUTE: Record<AuthMethod, TokenIdAttribute> = {
   eherkenning: EH_ATTR_PRIMARY_ID,

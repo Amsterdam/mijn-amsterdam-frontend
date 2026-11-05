@@ -1,6 +1,6 @@
+import type { CategoryMenuItem } from '../../../universal/types/thema-types.ts';
 import { routeConfig, themaId, themaTitle } from './MyArea-thema-config.ts';
 import { MyAreaLoader } from './MyAreaLoader.tsx';
-import type { CategoryMenuItem } from '../../../universal/types/thema-types.ts';
 
 export const MyAreaRoutes = [
   { route: routeConfig.themaPage.path, Component: MyAreaLoader },

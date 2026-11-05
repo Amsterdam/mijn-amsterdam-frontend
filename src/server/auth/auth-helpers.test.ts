@@ -2,8 +2,15 @@ import { millisecondsToSeconds } from 'date-fns';
 import type { Request } from 'express';
 import MockDate from 'mockdate';
 
-import { getReturnToUrl } from './auth-after-redirect-returnto.ts';
 import {
+  createDevelopmentSessionMock,
+  getAuthProfileAndToken,
+  getReqMockWithOidc,
+  ResponseMock,
+} from '../../testing/utils.ts';
+import { ONE_MINUTE_SECONDS, ONE_SECOND_MS } from '../config/app.ts';
+import {
+  getReturnToUrl,
   RETURNTO_AMSAPP_AUTH_CALLBACK,
   RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
   RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
@@ -25,13 +32,6 @@ import {
   isSessionCookieName,
 } from './auth-helpers.ts';
 import type { MaSession, TokenData } from './auth-types.ts';
-import {
-  createDevelopmentSessionMock,
-  getAuthProfileAndToken,
-  getReqMockWithOidc,
-  ResponseMock,
-} from '../../testing/utils.ts';
-import { ONE_MINUTE_SECONDS, ONE_SECOND_MS } from '../config/app.ts';
 
 describe('auth-helpers', () => {
   describe('getSessionExpiresAt', () => {

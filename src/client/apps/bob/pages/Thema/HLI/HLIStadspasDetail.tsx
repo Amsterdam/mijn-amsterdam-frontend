@@ -11,9 +11,6 @@ import {
 import classNames from 'classnames';
 import { useParams } from 'react-router';
 
-import { themaConfig } from './HLI-thema-config.ts';
-import styles from './HLIStadspasDetail.module.scss';
-import { useBlockStadspas, useStadspas } from './useStadspassen.hook.tsx';
 import type {
   StadspasBudget,
   StadspasBudgetTransaction,
@@ -28,8 +25,8 @@ import {
   type Row,
 } from '../../../../../components/Datalist/Datalist.tsx';
 import {
-  LoadingContent,
   type BarConfig,
+  LoadingContent,
 } from '../../../../../components/LoadingContent/LoadingContent.tsx';
 import { MaRouterLink } from '../../../../../components/MaLink/MaLink.tsx';
 import {
@@ -52,6 +49,9 @@ import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.
 import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
 import { isEnabled } from '../../../config/feature-toggles.ts';
+import { themaConfig } from './HLI-thema-config.ts';
+import styles from './HLIStadspasDetail.module.scss';
+import { useBlockStadspas, useStadspas } from './useStadspassen.hook.tsx';
 
 // TODO MIJN-13378: When GPASS behavior is adjusted we can remove the normalization logic
 const PC_BUDGET_CODE_PATTERN = /^\d{4}_AMSTEG_PC$/;
@@ -304,7 +304,8 @@ function determineUwUitgavenDescription(
         {extraInfo}
       </>
     );
-  } else if (stadspas.budgets && stadspas.balance > 0) {
+  }
+  if (stadspas.budgets && stadspas.balance > 0) {
     return (
       <>
         {expenseInfoTextBase}

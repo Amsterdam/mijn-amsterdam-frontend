@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 
-import { useBodemDetailData } from './useBodemDetailData.hook.tsx';
 import type { LoodMetingFrontend } from '../../../../../../server/services/bodem/types.ts';
 import type { Row } from '../../../../../components/Datalist/Datalist.tsx';
 import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
@@ -9,6 +8,7 @@ import { AddressDisplayAndModal } from '../../../../../components/LocationModal/
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { useBodemDetailData } from './useBodemDetailData.hook.tsx';
 
 function BodemDetailContent({ meting }: { meting: LoodMetingFrontend }) {
   const LoodMetingRows = useMemo(() => {

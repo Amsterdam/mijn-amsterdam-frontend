@@ -3,12 +3,6 @@ import type { NextFunction, Request, Response } from 'express';
 import express from 'express';
 import proxy from 'express-http-proxy';
 
-import { BffEndpoints } from './bff-routes.ts';
-import {
-  generateFullApiUrlBFF,
-  queryParams,
-  type RequestWithQueryParams,
-} from './route-helpers.ts';
 import { ZAAK_STATUS_ROUTE } from '../../client/apps/bob/pages/ZaakStatus/ZaakStatus-config.ts';
 import { IS_PRODUCTION, OTAP_ENV } from '../../universal/config/env.ts';
 import {
@@ -41,6 +35,12 @@ import {
 } from '../services/cms/cms-content.ts';
 import { fetchActiveMaintenanceNotifications } from '../services/cms/cms-maintenance-notifications.ts';
 import type { QueryParamsMaintenanceNotifications } from '../services/cms/cms-types.ts';
+import { BffEndpoints } from './bff-routes.ts';
+import {
+  generateFullApiUrlBFF,
+  queryParams,
+  type RequestWithQueryParams,
+} from './route-helpers.ts';
 
 export const router = express.Router();
 
@@ -78,7 +78,7 @@ router.get(
 
 router.get(
   BffEndpoints.SEARCH_CONFIG,
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (_req: Request, res: Response, next: NextFunction) => {
     try {
       const response = await fetchSearchConfig();
       return res.json(response);
@@ -234,7 +234,8 @@ function stripSetCookieFromResponse(cookieName: string) {
           (cookie: string) => !cookie.startsWith(`${cookieName}=`)
         );
         return originalSetHeader(name, filtered);
-      } else if (typeof value === 'string') {
+      }
+      if (typeof value === 'string') {
         if (value.startsWith(`${cookieName}=`)) {
           return res;
         }
@@ -267,10 +268,10 @@ if (!IS_PRODUCTION) {
 
 export const legacyRouter = express.Router();
 
-legacyRouter.get(BffEndpoints.LEGACY_LOGIN_API_LOGIN, (req, res) => {
+legacyRouter.get(BffEndpoints.LEGACY_LOGIN_API_LOGIN, (_req, res) => {
   return res.redirect(generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_DIGID));
 });
 
-legacyRouter.get(BffEndpoints.LEGACY_LOGIN_API1_LOGIN, (req, res) => {
+legacyRouter.get(BffEndpoints.LEGACY_LOGIN_API1_LOGIN, (_req, res) => {
   return res.redirect(generateFullApiUrlBFF(authRoutes.AUTH_LOGIN_EHERKENNING));
 });

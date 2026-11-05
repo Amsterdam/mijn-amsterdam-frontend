@@ -8,11 +8,11 @@ import {
 } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
+import type { SurveyFrontend } from '../../../server/services/user-feedback/user-feedback.types.ts';
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { FeedbackForm } from './FeedbackForm.tsx';
 import { Rating } from './Rating.tsx';
 import styles from './UserFeedback.module.scss';
-import type { SurveyFrontend } from '../../../server/services/user-feedback/user-feedback.types.ts';
-import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 
 type UserFeedbackProps = {
   onSubmit: (formData: FormData) => void;

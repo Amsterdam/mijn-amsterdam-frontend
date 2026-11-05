@@ -1,24 +1,24 @@
 import MockDate from 'mockdate';
 import type { Mock } from 'vitest';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
+import { getAuthProfileAndToken } from '../../../testing/utils.ts';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api.ts';
+import { caseTypeParkeren } from '../parkeren/config-and-types.ts';
 import {
   caseTypeVergunningen,
   type DecosZaakFrontend,
 } from './config-and-types.ts';
+import { fetchVergunningen } from './vergunningen.ts';
 import {
   createNotificationDefault,
-  getVergunningNotifications,
   fetchVergunningenNotifications,
+  getVergunningNotifications,
 } from './vergunningen-notifications.ts';
-import { fetchVergunningen } from './vergunningen.ts';
-import { themaConfig } from '../../../client/apps/bob/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
-import { getAuthProfileAndToken } from '../../../testing/utils.ts';
-import {
-  apiSuccessResult,
-  apiErrorResult,
-} from '../../../universal/helpers/api.ts';
-import { caseTypeParkeren } from '../parkeren/config-and-types.ts';
 
 vi.mock('./vergunningen', () => ({
   fetchVergunningen: vi.fn(),

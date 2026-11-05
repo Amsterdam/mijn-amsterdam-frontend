@@ -1,3 +1,11 @@
+import { isDateInPast } from '../../../universal/helpers/date.ts';
+import { entries } from '../../../universal/helpers/utils.ts';
+import type {
+  StatusLineItem,
+  ZaakStatus,
+} from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import type { WithKentekens } from '../vergunningen/config-and-types.ts';
 import {
   DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION,
   DECOS_EXCLUDE_CASES_WITH_PENDING_PAYMENT_CONFIRMATION_SUBJECT1,
@@ -7,17 +15,11 @@ import {
   MA_VERLEEND_DECISIONS_COMMOM,
 } from './decos-field-transformers.ts';
 import type {
-  DecosZaakTransformer,
-  DecosZaakSource,
-  DecosZaakBase,
   DecosFieldValue,
+  DecosZaakBase,
+  DecosZaakSource,
+  DecosZaakTransformer,
 } from './decos-types.ts';
-import { isDateInPast } from '../../../universal/helpers/date.ts';
-import { entries } from '../../../universal/helpers/utils.ts';
-import type { ZaakStatus } from '../../../universal/types/App.types.ts';
-import type { StatusLineItem } from '../../../universal/types/App.types.ts';
-import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import type { WithKentekens } from '../vergunningen/config-and-types.ts';
 
 // Checks to see if a payment was not processed correctly/completely yet.
 export function isWaitingForPaymentConfirmation<T extends DecosZaakBase>(
@@ -110,7 +112,8 @@ export function getCustomTitleForDecosZaakWithLicensePlates(
     const plates = decosZaak.kentekens?.split(' | ');
     if (plates?.length === 1) {
       return `${decosZaak.title} (${decosZaak.kentekens})`;
-    } else if (!!plates && plates.length > 1) {
+    }
+    if (plates && plates.length > 1) {
       return `${decosZaak.title} (${plates[0]}... +${plates.length - 1})`;
     }
   }

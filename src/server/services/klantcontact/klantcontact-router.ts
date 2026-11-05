@@ -1,12 +1,12 @@
 import express from 'express';
 
+import { createBFFRouter } from '../../routing/route-helpers.ts';
 import {
-  handleVerifyContactgegeven,
   handleCreateContactgegeven,
   handleDeleteContactgegeven,
+  handleVerifyContactgegeven,
 } from './klantcontact-route-handlers.ts';
 import { routes } from './klantcontact-service-config.ts';
-import { createBFFRouter } from '../../routing/route-helpers.ts';
 
 const routerProtected = createBFFRouter({ id: 'contact-router-protected' });
 

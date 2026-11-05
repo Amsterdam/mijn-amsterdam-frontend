@@ -1,10 +1,10 @@
+import type { ThemaMenuItem } from '../../../../../../universal/types/thema-types.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import { themaConfig } from './Jeugd-thema-config.ts';
 import { JeugdDetail } from './JeugdDetail.tsx';
 import { default as JeugdIcon } from './JeugdIcon.svg?react';
 import { JeugdList } from './JeugdList.tsx';
 import { JeugdThemaPagina } from './JeugdThema.tsx';
-import { isLoading } from '../../../../../helpers/api.ts';
-import type { ThemaMenuItem } from '../../../../../../universal/types/thema-types.ts';
 
 export const JeugdRoutes = [
   {

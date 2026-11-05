@@ -1,5 +1,5 @@
-import { render, screen, act } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { act, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 
 import { useBffApi } from './useBffApi.ts';
 

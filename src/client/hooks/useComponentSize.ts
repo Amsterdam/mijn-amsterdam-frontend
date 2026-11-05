@@ -18,7 +18,7 @@ export function useComponentSize(el: HTMLElement | null) {
     function handleResize() {
       setComponentSize(getElementSize(el));
     },
-    [el, setComponentSize]
+    [el]
   );
 
   useLayoutEffect(() => {

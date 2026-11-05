@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { Heading, Paragraph } from '@amsterdam/design-system-react';
-import { Column } from '@amsterdam/design-system-react';
+import { Column, Heading, Paragraph } from '@amsterdam/design-system-react';
 
 import type { AfspraakFrontend } from '../../../../../../../server/services/klantcontact/klantcontact.types.ts';
 import {

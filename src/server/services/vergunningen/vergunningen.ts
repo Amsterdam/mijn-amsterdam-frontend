@@ -1,14 +1,5 @@
 import createDebugger from 'debug';
 
-import {
-  type DecosVergunning,
-  type PBVergunning,
-  type ZaakFrontendCombined,
-} from './config-and-types.ts';
-import { getStatusStepsDecos as getStatusStepsDefault } from './decos-status-steps.ts';
-import { decosZaakTransformers } from './decos-zaken.ts';
-import { getStatusStepsPB } from './pb-status-steps.ts';
-import { pbZaakTransformers } from './pb-zaken.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
@@ -29,6 +20,15 @@ import {
   transformPBZaakFrontend,
 } from '../powerbrowser/powerbrowser-service.ts';
 import type { PowerBrowserZaakFrontend } from '../powerbrowser/powerbrowser-types.ts';
+import type {
+  DecosVergunning,
+  PBVergunning,
+  ZaakFrontendCombined,
+} from './config-and-types.ts';
+import { getStatusStepsDecos as getStatusStepsDefault } from './decos-status-steps.ts';
+import { decosZaakTransformers } from './decos-zaken.ts';
+import { getStatusStepsPB } from './pb-status-steps.ts';
+import { pbZaakTransformers } from './pb-zaken.ts';
 
 const debugDecos = createDebugger('vergunningen:decos');
 const debugPB = createDebugger('vergunningen:pb');

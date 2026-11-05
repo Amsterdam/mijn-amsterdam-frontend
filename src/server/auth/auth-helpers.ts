@@ -4,6 +4,13 @@ import type { Request, Response } from 'express';
 import * as jose from 'jose';
 import type { ParsedQs } from 'qs';
 
+import { ZAAK_STATUS_ROUTE } from '../../client/apps/bob/pages/ZaakStatus/ZaakStatus-config.ts';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
+import { PROFILE_TYPES } from '../../universal/types/App.types.ts';
+import { ONE_SECOND_MS } from '../config/app.ts';
+import { logger } from '../logging.ts';
+import { generateMaFrontendUrl } from '../routing/route-helpers.ts';
+import { captureException } from '../services/monitoring.ts';
 import { getReturnToUrl } from './auth-after-redirect-returnto.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
@@ -17,13 +24,6 @@ import type {
   MaSession,
   TokenData,
 } from './auth-types.ts';
-import { ZAAK_STATUS_ROUTE } from '../../client/apps/bob/pages/ZaakStatus/ZaakStatus-config.ts';
-import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
-import { PROFILE_TYPES } from '../../universal/types/App.types.ts';
-import { ONE_SECOND_MS } from '../config/app.ts';
-import { logger } from '../logging.ts';
-import { generateMaFrontendUrl } from '../routing/route-helpers.ts';
-import { captureException } from '../services/monitoring.ts';
 
 export function getZaakStatusQueryParams(
   queryParams?: ParsedQs

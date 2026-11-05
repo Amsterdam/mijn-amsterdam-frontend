@@ -1,13 +1,13 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { links } from './Bezwaren-thema-config.ts';
-import { useBezwarenThemaData } from './useBezwarenThemaData.hook.ts';
 import type { BezwaarFrontend } from '../../../../../../server/services/bezwaren/types.ts';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
 import { themaConfig as belastingenThemaConfig } from '../Belastingen/Belastingen-thema-config.ts';
+import { links } from './Bezwaren-thema-config.ts';
+import { useBezwarenThemaData } from './useBezwarenThemaData.hook.ts';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>

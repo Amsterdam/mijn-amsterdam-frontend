@@ -1,23 +1,5 @@
 import { isFuture, isPast, parseISO } from 'date-fns';
 
-import { sanitizeCmsContent } from './cms-content.ts';
-import {
-  CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS,
-  CMS_DATE_REGEX,
-  DEFAULT_OTAP_ENV,
-  DEFAULT_SEVERITY,
-  notificationEnvMap,
-  REPLACE_REL_URL_PARTS,
-  CMS_TIME_REGEX,
-  CMS_ENV_REGEX,
-} from './cms-service-config.ts';
-import type {
-  CMSEventData,
-  CMSMaintenanceNotification,
-  OtapEnv,
-  CMSFeedItem,
-  QueryParamsMaintenanceNotifications,
-} from './cms-types.ts';
 import {
   themaId,
   themaTitle,
@@ -30,6 +12,24 @@ import {
 import { FORCE_RENEW_CACHE_TTL_MS } from '../../config/source-api.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
+import { sanitizeCmsContent } from './cms-content.ts';
+import {
+  CMS_DATE_REGEX,
+  CMS_ENV_REGEX,
+  CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS,
+  CMS_TIME_REGEX,
+  DEFAULT_OTAP_ENV,
+  DEFAULT_SEVERITY,
+  notificationEnvMap,
+  REPLACE_REL_URL_PARTS,
+} from './cms-service-config.ts';
+import type {
+  CMSEventData,
+  CMSFeedItem,
+  CMSMaintenanceNotification,
+  OtapEnv,
+  QueryParamsMaintenanceNotifications,
+} from './cms-types.ts';
 
 function isOtapEnvMatch(notification: CMSMaintenanceNotification): boolean {
   return notification.otapEnvs.some((env) => notificationEnvMap[env]);

@@ -1,17 +1,17 @@
 import { generatePath, useNavigate, useParams } from 'react-router';
 
+import { PageContentCell } from '../../../../../../components/Page/Page.tsx';
+import { ThemaDetailPagina } from '../../../../../../components/Thema/ThemaDetailPagina.tsx';
+import { useSessionStorage } from '../../../../../../hooks/storage.hook.ts';
+import { useHTMLDocumentTitle } from '../../../../../../hooks/useHTMLDocumentTitle.ts';
+import { NotFound } from '../../../NotFound/NotFound.tsx';
+import { useKlantcontactData } from '../useKlantcontactData.hook.tsx';
+import { ContactgegevenTypeEnum } from './CommunicatieVoorkeuren-config.ts';
 import { useCommunicatieVoorkeurInstellen } from './useCommunicatieVoorkeuren.ts';
 import {
   ContactgegevenForm,
   ContactgegevenVerify,
 } from './ValueInputAndValidation.tsx';
-import { PageContentCell } from '../../../../../../components/Page/Page.tsx';
-import { ThemaDetailPagina } from '../../../../../../components/Thema/ThemaDetailPagina.tsx';
-import { useSessionStorage } from '../../../../../../hooks/storage.hook.ts';
-import { useHTMLDocumentTitle } from '../../../../../../hooks/useHTMLDocumentTitle.ts';
-import { useKlantcontactData } from '../useKlantcontactData.hook.tsx';
-import { ContactgegevenTypeEnum } from './CommunicatieVoorkeuren-config.ts';
-import { NotFound } from '../../../NotFound/NotFound.tsx';
 
 export function ContactgegevenInstellen() {
   const navigate = useNavigate();
@@ -67,7 +67,7 @@ export function ContactgegevenInstellen() {
               <ContactgegevenForm
                 value={valueLocal || currentValue || ''}
                 type={contactgegevenType}
-                onCallback={({ type, value }, success) => {
+                onCallback={({ value }, success) => {
                   setValueLocal(value ?? ''); // If we reload the page after setting the email in session storage, we can prefill the email field with the previously entered value.
                   if (success) {
                     navigateToStep('2');
@@ -79,7 +79,7 @@ export function ContactgegevenInstellen() {
               <ContactgegevenVerify
                 value={valueLocal}
                 type={contactgegevenType}
-                onVerified={({ otp, value, type }) => {
+                onVerified={(_onVerified) => {
                   setValueLocal('');
                   navigate(themaConfig.route.path);
                 }}

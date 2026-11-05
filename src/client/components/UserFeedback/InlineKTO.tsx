@@ -1,8 +1,5 @@
 import { useLocation } from 'react-router';
 
-import styles from './UserFeedback.module.scss';
-import { UserFeedback } from './UserFeedback.tsx';
-import { useSubmitUserFeedback } from './useSubmitUserFeedback.ts';
 import type { RecordStr2 } from '../../../server/routing/route-helpers.ts';
 import { isMokum } from '../../../universal/helpers/brp.ts';
 import { BFFApiUrls } from '../../apps/bob/config/api.ts';
@@ -11,6 +8,9 @@ import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { useErrorMessages } from '../ErrorMessages/ErrorMessages.tsx';
 import { PageContentCell } from '../Page/Page.tsx';
+import styles from './UserFeedback.module.scss';
+import { UserFeedback } from './UserFeedback.tsx';
+import { useSubmitUserFeedback } from './useSubmitUserFeedback.ts';
 
 type InlineKTOProps = {
   userFeedbackDetails?: object;

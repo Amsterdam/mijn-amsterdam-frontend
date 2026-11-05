@@ -1,9 +1,9 @@
 import { useParams } from 'react-router';
 
-import type { ListPageParamKind } from './ToeristischeVerhuur-thema-config.ts';
-import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook.ts';
 import { ListPagePaginated } from '../../../../../components/ListPagePaginated/ListPagePaginated.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import type { ListPageParamKind } from './ToeristischeVerhuur-thema-config.ts';
+import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook.ts';
 
 export function ToeristischeVerhuurList() {
   const { kind = 'lopende-aanvragen' } = useParams<{

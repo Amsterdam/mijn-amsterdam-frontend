@@ -1,18 +1,5 @@
 import type { Request, Response } from 'express';
 
-import { getRegistrationOverview } from './amsapp-notifications-model.ts';
-import {
-  handleRegisterConsumer,
-  handleConsumerRegistrationProfile,
-  handleUnregisterConsumer,
-  handleTruncateNotifications,
-  fetchAndStoreNotifications,
-  handleSendNotificationsResponse,
-} from './amsapp-notifications-route-handlers.ts';
-import {
-  featureToggle,
-  routes,
-} from './amsapp-notifications-service-config.ts';
 import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import { apiErrorResult } from '../../../../universal/helpers/api.ts';
 import { RETURNTO_NOTIFICATIES_CONSUMER_ID } from '../../../auth/auth-after-redirect-returnto.ts';
@@ -24,6 +11,19 @@ import {
   sendResponse,
 } from '../../../routing/route-helpers.ts';
 import { captureException } from '../../monitoring.ts';
+import { getRegistrationOverview } from './amsapp-notifications-model.ts';
+import {
+  fetchAndStoreNotifications,
+  handleConsumerRegistrationProfile,
+  handleRegisterConsumer,
+  handleSendNotificationsResponse,
+  handleTruncateNotifications,
+  handleUnregisterConsumer,
+} from './amsapp-notifications-route-handlers.ts';
+import {
+  featureToggle,
+  routes,
+} from './amsapp-notifications-service-config.ts';
 
 // PUBLIC INTERNET NETWORK ROUTER
 // ==============================

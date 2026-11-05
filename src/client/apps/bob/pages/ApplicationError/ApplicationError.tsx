@@ -2,13 +2,13 @@ import type { ReactNode } from 'react';
 import { useEffect } from 'react';
 
 import {
-  PageFooter,
   Grid,
   Heading,
   Link,
-  PageHeader,
-  Page,
   LinkList,
+  Page,
+  PageFooter,
+  PageHeader,
   Paragraph,
 } from '@amsterdam/design-system-react';
 import type { FallbackProps } from 'react-error-boundary';

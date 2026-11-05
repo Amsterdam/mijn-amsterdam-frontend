@@ -1,16 +1,16 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { vi, describe, it, expect } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
-import {
-  AfisEMandateActionButtons,
-  type AfisEMandateActionButtonsProps,
-} from './AfisEmandateActionButtons.tsx';
 import type {
   AfisEMandateFrontend,
   AfisFacturenOverviewResponse,
 } from '../../../../../../server/services/afis/afis-types.ts';
 import { MockApp } from '../../MockApp.tsx';
+import {
+  AfisEMandateActionButtons,
+  type AfisEMandateActionButtonsProps,
+} from './AfisEmandateActionButtons.tsx';
 
 describe('AfisEMandateActionButtons', () => {
   it('renders Activeren when signRequestUrl present and eMandate inactive', () => {

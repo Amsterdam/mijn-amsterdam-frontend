@@ -1,6 +1,6 @@
 import {
-  apiSuccessResult,
   type ApiResponse,
+  apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
 import { omit } from '../../../universal/helpers/utils.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';

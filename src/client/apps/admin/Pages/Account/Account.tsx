@@ -1,23 +1,23 @@
-import { useState, type FormEvent } from 'react';
+import { type FormEvent, useState } from 'react';
 
 import {
+  ErrorMessage,
   Field,
+  Icon,
   Label,
   Paragraph,
-  TextInput,
-  ErrorMessage,
-  Icon,
   StandaloneLink,
+  TextInput,
 } from '@amsterdam/design-system-react';
 import { CheckMarkIcon } from '@amsterdam/design-system-react-icons';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { themaConfig } from './Account-thema-config.ts';
 import type { AccountApiData } from '../../../../../server/services/admin/admin-account.types.ts';
 import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
 import { Spinner } from '../../../../components/Spinner/Spinner.tsx';
 import { useBffApi } from '../../../../hooks/api/useBffApi.ts';
 import { BFFApiUrls } from '../../config/api.ts';
+import { themaConfig } from './Account-thema-config.ts';
 
 export function useAccountApi(fetchImmediately: boolean = false) {
   const api = useBffApi<AccountApiData>(BFFApiUrls.ACCOUNT, {

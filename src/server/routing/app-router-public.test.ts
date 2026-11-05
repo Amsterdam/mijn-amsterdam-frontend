@@ -1,6 +1,6 @@
-import { zaakStatusHandler } from './app-router-public.ts';
 import { bffApiHost } from '../../testing/setup.ts';
 import { RequestMock, ResponseMock } from '../../testing/utils.ts';
+import { zaakStatusHandler } from './app-router-public.ts';
 
 describe('router-public', () => {
   describe('zaak status endpoint', () => {

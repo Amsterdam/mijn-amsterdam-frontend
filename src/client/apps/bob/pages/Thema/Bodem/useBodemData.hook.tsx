@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 
-import { tableConfig, themaConfig } from './Bodem-thema-config.ts';
 import { isError } from '../../../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
+import { tableConfig, themaConfig } from './Bodem-thema-config.ts';
 
 export function useBodemData() {
   const { BODEM } = useAppStateGetter();

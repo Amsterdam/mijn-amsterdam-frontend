@@ -1,10 +1,9 @@
 import type { ReactElement, ReactNode } from 'react';
 import { isValidElement } from 'react';
-
-import classnames from 'classnames';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import styles from './Datasets.module.scss';
+import classnames from 'classnames';
+
 import type { MaPointFeature } from '../../../server/services/buurt/datasets.ts';
 import { Colors } from '../../apps/bob/config/app.ts';
 import {
@@ -47,12 +46,13 @@ import {
   IconWior,
   IconZwembad,
 } from '../../assets/icons/map/index.tsx';
+import styles from './Datasets.module.scss';
 
 const DatasetIcon: React.FC<{
   color?: string;
   className?: string;
   children?: ReactNode;
-}> = ({ children, className, color = Colors.white }) => {
+}> = ({ children, className }) => {
   return (
     <div className={classnames(styles.DatasetIcon, className)}>{children}</div>
   );
@@ -60,6 +60,7 @@ const DatasetIcon: React.FC<{
 
 export const datasetIcons: Record<
   string,
+  // biome-ignore lint/suspicious/noExplicitAny: Icons have differing props.
   ReactNode | Record<string, ReactElement<any>>
 > = {
   afvalcontainers: {
@@ -338,7 +339,9 @@ export const datasetIcons: Record<
 export function getIcon(id: string, childId?: string) {
   let icon;
 
+  // biome-ignore lint/suspicious/noExplicitAny: Legacy nested icon lookup.
   if (id && childId && datasetIcons[id] && (datasetIcons[id] as any)[childId]) {
+    // biome-ignore lint/suspicious/noExplicitAny: Legacy nested icon lookup.
     icon = (datasetIcons[id] as any)[childId];
   } else if (
     !childId &&
@@ -349,11 +352,12 @@ export function getIcon(id: string, childId?: string) {
     icon = datasetIcons[id];
   }
 
+  // biome-ignore lint/suspicious/noExplicitAny: Icons have differing props.
   return icon && (icon as ReactElement<any>);
 }
 
 export function getIconChildIdFromValue(id: string, value: string) {
-  let childId: undefined | string = undefined;
+  let childId: undefined | string;
   switch (id) {
     default:
       childId = value?.toLowerCase();
@@ -366,7 +370,7 @@ export function getIconChildIdFromValue(id: string, value: string) {
 export function getIconHtml(feature: MaPointFeature) {
   let datasetId = feature.properties.datasetId;
   const iconDefault = datasetIcons.default;
-  let childId: undefined | string = undefined;
+  let childId: undefined | string;
   switch (datasetId) {
     case 'sport':
     case 'gymzaal':

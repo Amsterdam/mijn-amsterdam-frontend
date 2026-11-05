@@ -1,20 +1,20 @@
-import type {
-  NotificationTrigger,
-  KrefiaDeepLink,
-  KrefiaSourceResponse,
-  Krefia,
-} from './krefia.types.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Krefia/Krefia-thema-config.ts';
 import {
   type ApiResponse,
-  apiSuccessResult,
   apiDependencyError,
+  apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
 import { omit } from '../../../universal/helpers/utils.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
+import type {
+  Krefia,
+  KrefiaDeepLink,
+  KrefiaSourceResponse,
+  NotificationTrigger,
+} from './krefia.types.ts';
 
 function createNotification(
   message: NotificationTrigger,
