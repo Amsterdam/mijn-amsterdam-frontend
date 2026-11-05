@@ -16,7 +16,7 @@ export function useTrackThemas() {
   const themasState = useActiveThemaMenuItems();
 
   useEffect(() => {
-    if (storedThemas.length === 0 && !themasState.isLoading) {
+    if (storedThemas.length === 0 && !themasState.isLoading && themasState.items.length > 0) {
       const themaTitlesAndIds: ThemaTitleAndId[] = themasState.items.map(
         (item) => ({
           title: item.title,
