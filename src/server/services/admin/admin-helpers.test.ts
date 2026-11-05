@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
-import { getAdminRedirectUrl } from './admin-helpers.ts';
-import { BFF_ADMIN_FRONTEND_URL } from './admin-service-config.ts';
 import { BFF_API_ADMIN_BASE_URL } from '../../config/app.ts';
 import { BFF_BASE_PATH_ADMIN } from '../../routing/bff-routes.ts';
+import { getAdminRedirectUrl } from './admin-helpers.ts';
+import { BFF_ADMIN_FRONTEND_URL } from './admin-service-config.ts';
 
 describe('getAdminRedirectUrl', () => {
   const adminFrontendUrl = new URL(BFF_ADMIN_FRONTEND_URL);
@@ -34,8 +34,10 @@ describe('getAdminRedirectUrl', () => {
     const adminPath = adminFrontendUrl.pathname;
     const url = `${adminPath}/user-feedback?status=open#entry-123`;
     expect(getAdminRedirectUrl(url)).toBe(
-      new URL(`${adminPath}/user-feedback?status=open#entry-123`, adminFrontendUrl)
-        .href
+      new URL(
+        `${adminPath}/user-feedback?status=open#entry-123`,
+        adminFrontendUrl
+      ).href
     );
   });
 

@@ -2,9 +2,9 @@ import {
   Column,
   DescriptionList,
   Heading,
+  Icon,
   Paragraph,
   Row,
-  Icon,
 } from '@amsterdam/design-system-react';
 import QRCode from 'react-qr-code';
 

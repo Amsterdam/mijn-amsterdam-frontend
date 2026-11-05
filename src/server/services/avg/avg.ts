@@ -1,14 +1,6 @@
 import FormData from 'form-data';
 import { generatePath } from 'react-router';
 
-import { getAvgStatusLineItems } from './avg-status-line-items.ts';
-import type {
-  AVGRequestFrontend,
-  AVGResponse,
-  AvgThemesResponse,
-  SmileAvgResponse,
-  SmileAvgThemesResponse,
-} from './types.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/AVG/AVG-thema-config.ts';
 import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
 import {
@@ -24,6 +16,14 @@ import {
 } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import { smileDateParser } from '../smile/smile-helpers.ts';
+import { getAvgStatusLineItems } from './avg-status-line-items.ts';
+import type {
+  AVGRequestFrontend,
+  AVGResponse,
+  AvgThemesResponse,
+  SmileAvgResponse,
+  SmileAvgThemesResponse,
+} from './types.ts';
 
 const DEFAULT_PAGE_SIZE = 25;
 

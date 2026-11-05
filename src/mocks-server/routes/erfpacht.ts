@@ -1,8 +1,18 @@
-import ERFPACHT_V2_DOSSIER_INFO_DETAILS from '../fixtures/erfpacht/erfpacht-v2-dossierinfo-bsn.json' with { type: 'json' };
-import ERFPACHT_V2_DOSSIERS from '../fixtures/erfpacht/erfpacht-v2-dossiers.json' with { type: 'json' };
-import ERFPACHT_V2_ERFPACHTER from '../fixtures/erfpacht/erfpacht-v2-erfpachter.json' with { type: 'json' };
-import ERFPACHT_ZAAK_DETAIL from '../fixtures/erfpacht/erfpacht-zaak-detail.json' with { type: 'json' };
-import ERFPACHT_ZAAK_INFO from '../fixtures/erfpacht/erfpacht-zaak-info.json' with { type: 'json' };
+import ERFPACHT_V2_DOSSIER_INFO_DETAILS from '../fixtures/erfpacht/erfpacht-v2-dossierinfo-bsn.json' with {
+  type: 'json',
+};
+import ERFPACHT_V2_DOSSIERS from '../fixtures/erfpacht/erfpacht-v2-dossiers.json' with {
+  type: 'json',
+};
+import ERFPACHT_V2_ERFPACHTER from '../fixtures/erfpacht/erfpacht-v2-erfpachter.json' with {
+  type: 'json',
+};
+import ERFPACHT_ZAAK_DETAIL from '../fixtures/erfpacht/erfpacht-zaak-detail.json' with {
+  type: 'json',
+};
+import ERFPACHT_ZAAK_INFO from '../fixtures/erfpacht/erfpacht-zaak-info.json' with {
+  type: 'json',
+};
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 

@@ -2,36 +2,36 @@ import { HttpStatusCode } from 'axios';
 import type { Request, Response } from 'express';
 import z from 'zod';
 
-import { getSevenDaysAgoISOString } from './amsapp-notifications-helper.ts';
-import {
-  AMSAPP_NOTIFICATIONS_DEEP_LINK_BASE,
-  apiResponseErrors,
-} from './amsapp-notifications-service-config.ts';
-import {
-  unregisterConsumers,
-  getConsumerProfile,
-  registerConsumer,
-  batchFetchAndStoreNotifications,
-  batchDeleteNotifications,
-  batchFetchNotifications,
-} from './amsapp-notifications.ts';
 import { IS_PRODUCTION } from '../../../../universal/config/env.ts';
 import {
-  apiSuccessResult,
   apiErrorResult,
+  apiSuccessResult,
 } from '../../../../universal/helpers/api.ts';
 import { getAuth } from '../../../auth/auth-helpers.ts';
 import type { AuthProfileAndToken } from '../../../auth/auth-types.ts';
 import {
+  type RequestWithQueryParams,
   sendBadRequestInvalidInput,
   sendResponse,
-  type RequestWithQueryParams,
 } from '../../../routing/route-helpers.ts';
 import { fetchBrpByBsn } from '../../brp/brp.ts';
 import { captureMessage } from '../../monitoring.ts';
 import { baseRenderProps } from '../amsapp-service-config.ts';
 import type { ApiError, RenderProps } from '../amsapp-types.ts';
+import {
+  batchDeleteNotifications,
+  batchFetchAndStoreNotifications,
+  batchFetchNotifications,
+  getConsumerProfile,
+  registerConsumer,
+  unregisterConsumers,
+} from './amsapp-notifications.ts';
+import { getSevenDaysAgoISOString } from './amsapp-notifications-helper.ts';
 import { getProfilesCount } from './amsapp-notifications-model.ts';
+import {
+  AMSAPP_NOTIFICATIONS_DEEP_LINK_BASE,
+  apiResponseErrors,
+} from './amsapp-notifications-service-config.ts';
 
 function getRenderPropsForApiError(
   identifier: string,

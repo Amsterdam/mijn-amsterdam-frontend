@@ -1,8 +1,8 @@
 import classnames from 'classnames';
 
+import { OTAP_ENV } from '../../../universal/config/env.ts';
 import styles from './OtapLabel.module.scss';
 import { ProfileName } from './ProfileName.tsx';
-import { OTAP_ENV } from '../../../universal/config/env.ts';
 
 const shortEnv: Record<typeof OTAP_ENV, string> = {
   development: 'dev',
@@ -22,7 +22,8 @@ export function EnvLabel({ showProfileName }: { showProfileName: boolean }) {
       {shortEnv[OTAP_ENV]}
       {showProfileName && (
         <>
-          {' @ '}
+          {' '}
+          @{' '}
           <ProfileName fallbackName="[Error: Problem getting <ProfileName/>]" />
         </>
       )}

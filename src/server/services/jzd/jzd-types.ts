@@ -15,7 +15,8 @@ export type WithMaApiProps<T> = {
   maActies: maActie[];
   maProductgroep: string;
   maActieUrls:
-    Record<string, string> | Record<string, (voorziening: T) => string>;
+    | Record<string, string>
+    | Record<string, (voorziening: T) => string>;
 };
 
 export type VoorzieningActiePropsFrontend = {
@@ -26,10 +27,12 @@ export type VoorzieningActiePropsFrontend = {
 
 export type WithMaApiPropsAssignments<T> = {
   [Key in keyof WithMaApiProps<T>]:
-    WithMaApiProps<T>[Key] | MaApiPropAssignFN<T, Key, WithMaApiProps<T>[Key]>;
+    | WithMaApiProps<T>[Key]
+    | MaApiPropAssignFN<T, Key, WithMaApiProps<T>[Key]>;
 };
-export type ZorgnedAanvraagTransformedWithMaApiProps = ZorgnedAanvraagTransformed &
-  Partial<WithMaApiProps<ZorgnedAanvraagTransformed>>;
+export type ZorgnedAanvraagTransformedWithMaApiProps =
+  ZorgnedAanvraagTransformed &
+    Partial<WithMaApiProps<ZorgnedAanvraagTransformed>>;
 
 export type MaApiPropAssignFN<T, K, V> = (voorziening: T, key: K) => V;
 export type MaApiPropMatchFN<T> = (voorziening: T) => boolean;

@@ -1,11 +1,11 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { useAVGData } from './useAVGData.hook.tsx';
 import type { AVGRequestFrontend } from '../../../../../../server/services/avg/types.ts';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { useAVGData } from './useAVGData.hook.tsx';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>

@@ -15,10 +15,6 @@ import {
   vi,
 } from 'vitest';
 
-import type {
-  BSN,
-  NotificationsService,
-} from './amsapp-notifications-types.ts';
 import {
   setupPgTestDb,
   truncatePgSchemaTables,
@@ -27,6 +23,10 @@ import {
   notificationsConsumerDetailsTable,
   notificationsTable,
 } from '../../db/schema/amsapp-notifications.ts';
+import type {
+  BSN,
+  NotificationsService,
+} from './amsapp-notifications-types.ts';
 
 describe('amsapp-notifications-model (postgres integration)', () => {
   let pool: Pool;

@@ -5,19 +5,19 @@ import {
   PageFooter,
 } from '@amsterdam/design-system-react';
 
+import type {
+  CMSFooter,
+  CMSFooterSection,
+} from '../../../server/services/cms/cms-content.ts';
+import { useCanonmatigingFooterLink } from '../../apps/bob/pages/Thema/Erfpacht/Erfpacht-render-config.tsx';
+import { themaConfig } from '../../apps/bob/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
+import { BFF_API_BASE_URL } from '../../apps/config.ts';
+import { useBffApi } from '../../hooks/api/useBffApi.ts';
 import {
   CobrowseFooter,
   LABEL_HULP_SCHERMDELEN,
 } from './CobrowseFooter/CobrowseFooter.tsx';
 import styles from './MainFooter.module.scss';
-import type {
-  CMSFooter,
-  CMSFooterSection,
-} from '../../../server/services/cms/cms-content.ts';
-import { BFF_API_BASE_URL } from '../../apps/config.ts';
-import { useCanonmatigingFooterLink } from '../../apps/bob/pages/Thema/Erfpacht/Erfpacht-render-config.tsx';
-import { themaConfig } from '../../apps/bob/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
-import { useBffApi } from '../../hooks/api/useBffApi.ts';
 
 function useCustomFooterSections(
   sections: CMSFooterSection[],

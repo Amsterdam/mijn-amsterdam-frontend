@@ -1,23 +1,3 @@
-import {
-  fetchDecosDocumentList,
-  fetchDecosZaken,
-  fetchDecosWorkflows,
-  fetchDecosZakenFromSource,
-  forTesting,
-  fetchDecosTermijnen,
-  fetchDecosLinkedField,
-} from './decos-service.ts';
-import type {
-  DecosDocumentBlobSource,
-  DecosDocumentSource,
-  DecosZaakSource,
-  DecosZakenResponse,
-} from './decos-types.ts';
-import {
-  type DecosWorkflowResponse,
-  type DecosZaakBase,
-  type DecosZaakTransformer,
-} from './decos-types.ts';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import { jsonCopy, range } from '../../../universal/helpers/utils.ts';
 import * as sourceApiRequest from '../../helpers/source-api-request.ts';
@@ -30,6 +10,24 @@ import {
   decosCaseToZaakTransformers,
   decosZaakTransformers,
 } from '../vergunningen/decos-zaken.ts';
+import {
+  fetchDecosDocumentList,
+  fetchDecosLinkedField,
+  fetchDecosTermijnen,
+  fetchDecosWorkflows,
+  fetchDecosZaken,
+  fetchDecosZakenFromSource,
+  forTesting,
+} from './decos-service.ts';
+import type {
+  DecosDocumentBlobSource,
+  DecosDocumentSource,
+  DecosWorkflowResponse,
+  DecosZaakBase,
+  DecosZaakSource,
+  DecosZaakTransformer,
+  DecosZakenResponse,
+} from './decos-types.ts';
 
 describe('decos-service (non-mutation regressions)', () => {
   test('transformIsPdfDocumentResponse should not mutate content array', () => {

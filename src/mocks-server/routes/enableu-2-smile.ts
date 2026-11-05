@@ -1,7 +1,9 @@
 import { constants as httpConstants } from 'node:http2';
 
-import AVG_THEMAS_RESPONSE from '../fixtures/avg-themas.json' with { type: 'json' };
 import AVG_RESPONSE from '../fixtures/avg.json' with { type: 'json' };
+import AVG_THEMAS_RESPONSE from '../fixtures/avg-themas.json' with {
+  type: 'json',
+};
 import KLACHTEN_RESPONSE from '../fixtures/klachten.json' with { type: 'json' };
 import { parseMultipartForm } from '../helpers/formidable.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';

@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { Heading, IconButton, Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
-import styles from './TipCard.module.scss';
 import { parseHTML } from '../../helpers/html-react-parse.tsx';
 import { MaLink } from '../MaLink/MaLink.tsx';
+import styles from './TipCard.module.scss';
 
 export const tipCardColors = ['green', 'azure', 'purple'] as const;
 

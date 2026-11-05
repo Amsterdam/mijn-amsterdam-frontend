@@ -19,7 +19,7 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
   const isLandscape = useLandScape();
   const { loadingFeature, setLoadingFeature } = useLoadingFeature();
   const prevFilterPanelState = useRef<PanelState | null>(null);
-  const location = useLocation();
+  const _location = useLocation();
 
   useFetchPanelFeature();
 
@@ -39,13 +39,13 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
   }, [isWideScreen, setFilterPanelState]);
 
   // Reset state on unmount
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Preserve the existing hook dependency exclusion.
   useEffect(() => {
     return () => {
       detailPanelCycle.reset();
       filterPanelCycle.reset();
     };
     // Reason: detailPanelCycle and filterPanelCycle both get mutated and will cause recursion.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Set panel state without explicit panel interaction. Effect reacts to loading detailed features.
@@ -89,13 +89,7 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
     ) {
       setDetailPanelState(isNarrowScreen ? PanelState.Tip : PanelState.Closed);
     }
-  }, [
-    detailState,
-    location.pathname,
-    loadingFeature,
-    setDetailPanelState,
-    isNarrowScreen,
-  ]);
+  }, [detailState, loadingFeature, setDetailPanelState, isNarrowScreen]);
 
   return (
     <div id="skip-to-id-LegendPanel">

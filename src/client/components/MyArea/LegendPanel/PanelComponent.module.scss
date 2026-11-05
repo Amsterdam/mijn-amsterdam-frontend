@@ -81,7 +81,7 @@
   cursor: pointer;
 
   &:after {
-    content: '';
+    content: "";
     display: block;
     height: 0.9rem;
     width: 12rem;
@@ -96,16 +96,16 @@
   background-color: var(--ams-color-background);
   z-index: 3;
 
-  &[aria-expanded='false'] {
+  &[aria-expanded="false"] {
     top: 1rem;
     left: calc(100% + 1rem);
   }
 
-  &[aria-expanded='true'] {
+  &[aria-expanded="true"] {
     right: 2rem;
   }
 
-  &[aria-expanded='true'] .Icon {
+  &[aria-expanded="true"] .Icon {
     transform: rotate(180deg);
     transition: transform 200ms ease-in;
   }
@@ -170,7 +170,7 @@
   &:focus {
     visibility: visible;
   }
-  &[aria-expanded='true'] .CaretIcon {
+  &[aria-expanded="true"] .CaretIcon {
     transform: rotate(90deg);
   }
   transition: transform 80ms linear;

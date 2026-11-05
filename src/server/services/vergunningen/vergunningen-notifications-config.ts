@@ -1,12 +1,12 @@
+import type { CaseTypeHorecaVergunningen } from '../horeca/decos-zaken.ts';
+import {
+  type CaseTypeParkeren,
+  caseTypeParkeren,
+} from '../parkeren/config-and-types.ts';
 import {
   type CaseTypeVergunningenOrPB,
   caseTypeVergunningen,
 } from './config-and-types.ts';
-import type { CaseTypeHorecaVergunningen } from '../horeca/decos-zaken.ts';
-import {
-  caseTypeParkeren,
-  type CaseTypeParkeren,
-} from '../parkeren/config-and-types.ts';
 
 export type CaseType = Prettify<
   CaseTypeVergunningenOrPB | CaseTypeParkeren | CaseTypeHorecaVergunningen

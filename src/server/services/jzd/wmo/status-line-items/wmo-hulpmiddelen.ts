@@ -1,3 +1,8 @@
+import type {
+  ProductSoortCode,
+  ZorgnedAanvraagTransformed,
+  ZorgnedStatusLineItemTransformerConfig,
+} from '../../../zorgned/zorgned-types.ts';
 import {
   AANVRAAG,
   EINDE_RECHT,
@@ -10,11 +15,6 @@ import {
   isOpdrachtGegevenVisible,
   MEER_INFORMATIE,
 } from './wmo-generic.ts';
-import type {
-  ProductSoortCode,
-  ZorgnedAanvraagTransformed,
-  ZorgnedStatusLineItemTransformerConfig,
-} from '../../../zorgned/zorgned-types.ts';
 
 export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
   AANVRAAG,
@@ -116,9 +116,10 @@ export function getHulpmiddelenDisclaimer(
   aanvragen: ZorgnedAanvraagTransformed[]
 ): string | undefined {
   const config =
-    disclaimerConfig.find((cfg) =>
-      currentAanvraag.productsoortCode !== null &&
-      cfg.codes.includes(currentAanvraag.productsoortCode)
+    disclaimerConfig.find(
+      (cfg) =>
+        currentAanvraag.productsoortCode !== null &&
+        cfg.codes.includes(currentAanvraag.productsoortCode)
     ) ?? disclaimerConfig.find((cfg) => !cfg.codes.length);
 
   if (!config) {

@@ -3,9 +3,9 @@ import { useCallback, useEffect, useLayoutEffect } from 'react';
 import { create } from 'zustand';
 
 import {
+  type ApiResponse,
   apiErrorResult,
   apiSuccessResult,
-  type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import type { SomeOtherString } from '../../../universal/helpers/types.ts';
 import { omit } from '../../../universal/helpers/utils.ts';
@@ -68,6 +68,7 @@ async function handleResponse<T>(
  * @param init Payload can be a regular object and will be converted to URLSearchParams. The provided body however, takes precedence over payload.
  * @returns
  */
+// biome-ignore lint/suspicious/noExplicitAny: Legacy generic payload default.
 export async function sendFormPostRequest<T, P = any>(
   url: string | URL,
   init?: RequestInitWithPayload<P>
@@ -93,6 +94,7 @@ export async function sendFormPostRequest<T, P = any>(
  * @param init Payload can be a regular object and will be converted to URLSearchParams. The provided body however, takes precedence over payload.
  * @returns
  */
+// biome-ignore lint/suspicious/noExplicitAny: Legacy generic payload default.
 export async function sendJSONPostRequest<T, P = any>(
   url: string | URL,
   init?: RequestInitWithPayload<P>
@@ -143,6 +145,7 @@ export type BffApiState<D> = {
   isLoading: boolean;
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: Legacy generic payload default.
 export type BFFApiHook<T, P = any> = BffApiState<ApiResponse<T>> & {
   fetch: (
     url?: UrlOrString | RequestInitWithPayload<P>,
@@ -194,6 +197,7 @@ export const useBffApiStateStore = create<BFFApiStore>((set, get) => ({
   has: (key) => key in get(),
 }));
 
+// biome-ignore lint/suspicious/noExplicitAny: Legacy generic payload default.
 export function useBffApi<T, P = any>(
   cacheKey: string | null | undefined,
   options?: BffApiOptions<T, P>
@@ -230,8 +234,6 @@ export function useBffApi<T, P = any>(
   const storeGet = store.get;
   const isDirty = rState?.isDirty === true;
   const isLoading = rState?.isLoading === true;
-
-  const hasKeyInStore = !!cacheKey && storeHas(cacheKey);
 
   const setApiState = useCallback(
     (partialState: Partial<BffApiState<ApiResponse<T | null> | null>>) => {
@@ -310,16 +312,7 @@ export function useBffApi<T, P = any>(
     if (cacheKey && !storeHas(cacheKey)) {
       storeSet(cacheKey, initialState);
     }
-  }, [
-    state,
-    url_,
-    cacheKey,
-    storeSet,
-    storeHas,
-    options?.fetchImmediately,
-    fetch,
-    storeGet,
-  ]);
+  }, [cacheKey, storeSet, storeHas]);
 
   // Fetch data immediately if required.
   useLayoutEffect(() => {
@@ -331,14 +324,7 @@ export function useBffApi<T, P = any>(
     ) {
       fetch();
     }
-  }, [
-    options?.fetchImmediately,
-    fetch,
-    hasKeyInStore,
-    isDirty,
-    isLoading,
-    cacheKey,
-  ]);
+  }, [options?.fetchImmediately, fetch, isDirty, isLoading, cacheKey]);
 
   return Object.assign({}, rState, {
     fetch,

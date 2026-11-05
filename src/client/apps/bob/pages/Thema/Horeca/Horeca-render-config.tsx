@@ -1,13 +1,13 @@
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
+} from '../../../../../../universal/types/thema-types.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import { themaConfig } from './Horeca-thema-config.ts';
 import { HorecaDetail } from './HorecaDetail.tsx';
 import { default as HorecaIcon } from './HorecaIcon.svg?react';
 import { HorecaList } from './HorecaList.tsx';
 import { HorecaThema } from './HorecaThema.tsx';
-import { isLoading } from '../../../../../helpers/api.ts';
-import {
-  type ThemaMenuItem,
-  type ThemaRenderRouteConfig,
-} from '../../../../../../universal/types/thema-types.ts';
 
 export const HorecaRoutes = [
   {

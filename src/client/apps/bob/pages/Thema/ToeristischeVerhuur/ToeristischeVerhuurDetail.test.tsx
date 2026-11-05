@@ -2,13 +2,13 @@ import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { describe, expect } from 'vitest';
 
-import { themaConfig } from './ToeristischeVerhuur-thema-config.ts';
-import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail.tsx';
 import type { BBVergunningFrontend } from '../../../../../../server/services/toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types.ts';
 import type { VakantieverhuurVergunningFrontend } from '../../../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
 import { bffApi } from '../../../../../../testing/utils.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { MockApp } from '../../MockApp.tsx';
+import { themaConfig } from './ToeristischeVerhuur-thema-config.ts';
+import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail.tsx';
 
 const vergunning: VakantieverhuurVergunningFrontend = {
   id: 'Z-XXX-000007C',

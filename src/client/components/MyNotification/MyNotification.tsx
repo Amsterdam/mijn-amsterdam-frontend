@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
 
-import styles from './MyNotification.module.scss';
 import { MIJN_AMSTERDAM } from '../../../universal/config/app.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
@@ -12,6 +11,7 @@ import { isInteralUrl } from '../../helpers/utils.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import { DocumentLink } from '../DocumentList/DocumentLink.tsx';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
+import styles from './MyNotification.module.scss';
 
 type MyNotificationProps = {
   notification: MyNotification;

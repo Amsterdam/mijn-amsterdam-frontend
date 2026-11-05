@@ -1,12 +1,6 @@
 import { isBefore } from 'date-fns/isBefore';
 import { generatePath } from 'react-router';
 
-import { powerBrowserZaakTransformers } from './bed-and-breakfast-pb-zaken.ts';
-import { getStatusSteps } from './bed-and-breakfast-status-steps.ts';
-import type {
-  BBVergunningFrontend,
-  BedAndBreakfastType,
-} from './bed-and-breakfast-types.ts';
 import { themaConfig } from '../../../../client/apps/bob/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import type { ApiResponse } from '../../../../universal/helpers/api.ts';
 import { apiSuccessResult } from '../../../../universal/helpers/api.ts';
@@ -15,6 +9,12 @@ import {
   fetchPBZaken,
   transformPBZaakFrontend,
 } from '../../powerbrowser/powerbrowser-service.ts';
+import { powerBrowserZaakTransformers } from './bed-and-breakfast-pb-zaken.ts';
+import { getStatusSteps } from './bed-and-breakfast-status-steps.ts';
+import type {
+  BBVergunningFrontend,
+  BedAndBreakfastType,
+} from './bed-and-breakfast-types.ts';
 
 //Als een B&B voor 1 januari 2019 was aangevraagd. Dan mocht tot 1 juli 2026 verhuurt worden volgens andere regels.
 const DATE_NEW_REGIME_BB_RULES = '2019-01-01';

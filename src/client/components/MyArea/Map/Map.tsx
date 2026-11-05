@@ -1,4 +1,4 @@
-import { type MapProps, Map } from '@amsterdam/react-maps';
+import { Map, type MapProps } from '@amsterdam/react-maps';
 import 'leaflet/dist/leaflet.css';
 import classnames from 'classnames';
 
@@ -13,7 +13,7 @@ export interface MaMapProps extends MapProps {
 export function MaMap({
   children,
   options,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // biome-ignore lint/correctness/noUnusedFunctionParameters: Preserve the existing lint exception.
   fullScreen,
   className,
   ...otherProps

@@ -2,12 +2,12 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { CommunicatieVoorkeuren } from './CommunicatieVoorkeuren.tsx';
-import type { ContactgegevenPerTypeFrontend } from '../../../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
 import type { KlantcontactResponseData } from '../../../../../../../server/services/klantcontact/klantcontact.types.ts';
+import type { ContactgegevenPerTypeFrontend } from '../../../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
 import { bffApi } from '../../../../../../../testing/utils.ts';
 import type { ApiResponse } from '../../../../../../../universal/helpers/api.ts';
 import { useAppStateStore } from '../../../../../../hooks/useAppStateStore.ts';
+import { CommunicatieVoorkeuren } from './CommunicatieVoorkeuren.tsx';
 
 function getStandaardContactgegevens(emailOverrides?: {
   id?: string | null;

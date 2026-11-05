@@ -1,9 +1,5 @@
 import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
-import {
-  BB_VERGUNNING_DISCLAIMER,
-  useToeristischeVerhuurThemaData,
-} from './useToeristischeVerhuur.hook.ts';
 import type {
   LVVRegistratie,
   ToeristischeVerhuurVergunning,
@@ -13,6 +9,10 @@ import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import {
+  BB_VERGUNNING_DISCLAIMER,
+  useToeristischeVerhuurThemaData,
+} from './useToeristischeVerhuur.hook.ts';
 
 export function ToeristischeVerhuurThema() {
   const {

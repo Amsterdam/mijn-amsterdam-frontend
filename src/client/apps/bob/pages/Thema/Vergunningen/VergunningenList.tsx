@@ -1,9 +1,9 @@
 import { useParams } from 'react-router';
 
-import { useVergunningenThemaData } from './useVergunningenThemaData.hook.ts';
-import type { ListPageParamKind } from './Vergunningen-thema-config.ts';
 import { ListPagePaginated } from '../../../../../components/ListPagePaginated/ListPagePaginated.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { useVergunningenThemaData } from './useVergunningenThemaData.hook.ts';
+import type { ListPageParamKind } from './Vergunningen-thema-config.ts';
 
 export function VergunningenList() {
   const { kind = 'lopende-aanvragen' } = useParams<{

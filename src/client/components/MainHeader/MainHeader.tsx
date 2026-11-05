@@ -1,13 +1,10 @@
 import React from 'react';
 
-import { PageHeader, Icon } from '@amsterdam/design-system-react';
+import { Icon, PageHeader } from '@amsterdam/design-system-react';
 import { CloseIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router';
 
-import { EnvLabel } from './EnvLabel.tsx';
-import styles from './MainHeader.module.scss';
-import { useMainHeaderControl } from './useMainHeaderControl.hook.ts';
 import { LOGOUT_URL } from '../../apps/bob/config/api.ts';
 import { DashboardRoute } from '../../apps/bob/pages/Dashboard/Dashboard-routes.ts';
 import { SearchPageRoute } from '../../apps/bob/pages/Search/Search-routes.ts';
@@ -22,6 +19,9 @@ import {
   useSearchOnPage,
   useSearchStore,
 } from '../Search/useSearch.tsx';
+import { EnvLabel } from './EnvLabel.tsx';
+import styles from './MainHeader.module.scss';
+import { useMainHeaderControl } from './useMainHeaderControl.hook.ts';
 
 export const AmsMainMenuClassname = 'ma-main-header';
 

@@ -1,19 +1,17 @@
-import type { AxiosError, AxiosRequestConfig } from 'axios';
-import { type AxiosResponseHeaders } from 'axios';
+import type {
+  AxiosError,
+  AxiosRequestConfig,
+  AxiosResponseHeaders,
+} from 'axios';
 import axios, { isAxiosError } from 'axios';
 import memoryCache from 'memory-cache';
 
 import {
-  addRequestDataDebugging,
-  addResponseDataDebugging,
-} from './source-api-debug.ts';
-import { getRequestConfigCacheKey } from './source-api-helpers.ts';
-import {
+  type ApiErrorResponse,
+  type ApiResponse,
   apiErrorResult,
   apiPostponeResult,
   apiSuccessResult,
-  type ApiErrorResponse,
-  type ApiResponse,
 } from '../../universal/helpers/api.ts';
 import { omit } from '../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../auth/auth-types.ts';
@@ -31,6 +29,11 @@ import {
 } from '../config/source-api.ts';
 import { debugCacheKey, debugResponse, debugResponseError } from '../debug.ts';
 import { captureException } from '../services/monitoring.ts';
+import {
+  addRequestDataDebugging,
+  addResponseDataDebugging,
+} from './source-api-debug.ts';
+import { getRequestConfigCacheKey } from './source-api-helpers.ts';
 
 export const axiosRequest = axios.create({
   responseType: 'json',
@@ -41,7 +44,7 @@ export function isSuccessStatus(statusCode: number): boolean {
   return statusCode >= 200 && statusCode < 300;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
 const cache = new memoryCache.Cache<string, any>();
 
 export function deleteCacheEntry(cacheKey: string) {
@@ -92,7 +95,7 @@ function handleRequestDataError(
   let code: number = 500;
   let errorMessageInternal: string = '';
   let errorMessage: string = '';
-  let stack: string | undefined = undefined;
+  let stack: string | undefined;
 
   if (fromAxios) {
     const error = error_ as AxiosError;

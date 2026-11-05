@@ -1,10 +1,10 @@
 import { render, screen, within } from '@testing-library/react';
 
-import { VvEDetail } from './VvEDetail.tsx';
 import type { WonenDataFrontend } from '../../../../../../../server/services/wonen/wonen.types.ts';
 import type { AppState } from '../../../../../../../universal/types/App.types.ts';
 import { MockApp } from '../../../MockApp.tsx';
 import { themaConfig } from '../Profile-thema-config.ts';
+import { VvEDetail } from './VvEDetail.tsx';
 
 const routeEntry = themaConfig.BRP.detailPageVvE.route.path;
 const routePath = themaConfig.BRP.detailPageVvE.route.path;

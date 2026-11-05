@@ -1,5 +1,17 @@
 import type { Request, Response } from 'express';
 
+import { omit } from '../../../universal/helpers/utils.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import {
+  type ResponseAuthenticated,
+  sendBadRequestInvalidInput,
+  sendResponse,
+} from '../../routing/route-helpers.ts';
+import {
+  fetchAanvragenRaw,
+  fetchAllDocumentsRaw,
+  fetchDocument,
+} from '../zorgned/zorgned-service.ts';
 import {
   voorzieningDetailRequestInput,
   voorzieningenRequestInput,
@@ -9,18 +21,6 @@ import {
   fetchMaApiVoorzieningen,
 } from './jzd-voorzieningen-api-service.ts';
 import { ZORGNED_WMO_API_CONFIG_KEY } from './wmo/wmo-config.ts';
-import { omit } from '../../../universal/helpers/utils.ts';
-import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import {
-  sendResponse,
-  sendBadRequestInvalidInput,
-  type ResponseAuthenticated,
-} from '../../routing/route-helpers.ts';
-import {
-  fetchAanvragenRaw,
-  fetchAllDocumentsRaw,
-  fetchDocument,
-} from '../zorgned/zorgned-service.ts';
 
 export async function fetchZorgnedDocumentWMO(
   authProfileAndToken: AuthProfileAndToken,
@@ -35,7 +35,7 @@ export async function fetchZorgnedDocumentWMO(
 }
 
 export async function fetchZorgnedDocumentsWMO(
-  req: Request,
+  _req: Request,
   res: ResponseAuthenticated
 ) {
   const response = await fetchAllDocumentsRaw(res.locals.userID, {
@@ -46,7 +46,7 @@ export async function fetchZorgnedDocumentsWMO(
 }
 
 export async function fetchZorgnedAanvragenWMO(
-  req: Request,
+  _req: Request,
   res: ResponseAuthenticated
 ) {
   const response = await fetchAanvragenRaw(res.locals.userID, {
@@ -80,7 +80,10 @@ export async function handleVoorzieningDetailRequest(
   res: Response
 ) {
   // Validate the request body so we can be sure it has the correct shape and values.
-  let validatedRequestBody;
+  let validatedRequestBody: {
+    bsn: string;
+    id: string;
+  };
   try {
     validatedRequestBody = voorzieningDetailRequestInput.parse(req.body);
   } catch (error) {

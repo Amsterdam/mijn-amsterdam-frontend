@@ -1,14 +1,14 @@
-import {
-  fetchService,
-  fetchTipsAndNotifications,
-  type ApiPatternResponseA,
-} from './api-service.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Belastingen/Belastingen-thema-config.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
 import { getFromEnv, translateValueFromEnv } from '../../helpers/env.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import {
+  type ApiPatternResponseA,
+  fetchService,
+  fetchTipsAndNotifications,
+} from './api-service.ts';
 
 interface BelastingMessage {
   thema: 'Belastingen';

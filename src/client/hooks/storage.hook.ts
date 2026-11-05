@@ -123,7 +123,7 @@ function useWindowStorage(
   useEffect(() => {
     const value = getValueFromLocalStorage();
     setValue(storageType, key, value);
-  }, []);
+  }, [storageType, setValue, key, getValueFromLocalStorage]);
 
   const set = useCallback(
     (newValue: string | null) => {
@@ -142,7 +142,7 @@ function useWindowStorage(
         });
       }
     },
-    [key, saveValueToLocalStorage, setValue]
+    [key, saveValueToLocalStorage, setValue, storageType]
   );
 
   const onStorageEvent = useCallback(
@@ -224,7 +224,7 @@ function useStorage<T>(
 
   try {
     return [item !== null ? JSON.parse(item) : initialValue, setItem];
-  } catch (e) {
+  } catch (_e) {
     return [initialValue, setItem];
   }
 }

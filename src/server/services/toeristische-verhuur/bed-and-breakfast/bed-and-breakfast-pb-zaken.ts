@@ -1,11 +1,11 @@
+import { SELECT_FIELDS_TRANSFORM_BASE } from '../../powerbrowser/powerbrowser-field-transformers.ts';
+import { hasCaseTypeInFMT_CAPTION } from '../../powerbrowser/powerbrowser-helpers.ts';
+import type { PowerBrowserZaakTransformer } from '../../powerbrowser/powerbrowser-types.ts';
 import type { BedAndBreakfastType } from './bed-and-breakfast-types.ts';
 import {
   caseTypeBedAndBreakfast,
   documentNamenMA_PB,
 } from './bed-and-breakfast-types.ts';
-import { SELECT_FIELDS_TRANSFORM_BASE } from '../../powerbrowser/powerbrowser-field-transformers.ts';
-import { hasCaseTypeInFMT_CAPTION } from '../../powerbrowser/powerbrowser-helpers.ts';
-import type { PowerBrowserZaakTransformer } from '../../powerbrowser/powerbrowser-types.ts';
 
 export const RESULTATEN_VERLEEND = [
   'Verleend met overgangsrecht',

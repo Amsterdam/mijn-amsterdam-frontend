@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 
-import { getFromEnv } from './env.ts';
 import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
 import { logger } from '../logging.ts';
+import { getFromEnv } from './env.ts';
 
 export function getCertificateSync(envVarName: string | undefined) {
   const path = envVarName && getFromEnv(envVarName, false);

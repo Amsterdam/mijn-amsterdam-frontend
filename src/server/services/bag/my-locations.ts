@@ -1,5 +1,3 @@
-import { fetchBAG, fetchBAGByQuery } from './bag.ts';
-import { type BAGLocationExtended } from './bag.types.ts';
 import {
   DEFAULT_LAT,
   DEFAULT_LNG,
@@ -15,8 +13,10 @@ import {
 import { isMokum } from '../../../universal/helpers/brp.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { fetchBrp } from '../brp/brp.ts';
-import { getVestigingBagIds } from '../hr-kvk/hr-kvk-helpers.ts';
 import { fetchKVK } from '../hr-kvk/hr-kvk.ts';
+import { getVestigingBagIds } from '../hr-kvk/hr-kvk-helpers.ts';
+import { fetchBAG, fetchBAGByQuery } from './bag.ts';
+import type { BAGLocationExtended } from './bag.types.ts';
 
 export async function fetchPrivate(
   authProfileAndToken: AuthProfileAndToken
@@ -61,21 +61,19 @@ export async function fetchCommercial(
     const vestigingen = getVestigingBagIds(KVK.content);
 
     const locations = await Promise.all(
-      vestigingen
-        .map((vestiging) =>
-          vestiging.bagIds.map((id) =>
-            fetchBAGByQuery({ identificatie: id }).then((res) => {
-              return res.content
-                ? {
-                    ...res.content,
-                    profileType: 'commercial' as ProfileType,
-                    title: vestiging.naam,
-                  }
-                : null;
-            })
-          )
+      vestigingen.flatMap((vestiging) =>
+        vestiging.bagIds.map((id) =>
+          fetchBAGByQuery({ identificatie: id }).then((res) => {
+            return res.content
+              ? {
+                  ...res.content,
+                  profileType: 'commercial' as ProfileType,
+                  title: vestiging.naam,
+                }
+              : null;
+          })
         )
-        .flat()
+      )
     );
 
     return apiSuccessResult(locations.filter((location) => location !== null));

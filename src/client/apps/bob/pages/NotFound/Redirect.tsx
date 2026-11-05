@@ -1,8 +1,8 @@
-import { useLocation, Navigate } from 'react-router';
+import { Navigate, useLocation } from 'react-router';
 
-import { NotFound } from './NotFound.tsx';
 import { isPrivateRoute } from '../../App.routes.tsx';
 import { LandingRoute } from '../Landing/Landing-routes.ts';
+import { NotFound } from './NotFound.tsx';
 
 export function RedirectPrivateRoutesToLanding() {
   const location = useLocation();

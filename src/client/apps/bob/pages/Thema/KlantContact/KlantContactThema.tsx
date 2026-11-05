@@ -1,13 +1,13 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { Afspraken } from './Afspraken/Afspraken.tsx';
-import { CommunicatieVoorkeuren } from './Communicatievoorkeuren/CommunicatieVoorkeuren.tsx';
-import { ContactMomenten } from './Contactmomenten/ContactmomentenTable.tsx';
-import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
 import { getRedactedClass } from '../../../../../helpers/cobrowse.ts';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { Afspraken } from './Afspraken/Afspraken.tsx';
+import { CommunicatieVoorkeuren } from './Communicatievoorkeuren/CommunicatieVoorkeuren.tsx';
+import { ContactMomenten } from './Contactmomenten/ContactmomentenTable.tsx';
+import { useKlantcontactData } from './useKlantcontactData.hook.tsx';
 
 export function KlantContactThema() {
   const {

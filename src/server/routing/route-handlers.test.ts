@@ -3,11 +3,6 @@ import { createPrivateKey } from 'node:crypto';
 import { SignJWT } from 'jose';
 import nock from 'nock';
 
-import {
-  handleIsAuthenticated,
-  OAuthVerificationHandler,
-  requestID,
-} from './route-handlers.ts';
 import { HttpStatusCode } from '../../client/hooks/api/useBffApi.ts';
 import {
   getAuthProfileAndToken,
@@ -16,6 +11,11 @@ import {
   ResponseMock,
 } from '../../testing/utils.ts';
 import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config.ts';
+import {
+  handleIsAuthenticated,
+  OAuthVerificationHandler,
+  requestID,
+} from './route-handlers.ts';
 
 // Dummy private key only used for testing - can not be smaller
 // To generate: openssl genrsa -out private.pem 2048

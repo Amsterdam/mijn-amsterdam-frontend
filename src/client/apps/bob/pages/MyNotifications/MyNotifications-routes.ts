@@ -1,7 +1,7 @@
 import { generatePath } from 'react-router';
 
-import { themaId, themaTitle } from './MyNotifications-config.ts';
 import { MyNotificationsPage } from './MyNotifications.tsx';
+import { themaId, themaTitle } from './MyNotifications-config.ts';
 
 export const MyNotificationsRoute = {
   route: '/alle-berichten/:page?',

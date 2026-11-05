@@ -1,15 +1,15 @@
-import { fetchSalesforceApi } from './klantcontact-salesforce.ts';
-import type {
-  ContactmomentFrontend,
-  ContactmomentResponseSource,
-} from './klantcontact.types.ts';
 import {
-  defaultDateFormat,
   dateSort,
+  defaultDateFormat,
 } from '../../../universal/helpers/date.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
 import { createSessionBasedCacheKey } from '../../helpers/source-api-helpers.ts';
+import type {
+  ContactmomentFrontend,
+  ContactmomentResponseSource,
+} from './klantcontact.types.ts';
+import { fetchSalesforceApi } from './klantcontact-salesforce.ts';
 
 export async function fetchContactmomenten(
   authProfileAndToken: AuthProfileAndToken

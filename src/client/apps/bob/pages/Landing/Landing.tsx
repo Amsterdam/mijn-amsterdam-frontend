@@ -3,15 +3,15 @@ import { useRef, useState } from 'react';
 import { Heading, Link, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
-import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Landing-routes.ts';
-import styles from './Landing.module.scss';
 import { FeatureToggle } from '../../../../../universal/config/feature-toggles.ts';
 import { LogoDigiD } from '../../../../assets/images/LogoDigiD.tsx';
 import { LogoEherkenning } from '../../../../assets/images/LogoEherkenning.tsx';
 import { MaintenanceNotifications } from '../../../../components/MaintenanceNotifications/MaintenanceNotifications.tsx';
 import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
-import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api.ts';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
+import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api.ts';
+import styles from './Landing.module.scss';
+import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Landing-routes.ts';
 
 export function LandingPage() {
   useHTMLDocumentTitle({

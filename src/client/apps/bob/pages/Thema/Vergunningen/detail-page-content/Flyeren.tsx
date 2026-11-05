@@ -1,14 +1,12 @@
-import { commonTransformers, getRows } from './fields-config.tsx';
 import type { DecosZaakBase } from '../../../../../../../server/services/decos/decos-types.ts';
 import type {
+  DecosZaakFrontend,
+  Flyeren,
   WithDateRange,
   WithDateTimeRange,
 } from '../../../../../../../server/services/vergunningen/config-and-types.ts';
-import type {
-  Flyeren,
-  DecosZaakFrontend,
-} from '../../../../../../../server/services/vergunningen/config-and-types.ts';
 import { Datalist } from '../../../../../../components/Datalist/Datalist.tsx';
+import { commonTransformers, getRows } from './fields-config.tsx';
 
 const isSameDate = (vergunning: WithDateRange) =>
   vergunning.dateStart === vergunning.dateEnd || vergunning.dateEnd === null;

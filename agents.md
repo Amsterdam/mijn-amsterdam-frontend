@@ -11,7 +11,7 @@ Tell the agent the target path + expected behavior.
 
 For any `pnpm run` script that executes `vitest`, prepend `CI=1` and append `-- --run --reporter=verbose`.
 
-For example to run all tests in the routing directory `pnpm run bff-api:test:dirs src/server/routing` becomes 
+For example to run all tests in the routing directory `pnpm run bff-api:test:dirs src/server/routing` becomes
 `CI=1 pnpm run bff-api:test:dirs src/server/routing -- --run --reporter=verbose`
 
 ## Test env conventions
@@ -23,4 +23,3 @@ Set default or shared test environment variables in `src/testing/setup.ts`, not 
 Files in `drizzle/` are generated files and must never be edited directly without user permission.
 
 Only generate them by running the Drizzle commands defined in `package.json`.
-

@@ -3,11 +3,6 @@ import { promisify } from 'node:util';
 import type { Request } from 'express';
 import MockDate from 'mockdate';
 
-import { authRouterDevelopment } from './app-router-development.ts';
-import {
-  AMSAPP_SESSION_TOKEN_HEADER,
-  privateNetworkAuthContextMiddleware,
-} from './app-router-private-auth-context.ts';
 import {
   createDevelopmentSessionMock,
   createOidcResponseMock,
@@ -16,15 +11,20 @@ import {
   ResponseMock,
 } from '../../testing/utils.ts';
 import {
+  OIDC_SESSION_ABSOLUTE_MAX_AGE_SECONDS,
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
-  OIDC_SESSION_ABSOLUTE_MAX_AGE_SECONDS,
   oidcSessionStore,
 } from '../auth/auth-config.ts';
 import { getAuth } from '../auth/auth-helpers.ts';
 import { authRoutes } from '../auth/auth-routes.ts';
 import type { AuthProfile } from '../auth/auth-types.ts';
 import { ONE_MINUTE_SECONDS, ONE_SECOND_MS } from '../config/app.ts';
+import { authRouterDevelopment } from './app-router-development.ts';
+import {
+  AMSAPP_SESSION_TOKEN_HEADER,
+  privateNetworkAuthContextMiddleware,
+} from './app-router-private-auth-context.ts';
 
 const DIGID_PROFILE: AuthProfile = {
   sid: 'e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
@@ -181,9 +181,7 @@ describe('app-router-private-auth-context', () => {
 
     const ONE_MINUTE_BEFORE_EXPIRY_SECONDS =
       OIDC_SESSION_MAX_AGE_SECONDS - ONE_MINUTE_SECONDS;
-    MockDate.set(
-      Date.now() + ONE_MINUTE_BEFORE_EXPIRY_SECONDS * ONE_SECOND_MS
-    );
+    MockDate.set(Date.now() + ONE_MINUTE_BEFORE_EXPIRY_SECONDS * ONE_SECOND_MS);
     const req = createPrivateAuthRequest({
       [AMSAPP_SESSION_TOKEN_HEADER]: sessionToken,
     });
@@ -236,8 +234,9 @@ describe('app-router-private-auth-context', () => {
       featureToggle: { amsAppUniversalAuthIsActive: false },
     }));
     try {
-      const { privateNetworkAuthContextMiddleware: middleware } =
-        await import('./app-router-private-auth-context.ts');
+      const { privateNetworkAuthContextMiddleware: middleware } = await import(
+        './app-router-private-auth-context.ts'
+      );
       const sessionToken = await createDevelopmentSessionMock(DIGID_PROFILE);
       const { req: browserReq, res: browserRes } =
         await getOidcSessionMock(sessionToken);

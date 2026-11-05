@@ -2,6 +2,18 @@ import { HttpStatusCode } from 'axios';
 import * as date from 'date-fns';
 import { generatePath } from 'react-router';
 
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/HLI/HLI-thema-config.ts';
+import {
+  type ApiResponse,
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { decrypt, encrypt } from '../../helpers/encrypt-decrypt.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import { captureException } from '../monitoring.ts';
+import { featureToggle, routes } from './hli-service-config.ts';
 import { getBudgetNotifications } from './stadspas-config-and-content.ts';
 import {
   fetchGpassBudgetTransactions,
@@ -11,26 +23,12 @@ import {
   mutateGpassSetPasIsBlockedState,
 } from './stadspas-gpass-service.ts';
 import type {
+  PasblokkadeByPasnummer,
   StadspasAdministratieNummer,
   StadspasBudget,
   StadspasFrontend,
+  StadspasResponseFrontend,
 } from './stadspas-types.ts';
-import {
-  type PasblokkadeByPasnummer,
-  type StadspasResponseFrontend,
-} from './stadspas-types.ts';
-import { themaConfig } from '../../../client/apps/bob/pages/Thema/HLI/HLI-thema-config.ts';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-  type ApiResponse,
-} from '../../../universal/helpers/api.ts';
-import { defaultDateFormat } from '../../../universal/helpers/date.ts';
-import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import { decrypt, encrypt } from '../../helpers/encrypt-decrypt.ts';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
-import { captureException } from '../monitoring.ts';
-import { featureToggle, routes } from './hli-service-config.ts';
 
 export async function fetchStadspas(
   authProfileAndToken: AuthProfileAndToken

@@ -1,8 +1,5 @@
-import { describe, it, expect, vi, type Mock } from 'vitest';
+import { describe, expect, it, type Mock, vi } from 'vitest';
 
-import type { DecosVergunning } from './config-and-types.ts';
-import { getStatusStepsDecos } from './decos-status-steps.ts';
-import { fetchVergunningen } from './vergunningen.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
 import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
@@ -12,12 +9,15 @@ import {
 } from '../decos/decos-service.ts';
 import type { DecosZaakBase } from '../decos/decos-types.ts';
 import { fetchPBZaken } from '../powerbrowser/powerbrowser-service.ts';
+import type { DecosVergunning } from './config-and-types.ts';
+import { getStatusStepsDecos } from './decos-status-steps.ts';
+import { fetchVergunningen } from './vergunningen.ts';
 
 vi.mock('../../helpers/encrypt-decrypt');
 
 vi.mock(
   '../decos/decos-service',
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
   async (importOriginal: () => Promise<any>) => ({
     ...(await importOriginal()),
     fetchDecosZaken: vi.fn(),

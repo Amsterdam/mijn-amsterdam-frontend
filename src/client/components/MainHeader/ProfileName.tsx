@@ -1,10 +1,10 @@
-import { isLoading } from '../../helpers/api.ts';
 import { getFullName } from '../../../universal/helpers/brp.ts';
+import { isLoading } from '../../helpers/api.ts';
 import { useAppStateGetter } from '../../hooks/useAppStateStore.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import {
-  LoadingContent,
   type BarConfig,
+  LoadingContent,
 } from '../LoadingContent/LoadingContent.tsx';
 
 type ProfileNameProps = {
@@ -33,9 +33,11 @@ export function ProfileName({
 
     if (preferVoornaam && persoon.voornamen) {
       return persoon.voornamen;
-    } else if (persoon.opgemaakteNaam) {
+    }
+    if (persoon.opgemaakteNaam) {
       return persoon.opgemaakteNaam;
-    } else if (persoon.voornamen) {
+    }
+    if (persoon.voornamen) {
       return getFullName(persoon);
     }
   } else if (KVK.content?.onderneming?.handelsnaam) {

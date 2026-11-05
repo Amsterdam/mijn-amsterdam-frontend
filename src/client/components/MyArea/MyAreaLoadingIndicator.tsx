@@ -1,7 +1,7 @@
 import { BuildingsIcon, HouseIcon } from '@amsterdam/design-system-react-icons';
 
-import styles from './MyAreaLoadingIndicator.module.scss';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
+import styles from './MyAreaLoadingIndicator.module.scss';
 
 interface MyAreaLoadingIndicatorProps {
   label: string;

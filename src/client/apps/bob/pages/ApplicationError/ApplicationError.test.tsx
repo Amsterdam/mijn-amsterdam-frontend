@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
-import { ApplicationError } from './ApplicationError.tsx';
 import { MockApp } from '../MockApp.tsx';
+import { ApplicationError } from './ApplicationError.tsx';
 
 describe('ApplicationError', () => {
   function createErrorPage(error: Error) {

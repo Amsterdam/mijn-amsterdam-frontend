@@ -1,7 +1,7 @@
 import type { AppState } from '../../../../universal/types/App.types.ts';
 import type {
-  ThemaMenuItemTransformed,
   ThemaMenuItem,
+  ThemaMenuItemTransformed,
 } from '../../../../universal/types/thema-types.ts';
 import { useAppStateGetter } from '../../../hooks/useAppStateStore.ts';
 

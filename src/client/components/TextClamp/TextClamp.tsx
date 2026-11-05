@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import classNames from 'classnames';
 
@@ -37,15 +37,18 @@ export function TextClamp({
     undefined
   );
 
-  const callBackRef = useCallback((domNode: HTMLElement) => {
-    if (typeof hasOverflow === 'boolean' || !domNode) {
-      return;
-    }
-    setHasOverflow(
-      domNode.getBoundingClientRect().height - parseInt(maxHeight, 10) >
-        TEXT_CLAMP_HEIGHT_DELTA_THRESHOLD
-    );
-  }, []);
+  const callBackRef = useCallback(
+    (domNode: HTMLElement) => {
+      if (typeof hasOverflow === 'boolean' || !domNode) {
+        return;
+      }
+      setHasOverflow(
+        domNode.getBoundingClientRect().height - parseInt(maxHeight, 10) >
+          TEXT_CLAMP_HEIGHT_DELTA_THRESHOLD
+      );
+    },
+    [maxHeight, hasOverflow]
+  );
 
   const toggleClamp = () => {
     setIsClamped((isClamped) => !isClamped);

@@ -10,8 +10,8 @@ import {
   useActiveDatasetFilters,
   useDatasetFilterSelection,
 } from '../MyArea.hooks.ts';
-import { datasetCheckboxState } from './checkbox-helpers.ts';
 import { CollapsedState, MyAreaCollapsiblePanel } from './CollapsiblePanel.tsx';
+import { datasetCheckboxState } from './checkbox-helpers.ts';
 import { DatasetControlCheckbox } from './DatasetControlCheckbox.tsx';
 import type { DatasetControlPanelProps } from './DatasetControlPanel.tsx';
 import { DatasetPropertyFilterPanel } from './DatasetPropertyFilterPanel.tsx';

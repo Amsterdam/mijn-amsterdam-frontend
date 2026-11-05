@@ -1,19 +1,19 @@
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
+import {
+  type ApiResponse,
+  apiSuccessResult,
+} from '../../../universal/helpers/api.ts';
+import { isRecentNotification } from '../../../universal/helpers/date.ts';
+import type { MyNotification } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { captureException } from '../monitoring.ts';
+import { fetchErfpachtZaakInfo } from './erfpacht-zaken.ts';
 import {
   getSubStatusDescription,
   ZAAK_STATUS_FRONTEND,
   ZAAK_STATUS_SOURCE,
 } from './erfpacht-zaken-config.ts';
 import type { ErfpachtZaakExcerptFrontend } from './erfpacht-zaken-types.ts';
-import { fetchErfpachtZaakInfo } from './erfpacht-zaken.ts';
-import { themaConfig } from '../../../client/apps/bob/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
-import {
-  apiSuccessResult,
-  type ApiResponse,
-} from '../../../universal/helpers/api.ts';
-import { isRecentNotification } from '../../../universal/helpers/date.ts';
-import type { MyNotification } from '../../../universal/types/App.types.ts';
-import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import { captureException } from '../monitoring.ts';
 
 export function getSubStatusNotificationTitle(
   zaakExcerpt: Pick<ErfpachtZaakExcerptFrontend, 'statusOmschrijving'>

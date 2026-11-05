@@ -1,8 +1,8 @@
 import type { LatLngLiteral, LatLngTuple } from 'leaflet';
 
 import type {
-  BAGQueryParams,
   BAGAdreseerbaarObject,
+  BAGQueryParams,
 } from '../../server/services/bag/bag.types.ts';
 
 type ExtractUtils = {
@@ -18,7 +18,6 @@ const patterns: Partial<Record<keyof BAGQueryParams, ExtractUtils>> = {
     formatter: (postcode: string) => postcode.replace(' ', ''),
   },
   openbareruimteNaam: {
-    // @ts-ignore unicode does works
     pattern: /(?<![0-9a-z])([0-9]e)?[a-z_.'/\-\p{L} ]+(?![0-9a-z])/iu,
   },
   huisnummer: {
@@ -30,8 +29,7 @@ const patterns: Partial<Record<keyof BAGQueryParams, ExtractUtils>> = {
 export function extractAddressParts(rawText: string): BAGQueryParams {
   const cleanText = rawText
     .trim()
-    // Remove everything but alphanumeric, dash, dot, apostrophe and space.
-    // @ts-ignore unicode does work
+    // Remove everything but alphanumeric, dash, dot, apostrophe and space
     .replace(/[^/'0-9-.\s\p{Script=Latin}+]/giu, '')
     // Spaces to single space.
     .replace(/\s{2,}/g, ' ');

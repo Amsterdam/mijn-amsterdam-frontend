@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 
-import { forTesting } from './ProfileCommercial.transform.tsx';
-import { MijnBedrijfsGegevensThema } from './ProfileCommercial.tsx';
 import type { KvkResponseFrontend } from '../../../../../../../server/services/hr-kvk/hr-kvk.types.ts';
 import { getFullAddress } from '../../../../../../../universal/helpers/brp.ts';
 import type { AppState } from '../../../../../../../universal/types/App.types.ts';
 import { MockApp } from '../../../MockApp.tsx';
 import { themaConfig } from '../Profile-thema-config.ts';
+import { forTesting } from './ProfileCommercial.transform.tsx';
+import { MijnBedrijfsGegevensThema } from './ProfileCommercial.tsx';
 
 const responseData: KvkResponseFrontend = {
   eigenaar: {

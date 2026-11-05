@@ -1,10 +1,10 @@
-import { tableConfig, themaConfig } from './Horeca-thema-config.ts';
 import type { HorecaVergunningFrontend } from '../../../../../../server/services/horeca/decos-zaken.ts';
 import { isError } from '../../../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
+import { tableConfig, themaConfig } from './Horeca-thema-config.ts';
 
 export function useHorecaThemaData() {
   const { HORECA } = useAppStateGetter();

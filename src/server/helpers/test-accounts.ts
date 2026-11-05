@@ -1,7 +1,7 @@
-import { getFromEnv, getValueMapFromEnv } from './env.ts';
 import { capitalizeFirstLetter } from '../../universal/helpers/text.ts';
 import { uniqueArray } from '../../universal/helpers/utils.ts';
 import type { AuthProfile } from '../auth/auth-types.ts';
+import { getFromEnv, getValueMapFromEnv } from './env.ts';
 
 export type TestUserData = {
   tableHeaders: TableHeader[];

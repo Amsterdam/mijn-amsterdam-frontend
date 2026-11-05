@@ -1,14 +1,14 @@
+import type {
+  AfisBusinessPartnerDetailsTransformed,
+  AfisThemaResponse,
+} from '../../../../../../server/services/afis/afis-types.ts';
+import { hasFailedDependency } from '../../../../../../universal/helpers/api.ts';
+import { useBffApi } from '../../../../../hooks/api/useBffApi.ts';
 import { generateApiUrl } from './Afis-helpers.ts';
 import {
   businessPartnerDetailsLabels,
   titleBetaalvoorkeurenPage,
 } from './Afis-thema-config.ts';
-import type {
-  AfisThemaResponse,
-  AfisBusinessPartnerDetailsTransformed,
-} from '../../../../../../server/services/afis/afis-types.ts';
-import { hasFailedDependency } from '../../../../../../universal/helpers/api.ts';
-import { useBffApi } from '../../../../../hooks/api/useBffApi.ts';
 
 export function useAfisBetaalVoorkeurenData(
   businessPartnerIdEncrypted:

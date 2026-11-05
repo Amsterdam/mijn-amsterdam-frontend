@@ -9,13 +9,13 @@ import type {
 } from 'leaflet';
 import L from 'leaflet';
 
-import { getIconHtml } from './dataset-icons.tsx';
-import { processFeatures } from './MyArea.helpers.ts';
-import styles from './MyAreaDatasets.module.scss';
 import type {
   DatasetFeatureProperties,
   MaSuperClusterFeature,
 } from '../../../server/services/buurt/datasets.ts';
+import { getIconHtml } from './dataset-icons.tsx';
+import { processFeatures } from './MyArea.helpers.ts';
+import styles from './MyAreaDatasets.module.scss';
 
 const ICON_SIZE = 40;
 const ICON_ANCHOR = 20;
@@ -86,6 +86,7 @@ export function MaSuperClusterLayer({
     (event: LeafletMouseEvent) => {
       if (event.propagatedFrom.feature.properties.cluster_id) {
         map.setZoomAround(
+          // biome-ignore lint/suspicious/noExplicitAny: Leaflet event extension.
           event.latlng || (event as any)._latlng,
           event.propagatedFrom.feature.properties.expansion_zoom
         );
@@ -98,6 +99,7 @@ export function MaSuperClusterLayer({
   );
 
   const onKeyup = useCallback(
+    // biome-ignore lint/suspicious/noExplicitAny: Leaflet keyboard event shape.
     (event: any) => {
       if (event.originalEvent.key === 'Enter') {
         event.latlng = event.layer.getLatLng();
@@ -122,6 +124,7 @@ export function MaSuperClusterLayer({
 
     if (markerLayer && clusterFeatures.length) {
       markerLayer.addTo(map);
+      // biome-ignore lint/suspicious/noExplicitAny: Cluster feature mismatch.
       markerLayer.addData(clusterFeatures as any); // Type mismatch here.
       markerLayer.on('click', onClick);
       markerLayer.on('keyup', onKeyup);

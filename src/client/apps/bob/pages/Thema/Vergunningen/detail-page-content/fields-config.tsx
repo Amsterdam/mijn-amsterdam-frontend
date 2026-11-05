@@ -1,26 +1,26 @@
 import { UnorderedList } from '@amsterdam/design-system-react';
 
-import styles from './fields-config.module.scss';
 import type { DecosZaakBase } from '../../../../../../../server/services/decos/decos-types.ts';
 import type { PowerBrowserZaakBase } from '../../../../../../../server/services/powerbrowser/powerbrowser-types.ts';
 import type {
-  WithDateTimeRange,
-  WithDateRange,
-  WithLocation,
-  WithKentekens,
-  WithDateStart,
   WithDateEnd,
+  WithDateRange,
+  WithDateStart,
+  WithDateTimeRange,
+  WithKentekens,
+  WithLocation,
   WithTimeRange,
+  ZaakFrontendCombined,
 } from '../../../../../../../server/services/vergunningen/config-and-types.ts';
-import { type ZaakFrontendCombined } from '../../../../../../../server/services/vergunningen/config-and-types.ts';
 import { dateTimeFormatYear } from '../../../../../../../universal/helpers/date.ts';
 import type {
+  DatalistProps,
   Row,
   RowSet,
   WrappedRow,
 } from '../../../../../../components/Datalist/Datalist.tsx';
-import { type DatalistProps } from '../../../../../../components/Datalist/Datalist.tsx';
 import { AddressDisplayAndModal } from '../../../../../../components/LocationModal/LocationModal.tsx';
+import styles from './fields-config.module.scss';
 
 type DataListRowOptions = {
   endDateIncluded?: boolean;
@@ -295,14 +295,13 @@ export function getRows<T extends ZaakFrontendCombined>(
   keysOrTransformers: (VergunningDataListRow<T> | Row | RowSet)[]
 ): DatalistProps['rows'] {
   const rows = keysOrTransformers
-    .map((transformerOrRowType) => {
+    .flatMap((transformerOrRowType) => {
       if (typeof transformerOrRowType === 'function') {
         // transformerOrRowType is a transformer object
         return transformerOrRowType(vergunning);
       }
       return transformerOrRowType;
     })
-    .flat()
     .filter((row) => row !== null);
 
   return rows;

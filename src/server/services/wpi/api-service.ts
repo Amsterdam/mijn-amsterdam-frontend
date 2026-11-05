@@ -10,7 +10,7 @@ import { dateSort } from '../../../universal/helpers/date.ts';
 import { pick } from '../../../universal/helpers/utils.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import { wpiAuthHeader, type SourceApiName } from '../../config/source-api.ts';
+import { type SourceApiName, wpiAuthHeader } from '../../config/source-api.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,

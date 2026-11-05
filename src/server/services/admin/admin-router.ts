@@ -1,10 +1,15 @@
 import express from 'express';
 
+import { IS_AP, OTAP_ENV } from '../../../universal/config/env.ts';
+import { getFromEnv } from '../../helpers/env.ts';
+import { logger } from '../../logging.ts';
+import { handleIsDBEnabled } from '../../routing/route-handlers.ts';
+import { createBFFRouter } from '../../routing/route-helpers.ts';
 import {
   getAccountDataHandler,
   updateAccountDataHandler,
 } from './admin-account.route-handlers.ts';
-import { handleLogin, handleLogout, handleCallback } from './admin-auth.ts';
+import { handleCallback, handleLogin, handleLogout } from './admin-auth.ts';
 import {
   adminIndexHandler,
   authCheckHandler,
@@ -16,11 +21,6 @@ import {
 } from './admin-service-config.ts';
 import type { RequestWithSession } from './admin-types.ts';
 import { loginStats, loginStatsTable } from './admin-visitors.ts';
-import { IS_AP, OTAP_ENV } from '../../../universal/config/env.ts';
-import { getFromEnv } from '../../helpers/env.ts';
-import { logger } from '../../logging.ts';
-import { handleIsDBEnabled } from '../../routing/route-handlers.ts';
-import { createBFFRouter } from '../../routing/route-helpers.ts';
 
 // Public routes that don't require authentication.
 // Don't use this router for routes that should be protected, as these routes are mounted before the authentication middleware in app-router-admin.ts

@@ -1,13 +1,13 @@
-import { type DecosVakantieverhuurVergunningaanvraag } from './toeristische-verhuur.types.ts';
 import { caseTypeToeristischeVerhuur } from '../../../client/apps/bob/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import {
-  SELECT_FIELDS_TRANSFORM_BASE,
-  location,
-  dateStart,
-  dateEnd,
   DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11,
+  dateEnd,
+  dateStart,
+  location,
+  SELECT_FIELDS_TRANSFORM_BASE,
 } from '../decos/decos-field-transformers.ts';
 import type { DecosZaakTransformer } from '../decos/decos-types.ts';
+import type { DecosVakantieverhuurVergunningaanvraag } from './toeristische-verhuur.types.ts';
 
 export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<DecosVakantieverhuurVergunningaanvraag> =
   {

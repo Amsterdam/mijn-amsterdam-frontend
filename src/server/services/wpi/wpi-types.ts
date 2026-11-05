@@ -17,6 +17,7 @@ export interface WpiRequestStatus extends StatusLineItem {
   documents: WpiRequestStatusDocument[];
   datePublished: string;
   productSpecific?: 'lening' | 'uitkering';
+  // biome-ignore lint/suspicious/noExplicitAny: Additional WPI source fields.
   [key: string]: any;
 }
 
@@ -72,7 +73,8 @@ export interface WpiIncomeSpecification {
   url: string;
 }
 
-export interface WpiIncomeSpecificationTransformed extends WpiIncomeSpecification {
+export interface WpiIncomeSpecificationTransformed
+  extends WpiIncomeSpecification {
   datePublishedFormatted: string;
   category: string;
   download: string;

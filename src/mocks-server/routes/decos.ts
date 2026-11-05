@@ -1,10 +1,24 @@
-import ADDRESS_BOOKS from '../fixtures/decos-vergunningen-addressbook-response.json' with { type: 'json' };
-import DOCUMENTS_LIST from '../fixtures/decos-vergunningen-documents-list-response.json' with { type: 'json' };
-import TERMIJNENS from '../fixtures/decos-vergunningen-termijnens-response.json' with { type: 'json' };
-import VARENS from '../fixtures/decos-vergunningen-varens-response.json' with { type: 'json' };
-import WORKFLOW_INSTANCES from '../fixtures/decos-vergunningen-workflowinstances-response.json' with { type: 'json' };
-import WORKFLOWS from '../fixtures/decos-vergunningen-workflows-response.json' with { type: 'json' };
-import ZAKEN from '../fixtures/decos-vergunningen-zaken-response.json' with { type: 'json' };
+import ADDRESS_BOOKS from '../fixtures/decos-vergunningen-addressbook-response.json' with {
+  type: 'json',
+};
+import DOCUMENTS_LIST from '../fixtures/decos-vergunningen-documents-list-response.json' with {
+  type: 'json',
+};
+import TERMIJNENS from '../fixtures/decos-vergunningen-termijnens-response.json' with {
+  type: 'json',
+};
+import VARENS from '../fixtures/decos-vergunningen-varens-response.json' with {
+  type: 'json',
+};
+import WORKFLOW_INSTANCES from '../fixtures/decos-vergunningen-workflowinstances-response.json' with {
+  type: 'json',
+};
+import WORKFLOWS from '../fixtures/decos-vergunningen-workflows-response.json' with {
+  type: 'json',
+};
+import ZAKEN from '../fixtures/decos-vergunningen-zaken-response.json' with {
+  type: 'json',
+};
 import { sendMockDocument } from '../helpers/send-mock-document.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';

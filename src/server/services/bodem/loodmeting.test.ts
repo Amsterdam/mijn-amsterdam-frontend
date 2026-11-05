@@ -1,14 +1,18 @@
 import MockDate from 'mockdate';
 
+import document from '../../../mocks-server/fixtures/loodmeting-rapport.json' with {
+  type: 'json',
+};
+import metingen from '../../../mocks-server/fixtures/loodmetingen.json' with {
+  type: 'json',
+};
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import {
   fetchLoodMetingDocument,
   fetchLoodMetingNotifications,
   fetchLoodmetingen,
 } from './loodmetingen.ts';
-import document from '../../../mocks-server/fixtures/loodmeting-rapport.json' with { type: 'json' };
-import metingen from '../../../mocks-server/fixtures/loodmetingen.json' with { type: 'json' };
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
-import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 
 vi.mock('../../routing/route-helpers.ts', async (importOriginal) => {
   return {

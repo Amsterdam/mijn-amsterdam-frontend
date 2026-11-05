@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react';
 
 import {
+  Alert,
+  Checkbox,
   Heading,
   Paragraph,
   UnorderedList,
-  Checkbox,
-  Alert,
 } from '@amsterdam/design-system-react';
 
-import { ContactgegevenByTypeLabels } from './CommunicatieVoorkeuren-config.ts';
-import { ContactgegevenValue } from './ContactgegevenValue.tsx';
-import { useCommunicatieVoorkeurBevestigen } from './useCommunicatieVoorkeuren.ts';
 import type {
   ContactgegevenPerTypeFrontend,
   DienstSource,
 } from '../../../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
 import { Datalist } from '../../../../../../components/Datalist/Datalist.tsx';
+import { ContactgegevenByTypeLabels } from './CommunicatieVoorkeuren-config.ts';
+import { ContactgegevenValue } from './ContactgegevenValue.tsx';
+import { useCommunicatieVoorkeurBevestigen } from './useCommunicatieVoorkeuren.ts';
 
 type CommunicatieVoorkeurenProps = {
   standaardContactgegevens: ContactgegevenPerTypeFrontend | null;

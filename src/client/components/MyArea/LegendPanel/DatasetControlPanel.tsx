@@ -8,8 +8,8 @@ import type {
   DatasetPropertyValue,
 } from '../../../../universal/config/myarea-datasets.ts';
 import { getIcon } from '../dataset-icons.tsx';
-import { categoryCheckboxState } from './checkbox-helpers.ts';
 import { CollapsedState, MyAreaCollapsiblePanel } from './CollapsiblePanel.tsx';
+import { categoryCheckboxState } from './checkbox-helpers.ts';
 import { DatasetControlCheckbox } from './DatasetControlCheckbox.tsx';
 import { DatasetPanel } from './DatasetPanel.tsx';
 import { PanelList, PanelListItem } from './PanelList.tsx';

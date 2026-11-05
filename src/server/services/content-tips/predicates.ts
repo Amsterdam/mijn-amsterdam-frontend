@@ -4,7 +4,6 @@ import {
   parseISO,
 } from 'date-fns';
 
-import type { TipsPredicateFN } from './tip-types.ts';
 import type { AppStateBase } from '../../../universal/types/App.types.ts';
 import type { Kind } from '../brp/brp-types.ts';
 import { isAmsterdamAddress } from '../buurt/helpers.ts';
@@ -12,6 +11,7 @@ import type { HLIRegelingFrontend } from '../hli/hli-regelingen-types.ts';
 import type { WMOVoorzieningFrontend } from '../jzd/wmo/wmo-types.ts';
 import type { BBVergunningFrontend } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types.ts';
 import type { WpiRequestProcess } from '../wpi/wpi-types.ts';
+import type { TipsPredicateFN } from './tip-types.ts';
 
 // rule 2
 export const is18OrOlder: TipsPredicateFN = (

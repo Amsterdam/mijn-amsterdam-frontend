@@ -1,12 +1,12 @@
-import { OtapEnvs } from './cms-types.ts';
 import {
-  IS_TEST,
-  IS_ACCEPTANCE,
-  IS_PRODUCTION,
-  IS_DEVELOPMENT,
   APP_MODE,
+  IS_ACCEPTANCE,
+  IS_DEVELOPMENT,
+  IS_PRODUCTION,
+  IS_TEST,
 } from '../../../universal/config/env.ts';
 import { ONE_HOUR_MS } from '../../config/app.ts';
+import { OtapEnvs } from './cms-types.ts';
 
 export const CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS = ONE_HOUR_MS;
 export const notificationEnvMap = {

@@ -23,7 +23,7 @@ export function getElementOnPageAsync(
   interval: number = POLL_INTERVAL_MS
 ): { promise: Promise<Element | null>; cancel: () => void } {
   let timeout: ReturnType<typeof setTimeout> | null = null;
-  let resolve_: (result: Element | null) => void = () => {};
+  let resolve_: (result: Element | null) => void = () => undefined;
 
   function resolve(result: Element | null) {
     if (timeout !== null) {

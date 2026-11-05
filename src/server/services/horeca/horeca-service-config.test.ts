@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { createFetchDocumentsListUrl } from './horeca-service-config.ts';
 import { getDocumentsProvider } from '../shared/document-provider-registry.ts';
+import { createFetchDocumentsListUrl } from './horeca-service-config.ts';
 
 describe('horeca service config shared documents', () => {
   it('self-registers the horeca/decos provider', () => {

@@ -2,14 +2,14 @@ import { act } from 'react';
 
 import { renderHook } from '@testing-library/react';
 import nock from 'nock';
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
-  useBffApi,
-  sendFetchRequest,
-  sendJSONPostRequest,
-  sendFormPostRequest,
   isAborted,
+  sendFetchRequest,
+  sendFormPostRequest,
+  sendJSONPostRequest,
+  useBffApi,
 } from './useBffApi.ts';
 
 describe('useBffApi', () => {
@@ -86,7 +86,7 @@ describe('useBffApi', () => {
       })
     );
     // Wait for effect to finish
-    await act(async () => {});
+    await act(async () => undefined);
     expect(result.current.data).toEqual(mockResponse);
     expect(result.current.isDirty).toBe(true);
     expect(result.current.isPristine).toBe(false);

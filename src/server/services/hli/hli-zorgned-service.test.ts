@@ -1,8 +1,3 @@
-import {
-  fetchAdministratienummer,
-  fetchZorgnedAanvragenHLI,
-  forTesting,
-} from './hli-zorgned-service.ts';
 import { remoteApi } from '../../../testing/utils.ts';
 import * as zorgnedService from '../zorgned/zorgned-service.ts';
 import type {
@@ -10,6 +5,11 @@ import type {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedPersoonsgegevensNAWResponse,
 } from '../zorgned/zorgned-types.ts';
+import {
+  fetchAdministratienummer,
+  fetchZorgnedAanvragenHLI,
+  forTesting,
+} from './hli-zorgned-service.ts';
 import { AV_CZM } from './status-line-items/regeling-czm.ts';
 
 describe('hli-zorgned-service', () => {

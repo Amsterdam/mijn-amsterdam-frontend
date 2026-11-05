@@ -1,7 +1,6 @@
 import { Alert, Icon, Paragraph } from '@amsterdam/design-system-react';
 import { LinkExternalIcon } from '@amsterdam/design-system-react-icons';
 
-import { useParkerenData } from './useParkerenData.hook.tsx';
 import type { DecosZaakFrontend } from '../../../../../../server/services/vergunningen/config-and-types.ts';
 import { MaButtonLink } from '../../../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
@@ -10,6 +9,7 @@ import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
 import { useProfileTypeValue } from '../../../../../hooks/useProfileType.ts';
+import { useParkerenData } from './useParkerenData.hook.tsx';
 
 type PageContentTopProps = {
   hasMijnParkerenVergunningen: boolean;

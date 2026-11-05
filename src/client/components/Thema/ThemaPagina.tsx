@@ -2,17 +2,17 @@ import type { ReactNode } from 'react';
 
 import { LinkList } from '@amsterdam/design-system-react';
 
-import styles from './ThemaPagina.module.scss';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
 import type { LinkConfig } from '../../../universal/types/thema-types.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import { ErrorAlert } from '../Alert/Alert.tsx';
 import {
-  LoadingContent,
   type BarConfig,
+  LoadingContent,
 } from '../LoadingContent/LoadingContent.tsx';
 import { MaintenanceNotifications } from '../MaintenanceNotifications/MaintenanceNotifications.tsx';
 import { PageContentCell, PageV2 } from '../Page/Page.tsx';
+import styles from './ThemaPagina.module.scss';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
   ['20rem', '4rem', '4rem'],

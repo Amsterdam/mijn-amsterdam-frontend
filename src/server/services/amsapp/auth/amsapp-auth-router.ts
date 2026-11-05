@@ -1,4 +1,9 @@
 import {
+  apiKeyVerificationHandler,
+  handleIsAuthenticated,
+} from '../../../routing/route-handlers.ts';
+import { createBFFRouter } from '../../../routing/route-helpers.ts';
+import {
   handleAmsAppAuthCallback,
   handleAmsAppAuthLoginStart,
   handleAmsAppAuthLogout,
@@ -6,11 +11,6 @@ import {
   handleAmsAppAuthTokenExchange,
 } from './amsapp-auth-route-handlers.ts';
 import { featureToggle, routes } from './amsapp-auth-service-config.ts';
-import {
-  apiKeyVerificationHandler,
-  handleIsAuthenticated,
-} from '../../../routing/route-handlers.ts';
-import { createBFFRouter } from '../../../routing/route-helpers.ts';
 
 const routerPublic = createBFFRouter({
   id: 'external-consumer-public-amsapp-auth',

@@ -34,6 +34,7 @@ Tooling: Vitest + Testing Library, `happy-dom`.
 - Match the closest existing sibling test file’s style.
 
 ## Stubbing
+
 Use `bffApi`/`remoteApi` (`nock`) from `src/testing/utils.ts` for client HTTP stubbing, e.g. `bffApi.get('/services/...').reply(...)`.
 
 - Keep stubs close to each test and cover every expected request path.

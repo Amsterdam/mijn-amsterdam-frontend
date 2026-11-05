@@ -3,8 +3,8 @@ import { expect } from 'vitest';
 import { getStatusLineItems } from '../../../zorgned/zorgned-status-line-items.ts';
 import type {
   ZorgnedAanvraagTransformed,
-  ZorgnedStatusLineItemTransformerConfig,
   ZorgnedStatusLineItemsConfig,
+  ZorgnedStatusLineItemTransformerConfig,
 } from '../../../zorgned/zorgned-types.ts';
 
 export const today = new Date('2024-06-15T00:00:00.000Z');

@@ -44,7 +44,9 @@ export type ApiResponse_DEPRECATED<T> =
   | ApiPostponeResponse<T>;
 
 export type ApiResponse<T> =
-  ApiErrorResponse<null> | ApiSuccessResponse<T> | ApiPostponeResponse<null>;
+  | ApiErrorResponse<null>
+  | ApiSuccessResponse<T>
+  | ApiPostponeResponse<null>;
 
 export type ApiResponsePromise<T> = Promise<ApiResponse<T>>;
 
@@ -108,7 +110,7 @@ export function apiSuccessResult<T>(
 }
 
 export function getFailedDependencies<T extends object>(results: T) {
-  let failedDependencies: FailedDependencies | undefined = undefined;
+  let failedDependencies: FailedDependencies | undefined;
 
   for (const [key, apiResult] of Object.entries(results)) {
     if (apiResult?.status === 'ERROR') {

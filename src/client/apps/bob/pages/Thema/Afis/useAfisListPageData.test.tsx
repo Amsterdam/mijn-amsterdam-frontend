@@ -1,10 +1,10 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, type Mock } from 'vitest';
+import { describe, expect, it, type Mock, vi } from 'vitest';
 
-import type { AfisFactuurFrontend } from './Afis-thema-config.ts';
-import { useAfisListPageData } from './useAfisListPageData.tsx';
 import { bffApi } from '../../../../../../testing/utils.ts';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
+import type { AfisFactuurFrontend } from './Afis-thema-config.ts';
+import { useAfisListPageData } from './useAfisListPageData.tsx';
 
 vi.mock('../../../../../hooks/useAppStateStore');
 vi.mock('../../../../../hooks/useThemaBreadcrumbs');

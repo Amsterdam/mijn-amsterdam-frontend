@@ -1,5 +1,19 @@
 import * as ibantools from 'ibantools';
 
+import type { ApiResponse_DEPRECATED } from '../../../universal/helpers/api.ts';
+import {
+  type ApiResponse,
+  apiErrorResult,
+  apiSuccessResult,
+  getFailedDependencies,
+  getSettledResult,
+} from '../../../universal/helpers/api.ts';
+import { getFullAddress } from '../../../universal/helpers/brp.ts';
+import type { DataRequestConfig } from '../../config/source-api.ts';
+import {
+  getRequestParamsFromQueryString,
+  requestData,
+} from '../../helpers/source-api-request.ts';
 import {
   debugBusinesspartner,
   formatBusinessPartnerId,
@@ -24,20 +38,6 @@ import type {
   BusinessPartnerId,
   BusinessPartnerIdPayload,
 } from './afis-types.ts';
-import type { ApiResponse_DEPRECATED } from '../../../universal/helpers/api.ts';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-  getFailedDependencies,
-  getSettledResult,
-  type ApiResponse,
-} from '../../../universal/helpers/api.ts';
-import { getFullAddress } from '../../../universal/helpers/brp.ts';
-import type { DataRequestConfig } from '../../config/source-api.ts';
-import {
-  getRequestParamsFromQueryString,
-  requestData,
-} from '../../helpers/source-api-request.ts';
 
 function transformBusinessPartnerAddressResponse(
   response: AfisApiFeedResponseSource<AfisBusinessPartnerAddressSource>

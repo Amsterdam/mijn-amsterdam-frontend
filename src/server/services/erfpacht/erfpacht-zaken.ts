@@ -1,5 +1,22 @@
 import { generatePath } from 'react-router';
 
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
+import {
+  type ApiResponse,
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api.ts';
+import { dateSort, toISOString } from '../../../universal/helpers/date.ts';
+import type { SomeOtherString } from '../../../universal/helpers/types.ts';
+import { hash } from '../../../universal/helpers/utils.ts';
+import type {
+  LinkProps,
+  StatusLineItem,
+} from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 import { deriveDossierIdFromDossierNummer } from './erfpacht-dossiers.ts';
 import {
   dataRequestConfig,
@@ -23,23 +40,6 @@ import type {
   ZaakStatusFrontend,
   ZaakStatussenResponseSource,
 } from './erfpacht-zaken-types.ts';
-import { themaConfig } from '../../../client/apps/bob/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-  type ApiResponse,
-} from '../../../universal/helpers/api.ts';
-import { dateSort, toISOString } from '../../../universal/helpers/date.ts';
-import type { SomeOtherString } from '../../../universal/helpers/types.ts';
-import { hash } from '../../../universal/helpers/utils.ts';
-import type {
-  LinkProps,
-  StatusLineItem,
-} from '../../../universal/types/App.types.ts';
-import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
-import { requestData } from '../../helpers/source-api-request.ts';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 
 export function getDossierLinks(zaak: ZaakInfoSource): LinkProps[] {
   return (

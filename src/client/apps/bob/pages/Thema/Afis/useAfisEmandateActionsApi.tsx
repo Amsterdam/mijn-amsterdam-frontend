@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
-import { useSignRequestPayloadStorage } from './useAfisEMandatesSignRequest.tsx';
 import type {
   AfisEMandateFrontend,
   AfisEMandateSignRequestResponse,
@@ -11,11 +9,13 @@ import type {
 import { entries } from '../../../../../../universal/helpers/utils.ts';
 import { logger } from '../../../../../helpers/logging.ts';
 import {
-  useBffApi,
+  type RequestInitWithPayload,
   sendFetchRequest,
   sendFormPostRequest,
-  type RequestInitWithPayload,
+  useBffApi,
 } from '../../../../../hooks/api/useBffApi.ts';
+import { useSignRequestPayloadStorage } from './useAfisEMandatesSignRequest.tsx';
+import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
 
 function useRedirectUrlApi(
   eMandate: AfisEMandateFrontend,
@@ -129,6 +129,7 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
   const [showError, setShowError] = useState(false);
   const [lastActiveApi, setLastActiveApi] = useState<ApiName | null>(null);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Preserve the existing hook dependency exclusion.
   useEffect(() => {
     // Fetch the latest eMandates from the server after deactivating an eMandate.
     // The deactivated mandate should appear in the history section of the detail page, so we need to fetch the latest data to show that.
@@ -139,7 +140,6 @@ export function useEmandateApis(eMandate: AfisEMandateFrontend) {
     ) {
       fetchEMandates();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastActiveApi, deactivateApi.isLoading, deactivateApi.isError]);
 
   useEffect(() => {

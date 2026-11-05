@@ -5,11 +5,6 @@ import { decodeProtectedHeader, jwtVerify } from 'jose';
 import jwksClient from 'jwks-rsa';
 import uid from 'uid-safe';
 
-import {
-  sendServiceUnavailable,
-  sendUnauthorized,
-  type ResponseAuthenticated,
-} from './route-helpers.ts';
 import { apiSuccessResult } from '../../universal/helpers/api.ts';
 import {
   destroySession,
@@ -21,6 +16,11 @@ import type { AuthenticatedRequest } from '../auth/auth-types.ts';
 import { getFromEnv } from '../helpers/env.ts';
 import { IS_DB_ENABLED } from '../services/db/config.ts';
 import { captureException } from '../services/monitoring.ts';
+import {
+  type ResponseAuthenticated,
+  sendServiceUnavailable,
+  sendUnauthorized,
+} from './route-helpers.ts';
 
 export async function handleIsAuthenticated(
   req: Request,

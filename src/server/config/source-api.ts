@@ -2,12 +2,6 @@ import https from 'node:https';
 
 import type { AxiosHeaderValue, AxiosRequestConfig } from 'axios';
 
-import {
-  BFF_REQUEST_CACHE_ENABLED,
-  ONE_HOUR_MS,
-  ONE_MINUTE_MS,
-  ONE_SECOND_MS,
-} from './app.ts';
 import { themaConfig as themaConfigAfis } from '../../client/apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
 import { themaConfig as themaConfigBodem } from '../../client/apps/bob/pages/Thema/Bodem/Bodem-thema-config.ts';
 import { themaConfig as themaConfigJeugd } from '../../client/apps/bob/pages/Thema/Jeugd/Jeugd-thema-config.ts';
@@ -18,13 +12,18 @@ import { getCert } from '../helpers/cert.ts';
 import { getFromEnv } from '../helpers/env.ts';
 import { getHostNameFromUrl } from '../helpers/source-api-helpers.ts';
 import { featureToggle as featureToggleHLI } from '../services/hli/hli-service-config.ts';
+import {
+  BFF_REQUEST_CACHE_ENABLED,
+  ONE_HOUR_MS,
+  ONE_MINUTE_MS,
+  ONE_SECOND_MS,
+} from './app.ts';
 
 const RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS = ONE_HOUR_MS;
 export const FORCE_RENEW_CACHE_TTL_MS = 1;
 
 let adHocDependencyRequestCacheTtlMs: undefined | number;
-let resetAdHocDependencyRequestCacheTtlMsTimeout: NodeJS.Timeout | undefined =
-  undefined;
+let resetAdHocDependencyRequestCacheTtlMsTimeout: NodeJS.Timeout | undefined;
 
 export function setAdHocDependencyRequestCacheTtlMs(
   cacheTtl: typeof adHocDependencyRequestCacheTtlMs
@@ -38,6 +37,7 @@ export function setAdHocDependencyRequestCacheTtlMs(
 
 export type DataRequestHeaders = Record<string, AxiosHeaderValue | undefined>;
 
+// biome-ignore lint/suspicious/noExplicitAny: Legacy transformer input default.
 export type DataRequestResponseTransformer<S = any, T = unknown> = (
   data: S,
   headers: DataRequestHeaders,

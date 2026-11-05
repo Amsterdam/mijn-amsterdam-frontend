@@ -1,9 +1,9 @@
 import { useParams } from 'react-router';
 
-import { useVergunningDocumentList } from './detail-page-content/useVergunningDocumentsList.hook.ts';
-import { themaConfig } from './Vergunningen-thema-config.ts';
 import type { ZaakFrontendCombined } from '../../../../../../server/services/vergunningen/config-and-types.ts';
 import { logger } from '../../../../../helpers/logging.ts';
+import { useVergunningDocumentList } from './detail-page-content/useVergunningDocumentsList.hook.ts';
+import { themaConfig } from './Vergunningen-thema-config.ts';
 
 export function useVergunningenDetailData<T extends ZaakFrontendCombined>(
   vergunningen: T[]

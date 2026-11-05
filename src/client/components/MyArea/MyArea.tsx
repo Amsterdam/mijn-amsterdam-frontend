@@ -1,12 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMapInstance } from '@amsterdam/react-maps';
-import type { LatLngLiteral, TileLayerOptions } from 'leaflet';
 import type L from 'leaflet';
+import type { LatLngLiteral, TileLayerOptions } from 'leaflet';
 
+import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets.ts';
 import { DEFAULT_MAP_OPTIONS } from '../../apps/bob/config/map.ts';
+import iconUrlCommercialSecondary from '../../assets/icons/map/homeSecondaryCommercial.svg';
 import { useWidescreen } from '../../hooks/media.hook.ts';
 import { getElementSize } from '../../hooks/useComponentSize.ts';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
+import { AmsMainMenuClassname } from '../MainHeader/MainHeader.tsx';
 import { MaintenanceNotifications } from '../MaintenanceNotifications/MaintenanceNotifications.tsx';
 import { LegendPanel } from './LegendPanel/LegendPanel.tsx';
 import {
@@ -24,18 +28,14 @@ import {
 import { MaMap as Map } from './Map/Map.tsx';
 import { ViewerContainer } from './Map/ViewerContainer.tsx';
 import { ZoomControl } from './Map/ZoomControl.tsx';
-import { routeConfig } from './MyArea-thema-config.ts';
 import type { MapLocationMarker } from './MyArea.hooks.ts';
 import { useMapLocations, useSetMapCenterAtLocation } from './MyArea.hooks.ts';
 import styles from './MyArea.module.scss';
+import { routeConfig } from './MyArea-thema-config.ts';
 import { MyAreaCustomLocationControlButton } from './MyAreaCustomLocationControlButton.tsx';
 import { MyAreaDatasets } from './MyAreaDatasets.tsx';
 import { HomeControlButton } from './MyAreaHomeControlButton.tsx';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker.tsx';
-import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets.ts';
-import iconUrlCommercialSecondary from '../../assets/icons/map/homeSecondaryCommercial.svg';
-import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
-import { AmsMainMenuClassname } from '../MainHeader/MainHeader.tsx';
 
 const baseLayerOptions: TileLayerOptions = {
   subdomains: ['t1', 't2', 't3', 't4'],
@@ -126,6 +126,7 @@ export function MyArea({
   );
 
   const mapOptions: Partial<L.MapOptions & { center: LatLngLiteral }> =
+    // biome-ignore lint/correctness/useExhaustiveDependencies: Preserve the existing hook dependency exclusion.
     useMemo(() => {
       const options = {
         ...DEFAULT_MAP_OPTIONS,
@@ -136,7 +137,6 @@ export function MyArea({
       return options;
       // Disable hook dependencies, the mapOptions only need to be determined once.
       // Using memo here because we don't need the options to cause re-renders of the <Map/> component.
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
   const { detailState, filterState } = useLegendPanelCycle();
@@ -166,7 +166,7 @@ export function MyArea({
   useEffect(() => {
     updateViewportHeight();
     setIsReadyToRender(true);
-  }, [setIsReadyToRender]);
+  }, []);
 
   return (
     <div className={styles.Container}>

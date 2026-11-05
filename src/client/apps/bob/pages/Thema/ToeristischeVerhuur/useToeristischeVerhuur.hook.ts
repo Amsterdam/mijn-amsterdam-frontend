@@ -1,11 +1,3 @@
-import {
-  tableConfigLVVRegistraties,
-  tableConfig,
-  themaConfig,
-  vvVergunningPageLinkItem,
-  bbVergunningPageLinkItem,
-  bbVergunningPageLinkItemOvergangsrecht,
-} from './ToeristischeVerhuur-thema-config.ts';
 import type { ToeristischeVerhuurVergunning } from '../../../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
 import {
   hasFailedDependency,
@@ -16,6 +8,14 @@ import { addLinkElementToProperty } from '../../../../../components/Table/TableV
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
+import {
+  bbVergunningPageLinkItem,
+  bbVergunningPageLinkItemOvergangsrecht,
+  tableConfig,
+  tableConfigLVVRegistraties,
+  themaConfig,
+  vvVergunningPageLinkItem,
+} from './ToeristischeVerhuur-thema-config.ts';
 
 export const BB_VERGUNNING_DISCLAIMER =
   'Bed & breakfast vergunningen die vóór 14 mei 2021 zijn aangevraagd kunnen niet worden getoond';

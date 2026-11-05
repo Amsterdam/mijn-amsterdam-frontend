@@ -1,4 +1,5 @@
 ---
+
 name: write-a-prd
 description: Create a PRD through user interview, codebase exploration, and module design, then write the PRD to a date-prefixed feature folder under ./docs/plan/ (alongside plan.md if it exists). Use when user wants to write a PRD, create a product requirements document, or plan a new feature.
 ---

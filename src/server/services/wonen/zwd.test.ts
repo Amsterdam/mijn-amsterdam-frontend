@@ -1,7 +1,7 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import * as zwdVve from './zwd.ts';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import * as zwdVve from './zwd.ts';
 
 vi.mock('../bag/my-locations', () => ({
   fetchPrivate: vi.fn().mockResolvedValue({

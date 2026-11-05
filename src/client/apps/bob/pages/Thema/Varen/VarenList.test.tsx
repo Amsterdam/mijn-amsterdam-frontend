@@ -3,8 +3,6 @@ import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { themaConfig } from './Varen-thema-config.ts';
-import { VarenList } from './VarenList.tsx';
 import type {
   VarenVergunningFrontend,
   VarenZakenFrontend,
@@ -14,6 +12,8 @@ import { jsonCopy } from '../../../../../../universal/helpers/utils.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { expectHeaders } from '../../../../../helpers/test-utils.ts';
 import { MockApp } from '../../MockApp.tsx';
+import { themaConfig } from './Varen-thema-config.ts';
+import { VarenList } from './VarenList.tsx';
 
 type ExploitatieAanvraag = VarenZakenFrontend<ZaakVergunningExploitatieType>;
 const exploitatieInProgress: ExploitatieAanvraag = {

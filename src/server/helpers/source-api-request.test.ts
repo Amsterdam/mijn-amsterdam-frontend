@@ -11,17 +11,6 @@ import {
   vi,
 } from 'vitest';
 
-import { encrypt } from './encrypt-decrypt.ts';
-import {
-  createSessionBasedCacheKey,
-  getRequestConfigCacheKey,
-} from './source-api-helpers.ts';
-import {
-  axiosRequest,
-  findApiByRequestUrl,
-  forTesting,
-  requestData,
-} from './source-api-request.ts';
 import { remoteApiHost } from '../../testing/setup.ts';
 import { getAuthProfileAndToken, remoteApi } from '../../testing/utils.ts';
 import {
@@ -35,6 +24,17 @@ import {
   FORCE_RENEW_CACHE_TTL_MS,
 } from '../config/source-api.ts';
 import { captureException } from '../services/monitoring.ts';
+import { encrypt } from './encrypt-decrypt.ts';
+import {
+  createSessionBasedCacheKey,
+  getRequestConfigCacheKey,
+} from './source-api-helpers.ts';
+import {
+  axiosRequest,
+  findApiByRequestUrl,
+  forTesting,
+  requestData,
+} from './source-api-request.ts';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -389,7 +389,7 @@ describe('requestData', () => {
   });
 
   test('OIDC Bearer token _is_ passed _and_ overridden', async () => {
-    const rs = await requestData(
+    await requestData(
       {
         url: DUMMY_URL,
         passthroughOIDCToken: true,

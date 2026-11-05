@@ -1,13 +1,5 @@
 import type { Response } from 'express';
 
-import { SELECT_FIELDS_TRANSFORM_BASE } from './decos-field-transformers.ts';
-import {
-  fetchDecosDocumentList,
-  fetchDecosZaakByKeyFromSourceRaw,
-  fetchDecosZakenFromSourceRaw,
-  ZAAK_SUB_TYPE,
-} from './decos-service.ts';
-import type { DecosZaakBase } from './decos-types.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
@@ -17,11 +9,19 @@ import {
 } from '../../helpers/test-accounts.ts';
 import type { RequestWithQueryParams } from '../../routing/route-helpers.ts';
 import {
+  type ResponseAuthenticated,
   sendBadRequest,
   sendResponse,
-  type ResponseAuthenticated,
 } from '../../routing/route-helpers.ts';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param.ts';
+import { SELECT_FIELDS_TRANSFORM_BASE } from './decos-field-transformers.ts';
+import {
+  fetchDecosDocumentList,
+  fetchDecosZaakByKeyFromSourceRaw,
+  fetchDecosZakenFromSourceRaw,
+  ZAAK_SUB_TYPE,
+} from './decos-service.ts';
+import type { DecosZaakBase } from './decos-types.ts';
 
 export async function handleFetchDecosDocumentsList(
   req: RequestWithQueryParams<{ id: string }>,

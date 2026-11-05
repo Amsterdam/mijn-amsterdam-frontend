@@ -1,17 +1,17 @@
 import appInsights from 'applicationinsights';
 import {
   type ExceptionTelemetry,
+  SeverityLevel,
   type Telemetry,
   type TraceTelemetry,
-  SeverityLevel,
 } from 'applicationinsights/out/Declarations/Contracts/index.js';
 
+import { logger } from '../logging.ts';
 import {
+  shouldSendExceptionData,
   shouldSendRemoteDependencyData,
   shouldSendRequestData,
-  shouldSendExceptionData,
 } from './should-send-telemetry.ts';
-import { logger } from '../logging.ts';
 
 const logToApplicationInsights =
   process.env.APPLICATIONINSIGHTS_CONNECTION_STRING &&
@@ -37,7 +37,7 @@ const client: appInsights.TelemetryClient | undefined =
 
 if (client) {
   // Reason: Type is known. It is the same type as the keyname.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
   const shouldSendTelemetry: Record<string, (data: any) => boolean> = {
     RequestData: shouldSendRequestData,
     RemoteDependencyData: shouldSendRemoteDependencyData,
