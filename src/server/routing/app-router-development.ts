@@ -1,17 +1,28 @@
+import { differenceInSeconds } from 'date-fns';
 import type { Request, Response } from 'express';
+import type { AccessToken } from 'express-openid-connect';
 import UID from 'uid-safe';
 
 import { apiSuccessResult } from '../../universal/helpers/api.ts';
 import { getReturnToUrl } from '../auth/auth-after-redirect-returnto.ts';
-import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config.ts';
+import {
+  OIDC_SESSION_COOKIE_NAME,
+  OIDC_SESSION_MAX_AGE_SECONDS,
+  TOKEN_ID_ATTRIBUTE,
+} from '../auth/auth-config.ts';
 import {
   destroySession,
   getAuth,
   hasSessionCookie,
 } from '../auth/auth-helpers.ts';
+import { signDevelopmentToken } from '../auth/auth-helpers-development.ts';
 import { authRoutes } from '../auth/auth-routes.ts';
-import type { AuthenticatedRequest, AuthProfile } from '../auth/auth-types.ts';
-import { MA_FRONTEND_URL } from '../config/app.ts';
+import type {
+  AuthenticatedRequest,
+  AuthProfile,
+  MaSession,
+} from '../auth/auth-types.ts';
+import { MA_FRONTEND_URL, ONE_SECOND_MS } from '../config/app.ts';
 import { getFromEnv, getValueFromEnvByKey } from '../helpers/env.ts';
 import {
   fetchTestAccountOverviewFile,
@@ -166,11 +177,7 @@ authRouterDevelopment.get(
     const SESSION_ID_BYTE_LENGTH = 18;
     const sessionID = UID.sync(SESSION_ID_BYTE_LENGTH);
     const authProfile: AuthProfile = {
-      id: getTokenProfileId(
-        authMethod,
-        profileId,
-        req.query.gemachtigdVoor
-      ),
+      id: getTokenProfileId(authMethod, profileId, req.query.gemachtigdVoor),
       authMethod,
       profileType: authMethod === 'eherkenning' ? 'commercial' : 'private',
       sid: sessionID,
@@ -320,13 +327,15 @@ function addLoginLinkToUsernameProp(
       username: account.username,
     };
 
-    const authLoginRoute = generateFullApiUrlBFF(authRoute, [ {
+    const authLoginRoute = generateFullApiUrlBFF(authRoute, [
+      {
         ...queryParams,
         ...(authMethod === 'digidGemachtigd' &&
         typeof account.gemachtigdVoor === 'string'
           ? { gemachtigdVoor: account.gemachtigdVoor }
           : {}),
-      }]);
+      },
+    ]);
     return {
       ...account,
       username: `<a href="${authLoginRoute}" class="test-account-name">${account.username.replace(/^[a-zA-Z]_/, '')}</a>`,
@@ -400,4 +409,3 @@ authRouterDevelopment.get(
     return sendUnauthorized(res);
   }
 );
-
