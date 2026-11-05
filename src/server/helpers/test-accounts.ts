@@ -16,6 +16,7 @@ type TableHeader = {
 export type TestUserAccount = {
   username: string;
   profileId: string;
+  gemachtigdVoor?: string;
   brpBsn: string;
   mokum: string;
   hasChildren: string;

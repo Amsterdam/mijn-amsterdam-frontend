@@ -42,13 +42,30 @@ export async function fetchParkeren(authProfileAndToken: AuthProfileAndToken) {
   const decosParkeerVergunningenResponse =
     await fetchDecosParkeerVergunningen(authProfileAndToken);
 
+  let filteredParkeerVergunningen;
+  if (
+    authProfileAndToken.profile.authMethod === 'digidGemachtigd' &&
+    decosParkeerVergunningenResponse?.content
+  ) {
+    const filteredItems = decosParkeerVergunningenResponse.content.filter(
+      (item) => item.caseType === 'GPK Machtigen'
+    );
+
+    filteredParkeerVergunningen = {
+      ...decosParkeerVergunningenResponse,
+      content: filteredItems,
+    };
+  } else {
+    filteredParkeerVergunningen = decosParkeerVergunningenResponse;
+  }
+
   return apiSuccessResult(
     {
       isKnown,
       url: url ?? getFromEnv('BFF_PARKEREN_PORTAAL_URL'),
       vergunningen:
         decosParkeerVergunningenResponse.status === 'OK'
-          ? decosParkeerVergunningenResponse.content
+          ? filteredParkeerVergunningen.content
           : [],
     },
     getFailedDependencies({ vergunningen: decosParkeerVergunningenResponse })

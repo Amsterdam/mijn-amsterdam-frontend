@@ -4286,6 +4286,7 @@
     {
       "aNummer": "4078264913",
       "burgerservicenummer": "999992727",
+      "gemachtigdVoor": "999991863",
       "geslacht": {
         "code": "M",
         "omschrijving": "man"

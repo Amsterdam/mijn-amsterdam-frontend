@@ -1,6 +1,11 @@
 import { useRef, useState } from 'react';
 
-import { Heading, Link, Paragraph } from '@amsterdam/design-system-react';
+import {
+  ActionGroup,
+  Heading,
+  Link,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import { FeatureToggle } from '../../../../../universal/config/feature-toggles.ts';
@@ -9,7 +14,11 @@ import { LogoEherkenning } from '../../../../assets/images/LogoEherkenning.tsx';
 import { MaintenanceNotifications } from '../../../../components/MaintenanceNotifications/MaintenanceNotifications.tsx';
 import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
-import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api.ts';
+import {
+  LOGIN_URL_DIGID,
+  LOGIN_URL_DIGID_GEMACHTIGD,
+  LOGIN_URL_EHERKENNING,
+} from '../../config/api.ts';
 import styles from './Landing.module.scss';
 import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Landing-routes.ts';
 
@@ -44,27 +53,25 @@ export function LandingPage() {
             Voor particulieren en eenmanszaken
           </Heading>
         )}
-        <Paragraph>
-          <a
-            ref={loginButton}
-            role="button"
-            href={LOGIN_URL_DIGID}
-            onClick={() => setRedirecting(true)}
-            rel="noopener noreferrer"
-            className={classnames(
-              styles.LoginBtn,
-              styles['LoginBtn--digid'],
-              isRedirectingAny && styles.LoginBtnDisabled
-            )}
-          >
-            <span className={styles.LoginLogoWrap}>
-              <LogoDigiD />
-            </span>
-            <span className={styles.LoginButtonText}>
-              {isRedirecting ? 'Bezig met inloggen...' : 'Inloggen met DigiD'}
-            </span>
-          </a>
-        </Paragraph>
+        <a
+          ref={loginButton}
+          role="button"
+          href={LOGIN_URL_DIGID_GEMACHTIGD}
+          onClick={() => setRedirecting(true)}
+          rel="noopener noreferrer"
+          className={classnames(
+            styles.LoginBtn,
+            styles['LoginBtn--digidGemachtigd'],
+            isRedirectingAny && styles.LoginBtnDisabled
+          )}
+        >
+          <span className={styles.LoginLogoWrap}>
+            <LogoDigiD />
+          </span>
+          <span className={styles.LoginButtonText}>
+            {isRedirecting ? 'Bezig met inloggen...' : 'Inloggen met DigiD'}
+          </span>
+        </a>
         <Paragraph className="ams-mb-l">
           Heeft u nog geen DigiD? Regel dit dan eerst.
           <br />

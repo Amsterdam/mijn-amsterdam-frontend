@@ -36,6 +36,7 @@ export const BFFApiUrls = {
 
 // Urls directly used from front-end
 export const LOGIN_URL_DIGID = `${BFF_API_BASE_URL}/auth/digid/login`;
+export const LOGIN_URL_DIGID_GEMACHTIGD = `${BFF_API_BASE_URL}/auth/digidGemachtigd/login`;
 export const LOGIN_URL_EHERKENNING = `${BFF_API_BASE_URL}/auth/eherkenning/login`;
 export const LOGOUT_URL = `${BFF_API_BASE_URL}/auth/logout`;
 export const AUTH_API_URL = `${BFF_API_BASE_URL}/auth/check`;
@@ -45,10 +46,12 @@ export const AUTH_API_URL_DIGID = `${BFF_API_BASE_URL}/auth/digid/check`;
 export const loginUrlByAuthMethod: Record<string, string> = {
   eherkenning: LOGIN_URL_EHERKENNING,
   digid: LOGIN_URL_DIGID,
+  digidGemachtigd: LOGIN_URL_DIGID_GEMACHTIGD,
 };
 
 export const ExcludePageViewTrackingUrls = [
   LOGIN_URL_DIGID,
+  LOGIN_URL_DIGID_GEMACHTIGD,
   LOGIN_URL_EHERKENNING,
 ];
 
