@@ -22,7 +22,7 @@ RUN corepack prepare pnpm@10.11.0 --activate
 # Start with a node image for build dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM node-with-pnpm-installed AS build-deps
+FROM node-with-pnpm-installed AS dependencies
 
 WORKDIR /app
 
@@ -34,6 +34,8 @@ COPY vendor /app/vendor
 
 # Install the dependencies
 RUN pnpm install --frozen-lockfile --prefer-offline --reporter=append-only
+
+FROM dependencies AS build-deps
 
 # Test + dev related files
 COPY src/mocks-server/fixtures /app/src/mocks-server/fixtures
@@ -132,7 +134,7 @@ CMD nginx -g 'daemon off;'
 # Bff Web server image
 ########################################################################################################################
 ########################################################################################################################
-FROM app-code-bff AS deploy-bff-az
+FROM node-with-pnpm-installed AS bff-runtime-base
 
 # Change source to https as http calls were blocked by Azure firewall
 RUN sed -i 's|http:|https:|' /etc/apt/sources.list.d/*.sources
@@ -143,19 +145,8 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends \
   nano \
   rsync \
-  openssh-server
-
-ARG MA_OTAP_ENV=production
-ENV MA_OTAP_ENV=$MA_OTAP_ENV
-
-ARG MA_CONTAINER_SSH_ENABLED=false
-ENV MA_CONTAINER_SSH_ENABLED=$MA_CONTAINER_SSH_ENABLED
-
-ARG MA_BUILD_ID=0
-ENV MA_BUILD_ID=$MA_BUILD_ID
-
-ARG MA_GIT_SHA=-1
-ENV MA_GIT_SHA=$MA_GIT_SHA
+  openssh-server \
+  && rm -rf /var/lib/apt/lists/*
 
 # Tell node to use the OpenSSL (OS installed) Certificates
 ENV NODE_OPTIONS=--use-openssl-ca
@@ -174,15 +165,36 @@ RUN chmod u+x /usr/local/bin/docker-entrypoint-bff.sh
 # Webjob scripts
 COPY scripts/webjobs/triggered /app/jobs/triggered
 
+# SSH config
+COPY conf/sshd_config /etc/ssh/
+
+
+FROM bff-runtime-base AS deploy-bff-az
+
+WORKDIR /app
+
+COPY --from=dependencies /app/node_modules /app/node_modules
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .env.local.template /app/
+
 # Copy the built application files to the current image
+COPY --from=app-code-bff /app/build-bff /app/build-bff
 COPY db-migrations /app/db-migrations
 COPY src/server/views /app/build-bff/server/views
 
+ARG MA_OTAP_ENV=production
+ENV MA_OTAP_ENV=$MA_OTAP_ENV
+
+ARG MA_CONTAINER_SSH_ENABLED=false
+ENV MA_CONTAINER_SSH_ENABLED=$MA_CONTAINER_SSH_ENABLED
+
+ARG MA_BUILD_ID=0
+ENV MA_BUILD_ID=$MA_BUILD_ID
+
+ARG MA_GIT_SHA=-1
+ENV MA_GIT_SHA=$MA_GIT_SHA
+
 # ssh (see also: https://github.com/Azure-Samples/docker-django-webapp-linux)
 RUN --mount=type=secret,id=SSH_PASSWD export SSH_PASSWD=$(cat /run/secrets/SSH_PASSWD) && echo "$SSH_PASSWD" | chpasswd
-
-# SSH config
-COPY conf/sshd_config /etc/ssh/
 
 # Run the app
 CMD /usr/local/bin/docker-entrypoint-bff.sh
