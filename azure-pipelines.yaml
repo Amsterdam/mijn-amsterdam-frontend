@@ -88,6 +88,10 @@ parameters:
     displayName: UI image tag - used if btdBuild is false. Examples ui-$(Build.BuildId) ui-latest
     type: string
     default: ui-$(Build.BuildId)
+  - name: btdDeploy
+    displayName: DEPLOY - Select if you want to deploy the app.
+    type: boolean
+    default: true
 
 variables:
   - name: system.debug
@@ -101,7 +105,7 @@ variables:
   - name: dtapName
     value: ${{ parameters.dtapName }}
   - name: btdDeploy
-    value: true
+    value: ${{ parameters.btdDeploy }}
 
   # Overrides if the branch is testen, az-acceptance or main
   - ${{ if eq(parameters.dtapName, 'auto') }}:
