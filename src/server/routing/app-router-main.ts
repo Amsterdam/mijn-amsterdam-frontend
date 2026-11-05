@@ -5,13 +5,13 @@ import { authRouterDevelopment } from './app-router-development.ts';
 import { oidcRouter } from './app-router-oidc.ts';
 import { router as privateNetworkRouter } from './app-router-private.ts';
 import { router as protectedRouter } from './app-router-protected.ts';
-import { router as routerPublicExternalConsumer } from './app-router-public-external-consumer.ts';
 import { legacyRouter, router as publicRouter } from './app-router-public.ts';
+import { router as routerPublicExternalConsumer } from './app-router-public-external-consumer.ts';
 import {
-  BffEndpoints,
   BFF_BASE_PATH,
   BFF_BASE_PATH_ADMIN,
   BFF_BASE_PATH_PRIVATE,
+  BffEndpoints,
 } from './bff-routes.ts';
 import { handleIsAuthenticated, nocache } from './route-handlers.ts';
 import { createBFFRouter, generateFullApiUrlBFF } from './route-helpers.ts';
@@ -21,10 +21,7 @@ type CreateMainRouterOptions = {
   isAP: boolean;
 };
 
-export function createMainRouter({
-  isOT: isOT,
-  isAP: isAP,
-}: CreateMainRouterOptions) {
+export function createMainRouter({ isOT, isAP }: CreateMainRouterOptions) {
   const router = createBFFRouter({ id: 'router-main' });
 
   // Some legacy routes that are not prefixed with /api/v1

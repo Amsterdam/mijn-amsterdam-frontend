@@ -1,9 +1,9 @@
-import { tableConfig, themaConfig } from './AVG-thema-config.ts';
 import { isError } from '../../../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
+import { tableConfig, themaConfig } from './AVG-thema-config.ts';
 
 export function useAVGData() {
   const { AVG } = useAppStateGetter();

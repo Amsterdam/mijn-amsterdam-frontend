@@ -1,6 +1,10 @@
 import FOOTER from '../fixtures/cms-footer.json' with { type: 'json' };
-import DETAIL_RESPONSE from '../fixtures/cms-maintenance-notifications-item.json' with { type: 'json' };
-import PRODUCTEN_OP_MA from '../fixtures/cms-producten.json' with { type: 'json' };
+import DETAIL_RESPONSE from '../fixtures/cms-maintenance-notifications-item.json' with {
+  type: 'json',
+};
+import PRODUCTEN_OP_MA from '../fixtures/cms-producten.json' with {
+  type: 'json',
+};
 import { loadFixtureAndReplaceBaseUrl } from '../helpers/load-fixture-and-replace-base-url.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';

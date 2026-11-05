@@ -1,40 +1,12 @@
 import { HttpStatusCode } from 'axios';
 import { isAfter, parseISO, subYears } from 'date-fns';
 
-import {
-  ADRES_IN_ONDERZOEK_B,
-  GEMEENTE_CODE_AMSTERDAM,
-  LANDCODE_NEDERLAND,
-  LANDCODE_ONBEKEND,
-  ADRES_IN_ONDERZOEK_A,
-  AANTAL_INGESCHREVEN_PERSONEN_NOT_SET,
-} from './brp-config.ts';
-import { featureToggle, routes } from './brp-service-config.ts';
-import {
-  DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
-  DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
-} from './brp-service-config.ts';
-import {
-  type BrpFrontend,
-  type PersonenResponseSource,
-  type DatumSource,
-  type Adres,
-  type VerblijfplaatshistorieResponseSource,
-  type VerblijfplaatsSource,
-} from './brp-types.ts';
-import type {
-  PersonenResponseSourceError,
-  Persoon,
-  PersoonBasis,
-  PersoonBasisSource,
-  PersoonSource,
-} from './brp-types.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import {
+  type ApiResponse,
   apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
-  type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import type {
   AuthProfile,
@@ -51,7 +23,34 @@ import {
 import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token.ts';
 import { getContextOperationId } from '../monitoring.ts';
-import { type BSN } from '../zorgned/zorgned-types.ts';
+import type { BSN } from '../zorgned/zorgned-types.ts';
+import {
+  AANTAL_INGESCHREVEN_PERSONEN_NOT_SET,
+  ADRES_IN_ONDERZOEK_A,
+  ADRES_IN_ONDERZOEK_B,
+  GEMEENTE_CODE_AMSTERDAM,
+  LANDCODE_NEDERLAND,
+  LANDCODE_ONBEKEND,
+} from './brp-config.ts';
+import {
+  DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_FROM,
+  DEFAULT_VERBLIJFPLAATSHISTORIE_DATE_TO,
+  featureToggle,
+  routes,
+} from './brp-service-config.ts';
+import type {
+  Adres,
+  BrpFrontend,
+  DatumSource,
+  PersonenResponseSource,
+  PersonenResponseSourceError,
+  Persoon,
+  PersoonBasis,
+  PersoonBasisSource,
+  PersoonSource,
+  VerblijfplaatshistorieResponseSource,
+  VerblijfplaatsSource,
+} from './brp-types.ts';
 
 const TOKEN_VALIDITY_PERIOD = 1 * ONE_HOUR_MS;
 const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;

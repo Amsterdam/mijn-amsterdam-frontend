@@ -1,5 +1,10 @@
 import type { Response } from 'express';
 
+import {
+  type RequestWithQueryParams,
+  sendBadRequestInvalidInput,
+  sendResponse,
+} from '../../routing/route-helpers.ts';
 import { SURVEY_ID_INLINE_KTO } from './user-feedback.service-config.ts';
 import { fetchUserFeedbackSurvey, saveUserFeedback } from './user-feedback.ts';
 import {
@@ -7,11 +12,6 @@ import {
   type UserFeedbackInput,
   userFeedbackInput,
 } from './user-feedback.types.ts';
-import {
-  sendBadRequestInvalidInput,
-  sendResponse,
-  type RequestWithQueryParams,
-} from '../../routing/route-helpers.ts';
 
 export async function handleFetchSurvey(
   req: RequestWithQueryParams<{ id?: Survey['unique_code']; version?: string }>,

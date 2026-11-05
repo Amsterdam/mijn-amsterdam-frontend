@@ -13,21 +13,21 @@ import {
   CloseIcon,
 } from '@amsterdam/design-system-react-icons';
 import {
-  animated,
-  useSpring,
   type AnimatedProps,
+  animated,
   type SpringValues,
+  useSpring,
 } from '@react-spring/web';
 import classnames from 'classnames';
 import { useSwipeable } from 'react-swipeable';
 
+import { useWidescreen } from '../../../hooks/media.hook.ts';
 import styles from './PanelComponent.module.scss';
 import {
   getPanelSize,
   PanelState,
   type usePanelStateCycle,
 } from './panelCycle.ts';
-import { useWidescreen } from '../../../hooks/media.hook.ts';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 

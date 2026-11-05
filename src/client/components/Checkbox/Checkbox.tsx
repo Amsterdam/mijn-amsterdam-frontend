@@ -10,8 +10,8 @@ import {
 
 import classnames from 'classnames';
 
-import styles from './Checkbox.module.scss';
 import { IconCheckmark, IconIndeterminate } from '../../assets/icons/index.tsx';
+import styles from './Checkbox.module.scss';
 
 type CheckboxProps = {
   checked?: boolean;
@@ -45,14 +45,14 @@ export const Checkbox = forwardRef<
       if (ref.current) {
         ref.current.indeterminate = indeterminate ?? false;
       }
-    }, [ref, indeterminate]);
+    }, [indeterminate]);
 
     // Make the label aware of changes in the checked state
 
     // Make the component aware of changes in the checked prop
     useMemo(() => {
       setChecked(!!checkedProp);
-    }, [checkedProp, setChecked]);
+    }, [checkedProp]);
 
     return (
       <span

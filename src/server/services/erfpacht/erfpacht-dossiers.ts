@@ -1,22 +1,22 @@
 import { generatePath } from 'react-router';
 
-import { dataRequestConfig } from './erfpacht-service-config.ts';
-import type {
-  ErfpachtErpachterResponseSource,
-  ErfpachtDossiersResponse,
-  ErfpachtDossiersDetail,
-  ErfpachtDossiersDetailSource,
-  ErfpachtDossierSource,
-  ErfpachtDossierPropsFrontend,
-} from './erfpacht-types.ts';
-import { type ErfpachtDossiersResponseSource } from './erfpacht-types.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
-import { type ApiResponse } from '../../../universal/helpers/api.ts';
+import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import { jsonCopy, sortAlpha } from '../../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
+import { dataRequestConfig } from './erfpacht-service-config.ts';
+import type {
+  ErfpachtDossierPropsFrontend,
+  ErfpachtDossierSource,
+  ErfpachtDossiersDetail,
+  ErfpachtDossiersDetailSource,
+  ErfpachtDossiersResponse,
+  ErfpachtDossiersResponseSource,
+  ErfpachtErpachterResponseSource,
+} from './erfpacht-types.ts';
 
 // Transforms numbers like EW/123/456 into EW.123.456, E/567/22 into E.567.22 for use in URL paths.
 export function deriveDossierIdFromDossierNummer(

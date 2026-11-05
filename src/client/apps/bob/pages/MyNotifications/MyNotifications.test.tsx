@@ -1,14 +1,14 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { MockApp } from '../MockApp.tsx';
-import { MyNotificationsRoute } from './MyNotifications-routes.ts';
-import { MyNotificationsPage } from './MyNotifications.tsx';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
 import { themaId as themaIdDashboard } from '../Dashboard/Dashboard-config.ts';
+import { MockApp } from '../MockApp.tsx';
 import { themaConfig as themaInkomen } from '../Thema/Inkomen/Inkomen-thema-config.ts';
 import { themaConfig as themaParkeren } from '../Thema/Parkeren/Parkeren-thema-config.ts';
 import { themaConfig as themaProfiles } from '../Thema/Profile/Profile-thema-config.ts';
+import { MyNotificationsPage } from './MyNotifications.tsx';
+import { MyNotificationsRoute } from './MyNotifications-routes.ts';
 
 const testState = {
   NOTIFICATIONS: {

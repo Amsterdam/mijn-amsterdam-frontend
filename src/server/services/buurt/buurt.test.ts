@@ -1,6 +1,15 @@
 import type { Mock } from 'vitest';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
+import type { DatasetFilterSelection } from '../../../universal/config/myarea-datasets.ts';
+import { POLYLINE_GEOMETRY_TYPES } from '../../../universal/config/myarea-datasets.ts';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api.ts';
+import { jsonCopy, omit } from '../../../universal/helpers/utils.ts';
+import { FileCache } from '../../helpers/file-cache.ts';
+import { requestData } from '../../helpers/source-api-request.ts';
 import * as service from './buurt.ts';
 import type {
   DatasetConfig,
@@ -20,15 +29,6 @@ import {
   getDatasetEndpointConfig,
   getDynamicDatasetFilters,
 } from './helpers.ts';
-import type { DatasetFilterSelection } from '../../../universal/config/myarea-datasets.ts';
-import { POLYLINE_GEOMETRY_TYPES } from '../../../universal/config/myarea-datasets.ts';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-} from '../../../universal/helpers/api.ts';
-import { jsonCopy, omit } from '../../../universal/helpers/utils.ts';
-import { FileCache } from '../../helpers/file-cache.ts';
-import { requestData } from '../../helpers/source-api-request.ts';
 
 const DUMMY_DATA_RESPONSE = apiSuccessResult([
   { properties: { foo: 'bar', bar: undefined } },

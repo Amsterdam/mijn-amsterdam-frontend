@@ -1,8 +1,8 @@
 import type { NextFunction, Request, Response } from 'express';
 
-import { ensureOIDCAuthContext } from './route-helpers-oidc.ts';
 import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config.ts';
 import { featureToggle } from '../services/amsapp/auth/amsapp-auth-service-config.ts';
+import { ensureOIDCAuthContext } from './route-helpers-oidc.ts';
 
 export const AMSAPP_SESSION_TOKEN_HEADER = 'x-amsapp-session-token';
 
@@ -43,8 +43,7 @@ export async function privateNetworkAuthContextMiddleware(
   try {
     await applyAmsAppSessionTokenAsCookie(req);
 
-    const sessionTokenFromCookie =
-      req.cookies?.[OIDC_SESSION_COOKIE_NAME];
+    const sessionTokenFromCookie = req.cookies?.[OIDC_SESSION_COOKIE_NAME];
     if (!sessionTokenFromCookie) {
       return next();
     }

@@ -1,13 +1,3 @@
-import { getThemaTitle } from './helpers.ts';
-import {
-  kindTegoedPageLinkItem,
-  listPageParamKind,
-  listPageTitle,
-  specificatieTableConfig,
-  tableConfig,
-  themaConfig,
-} from './HLI-thema-config.ts';
-import { useStadspassen } from './useStadspassen.hook.tsx';
 import type { HLIRegelingFrontend } from '../../../../../../server/services/hli/hli-regelingen-types.ts';
 import {
   hasFailedDependency,
@@ -18,6 +8,16 @@ import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
 import { useAddDocumentLinkComponents } from '../../../data-transform/useAddDocumentLinks.tsx';
+import {
+  kindTegoedPageLinkItem,
+  listPageParamKind,
+  listPageTitle,
+  specificatieTableConfig,
+  tableConfig,
+  themaConfig,
+} from './HLI-thema-config.ts';
+import { getThemaTitle } from './helpers.ts';
+import { useStadspassen } from './useStadspassen.hook.tsx';
 
 export function useHliThemaData() {
   const { HLI } = useAppStateGetter();

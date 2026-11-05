@@ -1,8 +1,9 @@
-import { AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js';
 import { createRoot } from 'react-dom/client';
 
-import { AppWrapper } from './App.tsx';
+import { AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js';
+
 import { reactPlugin } from '../../helpers/monitoring.ts';
+import { AppWrapper } from './App.tsx';
 import { ApplicationError } from './pages/ApplicationError/ApplicationError.tsx';
 
 const root = createRoot(document.getElementById('root')!);

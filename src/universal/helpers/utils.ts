@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// biome-ignore-all lint/suspicious/noExplicitAny: Preserve the existing file-level exception.
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
 export const entries = Object.entries as <T>(
@@ -118,7 +118,8 @@ export function hash(str: string) {
 export function deepOmitKeys(data: any, omitKeys: string[] = []): any {
   if (Array.isArray(data)) {
     return data.map((item) => deepOmitKeys(item, omitKeys));
-  } else if (data !== null && typeof data === 'object') {
+  }
+  if (data !== null && typeof data === 'object') {
     const rdata: Record<string, any> = omit(data, omitKeys);
     for (const [key, value] of Object.entries(rdata)) {
       if (Array.isArray(value)) {

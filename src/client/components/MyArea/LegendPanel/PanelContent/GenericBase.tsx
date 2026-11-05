@@ -3,13 +3,13 @@ import type { PropsWithChildren } from 'react';
 import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
-import styles from './GenericBase.module.scss';
-import { JsonString } from './JsonString.tsx';
 import {
   DATASETS,
   getDatasetCategoryId,
 } from '../../../../../universal/config/myarea-datasets.ts';
 import { useSmallScreen } from '../../../../hooks/media.hook.ts';
+import styles from './GenericBase.module.scss';
+import { JsonString } from './JsonString.tsx';
 
 type GenericBaseProps = PropsWithChildren<{
   title?: string;

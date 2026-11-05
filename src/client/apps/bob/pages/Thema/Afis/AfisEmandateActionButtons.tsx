@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactElement } from 'react';
+import { type ReactElement, useMemo, useState } from 'react';
 
 import {
   ActionGroup,
@@ -9,17 +9,6 @@ import {
 } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
-import {
-  getFirstOpenTermijnFactuurDateFormatted,
-  getOpenstaandBedragFormatted,
-  isFactuurInTermijnen,
-} from './Afis-helpers.ts';
-import {
-  displayPropsStopMandate,
-  EMANDATE_STATUS_ACTIVE,
-} from './Afis-thema-config.ts';
-import styles from './AfisEmandateActionButtons.module.scss';
-import { useAfisFacturenData } from './useAfisThemaData.hook.tsx';
 import type {
   AfisEMandateFrontend,
   AfisEMandateSignRequestResponse,
@@ -32,6 +21,17 @@ import { Spinner } from '../../../../../components/Spinner/Spinner.tsx';
 import { trackLinkClick } from '../../../../../hooks/analytics.hook.ts';
 import type { BFFApiHook } from '../../../../../hooks/api/useBffApi.ts';
 import { useProfileTypeValue } from '../../../../../hooks/useProfileType.ts';
+import {
+  getFirstOpenTermijnFactuurDateFormatted,
+  getOpenstaandBedragFormatted,
+  isFactuurInTermijnen,
+} from './Afis-helpers.ts';
+import {
+  displayPropsStopMandate,
+  EMANDATE_STATUS_ACTIVE,
+} from './Afis-thema-config.ts';
+import styles from './AfisEmandateActionButtons.module.scss';
+import { useAfisFacturenData } from './useAfisThemaData.hook.tsx';
 
 type ActionConfirmationModalProps = {
   confirmationText: ReactElement | string;

@@ -1,6 +1,6 @@
 import type {
-  MyNotification,
   LinkProps,
+  MyNotification,
 } from '../../../universal/types/App.types.ts';
 
 type Tyd = {

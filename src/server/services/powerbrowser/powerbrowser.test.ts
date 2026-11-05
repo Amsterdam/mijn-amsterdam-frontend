@@ -3,19 +3,6 @@ import stream from 'node:stream';
 import Mockdate from 'mockdate';
 import { describe, expect } from 'vitest';
 
-import { SELECT_FIELDS_TRANSFORM_BASE } from './powerbrowser-field-transformers.ts';
-import {
-  fetchPBZaken,
-  fetchDocument,
-  forTesting,
-} from './powerbrowser-service.ts';
-import type {
-  PowerBrowserZaakTransformer,
-  PBZaakFields,
-  PBZaakRecord,
-  SearchRequestResponse,
-  PBDocumentFields,
-} from './powerbrowser-types.ts';
 import { remoteApi } from '../../../testing/utils.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 import type {
@@ -26,6 +13,19 @@ import * as encryptDecrypt from '../../helpers/encrypt-decrypt.ts';
 import { powerBrowserZaakTransformers as powerBrowserZaakTransformersForBB } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-pb-zaken.ts';
 import type { BBVergunningFrontend } from '../toeristische-verhuur/bed-and-breakfast/bed-and-breakfast-types.ts';
 import { pbZaakTransformers as pbZaakTransformersForVTH } from '../vergunningen/pb-zaken.ts';
+import { SELECT_FIELDS_TRANSFORM_BASE } from './powerbrowser-field-transformers.ts';
+import {
+  fetchDocument,
+  fetchPBZaken,
+  forTesting,
+} from './powerbrowser-service.ts';
+import type {
+  PBDocumentFields,
+  PBZaakFields,
+  PBZaakRecord,
+  PowerBrowserZaakTransformer,
+  SearchRequestResponse,
+} from './powerbrowser-types.ts';
 
 describe('Powerbrowser service', () => {
   const authProfile: AuthProfile = {
@@ -42,8 +42,8 @@ describe('Powerbrowser service', () => {
   };
 
   const documentNamesMA_PB = {
-    ['DocumentnaamMA']: ['DocumentnaamPB', 'AndersInPBMaarZelfdeInMA'],
-    ['NietDocumentnaamMA']: ['NietDocumentnaamPB'],
+    DocumentnaamMA: ['DocumentnaamPB', 'AndersInPBMaarZelfdeInMA'],
+    NietDocumentnaamMA: ['NietDocumentnaamPB'],
   };
 
   const zaakTransformer = {

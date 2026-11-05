@@ -2,10 +2,10 @@ import { render, within } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
-import { themaConfig } from './Jeugd-thema-config.ts';
-import { JeugdDetail } from './JeugdDetail.tsx';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { componentCreator } from '../../MockApp.tsx';
+import { themaConfig } from './Jeugd-thema-config.ts';
+import { JeugdDetail } from './JeugdDetail.tsx';
 
 const id = '1610585298';
 const voorzieningTitle = 'Aangepast groepsvervoer';

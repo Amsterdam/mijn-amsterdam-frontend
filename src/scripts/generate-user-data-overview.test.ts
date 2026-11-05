@@ -1,6 +1,6 @@
-import { forTesting } from './generate-user-data-overview.ts';
 import type { ServiceResults } from '../server/services/content-tips/tip-types.ts';
 import { apiSuccessResult } from '../universal/helpers/api.ts';
+import { forTesting } from './generate-user-data-overview.ts';
 
 describe('getAvailableUserThemas', () => {
   function wrap(results: Record<string, unknown>): ServiceResults {

@@ -1,6 +1,12 @@
-import RESPONSES_PASHOUDERS from '../fixtures/gpass-pashouders.json' with { type: 'json' };
-import RESPONSES_STADSPAS from '../fixtures/gpass-stadspas.json' with { type: 'json' };
-import RESPONSES_TRANSACTIES from '../fixtures/gpass-transacties.json' with { type: 'json' };
+import RESPONSES_PASHOUDERS from '../fixtures/gpass-pashouders.json' with {
+  type: 'json',
+};
+import RESPONSES_STADSPAS from '../fixtures/gpass-stadspas.json' with {
+  type: 'json',
+};
+import RESPONSES_TRANSACTIES from '../fixtures/gpass-transacties.json' with {
+  type: 'json',
+};
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 

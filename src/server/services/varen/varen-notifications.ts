@@ -1,21 +1,23 @@
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
-import type {
-  VarenZakenFrontend,
-  VarenRegistratieRederType,
-  VarenVergunningFrontend,
-} from './config-and-types.ts';
-import { fetchVaren } from './varen.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Varen/Varen-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
-import { isDateInFuture } from '../../../universal/helpers/date.ts';
-import { isRecentNotification } from '../../../universal/helpers/date.ts';
+import {
+  isDateInFuture,
+  isRecentNotification,
+} from '../../../universal/helpers/date.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import type {
+  VarenRegistratieRederType,
+  VarenVergunningFrontend,
+  VarenZakenFrontend,
+} from './config-and-types.ts';
+import { fetchVaren } from './varen.ts';
 
 function createVarenRederRegisteredNotification(
   zaak: VarenRegistratieRederType

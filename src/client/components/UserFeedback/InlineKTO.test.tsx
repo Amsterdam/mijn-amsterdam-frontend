@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import { InlineKTO } from './InlineKTO.tsx';
 import { bffApi } from '../../../testing/utils.ts';
 import type { AppState } from '../../../universal/types/App.types.ts';
 import { componentCreator } from '../../apps/bob/pages/MockApp.tsx';
+import { InlineKTO } from './InlineKTO.tsx';
 
 const questions = [
   {

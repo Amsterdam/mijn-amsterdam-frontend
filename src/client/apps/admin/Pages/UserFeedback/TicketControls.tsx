@@ -10,19 +10,19 @@ import {
 import { CloseIcon, PlusIcon } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
 
-import styles from './TicketControls.module.scss';
-import {
-  buildMailtoLink,
-  buildHandoffMailBody,
-  getQuestionEntries,
-} from './UserFeedback.helpers.tsx';
-import { useJiraTicketApi } from './UserFeedback.hooks.ts';
 import type {
   SurveyOverviewFrontend,
   UserFeedbackHandoffConfigResponse,
 } from '../../../../../server/services/user-feedback/user-feedback.types.ts';
 import { MaLinkLikeButton } from '../../../../components/MaLink/MaLink.tsx';
 import { Spinner } from '../../../../components/Spinner/Spinner.tsx';
+import styles from './TicketControls.module.scss';
+import {
+  buildHandoffMailBody,
+  buildMailtoLink,
+  getQuestionEntries,
+} from './UserFeedback.helpers.tsx';
+import { useJiraTicketApi } from './UserFeedback.hooks.ts';
 
 type TicketControlsProps = {
   entry: SurveyOverviewFrontend['entries'][number];

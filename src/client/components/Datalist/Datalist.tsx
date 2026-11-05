@@ -126,7 +126,7 @@ export function Datalist({
     >
       {rows
         .filter((row) =>
-          !!row && typeof row.isVisible !== 'undefined' ? row.isVisible : true
+          row && typeof row.isVisible !== 'undefined' ? row.isVisible : true
         )
         .map((row: Row | RowSet, index) =>
           'rows' in row ? (

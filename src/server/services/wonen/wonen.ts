@@ -1,11 +1,11 @@
-import type { WonenDataFrontend } from './wonen.types.ts';
-import { fetchVVEData } from './zwd.ts';
 import {
+  type ApiResponse,
   apiSuccessResult,
   getFailedDependencies,
-  type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import type { WonenDataFrontend } from './wonen.types.ts';
+import { fetchVVEData } from './zwd.ts';
 
 export async function fetchWonen(
   authProfileAndToken: AuthProfileAndToken

@@ -3,14 +3,14 @@ import { useEffect } from 'react';
 import { Grid, PageHeader } from '@amsterdam/design-system-react';
 import { BrowserRouter } from 'react-router';
 
-import { PrivateRoutes, PublicRoutes } from './App.routes.tsx';
-import { AppTabs } from './AppTabs.tsx';
-import { AUTH_API_URL, LOGIN_URL, LOGOUT_URL } from './config/api.ts';
-import { themaConfig as themaConfigAccount } from './Pages/Account/Account-thema-config.ts';
-import { useAccountApi } from './Pages/Account/Account.tsx';
 import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../components/Page/Page.tsx';
 import { useSessionApi } from '../../hooks/api/useSessionApi.ts';
+import { PrivateRoutes, PublicRoutes } from './App.routes.tsx';
+import { AppTabs } from './AppTabs.tsx';
+import { AUTH_API_URL, LOGIN_URL, LOGOUT_URL } from './config/api.ts';
+import { useAccountApi } from './Pages/Account/Account.tsx';
+import { themaConfig as themaConfigAccount } from './Pages/Account/Account-thema-config.ts';
 
 function AppLanding() {
   const session = useSessionApi(AUTH_API_URL);

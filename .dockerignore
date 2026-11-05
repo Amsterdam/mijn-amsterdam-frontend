@@ -2,7 +2,6 @@
 node_modules/
 .editorconfig
 .gitignore
-.prettierrc
 .idea
 .git
 readme.md

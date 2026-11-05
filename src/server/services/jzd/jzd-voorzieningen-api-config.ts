@@ -1,7 +1,10 @@
 import { parseISO } from 'date-fns/parseISO';
 import type z from 'zod';
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { IS_PRODUCTION } from '../../../universal/config/env.ts';
+import { entries } from '../../../universal/helpers/utils.ts';
+import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
+// biome-ignore lint/style/useImportType: Preserve the existing lint exception.
 import { voorzieningenRequestInput } from './jzd-service-config.ts';
 import type {
   JzdApiConfig,
@@ -11,9 +14,6 @@ import {
   productGroep,
   wmoStatusLineItemsConfig,
 } from './wmo/wmo-status-line-items.ts';
-import { IS_PRODUCTION } from '../../../universal/config/env.ts';
-import { entries } from '../../../universal/helpers/utils.ts';
-import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 
 export type FetchWmoVoorzieningenApiOptions = Omit<
   z.infer<typeof voorzieningenRequestInput>,
@@ -60,7 +60,7 @@ function maActieUrlsReparatieverzoek(
 ) {
   const guid = encodeURIComponent(`ID:${zorgnedAanvraag.id}`);
   return `${FORMULIEREN_BASE_URL}/reparatieverzoeken.aspx?GUID=${guid}`;
-};
+}
 
 function maActieUrlsStopzetten(zorgnedAanvraag: ZorgnedAanvraagTransformed) {
   const guid = encodeURIComponent(`ID:${zorgnedAanvraag.id}`);

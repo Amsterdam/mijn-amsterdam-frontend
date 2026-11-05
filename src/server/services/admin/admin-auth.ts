@@ -1,21 +1,21 @@
 import * as msal from '@azure/msal-node';
 import type { Request, Response } from 'express';
 
-import { getAdminRedirectUrl } from './admin-helpers.ts';
-import {
-  BFF_ADMIN_AUTH_CLIENT_ID,
-  BFF_ADMIN_AUTH_CLIENT_SECRET,
-  BFF_ADMIN_AUTH_TENANT_ID,
-  MSAL_AUTH_SCOPES,
-  OAUTH_ROLE_APPLICATION_ADMIN,
-  BFF_ADMIN_AUTH_POST_LOGOUT_REDIRECT_URI,
-  BFF_ADMIN_AUTH_REDIRECT_URI,
-} from './admin-service-config.ts';
-import type { RequestWithSession } from './admin-types.ts';
 import { IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { apiErrorResult } from '../../../universal/helpers/api.ts';
 import { sendResponseHTML } from '../../routing/route-helpers.ts';
 import { captureException } from '../monitoring.ts';
+import { getAdminRedirectUrl } from './admin-helpers.ts';
+import {
+  BFF_ADMIN_AUTH_CLIENT_ID,
+  BFF_ADMIN_AUTH_CLIENT_SECRET,
+  BFF_ADMIN_AUTH_POST_LOGOUT_REDIRECT_URI,
+  BFF_ADMIN_AUTH_REDIRECT_URI,
+  BFF_ADMIN_AUTH_TENANT_ID,
+  MSAL_AUTH_SCOPES,
+  OAUTH_ROLE_APPLICATION_ADMIN,
+} from './admin-service-config.ts';
+import type { RequestWithSession } from './admin-types.ts';
 
 const cryptoProvider = new msal.CryptoProvider();
 const msalApp = new msal.ConfidentialClientApplication({

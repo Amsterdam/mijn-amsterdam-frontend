@@ -2,17 +2,17 @@ import { useEffect } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import {
-  AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS,
-  EMANDATE_SIGN_REQUEST_SUCCESS_STATUSES,
-  EMANDATE_STATUS_ACTIVE,
-} from './Afis-thema-config.ts';
 import type {
   AfisEMandateFrontend,
   AfisEMandateSignRequestStatusResponse,
 } from '../../../../../../server/services/afis/afis-types.ts';
 import { useBffApi } from '../../../../../hooks/api/useBffApi.ts';
 import { useLocalStorage } from '../../../../../hooks/storage.hook.ts';
+import {
+  AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS,
+  EMANDATE_SIGN_REQUEST_SUCCESS_STATUSES,
+  EMANDATE_STATUS_ACTIVE,
+} from './Afis-thema-config.ts';
 
 type AfisEmandateStatusCheckPayload = {
   eMandateId: AfisEMandateFrontend['id'];
@@ -31,9 +31,9 @@ export function useSignRequestPayloadStorage() {
     eMandateId: AfisEMandateFrontend['id'],
     property: keyof AfisEmandateStatusCheckPayload
   ): string | null {
-    const statusCheck = payloads.findLast(
-      (p) => p.eMandateId === eMandateId
-    ) as AfisEmandateStatusCheckPayload | undefined;
+    const statusCheck = payloads.findLast((p) => p.eMandateId === eMandateId) as
+      | AfisEmandateStatusCheckPayload
+      | undefined;
     return statusCheck ? statusCheck[property] : null;
   }
 
@@ -75,7 +75,7 @@ export function useSignRequestPayloadStorage() {
         isTakingLong(): boolean {
           const activationDate = get(eMandateId, 'activationDate');
           return activationDate
-            ? new Date().getTime() - new Date(activationDate).getTime() >
+            ? Date.now() - new Date(activationDate).getTime() >
                 AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS
             : false;
         },
@@ -110,6 +110,7 @@ export function useSignRequestPayloadStorageCleanup(
 ) {
   const payloadStorage = useSignRequestPayloadStorage();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Preserve the existing hook dependency exclusion.
   useEffect(() => {
     if (EMandatesSource.length) {
       const obsoleteStatusCheckIds = EMandatesSource.filter(
@@ -127,7 +128,6 @@ export function useSignRequestPayloadStorageCleanup(
         payloadStorage.get(id)?.remove();
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [EMandatesSource]);
 }
 
@@ -152,7 +152,7 @@ export function useSignRequestStatusCheck(eMandate: AfisEMandateFrontend) {
 
   const statusResponse = api.data?.content?.status ?? '';
   const isUpdatingEMandateStatus =
-    !!payload && payloadStorage.get(eMandate.id)?.isReplacement()
+    payload && payloadStorage.get(eMandate.id)?.isReplacement()
       ? !payloadStorage.get(eMandate.id)?.isReplaced(eMandate.eMandateIdSource)
       : eMandate.status !== EMANDATE_STATUS_ACTIVE;
 
@@ -180,11 +180,11 @@ type CheckStatusProps = {
 
 export function CheckStatus({ eMandate }: CheckStatusProps) {
   const signRequestStatusCheckApi = useSignRequestStatusCheck(eMandate);
-  return signRequestStatusCheckApi.isRequestingStatusCheck ? (
-    <Paragraph>Controleren...</Paragraph>
-  ) : signRequestStatusCheckApi.isPendingActivation ? (
-    <>Wachten op activatie</>
-  ) : (
-    eMandate.displayStatus
-  );
+  if (signRequestStatusCheckApi.isRequestingStatusCheck) {
+    return <Paragraph>Controleren...</Paragraph>;
+  }
+  if (signRequestStatusCheckApi.isPendingActivation) {
+    return <>Wachten op activatie</>;
+  }
+  return <>{eMandate.displayStatus}</>;
 }

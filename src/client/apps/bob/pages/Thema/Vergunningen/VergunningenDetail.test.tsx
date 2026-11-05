@@ -1,10 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import type { Mock } from 'vitest';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
-import { useVergunningenDetailData } from './useVergunningenDetailData.hook.ts';
-import { useVergunningenThemaData } from './useVergunningenThemaData.hook.ts';
-import { VergunningenDetail, forTesting } from './VergunningenDetail.tsx';
 import type { DecosZaakFrontend } from '../../../../../../server/services/decos/decos-types.ts';
 import type { PowerBrowserZaakFrontend } from '../../../../../../server/services/powerbrowser/powerbrowser-types.ts';
 import type {
@@ -15,6 +12,9 @@ import type {
 import { decosCaseToZaakTransformers } from '../../../../../../server/services/vergunningen/decos-zaken.ts';
 import { pbCaseToZaakTransformers } from '../../../../../../server/services/vergunningen/pb-zaken.ts';
 import { componentCreator } from '../../MockApp.tsx';
+import { useVergunningenDetailData } from './useVergunningenDetailData.hook.ts';
+import { useVergunningenThemaData } from './useVergunningenThemaData.hook.ts';
+import { forTesting, VergunningenDetail } from './VergunningenDetail.tsx';
 
 const mocks = vi.hoisted(() => {
   return {

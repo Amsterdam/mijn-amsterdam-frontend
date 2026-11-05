@@ -1,5 +1,5 @@
-import type { PBVergunning } from './config-and-types.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
+import type { PBVergunning } from './config-and-types.ts';
 
 export function getStatusStepsPB<T extends PBVergunning>(
   zaak: T

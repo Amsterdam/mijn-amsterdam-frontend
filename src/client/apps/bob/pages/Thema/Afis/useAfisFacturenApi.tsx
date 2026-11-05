@@ -1,24 +1,27 @@
 import { type ReactNode, useMemo } from 'react';
 
-import {
-  type AfisFacturenByStateFrontend,
-  type AfisFactuurFrontend,
-} from './Afis-thema-config.ts';
 import type {
-  AfisThemaResponse,
-  AfisFactuurState,
-  AfisFacturenResponse,
-  AfisFactuurStateFrontend,
   AfisFacturenOverviewResponse,
+  AfisFacturenResponse,
   AfisFactuur,
+  AfisFactuurState,
+  AfisFactuurStateFrontend,
+  AfisThemaResponse,
 } from '../../../../../../server/services/afis/afis-types.ts';
 import { capitalizeFirstLetter } from '../../../../../../universal/helpers/text.ts';
 import { entries, omit } from '../../../../../../universal/helpers/utils.ts';
 import { DocumentLink } from '../../../../../components/DocumentList/DocumentLink.tsx';
-import { MaLink, MaRouterLink } from '../../../../../components/MaLink/MaLink.tsx';
+import {
+  MaLink,
+  MaRouterLink,
+} from '../../../../../components/MaLink/MaLink.tsx';
 import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../../../helpers/api.ts';
 import { parseHTML } from '../../../../../helpers/html-react-parse.tsx';
 import { useBffApi } from '../../../../../hooks/api/useBffApi.ts';
+import type {
+  AfisFacturenByStateFrontend,
+  AfisFactuurFrontend,
+} from './Afis-thema-config.ts';
 
 // A very basic helper that performs a simple check to see if the text contains HTML tags.
 // Some of the status descriptions may contain HTML tags that need to be rendered as React components.

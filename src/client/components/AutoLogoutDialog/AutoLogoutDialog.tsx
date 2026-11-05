@@ -1,14 +1,13 @@
 import type { ReactNode } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { ActionGroup, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { differenceInMilliseconds } from 'date-fns';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 
 import 'react-circular-progressbar/dist/styles.css';
 
-import styles from './AutoLogoutDialog.module.scss';
 import { formattedTimeFromSeconds } from '../../../universal/helpers/date.ts';
 import {
   LOGIN_URL_DIGID,
@@ -23,6 +22,7 @@ import { useCounter } from '../../hooks/timer.hook.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import { MaButtonLink } from '../MaLink/MaLink.tsx';
 import { Modal } from '../Modal/Modal.tsx';
+import styles from './AutoLogoutDialog.module.scss';
 
 const TITLE = 'Wilt u ingelogd blijven op Mijn Amsterdam?';
 const ONE_MINUTE_SECONDS = 60;
@@ -112,7 +112,7 @@ export function AutoLogoutDialog({
   const [originalTitle, setOriginalDocumentTitle] = useState(document.title);
   const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
 
-  function logtime() {
+  const logtime = useCallback(() => {
     logger.info(
       'Dialog opens in %s seconds, expires in %s seconds at %s',
       formattedTimeFromSeconds(
@@ -122,7 +122,7 @@ export function AutoLogoutDialog({
       formattedTimeFromSeconds(getExpiresInSeconds(expiresAtMilliseconds)),
       new Date(expiresAtMilliseconds)
     );
-  }
+  }, [expiresAtMilliseconds, lastChanceBeforeAutoLogoutSeconds]);
 
   const intervalId = useRef<number | undefined>(undefined);
   const timeoutId = useRef<number | undefined>(undefined);
@@ -157,7 +157,7 @@ export function AutoLogoutDialog({
       clearInterval(intervalId.current);
       clearTimeout(timeoutId.current);
     };
-  }, [millisecondsBeforeAutoLogoutDialogOpens]);
+  }, [millisecondsBeforeAutoLogoutDialogOpens, logtime]);
 
   const maxCountInSeconds = Math.min(
     lastChanceBeforeAutoLogoutSeconds,

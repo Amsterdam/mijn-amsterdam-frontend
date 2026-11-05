@@ -4,10 +4,10 @@ import { render, screen } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
 
 import {
-  LinkOrFragment,
+  DataViewList,
   formatPropValueForDisplay,
   getTitleAttribute,
-  DataViewList,
+  LinkOrFragment,
 } from './DataViewList.tsx';
 
 const mockUseDisplayPropsEntries = vi.fn();

@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
 
-import { AfisFactuur } from './AfisFactuur.tsx';
 import type {
-  AfisThemaResponse,
-  AfisFactuur as AfisFactuurType,
   AfisEMandateFrontend,
+  AfisFactuur as AfisFactuurType,
+  AfisThemaResponse,
 } from '../../../../../../server/services/afis/afis-types.ts';
 import { bffApi } from '../../../../../../testing/utils.ts';
 import type { ApiResponse } from '../../../../../../universal/helpers/api.ts';
 import { MockApp } from '../../MockApp.tsx';
+import { AfisFactuur } from './AfisFactuur.tsx';
 
 const mockFactuur = {
   factuurNummer: '12345',

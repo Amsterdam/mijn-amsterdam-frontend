@@ -4,16 +4,16 @@ import type {
   WpiIncomeSpecificationTransformed,
   WpiRequestProcess,
 } from '../../../../../../server/services/wpi/wpi-types.ts';
-import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
-import {
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-  MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-} from '../../../config/app.ts';
 import type {
   PageConfig,
   ThemaConfigBase,
   WithListPage,
 } from '../../../../../../universal/types/thema-types.ts';
+import type { DisplayProps } from '../../../../../components/Table/TableV2.types.ts';
+import {
+  MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+  MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
+} from '../../../config/app.ts';
 
 const THEMA_ID = 'INKOMEN';
 const THEMA_TITLE = 'Inkomen';

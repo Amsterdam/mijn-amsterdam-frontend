@@ -1,13 +1,27 @@
+import {
+  type ApiResponse,
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../../universal/helpers/api.ts';
+import { toISOString } from '../../../../universal/helpers/date.ts';
+import { entries, pick } from '../../../../universal/helpers/utils.ts';
+import { getApiConfig } from '../../../helpers/source-api-helpers.ts';
+import { requestData } from '../../../helpers/source-api-request.ts';
+import {
+  fetchNotificationsAndTipsFromServices,
+  type NotificationsAndTipsResponse,
+  notificationServices,
+} from '../../tips-and-notifications.ts';
 import { getAuthProfileAndTokenWithoutSession } from './amsapp-notifications-helper.ts';
 import {
-  listProfileIds,
-  listConsumerIds,
-  upsertConsumer,
-  listProfiles,
-  truncate,
   deleteConsumers,
   getProfileByConsumer,
+  listConsumerIds,
+  listProfileIds,
+  listProfiles,
   storeNotifications,
+  truncate,
+  upsertConsumer,
 } from './amsapp-notifications-model.ts';
 import { DISCRETE_GENERIC_MESSAGE } from './amsapp-notifications-service-config.ts';
 import type {
@@ -16,20 +30,7 @@ import type {
   NotificationsLean,
   ServiceId,
 } from './amsapp-notifications-types.ts';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-  type ApiResponse,
-} from '../../../../universal/helpers/api.ts';
-import { toISOString } from '../../../../universal/helpers/date.ts';
-import { entries, pick } from '../../../../universal/helpers/utils.ts';
-import { getApiConfig } from '../../../helpers/source-api-helpers.ts';
-import { requestData } from '../../../helpers/source-api-request.ts';
-import {
-  fetchNotificationsAndTipsFromServices,
-  notificationServices,
-  type NotificationsAndTipsResponse,
-} from '../../tips-and-notifications.ts';
+
 /**
  * The Notification service allows batch handling of notifications for previously verified consumers
  */

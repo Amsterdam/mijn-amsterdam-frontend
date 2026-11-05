@@ -1,12 +1,12 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { apiErrorResult } from '../../../universal/helpers/api.ts';
 import { fetchKVK, forTesting } from './hr-kvk.ts';
 import type {
   MACResponseSource,
   VestigingenResponseSource,
 } from './hr-kvk.types.ts';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
-import { apiErrorResult } from '../../../universal/helpers/api.ts';
 
 const mocks = vi.hoisted(() => {
   return {

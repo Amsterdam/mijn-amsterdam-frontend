@@ -6,6 +6,7 @@ import { describe, expect, it } from 'vitest';
 
 import styles from './TipCard.module.scss';
 import { TipCard, tipCardColors } from './TipCard.tsx';
+
 type TipCardProps = ComponentProps<typeof TipCard>;
 
 describe('<TipCard />', () => {

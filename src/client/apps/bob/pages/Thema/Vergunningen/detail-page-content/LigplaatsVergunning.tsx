@@ -1,10 +1,10 @@
-import { commonTransformers, getRows } from './fields-config.tsx';
 import type {
   LigplaatsBedrijfsvaartuigvergunning,
   LigplaatsWoonbootvergunning,
   ZaakFrontendCombined,
 } from '../../../../../../../server/services/vergunningen/config-and-types.ts';
 import { Datalist } from '../../../../../../components/Datalist/Datalist.tsx';
+import { commonTransformers, getRows } from './fields-config.tsx';
 
 export function LigplaatsVergunning({
   vergunning,

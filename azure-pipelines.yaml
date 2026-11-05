@@ -1,4 +1,4 @@
-name: '[$(dtapName)] $(Build.BuildId) - $(Build.SourceBranchName) - $(Build.DefinitionName)'
+name: "[$(dtapName)] $(Build.BuildId) - $(Build.SourceBranchName) - $(Build.DefinitionName)"
 
 trigger:
   batch: true
@@ -58,8 +58,8 @@ parameters:
     default: auto
     values:
       - auto
-      - 'yes'
-      - 'no'
+      - "yes"
+      - "no"
   - name: btdMigrate
     displayName: MIGRATE - Select if you want to run the BFF migrations (BFF needs to be selected too).
     type: boolean
@@ -96,6 +96,8 @@ variables:
     value: ${{ parameters.btdBuild }}
   - name: btdTest
     value: ${{ parameters.btdTest }}
+  - name: btdMigrate
+    value: ${{ parameters.btdMigrate }}
   - name: dtapName
     value: ${{ parameters.dtapName }}
   - name: btdDeploy
@@ -113,7 +115,7 @@ variables:
   - ${{ if and(eq(parameters.btdTest, 'auto'), or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.SourceBranchName'], 'az-acceptance'))) }}:
       # We assume code is tested locally before merging to these auto-deploy branches, so we skip tests for these branches.
       - name: btdTest
-        value: 'no'
+        value: "no"
       # When testing code including migrations, run them from the infra pipeline and enable the migrate step manually.
       - name: btdMigrate
         value: false
@@ -143,6 +145,7 @@ jobs:
       dtapName: ${{ variables.dtapName }}
       btdBuild: ${{ variables.btdBuild }}
       btdTest: ${{ variables.btdTest }}
+      btdMigrate: ${{ variables.btdMigrate }}
       btdDeploy: ${{ variables.btdDeploy }}
       # For selecting which app to build and deploy
       btdAppBFF: ${{ parameters.btdAppBFF }}

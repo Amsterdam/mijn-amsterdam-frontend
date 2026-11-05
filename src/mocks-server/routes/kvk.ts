@@ -1,6 +1,12 @@
-import maatschappelijkeactiviteitenEMZ from '../fixtures/hr-kvk/maatschappelijkeactiviteiten-eenmanszaak.json' with { type: 'json' };
-import maatschappelijkeactiviteiten from '../fixtures/hr-kvk/maatschappelijkeactiviteiten.json' with { type: 'json' };
-import vestigingen from '../fixtures/hr-kvk/vestigingen.json' with { type: 'json' };
+import maatschappelijkeactiviteiten from '../fixtures/hr-kvk/maatschappelijkeactiviteiten.json' with {
+  type: 'json',
+};
+import maatschappelijkeactiviteitenEMZ from '../fixtures/hr-kvk/maatschappelijkeactiviteiten-eenmanszaak.json' with {
+  type: 'json',
+};
+import vestigingen from '../fixtures/hr-kvk/vestigingen.json' with {
+  type: 'json',
+};
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 

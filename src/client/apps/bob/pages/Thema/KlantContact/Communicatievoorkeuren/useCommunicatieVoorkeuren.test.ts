@@ -1,17 +1,17 @@
 import { act, renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import {
-  useSetCommunicatievoorkeur,
-  useVerifyCommunicatievoorkeur,
-  useCommunicatieVoorkeurVerwijderen,
-} from './useCommunicatieVoorkeuren.ts';
 import type { KlantcontactResponseData } from '../../../../../../../server/services/klantcontact/klantcontact.types.ts';
 import { bffApiHost } from '../../../../../../../testing/setup.ts';
 import { bffApi } from '../../../../../../../testing/utils.ts';
 import type { ApiResponse } from '../../../../../../../universal/helpers/api.ts';
-import { BFFApiUrls } from '../../../../config/api.ts';
 import { useAppStateStore } from '../../../../../../hooks/useAppStateStore.ts';
+import { BFFApiUrls } from '../../../../config/api.ts';
+import {
+  useCommunicatieVoorkeurVerwijderen,
+  useSetCommunicatievoorkeur,
+  useVerifyCommunicatievoorkeur,
+} from './useCommunicatieVoorkeuren.ts';
 
 const BFF_ENDPOINTS = {
   create: BFFApiUrls.KLANTCONTACT_CONTACTGEGEVEN_CREATE.replace(

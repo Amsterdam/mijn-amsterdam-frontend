@@ -1,16 +1,16 @@
-import { ALL_ISSUES_LINK } from './jira/user-feedback-jira.service-config.ts';
-import { upsertAdministrationMeta } from './user-feedback-meta.model.ts';
-import type {
-  HandoffDepartmentInput,
-  UserFeedbackHandoffConfigResponse,
-  UserFeedbackAdministrationMeta,
-} from './user-feedback.types.ts';
 import {
-  apiSuccessResult,
   type ApiResponsePromise,
+  apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
 import { pick } from '../../../universal/helpers/utils.ts';
 import { getValueMapFromEnv } from '../../helpers/env.ts';
+import { ALL_ISSUES_LINK } from './jira/user-feedback-jira.service-config.ts';
+import type {
+  HandoffDepartmentInput,
+  UserFeedbackAdministrationMeta,
+  UserFeedbackHandoffConfigResponse,
+} from './user-feedback.types.ts';
+import { upsertAdministrationMeta } from './user-feedback-meta.model.ts';
 
 const HANDOFF_DEPARTMENTS: UserFeedbackHandoffConfigResponse['departments'] =
   getValueMapFromEnv('BFF_HANDOFF_DEPARTMENTS')

@@ -1,7 +1,7 @@
 import { useParams } from 'react-router';
 
-import { useJeugdThemaData } from './useJeugdThemaData.ts';
 import type { LeerlingenvervoerVoorzieningFrontend } from '../../../../../../server/services/jzd/jeugd/jeugd.ts';
+import { useJeugdThemaData } from './useJeugdThemaData.ts';
 
 export function useJeugdDetailData() {
   const {

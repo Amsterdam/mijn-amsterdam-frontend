@@ -1,7 +1,7 @@
 import { generatePath } from 'react-router';
 
-import { themaTitle, themaId, themaConfig } from './MyTips-config.ts';
 import { MyTipsPage } from './MyTips.tsx';
+import { themaConfig, themaId, themaTitle } from './MyTips-config.ts';
 
 export const MyTipsRoute = {
   route: '/alle-tips/:page?',

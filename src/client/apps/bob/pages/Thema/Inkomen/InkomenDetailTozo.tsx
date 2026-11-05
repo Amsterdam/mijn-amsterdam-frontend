@@ -1,9 +1,9 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { useInkomenDetailData } from './useInkomenDetailData.hook.ts';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { useInkomenDetailData } from './useInkomenDetailData.hook.ts';
 
 export function InkomenDetailTozo() {
   const { isLoading, isError, zaak, breadcrumbs, themaConfig } =

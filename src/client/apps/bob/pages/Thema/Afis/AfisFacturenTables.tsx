@@ -1,5 +1,7 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
+import { entries } from '../../../../../../universal/helpers/utils.ts';
+import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import type { AfisFactuurFrontend } from './Afis-thema-config.ts';
 import { AfisDisclaimerOvergedragenFacturen } from './AfisThema.tsx';
 import { VragenOverFactuurLink } from './AfisVragenOverFactuurLink.tsx';
@@ -7,8 +9,6 @@ import {
   type AfisFacturenThemaContextParams,
   useAfisFacturenData,
 } from './useAfisThemaData.hook.tsx';
-import { entries } from '../../../../../../universal/helpers/utils.ts';
-import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 
 type FacturenTablesProps = {
   themaContextParams?: AfisFacturenThemaContextParams;
@@ -41,7 +41,7 @@ export function AfisFacturenTables({
           );
         }
         let contentAfterTheTitle = null;
-        if (state === 'overgedragen' && !!facturen.length) {
+        if (state === 'overgedragen' && facturen.length) {
           contentAfterTheTitle = <AfisDisclaimerOvergedragenFacturen />;
         } else if (state === 'afgehandeld') {
           contentAfterTheTitle = (

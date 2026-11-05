@@ -1,13 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { themaConfig } from './Krefia-thema-config.ts';
-import { KrefiaThema } from './KrefiaThema.tsx';
-import KrefiaData from '../../../../../../mocks-server/fixtures/krefia' with { type: 'json' };
+import KrefiaData from '../../../../../../mocks-server/fixtures/krefia.json' with {
+  type: 'json',
+};
 import { forTesting } from '../../../../../../server/services/krefia/krefia.ts';
 import type { KrefiaSourceResponse } from '../../../../../../server/services/krefia/krefia.types.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { MockApp } from '../../MockApp.tsx';
+import { themaConfig } from './Krefia-thema-config.ts';
+import { KrefiaThema } from './KrefiaThema.tsx';
 
 const testState = {
   KREFIA: {

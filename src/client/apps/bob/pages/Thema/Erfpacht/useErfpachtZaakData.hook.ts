@@ -1,9 +1,9 @@
 import { useParams } from 'react-router';
 
-import { addLinkToDossiernummers } from './Erfpacht-helpers.tsx';
-import { useErfpachtThemaData } from './useErfpachtThemaData.hook.tsx';
 import type { ErfpachtZaakDetailFrontend } from '../../../../../../server/services/erfpacht/erfpacht-zaken-types.ts';
 import { useBffApi } from '../../../../../hooks/api/useBffApi.ts';
+import { addLinkToDossiernummers } from './Erfpacht-helpers.tsx';
+import { useErfpachtThemaData } from './useErfpachtThemaData.hook.tsx';
 
 export function useZaakDetailData() {
   const { uuid } = useParams<{

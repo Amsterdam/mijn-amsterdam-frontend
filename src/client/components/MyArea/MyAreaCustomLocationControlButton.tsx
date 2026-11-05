@@ -2,9 +2,9 @@ import { Button } from '@amsterdam/design-system-react';
 import { useMapInstance } from '@amsterdam/react-maps';
 import type { LatLngLiteral } from 'leaflet';
 
-import styles from './Map/ZoomControl.module.scss';
 import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets.ts';
 import { IconPin } from '../../assets/icons/map/index.tsx';
+import styles from './Map/ZoomControl.module.scss';
 
 interface MyAreaCustomLocationControlButtonProps {
   latlng: LatLngLiteral;

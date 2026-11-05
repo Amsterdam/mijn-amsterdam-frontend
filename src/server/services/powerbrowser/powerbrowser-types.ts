@@ -1,10 +1,10 @@
-import type { SELECT_FIELDS_TRANSFORM_BASE } from './powerbrowser-field-transformers.ts';
 import type { OmitMapped } from '../../../universal/helpers/utils.ts';
 import type {
   GenericDocument,
   ZaakAanvraagDetail,
 } from '../../../universal/types/App.types.ts';
 import type { AuthProfile } from '../../auth/auth-types.ts';
+import type { SELECT_FIELDS_TRANSFORM_BASE } from './powerbrowser-field-transformers.ts';
 
 export type NestedType<T> =
   T extends PowerBrowserZaakTransformer<infer R> ? R : never;
@@ -150,10 +150,11 @@ type CaseTypeLiteral<T extends PowerBrowserZaakBase> =
     : T['caseType'];
 
 export type PowerBrowserZaakTransformer<
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: Preserve the existing lint exception.
   T extends PowerBrowserZaakBase = any,
-  TF extends typeof SELECT_FIELDS_TRANSFORM_BASE & Record<string, string> =
-    typeof SELECT_FIELDS_TRANSFORM_BASE & Record<string, string>,
+  TF extends typeof SELECT_FIELDS_TRANSFORM_BASE &
+    Record<string, string> = typeof SELECT_FIELDS_TRANSFORM_BASE &
+    Record<string, string>,
 > = {
   caseType: CaseTypeLiteral<T>;
   title: string;

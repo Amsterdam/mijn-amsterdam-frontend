@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { themaConfig } from './Bodem-thema-config.ts';
-import { BodemDetail } from './BodemDetail.tsx';
 import type { LoodMetingFrontend } from '../../../../../../server/services/bodem/types.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { componentCreator } from '../../MockApp.tsx';
+import { themaConfig } from './Bodem-thema-config.ts';
+import { BodemDetail } from './BodemDetail.tsx';
 
 const metingen: LoodMetingFrontend[] = [
   {

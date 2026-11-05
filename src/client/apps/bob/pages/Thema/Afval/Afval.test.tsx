@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import type { Mock } from 'vitest';
 
-import { themaConfig } from './Afval-thema-config.ts';
-import { AfvalThemaPagina } from './AfvalThema.tsx';
 import type { AfvalFractionData } from '../../../../../../server/services/afval/afval.types.ts';
 import { jsonCopy } from '../../../../../../universal/helpers/utils.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { useProfileTypeValue } from '../../../../../hooks/useProfileType.ts';
 import { MockApp } from '../../MockApp.tsx';
+import { themaConfig } from './Afval-thema-config.ts';
+import { AfvalThemaPagina } from './AfvalThema.tsx';
 
 //const { BRP, AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
 

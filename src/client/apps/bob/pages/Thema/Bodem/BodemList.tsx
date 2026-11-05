@@ -1,6 +1,6 @@
-import { useBodemListPageData } from './useBodemListPageData.hook.ts';
 import { ListPagePaginated } from '../../../../../components/ListPagePaginated/ListPagePaginated.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { useBodemListPageData } from './useBodemListPageData.hook.ts';
 
 export function BodemList() {
   const {

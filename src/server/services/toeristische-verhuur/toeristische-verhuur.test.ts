@@ -1,11 +1,11 @@
 import Mockdate from 'mockdate';
 import { describe, expect, it } from 'vitest';
 
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import type { BBVergunningFrontend } from './bed-and-breakfast/bed-and-breakfast-types.ts';
-import { createToeristischeVerhuurNotification } from './toeristische-verhuur-notifications.ts';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur.ts';
 import type { VakantieverhuurVergunningFrontend } from './toeristische-verhuur.types.ts';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import { createToeristischeVerhuurNotification } from './toeristische-verhuur-notifications.ts';
 
 const REGISTRATIES_DUMMY_RESPONSE_NUMBERS = [
   {

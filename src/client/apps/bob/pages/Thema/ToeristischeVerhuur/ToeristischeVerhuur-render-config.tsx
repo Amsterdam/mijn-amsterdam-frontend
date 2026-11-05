@@ -1,13 +1,13 @@
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
+} from '../../../../../../universal/types/thema-types.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import { themaConfig } from './ToeristischeVerhuur-thema-config.ts';
 import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail.tsx';
 import { default as ToeristischeVerhuurIcon } from './ToeristischeVerhuurIcon.svg?react';
 import { ToeristischeVerhuurList } from './ToeristischeVerhuurList.tsx';
 import { ToeristischeVerhuurThema } from './ToeristischeVerhuurThema.tsx';
-import { isLoading } from '../../../../../helpers/api.ts';
-import {
-  type ThemaMenuItem,
-  type ThemaRenderRouteConfig,
-} from '../../../../../../universal/types/thema-types.ts';
 
 export const ToeristischeVerhuurRoutes = [
   {

@@ -1,8 +1,3 @@
-import type {
-  LVVRegistratie,
-  LVVRegistratieSource,
-  ToeristischeVerhuurRegistratieNumberSource,
-} from './toeristische-verhuur.types.ts';
 import {
   apiDependencyError,
   apiErrorResult,
@@ -14,6 +9,11 @@ import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import { isAmsterdamAddress } from '../buurt/helpers.ts';
+import type {
+  LVVRegistratie,
+  LVVRegistratieSource,
+  ToeristischeVerhuurRegistratieNumberSource,
+} from './toeristische-verhuur.types.ts';
 
 export async function fetchRegistraties(
   authProfileAndToken: AuthProfileAndToken

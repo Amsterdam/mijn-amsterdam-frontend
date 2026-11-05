@@ -1,11 +1,11 @@
 import { render, within } from '@testing-library/react';
 
-import { themaConfig } from './Bodem-thema-config.ts';
-import { BodemThema } from './BodemThema.tsx';
 import type { LoodMetingFrontend } from '../../../../../../server/services/bodem/types.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { expectTableHeaders } from '../../../../../helpers/test-utils.ts';
 import { componentCreator } from '../../MockApp.tsx';
+import { themaConfig } from './Bodem-thema-config.ts';
+import { BodemThema } from './BodemThema.tsx';
 
 const metingen = [
   {
@@ -250,27 +250,21 @@ describe('Bodem', () => {
         afgehandeld: /Afgehandeld/,
         afgewezen: /Afgewezen/,
       };
+      within(lopendeAanvraagTable).getByRole('cell', {
+        name: statusPatterns.ontvangen,
+      });
 
-      // Test if the patterns we use are correct in this scope.
-      // If we don't do this, we can run into the situation that these -
-      // fail and that the tests afterwards always succeed while the pattern is incorrect.
-      {
-        within(lopendeAanvraagTable).getByRole('cell', {
-          name: statusPatterns.ontvangen,
-        });
+      within(lopendeAanvraagTable).getByRole('cell', {
+        name: statusPatterns.inBehandeling,
+      });
 
-        within(lopendeAanvraagTable).getByRole('cell', {
-          name: statusPatterns.inBehandeling,
-        });
+      within(afgehandeldeAanvraagTable).getByRole('cell', {
+        name: decisionPatterns.afgehandeld,
+      });
 
-        within(afgehandeldeAanvraagTable).getByRole('cell', {
-          name: decisionPatterns.afgehandeld,
-        });
-
-        within(afgehandeldeAanvraagTable).getByRole('cell', {
-          name: decisionPatterns.afgewezen,
-        });
-      }
+      within(afgehandeldeAanvraagTable).getByRole('cell', {
+        name: decisionPatterns.afgewezen,
+      });
 
       const lopendeAanvraagRows = within(
         afgehandeldeAanvraagTable

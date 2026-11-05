@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
 import type { ReactNode } from 'react';
+import { useMemo } from 'react';
 
 import {
   Link,
@@ -9,8 +9,18 @@ import {
 } from '@amsterdam/design-system-react';
 import { useLocation } from 'react-router';
 
+import type {
+  SurveyOverviewFrontend,
+  UserFeedbackHandoffConfigResponse,
+} from '../../../../../server/services/user-feedback/user-feedback.types.ts';
+import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
+import { DataView } from '../../../../components/DataView/DataView.tsx';
+import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
+import { ModalAndButton } from '../../../../components/Modal/Modal.tsx';
+import { PageContentCell } from '../../../../components/Page/Page.tsx';
+import { TextClamp } from '../../../../components/TextClamp/TextClamp.tsx';
+import { ThemaPagina } from '../../../../components/Thema/ThemaPagina.tsx';
 import { TicketControls } from './TicketControls.tsx';
-import { themaConfig } from './UserFeedback-thema-config.ts';
 import {
   calculateScore,
   getCurrentPage,
@@ -20,19 +30,11 @@ import {
 } from './UserFeedback.helpers.tsx';
 import {
   useAdministrationStateContent,
-  useUserFeedbackHandoffConfigApi,
   useUserFeedbackApi,
+  useUserFeedbackHandoffConfigApi,
 } from './UserFeedback.hooks.ts';
 import styles from './UserFeedback.module.scss';
-import type { UserFeedbackHandoffConfigResponse } from '../../../../../server/services/user-feedback/user-feedback.types.ts';
-import type { SurveyOverviewFrontend } from '../../../../../server/services/user-feedback/user-feedback.types.ts';
-import { Datalist } from '../../../../components/Datalist/Datalist.tsx';
-import { DataView } from '../../../../components/DataView/DataView.tsx';
-import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
-import { ModalAndButton } from '../../../../components/Modal/Modal.tsx';
-import { PageContentCell } from '../../../../components/Page/Page.tsx';
-import { TextClamp } from '../../../../components/TextClamp/TextClamp.tsx';
-import { ThemaPagina } from '../../../../components/Thema/ThemaPagina.tsx';
+import { themaConfig } from './UserFeedback-thema-config.ts';
 
 type UserFeedbackTableRow = {
   title?: string;

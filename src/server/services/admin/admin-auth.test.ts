@@ -1,9 +1,6 @@
 import type { Request } from 'express';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { handleLogin, handleCallback, handleLogout } from './admin-auth.ts';
-import { OAUTH_ROLE_APPLICATION_ADMIN } from './admin-service-config.ts';
-import type { RequestWithSession } from './admin-types.ts';
 import { RequestMock, ResponseMock } from '../../../testing/utils.ts';
 import { apiErrorResult } from '../../../universal/helpers/api.ts';
 import { BFF_BASE_PATH_ADMIN } from '../../routing/bff-routes.ts';
@@ -11,6 +8,9 @@ import {
   generateMaFrontendUrl,
   sendResponseHTML,
 } from '../../routing/route-helpers.ts';
+import { handleCallback, handleLogin, handleLogout } from './admin-auth.ts';
+import { OAUTH_ROLE_APPLICATION_ADMIN } from './admin-service-config.ts';
+import type { RequestWithSession } from './admin-types.ts';
 
 vi.mock('./admin-service-config.ts', async (importOriginal) => {
   return {
@@ -37,7 +37,6 @@ vi.mock('@azure/msal-node', () => {
   class ConfidentialClientApplication {
     getAuthCodeUrl = mocks.getAuthCodeUrl;
     acquireTokenByCode = mocks.acquireTokenByCode;
-    constructor() {}
   }
 
   return {

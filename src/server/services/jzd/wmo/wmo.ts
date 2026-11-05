@@ -1,23 +1,11 @@
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
-import { featureToggle, routes } from '../jzd-service-config.ts';
-import {
-  hasDecision,
-  isAfterWCAGValidDocumentsDate,
-} from './status-line-items/wmo-generic.ts';
-import {
-  getHulpmiddelenDisclaimer,
-  hulpmiddelenDisclaimerConfig as hulpmiddelenDisclaimerConfig,
-} from './status-line-items/wmo-hulpmiddelen.ts';
-import { wmoStatusLineItemsConfig } from './wmo-status-line-items.ts';
-import { type WMOVoorzieningFrontend } from './wmo-types.ts';
-import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service.ts';
 import { themaConfig } from '../../../../client/apps/bob/pages/Thema/Zorg/Zorg-thema-config.ts';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles.ts';
 import {
-  apiSuccessResult,
   type ApiResponse,
+  apiSuccessResult,
 } from '../../../../universal/helpers/api.ts';
 import {
   dateSort,
@@ -33,9 +21,21 @@ import {
 } from '../../../helpers/zaken.ts';
 import { generateFullApiUrlBFF } from '../../../routing/route-helpers.ts';
 import { getStatusLineItems } from '../../zorgned/zorgned-status-line-items.ts';
-import { type ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
+import type { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
+import { featureToggle, routes } from '../jzd-service-config.ts';
 import type { ZorgnedAanvraagTransformedWithMaApiProps } from '../jzd-types.ts';
 import { transformVoorzieningForFrontendWithMaApiProps } from '../jzd-voorzieningen-api-service.ts';
+import {
+  hasDecision,
+  isAfterWCAGValidDocumentsDate,
+} from './status-line-items/wmo-generic.ts';
+import {
+  getHulpmiddelenDisclaimer,
+  hulpmiddelenDisclaimerConfig,
+} from './status-line-items/wmo-hulpmiddelen.ts';
+import { wmoStatusLineItemsConfig } from './wmo-status-line-items.ts';
+import type { WMOVoorzieningFrontend } from './wmo-types.ts';
+import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service.ts';
 
 export function getDocuments(
   sessionID: SessionID,

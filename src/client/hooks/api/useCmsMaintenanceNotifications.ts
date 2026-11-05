@@ -1,7 +1,7 @@
-import { useBffApi } from './useBffApi.ts';
 import type { CMSMaintenanceNotification } from '../../../server/services/cms/cms-types.ts';
 import { BFFApiUrls } from '../../apps/bob/config/api.ts';
 import { useAppStateGetter } from '../useAppStateStore.ts';
+import { useBffApi } from './useBffApi.ts';
 
 export function useCmsMaintenanceNotifications(
   page: string,

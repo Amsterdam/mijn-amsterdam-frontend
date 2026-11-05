@@ -9,8 +9,8 @@ import { Breadcrumb, Link } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router';
 
-import styles from './MaLink.module.scss';
 import { usePageTypeSettingValue } from '../../hooks/usePageTypeSetting.ts';
+import styles from './MaLink.module.scss';
 
 export type MaClassNameVariant =
   | 'fatNoUnderline'

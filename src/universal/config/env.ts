@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../../mijnamsterdam.d.ts" />
 
 // This file is being used by the setting of local environment variables (load-env.ts).
@@ -24,7 +23,7 @@ export const OTAP_ENV = getOtapEnv();
 export const APP_MODE = getAppMode();
 
 if (APP_MODE !== 'unittest') {
-  // eslint-disable-next-line no-console
+  // biome-ignore lint/suspicious/noConsole: Preserve the existing lint exception.
   console.info(
     `App configured in ${APP_MODE} mode on the ${OTAP_ENV} environment.`
   );

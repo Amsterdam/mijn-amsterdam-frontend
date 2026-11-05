@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react';
 
-import { themaConfig } from './Inkomen-thema-config.ts';
-import { InkomenThema } from './InkomenThema.tsx';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { MockApp } from '../../MockApp.tsx';
+import { themaConfig } from './Inkomen-thema-config.ts';
+import { InkomenThema } from './InkomenThema.tsx';
 
 const testState = {
   WPI_AANVRAGEN: {

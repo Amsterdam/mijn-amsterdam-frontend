@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { themaConfig } from './Jeugd-thema-config.ts';
-import { JeugdThemaPagina } from './JeugdThema.tsx';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { expectTableHeaders } from '../../../../../helpers/test-utils.ts';
 import { componentCreator } from '../../MockApp.tsx';
+import { themaConfig } from './Jeugd-thema-config.ts';
+import { JeugdThemaPagina } from './JeugdThema.tsx';
 
 const jeugdState: AppState['JEUGD'] = {
   content: [

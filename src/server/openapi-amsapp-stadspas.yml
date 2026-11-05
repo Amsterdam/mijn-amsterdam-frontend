@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: '1.0'
+  version: "1.0"
   title: Mijn Amsterdam api spec for external consumers (Amsterdam App)
   description: |
     We're providing a set of endpoints that can be used to retrieve data from source api's. These api's are intended for users other than Mijn Amsterdam
@@ -25,14 +25,14 @@ paths:
           schema:
             type: string
       responses:
-        '302':
+        "302":
           description: Found. Valid redirect to Digid login
-        '404':
+        "404":
           description: Not Found. (Missing path parameter)
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorNotFound'
+                $ref: "#/components/schemas/ErrorNotFound"
   /api/v1/services/amsapp/stadspas/administratienummer/{sessionToken}:
     get:
       description: Retrieves administratienummer based on BSN found in OIDC session.
@@ -43,23 +43,23 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: |
             Always returns html page with link that opens Stadspas App automatically with Javascript.
             If the administratienummer is retrieved succesfully, no query parameters are passed to the app link.
             If an error occurred an ApiErrorAdministratieNummer will be passed as query parameters to the app link.
           content:
-            'text/html':
+            "text/html":
               schema:
                 oneOf:
-                  - $ref: '#/components/schemas/ApiErrorAdministratieNummer'
+                  - $ref: "#/components/schemas/ApiErrorAdministratieNummer"
                   - type: string
-        '404':
+        "404":
           description: Missing path parameter
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorNotFound'
+                $ref: "#/components/schemas/ErrorNotFound"
   /private/api/v1/services/amsapp/auth/token:
     post:
       x-env-availability:
@@ -71,32 +71,32 @@ paths:
         Exchanges the one-time authorizationCode for a Mijn Amsterdam session cookie payload.
         The authorizationCode is bound to the provided PKCE codeVerifier.
       parameters:
-        - $ref: '#/components/parameters/xApiKeyHeader'
+        - $ref: "#/components/parameters/xApiKeyHeader"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AmsAppAuthTokenExchangeRequest'
+              $ref: "#/components/schemas/AmsAppAuthTokenExchangeRequest"
       responses:
-        '200':
+        "200":
           description: Returns session cookie data for the mobile app
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AmsAppAuthTokenExchangeResponse'
-        '400':
+                $ref: "#/components/schemas/AmsAppAuthTokenExchangeResponse"
+        "400":
           description: Returns bad request error (invalid input, expired code, or PKCE mismatch)
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBadRequestAmsAppAuthTokenExchange'
-        '401':
+                $ref: "#/components/schemas/ErrorBadRequestAmsAppAuthTokenExchange"
+        "401":
           description: Returns unauthorized error (invalid api key)
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorUnauthorized'
+                $ref: "#/components/schemas/ErrorUnauthorized"
   /private/api/v1/services/amsapp/auth/logout:
     post:
       x-env-availability:
@@ -108,27 +108,27 @@ paths:
         Invalidates the provided Mijn Amsterdam session token and revokes any associated
         authorization codes for that session.
       parameters:
-        - $ref: '#/components/parameters/xApiKeyHeader'
-        - $ref: '#/components/parameters/xAmsAppSessionTokenHeader'
+        - $ref: "#/components/parameters/xApiKeyHeader"
+        - $ref: "#/components/parameters/xAmsAppSessionTokenHeader"
       responses:
-        '200':
+        "200":
           description: Returns successful logout response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AmsAppAuthLogoutResponse'
-        '400':
+                $ref: "#/components/schemas/AmsAppAuthLogoutResponse"
+        "400":
           description: Returns bad request error (missing or invalid session token)
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBadRequestAmsAppAuthLogout'
-        '401':
+                $ref: "#/components/schemas/ErrorBadRequestAmsAppAuthLogout"
+        "401":
           description: Returns unauthorized error (invalid api key)
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorUnauthorized'
+                $ref: "#/components/schemas/ErrorUnauthorized"
   /private/api/v1/services/amsapp/stadspas/passen/{administratienummerEncrypted}:
     get:
       security:
@@ -142,34 +142,34 @@ paths:
           required: true
           schema:
             type: string
-        - $ref: '#/components/parameters/xApiKeyHeader'
+        - $ref: "#/components/parameters/xApiKeyHeader"
       responses:
-        '200':
+        "200":
           description: Returns stadspas data
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/StadspassenResponse'
-        '400':
+                $ref: "#/components/schemas/StadspassenResponse"
+        "400":
           description: Returns bad request error
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorBadRequest'
+                $ref: "#/components/schemas/ErrorBadRequest"
 
-        '401':
+        "401":
           description: Returns unauthorized error (invalid api key)
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorUnauthorized'
-        '500':
+                $ref: "#/components/schemas/ErrorUnauthorized"
+        "500":
           description: |
             Returns Application error, any error in code or from failed requests.
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApplicationError'
+                $ref: "#/components/schemas/ApplicationError"
 
   /private/api/v1/services/amsapp/stadspas/aanbiedingen/transactions/{transactionsKeyEncrypted}:
     get:
@@ -184,34 +184,34 @@ paths:
           required: true
           schema:
             type: string
-        - $ref: '#/components/parameters/xApiKeyHeader'
+        - $ref: "#/components/parameters/xApiKeyHeader"
       responses:
-        '200':
+        "200":
           description: Returns transactions data
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/StadsDiscountTransactionsResponse'
-        '400':
+                $ref: "#/components/schemas/StadsDiscountTransactionsResponse"
+        "400":
           description: Returns bad request error
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorBadRequest'
+                $ref: "#/components/schemas/ErrorBadRequest"
 
-        '401':
+        "401":
           description: Returns unauthorized error (invalid api key)
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorUnauthorized'
-        '500':
+                $ref: "#/components/schemas/ErrorUnauthorized"
+        "500":
           description: |
             Returns Application error, any error in code or from failed requests.
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApplicationError'
+                $ref: "#/components/schemas/ApplicationError"
 
   /private/api/v1/services/amsapp/stadspas/budget/transactions/{transactionsKeyEncrypted}:
     get:
@@ -231,34 +231,34 @@ paths:
           required: false
           schema:
             type: string
-        - $ref: '#/components/parameters/xApiKeyHeader'
+        - $ref: "#/components/parameters/xApiKeyHeader"
       responses:
-        '200':
+        "200":
           description: Returns transactions data
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/StadsTransactionsResponse'
-        '400':
+                $ref: "#/components/schemas/StadsTransactionsResponse"
+        "400":
           description: Returns bad request error
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorBadRequest'
+                $ref: "#/components/schemas/ErrorBadRequest"
 
-        '401':
+        "401":
           description: Returns unauthorized error (invalid api key)
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorUnauthorized'
-        '500':
+                $ref: "#/components/schemas/ErrorUnauthorized"
+        "500":
           description: |
             Returns Application error, any error in code or from failed requests.
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApplicationError'
+                $ref: "#/components/schemas/ApplicationError"
   /private/api/v1/services/amsapp/stadspas/block/{transactionsKeyEncrypted}:
     post:
       security:
@@ -271,35 +271,35 @@ paths:
           required: true
           schema:
             type: string
-        - $ref: '#/components/parameters/xApiKeyHeader'
+        - $ref: "#/components/parameters/xApiKeyHeader"
       responses:
-        '200':
+        "200":
           description: |
             Blocking stadspas was successful or an attempt was made to block a pass that is not active.
             This returns the state of the pass after this request.
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/StadspasBlockResponse'
-        '400':
+                $ref: "#/components/schemas/StadspasBlockResponse"
+        "400":
           description: Returns bad request error
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorBadRequest'
-        '401':
+                $ref: "#/components/schemas/ErrorBadRequest"
+        "401":
           description: Returns unauthorized error (invalid api key)
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorUnauthorized'
-        '500':
+                $ref: "#/components/schemas/ErrorUnauthorized"
+        "500":
           description: |
             Returns Application error, any error in code or from failed requests.
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApplicationError'
+                $ref: "#/components/schemas/ApplicationError"
 
 components:
   securitySchemes:
@@ -325,7 +325,7 @@ components:
         status:
           type: string
           enum:
-            - 'OK'
+            - "OK"
         content:
           type: object
           properties:
@@ -352,7 +352,7 @@ components:
         status:
           type: string
           enum:
-            - 'OK'
+            - "OK"
         content:
           type: object
           properties:
@@ -378,11 +378,11 @@ components:
         content:
           type: array
           items:
-            $ref: '#/components/schemas/StadspasTransaction'
+            $ref: "#/components/schemas/StadspasTransaction"
         status:
           type: string
           enum:
-            - 'SUCCESS'
+            - "SUCCESS"
 
     StadspasTransaction:
       type: object
@@ -395,7 +395,7 @@ components:
           type: number
         amountFormatted:
           type: string
-          description: 'For example: - €12,45'
+          description: "For example: - €12,45"
         datePublished:
           type: string
         datePublishedFormatted:
@@ -421,11 +421,11 @@ components:
             transactions:
               type: array
               items:
-                $ref: '#/components/schemas/StadspasDiscountTransaction'
+                $ref: "#/components/schemas/StadspasDiscountTransaction"
         status:
           type: string
           enum:
-            - 'SUCCESS'
+            - "SUCCESS"
 
     StadspasDiscountTransaction:
       type: object
@@ -493,7 +493,7 @@ components:
         id:
           type: string
         owner:
-          $ref: '#/components/schemas/StadspasOwner'
+          $ref: "#/components/schemas/StadspasOwner"
         dateEnd:
           type: string
         dateEndFormatted:
@@ -501,7 +501,7 @@ components:
         budgets:
           type: array
           items:
-            $ref: '#/components/schemas/StadspasBudget'
+            $ref: "#/components/schemas/StadspasBudget"
         balanceFormatted:
           type: string
         balance:
@@ -516,9 +516,9 @@ components:
         type:
           type: string
           enum:
-            - 'volwassene'
-            - 'kind'
-            - 'onbekend'
+            - "volwassene"
+            - "kind"
+            - "onbekend"
         transactionsKeyEncrypted:
           description: |
             Used in subsequent requests to other endpoints requiring this.
@@ -531,7 +531,7 @@ components:
         content:
           type: object
           properties:
-            '<passnumber>':
+            "<passnumber>":
               type: boolean
               description: |
                 The passnumber key is the number itself and the value is the new active state. So false will mean that the pass is now blocked while true will mean it is still active.
@@ -539,8 +539,8 @@ components:
         status:
           type: string
           enum:
-            - 'SUCCESS'
-          example: 'OK'
+            - "SUCCESS"
+          example: "OK"
 
     StadspassenResponse:
       type: object
@@ -548,11 +548,11 @@ components:
         content:
           type: array
           items:
-            $ref: '#/components/schemas/Stadspas'
+            $ref: "#/components/schemas/Stadspas"
         status:
           type: string
           enum:
-            - 'SUCCESS'
+            - "SUCCESS"
 
     ApplicationError:
       type: object
@@ -568,7 +568,7 @@ components:
         status:
           type: string
           enum:
-            - 'ERROR'
+            - "ERROR"
         message:
           type: string
 
@@ -587,12 +587,12 @@ components:
         code:
           type: string
           enum:
-            - '000'
-            - '001'
-            - '002'
-            - '003'
-            - '004'
-            - '005'
+            - "000"
+            - "001"
+            - "002"
+            - "003"
+            - "004"
+            - "005"
     ErrorNotFound:
       type: object
       properties:
@@ -605,11 +605,11 @@ components:
         status:
           type: string
           enum:
-            - 'ERROR'
+            - "ERROR"
         message:
           type: string
           enum:
-            - 'Not Found'
+            - "Not Found"
     ErrorUnauthorized:
       type: object
       properties:
@@ -622,11 +622,11 @@ components:
         status:
           type: string
           enum:
-            - 'ERROR'
+            - "ERROR"
         message:
           type: string
           enum:
-            - 'Api key ongeldig'
+            - "Api key ongeldig"
     ErrorBadRequest:
       type: object
       properties:
@@ -639,13 +639,13 @@ components:
         status:
           type: string
           enum:
-            - 'ERROR'
+            - "ERROR"
         message:
           type: string
           enum:
             - "Bad request: ApiError 005 - Could not decrypt url parameter 'administratienummerEncrypted'."
-            - 'Bad request: ApiError 000 - Onbekende fout'
-            - 'Bad request: Bad request: Failed to decrypt transactions key'
+            - "Bad request: ApiError 000 - Onbekende fout"
+            - "Bad request: Bad request: Failed to decrypt transactions key"
 
     ErrorBadRequestAmsAppAuthTokenExchange:
       type: object
@@ -663,7 +663,7 @@ components:
         status:
           type: string
           enum:
-            - 'ERROR'
+            - "ERROR"
         message:
           type: string
           description: |
@@ -671,7 +671,7 @@ components:
             * Bad request: ApiError 003 - Ongeldige invoer: <validation details>
             * Bad request: ApiError 004 - Authorization code niet gevonden of verlopen
             * Bad request: ApiError 005 - Code verifier komt niet overeen met code challenge
-          example: 'Bad request: ApiError 005 - Code verifier komt niet overeen met code challenge'
+          example: "Bad request: ApiError 005 - Code verifier komt niet overeen met code challenge"
 
     ErrorBadRequestAmsAppAuthLogout:
       type: object
@@ -687,13 +687,13 @@ components:
         status:
           type: string
           enum:
-            - 'ERROR'
+            - "ERROR"
         message:
           type: string
           description: |
             Error message format:
             * Bad request: ApiError 003 - Ongeldige invoer
-          example: 'Bad request: ApiError 003 - Ongeldige invoer'
+          example: "Bad request: ApiError 003 - Ongeldige invoer"
   parameters:
     xApiKeyHeader:
       name: x-api-key

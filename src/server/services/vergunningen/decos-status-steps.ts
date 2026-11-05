@@ -1,13 +1,13 @@
-import type { WithDateEnd } from './config-and-types.ts';
-import {
-  getVergunningCTALinks,
-  type CaseType,
-} from './vergunningen-notifications-config.ts';
 import { dateTimeEndFormatted } from '../../../client/apps/bob/pages/Thema/Vergunningen/Vergunningen-helpers.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 import { MA_VERLEEND_DECISIONS_COMMOM } from '../decos/decos-field-transformers.ts';
 import { getWorkflowStatusDate } from '../decos/decos-helpers.ts';
 import type { DecosZaakBase } from '../decos/decos-types.ts';
+import type { WithDateEnd } from './config-and-types.ts';
+import {
+  type CaseType,
+  getVergunningCTALinks,
+} from './vergunningen-notifications-config.ts';
 
 export function getStatusStepsDecos<
   DZ extends DecosZaakBase & Partial<WithDateEnd>,

@@ -1,14 +1,15 @@
+// biome-ignore-all lint/suspicious/noExplicitAny: Test fixtures and mocks.
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, vi } from 'vitest';
 
+import { newEventSourceMock } from '../../testing/EventSourceMock.ts';
+import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
 import {
   addParamsToStreamEndpoint,
   useAppStateRemote,
 } from './useAppStateRemote.ts';
 import { useAppStateStore } from './useAppStateStore.ts';
 import { SSE_ERROR_MESSAGE } from './useSSE.ts';
-import { newEventSourceMock } from '../../testing/EventSourceMock.ts';
-import { FeatureToggle } from '../../universal/config/feature-toggles.ts';
 
 vi.mock('./api/useTipsApi');
 vi.mock('./useProfileType');
@@ -40,8 +41,8 @@ describe('useAppState', () => {
   });
 
   test('Should start with the SSE endpoint', async () => {
-    const EventSourceMock = ((window as any).EventSource =
-      newEventSourceMock());
+    const EventSourceMock = newEventSourceMock();
+    (window as any).EventSource = EventSourceMock;
     const stateSliceMock = { BRP: { content: { hello: 'world' } } };
     renderHook(() => useAppStateRemote());
 
@@ -75,8 +76,8 @@ describe('useAppState', () => {
   });
 
   test('Should use Fallback service endpoint if EventSource fails to connect', async () => {
-    const EventSourceMock = ((window as any).EventSource =
-      newEventSourceMock());
+    const EventSourceMock = newEventSourceMock();
+    (window as any).EventSource = EventSourceMock;
 
     const stateSliceMock = { BRP: { content: { foo: 'blappie' } } };
     fetchMock.mockResolvedValueOnce(createFetchResponse(stateSliceMock));
@@ -98,8 +99,8 @@ describe('useAppState', () => {
   });
 
   test('Should respond with an appState error entry if Fallback service and SSE both fail.', async () => {
-    const EventSourceMock = ((window as any).EventSource =
-      newEventSourceMock());
+    const EventSourceMock = newEventSourceMock();
+    (window as any).EventSource = EventSourceMock;
     fetchMock.mockResolvedValue(createFetchResponse(null, false));
     renderHook(() => useAppStateRemote());
 

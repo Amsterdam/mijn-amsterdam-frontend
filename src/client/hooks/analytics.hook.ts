@@ -1,8 +1,8 @@
 import type {
   CustomDimension,
+  PiwikTracker,
   TrackPageViewParams,
   UserOptions,
-  PiwikTracker,
 } from '@amsterdam/piwik-tracker-react';
 import {
   createInstance as createPiwikInstance,

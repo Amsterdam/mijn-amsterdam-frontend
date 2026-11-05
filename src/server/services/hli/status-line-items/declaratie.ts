@@ -1,8 +1,8 @@
-import { BESLUIT } from './generic.ts';
 import type {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types.ts';
+import { BESLUIT } from './generic.ts';
 
 function getDeclaratieBesluitDescription(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed

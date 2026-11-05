@@ -1,8 +1,8 @@
-import { FEATURE_TOGGLES_API_URL } from './config.ts';
 import type { FeatureToggles } from '../../server/config/feature-toggles.ts';
+import { FEATURE_TOGGLES_API_URL } from './config.ts';
 
 export async function startApp(render: () => Promise<unknown>) {
-  // eslint-disable-next-line no-console
+  // biome-ignore lint/suspicious/noConsole: Preserve the existing lint exception.
   console.info(
     'Commit: %s Build: %s',
     `https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${MA_GIT_SHA}`,
@@ -15,7 +15,7 @@ export async function startApp(render: () => Promise<unknown>) {
     globalThis.MA_FEATURETOGGLES = featureToggles;
     await render();
   } catch (error) {
-    // eslint-disable-next-line no-console
+    // biome-ignore lint/suspicious/noConsole: Preserve the existing lint exception.
     console.error('Error fetching feature toggles', error);
     document.getElementById('loader')?.appendChild(
       Object.assign(document.createElement('div'), {

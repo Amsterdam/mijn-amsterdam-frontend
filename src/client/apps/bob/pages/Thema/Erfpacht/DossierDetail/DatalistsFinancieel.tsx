@@ -1,11 +1,6 @@
 import { Heading, Link } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
-import {
-  DatalistCanonsAfgekocht,
-  DatalistCanonsNietAfgekocht,
-} from './DatalistCanons.tsx';
-import type { ErfpachtDatalistProps } from './DatalistGeneral.tsx';
 import type {
   ErfpachtDossierDetailHuidigePeriode,
   ErfpachtDossierDetailToekomstigePeriode,
@@ -16,6 +11,11 @@ import { Datalist } from '../../../../../../components/Datalist/Datalist.tsx';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../../config/app.ts';
 import { LINKS } from '../Erfpacht-thema-config.ts';
 import styles from '../ErfpachtDossierDetail.module.scss';
+import {
+  DatalistCanonsAfgekocht,
+  DatalistCanonsNietAfgekocht,
+} from './DatalistCanons.tsx';
+import type { ErfpachtDatalistProps } from './DatalistGeneral.tsx';
 
 interface DatalistFinancieelPeriodeProps<T> {
   periode: T;
@@ -23,7 +23,6 @@ interface DatalistFinancieelPeriodeProps<T> {
   titelPeriodeVan: string;
   titelCanon: string;
   titelCanonTenTijdeVanAfkoop: string;
-  isHuidigePeriode: boolean;
 }
 
 function DatalistFinancieelPeriode({
@@ -32,7 +31,6 @@ function DatalistFinancieelPeriode({
   titelPeriodeVan,
   titelCanon,
   titelCanonTenTijdeVanAfkoop,
-  isHuidigePeriode,
 }: DatalistFinancieelPeriodeProps<
   ErfpachtDossierDetailHuidigePeriode | ErfpachtDossierDetailToekomstigePeriode
 >) {
@@ -108,7 +106,6 @@ function DatalistHuidigePeriode({ dossier }: ErfpachtDatalistProps) {
           dossier.financieel.huidigePeriode.titelCanonTenTijdeVanAfkoop
         }
         periode={dossier.financieel.huidigePeriode}
-        isHuidigePeriode
       />
     );
   }
@@ -128,7 +125,6 @@ function DatalistToekomstigePeriodes({ dossier }: ErfpachtDatalistProps) {
         titelCanon={periode.titelFinancieelToekomstigeCanon}
         titelCanonTenTijdeVanAfkoop={periode.titelCanonTenTijdeVanAfkoop}
         periode={periode}
-        isHuidigePeriode={false}
       />
     ));
 }

@@ -1,4 +1,3 @@
-import { tableConfig, themaConfig } from './Parkeren-thema-config.ts';
 import type { DecosParkeerVergunning } from '../../../../../../server/services/parkeren/config-and-types.ts';
 import type { DecosZaakFrontend } from '../../../../../../server/services/vergunningen/config-and-types.ts';
 import { isError } from '../../../../../../universal/helpers/api.ts';
@@ -6,6 +5,7 @@ import { addLinkElementToProperty } from '../../../../../components/Table/TableV
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
+import { tableConfig, themaConfig } from './Parkeren-thema-config.ts';
 
 export function useParkerenData() {
   const { PARKEREN } = useAppStateGetter();

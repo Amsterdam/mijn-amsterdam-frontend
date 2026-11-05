@@ -32,8 +32,11 @@ interface ThemaPaginaDataViewProps<T> {
 }
 
 export function ThemaPaginaDataView<
-  T extends { title?: string; link?: LinkProps; themaId?: string } =
-    ZaakAanvraagDetail,
+  T extends {
+    title?: string;
+    link?: LinkProps;
+    themaId?: string;
+  } = ZaakAanvraagDetail,
 >({
   title = '',
   contentAfterTheTitle = '',

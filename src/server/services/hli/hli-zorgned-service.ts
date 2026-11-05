@@ -1,5 +1,3 @@
-import { ZORGNED_AV_API_CONFIG_KEY } from './hli-service-config.ts';
-import { AV_CZM } from './status-line-items/regeling-czm.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import { isDateInPast } from '../../../universal/helpers/date.ts';
 import {
@@ -11,7 +9,9 @@ import type {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedPersoonsgegevensNAWResponse,
 } from '../zorgned/zorgned-types.ts';
-import { ZORGNED_GEMEENTE_CODE, type BSN } from '../zorgned/zorgned-types.ts';
+import { type BSN, ZORGNED_GEMEENTE_CODE } from '../zorgned/zorgned-types.ts';
+import { ZORGNED_AV_API_CONFIG_KEY } from './hli-service-config.ts';
+import { AV_CZM } from './status-line-items/regeling-czm.ts';
 
 function transformToAdministratienummer(identificatie: number): string {
   const padLength = 10;

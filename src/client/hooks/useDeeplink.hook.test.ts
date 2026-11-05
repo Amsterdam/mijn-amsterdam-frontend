@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import { useLocation } from 'react-router';
 import type { Mock } from 'vitest';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { useLocalStorage } from './storage.hook.ts';
 import { useSetDeeplinkEntry } from './useDeeplink.hook.ts';

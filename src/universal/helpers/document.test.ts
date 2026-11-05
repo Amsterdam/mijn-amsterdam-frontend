@@ -1,5 +1,5 @@
-import { dedupeDocumentsInDataSets } from './document.ts';
 import type { GenericDocument } from '../types/App.types.ts';
+import { dedupeDocumentsInDataSets } from './document.ts';
 
 type TestData = Array<{ documents: GenericDocument[] }>;
 

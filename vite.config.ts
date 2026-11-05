@@ -1,12 +1,12 @@
+// biome-ignore-all lint: Preserve the existing file-level exception.
 /// <reference types="vitest" />
-/* eslint-disable */
 import { createHash } from 'node:crypto';
+import path, { resolve } from 'node:path';
 
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
-import { configDefaults } from 'vitest/config';
 import svgr from 'vite-plugin-svgr';
-import path, { resolve } from 'node:path';
+import { configDefaults } from 'vitest/config';
 
 const testExclude = [...configDefaults.exclude, '**/__tmp-routes-*/**'];
 
@@ -130,4 +130,3 @@ export default defineConfig({
     },
   },
 });
-/* eslint-enable */

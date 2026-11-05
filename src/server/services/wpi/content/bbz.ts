@@ -25,10 +25,10 @@ const beslisTermijnLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess, statusStep) =>
       `${statusStep.about || requestProcess.about}: Meer tijd nodig`,
-    description: (requestProcess) =>
+    description: (_requestProcess) =>
       `Wij hebben meer tijd nodig om uw aanvraag te behandelen.`,
   },
-  description: (requestProcess) =>
+  description: (_requestProcess) =>
     `<p>Wij hebben meer tijd nodig om uw aanvraag te behandelen. Bekijk de brief voor meer details.</p>`,
 };
 
@@ -38,10 +38,10 @@ const akteLabels: WpiRequestStatusLabels = {
       `${
         statusStep.about || requestProcess.about
       }: Onderteken de akte voor bedrijfskapitaal`,
-    description: (requestProcess) =>
+    description: (_requestProcess) =>
       `Wij kunnen de lening voor bedrijfskapitaal uitbetalen als u de akte voor bedrijfskapitaal hebt ondertekend.`,
   },
-  description: (requestProcess) =>
+  description: (_requestProcess) =>
     `<p>Wij kunnen de lening voor bedrijfskapitaal uitbetalen als u de akte voor bedrijfskapitaal hebt ondertekend. Bekijk de brief voor meer details.</p>`,
 };
 
@@ -162,7 +162,7 @@ const informatieOntvangen: WpiRequestStatusLabels = {
       `${
         statusStep.about || requestProcess.about
       }: Wij hebben uw formulier 'Bbz: informatie doorgeven' ontvangen`,
-    description: (requestProcess, statusStep) =>
+    description: (_requestProcess, statusStep) =>
       `Wij hebben uw formulier 'Bbz: informatie doorgeven' ontvangen op ${defaultDateTimeFormat(
         statusStep.datePublished
       )}.`,
@@ -178,7 +178,7 @@ const informatieOntvangen: WpiRequestStatusLabels = {
       };
     },
   },
-  description: (requestProcess, statusStep) =>
+  description: (_requestProcess, statusStep) =>
     `<p>Wij hebben uw formulier 'Bbz: informatie doorgeven' ontvangen op ${defaultDateTimeFormat(
       statusStep.datePublished
     )}. Het kan zijn dat er meer informatie en tijd nodig is om uw Bbz-uitkering definitief te kunnen berekenen. Bekijk het formulier voor meer details.</p>` +

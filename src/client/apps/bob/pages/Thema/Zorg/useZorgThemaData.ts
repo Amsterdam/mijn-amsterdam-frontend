@@ -1,15 +1,15 @@
-import {
-  listPageParamKind,
-  listPageTitle,
-  tableConfig,
-  themaConfig,
-} from './Zorg-thema-config.ts';
 import type { WMOVoorzieningFrontend } from '../../../../../../server/services/jzd/wmo/wmo-types.ts';
 import { isError } from '../../../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
+import {
+  listPageParamKind,
+  listPageTitle,
+  tableConfig,
+  themaConfig,
+} from './Zorg-thema-config.ts';
 
 export function useZorgThemaData() {
   const { WMO } = useAppStateGetter();

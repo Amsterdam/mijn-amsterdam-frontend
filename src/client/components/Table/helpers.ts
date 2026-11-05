@@ -1,9 +1,9 @@
 import type {
   DisplayProps,
   DisplayPropsBase,
+  DisplayPropsViewConfig,
   ScreenSize,
   TableV2ColWidths,
-  DisplayPropsViewConfig,
 } from './TableV2.types.ts';
 
 export function getDisplayProps<T extends DisplayProps<object>>(

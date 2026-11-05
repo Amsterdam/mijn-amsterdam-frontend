@@ -276,7 +276,7 @@ export async function loginStats(
   });
 }
 
-export async function loginStatsTable(req: Request, res: Response) {
+export async function loginStatsTable(_req: Request, res: Response) {
   const { queryALL } = await db();
   const queries = await getQueries();
 

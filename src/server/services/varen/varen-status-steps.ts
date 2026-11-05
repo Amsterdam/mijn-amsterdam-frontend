@@ -1,9 +1,9 @@
-import type { Varen } from './config-and-types.ts';
 import {
   defaultDateFormat,
   isDateInPast,
 } from '../../../universal/helpers/date.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
+import type { Varen } from './config-and-types.ts';
 
 export function getStatusSteps<T extends Varen>(
   decosZaak: T

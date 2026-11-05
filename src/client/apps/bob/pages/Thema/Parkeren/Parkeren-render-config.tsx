@@ -1,15 +1,15 @@
 import { CarIcon } from '@amsterdam/design-system-react-icons';
 
+import type { AppState } from '../../../../../../universal/types/App.types.ts';
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
+} from '../../../../../../universal/types/thema-types.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import { themaConfig } from './Parkeren-thema-config.ts';
 import { ParkerenDetail } from './ParkerenDetail.tsx';
 import { ParkerenList } from './ParkerenList.tsx';
 import { ParkerenThema } from './ParkerenThema.tsx';
-import { isLoading } from '../../../../../helpers/api.ts';
-import { type AppState } from '../../../../../../universal/types/App.types.ts';
-import {
-  type ThemaMenuItem,
-  type ThemaRenderRouteConfig,
-} from '../../../../../../universal/types/thema-types.ts';
 
 export const ParkerenRoutes = [
   {

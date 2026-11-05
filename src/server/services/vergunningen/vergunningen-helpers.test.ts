@@ -1,11 +1,11 @@
 import MockDate from 'mockdate';
 
+import type { TouringcarDagontheffing } from '../parkeren/config-and-types.ts';
 import {
-  isExpiryNotificationDue,
   getCustomTitleForVergunningWithLicensePlates,
   getLifetimeTriggerDate,
+  isExpiryNotificationDue,
 } from './vergunningen-helpers.ts';
-import type { TouringcarDagontheffing } from '../parkeren/config-and-types.ts';
 
 describe('vergunningen/helpers', () => {
   beforeAll(() => {

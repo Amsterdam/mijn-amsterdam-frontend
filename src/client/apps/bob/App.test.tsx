@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
-import { vi, describe, it, expect } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
-import { App } from './App.tsx';
 import { bffApi } from '../../../testing/utils.ts';
 import { MIJN_AMSTERDAM } from '../../../universal/config/app.ts';
 import { mockFooterRequest } from '../../components/MainFooter/MainFooter.test.tsx';
+import { App } from './App.tsx';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -30,7 +30,7 @@ function mockCMSRequest() {
 }
 
 describe('App', () => {
-  const appLoadingIndicator = new RegExp('Welkom', 'i');
+  const appLoadingIndicator = /Welkom/i;
 
   it('Renders dirty App with loading indicator', () => {
     mockFooterRequest();

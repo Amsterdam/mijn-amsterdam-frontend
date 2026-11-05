@@ -1,6 +1,5 @@
 import { useParams } from 'react-router';
 
-import { useHliThemaData } from './useHliThemaData.ts';
 import type { HLIRegelingFrontend } from '../../../../../../server/services/hli/hli-regelingen-types.ts';
 import type { Row } from '../../../../../components/Datalist/Datalist.tsx';
 import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
@@ -8,6 +7,7 @@ import { DocumentListV2 } from '../../../../../components/DocumentList/DocumentL
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { useHliThemaData } from './useHliThemaData.ts';
 
 type DetailPageContentProps = {
   hliRegeling: HLIRegelingFrontend;

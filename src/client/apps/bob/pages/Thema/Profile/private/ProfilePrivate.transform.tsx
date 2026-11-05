@@ -1,11 +1,11 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import type {
+  Adres,
   BrpFrontend,
   Persoon,
   Verbintenis,
 } from '../../../../../../../server/services/brp/brp-types.ts';
-import type { Adres } from '../../../../../../../server/services/brp/brp-types.ts';
 import {
   getFullAddress,
   hasDutchNationality,
@@ -21,13 +21,14 @@ import {
   profileLinks,
   themaConfig,
 } from '../Profile-thema-config.ts';
-import type { ProfileLabels } from '../profileDataFormatter.ts';
-import { formatProfileSectionData } from '../profileDataFormatter.ts';
 import type {
   ActionLink,
   PanelConfig,
   ProfileSectionData,
 } from '../ProfileSectionPanel.tsx';
+import type { ProfileLabels } from '../profileDataFormatter.ts';
+import { formatProfileSectionData } from '../profileDataFormatter.ts';
+
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
  * into the Profile page data.

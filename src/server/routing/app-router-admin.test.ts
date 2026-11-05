@@ -1,5 +1,5 @@
-import express from 'express';
 import type { NextFunction, Request, Response } from 'express';
+import express from 'express';
 import type { ILayer } from 'express-serve-static-core/index.js';
 
 import { createAdminRouter } from './app-router-admin.ts';

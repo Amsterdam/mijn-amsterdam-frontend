@@ -6,8 +6,8 @@ import { describe } from 'vitest';
 
 import type { Kanaal } from '../../server/services/klantcontact/klantcontact.types.ts';
 import type { AppState } from '../../universal/types/App.types.ts';
-import { DashboardRoute } from '../apps/bob/pages/Dashboard/Dashboard-routes.ts';
 import { Dashboard } from '../apps/bob/pages/Dashboard/Dashboard.tsx';
+import { DashboardRoute } from '../apps/bob/pages/Dashboard/Dashboard-routes.ts';
 import { MockApp } from '../apps/bob/pages/MockApp.tsx';
 import { MyNotificationsPage } from '../apps/bob/pages/MyNotifications/MyNotifications.tsx';
 import { themaConfig as themaAfis } from '../apps/bob/pages/Thema/Afis/Afis-thema-config.ts';

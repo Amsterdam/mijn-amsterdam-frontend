@@ -1,4 +1,4 @@
-name: 'Release notification'
+name: "Release notification"
 on:
   push:
     tags:
@@ -38,4 +38,3 @@ jobs:
             echo "Creating new release..."
             gh release create "$latest_tag" --notes "$release_notes"
           fi
-

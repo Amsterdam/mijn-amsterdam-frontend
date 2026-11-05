@@ -1,10 +1,5 @@
 import Mockdate from 'mockdate';
 
-import { forTesting } from './app-router-oidc.ts';
-import {
-  generateFullApiUrlBFF,
-  generateMaFrontendUrl,
-} from './route-helpers.ts';
 import { bffApiHost } from '../../testing/setup.ts';
 import {
   getAuthProfileAndToken,
@@ -14,6 +9,11 @@ import {
 } from '../../testing/utils.ts';
 import { oidcConfigDigid, oidcConfigEherkenning } from '../auth/auth-config.ts';
 import { authRoutes } from '../auth/auth-routes.ts';
+import { forTesting } from './app-router-oidc.ts';
+import {
+  generateFullApiUrlBFF,
+  generateMaFrontendUrl,
+} from './route-helpers.ts';
 
 const mocks = vi.hoisted(() => {
   const openIdAuthHandlerEH = vi.fn();

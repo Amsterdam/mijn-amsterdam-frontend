@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { parseISO } from 'date-fns';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { DateInput } from './DateInput.tsx';
 

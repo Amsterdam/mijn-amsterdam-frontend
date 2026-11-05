@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
 
-import { componentCreator } from '../MockApp.tsx';
-import { GeneralInfoRoute } from './GeneralInfo-routes.ts';
-import { GeneralInfo } from './GeneralInfo.tsx';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
 import { themaTitle } from '../../../../components/MyArea/MyArea-thema-config.ts';
+import { componentCreator } from '../MockApp.tsx';
 import { stadspasTitle } from '../Thema/HLI/HLI-thema-config.ts';
+import { GeneralInfo } from './GeneralInfo.tsx';
+import { GeneralInfoRoute } from './GeneralInfo-routes.ts';
 
 const createGeneralInfoComponent = componentCreator({
   component: GeneralInfo,

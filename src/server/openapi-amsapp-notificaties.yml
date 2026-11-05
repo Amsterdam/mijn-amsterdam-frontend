@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: '1.0'
+  version: "1.0"
   title: Mijn Amsterdam api spec for external consumers (Amsterdam App)
   description: |
     We're providing a set of endpoints that can be used to retrieve data from source api's. These api's are intended for users other than Mijn Amsterdam
@@ -25,14 +25,14 @@ paths:
           schema:
             type: string
       responses:
-        '302':
+        "302":
           description: Found. Valid redirect to identity provider login
-        '404':
+        "404":
           description: Not Found. (Missing path parameter)
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorNotFound'
+                $ref: "#/components/schemas/ErrorNotFound"
   /api/v1/services/amsapp/notifications/consumer/{consumerId}/app:
     get:
       description: |
@@ -44,23 +44,23 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: |
             Always returns an html page. The page contains a link that will open the Amsterdam App.\
             If the consumer has been registrered succesfully, the app link will not contain query parameters.\
             If an error occurred, an ApiErrorNotificatieConsumerId will be passed as query parameter to the app link.
           content:
-            'text/html':
+            "text/html":
               schema:
                 oneOf:
-                  - $ref: '#/components/schemas/ApiErrorNotificatieConsumerId'
+                  - $ref: "#/components/schemas/ApiErrorNotificatieConsumerId"
                   - type: string
-        '404':
+        "404":
           description: Missing path parameter
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorNotFound'
+                $ref: "#/components/schemas/ErrorNotFound"
   /private/api/v1/services/amsapp/notifications/consumer/{consumerId}:
     get:
       description: Get consumer profile and registration status. Or if consumer is not registered, return only registration status with false.
@@ -70,31 +70,31 @@ paths:
           required: true
           schema:
             type: string
-        - $ref: '#/components/parameters/xApiKeyHeader'
+        - $ref: "#/components/parameters/xApiKeyHeader"
       responses:
-        '200':
+        "200":
           description: Current registration profile of consumer
           content:
             application/json:
               schema:
                 oneOf:
-                  - $ref: '#/components/schemas/ConsumerRegistered'
+                  - $ref: "#/components/schemas/ConsumerRegistered"
                   - allOf:
-                      - $ref: '#/components/schemas/ConsumerProfile'
-                      - $ref: '#/components/schemas/ConsumerRegistered'
-        '404':
+                      - $ref: "#/components/schemas/ConsumerProfile"
+                      - $ref: "#/components/schemas/ConsumerRegistered"
+        "404":
           description: Consumer not found
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorNotFound'
-        '500':
+                $ref: "#/components/schemas/ErrorNotFound"
+        "500":
           description: |
             Returns Application error, any error in code or from failed requests.
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApplicationError'
+                $ref: "#/components/schemas/ApplicationError"
     delete:
       parameters:
         - in: path
@@ -102,23 +102,23 @@ paths:
           required: true
           schema:
             type: string
-        - $ref: '#/components/parameters/xApiKeyHeader'
+        - $ref: "#/components/parameters/xApiKeyHeader"
       responses:
-        '200':
+        "200":
           description: Consumer deleted
-        '304':
+        "304":
           description: Consumer not Modified
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorNotModified'
-        '500':
+                $ref: "#/components/schemas/ErrorNotModified"
+        "500":
           description: |
             Returns Application error, any error in code or from failed requests.
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApplicationError'
+                $ref: "#/components/schemas/ApplicationError"
   /private/api/v1/services/amsapp/notifications:
     get:
       security:
@@ -126,7 +126,7 @@ paths:
       description: |
         Retrieves all notification data of all consumers.
       parameters:
-        - $ref: '#/components/parameters/xApiKeyHeader'
+        - $ref: "#/components/parameters/xApiKeyHeader"
         - name: dateFrom
           in: query
           required: false
@@ -135,7 +135,7 @@ paths:
           schema:
             type: string
             format: date-time
-            example: '2026-03-01T00:00:00.000Z'
+            example: "2026-03-01T00:00:00.000Z"
         - name: offset
           in: query
           required: false
@@ -153,31 +153,31 @@ paths:
             minimum: 1
             default: 100
       responses:
-        '200':
+        "200":
           description: Returns consumer notifications data
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ConsumerNotificationsResponse'
-        '400':
+                $ref: "#/components/schemas/ConsumerNotificationsResponse"
+        "400":
           description: Returns bad request error
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorBadRequest'
-        '401':
+                $ref: "#/components/schemas/ErrorBadRequest"
+        "401":
           description: Returns unauthorized error (invalid api key)
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorUnauthorized'
-        '500':
+                $ref: "#/components/schemas/ErrorUnauthorized"
+        "500":
           description: |
             Returns Application error, any error in code or from failed requests.
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApplicationError'
+                $ref: "#/components/schemas/ApplicationError"
     delete:
       security:
         - ApiKeyAuth: []
@@ -185,20 +185,20 @@ paths:
         Truncate all notifications data.\
         Note: This is a temporary endpoint for the PoC
       parameters:
-        - $ref: '#/components/parameters/xApiKeyHeader'
+        - $ref: "#/components/parameters/xApiKeyHeader"
       responses:
-        '200':
+        "200":
           description: Returns an application success response
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApiSuccessResponse'
-        '500':
+                $ref: "#/components/schemas/ApiSuccessResponse"
+        "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationError'
+                $ref: "#/components/schemas/ApplicationError"
   /private/api/v1/services/amsapp/job/notifications:
     post:
       security:
@@ -208,14 +208,14 @@ paths:
         Note: This endpoint has a long execution time, making it impractical to await.\
         A success response is send to indicate it has started.
       parameters:
-        - $ref: '#/components/parameters/xApiKeyHeader'
+        - $ref: "#/components/parameters/xApiKeyHeader"
       responses:
-        '200':
+        "200":
           description: Returns an application success response
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApiSuccessResponse'
+                $ref: "#/components/schemas/ApiSuccessResponse"
 
 components:
   securitySchemes:
@@ -238,7 +238,7 @@ components:
         status:
           type: string
           enum:
-            - 'ERROR'
+            - "ERROR"
         message:
           type: string
 
@@ -254,9 +254,9 @@ components:
         code:
           type: string
           enum:
-            - '000'
-            - '001'
-            - '002'
+            - "000"
+            - "001"
+            - "002"
     ConsumerNotificationsResponse:
       type: object
       properties:
@@ -269,13 +269,13 @@ components:
                 type: array
                 description: Preferred consumer projection for this profile.
                 items:
-                  $ref: '#/components/schemas/ConsumerDetail'
+                  $ref: "#/components/schemas/ConsumerDetail"
               consumerIds:
                 deprecated: true
                 description: Deprecated compatibility projection of consumers. Mirrors consumerDetails[].id.
                 items:
                   type: string
-                  default: '123'
+                  default: "123"
               dateUpdated:
                 type: string
                 format: date-time
@@ -288,17 +288,17 @@ components:
                 type: array
                 items:
                   oneOf:
-                    - $ref: '#/components/schemas/ServiceResultOk'
-                    - $ref: '#/components/schemas/ServiceResultError'
+                    - $ref: "#/components/schemas/ServiceResultOk"
+                    - $ref: "#/components/schemas/ServiceResultError"
                   discriminator:
                     propertyName: status
                     mapping:
-                      OK: '#/components/schemas/ServiceResultOk'
-                      ERROR: '#/components/schemas/ServiceResultError'
+                      OK: "#/components/schemas/ServiceResultOk"
+                      ERROR: "#/components/schemas/ServiceResultError"
         status:
           type: string
           enum:
-            - 'OK'
+            - "OK"
         totalItems:
           type: integer
           minimum: 0
@@ -325,32 +325,32 @@ components:
           format: date-time
     ServiceResultOk:
       allOf:
-        - $ref: '#/components/schemas/ServiceResultBase'
+        - $ref: "#/components/schemas/ServiceResultBase"
         - type: object
           properties:
             status:
               type: string
               enum:
-                - 'OK'
+                - "OK"
             content:
               type: array
               items:
-                $ref: '#/components/schemas/ServiceResult'
+                $ref: "#/components/schemas/ServiceResult"
     ServiceResultError:
       allOf:
-        - $ref: '#/components/schemas/ServiceResultBase'
+        - $ref: "#/components/schemas/ServiceResultBase"
         - type: object
           properties:
             status:
               type: string
               enum:
-                - 'ERROR'
+                - "ERROR"
             content:
               type: object
               default: null
             message:
               type: string
-              default: 'DEPENDENCY ERROR'
+              default: "DEPENDENCY ERROR"
     ServiceResult:
       type: object
       properties:
@@ -409,11 +409,11 @@ components:
         status:
           type: string
           enum:
-            - 'ERROR'
+            - "ERROR"
         message:
           type: string
           enum:
-            - 'Not Found'
+            - "Not Found"
     ErrorUnauthorized:
       type: object
       properties:
@@ -426,11 +426,11 @@ components:
         status:
           type: string
           enum:
-            - 'ERROR'
+            - "ERROR"
         message:
           type: string
           enum:
-            - 'Api key ongeldig'
+            - "Api key ongeldig"
     ErrorBadRequest:
       type: object
       properties:
@@ -443,11 +443,11 @@ components:
         status:
           type: string
           enum:
-            - 'ERROR'
+            - "ERROR"
         message:
           type: string
           enum:
-            - 'Bad request: ApiError 000 - Onbekende fout'
+            - "Bad request: ApiError 000 - Onbekende fout"
   parameters:
     xApiKeyHeader:
       name: x-api-key

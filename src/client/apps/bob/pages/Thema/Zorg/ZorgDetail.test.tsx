@@ -2,11 +2,11 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
-import { themaConfig } from './Zorg-thema-config.ts';
-import { ZorgDetail } from './ZorgDetail.tsx';
 import { jsonCopy } from '../../../../../../universal/helpers/utils.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { MockApp } from '../../MockApp.tsx';
+import { themaConfig } from './Zorg-thema-config.ts';
+import { ZorgDetail } from './ZorgDetail.tsx';
 
 const testState = {
   WMO: {

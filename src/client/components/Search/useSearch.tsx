@@ -9,15 +9,6 @@ import { matchPath, useLocation } from 'react-router';
 import { create } from 'zustand';
 
 import {
-  type ApiBaseItem,
-  type ApiSearchConfig,
-  type SearchEntry,
-  apiSearchConfigs,
-  displayLinkToSearchResult,
-  type RemoteApiSearchConfigs,
-} from './search-config.tsx';
-import styles from './Search.module.scss';
-import {
   apiErrorResult,
   apiSuccessResult,
   isError,
@@ -35,6 +26,15 @@ import {
 } from '../../hooks/useAppStateStore.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import { routeConfig as buurtRouteConfig } from '../MyArea/MyArea-thema-config.ts';
+import styles from './Search.module.scss';
+import {
+  type ApiBaseItem,
+  type ApiSearchConfig,
+  apiSearchConfigs,
+  displayLinkToSearchResult,
+  type RemoteApiSearchConfigs,
+  type SearchEntry,
+} from './search-config.tsx';
 
 export function generateSearchIndexPageEntry(
   item: ApiBaseItem,
@@ -125,7 +125,7 @@ export function generateSearchIndexPageEntries(
     const hasProperAppState = !!stateSlice && !isError(stateSlice);
 
     const isEnabled =
-      !!apiConfig && 'isEnabled' in apiConfig ? apiConfig.isEnabled : true;
+      apiConfig && 'isEnabled' in apiConfig ? apiConfig.isEnabled : true;
 
     return (
       apiConfig.profileTypes?.includes(profileType) &&
@@ -364,14 +364,13 @@ export function useSearchIndex(extendedAMResults: boolean) {
   }, [
     dynamicSearchEntries,
     staticSearchEntries,
-    isLoading,
     fuseInstance,
     isAppStateReady,
     setFuseInstance,
   ]);
 
   useEffect(() => {
-    if (fuseInstance && !!term) {
+    if (fuseInstance && term) {
       const rawResults = fuseInstance.search(term).map((result) => result.item);
       setResults({ ma: rawResults });
     }

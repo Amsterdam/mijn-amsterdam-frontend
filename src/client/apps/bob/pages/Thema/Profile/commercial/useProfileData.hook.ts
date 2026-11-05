@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 
-import { formatKvkProfileData } from './ProfileCommercial.transform.tsx';
 import { isError } from '../../../../../../../universal/helpers/api.ts';
 import { useAppStateGetter } from '../../../../../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../../../../../hooks/useIsLoading.ts';
 import { themaConfig } from '../Profile-thema-config.ts';
+import { formatKvkProfileData } from './ProfileCommercial.transform.tsx';
 
 export function useProfileData() {
   const { KVK } = useAppStateGetter();

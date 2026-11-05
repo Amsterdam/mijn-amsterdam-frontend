@@ -124,7 +124,7 @@ It's basically an additional development server integrated in the BFF api.
 
 #### Required IDE plugins
 
-- `prettier` with "format on save" option on.
+- `biomejs.biome` with "format on save" enabled. The folder settings also apply lint fixes and organize imports on save.
 - `.editorconfig`
 
 #### Testing and development

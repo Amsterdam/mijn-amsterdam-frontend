@@ -1,41 +1,40 @@
 @font-face {
-  font-family: 'Amsterdam Sans';
+  font-family: "Amsterdam Sans";
   src:
-    url('/fonts/AmsterdamSans/AmsterdamSans-Regular.woff2')
-      format('woff2'),
-    url('/fonts/AmsterdamSans/AmsterdamSans-Regular.woff')
-      format('woff');
+    url("/fonts/AmsterdamSans/AmsterdamSans-Regular.woff2") format("woff2"),
+    url("/fonts/AmsterdamSans/AmsterdamSans-Regular.woff") format("woff");
   font-weight: 400;
 }
 
 @font-face {
-  font-family: 'Amsterdam Sans';
+  font-family: "Amsterdam Sans";
   src:
-    url('/fonts/AmsterdamSansBold/AmsterdamSans-Bold.woff2')
-      format('woff2'),
-    url('/fonts/AmsterdamSansBold/AmsterdamSans-Bold.woff')
-      format('woff');
+    url("/fonts/AmsterdamSansBold/AmsterdamSans-Bold.woff2") format("woff2"),
+    url("/fonts/AmsterdamSansBold/AmsterdamSans-Bold.woff") format("woff");
   font-weight: 700;
 }
 
 @font-face {
-  font-family: 'Amsterdam Sans';
+  font-family: "Amsterdam Sans";
   src:
-    url('/fonts/AmsterdamSansExtraBold/AmsterdamSans-ExtraBold.woff2')
-      format('woff2'),
-    url('/fonts/AmsterdamSansExtraBold/AmsterdamSans-ExtraBold.woff')
-      format('woff');
+    url("/fonts/AmsterdamSansExtraBold/AmsterdamSans-ExtraBold.woff2")
+    format("woff2"),
+    url("/fonts/AmsterdamSansExtraBold/AmsterdamSans-ExtraBold.woff")
+    format("woff");
   font-weight: 800;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
   margin: 0;
 }
 
 body {
-  font-family: Amsterdam Sans, Arial;
+  font-family:
+    Amsterdam Sans,
+    Arial;
   font-size: 1.3rem;
 }
 
@@ -56,11 +55,11 @@ body {
 }
 
 pre {
- white-space: pre-wrap;       /* css-3 */
- white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
- white-space: -pre-wrap;      /* Opera 4-6 */
- white-space: -o-pre-wrap;    /* Opera 7 */
- word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  white-space: pre-wrap; /* css-3 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
 
 #protocol-link-button {

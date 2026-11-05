@@ -1,3 +1,6 @@
+import { getAuthProfileAndToken } from '../../../../testing/utils.ts';
+import type { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types.ts';
+import { forTesting as forTestingHLI } from '../hli.ts';
 import {
   AV_PCVC,
   AV_PCVTG,
@@ -7,9 +10,6 @@ import {
   AV_UPCZIL,
   forTesting,
 } from './regeling-pcvergoeding.ts';
-import { getAuthProfileAndToken } from '../../../../testing/utils.ts';
-import type { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types.ts';
-import { forTesting as forTestingHLI } from '../hli.ts';
 
 const mocks = vi.hoisted(() => {
   return {
