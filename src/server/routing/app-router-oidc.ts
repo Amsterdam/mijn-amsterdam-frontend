@@ -143,9 +143,7 @@ oidcRouter.get(
     if (auth?.profile.id) {
       countLoggedInVisit(auth.profile.id, 'digidGemachtigd');
     }
-    return res.redirect(
-      generateMaFrontendUrl('/?authMethod=digidGemachtigd')
-    );
+    return res.redirect(generateMaFrontendUrl('/?authMethod=digidGemachtigd'));
   }
 );
 

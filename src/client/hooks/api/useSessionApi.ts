@@ -3,10 +3,7 @@ import { useEffect } from 'react';
 import type { AuthProfile } from '../../../server/auth/auth-types.ts';
 import { clearSessionStorage } from '../storage.hook.ts';
 import { clearDeeplinkEntry } from '../useDeeplink.hook.ts';
-import {
-  useAuthMethodTypeStore,
-  useProfileType,
-} from '../useProfileType.ts';
+import { useAuthMethodTypeStore, useProfileType } from '../useProfileType.ts';
 import { useBffApi, useBffApiStateStore } from './useBffApi.ts';
 
 export const ONE_SECOND_MS = 1000;
@@ -103,4 +100,3 @@ export function useLogout(url: string) {
     window.location.href = url;
   };
 }
-

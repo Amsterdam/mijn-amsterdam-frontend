@@ -1,4 +1,6 @@
-import BRP_PERSOONSGEGEVENS from '../fixtures/brp/test-personen.json' with { type: 'json' };
+import BRP_PERSOONSGEGEVENS from '../fixtures/brp/test-personen.json' with {
+  type: 'json',
+};
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 
@@ -2416,4 +2418,3 @@ export const routes: MockRouteDefinition[] = [
     },
   },
 ];
-

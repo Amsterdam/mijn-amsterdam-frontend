@@ -44,7 +44,6 @@ export function getAuthProfile(
   maSession: MaSession,
   tokenData: TokenData
 ): AuthProfile {
-
   console.log('tokenData:', tokenData);
   const idAttr = OIDC_TOKEN_ID_ATTRIBUTE[maSession.authMethod](tokenData);
   const id = String(tokenData[idAttr]);
