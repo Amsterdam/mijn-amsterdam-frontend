@@ -19,14 +19,7 @@ import { requestData } from '../../helpers/source-api-request.ts';
 import { captureMessage } from '../monitoring.ts';
 import type { DocumentDownloadData } from '../shared/document-download-route-handler.ts';
 import { DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE } from '../shared/document-download-route-handler.ts';
-import {
-  requestProcess as bijstandsuitkeringRequestProcessLabels,
-  getNotifications as getBijstandsuitkeringNotifications,
-} from './content/bijstandsuitkering.ts';
-import {
-  requestProcess as bijzondereBijstandRequestProcessLabels,
-  getNotifications as getBijzondereBijstandNotifications,
-} from './content/bijzondere-bijstand.ts';
+import { getAaanvraagConfig, wpiAanvragen } from './config-and-types.ts';
 import {
   getNotifications as getSpecificatieNotifications,
   transformIncomeSpecificationItem,
@@ -126,10 +119,8 @@ export async function fetchBijstandsuitkering(
     return (
       response.content
         ?.filter((requestProcess) => requestProcess !== null)
-        .filter(
-          (requestProcess) =>
-            requestProcess?.about === 'Bijstandsuitkering' ||
-            requestProcess?.about === 'Bijzondere Bijstand'
+        .filter((requestProcess) =>
+          wpiAanvragen.some((config) => config.about === requestProcess.about)
         )
         .map((requestProcess) => addLink(requestProcess)) ?? []
     );
@@ -138,9 +129,7 @@ export async function fetchBijstandsuitkering(
   const response = await fetchRequestProcess(
     authProfileAndToken,
     (requestProcess) =>
-      requestProcess.about === 'Bijzondere Bijstand'
-        ? bijzondereBijstandRequestProcessLabels
-        : bijstandsuitkeringRequestProcessLabels,
+      getAaanvraagConfig(requestProcess.about)?.labels ?? null,
     {
       apiConfigName: 'WPI_AANVRAGEN',
       filterResponse,
@@ -271,14 +260,9 @@ export async function fetchWpiNotifications(
 
     if (status === 'OK' && Array.isArray(content)) {
       notifications.push(
-        ...getBijstandsuitkeringNotifications(
-          content.filter(
-            (requestProcess) => requestProcess.about === 'Bijstandsuitkering'
-          )
-        ),
-        ...getBijzondereBijstandNotifications(
-          content.filter(
-            (requestProcess) => requestProcess.about === 'Bijzondere Bijstand'
+        ...wpiAanvragen.flatMap(({ about, getNotifications }) =>
+          getNotifications(
+            content.filter((requestProcess) => requestProcess.about === about)
           )
         )
       );
