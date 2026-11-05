@@ -10,18 +10,18 @@ import {
   vi,
 } from 'vitest';
 
-import {
-  addServiceResultHandler,
-  loadServices,
-  forTesting,
-  servicesTipsByProfileType,
-} from './controller.ts';
 import { getReqMockWithOidc, ResponseMock } from '../../testing/utils.ts';
 import {
   apiErrorResult,
   apiPostponeResult,
   apiSuccessResult,
 } from '../../universal/helpers/api.ts';
+import {
+  addServiceResultHandler,
+  forTesting,
+  loadServices,
+  servicesTipsByProfileType,
+} from './controller.ts';
 
 const mocks = vi.hoisted(() => {
   return {

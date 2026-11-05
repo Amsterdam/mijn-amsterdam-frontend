@@ -1,15 +1,15 @@
 import type { Request } from 'express';
 import type { MockInstance } from 'vitest';
-import { describe, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, vi } from 'vitest';
 
+import {
+  RequestMock,
+  ResponseAuthenticatedMock,
+} from '../../../testing/utils.ts';
+import type { ResponseAuthenticated } from '../../routing/route-helpers.ts';
 import * as routeHandlersAdmin from './user-feedback.admin.route-handlers.ts';
 import * as routeHandlers from './user-feedback.route-handlers.ts';
 import * as userFeedback from './user-feedback.ts';
-import {
-  ResponseAuthenticatedMock,
-  RequestMock,
-} from '../../../testing/utils.ts';
-import type { ResponseAuthenticated } from '../../routing/route-helpers.ts';
 
 const { handleFetchSurvey, handleUserFeedbackSubmission } = routeHandlers;
 const { handleFetchSurveyOverview, handleShowSurveyOverview } =

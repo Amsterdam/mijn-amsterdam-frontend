@@ -1,5 +1,18 @@
 import { describe, expect, test } from 'vitest';
 
+import ERFPACHT_ZAAK_DETAIL from '../../../mocks-server/fixtures/erfpacht/erfpacht-zaak-detail.json' with {
+  type: 'json',
+};
+import ERFPACHT_ZAAK_INFO from '../../../mocks-server/fixtures/erfpacht/erfpacht-zaak-info.json' with {
+  type: 'json',
+};
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import {
+  fetchErfpachtZaakDetail,
+  fetchErfpachtZaakInfo,
+  forTesting,
+} from './erfpacht-zaken.ts';
 import {
   getParentStatus,
   ZAAK_STATUS_FRONTEND,
@@ -8,15 +21,6 @@ import type {
   ZaakInfoResponseSource,
   ZaakStatussenResponseSource,
 } from './erfpacht-zaken-types.ts';
-import {
-  fetchErfpachtZaakDetail,
-  fetchErfpachtZaakInfo,
-  forTesting,
-} from './erfpacht-zaken.ts';
-import ERFPACHT_ZAAK_DETAIL from '../../../mocks-server/fixtures/erfpacht/erfpacht-zaak-detail.json' with { type: 'json' };
-import ERFPACHT_ZAAK_INFO from '../../../mocks-server/fixtures/erfpacht/erfpacht-zaak-info.json' with { type: 'json' };
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
-import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 
 describe('erfpacht-zaken', () => {
   const authProfileAndToken: AuthProfileAndToken = getAuthProfileAndToken();

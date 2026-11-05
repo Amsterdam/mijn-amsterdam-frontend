@@ -1,38 +1,38 @@
-import { differenceInSeconds } from 'date-fns';
-import type { CookieOptions, Request, Response } from 'express';
-import type { AccessToken } from 'express-openid-connect';
+import type { Request, Response } from 'express';
 import UID from 'uid-safe';
 
+import { apiSuccessResult } from '../../universal/helpers/api.ts';
+import { getReturnToUrl } from '../auth/auth-after-redirect-returnto.ts';
+import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config.ts';
+import {
+  destroySession,
+  getAuth,
+  hasSessionCookie,
+} from '../auth/auth-helpers.ts';
+import { authRoutes } from '../auth/auth-routes.ts';
+import type { AuthenticatedRequest, AuthProfile } from '../auth/auth-types.ts';
+import { MA_FRONTEND_URL } from '../config/app.ts';
+import { getFromEnv, getValueFromEnvByKey } from '../helpers/env.ts';
+import {
+  fetchTestAccountOverviewFile,
+  getTestAccountsBaseFromEnv,
+  mergeWithDynamicTableHeaders,
+  type TestUserAccount,
+  type TestUserData,
+} from '../helpers/test-accounts.ts';
+import { countLoggedInVisit } from '../services/admin/admin-visitors.ts';
 import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes.ts';
 import {
   createBFFRouter,
   generateFullApiUrlBFF,
   generateMaFrontendUrl,
-  sendUnauthorized,
   type RequestWithRouteAndQueryParams,
+  sendUnauthorized,
 } from './route-helpers.ts';
-import { apiSuccessResult } from '../../universal/helpers/api.ts';
-import { getReturnToUrl } from '../auth/auth-after-redirect-returnto.ts';
 import {
-  OIDC_SESSION_COOKIE_NAME,
-  OIDC_SESSION_MAX_AGE_SECONDS,
-  TOKEN_ID_ATTRIBUTE,
-} from '../auth/auth-config.ts';
-import { signDevelopmentToken } from '../auth/auth-helpers-development.ts';
-import { getAuth, hasSessionCookie } from '../auth/auth-helpers.ts';
-import { authRoutes } from '../auth/auth-routes.ts';
-import type { AuthProfile, MaSession } from '../auth/auth-types.ts';
-import { type AuthenticatedRequest } from '../auth/auth-types.ts';
-import { MA_FRONTEND_URL, ONE_SECOND_MS } from '../config/app.ts';
-import { getFromEnv, getValueFromEnvByKey } from '../helpers/env.ts';
-import {
-  type TestUserAccount,
-  type TestUserData,
-  fetchTestAccountOverviewFile,
-  getTestAccountsBaseFromEnv,
-  mergeWithDynamicTableHeaders,
-} from '../helpers/test-accounts.ts';
-import { countLoggedInVisit } from '../services/admin/admin-visitors.ts';
+  createDevelopmentSessionData,
+  ensureOIDCAuthContext,
+} from './route-helpers-oidc.ts';
 
 export const authRouterDevelopment = createBFFRouter({ id: 'router-dev' });
 
@@ -109,17 +109,11 @@ function getPredefinedRedirectUrl<
 }
 
 authRouterDevelopment.use(async (req, res, next) => {
-  if (hasSessionCookie(req)) {
-    const cookieValue = req.cookies[OIDC_SESSION_COOKIE_NAME];
-    try {
-      await createOIDCStub(
-        req,
-        JSON.parse(Buffer.from(cookieValue, 'base64').toString('ascii'))
-      );
-    } catch (error) {
-      res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-      return sendUnauthorized(res);
-    }
+  try {
+    await ensureOIDCAuthContext(req, res);
+  } catch (_error) {
+    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+    return sendUnauthorized(res);
   }
   next();
 });
@@ -182,27 +176,15 @@ authRouterDevelopment.get(
       sid: sessionID,
     };
 
-    await createOIDCStub(req, authProfile);
+    const session =
+      OIDC_SESSION_COOKIE_NAME in req
+        ? req[OIDC_SESSION_COOKIE_NAME]
+        : undefined;
+    if (!session || typeof session !== 'object') {
+      throw new Error('OIDC session has not been initialized');
+    }
 
-    const appSessionCookieValue = Buffer.from(
-      JSON.stringify(authProfile)
-    ).toString('base64');
-
-    const appSessionCookieOptions: CookieOptions = {
-      expires: new Date(
-        new Date().getTime() + OIDC_SESSION_MAX_AGE_SECONDS * ONE_SECOND_MS
-      ),
-      httpOnly: true,
-      path: '/',
-      secure: false, // Not secure for local development
-      sameSite: 'lax',
-    };
-
-    res.cookie(
-      OIDC_SESSION_COOKIE_NAME,
-      appSessionCookieValue,
-      appSessionCookieOptions
-    );
+    Object.assign(session, await createDevelopmentSessionData(authProfile));
 
     const redirectUrl = getPredefinedRedirectUrl(req);
 
@@ -236,22 +218,15 @@ function transformAccount(account: TestUserAccount): TestUserAccount {
 async function sendRenderedTestAccountTable(
   res: Response,
   authMethod: AuthMethod,
-  queryParams: Record<string, string> = {}
+  loginQueryParams: Record<string, string | undefined> = {}
 ) {
   const envKey = getTestAccountsEnvKey(authMethod);
 
   const testAccountsBase = getTestAccountsBaseFromEnv(envKey);
-  let testAccountsOverview: TestUserData | null = null;
-  try {
-    testAccountsOverview = await fetchTestAccountOverviewFile(
-      `${envKey}_OVERVIEW_URL`
+  const testAccountsOverview: TestUserData | null =
+    await fetchTestAccountOverviewFile(`${envKey}_OVERVIEW_URL`).catch(
+      () => null
     );
-  } catch (error) {
-    console.error(
-      'Error fetching test account overview file:',
-      (error as Error).toString()
-    );
-  }
 
   const testAccountOverviewByUsername =
     testAccountsOverview?.accounts.reduce(
@@ -307,7 +282,7 @@ async function sendRenderedTestAccountTable(
   const accountsWithLoginLink = addLoginLinkToUsernameProp(
     testAccountsData,
     authMethod,
-    queryParams
+    loginQueryParams
   );
 
   const renderProps = {
@@ -319,10 +294,18 @@ async function sendRenderedTestAccountTable(
   return res.render('select-test-account', renderProps);
 }
 
+function filterUndefinedQueryParams(
+  queryParams: Record<string, string | undefined>
+) {
+  return Object.fromEntries(
+    Object.entries(queryParams).filter(([, value]) => typeof value === 'string')
+  );
+}
+
 function addLoginLinkToUsernameProp(
   testAccountData: TestUserData,
   authMethod: AuthProfile['authMethod'],
-  queryParams: Record<string, string> = {}
+  loginQueryParams: Record<string, string | undefined>
 ) {
   let authRoute = authRoutes.AUTH_LOGIN_EHERKENNING;
   if (authMethod === 'digid') {
@@ -332,16 +315,18 @@ function addLoginLinkToUsernameProp(
   }
 
   return testAccountData.accounts.map((account) => {
-    const authLoginRoute = generateFullApiUrlBFF(authRoute, [
-      {
-        username: account.username,
+    const queryParams = {
+      ...filterUndefinedQueryParams(loginQueryParams),
+      username: account.username,
+    };
+
+    const authLoginRoute = generateFullApiUrlBFF(authRoute, [ {
         ...queryParams,
         ...(authMethod === 'digidGemachtigd' &&
         typeof account.gemachtigdVoor === 'string'
           ? { gemachtigdVoor: account.gemachtigdVoor }
           : {}),
-      },
-    ]);
+      }]);
     return {
       ...account,
       username: `<a href="${authLoginRoute}" class="test-account-name">${account.username.replace(/^[a-zA-Z]_/, '')}</a>`,
@@ -357,9 +342,7 @@ authRouterDevelopment.get(
     authRoutes.AUTH_LOGOUT_DIGID_GEMACHTIGD,
   ],
   async (req, res) => {
-    res.clearCookie(OIDC_SESSION_COOKIE_NAME, {
-      path: '/',
-    });
+    destroySession(req, res);
     const returnTo = getReturnToUrl(req.query, MA_FRONTEND_URL);
     return res.redirect(returnTo);
   }

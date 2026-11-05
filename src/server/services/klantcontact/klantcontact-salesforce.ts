@@ -1,10 +1,10 @@
-import { salesforceDataRequestConfig } from './klantcontact-service-config.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
 import { encrypt } from '../../helpers/encrypt-decrypt.ts';
 import { getFromEnv } from '../../helpers/env.ts';
 import { getCustomApiConfigWithCacheKey } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
+import { salesforceDataRequestConfig } from './klantcontact-service-config.ts';
 
 export async function fetchSalesforceApi<T>(
   authProfileAndToken: AuthProfileAndToken,

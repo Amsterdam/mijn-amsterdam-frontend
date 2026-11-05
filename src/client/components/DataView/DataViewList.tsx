@@ -10,11 +10,11 @@ import {
 import { ChevronForwardIcon } from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
 
-import styles from './DataViewList.module.scss';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 import type { TableV2Props } from '../Table/TableV2.types.ts';
 import { useDisplayPropsEntries } from '../Table/useDisplayPropEntries.hook.ts';
+import styles from './DataViewList.module.scss';
 
 export function LinkOrFragment({
   children,

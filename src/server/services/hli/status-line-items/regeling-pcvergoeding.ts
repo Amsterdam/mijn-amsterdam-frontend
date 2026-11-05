@@ -1,6 +1,5 @@
 import { isBefore, isSameDay, parseISO } from 'date-fns';
 
-import { getBetrokkenKinderenDescription } from './generic.ts';
 import { defaultDateFormat } from '../../../../universal/helpers/date.ts';
 import { lowercaseFirstLetter } from '../../../../universal/helpers/text.ts';
 import { sortAlpha, splitBy } from '../../../../universal/helpers/utils.ts';
@@ -9,6 +8,7 @@ import type {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types.ts';
+import { getBetrokkenKinderenDescription } from './generic.ts';
 
 // The following code does not exist for the business but we create it to differentiate
 // between 2026 aanvragen and older.

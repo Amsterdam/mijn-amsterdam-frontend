@@ -3,9 +3,6 @@ import { useMemo } from 'react';
 import { OrderedList } from '@amsterdam/design-system-react';
 import { generatePath, useParams } from 'react-router';
 
-import { MY_NOTIFICATIONS_PAGE_DOCUMENT_TITLE } from './MyNotifications-config.ts';
-import { themaTitle } from './MyNotifications-config.ts';
-import { MyNotificationsRoute } from './MyNotifications-routes.ts';
 import { isError } from '../../../../../universal/helpers/api.ts';
 import { ErrorAlert } from '../../../../components/Alert/Alert.tsx';
 import { LoadingContent } from '../../../../components/LoadingContent/LoadingContent.tsx';
@@ -16,6 +13,11 @@ import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
 import { useIsLoading } from '../../../../hooks/useIsLoading.ts';
 import { useAppStateNotifications } from '../../../../hooks/useNotifications.ts';
+import {
+  MY_NOTIFICATIONS_PAGE_DOCUMENT_TITLE,
+  themaTitle,
+} from './MyNotifications-config.ts';
+import { MyNotificationsRoute } from './MyNotifications-routes.ts';
 
 const PAGE_SIZE = 12;
 

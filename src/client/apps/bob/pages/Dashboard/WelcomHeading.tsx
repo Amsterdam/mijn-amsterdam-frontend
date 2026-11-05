@@ -1,6 +1,6 @@
-import styles from './WelcomeHeading.module.scss';
 import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
 import { useAuthMethod } from '../../../../hooks/useProfileType.ts';
+import styles from './WelcomeHeading.module.scss';
 
 const NOON = 12;
 const EVENING = 18;

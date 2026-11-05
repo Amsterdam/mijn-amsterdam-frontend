@@ -3,19 +3,19 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import type {
   LatLngLiteral,
   LeafletEventHandlerFn,
-  Marker as MarkerType,
   MarkerOptions,
+  Marker as MarkerType,
 } from 'leaflet';
 import L from 'leaflet';
 
-import { Marker } from './Map/Marker.tsx';
-import styles from './MyArea.module.scss';
-import { useMapRef } from './useMap.ts';
 import { LOCATION_ZOOM } from '../../../universal/config/myarea-datasets.ts';
 import iconUrl from '../../assets/icons/home.svg';
 import iconUrlCommercial from '../../assets/icons/map/homeCommercial__primary-red.svg';
 import markerIconUrl from '../../assets/icons/map/pin.svg';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
+import { Marker } from './Map/Marker.tsx';
+import styles from './MyArea.module.scss';
+import { useMapRef } from './useMap.ts';
 
 interface MyAreaMarkerProps {
   latlng: LatLngLiteral;
@@ -47,7 +47,7 @@ function MyAreaMarker({
       events.click = onClick;
     }
 
-    const marker: { options: MarkerOptions; events: any } = {
+    const marker: { options: MarkerOptions; events: typeof events } = {
       options: { icon },
       events,
     };

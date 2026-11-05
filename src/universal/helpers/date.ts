@@ -25,7 +25,7 @@ export function dateFormat(date: string | Date | number, fmt: string) {
     const parsedDate = typeof date === 'string' ? parseISO(date) : date;
     return format(parsedDate, fmt, { locale: nl });
   } catch (_error) {
-    // eslint-disable-next-line no-console
+    // biome-ignore lint/suspicious/noConsole: Preserve the existing lint exception.
     console.error(`dateFormat: Could not format date: ${date}`);
   }
 
@@ -45,7 +45,7 @@ export function toISOString(date: string | Date): string | null {
 
   const parsedDate = parseISO(date);
   if (parsedDate.toString() === 'Invalid Date') {
-    // eslint-disable-next-line no-console
+    // biome-ignore lint/suspicious/noConsole: Preserve the existing lint exception.
     console.error(`parseDateToISO: Could not parse date: ${date}`);
     return null;
   }

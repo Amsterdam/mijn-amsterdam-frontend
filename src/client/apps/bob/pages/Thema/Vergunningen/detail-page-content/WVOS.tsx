@@ -1,12 +1,12 @@
 import { UnorderedList } from '@amsterdam/design-system-react';
 
-import styles from './fields-config.module.scss';
-import { commonTransformers, getRows } from './fields-config.tsx';
 import type {
   DecosZaakFrontend,
   WerkzaamhedenEnVervoerOpStraat,
 } from '../../../../../../../server/services/vergunningen/config-and-types.ts';
 import { Datalist } from '../../../../../../components/Datalist/Datalist.tsx';
+import styles from './fields-config.module.scss';
+import { commonTransformers, getRows } from './fields-config.tsx';
 
 export function WVOSContent({
   vergunning,

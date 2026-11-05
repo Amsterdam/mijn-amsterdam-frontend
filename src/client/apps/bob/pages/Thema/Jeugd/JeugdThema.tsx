@@ -1,6 +1,5 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { useJeugdThemaData } from './useJeugdThemaData.ts';
 import type { LeerlingenvervoerVoorzieningFrontend } from '../../../../../../server/services/jzd/jeugd/jeugd.ts';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ParagaphSuppressed } from '../../../../../components/ParagraphSuppressed/ParagraphSuppressed.tsx';
@@ -11,6 +10,7 @@ import {
   WMO_HELPDESK_HREF_TEL_LINK,
   WMO_HELPDESK_PHONENUMBER,
 } from '../Zorg/ZorgThema.tsx';
+import { useJeugdThemaData } from './useJeugdThemaData.ts';
 
 export function HistoricItemsMention() {
   return (

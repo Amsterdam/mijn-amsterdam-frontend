@@ -1,17 +1,16 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import {
-  listPageParamKind,
-  themaConfig,
-  tableConfig,
-} from './HLI-thema-config.ts';
-import { HLIThema } from './HLIThema.tsx';
-import { stadspasCreator } from './test-helpers.ts';
-import { createHLIState } from './test-helpers.ts';
 import type { HLIRegelingFrontend } from '../../../../../../server/services/hli/hli-regelingen-types.ts';
 import { RTM_SPECIFICATIE_TITLE } from '../../../../../../server/services/hli/rtm/regeling-rtm.ts';
 import { componentCreator } from '../../MockApp.tsx';
+import {
+  listPageParamKind,
+  tableConfig,
+  themaConfig,
+} from './HLI-thema-config.ts';
+import { HLIThema } from './HLIThema.tsx';
+import { createHLIState, stadspasCreator } from './test-helpers.ts';
 
 const createStadspas = stadspasCreator();
 

@@ -1,15 +1,15 @@
 import { FeatureToggle } from '../../../universal/config/feature-toggles.ts';
 import {
-  SELECT_FIELDS_TRANSFORM_BASE,
   dateEnd,
   dateStart,
   location,
+  SELECT_FIELDS_TRANSFORM_BASE,
 } from '../decos/decos-field-transformers.ts';
 import type {
   DecosZaakBase,
+  DecosZaakFrontend,
   DecosZaakTransformer,
 } from '../decos/decos-types.ts';
-import { type DecosZaakFrontend } from '../decos/decos-types.ts';
 import type {
   WithDateRange,
   WithLocation,

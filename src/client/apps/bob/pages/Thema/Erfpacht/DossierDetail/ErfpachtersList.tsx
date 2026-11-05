@@ -2,10 +2,10 @@ import { useState } from 'react';
 
 import { Button, OrderedList } from '@amsterdam/design-system-react';
 
-import styles from '../ErfpachtDossierDetail.module.scss';
-import { WijzigenLink } from './WijzigenLink.tsx';
 import type { ErfpachtDossiersDetail } from '../../../../../../../server/services/erfpacht/erfpacht-types.ts';
 import { useMediumScreen } from '../../../../../../hooks/media.hook.ts';
+import styles from '../ErfpachtDossierDetail.module.scss';
+import { WijzigenLink } from './WijzigenLink.tsx';
 
 const MAX_ERFPACHTERS_VISIBLE_INITIALLY = 3;
 

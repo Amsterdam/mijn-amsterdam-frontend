@@ -9,7 +9,6 @@ import {
 } from '@amsterdam/design-system-react';
 import { LinkExternalIcon } from '@amsterdam/design-system-react-icons';
 
-import styles from './StatusSteps.module.scss';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import type {
   GenericDocument,
@@ -18,6 +17,7 @@ import type {
 import { parseHTML } from '../../helpers/html-react-parse.tsx';
 import { DocumentLink } from '../DocumentList/DocumentLink.tsx';
 import { MaButtonLink } from '../MaLink/MaLink.tsx';
+import styles from './StatusSteps.module.scss';
 
 interface StatusStepDocumentsProps {
   documents?: GenericDocument[];
@@ -56,7 +56,7 @@ export function StatusStepDocuments({
 }: StatusStepDocumentsProps) {
   return (
     <>
-      {!!altDocumentContent && typeof altDocumentContent === 'string'
+      {altDocumentContent && typeof altDocumentContent === 'string'
         ? parseHTML(altDocumentContent)
         : altDocumentContent}
       {!!documents?.length && (

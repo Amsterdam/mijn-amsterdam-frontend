@@ -1,4 +1,5 @@
 ---
+
 name: jira-ticket-grill
 description: 'Werk een ticket-idee uit tot een compact Nederlands Jira-concept.'
 disable-model-invocation: true

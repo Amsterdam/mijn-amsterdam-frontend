@@ -1,4 +1,3 @@
-import type { DocumentDownloadResponse } from './document-download-route-handler.ts';
 import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import type { GenericDocument } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
@@ -6,6 +5,7 @@ import { ensureOpsFlagExists } from '../../config/azure-appconfiguration.ts';
 import { encryptPayloadAndSessionID } from '../../helpers/encrypt-decrypt.ts';
 import { BffEndpoints } from '../../routing/bff-routes.ts';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
+import type { DocumentDownloadResponse } from './document-download-route-handler.ts';
 
 export type DocumentsListPayload = {
   domainService: string;

@@ -1,7 +1,6 @@
 import { Icon, UnorderedList } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
-import styles from './MyThemasPanel.module.scss';
 import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
 import type { ThemaMenuItemTransformed } from '../../../universal/types/thema-types.ts';
 import {
@@ -12,6 +11,7 @@ import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import { useAuthMethod } from '../../hooks/useProfileType.ts';
 import { LoadingContent } from '../LoadingContent/LoadingContent.tsx';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
+import styles from './MyThemasPanel.module.scss';
 
 type ThemaLinkLoaderProps = {
   width: number;

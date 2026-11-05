@@ -1,10 +1,10 @@
-import { tableConfig, themaConfig } from './Bezwaren-thema-config.ts';
 import type { BezwaarFrontend } from '../../../../../../server/services/bezwaren/types.ts';
 import { isError } from '../../../../../../universal/helpers/api.ts';
 import { addLinkElementToProperty } from '../../../../../components/Table/TableV2.tsx';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
+import { tableConfig, themaConfig } from './Bezwaren-thema-config.ts';
 
 export function useBezwarenThemaData() {
   const { BEZWAREN } = useAppStateGetter();

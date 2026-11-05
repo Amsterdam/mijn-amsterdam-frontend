@@ -1,12 +1,12 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { tableConfigSpecificaties } from './Inkomen-thema-config.ts';
-import { useInkomenThemaData } from './useInkomenThemaData.hook.ts';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import { getFeedbackDetailsByTableConfig } from '../../../../../components/UserFeedback/UserFeedback.helpers.ts';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { tableConfigSpecificaties } from './Inkomen-thema-config.ts';
+import { useInkomenThemaData } from './useInkomenThemaData.hook.ts';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>

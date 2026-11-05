@@ -5,8 +5,6 @@ import type { LatLngBoundsLiteral, LatLngLiteral, LeafletEvent } from 'leaflet';
 import { useLocation } from 'react-router';
 import { create } from 'zustand';
 
-import { filterItemCheckboxState } from './LegendPanel/checkbox-helpers.ts';
-import styles from './MyAreaDatasets.module.scss';
 import type { BAGLocationExtended } from '../../../server/services/bag/bag.types.ts';
 import type {
   MaPointFeature,
@@ -37,6 +35,8 @@ import {
   useAppStateGetter,
   useAppStateReady,
 } from '../../hooks/useAppStateStore.ts';
+import { filterItemCheckboxState } from './LegendPanel/checkbox-helpers.ts';
+import styles from './MyAreaDatasets.module.scss';
 
 const NO_DATA_ERROR_RESPONSE = {
   errors: [
@@ -204,7 +204,7 @@ export function useFetchPanelFeature() {
 const selectedFeatureStyleSelector = styles['Feature--selected'];
 
 export function useSelectedFeatureCSS(
-  features: Array<MaSuperClusterFeature | MaPolylineFeature>
+  _features: Array<MaSuperClusterFeature | MaPolylineFeature>
 ) {
   const { loadingFeature } = useLoadingFeature();
   const map = useMapInstance();
@@ -226,7 +226,7 @@ export function useSelectedFeatureCSS(
         }
       }
     }
-  }, [map, loadingFeatureId, features]);
+  }, [map, loadingFeatureId]);
 }
 
 export function useOnMarkerClick() {
@@ -459,7 +459,7 @@ export function getQueryConfig(searchEntry: string): QueryConfig {
   return Object.fromEntries(
     Array.from(new URLSearchParams(searchEntry).entries())
       .map(([k, v]) => {
-        let value = undefined;
+        let value;
         try {
           value = v ? JSON.parse(v) : undefined;
         } catch {
@@ -522,7 +522,7 @@ export function useMapLocations(
 
   const customLocationMarker = useMemo(() => {
     const customLocationMarker: MapLocationMarker =
-      !!queryCenterMarker && typeof queryCenterMarker === 'string'
+      queryCenterMarker && typeof queryCenterMarker === 'string'
         ? JSON.parse(queryCenterMarker)
         : centerMarker;
     const centerMarkerLabel = customLocationMarker?.label;
@@ -596,6 +596,7 @@ export function useMapLocations(
     }
   }, [urlQueryCenter]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: mapOptions only need to be determined once; dependencies intentionally omitted to avoid unnecessary re-renders
   const mapCenter: LatLngLiteral = useMemo(() => {
     let center = customLocationMarker.latlng;
 
@@ -609,7 +610,6 @@ export function useMapLocations(
 
     return center;
     // Using memo here because we don't need the options to cause re-renders of the <Map/> component.
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- mapOptions only need to be determined once; dependencies intentionally omitted to avoid unnecessary re-renders
   }, []);
 
   return {
@@ -647,10 +647,11 @@ export function useSetMapCenterAtLocation(
    *
    * This is not nice UX therefor we set isReadyForSetViewUpdates after appState is ready and mapInstance exists.
    * */
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Preserve the existing hook dependency exclusion.
   useEffect(() => {
     if (mapInstance && isReadyForSetViewUpdates.current === true) {
       let centerMarker: MapLocationMarker = customLocationMarker;
-      if (customLocationMarker.type === 'default' && !!homeLocationMarker) {
+      if (customLocationMarker.type === 'default' && homeLocationMarker) {
         centerMarker = homeLocationMarker;
       }
       if (centerMarker.latlng) {
@@ -659,7 +660,6 @@ export function useSetMapCenterAtLocation(
     }
     // Disable because we don't want to re-center the map everytime the zoom level changes.
     // Whenever centerMarker changes, and a new zoom level was provided at the same time, the effect will also take new zoom into account.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customLocationMarker, homeLocationMarker, mapInstance]);
 
   useEffect(() => {

@@ -1,11 +1,3 @@
-import { BZB } from './detail-page-content/BZB.tsx';
-import { BZP } from './detail-page-content/BZP.tsx';
-import { EigenParkeerplaats } from './detail-page-content/EigenParkeerplaats.tsx';
-import { EigenParkeerplaatsOpheffen } from './detail-page-content/EigenParkeerplaatsOpheffen.tsx';
-import { GPK } from './detail-page-content/GPK.tsx';
-import { GPPContent } from './detail-page-content/GPP.tsx';
-import { Touringcar } from './detail-page-content/Touringcar.tsx';
-import { useParkerenData } from './useParkerenData.hook.tsx';
 import type { DecosParkeerVergunning } from '../../../../../../server/services/parkeren/config-and-types.ts';
 import type { DecosZaakFrontend } from '../../../../../../server/services/vergunningen/config-and-types.ts';
 import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
@@ -14,6 +6,14 @@ import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPa
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
 import { VergunningDetailDocumentsList } from '../Vergunningen/detail-page-content/VergunningDetailDocumentsList.tsx';
 import { useVergunningenDetailData } from '../Vergunningen/useVergunningenDetailData.hook.ts';
+import { BZB } from './detail-page-content/BZB.tsx';
+import { BZP } from './detail-page-content/BZP.tsx';
+import { EigenParkeerplaats } from './detail-page-content/EigenParkeerplaats.tsx';
+import { EigenParkeerplaatsOpheffen } from './detail-page-content/EigenParkeerplaatsOpheffen.tsx';
+import { GPK } from './detail-page-content/GPK.tsx';
+import { GPPContent } from './detail-page-content/GPP.tsx';
+import { Touringcar } from './detail-page-content/Touringcar.tsx';
+import { useParkerenData } from './useParkerenData.hook.tsx';
 
 interface DetailPageContentProps<V> {
   vergunning: V;

@@ -14,6 +14,7 @@ vi.mock('./admin-account.model.ts', () => ({
   updateAccountData: vi.fn(),
 }));
 
+import { RequestMock, ResponseMock } from '../../../testing/utils.ts';
 import {
   getAndUpsertAccountData,
   updateAccountData,
@@ -22,7 +23,6 @@ import {
   getAccountDataHandler,
   updateAccountDataHandler,
 } from './admin-account.route-handlers.ts';
-import { RequestMock, ResponseMock } from '../../../testing/utils.ts';
 
 const mockedGetOrCreateAccountData = vi.mocked(getAndUpsertAccountData);
 const mockedUpdateAccountData = vi.mocked(updateAccountData);

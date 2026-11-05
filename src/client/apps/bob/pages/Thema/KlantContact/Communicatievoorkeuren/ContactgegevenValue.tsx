@@ -4,19 +4,19 @@ import { Alert, Badge, Paragraph } from '@amsterdam/design-system-react';
 import { differenceInCalendarMonths } from 'date-fns';
 import { generatePath } from 'react-router';
 
-import {
-  ContactgegevenTypeEnum,
-  MAXIMUM_AGE_BEFORE_VALIDATION_MONTHS,
-} from './CommunicatieVoorkeuren-config.ts';
-import { useCommunicatieVoorkeurVerwijderen } from './useCommunicatieVoorkeuren.ts';
 import type { ContactgegevenFrontend } from '../../../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
 import { MaRouterLink } from '../../../../../../components/MaLink/MaLink.tsx';
 import { ModalAndButton } from '../../../../../../components/Modal/Modal.tsx';
 import { Spinner } from '../../../../../../components/Spinner/Spinner.tsx';
 import {
-  themaConfig,
   type InstelAction,
+  themaConfig,
 } from '../KlantContact-thema-config.ts';
+import {
+  ContactgegevenTypeEnum,
+  MAXIMUM_AGE_BEFORE_VALIDATION_MONTHS,
+} from './CommunicatieVoorkeuren-config.ts';
+import { useCommunicatieVoorkeurVerwijderen } from './useCommunicatieVoorkeuren.ts';
 
 type CommunicatieMediumValueProps = {
   contactgegeven: ContactgegevenFrontend;

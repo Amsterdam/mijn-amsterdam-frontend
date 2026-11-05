@@ -1,10 +1,10 @@
 import { describe, expect } from 'vitest';
 
-import { sortNotificationsAndInsertTips } from './tips-and-notifications.ts';
 import {
-  NOTIFICATION_SORTPRIORITY,
   type MyNotification,
+  NOTIFICATION_SORTPRIORITY,
 } from '../../universal/types/App.types.ts';
+import { sortNotificationsAndInsertTips } from './tips-and-notifications.ts';
 
 describe('tips-and-notifications', () => {
   test('Should sort notifications by datePublished and insert tips', () => {

@@ -1,14 +1,14 @@
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
+} from '../../../../../../universal/types/thema-types.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import { themaConfig } from './Varen-thema-config.ts';
 import { VarenDetailPageContentExploitatieVergunning } from './VarenDetailVergunningExploitatie.tsx';
 import { VarenDetailPageContentExploitatieZaak } from './VarenDetailZaakExploitatie.tsx';
 import { default as VarenIcon } from './VarenIcon.svg?react';
 import { VarenList } from './VarenList.tsx';
 import { VarenThema } from './VarenThema.tsx';
-import { isLoading } from '../../../../../helpers/api.ts';
-import {
-  type ThemaMenuItem,
-  type ThemaRenderRouteConfig,
-} from '../../../../../../universal/types/thema-types.ts';
 
 export const VarenRoutes = [
   {

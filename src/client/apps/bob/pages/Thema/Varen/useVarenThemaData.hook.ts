@@ -1,5 +1,3 @@
-import { CONTENT_EMPTY } from './helper.ts';
-import { tableConfig, themaConfig } from './Varen-thema-config.ts';
 import type {
   VarenVergunningFrontend,
   VarenZakenFrontend,
@@ -9,6 +7,8 @@ import { addLinkElementToProperty } from '../../../../../components/Table/TableV
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
+import { CONTENT_EMPTY } from './helper.ts';
+import { tableConfig, themaConfig } from './Varen-thema-config.ts';
 
 export function useVarenThemaData() {
   const { VAREN } = useAppStateGetter();

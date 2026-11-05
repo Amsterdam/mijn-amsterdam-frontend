@@ -12,7 +12,8 @@ export type TextPartContentTransformer<T> = (
 ) => TextPartContent;
 
 export type TextPartContents<T> =
-  TextPartContent | TextPartContentTransformer<T>;
+  | TextPartContent
+  | TextPartContentTransformer<T>;
 
 export type LeveringsVormConfig = Record<
   LeveringsVormTransformed,
@@ -26,18 +27,22 @@ export type ZorgnedStatusLineItemTransformerConfig<
   datePublished: TextPartContents<T>;
   description: TextPartContents<T>;
   isChecked:
-    ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean) | boolean;
+    | ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean)
+    | boolean;
   isActive:
-    ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean) | boolean;
+    | ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean)
+    | boolean;
   isVisible?:
-    ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean) | boolean;
+    | ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean)
+    | boolean;
   hideDatePublished?: boolean;
   substeps?: ZorgnedStatusLineItemTransformerConfig<T>[];
 };
 
 type ZorgnedLineItemsFilter = (
   aanvraag:
-    ZorgnedAanvraagTransformed | ZorgnedAanvraagWithRelatedPersonsTransformed,
+    | ZorgnedAanvraagTransformed
+    | ZorgnedAanvraagWithRelatedPersonsTransformed,
   allAanvragen:
     | ZorgnedAanvraagTransformed[]
     | ZorgnedAanvraagWithRelatedPersonsTransformed[]
@@ -203,7 +208,8 @@ export interface ZorgnedAanvraagTransformed {
   titel: string;
 }
 
-export interface ZorgnedAanvraagWithRelatedPersonsTransformed extends ZorgnedAanvraagTransformed {
+export interface ZorgnedAanvraagWithRelatedPersonsTransformed
+  extends ZorgnedAanvraagTransformed {
   betrokkenPersonen: ZorgnedPerson[];
   bsnAanvrager: BSN;
 }
@@ -278,7 +284,9 @@ export interface ZorgnedPerson {
 }
 
 export type ZorgnedApiConfigKey =
-  'ZORGNED_WMO' | 'ZORGNED_AV' | 'ZORGNED_LEERLINGENVERVOER';
+  | 'ZORGNED_WMO'
+  | 'ZORGNED_AV'
+  | 'ZORGNED_LEERLINGENVERVOER';
 
 export interface ZorgnedAanvragenServiceOptions {
   zorgnedApiConfigKey: ZorgnedApiConfigKey;

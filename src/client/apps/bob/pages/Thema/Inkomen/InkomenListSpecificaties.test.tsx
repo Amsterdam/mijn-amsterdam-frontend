@@ -3,13 +3,13 @@ import { userEvent } from '@testing-library/user-event';
 import { generatePath } from 'react-router';
 import { describe, expect, it } from 'vitest';
 
-import { listPageParamKind, themaConfig } from './Inkomen-thema-config.ts';
-import { InkomenListSpecificaties } from './InkomenListSpecificaties.tsx';
 import { transformIncomSpecificationResponse } from '../../../../../../server/services/wpi/api-service.ts';
 import type { WpiIncomeSpecificationResponseData } from '../../../../../../server/services/wpi/wpi-types.ts';
 import { dateSort } from '../../../../../../universal/helpers/date.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { MockApp } from '../../MockApp.tsx';
+import { listPageParamKind, themaConfig } from './Inkomen-thema-config.ts';
+import { InkomenListSpecificaties } from './InkomenListSpecificaties.tsx';
 
 vi.mock(
   '../../../../../components/DateInput/DateInput',

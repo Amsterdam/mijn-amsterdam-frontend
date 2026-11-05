@@ -3,12 +3,12 @@ import { userEvent } from '@testing-library/user-event';
 import { generatePath, MemoryRouter, Route, Routes } from 'react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { ContactgegevenInstellen } from './ContactgegevenInstellen.tsx';
 import type { KlantcontactResponseData } from '../../../../../../../server/services/klantcontact/klantcontact.types.ts';
 import { bffApi } from '../../../../../../../testing/utils.ts';
 import type { ApiResponse } from '../../../../../../../universal/helpers/api.ts';
 import { useAppStateStore } from '../../../../../../hooks/useAppStateStore.ts';
 import { themaConfig } from '../KlantContact-thema-config.ts';
+import { ContactgegevenInstellen } from './ContactgegevenInstellen.tsx';
 
 function setBaseState() {
   useAppStateStore.setState({

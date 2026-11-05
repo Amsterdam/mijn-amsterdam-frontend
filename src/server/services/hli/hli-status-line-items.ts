@@ -1,21 +1,21 @@
-import type { ZorgnedHLIRegeling } from './hli-regelingen-types.ts';
+import { themaConfig } from '../../../client/apps/bob/pages/Thema/HLI/HLI-thema-config.ts';
 import type {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemsConfig,
 } from '../zorgned/zorgned-types.ts';
+import type { ZorgnedHLIRegeling } from './hli-regelingen-types.ts';
 import { DECLARATIE } from './status-line-items/declaratie.ts';
+import { REGELING } from './status-line-items/regeling.ts';
 import { AV_CZM, REGELING_CZM } from './status-line-items/regeling-czm.ts';
 import {
-  verzilveringCodes,
   AV_PCVC,
   AV_UPCC,
+  MAMS_PC2026,
   PCVERGOEDING,
   PCVERGOEDING_2026,
-  MAMS_PC2026,
+  verzilveringCodes,
 } from './status-line-items/regeling-pcvergoeding.ts';
 import { REGELING_PERIODIEK } from './status-line-items/regeling-periodiek.ts';
-import { REGELING } from './status-line-items/regeling.ts';
-import { themaConfig } from '../../../client/apps/bob/pages/Thema/HLI/HLI-thema-config.ts';
 
 export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
   ZorgnedHLIRegeling | ZorgnedAanvraagWithRelatedPersonsTransformed

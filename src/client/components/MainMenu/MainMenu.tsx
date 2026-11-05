@@ -1,8 +1,6 @@
 import { Heading } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
-import { categoryMenuItems } from './MainMenu.constants.ts';
-import styles from './MainMenu.module.scss';
 import { themaConfig } from '../../apps/bob/pages/MyTips/MyTips-config.ts';
 import { myTipsMenuItem } from '../../apps/bob/pages/MyTips/MyTips-routes.ts';
 import { getRedactedClass } from '../../helpers/cobrowse.ts';
@@ -14,6 +12,8 @@ import {
 import { useActiveThemaMenuItems } from '../../hooks/useThemaMenuItems.ts';
 import { MainHeaderSecondaryLinks } from '../MainHeader/MainHeader.tsx';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
+import { categoryMenuItems } from './MainMenu.constants.ts';
+import styles from './MainMenu.module.scss';
 
 export const MAIN_MENU_ID = 'main-menu';
 

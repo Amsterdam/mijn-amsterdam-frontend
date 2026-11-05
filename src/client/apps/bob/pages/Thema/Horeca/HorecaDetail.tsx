@@ -1,4 +1,3 @@
-import { useHorecaThemaData } from './useHorecaThemaData.hook.ts';
 import type { DecosZaakExploitatieHorecabedrijf } from '../../../../../../server/services/horeca/decos-zaken.ts';
 import type {
   DecosZaakFrontend,
@@ -16,6 +15,7 @@ import {
 } from '../Vergunningen/detail-page-content/fields-config.tsx';
 import { VergunningDetailDocumentsList } from '../Vergunningen/detail-page-content/VergunningDetailDocumentsList.tsx';
 import { useVergunningenDetailData } from '../Vergunningen/useVergunningenDetailData.hook.ts';
+import { useHorecaThemaData } from './useHorecaThemaData.hook.ts';
 
 type ExploitatieHorecaBedrijfProps = {
   vergunning: DecosZaakFrontend<DecosZaakExploitatieHorecabedrijf>;

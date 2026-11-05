@@ -1,6 +1,6 @@
-import { themaConfig } from './UserFeedback-thema-config.ts';
-import { UserFeedback } from './UserFeedback.tsx';
 import type { ApplicationRouteConfig } from '../../../../../universal/types/thema-types.ts';
+import { UserFeedback } from './UserFeedback.tsx';
+import { themaConfig } from './UserFeedback-thema-config.ts';
 
 export const AdminUserFeedbackRoutes = [
   {

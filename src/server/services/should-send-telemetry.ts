@@ -1,7 +1,7 @@
 import type {
+  DependencyTelemetry,
   ExceptionData,
   RequestData,
-  DependencyTelemetry,
 } from 'applicationinsights/out/Declarations/Contracts/index.js';
 
 // Example: ["GET /api/users", ...]. This is how a 'name' is represented in telemetry data

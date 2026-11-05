@@ -1,18 +1,5 @@
 import { parseISO } from 'date-fns';
 
-import {
-  type BZB,
-  type BZP,
-  caseTypeParkeren,
-  type EigenParkeerplaatsOpheffen,
-  type EigenParkeerplaatsRequestType,
-  type EigenParkeerplaats,
-  type GPK,
-  type GPP,
-  type TouringcarDagontheffing,
-  type TouringcarJaarontheffing,
-  type GPKMachtigen,
-} from './config-and-types.ts';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text.ts';
 import {
   dateEnd,
@@ -32,6 +19,19 @@ import {
   transformKenteken,
 } from '../decos/decos-helpers.ts';
 import type { DecosZaakTransformer } from '../decos/decos-types.ts';
+import {
+  type BZB,
+  type BZP,
+  caseTypeParkeren,
+  type EigenParkeerplaatsOpheffen,
+  type EigenParkeerplaatsRequestType,
+  type EigenParkeerplaats,
+  type GPK,
+  type GPP,
+  type TouringcarDagontheffing,
+  type TouringcarJaarontheffing,
+  type GPKMachtigen,
+} from './config-and-types.ts';
 
 const GPP: DecosZaakTransformer<GPP> = {
   isActive: true,
@@ -147,7 +147,7 @@ const BZP: DecosZaakTransformer<BZP> = {
     date7: dateEnd,
     text8: kentekens,
   },
-  async afterTransform(vergunning, decosZaakSource) {
+  async afterTransform(vergunning, _decosZaakSource) {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
   },

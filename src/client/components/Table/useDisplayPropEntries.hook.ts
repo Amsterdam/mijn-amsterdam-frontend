@@ -1,11 +1,11 @@
+import { entries } from '../../../universal/helpers/utils.ts';
+import { useSmallScreen } from '../../hooks/media.hook.ts';
 import {
-  getDisplayPropsColWidths,
   getDisplayProps,
+  getDisplayPropsColWidths,
   getVisibleColumnConfigValue,
 } from './helpers.ts';
 import type { DisplayProps } from './TableV2.types.ts';
-import { entries } from '../../../universal/helpers/utils.ts';
-import { useSmallScreen } from '../../hooks/media.hook.ts';
 
 export function useDisplayPropsEntries<T extends DisplayProps<object>>(
   displayProps: T

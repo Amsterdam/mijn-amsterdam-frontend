@@ -2,6 +2,12 @@ import createDebugger from 'debug';
 import type { Request } from 'express';
 
 import {
+  type ResponseAuthenticated,
+  sendBadRequest,
+  sendBadRequestInvalidInput,
+  sendResponse,
+} from '../../routing/route-helpers.ts';
+import {
   ContactgegevenTypes,
   ContactgegevenTypeValues,
   fetchCommunicatievoorkeuren,
@@ -12,12 +18,6 @@ import {
   fetchDienstverlener,
   verifyContactgegeven,
 } from './klantcontact-profieldienst.ts';
-import {
-  sendBadRequest,
-  sendBadRequestInvalidInput,
-  sendResponse,
-  type ResponseAuthenticated,
-} from '../../routing/route-helpers.ts';
 
 const debugContactRequestData = createDebugger(
   'contact-api:route-request-data'
@@ -45,7 +45,7 @@ export async function handleVerifyContactgegeven(
 }
 
 export async function handleFetchCommunicatievoorkeuren(
-  req: Request,
+  _req: Request,
   res: ResponseAuthenticated
 ) {
   const communicatievoorkeurenResponse = await fetchCommunicatievoorkeuren(

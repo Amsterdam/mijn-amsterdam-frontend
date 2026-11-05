@@ -4,24 +4,24 @@ import UID from 'uid-safe';
 
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Klachten/Klachten-thema-config.ts';
 import {
+  type ApiResponse,
   apiDependencyError,
   apiSuccessResult,
-  type ApiResponse,
 } from '../../../universal/helpers/api.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
+import type { AuthProfileAndToken } from './../../auth/auth-types.ts';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
 } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import { smileDateParser } from '../smile/smile-helpers.ts';
-import type { AuthProfileAndToken } from './../../auth/auth-types.ts';
 import type {
-  KlachtFrontend,
   KlachtenResponse,
+  KlachtFrontend,
   SmileKlachtenReponse,
 } from './types.ts';
-import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 
 const DEFAULT_PAGE_SIZE = 250;
 
@@ -232,7 +232,8 @@ export async function fetchAllKlachten(
       result.klachten.length < result.aantal &&
       result.klachten.length < MAX_KLACHTEN_COUNT
     ) {
-      const response = await fetchKlachten(authProfileAndToken, (page += 1));
+      page += 1;
+      const response = await fetchKlachten(authProfileAndToken, page);
 
       if (response.status === 'OK') {
         result.klachten = result.klachten.concat(response.content.klachten);

@@ -1,9 +1,9 @@
 import { describe, expect } from 'vitest';
 
-import { fetchUserFeedbackSurvey, saveUserFeedback } from './user-feedback.ts';
-import type { UserFeedbackInput } from './user-feedback.types.ts';
 import { remoteApi } from '../../../testing/utils.ts';
 import { captureMessage } from '../monitoring.ts';
+import { fetchUserFeedbackSurvey, saveUserFeedback } from './user-feedback.ts';
+import type { UserFeedbackInput } from './user-feedback.types.ts';
 
 vi.mock('../../services/monitoring.ts', async (importOriginal) => {
   return {

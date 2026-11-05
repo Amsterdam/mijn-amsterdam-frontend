@@ -3,15 +3,15 @@ import Mockdate from 'mockdate';
 import { generatePath } from 'react-router';
 import { describe, it } from 'vitest';
 
-import type { AppState } from '../../../../../universal/types/App.types.ts';
-import { componentCreator } from '../MockApp.tsx';
-import { themaId } from './Dashboard-config.ts';
-import { DashboardRoute } from './Dashboard-routes.ts';
-import { Dashboard } from './Dashboard.tsx';
 import type { AfspraakFrontend } from '../../../../../server/services/klantcontact/klantcontact.types.ts';
 import { remoteApiHost } from '../../../../../testing/setup.ts';
 import { bffApi } from '../../../../../testing/utils.ts';
 import { toDateFormatted } from '../../../../../universal/helpers/date.ts';
+import type { AppState } from '../../../../../universal/types/App.types.ts';
+import { componentCreator } from '../MockApp.tsx';
+import { Dashboard } from './Dashboard.tsx';
+import { themaId } from './Dashboard-config.ts';
+import { DashboardRoute } from './Dashboard-routes.ts';
 
 const DATE_NOW = '2021-09-22T09:00:00';
 

@@ -1,10 +1,10 @@
 import { eq, inArray } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/node-postgres';
 
-import { toMetaData } from './user-feedback-meta.helpers.ts';
-import type { UserFeedbackAdministrationMeta } from './user-feedback.types.ts';
 import { getPool } from '../db/postgres.ts';
 import { userFeedbackMetaTable } from '../db/schema/user-feedback-meta.ts';
+import type { UserFeedbackAdministrationMeta } from './user-feedback.types.ts';
+import { toMetaData } from './user-feedback-meta.helpers.ts';
 
 function getDrizzleDb() {
   return drizzle(getPool());

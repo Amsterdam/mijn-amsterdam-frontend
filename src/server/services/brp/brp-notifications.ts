@@ -1,17 +1,17 @@
-import { ADRES_IN_ONDERZOEK_A } from './brp-config.ts';
-import type { BrpFrontend } from './brp-types.ts';
-import { fetchBrpByBsnTransformed } from './brp.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Profile/Profile-thema-config.ts';
 import {
-  apiSuccessResult,
   apiDependencyError,
+  apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import {
-  NOTIFICATION_SORTPRIORITY,
   type MyNotification,
+  NOTIFICATION_SORTPRIORITY,
 } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { fetchBrpByBsnTransformed } from './brp.ts';
+import { ADRES_IN_ONDERZOEK_A } from './brp-config.ts';
+import type { BrpFrontend } from './brp-types.ts';
 
 export function transformBRPNotifications(
   data: BrpFrontend,

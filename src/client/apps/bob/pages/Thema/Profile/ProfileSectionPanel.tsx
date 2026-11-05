@@ -1,14 +1,14 @@
 import type { ReactNode } from 'react';
 
-import { LinkList, Grid } from '@amsterdam/design-system-react';
+import { Grid, LinkList } from '@amsterdam/design-system-react';
 
-import { themaConfig } from './Profile-thema-config.ts';
-import styles from './ProfileSectionPanel.module.scss';
 import { CollapsiblePanel } from '../../../../../components/CollapsiblePanel/CollapsiblePanel.tsx';
 import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { getRedactedClass } from '../../../../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../../../../hooks/media.hook.ts';
+import { themaConfig } from './Profile-thema-config.ts';
+import styles from './ProfileSectionPanel.module.scss';
 
 export interface ActionLink {
   title: string;

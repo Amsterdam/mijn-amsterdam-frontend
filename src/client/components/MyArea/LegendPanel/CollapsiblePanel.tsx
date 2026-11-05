@@ -1,6 +1,6 @@
 import type {
-  MouseEvent as ReactMouseEvent,
   PropsWithChildren,
+  MouseEvent as ReactMouseEvent,
   ReactNode,
 } from 'react';
 import { Children, useState } from 'react';

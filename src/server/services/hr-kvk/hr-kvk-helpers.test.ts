@@ -1,12 +1,12 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
+import type { KvkResponseFrontend } from './hr-kvk.types.ts';
 import {
+  getFullDate,
+  getPartialDateFormatted,
   getVestigingBagIds,
   normalizeDatePropertyNames,
-  getPartialDateFormatted,
-  getFullDate,
 } from './hr-kvk-helpers.ts';
-import type { KvkResponseFrontend } from './hr-kvk.types.ts';
 
 describe('hr-kvk-helpers', () => {
   describe('getVestigingBagIds', () => {

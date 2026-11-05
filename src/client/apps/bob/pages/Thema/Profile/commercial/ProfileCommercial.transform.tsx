@@ -4,18 +4,18 @@ import type {
   KvkResponseFrontend,
   NatuurlijkPersoon,
   NietNatuurlijkPersoon,
+  Onderneming,
   Vestiging,
 } from '../../../../../../../server/services/hr-kvk/hr-kvk.types.ts';
-import type { Onderneming } from '../../../../../../../server/services/hr-kvk/hr-kvk.types.ts';
 import type { AppState } from '../../../../../../../universal/types/App.types.ts';
 import { ListExpandable } from '../../../../../../components/ListExpandable/ListExpandable.tsx';
 import { PreWrap } from '../../../../../../components/PreWrap/PreWrap.tsx';
-import type { ProfileLabels } from '../profileDataFormatter.ts';
-import { formatProfileSectionData } from '../profileDataFormatter.ts';
 import type {
   PanelConfig,
   ProfileSectionData,
 } from '../ProfileSectionPanel.tsx';
+import type { ProfileLabels } from '../profileDataFormatter.ts';
+import { formatProfileSectionData } from '../profileDataFormatter.ts';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
@@ -88,43 +88,56 @@ const vestiging: ProfileLabels<Partial<Vestiging>, AppState['KVK']> = {
   ],
   telefoonnummer: [
     'Telefoonnummer',
-    (phonenumbers) =>
-      phonenumbers && phonenumbers.length > 1 ? (
-        <ListExpandable
-          className="ams-mb-l"
-          expandButtonText="Toon alle websites"
-          items={phonenumbers}
-          renderItem={(number) => (
-            <Link href={`tel:${number}`} rel="noopener noreferrer">
-              {number}
-            </Link>
-          )}
-        />
-      ) : phonenumbers?.length ? (
+    (phonenumbers) => {
+      if (!phonenumbers?.length) {
+        return null;
+      }
+      if (phonenumbers.length > 1) {
+        return (
+          <ListExpandable
+            className="ams-mb-l"
+            expandButtonText="Toon alle websites"
+            items={phonenumbers}
+            renderItem={(number) => (
+              <Link href={`tel:${number}`} rel="noopener noreferrer">
+                {number}
+              </Link>
+            )}
+          />
+        );
+      }
+      return (
         <Link href={`tel:${phonenumbers[0]}`} rel="noopener noreferrer">
           {phonenumbers[0]}
         </Link>
-      ) : null,
+      );
+    },
   ],
   websites: [
     'Website',
-    (urls) =>
-      urls && urls.length > 1 ? (
-        <ListExpandable
-          className="ams-mb-l"
-          expandButtonText="Toon alle websites"
-          items={urls}
-          renderItem={(url) => (
-            <Link
-              key={url}
-              href={url.startsWith('http') ? url : `https://${url}`}
-              rel="noopener noreferrer"
-            >
-              {url.replace(/(https?:\/\/)/, '')}
-            </Link>
-          )}
-        />
-      ) : urls?.length ? (
+    (urls) => {
+      if (!urls?.length) {
+        return null;
+      }
+      if (urls.length > 1) {
+        return (
+          <ListExpandable
+            className="ams-mb-l"
+            expandButtonText="Toon alle websites"
+            items={urls}
+            renderItem={(url) => (
+              <Link
+                key={url}
+                href={url.startsWith('http') ? url : `https://${url}`}
+                rel="noopener noreferrer"
+              >
+                {url.replace(/(https?:\/\/)/, '')}
+              </Link>
+            )}
+          />
+        );
+      }
+      return (
         <Link
           key={urls[0]}
           href={urls[0].startsWith('http') ? urls[0] : `https://${urls[0]}`}
@@ -132,47 +145,62 @@ const vestiging: ProfileLabels<Partial<Vestiging>, AppState['KVK']> = {
         >
           {urls[0].replace(/(https?:\/\/)/, '')}
         </Link>
-      ) : null,
+      );
+    },
   ],
   emailadres: [
     'E-mail',
-    (emails) =>
-      emails && emails.length > 1 ? (
-        <ListExpandable
-          className="ams-mb-l"
-          expandButtonText="Toon alle websites"
-          items={emails}
-          renderItem={(email) => (
-            <Link href={`mailto:${email}`} rel="noopener noreferrer">
-              {email}
-            </Link>
-          )}
-        />
-      ) : emails?.length ? (
+    (emails) => {
+      if (!emails?.length) {
+        return null;
+      }
+      if (emails.length > 1) {
+        return (
+          <ListExpandable
+            className="ams-mb-l"
+            expandButtonText="Toon alle websites"
+            items={emails}
+            renderItem={(email) => (
+              <Link href={`mailto:${email}`} rel="noopener noreferrer">
+                {email}
+              </Link>
+            )}
+          />
+        );
+      }
+      return (
         <Link href={`mailto:${emails[0]}`} rel="noopener noreferrer">
           {emails[0]}
         </Link>
-      ) : null,
+      );
+    },
   ],
   faxnummer: [
     'Fax',
-    (faxnumbers) =>
-      faxnumbers && faxnumbers.length > 1 ? (
-        <ListExpandable
-          className="ams-mb-l"
-          expandButtonText="Toon alle websites"
-          items={faxnumbers}
-          renderItem={(number) => (
-            <Link href={`fax:${number}`} rel="noopener noreferrer">
-              {number}
-            </Link>
-          )}
-        />
-      ) : faxnumbers?.length ? (
+    (faxnumbers) => {
+      if (!faxnumbers?.length) {
+        return null;
+      }
+      if (faxnumbers.length > 1) {
+        return (
+          <ListExpandable
+            className="ams-mb-l"
+            expandButtonText="Toon alle websites"
+            items={faxnumbers}
+            renderItem={(number) => (
+              <Link href={`fax:${number}`} rel="noopener noreferrer">
+                {number}
+              </Link>
+            )}
+          />
+        );
+      }
+      return (
         <Link href={`fax:${faxnumbers[0]}`} rel="noopener noreferrer">
           {faxnumbers[0]}
         </Link>
-      ) : null,
+      );
+    },
   ],
   activiteiten: [
     'Activiteiten',

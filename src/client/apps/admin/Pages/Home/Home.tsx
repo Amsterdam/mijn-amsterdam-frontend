@@ -1,15 +1,15 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { themaConfig } from './Home-thema-config.ts';
 import type { AdminIndexLocals } from '../../../../../server/services/admin/admin-types.ts';
 import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../../components/Thema/ThemaPagina.tsx';
 import { useBffApi } from '../../../../hooks/api/useBffApi.ts';
 import {
-  useSessionApiData,
   type SessionData,
+  useSessionApiData,
 } from '../../../../hooks/api/useSessionApi.ts';
 import { AUTH_API_URL, BFFApiUrls } from '../../config/api.ts';
+import { themaConfig } from './Home-thema-config.ts';
 
 function useIndexPageApi() {
   return useBffApi<AdminIndexLocals>(BFFApiUrls.INDEX);

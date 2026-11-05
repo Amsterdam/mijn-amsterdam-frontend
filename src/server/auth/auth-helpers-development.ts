@@ -1,14 +1,13 @@
 import type { AccessToken } from 'express-openid-connect';
 import * as jose from 'jose';
-import memoizee from 'memoizee';
 
+import { DEV_JWK_PRIVATE } from '../config/development.ts';
+import { logger } from '../logging.ts';
 import {
   OIDC_TOKEN_AUD_ATTRIBUTE_VALUE,
   TOKEN_ID_ATTRIBUTE,
 } from './auth-config.ts';
 import type { AuthProfile } from './auth-types.ts';
-import { DEV_JWK_PRIVATE } from '../config/development.ts';
-import { logger } from '../logging.ts';
 
 /**
  *
@@ -19,7 +18,7 @@ export async function getPrivateKeyForDevelopment() {
   return jose.importJWK(DEV_JWK_PRIVATE);
 }
 
-async function signDevelopmentToken_(
+export async function signDevelopmentToken(
   authMethod: AuthProfile['authMethod'],
   userID: string,
   sessionID: SessionID
@@ -41,5 +40,3 @@ async function signDevelopmentToken_(
     logger.error(err);
   }
 }
-
-export const signDevelopmentToken = memoizee(signDevelopmentToken_);

@@ -1,12 +1,20 @@
+import { themaConfig as themaAfval } from '../../../client/apps/bob/pages/Thema/Afval/Afval-thema-config.ts';
+import { themaConfig as hliThemaConfig } from '../../../client/apps/bob/pages/Thema/HLI/HLI-thema-config.ts';
+import { themaConfig as inkomenThemaConfig } from '../../../client/apps/bob/pages/Thema/Inkomen/Inkomen-thema-config.ts';
+import { themaConfig as profileThemaConfig } from '../../../client/apps/bob/pages/Thema/Profile/Profile-thema-config.ts';
+import { themaConfig as toeristischeVerhuurThemaConfig } from '../../../client/apps/bob/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 import {
   hasBijstandsuitkering,
   hasBnBVergunning,
+  hasKidsBetweenAges,
   hasOldestKidBornFrom2016,
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
   hasTozo,
   hasValidRecentStadspasRequest,
   hasVerhuurRegistrations,
+  is18OrOlderOnElectionDay,
+  isBetweenAges,
   isLivingInAmsterdamLessThanNumberOfDays,
   isMarriedOrLivingTogether,
   isMokum,
@@ -14,16 +22,8 @@ import {
   not,
   or,
   previouslyLivingInAmsterdam,
-  hasKidsBetweenAges,
-  isBetweenAges,
-  is18OrOlderOnElectionDay,
 } from './predicates.ts';
 import type { ContentTipSource } from './tip-types.ts';
-import { themaConfig as themaAfval } from '../../../client/apps/bob/pages/Thema/Afval/Afval-thema-config.ts';
-import { themaConfig as hliThemaConfig } from '../../../client/apps/bob/pages/Thema/HLI/HLI-thema-config.ts';
-import { themaConfig as inkomenThemaConfig } from '../../../client/apps/bob/pages/Thema/Inkomen/Inkomen-thema-config.ts';
-import { themaConfig as profileThemaConfig } from '../../../client/apps/bob/pages/Thema/Profile/Profile-thema-config.ts';
-import { themaConfig as toeristischeVerhuurThemaConfig } from '../../../client/apps/bob/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
 
 const DAYS = 90;
 

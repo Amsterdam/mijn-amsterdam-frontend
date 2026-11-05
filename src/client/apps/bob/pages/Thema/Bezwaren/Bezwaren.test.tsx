@@ -1,9 +1,10 @@
+// biome-ignore-all lint/suspicious/noExplicitAny: Test fixtures and mocks.
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { BezwarenThema } from './BezwarenThema.tsx';
 import { MockApp } from '../../MockApp.tsx';
 import { themaConfig } from '../Bezwaren/Bezwaren-thema-config.ts';
+import { BezwarenThema } from './BezwarenThema.tsx';
 
 const testState = {
   BEZWAREN: {

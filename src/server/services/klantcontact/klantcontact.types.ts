@@ -1,5 +1,5 @@
-import type { CommunicatievoorkeurenResponseFrontend } from './klantcontact-profieldienst-types.ts';
 import type { LinkProps } from '../../../universal/types/App.types.ts';
+import type { CommunicatievoorkeurenResponseFrontend } from './klantcontact-profieldienst-types.ts';
 
 export type SalesforceResponseType = {
   '@onformdata.context': string;

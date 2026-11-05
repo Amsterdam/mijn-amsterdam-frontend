@@ -1,8 +1,6 @@
 import { Button, Link, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
-import styles from './InkomenSpecificaties.module.scss';
-import { useInkomenSpecificatiesListPageData } from './useInkomenSpecificatiesListPageData.hook.ts';
 import {
   DateInput,
   isNativeDatePickerInputSupported,
@@ -10,6 +8,8 @@ import {
 import { ListPagePaginated } from '../../../../../components/ListPagePaginated/ListPagePaginated.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import styles from './InkomenSpecificaties.module.scss';
+import { useInkomenSpecificatiesListPageData } from './useInkomenSpecificatiesListPageData.hook.ts';
 
 function Caret() {
   return <i className={styles.SearchButtonIcon}>&#9698;</i>;

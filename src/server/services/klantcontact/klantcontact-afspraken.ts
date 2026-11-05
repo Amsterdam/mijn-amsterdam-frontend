@@ -1,9 +1,3 @@
-import { fetchSalesforceApi } from './klantcontact-salesforce.ts';
-import type {
-  AfspraakFrontend,
-  AfspraakSource,
-  AfspraakResponseSource as AfsprakenResponseSource,
-} from './klantcontact.types.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/KlantContact/KlantContact-thema-config.ts';
 import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
@@ -16,6 +10,12 @@ import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
 import { createICSDataUri } from '../../helpers/ics.ts';
 import { createSessionBasedCacheKey } from '../../helpers/source-api-helpers.ts';
+import type {
+  AfspraakFrontend,
+  AfspraakSource,
+  AfspraakResponseSource as AfsprakenResponseSource,
+} from './klantcontact.types.ts';
+import { fetchSalesforceApi } from './klantcontact-salesforce.ts';
 
 export async function fetchAfspraken(
   authProfileAndToken: AuthProfileAndToken

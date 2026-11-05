@@ -20,7 +20,7 @@ const tipCardProps: TipCardProps = {
     to: '/tip-1',
     title: 'Bekijk tip 1',
   },
-  onRead: () => { },
+  onRead: vi.fn(),
 };
 
 function renderTipCard(props: Partial<TipCardProps> = {}) {

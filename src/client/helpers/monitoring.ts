@@ -5,8 +5,8 @@ import {
 } from '@microsoft/applicationinsights-web';
 import { createBrowserHistory } from 'history';
 
-import { logger } from './logging.ts';
 import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
+import { logger } from './logging.ts';
 
 export type Severity =
   | 'verbose'
@@ -39,7 +39,7 @@ const appInsights = new ApplicationInsights({
     enableAutoRouteTracking: true,
     extensionConfig: {
       [reactPlugin.identifier]: { history: browserHistory },
-      ['AppInsightsCfgSyncPlugin']: {
+      AppInsightsCfgSyncPlugin: {
         cfgUrl: '', // this will block fetching from default cdn
       },
     },

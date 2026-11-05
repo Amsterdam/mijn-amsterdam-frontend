@@ -11,6 +11,7 @@ import type {
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../../zorgned/zorgned-types.ts';
 import {
+  ACTIE_VERZOEK_MEER_INFORMATIE,
   DOCUMENT_PGB_BESLUIT,
   DOCUMENT_TITLE_BESLUIT_STARTS_WITH,
   DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH,
@@ -78,7 +79,7 @@ export function getDocumentMeerInformatieDate(documents: GenericDocument[]) {
 function hasMeerInformatieActie(aanvraag: ZorgnedAanvraagTransformed) {
   return (aanvraag.procesAanvraagActieOmschrijvingen ?? []).some((actie) => {
     const normalizedActie = actie.trim().toLowerCase();
-    return normalizedActie === 'verzoek om meer informatie';
+    return normalizedActie === ACTIE_VERZOEK_MEER_INFORMATIE;
   });
 }
 
@@ -192,18 +193,20 @@ export function getTransformerConfigBesluit(
         FAKE_DECISION_DOCUMENT_ID
       );
     },
-    description: (aanvraag) =>
-      hasDecision(aanvraag)
-        ? `<p>${
-            aanvraag.resultaat === 'toegewezen'
-              ? `U krijgt ${
-                  useAsProduct ? 'een ' : ''
-                }${aanvraag.titel} ${aanvraag.datumIngangGeldigheid ? `per ${defaultDateFormat(aanvraag.datumIngangGeldigheid)}` : ''}`
-              : `U krijgt geen ${aanvraag.titel}`
-          }.</p>
+    description: (aanvraag) => {
+      if (hasDecision(aanvraag)) {
+        return `<p>${
+          aanvraag.resultaat === 'toegewezen'
+            ? `U krijgt ${
+                useAsProduct ? 'een ' : ''
+              }${aanvraag.titel} ${aanvraag.datumIngangGeldigheid ? `per ${defaultDateFormat(aanvraag.datumIngangGeldigheid)}` : ''}`
+            : `U krijgt geen ${aanvraag.titel}`
+        }.</p>
       ${decisionParagraph(aanvraag)}
-      `
-        : '<p>Er is nog geen besluit over uw melding. Zodra er een besluit is, kunt u het hier bekijken.</p>',
+      `;
+      }
+      return '<p>Er is nog geen besluit over uw melding. Zodra er een besluit is, kunt u het hier bekijken.</p>';
+    },
   };
 }
 
@@ -229,13 +232,14 @@ export const EINDE_RECHT_PGB: ZorgnedStatusLineItemTransformerConfig = {
   ...EINDE_RECHT,
   description: (aanvraag) =>
     `<p>
-      ${
-        aanvraag.datumEindeGeldigheid
-          ? aanvraag.isActueel
-            ? `Uw recht op ${aanvraag.titel} stopt op ${aanvraag.datumEindeGeldigheid ? `${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
-            : `Uw recht op ${aanvraag.titel} is beëindigd ${aanvraag.datumEindeGeldigheid ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
-          : ``
-      }
+      ${(() => {
+        if (!aanvraag.datumEindeGeldigheid) {
+          return '';
+        }
+        return aanvraag.isActueel
+          ? `Uw recht op ${aanvraag.titel} stopt${aanvraag.datumEindeGeldigheid ? ` op ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
+          : `Uw recht op ${aanvraag.titel} is beëindigd${aanvraag.datumEindeGeldigheid ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`;
+      })()}
     </p>
     ${
       aanvraag.isActueel && aanvraag.leveringsVorm === 'PGB'
@@ -285,7 +289,8 @@ export function isDecisionStatusActive(aanvraag: ZorgnedAanvraagTransformed) {
       hasDecision(aanvraag) &&
       !isEindeGeldigheidVerstreken(aanvraag.datumEindeGeldigheid, new Date())
     );
-  } else if (aanvraag.resultaat === 'afgewezen') {
+  }
+  if (aanvraag.resultaat === 'afgewezen') {
     return true;
   }
   return false;

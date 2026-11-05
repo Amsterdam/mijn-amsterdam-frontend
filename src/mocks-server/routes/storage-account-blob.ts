@@ -2360,7 +2360,7 @@ export const routes: MockRouteDefinition[] = [
             profileId: '999990809',
           },
           {
-            brpBsn: '999970355',
+            brpBsn: '999991267',
             mokum: false,
             hasChildren: false,
             partnerName: '',

@@ -1,22 +1,6 @@
 import * as jose from 'jose';
 import { generatePath } from 'react-router';
 
-import {
-  EMPTY_UUID,
-  MAX_PAGE_COUNT,
-  routes,
-} from './bezwaren-service-config.ts';
-import type {
-  BezwaarFrontend,
-  BezwaarDocument,
-  BezwaarSourceData,
-  BezwaarSourceDocument,
-  BezwaarSourceStatus,
-  BezwarenSourceResponse,
-  Kenmerk,
-  OctopusApiResponse,
-  kenmerkKey,
-} from './types.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
 import {
   apiDependencyError,
@@ -24,8 +8,10 @@ import {
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api.ts';
-import { defaultDateFormat } from '../../../universal/helpers/date.ts';
-import { isRecentNotification } from '../../../universal/helpers/date.ts';
+import {
+  defaultDateFormat,
+  isRecentNotification,
+} from '../../../universal/helpers/date.ts';
 import type {
   MyNotification,
   StatusLineItem,
@@ -43,6 +29,22 @@ import { requestData } from '../../helpers/source-api-request.ts';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 import { trackEvent } from '../monitoring.ts';
 import type { DocumentDownloadData } from '../shared/document-download-route-handler.ts';
+import {
+  EMPTY_UUID,
+  MAX_PAGE_COUNT,
+  routes,
+} from './bezwaren-service-config.ts';
+import type {
+  BezwaarDocument,
+  BezwaarFrontend,
+  BezwaarSourceData,
+  BezwaarSourceDocument,
+  BezwaarSourceStatus,
+  BezwarenSourceResponse,
+  Kenmerk,
+  kenmerkKey,
+  OctopusApiResponse,
+} from './types.ts';
 
 async function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
   const now = new Date();

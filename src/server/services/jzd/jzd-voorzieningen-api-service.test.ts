@@ -1,10 +1,10 @@
+import { remoteApi } from '../../../testing/utils.ts';
+import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 import type { JzdApiConfig } from './jzd-types.ts';
 import {
   fetchMaApiVoorzieningen,
   forTesting,
 } from './jzd-voorzieningen-api-service.ts';
-import { remoteApi } from '../../../testing/utils.ts';
-import type { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types.ts';
 
 describe('jzd-voorzieningen-api-service', () => {
   describe('isMaApiPropertyConfigMatch', () => {

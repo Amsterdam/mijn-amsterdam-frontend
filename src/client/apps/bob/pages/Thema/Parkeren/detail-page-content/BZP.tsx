@@ -2,9 +2,9 @@ import type { BZP } from '../../../../../../../server/services/parkeren/config-a
 import type { DecosZaakFrontend } from '../../../../../../../server/services/vergunningen/config-and-types.ts';
 import { Datalist } from '../../../../../../components/Datalist/Datalist.tsx';
 import {
-  getRows,
-  dateRange,
   commonTransformers,
+  dateRange,
+  getRows,
 } from '../../Vergunningen/detail-page-content/fields-config.tsx';
 
 export function BZP({ vergunning }: { vergunning: DecosZaakFrontend<BZP> }) {

@@ -1,6 +1,6 @@
-import { useAVGListPageData } from './useAVGListPage.hook.ts';
 import { ListPagePaginated } from '../../../../../components/ListPagePaginated/ListPagePaginated.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { useAVGListPageData } from './useAVGListPage.hook.ts';
 
 export function AVGList() {
   const {

@@ -2,8 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
   Button,
-  Link,
   Heading,
+  Link,
   Paragraph,
   UnorderedList,
 } from '@amsterdam/design-system-react';
@@ -12,10 +12,6 @@ import classnames from 'classnames';
 import { useNavigate } from 'react-router';
 import { useDebouncedCallback } from 'use-debounce';
 
-import type { SearchEntry } from './search-config.tsx';
-import { displayLinkToSearchResult } from './search-config.tsx';
-import styles from './Search.module.scss';
-import { useSearchIndex } from './useSearch.tsx';
 import { SearchPageRoute } from '../../apps/bob/pages/Search/Search-routes.ts';
 import { getRedactedClass } from '../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../hooks/media.hook.ts';
@@ -23,6 +19,10 @@ import { useAppStateReady } from '../../hooks/useAppStateStore.ts';
 import { useKeyDown } from '../../hooks/useKey.ts';
 import { MaButtonLink, MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 import { Spinner } from '../Spinner/Spinner.tsx';
+import styles from './Search.module.scss';
+import type { SearchEntry } from './search-config.tsx';
+import { displayLinkToSearchResult } from './search-config.tsx';
+import { useSearchIndex } from './useSearch.tsx';
 
 interface ResultSetProps {
   results: SearchEntry[];
@@ -190,6 +190,7 @@ export function Search({
 
   useKeyDown(keyHandler);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Preserve the existing hook dependency exclusion.
   useEffect(() => {
     if (autoFocus) {
       // AutoFocus on the element doesn't seem to work properly with dynamic mounting
@@ -202,7 +203,6 @@ export function Search({
     return () => {
       onFinish('Unmount component');
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -232,7 +232,7 @@ export function Search({
     } else {
       setTerm('');
     }
-  }, []);
+  }, [termInitial, setTerm]);
 
   return (
     <div

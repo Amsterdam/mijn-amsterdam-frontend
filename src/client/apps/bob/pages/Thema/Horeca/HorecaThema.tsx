@@ -1,11 +1,11 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { useHorecaThemaData } from './useHorecaThemaData.hook.ts';
 import type { HorecaVergunningFrontend } from '../../../../../../server/services/horeca/decos-zaken.ts';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { useHorecaThemaData } from './useHorecaThemaData.hook.ts';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>

@@ -84,6 +84,111 @@
             "SndIban": "NL99AMS7777888888"
           }
         }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "PayType": "N",
+            "SndType": "BUS3007",
+            "SndId": "0001500092",
+            "SndPostal": "1011 AA",
+            "SndCountry": "NL",
+            "RefType": "",
+            "RecType": "BUS0002",
+            "RecId": 1000,
+            "RecName1": "Gemeente Amsterdam",
+            "RecPostal": "1011 PN",
+            "RecStreet": "Amstel 1",
+            "RecHouse": "",
+            "RecCity": "Amsterdam",
+            "RecCountry": "NL",
+            "LifetimeFrom": "2025-09-01T00:00:00",
+            "LifetimeTo": "2025-11-05T00:00:00",
+            "SignDate": "2025-09-01T00:00:00",
+            "SignCity": "Amsterdam",
+            "Status": "6",
+            "IMandateId": 100000000081,
+            "SndIban": "NL91ABNA0417164300",
+            "SndBic": "ABNANL2A",
+            "SndStreet": "Teststraat",
+            "SndHouse": 12,
+            "SndCity": "Amsterdam",
+            "SndName2": "",
+            "SndName1": "M. Jansen",
+            "SndDebtorId": "ERFPACHT"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "PayType": "N",
+            "SndType": "BUS3007",
+            "SndId": "0001500093",
+            "SndPostal": "1011 AB",
+            "SndCountry": "NL",
+            "RefType": "",
+            "RecType": "BUS0002",
+            "RecId": 1000,
+            "RecName1": "Gemeente Amsterdam",
+            "RecPostal": "1011 PN",
+            "RecStreet": "Amstel 1",
+            "RecHouse": "",
+            "RecCity": "Amsterdam",
+            "RecCountry": "NL",
+            "LifetimeFrom": "2025-09-01T00:00:00",
+            "LifetimeTo": "9999-12-31T00:00:00",
+            "SignDate": "2025-09-01T00:00:00",
+            "SignCity": "Amsterdam",
+            "Status": 1,
+            "IMandateId": 100000000082,
+            "SndIban": "NL02ABNA0123456789",
+            "SndBic": "ABNANL2A",
+            "SndStreet": "Teststraat",
+            "SndHouse": 14,
+            "SndCity": "Amsterdam",
+            "SndName2": "",
+            "SndName1": "P. de Boer",
+            "SndDebtorId": "ERFPACHT"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "PayType": "N",
+            "SndType": "BUS3007",
+            "SndId": "0001500094",
+            "SndPostal": "1011 AC",
+            "SndCountry": "NL",
+            "RefType": "",
+            "RecType": "BUS0002",
+            "RecId": 1000,
+            "RecName1": "Gemeente Amsterdam",
+            "RecPostal": "1011 PN",
+            "RecStreet": "Amstel 1",
+            "RecHouse": "",
+            "RecCity": "Amsterdam",
+            "RecCountry": "NL",
+            "LifetimeFrom": "2025-09-01T00:00:00",
+            "LifetimeTo": "9999-12-31T00:00:00",
+            "SignDate": "2025-09-01T00:00:00",
+            "SignCity": "Amsterdam",
+            "Status": 1,
+            "IMandateId": 100000000083,
+            "SndIban": "NL86INGB0002445588",
+            "SndBic": "INGBNL2A",
+            "SndStreet": "Teststraat",
+            "SndHouse": 16,
+            "SndCity": "Amsterdam",
+            "SndName2": "",
+            "SndName1": "A. Smit",
+            "SndDebtorId": "AFVAL"
+          }
+        }
       }
     ]
   }

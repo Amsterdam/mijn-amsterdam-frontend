@@ -1,5 +1,5 @@
-import { fetchAfisBusinessPartnerDetails } from './afis-business-partner.ts';
 import { remoteApi } from '../../../testing/utils.ts';
+import { fetchAfisBusinessPartnerDetails } from './afis-business-partner.ts';
 
 const GENERIC_ID = '12346789';
 const BASE_ROUTE = '/afis/RESTAdapter';

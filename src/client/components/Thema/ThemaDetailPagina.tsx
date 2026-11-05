@@ -6,8 +6,8 @@ import type {
 } from '../../../universal/types/App.types.ts';
 import { ErrorAlert } from '../Alert/Alert.tsx';
 import {
-  LoadingContent,
   type BarConfig,
+  LoadingContent,
 } from '../LoadingContent/LoadingContent.tsx';
 import { PageContentCell, PageV2 } from '../Page/Page.tsx';
 import { Steps } from '../StatusSteps/StatusSteps.tsx';

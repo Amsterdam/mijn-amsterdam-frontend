@@ -1,13 +1,16 @@
-import type { BAGQueryParams } from './bag.types.ts';
-import { type BAGLocation, type BAGSourceData } from './bag.types.ts';
 import {
-  apiErrorResult,
   type ApiResponse,
+  apiErrorResult,
 } from '../../../universal/helpers/api.ts';
 import { getLatLngCoordinates } from '../../../universal/helpers/bag.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import type { Adres } from '../brp/brp-types.ts';
+import type {
+  BAGLocation,
+  BAGQueryParams,
+  BAGSourceData,
+} from './bag.types.ts';
 
 function transformBagAddressResponse(
   sourceAddress: Adres | null,
@@ -37,14 +40,24 @@ function transformBagAddressResponse(
 export async function fetchBAG(
   sourceAddress: Adres | null
 ): Promise<ApiResponse<BAGLocation>> {
-  if (!sourceAddress?.straatnaam || !sourceAddress.huisnummer) {
-    return apiErrorResult('Could not query BAG, no address supplied.', null);
+  if (
+    !sourceAddress ||
+    !sourceAddress.straatnaam ||
+    !sourceAddress.huisnummer ||
+    !sourceAddress.postcode
+  ) {
+    return apiErrorResult(
+      'Could not query BAG, no complete address supplied.',
+      null
+    );
   }
 
   const params: BAGQueryParams = {
     openbareruimteNaamNen: sourceAddress.straatnaam,
     huisnummer: sourceAddress.huisnummer,
+    postcode: sourceAddress.postcode,
     huisletter: sourceAddress.huisletter || undefined,
+    huisnummertoevoeging: sourceAddress.huisnummertoevoeging || undefined,
   };
 
   const config = getApiConfig('BAG', {

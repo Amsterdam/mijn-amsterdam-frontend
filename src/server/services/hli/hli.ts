@@ -2,29 +2,6 @@ import { isAfter, parseISO } from 'date-fns';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
-import type {
-  HLIRegelingFrontend,
-  HLIresponseData,
-  ZorgnedHLIRegeling,
-} from './hli-regelingen-types.ts';
-import {
-  featureToggle,
-  routes,
-  ZORGNED_AV_API_CONFIG_KEY,
-} from './hli-service-config.ts';
-import { hliStatusLineItemsConfig } from './hli-status-line-items.ts';
-import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service.ts';
-import {
-  transformRTMAanvragen,
-  isRTMAanvraag,
-  fetchRTMSpecificaties,
-} from './rtm/regeling-rtm.ts';
-import { fetchStadspas } from './stadspas.ts';
-import {
-  isPcAanvraag,
-  isWorkshopNietGevolgd,
-  filterCombineUpcPcvData,
-} from './status-line-items/regeling-pcvergoeding.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/HLI/HLI-thema-config.ts';
 import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import {
@@ -39,8 +16,8 @@ import { splitBy } from '../../../universal/helpers/utils.ts';
 import type {
   GenericDocument,
   StatusLineItem,
+  ZaakDisplayStatus,
 } from '../../../universal/types/App.types.ts';
-import type { ZaakDisplayStatus } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
@@ -49,8 +26,33 @@ import {
   sortZorgnedAanvragenByDateAndId,
 } from '../zorgned/zorgned-service.ts';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items.ts';
-import type { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types.ts';
-import { type ZorgnedPerson } from '../zorgned/zorgned-types.ts';
+import type {
+  ZorgnedAanvraagWithRelatedPersonsTransformed,
+  ZorgnedPerson,
+} from '../zorgned/zorgned-types.ts';
+import type {
+  HLIRegelingFrontend,
+  HLIresponseData,
+  ZorgnedHLIRegeling,
+} from './hli-regelingen-types.ts';
+import {
+  featureToggle,
+  routes,
+  ZORGNED_AV_API_CONFIG_KEY,
+} from './hli-service-config.ts';
+import { hliStatusLineItemsConfig } from './hli-status-line-items.ts';
+import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service.ts';
+import {
+  fetchRTMSpecificaties,
+  isRTMAanvraag,
+  transformRTMAanvragen,
+} from './rtm/regeling-rtm.ts';
+import { fetchStadspas } from './stadspas.ts';
+import {
+  filterCombineUpcPcvData,
+  isPcAanvraag,
+  isWorkshopNietGevolgd,
+} from './status-line-items/regeling-pcvergoeding.ts';
 
 export type GetDisplayStatusFn<
   T extends ZaakDisplayStatus = ZaakDisplayStatus,

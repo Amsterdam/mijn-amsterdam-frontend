@@ -1,9 +1,9 @@
 import { renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import type { AfisFactuurFrontend } from '../../apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
 import type { DisplayProps } from './TableV2.types.ts';
 import { useDisplayPropsEntries } from './useDisplayPropEntries.hook.ts';
-import type { AfisFactuurFrontend } from '../../apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
 
 const mockUseSmallScreen = vi.fn();
 

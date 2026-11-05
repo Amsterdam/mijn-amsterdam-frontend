@@ -1,19 +1,19 @@
 import type { Request, Response } from 'express';
 
-import {
-  getAndUpsertAccountData,
-  updateAccountData,
-} from './admin-account.model.ts';
-import {
-  accountUpdateInput,
-  type AccountUpdateInput,
-} from './admin-account.types.ts';
-import { getUsernameFromSession } from './admin-helpers.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import {
   sendBadRequestInvalidInput,
   sendResponse,
 } from '../../routing/route-helpers.ts';
+import {
+  getAndUpsertAccountData,
+  updateAccountData,
+} from './admin-account.model.ts';
+import {
+  type AccountUpdateInput,
+  accountUpdateInput,
+} from './admin-account.types.ts';
+import { getUsernameFromSession } from './admin-helpers.ts';
 
 export async function getAccountDataHandler(req: Request, res: Response) {
   const username = getUsernameFromSession(req);

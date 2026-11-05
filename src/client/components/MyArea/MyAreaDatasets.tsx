@@ -6,7 +6,15 @@ import isEqual from 'lodash.isequal';
 import { useLocation, useNavigate } from 'react-router';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { routeConfig, themaId } from './MyArea-thema-config.ts';
+import type {
+  MaPointFeature,
+  MaPolylineFeature,
+} from '../../../server/services/buurt/datasets.ts';
+import type {
+  DatasetFilterSelection,
+  DatasetId,
+} from '../../../universal/config/myarea-datasets.ts';
+import { ErrorMessagesContent } from '../ErrorMessages/ErrorMessages.tsx';
 import { toBoundLiteral } from './MyArea.helpers.ts';
 import {
   getQueryConfig,
@@ -18,18 +26,10 @@ import {
   useOnMarkerClick,
   useSelectedFeatureCSS,
 } from './MyArea.hooks.ts';
+import { routeConfig, themaId } from './MyArea-thema-config.ts';
 import styles from './MyAreaDatasets.module.scss';
 import { MyAreaPolylineDatasets } from './MyAreaPolylineDatasets.tsx';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster.tsx';
-import type {
-  MaPointFeature,
-  MaPolylineFeature,
-} from '../../../server/services/buurt/datasets.ts';
-import type {
-  DatasetFilterSelection,
-  DatasetId,
-} from '../../../universal/config/myarea-datasets.ts';
-import { ErrorMessagesContent } from '../ErrorMessages/ErrorMessages.tsx';
 
 interface MyAreaDatasetsProps {
   datasetIds?: DatasetId[];
@@ -76,10 +76,9 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       ? currentBbox
       : queryConfig?.bbox || currentBbox;
 
-    const datasetIds = queryConfig?.s
-      ? activeDatasetIds
-      : Array.isArray(queryConfig?.datasetIds)
-        ? queryConfig?.datasetIds
+    const datasetIds =
+      !queryConfig?.s && Array.isArray(queryConfig?.datasetIds)
+        ? queryConfig.datasetIds
         : activeDatasetIds;
 
     const filters = queryConfig?.s
@@ -137,7 +136,20 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     const url = `${routeConfig.themaPage.path}?${params}`;
 
     navigate(url);
-  }, [search, activeDatasetIds, activeDatasetFilters, loadingFeature]);
+  }, [
+    search,
+    activeDatasetIds,
+    activeDatasetFilters,
+    loadingFeature,
+    map.getCenter,
+    setLoadingFeature,
+    setActiveDatasetIds,
+    map.getBounds,
+    setActiveFilters,
+    navigate,
+    map.getZoom,
+    map.fitBounds,
+  ]);
 
   const fetch = useCallback(
     async (
@@ -190,7 +202,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
         navigate(url);
       }
     },
-    [search, location.pathname, navigate]
+    [search, navigate]
   );
 
   // This callback runs whenever the map zooms / pans
@@ -230,9 +242,6 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     }
   }, [
     fetchDebounced,
-    setClusterFeatures,
-    setPolylineFeatures,
-    setErrorResults,
     activeDatasetIds,
     activeDatasetFilters,
     setFeaturesLoadingDebounced,

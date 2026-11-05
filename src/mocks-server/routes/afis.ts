@@ -1,12 +1,22 @@
 import { constants as httpConstants } from 'node:http2';
 
-import AFGEHANDELDE_FACTUREN from '../fixtures/afis/afgehandelde-facturen.json' with { type: 'json' };
-import AFGEHANDELDE_TERMIJN_FACTUREN from '../fixtures/afis/afgehandeldetermijn-facturen.json' with { type: 'json' };
+import AFGEHANDELDE_FACTUREN from '../fixtures/afis/afgehandelde-facturen.json' with {
+  type: 'json',
+};
+import AFGEHANDELDE_TERMIJN_FACTUREN from '../fixtures/afis/afgehandeldetermijn-facturen.json' with {
+  type: 'json',
+};
 import ARC_DOC_ID from '../fixtures/afis/arc-doc-id.json' with { type: 'json' };
-import DOCUMENT_RESPONSE from '../fixtures/afis/document.json' with { type: 'json' };
+import DOCUMENT_RESPONSE from '../fixtures/afis/document.json' with {
+  type: 'json',
+};
 import E_MANDATES from '../fixtures/afis/e-mandates.json' with { type: 'json' };
-import OPENSTAANDE_FACTUREN from '../fixtures/afis/openstaande-facturen.json' with { type: 'json' };
-import OVERGEDRAGEN_FACTUREN from '../fixtures/afis/overgedragen-facturen.json' with { type: 'json' };
+import OPENSTAANDE_FACTUREN from '../fixtures/afis/openstaande-facturen.json' with {
+  type: 'json',
+};
+import OVERGEDRAGEN_FACTUREN from '../fixtures/afis/overgedragen-facturen.json' with {
+  type: 'json',
+};
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 

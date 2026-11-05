@@ -1,16 +1,16 @@
 import { addDays, differenceInDays, parseISO } from 'date-fns';
 
+import { isDateInPast } from '../../../universal/helpers/date.ts';
+import type {
+  EigenParkeerplaats,
+  EigenParkeerplaatsOpheffen,
+  TouringcarDagontheffing,
+  TouringcarJaarontheffing,
+} from '../parkeren/config-and-types.ts';
 import {
   MINIMUM_DAYS_FOR_WILL_EXPIRE_NOTIFICATION,
   PERCENTAGE_OF_LIFETIME_FOR_WILL_EXPIRE_NOTIFICATION,
 } from './config-and-types.ts';
-import { isDateInPast } from '../../../universal/helpers/date.ts';
-import type {
-  TouringcarDagontheffing,
-  TouringcarJaarontheffing,
-  EigenParkeerplaatsOpheffen,
-  EigenParkeerplaats,
-} from '../parkeren/config-and-types.ts';
 
 export function getCustomTitleForVergunningWithLicensePlates(
   vergunning:
@@ -26,7 +26,8 @@ export function getCustomTitleForVergunningWithLicensePlates(
     const plates = vergunning.kentekens?.split(' | ');
     if (plates?.length === 1) {
       return `${vergunning.title} (${vergunning.kentekens})`;
-    } else if (!!plates && plates?.length > 1) {
+    }
+    if (plates && plates?.length > 1) {
       return `${vergunning.title} (${plates[0]}... +${plates.length - 1})`;
     }
   }

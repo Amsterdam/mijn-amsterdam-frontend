@@ -1,6 +1,13 @@
 import { Decimal } from 'decimal.js';
 import Mockdate from 'mockdate';
 
+import ARC_DOC from '../../../mocks-server/fixtures/afis/arc-doc-id.json' with {
+  type: 'json',
+};
+import DOCUMENT_DOWNLOAD_RESPONSE from '../../../mocks-server/fixtures/afis/document.json' with {
+  type: 'json',
+};
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import { fetchAfisDocument } from './afis-documents.ts';
 import {
   fetchAfisFacturen,
@@ -15,11 +22,12 @@ import type {
   AfisInvoicesPartialPaymentsSource,
   XmlNullable,
 } from './afis-types.ts';
-import AFIS_AFGEHANDELDE_FACTUREN from './test-fixtures/afgehandelde-facturen.json' with { type: 'json' };
-import AFIS_OPENSTAAANDE_FACTUREN from './test-fixtures/openstaande-facturen.json' with { type: 'json' };
-import ARC_DOC from '../../../mocks-server/fixtures/afis/arc-doc-id.json' with { type: 'json' };
-import DOCUMENT_DOWNLOAD_RESPONSE from '../../../mocks-server/fixtures/afis/document.json' with { type: 'json' };
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
+import AFIS_AFGEHANDELDE_FACTUREN from './test-fixtures/afgehandelde-facturen.json' with {
+  type: 'json',
+};
+import AFIS_OPENSTAAANDE_FACTUREN from './test-fixtures/openstaande-facturen.json' with {
+  type: 'json',
+};
 
 const mocks = vi.hoisted(() => {
   const MOCK_VALUE_ENCRYPTED = 'xx-encrypted-xx';
@@ -131,9 +139,9 @@ describe('afis-facturen', async () => {
     expect(openFactuur).toStrictEqual({
       afzender: 'Bedrijf: Ok',
       amountOriginal: '343.00',
-      amountOriginalFormatted: '€ 343,00',
+      amountOriginalFormatted: '€343,00',
       amountPayed: '315.50',
-      amountPayedFormatted: '€ 315,50',
+      amountPayedFormatted: '€315,50',
       datePublished: '2023-11-21T00:00:00',
       datePublishedFormatted: '21 november 2023',
       debtClearingDate: null,
@@ -153,7 +161,7 @@ describe('afis-facturen', async () => {
       paymentDueDateFormatted: '21 december 2023',
       status: 'gedeeltelijke-betaling',
       statusDescription:
-        'Uw factuur van € 343,00 is nog niet volledig betaald. Maak het resterend bedrag van € 315,50 over onder vermelding van de gegevens op uw factuur.',
+        'Uw factuur van €343,00 is nog niet volledig betaald. Maak het resterend bedrag van €315,50 over onder vermelding van de gegevens op uw factuur.',
     });
 
     const automatischeIncassoFactuur = response.content?.facturen[1];
@@ -205,9 +213,9 @@ describe('afis-facturen', async () => {
     expect(geannuleerdeInvoice).toStrictEqual({
       afzender: 'Lisan al Gaib inc.',
       amountOriginal: '0.00',
-      amountOriginalFormatted: '€ 0,00',
+      amountOriginalFormatted: '€0,00',
       amountPayed: '0.00',
-      amountPayedFormatted: '€ 0,00',
+      amountPayedFormatted: '€0,00',
       datePublished: null,
       datePublishedFormatted: null,
       debtClearingDate: null,
@@ -226,7 +234,7 @@ describe('afis-facturen', async () => {
       paymentDueDate: '2023-12-21T00:00:00',
       paymentDueDateFormatted: '21 december 2023',
       status: 'geannuleerd',
-      statusDescription: '€ 0,00 geannuleerd op null',
+      statusDescription: '€0,00 geannuleerd op null',
     });
 
     const betaaldeInvoice = response.content?.facturen[1];
@@ -950,7 +958,7 @@ describe('afis-facturen', async () => {
 
       test('open facturen with an inactive E-Mandate reference should have a status description that includes a warning about the mandate being stopped', () => {
         expect(response.content?.open?.facturen?.[0]?.statusDescription).toBe(
-          '€ 10,00 wordt automatisch van uw rekening afgeschreven. <br><strong>Let op! De automatische incasso is gestopt. Betaal de factuur zelf via uw bank.</strong>'
+          '€10,00 wordt automatisch van uw rekening afgeschreven. <br><strong>Let op! De automatische incasso is gestopt. Betaal de factuur zelf via uw bank.</strong>'
         );
       });
 

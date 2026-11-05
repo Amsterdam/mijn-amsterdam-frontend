@@ -1,4 +1,9 @@
 import type {
+  DatasetId,
+  FeatureType,
+} from '../../../universal/config/myarea-datasets.ts';
+import { POLYLINE_GEOMETRY_TYPES } from '../../../universal/config/myarea-datasets.ts';
+import type {
   DatasetConfig,
   DatasetFeatureProperties,
   DatasetFeatures,
@@ -11,11 +16,6 @@ import {
   getPropertyFilters,
   recursiveCoordinateSwap,
 } from './helpers.ts';
-import type {
-  DatasetId,
-  FeatureType,
-} from '../../../universal/config/myarea-datasets.ts';
-import { POLYLINE_GEOMETRY_TYPES } from '../../../universal/config/myarea-datasets.ts';
 
 const DEFAULT_PAGE_SIZE = 1000;
 
@@ -124,7 +124,8 @@ export function transformGenericApiListResponse(
         featureGeometry.coordinates
       ) {
         const featureProperties = feature.properties as
-          Record<string, unknown> | undefined;
+          | Record<string, unknown>
+          | undefined;
         const id = config.idKeyList
           ? encodeURIComponent(
               String(

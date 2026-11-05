@@ -1,12 +1,12 @@
-import { vi, describe, it, expect, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { logger } from '../logging.ts';
+import * as monitoring from '../services/monitoring.ts';
 import {
   forTesting,
   getValueMapFromEnv,
   translateValueFromEnv,
 } from './env.ts';
-import { logger } from '../logging.ts';
-import * as monitoring from '../services/monitoring.ts';
 
 describe('getFromEnv', () => {
   const loggerSpy = vi.spyOn(logger, 'error');

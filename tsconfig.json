@@ -3,11 +3,7 @@
     "outDir": "build-bff",
     "rootDir": "./src",
     "target": "esnext",
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable"
-    ],
+    "lib": ["esnext", "dom", "dom.iterable"],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -26,8 +22,5 @@
     "jsx": "react-jsx",
     "types": ["vitest/globals", "@testing-library/jest-dom"]
   },
-  "include": [
-    "src",
-    "scripts/generate-user-data-overview.ts"
-  ]
+  "include": ["src", "scripts/generate-user-data-overview.ts"]
 }

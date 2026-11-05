@@ -5,41 +5,26 @@ import { generatePath } from 'react-router';
 import slug from 'slugme';
 import thenby from 'thenby';
 
-import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers.ts';
-import { featureToggle, routes } from './afis-service-config.ts';
-import type {
-  AfisFactuurState,
-  AfisFacturenParams,
-  AccountingDocumentType,
-  AfisInvoicesPartialPaymentsSource,
-  AfisFactuurDeelbetalingen,
-  AfisFactuurPropertiesSource,
-  XmlNullable,
-  AfisFactuur,
-  AfisInvoicesSource,
-  AfisFacturenResponse,
-  AfisFacturenOverviewResponse,
-  AfisFactuurTermijn,
-} from './afis-types.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
 import {
+  type ApiResponse,
   apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
-  type ApiResponse,
 } from '../../../universal/helpers/api.ts';
 import {
   dateSort,
   defaultDateFormat,
   isDateInPast,
+  toDateFormatted,
 } from '../../../universal/helpers/date.ts';
-import { toDateFormatted } from '../../../universal/helpers/date.ts';
 import {
-  displayAmount,
   capitalizeFirstLetter,
+  displayAmount,
 } from '../../../universal/helpers/text.ts';
 import { entries, uniqueArray } from '../../../universal/helpers/utils.ts';
+import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt.ts';
 import {
   getRequestParamsFromQueryString,
@@ -48,7 +33,22 @@ import {
 import { generateFullApiUrlBFF } from '../../routing/route-helpers.ts';
 import { captureMessage, trackEvent } from '../monitoring.ts';
 import { fetchEMandates } from './afis-e-mandates.ts';
-import { isEnabled } from '../../config/azure-appconfiguration.ts';
+import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers.ts';
+import { featureToggle, routes } from './afis-service-config.ts';
+import type {
+  AccountingDocumentType,
+  AfisFacturenOverviewResponse,
+  AfisFacturenParams,
+  AfisFacturenResponse,
+  AfisFactuur,
+  AfisFactuurDeelbetalingen,
+  AfisFactuurPropertiesSource,
+  AfisFactuurState,
+  AfisFactuurTermijn,
+  AfisInvoicesPartialPaymentsSource,
+  AfisInvoicesSource,
+  XmlNullable,
+} from './afis-types.ts';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
 const AFIS_MAX_FACTUREN_TOP = 2000;
@@ -274,8 +274,8 @@ function transformFactuur(
   const eMandateId = invoice.SEPAMandate?.toString() ?? null;
   const amountOriginal = getInvoiceAmount(invoice);
   const amountPayed = getInvoiceAmount(invoice, deelbetaling);
-  const amountPayedFormatted = `€ ${amountPayed ? displayAmount(parseFloat(amountPayed.toFixed(2))) : '0,00'}`;
-  const amountOriginalFormatted = `€ ${amountOriginal ? displayAmount(parseFloat(amountOriginal.toFixed(2))) : '0,00'}`;
+  const amountPayedFormatted = `€${amountPayed ? displayAmount(parseFloat(amountPayed.toFixed(2))) : '0,00'}`;
+  const amountOriginalFormatted = `€${amountOriginal ? displayAmount(parseFloat(amountOriginal.toFixed(2))) : '0,00'}`;
 
   let debtClearingDate = null;
   let debtClearingDateFormatted = null;
@@ -746,18 +746,18 @@ export async function fetchAfisFacturenOverview(
     const facturenOpen = openFacturenContent?.facturen ?? [];
     const facturen = facturenOpen.sort(
       thenby
-        .firstBy(function (factuur: AfisFactuur) {
-          return factuur.status === 'herinnering' ? -1 : 1;
-        })
-        .thenBy(function (factuur: AfisFactuur) {
-          return [
+        .firstBy((factuur: AfisFactuur) =>
+          factuur.status === 'herinnering' ? -1 : 1
+        )
+        .thenBy((factuur: AfisFactuur) =>
+          [
             'gedeeltelijke-betaling',
             'handmatig-betalen',
             'openstaand',
           ].includes(factuur.status)
             ? -1
-            : 1;
-        })
+            : 1
+        )
         .thenBy(dateSort('paymentDueDate', 'asc'))
     );
 

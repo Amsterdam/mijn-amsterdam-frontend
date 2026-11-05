@@ -1,13 +1,13 @@
+import type {
+  ThemaMenuItem,
+  ThemaRenderRouteConfig,
+} from '../../../../../../universal/types/thema-types.ts';
+import { isLoading } from '../../../../../helpers/api.ts';
 import { themaConfig } from './Bezwaren-thema-config.ts';
 import { BezwarenDetail } from './BezwarenDetail.tsx';
 import { default as BezwarenIcon } from './BezwarenIcon.svg?react';
 import { BezwarenList } from './BezwarenList.tsx';
 import { BezwarenThema } from './BezwarenThema.tsx';
-import { isLoading } from '../../../../../helpers/api.ts';
-import {
-  type ThemaMenuItem,
-  type ThemaRenderRouteConfig,
-} from '../../../../../../universal/types/thema-types.ts';
 
 export const BezwarenRoutes = [
   {

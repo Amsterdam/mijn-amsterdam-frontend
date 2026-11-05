@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: '1.0'
+  version: "1.0"
   title: Mijn Amsterdam api spec for Mijn Amsterdam - Dienstverlening api's
   description: |
     We're providing a set of endpoints that can be used to retrieve data from source api's. These api's are intended for users other than Mijn Amsterdam
@@ -13,12 +13,12 @@ paths:
     get:
       description: Endpoint for checking whether the server has started.
       responses:
-        '200':
+        "200":
           description: Returns "OK" when server is started.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HealthyResponse'
+                $ref: "#/components/schemas/HealthyResponse"
 
   /private/api/v1/services/jzd/voorziening:
     post:
@@ -33,7 +33,7 @@ paths:
           application/json:
             schema:
               type: object
-              required: [bsn, id]
+              required: [ bsn, id ]
               properties:
                 bsn:
                   type: string
@@ -42,23 +42,23 @@ paths:
                   type: string
                   description: Id of the voorziening.
       responses:
-        '200':
+        "200":
           description: |
             The requested JZD voorziening
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/JzdVoorzieningResponse'
-        '500':
-          $ref: '#/components/responses/ApplicationErrorResponse'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailableResponse'
-        '400':
-          $ref: '#/components/responses/BadRequestResponse'
-        '404':
-          $ref: '#/components/responses/NotFoundResponse'
-        '401':
-          $ref: '#/components/responses/UnauthorizedResponse'
+                $ref: "#/components/schemas/JzdVoorzieningResponse"
+        "500":
+          $ref: "#/components/responses/ApplicationErrorResponse"
+        "503":
+          $ref: "#/components/responses/ServiceUnavailableResponse"
+        "400":
+          $ref: "#/components/responses/BadRequestResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
 
   /private/api/v1/services/jzd/voorzieningen:
     post:
@@ -73,7 +73,7 @@ paths:
           application/json:
             schema:
               type: object
-              required: [bsn]
+              required: [ bsn ]
               properties:
                 bsn:
                   type: string
@@ -81,33 +81,33 @@ paths:
                 maActies:
                   type: array
                   items:
-                    $ref: '#/components/schemas/JzdVoorziening/properties/maActies'
+                    $ref: "#/components/schemas/JzdVoorziening/properties/maActies"
                   description:
                     Optional list of maActies to filter the voorzieningen on.
                     Only voorzieningen that have at least one of the specified maActies will be included in the response.
                 maProductgroep:
                   type: array
                   items:
-                    $ref: '#/components/schemas/JzdVoorziening/properties/maProductgroep'
+                    $ref: "#/components/schemas/JzdVoorziening/properties/maProductgroep"
                   description:
                     Optional list of maProductgroepen to filter the voorzieningen on.
                     Only voorzieningen that have at least one of the specified maProductgroepen will be included in the response.
       responses:
-        '200':
+        "200":
           description: |
             A list of huidige toegewezen JZD voorzieningen sorted by datumBesluit desc.
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/JzdVoorzieningenResponse'
-        '500':
-          $ref: '#/components/responses/ApplicationErrorResponse'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailableResponse'
-        '400':
-          $ref: '#/components/responses/BadRequestResponse'
-        '401':
-          $ref: '#/components/responses/UnauthorizedResponse'
+                $ref: "#/components/schemas/JzdVoorzieningenResponse"
+        "500":
+          $ref: "#/components/responses/ApplicationErrorResponse"
+        "503":
+          $ref: "#/components/responses/ServiceUnavailableResponse"
+        "400":
+          $ref: "#/components/responses/BadRequestResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
 
   /private/api/v1/services/afis/e-mandates/sign-request-status-notify:
     post:
@@ -121,28 +121,28 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AfisStatusNotificationRequestBody'
+              $ref: "#/components/schemas/AfisStatusNotificationRequestBody"
       responses:
-        '200':
+        "200":
           description: |
             Acknowledgement of the received notification.
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/AfisStatusNotificationResponse'
-        '500':
+                $ref: "#/components/schemas/AfisStatusNotificationResponse"
+        "500":
           description: |
             Returns Application error, any error in code or from failed requests.
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/AfisApplicationError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailableResponse'
-        '400':
-          $ref: '#/components/responses/BadRequestResponse'
-        '401':
-          $ref: '#/components/responses/UnauthorizedResponse'
+                $ref: "#/components/schemas/AfisApplicationError"
+        "503":
+          $ref: "#/components/responses/ServiceUnavailableResponse"
+        "400":
+          $ref: "#/components/responses/BadRequestResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
 
 components:
   securitySchemes:
@@ -159,34 +159,34 @@ components:
     BadRequestResponse:
       description: Returns bad request error
       content:
-        'application/json':
+        "application/json":
           schema:
-            $ref: '#/components/schemas/ErrorBadRequest'
+            $ref: "#/components/schemas/ErrorBadRequest"
     NotFoundResponse:
       description: Returns not found error
       content:
-        'application/json':
+        "application/json":
           schema:
-            $ref: '#/components/schemas/ErrorNotFound'
+            $ref: "#/components/schemas/ErrorNotFound"
     UnauthorizedResponse:
       description: Returns unauthorized error (invalid api key / token)
       content:
-        'application/json':
+        "application/json":
           schema:
-            $ref: '#/components/schemas/ErrorUnauthorized'
+            $ref: "#/components/schemas/ErrorUnauthorized"
     ServiceUnavailableResponse:
       description: Returns Service Unavailable error
       content:
-        'application/json':
+        "application/json":
           schema:
-            $ref: '#/components/schemas/ErrorUnavailable'
+            $ref: "#/components/schemas/ErrorUnavailable"
     ApplicationErrorResponse:
       description: |
         Returns Application error, any error in code or from failed requests.
       content:
-        'application/json':
+        "application/json":
           schema:
-            $ref: '#/components/schemas/ApplicationError'
+            $ref: "#/components/schemas/ApplicationError"
   schemas:
     HealthyResponse:
       type: object
@@ -205,20 +205,20 @@ components:
         content:
           type: array
           items:
-            $ref: '#/components/schemas/JzdVoorziening'
+            $ref: "#/components/schemas/JzdVoorziening"
         status:
           type: string
           enum:
-            - 'SUCCESS'
+            - "SUCCESS"
     JzdVoorzieningResponse:
       type: object
       properties:
         content:
-          $ref: '#/components/schemas/JzdVoorziening'
+          $ref: "#/components/schemas/JzdVoorziening"
         status:
           type: string
           enum:
-            - 'SUCCESS'
+            - "SUCCESS"
     JzdVoorziening:
       type: object
       properties:
@@ -229,13 +229,13 @@ components:
         maProductgroep:
           type: string
           enum:
-            - 'WRA'
-            - 'hulpmiddelen'
-            - 'diensten'
-            - 'PGB'
-            - 'vergoeding'
-            - 'AOV'
-            - 'Alle afgewezen'
+            - "WRA"
+            - "hulpmiddelen"
+            - "diensten"
+            - "PGB"
+            - "vergoeding"
+            - "AOV"
+            - "Alle afgewezen"
         maActies:
           type: array
           items:
@@ -304,62 +304,62 @@ components:
       properties:
         id_client:
           type: string
-          example: '1000'
+          example: "1000"
         debtornumber:
           type: string
-          example: '123456'
+          example: "123456"
         cid:
           type: string
-          example: '2345678910'
+          example: "2345678910"
         mpid:
           type: string
-          example: '1234567890'
+          example: "1234567890"
         payment_reference:
           type: string
-          example: '123456789'
+          example: "123456789"
         id_request_client:
           type: string
-          example: 'test'
+          example: "test"
         event_type:
           type: string
-          example: 'payment'
+          example: "payment"
         amount_total:
           type: string
-          example: '45500'
+          example: "45500"
         id_bank:
           type: string
-          example: 'ABNANL2A'
+          example: "ABNANL2A"
         iban:
           type: string
-          example: 'GB33BUKB20201555555555'
+          example: "GB33BUKB20201555555555"
         bic:
           type: string
-          example: 'INGBNL2A'
+          example: "INGBNL2A"
         account_owner:
           type: string
-          example: 'John Doe'
+          example: "John Doe"
         event_date:
           type: string
           format: date
-          example: '2024-01-05'
+          example: "2024-01-05"
         event_time:
           type: string
           format: time
-          example: '11:27'
+          example: "11:27"
         variable1:
           type: string
-          example: 'GB33BUKB20201555555555'
+          example: "GB33BUKB20201555555555"
     AfisStatusNotificationResponse:
       type: object
       properties:
         content:
           type: string
           enum:
-            - 'E-Mandate created successfully'
+            - "E-Mandate created successfully"
         status:
           type: string
           enum:
-            - 'SUCCESS'
+            - "SUCCESS"
     ApplicationError:
       type: object
       description: |
@@ -374,18 +374,18 @@ components:
         status:
           type: string
           enum:
-            - 'ERROR'
+            - "ERROR"
         message:
           type: string
     AfisApplicationError:
       allOf:
-        - $ref: '#/components/schemas/ApplicationError'
+        - $ref: "#/components/schemas/ApplicationError"
         - type: object
           properties:
             message:
               type: string
               enum:
-                - 'Failed to create E-Mandate from sign request status notification'
+                - "Failed to create E-Mandate from sign request status notification"
     ErrorUnavailable:
       type: object
       properties:
@@ -398,11 +398,11 @@ components:
         status:
           type: string
           enum:
-            - 'ERROR'
+            - "ERROR"
         message:
           type: string
           enum:
-            - 'Service Unavailable'
+            - "Service Unavailable"
     ErrorNotFound:
       type: object
       properties:
@@ -415,7 +415,7 @@ components:
         status:
           type: string
           enum:
-            - 'ERROR'
+            - "ERROR"
         message:
           type: string
     ErrorUnauthorized:
@@ -430,14 +430,14 @@ components:
         status:
           type: string
           enum:
-            - 'ERROR'
+            - "ERROR"
         message:
           type: string
           enum:
-            - 'Api key ongeldig'
-            - 'Authorisatie header mist'
-            - 'Authorisatie header verkeerd gevormd'
-            - 'Unauthorized'
+            - "Api key ongeldig"
+            - "Authorisatie header mist"
+            - "Authorisatie header verkeerd gevormd"
+            - "Unauthorized"
     ErrorBadRequest:
       type: object
       properties:
@@ -450,7 +450,7 @@ components:
         status:
           type: string
           enum:
-            - 'ERROR'
+            - "ERROR"
         message:
           type: string
-          example: 'Invalid input'
+          example: "Invalid input"

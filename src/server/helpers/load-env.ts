@@ -14,7 +14,6 @@ import { IS_DEVELOPMENT } from '../../universal/config/env.ts';
 const LOCAL_ENV_FILE = '.env.local';
 
 if (IS_DEVELOPMENT) {
-  console.debug(`Using local env file ${LOCAL_ENV_FILE}`);
   const envConfig = dotenv.config({ path: LOCAL_ENV_FILE });
   dotenvExpand.expand(envConfig);
 }

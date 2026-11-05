@@ -4,9 +4,10 @@ vi.mock('../debug.ts', () => ({
   debugRequest: vi.fn(),
   debugResponse: vi.fn(),
 }));
+
 import * as debug from '../debug.ts';
 import { getFromEnv } from './env.ts';
-import { forTesting, addRequestDataDebugging } from './source-api-debug.ts';
+import { addRequestDataDebugging, forTesting } from './source-api-debug.ts';
 
 describe('source-api-debug', () => {
   describe('isDebugResponseDataMatch', () => {

@@ -3,11 +3,11 @@ import nock from 'nock';
 import { generatePath } from 'react-router';
 import { describe } from 'vitest';
 
-import { SearchPageRoute } from './Search-routes.ts';
-import { SearchPage } from './Search.tsx';
 import { bffApi } from '../../../../../testing/utils.ts';
 import type { AppState } from '../../../../../universal/types/App.types.ts';
 import { MockApp } from '../../pages/MockApp.tsx';
+import { SearchPage } from './Search.tsx';
+import { SearchPageRoute } from './Search-routes.ts';
 
 const testState = {
   WPI_AANVRAGEN: {

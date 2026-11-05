@@ -116,8 +116,9 @@ describe('startAppConfiguration OPS behavior', () => {
   });
 
   it('ensureOpsFlagExists creates a missing OPS flag and provisions it', async () => {
-    const { ensureOpsFlagExists, isOpsEnabled } =
-      await import('./azure-appconfiguration.ts');
+    const { ensureOpsFlagExists, isOpsEnabled } = await import(
+      './azure-appconfiguration.ts'
+    );
     const { opsFeatureToggle } = await import('./ops-feature-toggles.ts');
 
     expect(opsFeatureToggle[OPS_DECOS_FEATURE_FLAG]).toBeUndefined();
@@ -134,8 +135,9 @@ describe('startAppConfiguration OPS behavior', () => {
   });
 
   it('ensureOpsFlagExists keeps an existing OPS flag value', async () => {
-    const { ensureOpsFlagExists, isOpsEnabled } =
-      await import('./azure-appconfiguration.ts');
+    const { ensureOpsFlagExists, isOpsEnabled } = await import(
+      './azure-appconfiguration.ts'
+    );
     const { opsFeatureToggle } = await import('./ops-feature-toggles.ts');
 
     opsFeatureToggle[OPS_DECOS_FEATURE_FLAG] = false;

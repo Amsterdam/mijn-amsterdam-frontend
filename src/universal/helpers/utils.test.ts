@@ -1,13 +1,13 @@
-import { toDateFormatted } from './date.ts';
-import { isRecentNotification } from './date.ts';
+import { isRecentNotification, toDateFormatted } from './date.ts';
 import {
   deepOmitKeys,
-  jsonCopy,
-  sortAlpha,
-  range,
-  splitBy,
   isNumeric,
+  jsonCopy,
+  range,
+  sortAlpha,
+  splitBy,
 } from './utils.ts';
+
 describe('Utils.ts', () => {
   it('deepOmitKeys: Should omit keys recursively', () => {
     const testData = {

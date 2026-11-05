@@ -1,6 +1,12 @@
 import type { LatLngBoundsLiteral } from 'leaflet';
 
 import {
+  featureToggle,
+  routeConfig,
+  themaId,
+  themaTitle,
+} from '../../client/components/MyArea/MyArea-thema-config.ts';
+import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../universal/helpers/api.ts';
@@ -13,12 +19,6 @@ import {
   filterFeaturesinRadius,
   getBboxFromFeatures,
 } from './buurt/helpers.ts';
-import {
-  featureToggle,
-  routeConfig,
-  themaId,
-  themaTitle,
-} from '../../client/components/MyArea/MyArea-thema-config.ts';
 
 const WITHIN_RADIUS_KM = 1;
 

@@ -1,10 +1,10 @@
 import { useParams } from 'react-router';
 
-import { useBezwarenThemaData } from './useBezwarenThemaData.hook.ts';
 import type { BezwaarDetail } from '../../../../../../server/services/bezwaren/bezwaren.ts';
 import { hasFailedDependency } from '../../../../../../universal/helpers/api.ts';
 import { uniqueArray } from '../../../../../../universal/helpers/utils.ts';
 import { useBffApi } from '../../../../../hooks/api/useBffApi.ts';
+import { useBezwarenThemaData } from './useBezwarenThemaData.hook.ts';
 
 export function useBezwarenDetailData() {
   const {

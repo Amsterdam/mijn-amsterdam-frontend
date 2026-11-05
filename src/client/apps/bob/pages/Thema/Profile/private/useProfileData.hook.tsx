@@ -1,10 +1,10 @@
-import {
-  formatBrpProfileData,
-  type BrpProfileData,
-} from './ProfilePrivate.transform.tsx';
-import { useIngeschrevenPersonenOpAdres } from './useAantalIngeschrevenPersonen.hook.ts';
 import { useAppStateGetter } from '../../../../../../hooks/useAppStateStore.ts';
 import { themaConfig } from '../Profile-thema-config.ts';
+import {
+  type BrpProfileData,
+  formatBrpProfileData,
+} from './ProfilePrivate.transform.tsx';
+import { useIngeschrevenPersonenOpAdres } from './useAantalIngeschrevenPersonen.hook.ts';
 
 export function useProfileData() {
   const { BRP, WONEN } = useAppStateGetter();

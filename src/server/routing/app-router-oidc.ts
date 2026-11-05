@@ -1,18 +1,10 @@
-import type { Request, RequestHandler, Response } from 'express';
-import type { NextFunction } from 'express';
+import type { NextFunction, Request, RequestHandler, Response } from 'express';
 import type { ConfigParams } from 'express-openid-connect';
 import expressOpenIdConnect from 'express-openid-connect';
 
-import { nocache, verifyAuthenticated } from './route-handlers.ts';
-import {
-  generateFullApiUrlBFF,
-  generateMaFrontendUrl,
-  sendUnauthorized,
-} from './route-helpers.ts';
-import { createBFFRouter } from './route-helpers.ts';
 import { apiSuccessResult } from '../../universal/helpers/api.ts';
-import { getReturnToUrl } from '../auth/auth-after-redirect-returnto.ts';
 import {
+  getReturnToUrl,
   RETURNTO_MAMS_LANDING_DIGID,
   RETURNTO_MAMS_LANDING_DIGID_GEMACHTIGD,
   RETURNTO_MAMS_LANDING_EHERKENNING,
@@ -37,6 +29,13 @@ import {
 } from '../auth/auth-routes.ts';
 import type { AuthenticatedRequest } from '../auth/auth-types.ts';
 import { countLoggedInVisit } from '../services/admin/admin-visitors.ts';
+import { nocache, verifyAuthenticated } from './route-handlers.ts';
+import {
+  createBFFRouter,
+  generateFullApiUrlBFF,
+  generateMaFrontendUrl,
+  sendUnauthorized,
+} from './route-helpers.ts';
 
 export const oidcRouter = createBFFRouter({ id: 'router-oidc' });
 

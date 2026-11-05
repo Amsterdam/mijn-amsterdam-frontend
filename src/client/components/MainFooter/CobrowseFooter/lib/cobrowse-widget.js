@@ -1,3 +1,4 @@
+// biome-ignore-all lint/suspicious/noConsole: Preserve the existing file-level exception.
 /*
  * The CobrowseWidget code is kept as much as is.
  * It was developed separately and is used without modification on amsterdam.nl.
@@ -6,8 +7,6 @@
  * The localStorage is used to persist the cobrowse session to allow navigating between pages.
  * A redactedViews constructor parameter is added to sync the redactedViews class used
  */
-
-/* eslint-disable no-console */
 
 const translations = {
   nl: {

@@ -1,3 +1,8 @@
+import { isError } from '../../../../../../universal/helpers/api.ts';
+import { addLinkElementToProperty } from '../../../../../components/Table/TableV2.tsx';
+import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
+import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
+import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
 import { addLinkToDossiernummers } from './Erfpacht-helpers.tsx';
 import {
   erfpachtFacturenTableConfig,
@@ -5,11 +10,6 @@ import {
   listPageParamKind,
   themaConfig,
 } from './Erfpacht-thema-config.ts';
-import { isError } from '../../../../../../universal/helpers/api.ts';
-import { addLinkElementToProperty } from '../../../../../components/Table/TableV2.tsx';
-import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
-import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
-import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
 
 export function useErfpachtThemaData() {
   const { ERFPACHT } = useAppStateGetter();

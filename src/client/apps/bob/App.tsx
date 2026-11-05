@@ -1,13 +1,10 @@
 import { useEffect } from 'react';
 
-import { Paragraph, Page, SkipLink } from '@amsterdam/design-system-react';
+import { Page, Paragraph, SkipLink } from '@amsterdam/design-system-react';
 import { PiwikProvider, usePiwik } from '@amsterdam/piwik-tracker-react';
 import classNames from 'classnames';
 import { BrowserRouter, useLocation, useNavigate } from 'react-router';
 
-import styles from './App.module.scss';
-import { PrivateRoutes, PublicRoutes } from './App.routes.tsx';
-import { loginUrlByAuthMethod } from './config/api.ts';
 import { AUTH_API_URL } from '../../apps/bob/config/api.ts';
 import { CobrowseScreenshareAlert } from '../../components/Alert/CobrowseScreenshareDisclaimer.tsx';
 import { AutoLogoutDialog } from '../../components/AutoLogoutDialog/AutoLogoutDialog.tsx';
@@ -27,6 +24,9 @@ import {
 } from '../../hooks/useDeeplink.hook.ts';
 import { useScrollToTop } from '../../hooks/useScrollToTop.ts';
 import { useTrackThemas } from '../../hooks/useTrackThemas.hook.ts';
+import styles from './App.module.scss';
+import { PrivateRoutes, PublicRoutes } from './App.routes.tsx';
+import { loginUrlByAuthMethod } from './config/api.ts';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -73,12 +73,12 @@ function AppAuthenticated() {
   const redirectAfterLogin = useDeeplinkRedirect();
   const isScreensharing = useCobrowseScreenshareState();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Preserve the existing hook dependency exclusion.
   useEffect(() => {
     if (redirectAfterLogin && redirectAfterLogin !== '/') {
       clearDeeplinkEntry();
       navigate(redirectAfterLogin);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [redirectAfterLogin]);
 
   const isBuurt = location.pathname === buurtRouteConfig.themaPage.path;

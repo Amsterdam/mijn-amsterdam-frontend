@@ -1,16 +1,16 @@
-import type { AfisFactuur, AfisFactuurStatus } from './afis-types.ts';
-import { fetchIsKnownInAFIS } from './afis.ts';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
 import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api.ts';
 import {
-  NOTIFICATION_SORTPRIORITY,
   type MyNotification,
+  NOTIFICATION_SORTPRIORITY,
 } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { sanitizeStringTemplate } from '../../helpers/text.ts';
+import { fetchIsKnownInAFIS } from './afis.ts';
+import type { AfisFactuur, AfisFactuurStatus } from './afis-types.ts';
 
 const facturenOpen: AfisFactuurStatus[] = [
   'openstaand',

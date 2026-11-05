@@ -1,8 +1,8 @@
-import { handleFetchBezwaarDetail } from './bezwaren-route-handlers.ts';
-import { featureToggle, routes } from './bezwaren-service-config.ts';
-import { fetchBezwaarDocument } from './bezwaren.ts';
 import { createBFFRouter } from '../../routing/route-helpers.ts';
 import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler.ts';
+import { fetchBezwaarDocument } from './bezwaren.ts';
+import { handleFetchBezwaarDetail } from './bezwaren-route-handlers.ts';
+import { featureToggle, routes } from './bezwaren-service-config.ts';
 
 const bezwarenRouterProtected = createBFFRouter({
   id: 'protected-bezwaren-router',

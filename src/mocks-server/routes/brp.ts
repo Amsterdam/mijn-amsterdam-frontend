@@ -1,8 +1,14 @@
 import { constants as httpConstants } from 'node:http2';
 
-import BRP_PERSONEN_OP_ADRES from '../fixtures/brp/personen-op-adres.json' with { type: 'json' };
-import BRP_PERSOONSGEGEVENS from '../fixtures/brp/test-personen.json' with { type: 'json' };
-import BRP_VERBLIJFPLAATSHISTORIE from '../fixtures/brp/verblijfplaatshistorie.json' with { type: 'json' };
+import BRP_PERSONEN_OP_ADRES from '../fixtures/brp/personen-op-adres.json' with {
+  type: 'json',
+};
+import BRP_PERSOONSGEGEVENS from '../fixtures/brp/test-personen.json' with {
+  type: 'json',
+};
+import BRP_VERBLIJFPLAATSHISTORIE from '../fixtures/brp/verblijfplaatshistorie.json' with {
+  type: 'json',
+};
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 

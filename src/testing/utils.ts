@@ -1,9 +1,8 @@
 import { HttpStatusCode } from 'axios';
-import type { Request, Response } from 'express';
+import type { Request, RequestHandler, Response } from 'express';
 import nock from 'nock';
 import UID from 'uid-safe';
 
-import { bffApiHost, remoteApiHost } from './setup.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
@@ -13,12 +12,17 @@ import type {
   AuthProfile,
   AuthProfileAndToken,
 } from '../server/auth/auth-types.ts';
-import { createOIDCStub } from '../server/routing/app-router-development.ts';
 import type {
   RecordStr2,
   RequestWithRouteAndQueryParams,
   ResponseAuthenticated,
 } from '../server/routing/route-helpers.ts';
+import {
+  createDevelopmentSessionData,
+  createOIDCStub,
+  ensureOIDCAuthContext,
+} from '../server/routing/route-helpers-oidc.ts';
+import { bffApiHost, remoteApiHost } from './setup.ts';
 
 const defaultReplyHeaders = {
   'access-control-allow-origin': '*',
@@ -160,6 +164,56 @@ export class RequestMock {
   get<T extends typeof this.params>() {
     return this as unknown as Request<T>;
   }
+}
+
+export function createOidcResponseMock() {
+  const res = Object.assign(ResponseMock.new(), {
+    cookie: vi.fn(),
+    writeHead: vi.fn(),
+  });
+  res.end = vi.fn(() => {
+    res.writeHead(res.statusCode);
+    return res;
+  });
+  return res;
+}
+
+export async function getOidcSessionMock(
+  cookieValue = '',
+  middleware?: RequestHandler
+) {
+  const req = RequestMock.new()
+    .setCookies({ [OIDC_SESSION_COOKIE_NAME]: cookieValue })
+    .get() as AuthenticatedRequest;
+  Object.assign(req, {
+    method: 'GET',
+    url: '/session',
+    headers: {
+      cookie: `${OIDC_SESSION_COOKIE_NAME}=${encodeURIComponent(cookieValue)}`,
+    },
+    get: (name: string) => req.headers[name.toLowerCase()],
+  });
+  const res = createOidcResponseMock();
+  if (middleware) {
+    await new Promise<void>((resolve, reject) => {
+      middleware(req, res, (error?: unknown) =>
+        error ? reject(error) : resolve()
+      );
+    });
+  } else {
+    await ensureOIDCAuthContext(req, res);
+  }
+  return { req, res };
+}
+
+export async function createDevelopmentSessionMock(profile: AuthProfile) {
+  const { req, res } = await getOidcSessionMock();
+  Object.assign(
+    req[OIDC_SESSION_COOKIE_NAME]!,
+    await createDevelopmentSessionData(profile)
+  );
+  await res.end();
+  return res.cookie.mock.calls[0][1] as string;
 }
 
 export async function getReqMockWithOidc(

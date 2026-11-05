@@ -30,7 +30,7 @@
     color: var(--ams-color-background);
   }
 
-  &[aria-disabled='true'] {
+  &[aria-disabled="true"] {
     &,
     &:hover {
       background-color: transparent;
@@ -71,7 +71,7 @@
   }
 
   &:disabled,
-  &[aria-disabled='true'] {
+  &[aria-disabled="true"] {
     color: var(--ams-color-interactive-disabled);
     cursor: default;
     text-decoration: none;

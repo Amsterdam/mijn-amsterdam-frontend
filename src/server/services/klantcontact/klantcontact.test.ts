@@ -1,13 +1,13 @@
 import mockdate from 'mockdate';
 
+import { remoteApiHost } from '../../../testing/setup.ts';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 import { fetchKlantcontact } from './klantcontact.ts';
 import type {
   AfspraakResponseSource,
   AfspraakSource,
   ContactmomentResponseSource,
 } from './klantcontact.types.ts';
-import { remoteApiHost } from '../../../testing/setup.ts';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils.ts';
 
 const baseAfspraak: AfspraakSource = {
   subject: 'Blauwe zone',
@@ -37,16 +37,12 @@ function setUpAPI(responses: {
 }) {
   remoteApi
     .get(
-      new RegExp(
-        '/salesforce/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/'
-      )
+      /\/salesforce\/contactmomenten\/services\/apexrest\/klantinteracties\/v1.0\/klantcontacten\//
     )
     .reply(200, responses.contactmomentenResponse);
   remoteApi
     .get(
-      new RegExp(
-        '/salesforce/contactmomenten/services/apexrest/klantinteracties/v1.0/appointments'
-      )
+      /\/salesforce\/contactmomenten\/services\/apexrest\/klantinteracties\/v1.0\/appointments/
     )
     .reply(200, responses.afsprakenResponse);
 }

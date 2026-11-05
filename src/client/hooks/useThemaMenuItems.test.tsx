@@ -1,17 +1,17 @@
 import { renderHook } from '@testing-library/react';
 import type { Mock } from 'vitest';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
+import type { ThemaMenuItemTransformed } from '../../universal/types/thema-types.ts';
+import { useThemasByProfileType } from '../apps/bob/config/menuItems.ts';
 import { useAppStateGetter, useAppStateReady } from './useAppStateStore.ts';
 import { useProfileTypeValue } from './useProfileType.ts';
 import {
   compareThemas,
-  useThemaMenuItemByThemaID,
   useActiveThemaMenuItems,
   useAllThemaMenuItemsByThemaID,
+  useThemaMenuItemByThemaID,
 } from './useThemaMenuItems.ts';
-import type { ThemaMenuItemTransformed } from '../../universal/types/thema-types.ts';
-import { useThemasByProfileType } from '../apps/bob/config/menuItems.ts';
 
 vi.mock('./useProfileType', () => ({
   useProfileTypeValue: vi.fn(),

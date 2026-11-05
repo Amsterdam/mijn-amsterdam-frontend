@@ -11,10 +11,7 @@
   grid-auto-flow: column;
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: var(--ams-grid-column-gap);
-  grid-template-rows: repeat(
-    3,
-    var(--list-item-row-height)
-  ); // Will be replaced dynamically
+  grid-template-rows: repeat(3, var(--list-item-row-height)); // Will be replaced dynamically
 
   @media screen and (min-width: $ams-breakpoint-wide) {
     grid-template-columns: repeat(3, 1fr);

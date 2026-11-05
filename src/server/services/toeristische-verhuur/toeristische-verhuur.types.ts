@@ -1,11 +1,11 @@
-import type { BBVergunningFrontend } from './bed-and-breakfast/bed-and-breakfast-types.ts';
 import type { caseTypeToeristischeVerhuur } from '../../../client/apps/bob/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
-import type { DecosZaakBase } from '../decos/decos-types.ts';
 import type {
+  DecosZaakBase,
   DecosZaakFrontend,
-  WithLocation,
   WithDateRange,
+  WithLocation,
 } from '../decos/decos-types.ts';
+import type { BBVergunningFrontend } from './bed-and-breakfast/bed-and-breakfast-types.ts';
 
 type CaseTypeToeristischeVerhuurKey = keyof typeof caseTypeToeristischeVerhuur;
 
@@ -57,9 +57,6 @@ export type VakantieverhuurVergunningFrontend =
 export type ToeristischeVerhuurVergunning =
   | BBVergunningFrontend
   | VakantieverhuurVergunningFrontend;
-
-type s1 = BBVergunningFrontend['steps'];
-type s2 = VakantieverhuurVergunningFrontend['steps'];
 
 export type ToeristischeVerhuur = {
   vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[];

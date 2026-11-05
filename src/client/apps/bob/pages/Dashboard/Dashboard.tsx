@@ -3,10 +3,6 @@ import { useEffect } from 'react';
 import { Heading, OrderedList } from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
 
-import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Dashboard-config.ts';
-import styles from './Dashboard.module.scss';
-import { DashboardHeader } from './DashboardHeader.tsx';
-import { WelcomeHeading } from './WelcomHeading.tsx';
 import { LoadingContent } from '../../../../components/LoadingContent/LoadingContent.tsx';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import { MyAreaDashboard } from '../../../../components/MyArea/MyAreaDashboard.tsx';
@@ -25,6 +21,10 @@ import { useActiveThemaMenuItems } from '../../../../hooks/useThemaMenuItems.ts'
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
 import { AfsprakenDashboard } from '../Thema/KlantContact/Afspraken/Afspraken.tsx';
 import { useKlantcontactData } from '../Thema/KlantContact/useKlantcontactData.hook.tsx';
+import styles from './Dashboard.module.scss';
+import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Dashboard-config.ts';
+import { DashboardHeader } from './DashboardHeader.tsx';
+import { WelcomeHeading } from './WelcomHeading.tsx';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
 
@@ -54,11 +54,11 @@ export function Dashboard() {
   const hasAfspraken = afspraken.length > 0;
 
   // We only want to run this on mount.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Preserve the existing hook dependency exclusion.
   useEffect(() => {
     if (location.search) {
       navigate(location.pathname, { replace: true });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

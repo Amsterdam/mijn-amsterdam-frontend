@@ -2,9 +2,9 @@ import { renderHook } from '@testing-library/react';
 import type { Mock } from 'vitest';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import type { ApiResponse_DEPRECATED } from '../../universal/helpers/api.ts';
 import { useIsLoading } from './useIsLoading.ts';
 import { useProfileTypeValue } from './useProfileType.ts';
-import type { ApiResponse_DEPRECATED } from '../../universal/helpers/api.ts';
 
 vi.mock('./useProfileType.ts', () => ({
   useProfileTypeValue: vi.fn(),

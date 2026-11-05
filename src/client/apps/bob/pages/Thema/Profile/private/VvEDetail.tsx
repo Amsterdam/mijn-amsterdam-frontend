@@ -1,10 +1,8 @@
 import { Heading, Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { useProfileData } from './useProfileData.hook.tsx';
-import { useWonenThemaData } from './useWonenThemaData.hook.ts';
 import type {
-  VveCaseDetail,
   VvEDataFrontend,
+  VveCaseDetail,
 } from '../../../../../../../server/services/wonen/zwd.types.ts';
 import {
   Datalist,
@@ -17,15 +15,23 @@ import type { DisplayProps } from '../../../../../../components/Table/TableV2.ty
 import { ThemaDetailPagina } from '../../../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../../../hooks/useHTMLDocumentTitle.ts';
 import { themaConfig } from '../Profile-thema-config.ts';
+import { useProfileData } from './useProfileData.hook.tsx';
+import { useWonenThemaData } from './useWonenThemaData.hook.ts';
 
 type VveDetailsProps = {
   vve: VvEDataFrontend;
 };
 
 const VVE_CASES_DISPLAYPROPS: DisplayProps<VveCaseDetail> = {
-  title: 'Aanvraag',
-  formattedDateStart: 'Startdatum',
-  displayStatus: 'Status',
+  props: {
+    title: 'Aanvraag',
+    id: 'Zaaknummer',
+    formattedDateStart: 'Startdatum',
+  },
+  colWidths: {
+    small: ['1fr', '1fr', '1fr'],
+    large: ['1fr', '1fr', '1fr'],
+  },
 };
 
 function VveDetail({ vve }: VveDetailsProps) {

@@ -5,32 +5,32 @@
 
 version: 2
 updates:
-  - package-ecosystem: 'docker'
-    directory: '/'
+  - package-ecosystem: "docker"
+    directory: "/"
     schedule:
-      interval: 'weekly'
+      interval: "weekly"
     cooldown:
       default-days: 7
-  - package-ecosystem: 'npm'
-    directory: '/'
+  - package-ecosystem: "npm"
+    directory: "/"
     cooldown:
       default-days: 7
     schedule:
-      interval: 'weekly'
+      interval: "weekly"
     ignore:
-      - dependency-name: '*'
-        update-types: ['version-update:semver-major']
-      - dependency-name: 'express-openid-connect'
+      - dependency-name: "*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "express-openid-connect"
         versions:
-          - '> 2.18.1'
+          - "> 2.18.1"
     groups:
       production-dependencies:
-        dependency-type: 'production'
+        dependency-type: "production"
         update-types:
-          - 'minor'
-          - 'patch'
+          - "minor"
+          - "patch"
       development-dependencies:
-        dependency-type: 'development'
+        dependency-type: "development"
         update-types:
-          - 'minor'
-          - 'patch'
+          - "minor"
+          - "patch"

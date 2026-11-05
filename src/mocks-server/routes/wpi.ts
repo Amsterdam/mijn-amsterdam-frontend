@@ -1,6 +1,12 @@
-import WPI_AANVRAGEN_RESPONSE from '../fixtures/wpi-aanvragen.json' with { type: 'json' };
-import WPI_E_AANVRAGEN_RESPONSE from '../fixtures/wpi-e-aanvragen.json' with { type: 'json' };
-import WPI_SPECIFICATIES_RESPONSE from '../fixtures/wpi-specificaties.json' with { type: 'json' };
+import WPI_AANVRAGEN_RESPONSE from '../fixtures/wpi-aanvragen.json' with {
+  type: 'json',
+};
+import WPI_E_AANVRAGEN_RESPONSE from '../fixtures/wpi-e-aanvragen.json' with {
+  type: 'json',
+};
+import WPI_SPECIFICATIES_RESPONSE from '../fixtures/wpi-specificaties.json' with {
+  type: 'json',
+};
 import { sendMockDocument } from '../helpers/send-mock-document.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';

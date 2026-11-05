@@ -1,6 +1,22 @@
 import { HttpStatusCode } from 'axios';
 
 import {
+  type ApiResponsePromise,
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../../universal/helpers/api.ts';
+import { getCustomApiConfig } from '../../../helpers/source-api-helpers.ts';
+import { requestData } from '../../../helpers/source-api-request.ts';
+import { getAccountData } from '../../admin/admin-account.model.ts';
+import type {
+  CreateJiraTicketInput,
+  UserFeedbackAdministrationMeta,
+} from '../user-feedback.types.ts';
+import {
+  getUserFeedbackMetaByEntryId,
+  upsertAdministrationMeta,
+} from '../user-feedback-meta.model.ts';
+import {
   getJiraAuthHeader,
   normalizeJiraLabel,
   toJiraDescription,
@@ -21,22 +37,6 @@ import type {
   JiraMyselfResponse,
   JiraSprintsResponse,
 } from './user-feedback-jira.types.ts';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-  type ApiResponsePromise,
-} from '../../../../universal/helpers/api.ts';
-import { getCustomApiConfig } from '../../../helpers/source-api-helpers.ts';
-import { requestData } from '../../../helpers/source-api-request.ts';
-import { getAccountData } from '../../admin/admin-account.model.ts';
-import {
-  getUserFeedbackMetaByEntryId,
-  upsertAdministrationMeta,
-} from '../user-feedback-meta.model.ts';
-import type {
-  CreateJiraTicketInput,
-  UserFeedbackAdministrationMeta,
-} from '../user-feedback.types.ts';
 
 async function fetchJiraAccountId(username: string, jiraApiToken: string) {
   const authHeader = getJiraAuthHeader(username, jiraApiToken);

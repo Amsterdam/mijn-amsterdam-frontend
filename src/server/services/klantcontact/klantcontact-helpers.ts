@@ -1,3 +1,5 @@
+import type { ApiResponse } from '../../../universal/helpers/api.ts';
+import { toDateFormatted } from '../../../universal/helpers/date.ts';
 import type {
   ContactgegevenFrontend,
   ContactgegevenSource,
@@ -5,8 +7,6 @@ import type {
   ContactProfieldienstResponseSource,
   IdentificatieType,
 } from './klantcontact-profieldienst-types.ts';
-import type { ApiResponse } from '../../../universal/helpers/api.ts';
-import { toDateFormatted } from '../../../universal/helpers/date.ts';
 
 const identificatieTypeByProfileType: Record<ProfileType, IdentificatieType> = {
   private: 'BSN',

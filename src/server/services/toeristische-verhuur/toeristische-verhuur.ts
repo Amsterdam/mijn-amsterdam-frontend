@@ -1,7 +1,3 @@
-import { fetchBedAndBreakfast } from './bed-and-breakfast/bed-and-breakfast.ts';
-import { fetchRegistraties } from './toeristische-verhuur-lvv-registratie.ts';
-import { fetchVakantieverhuurVergunningen } from './toeristische-verhuur-vakantieverhuur-vergunning.ts';
-import type { ToeristischeVerhuur } from './toeristische-verhuur.types.ts';
 import { FeatureToggle } from '../../../universal/config/feature-toggles.ts';
 import type { ApiSuccessResponse } from '../../../universal/helpers/api.ts';
 import {
@@ -11,6 +7,10 @@ import {
 } from '../../../universal/helpers/api.ts';
 import { dateSort } from '../../../universal/helpers/date.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
+import { fetchBedAndBreakfast } from './bed-and-breakfast/bed-and-breakfast.ts';
+import type { ToeristischeVerhuur } from './toeristische-verhuur.types.ts';
+import { fetchRegistraties } from './toeristische-verhuur-lvv-registratie.ts';
+import { fetchVakantieverhuurVergunningen } from './toeristische-verhuur-vakantieverhuur-vergunning.ts';
 
 export async function fetchToeristischeVerhuur(
   authProfileAndToken: AuthProfileAndToken

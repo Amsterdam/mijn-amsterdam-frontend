@@ -1,9 +1,9 @@
+import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 import type {
   ZaakResultaatFrontend,
   ZaakResultaatSource,
   ZaakStatusFrontend,
 } from './erfpacht-zaken-types.ts';
-import type { StatusLineItem } from '../../../universal/types/App.types.ts';
 
 const ZAAK_STATUS_SOURCE_ = {
   AANVRAAG: 'Aanvraag',

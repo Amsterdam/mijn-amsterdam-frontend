@@ -1,11 +1,3 @@
-import {
-  facturenTableConfig,
-  listPageTitle,
-  themaConfig as themaAfis,
-  type AfisFactuurFrontend,
-  themaConfig,
-} from './Afis-thema-config.ts';
-import { useTransformFacturen } from './useAfisFacturenApi.tsx';
 import type { AfisFactuurState } from '../../../../../../server/services/afis/afis-types.ts';
 import {
   hasFailedDependency,
@@ -18,6 +10,14 @@ import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
 import { useThemaMenuItemByThemaID } from '../../../../../hooks/useThemaMenuItems.ts';
 import { themaConfig as themaBelastingen } from '../Belastingen/Belastingen-thema-config.ts';
+import {
+  type AfisFactuurFrontend,
+  facturenTableConfig,
+  listPageTitle,
+  themaConfig as themaAfis,
+  themaConfig,
+} from './Afis-thema-config.ts';
+import { useTransformFacturen } from './useAfisFacturenApi.tsx';
 
 export type AfisFacturenThemaContextParams = {
   themaId: string;

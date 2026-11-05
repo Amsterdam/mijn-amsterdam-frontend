@@ -2,12 +2,11 @@ import { useCallback, useState } from 'react';
 
 import { Icon } from '@amsterdam/design-system-react';
 import {
-  WarningIcon,
   DownloadIcon,
+  WarningIcon,
 } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
 
-import styles from './DocumentLink.module.scss';
 import type { GenericDocument } from '../../../universal/types/App.types.ts';
 import { captureException } from '../../helpers/monitoring.ts';
 import { trackDownload } from '../../hooks/analytics.hook.ts';
@@ -15,6 +14,7 @@ import { HttpStatusCode } from '../../hooks/api/useBffApi.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import { MaLink } from '../MaLink/MaLink.tsx';
 import { Spinner } from '../Spinner/Spinner.tsx';
+import styles from './DocumentLink.module.scss';
 
 interface DocumentLinkProps {
   document: GenericDocument;

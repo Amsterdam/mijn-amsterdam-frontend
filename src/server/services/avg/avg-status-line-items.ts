@@ -1,5 +1,5 @@
-import type { AVGRequestFrontend } from './types.ts';
 import type { StatusLineItem } from '../../../universal/types/App.types.ts';
+import type { AVGRequestFrontend } from './types.ts';
 
 function createStatusLineItem(
   id: string,
