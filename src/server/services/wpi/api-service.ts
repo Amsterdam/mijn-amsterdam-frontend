@@ -275,17 +275,12 @@ export async function fetchWpiNotifications(
           content.filter(
             (requestProcess) => requestProcess.about === 'Bijstandsuitkering'
           )
+        ),
+        ...getBijzondereBijstandNotifications(
+          content.filter(
+            (requestProcess) => requestProcess.about === 'Bijzondere Bijstand'
+          )
         )
-      );
-
-      const bijzondereBijstandAanvragen = content.filter(
-        (requestProcess) =>
-          requestProcess.about === 'Bijzondere Bijstand' &&
-          !!requestProcess.datePublished &&
-          isRequestProcessActual(requestProcess.datePublished, today)
-      );
-      notifications.push(
-        ...getBijzondereBijstandNotifications(bijzondereBijstandAanvragen)
       );
     }
   }
