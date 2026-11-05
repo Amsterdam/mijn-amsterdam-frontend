@@ -14,7 +14,11 @@ import { LogoEherkenning } from '../../../../assets/images/LogoEherkenning.tsx';
 import { MaintenanceNotifications } from '../../../../components/MaintenanceNotifications/MaintenanceNotifications.tsx';
 import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
-import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING, LOGIN_URL_DIGID_GEMACHTIGD } from '../../config/api.ts';
+import {
+  LOGIN_URL_DIGID,
+  LOGIN_URL_DIGID_GEMACHTIGD,
+  LOGIN_URL_EHERKENNING,
+} from '../../config/api.ts';
 import styles from './Landing.module.scss';
 import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Landing-routes.ts';
 

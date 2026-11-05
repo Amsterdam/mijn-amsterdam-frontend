@@ -61,3 +61,4 @@ export const authRoutes = {
   AUTH_LOGOUT: `${AUTH_BASE}/logout`,
   // end: OIDC config
 };
+

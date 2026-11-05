@@ -2,10 +2,9 @@ import { useEffect } from 'react';
 
 import { create } from 'zustand';
 
+import type { AuthProfile } from '../../server/auth/auth-types.ts';
 import { logger } from '../helpers/logging.ts';
 import { useSessionStorage } from './storage.hook.ts';
-import type { AuthProfile } from '../../server/auth/auth-types.ts';
-
 
 const PROFILE_TYPE_STORAGE_KEY = 'profileType';
 

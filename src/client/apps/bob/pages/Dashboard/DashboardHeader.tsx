@@ -9,7 +9,10 @@ import {
   useAppStateReady,
 } from '../../../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../../../hooks/useIsLoading.ts';
-import { useProfileTypeValue, useAuthMethod } from '../../../../hooks/useProfileType.ts';
+import {
+  useAuthMethod,
+  useProfileTypeValue,
+} from '../../../../hooks/useProfileType.ts';
 import styles from './DashboardHeader.module.scss';
 
 const STADSDELEN = [
