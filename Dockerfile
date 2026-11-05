@@ -53,6 +53,16 @@ COPY src /app/src
 COPY index.html /app/
 COPY admin.html /app/
 
+FROM build-deps AS test-bff
+
+ARG TEST_FILES="src/server src/universal src/scripts src/mocks-server"
+RUN CI=1 pnpm run bff-api:test:dirs $TEST_FILES -- --run --reporter=verbose
+
+FROM build-deps AS test-ui
+
+ARG TEST_FILES="src/client"
+RUN CI=1 pnpm run test:dirs $TEST_FILES -- --run --reporter=verbose
+
 ########################################################################################################################
 ########################################################################################################################
 # Actually building the application
