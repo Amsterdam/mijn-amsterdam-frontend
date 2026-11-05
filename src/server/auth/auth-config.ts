@@ -125,9 +125,9 @@ export const EH_ATTR_PRIMARY_ID_LEGACY =
   'urn:etoegang:1.9:EntityConcernedID:KvKnr';
 
 export const DIGID_ATTR_PRIMARY = 'sub';
-export const DIGID_ATTR_VRIJGEGEVENGEVER = 'urn:nl-eid-gdi:1.0:ActingSubjectID';
-export const DIGID_ATTR_SERVICE_ID = 'urn:nl-eid-gdi:1.0:ServiceUUID';
-export const DIGID_ATTR_VRIJGEGEVEN_BSN = 'urn:nl-eid-gdi:1.0:LegalSubjectID';
+export const DIGID_ATTR_MACHTIGINGGEVER = 'urn:nl-eid-gdi:1.0:LegalSubjectID';
+// export const DIGID_ATTR_SERVICE_UUID = 'urn:nl-eid-gdi:1.0:ServiceUUID';
+// export const DIGID_ATTR_GEMACHTIGDE = 'urn:nl-eid-gdi:1.0:ActingSubjectID';
 
 export const OIDC_TOKEN_ID_ATTRIBUTE = {
   eherkenning: (tokenData: TokenData) => {
@@ -148,18 +148,18 @@ export const OIDC_TOKEN_ID_ATTRIBUTE = {
     return EH_ATTR_PRIMARY_ID_LEGACY;
   },
   digid: () => DIGID_ATTR_PRIMARY,
-  digidGemachtigd: () => DIGID_ATTR_VRIJGEGEVENGEVER,
+  digidGemachtigd: () => DIGID_ATTR_MACHTIGINGGEVER,
 };
 
 export type TokenIdAttribute =
   | typeof DIGID_ATTR_PRIMARY
   | typeof EH_ATTR_PRIMARY_ID
-  | typeof DIGID_ATTR_VRIJGEGEVENGEVER;
+  | typeof DIGID_ATTR_MACHTIGINGGEVER;
 
 export const TOKEN_ID_ATTRIBUTE: Record<AuthMethod, TokenIdAttribute> = {
   eherkenning: EH_ATTR_PRIMARY_ID,
   digid: DIGID_ATTR_PRIMARY,
-  digidGemachtigd: DIGID_ATTR_VRIJGEGEVENGEVER,
+  digidGemachtigd: DIGID_ATTR_MACHTIGINGGEVER,
 };
 
 export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
