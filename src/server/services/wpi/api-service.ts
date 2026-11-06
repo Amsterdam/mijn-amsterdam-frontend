@@ -19,7 +19,10 @@ import { requestData } from '../../helpers/source-api-request.ts';
 import { captureMessage } from '../monitoring.ts';
 import type { DocumentDownloadData } from '../shared/document-download-route-handler.ts';
 import { DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE } from '../shared/document-download-route-handler.ts';
-import { getAaanvraagConfig, wpiAanvragen } from './config-and-types.ts';
+import {
+  getAaanvraagConfig,
+  getWpiAanvragenConfig,
+} from './config-and-types.ts';
 import {
   getNotifications as getSpecificatieNotifications,
   transformIncomeSpecificationItem,
@@ -115,6 +118,7 @@ export async function fetchRequestProcess(
 export async function fetchBijstandsuitkering(
   authProfileAndToken: AuthProfileAndToken
 ) {
+  const wpiAanvragen = getWpiAanvragenConfig();
   const filterResponse: FilterResponse = (response) => {
     return (
       response.content
@@ -260,7 +264,7 @@ export async function fetchWpiNotifications(
 
     if (status === 'OK' && Array.isArray(content)) {
       notifications.push(
-        ...wpiAanvragen.flatMap(({ about, getNotifications }) =>
+        ...getWpiAanvragenConfig().flatMap(({ about, getNotifications }) =>
           getNotifications(
             content.filter((requestProcess) => requestProcess.about === about)
           )

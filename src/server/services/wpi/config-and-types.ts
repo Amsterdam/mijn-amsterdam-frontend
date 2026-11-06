@@ -1,4 +1,5 @@
 import type { MyNotification } from '../../../universal/types/App.types.ts';
+import { featureToggle } from '../../config/feature-toggles.ts';
 import {
   requestProcess as bijstandsuitkeringRequestProcessLabels,
   getNotifications as getBijstandsuitkeringNotifications,
@@ -20,7 +21,7 @@ type WpiAanvraagConfig = {
   ) => MyNotification<string>[];
 }[];
 
-export const wpiAanvragen: WpiAanvraagConfig = [
+const wpiAanvragen: WpiAanvraagConfig = [
   {
     about: 'Bijstandsuitkering',
     labels: bijstandsuitkeringRequestProcessLabels,
@@ -33,6 +34,16 @@ export const wpiAanvragen: WpiAanvraagConfig = [
   },
 ];
 
+export function getWpiAanvragenConfig(): WpiAanvraagConfig {
+  return featureToggle['INKOMEN.bijzondereBijstand']
+    ? wpiAanvragen
+    : wpiAanvragen.filter(
+        (aanvraag) => aanvraag.about !== 'Bijzondere Bijstand'
+      );
+}
+
 export function getAaanvraagConfig(aanvraagType: WpiRequestProcess['about']) {
-  return wpiAanvragen.find((aanvraag) => aanvraag.about === aanvraagType);
+  return getWpiAanvragenConfig().find(
+    (aanvraag) => aanvraag.about === aanvraagType
+  );
 }

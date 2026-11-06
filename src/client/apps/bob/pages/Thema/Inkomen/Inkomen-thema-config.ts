@@ -14,9 +14,11 @@ import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app.ts';
+import { isEnabled } from '../../../config/feature-toggles.ts';
 
 const THEMA_ID = 'INKOMEN';
 const THEMA_TITLE = 'Inkomen';
+const bijzondereBijstandActive = isEnabled('INKOMEN.bijzondereBijstand');
 
 export const wpiLinks = {
   BIJSTANDSUITKERING:
@@ -48,6 +50,7 @@ export const themaConfig: InkomenThemaConfig = {
   title: THEMA_TITLE,
   featureToggle: {
     active: true,
+    bijzondereBijstandActive,
   },
   profileTypes: ['private'],
   route: {
@@ -70,7 +73,7 @@ export const themaConfig: InkomenThemaConfig = {
     {
       title: THEMA_TITLE,
       listItems: [
-        'Uw aanvraag voor een bijstandsuitkering, bijzondere bijstand of bijstand voor zelfstandigen (Bbz)',
+        `Uw aanvraag voor een bijstandsuitkering${bijzondereBijstandActive ? ', bijzondere bijstand' : ''} of bijstand voor zelfstandigen (Bbz)`,
         'De uitkeringsspecificaties en jaaropgaven van uw bijstandsuitkering of bijstand voor zelfstandigen (Bbz)',
         'Uw aanvraag voor de Tijdelijke overbruggingsregeling zelfstandig ondernemers (Tozo 1, 2, 3, 4 en 5)',
         'Uw aanvraag voor de Tijdelijke Ondersteuning Noodzakelijke Kosten (TONK)',

@@ -36,6 +36,7 @@ export const InkomenRoutes = [
   {
     route: themaConfig.detailPageBijzondereBijstand.route.path,
     Component: InkomenDetailBijzondereBijstand,
+    isActive: themaConfig.featureToggle.bijzondereBijstandActive,
   },
   {
     route: themaConfig.detailPageBbz.route.path,
