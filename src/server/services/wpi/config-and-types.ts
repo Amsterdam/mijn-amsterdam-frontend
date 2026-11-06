@@ -27,7 +27,7 @@ export const wpiAanvragen: WpiAanvraagConfig = [
     getNotifications: getBijstandsuitkeringNotifications,
   },
   {
-    about: 'Bijzondere bijstand',
+    about: 'Bijzondere Bijstand',
     labels: bijzondereBijstandRequestProcessLabels,
     getNotifications: getBijzondereBijstandNotifications,
   },
