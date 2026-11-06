@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 
 import {
   ActionGroup,
+  Column,
   Heading,
   Link,
   Paragraph,
@@ -53,59 +54,75 @@ export function LandingPage() {
             Voor particulieren en eenmanszaken
           </Heading>
         )}
-        <ActionGroup>
-          <a
-            ref={loginButton}
-            role="button"
-            href={LOGIN_URL_DIGID}
-            onClick={() => setRedirecting(true)}
-            rel="noopener noreferrer"
-            className={classnames(
-              styles.LoginBtn,
-              styles['LoginBtn--digid'],
-              isRedirectingAny && styles.LoginBtnDisabled
-            )}
-          >
-            <span className={styles.LoginLogoWrap}>
-              <LogoDigiD />
-            </span>
-            <span className={styles.LoginButtonText}>
-              {isRedirecting ? 'Bezig met inloggen...' : 'Inloggen met DigiD'}
-            </span>
-          </a>
-          <a
-            ref={loginButton}
-            role="button"
-            href={LOGIN_URL_DIGID_GEMACHTIGD}
-            onClick={() => setRedirecting(true)}
-            rel="noopener noreferrer"
-            className={classnames(
-              styles.LoginBtn,
-              styles['LoginBtn--digidGemachtigd'],
-              isRedirectingAny && styles.LoginBtnDisabled
-            )}
-          >
-            <span className={styles.LoginLogoWrap}>
-              <LogoDigiD />
-            </span>
-            <span className={styles.LoginButtonText}>
-              {isRedirecting
-                ? 'Bezig met inloggen...'
-                : 'Inloggen met DigiD als gemachtigde'}
-            </span>
-          </a>
+        <ActionGroup className="ams-mb-l">
+          <Column>
+            <a
+              ref={loginButton}
+              role="button"
+              href={LOGIN_URL_DIGID}
+              onClick={() => setRedirecting(true)}
+              rel="noopener noreferrer"
+              className={classnames(
+                styles.LoginBtn,
+                styles['LoginBtn--digid'],
+                isRedirectingAny && styles.LoginBtnDisabled
+              )}
+            >
+              <span className={styles.LoginLogoWrap}>
+                <LogoDigiD />
+              </span>
+              <span className={styles.LoginButtonText}>
+                {isRedirecting ? 'Bezig met inloggen...' : 'Inloggen met DigiD'}
+              </span>
+            </a>
+            <Paragraph>
+              Heeft u nog geen DigiD? Regel dit dan eerst.
+              <br />
+              Ga naar{' '}
+              <Link
+                rel="noopener noreferrer"
+                href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen"
+              >
+                DigiD aanvragen
+              </Link>
+            </Paragraph>
+          </Column>
+          <Column>
+            <a
+              ref={loginButton}
+              role="button"
+              href={LOGIN_URL_DIGID_GEMACHTIGD}
+              onClick={() => setRedirecting(true)}
+              rel="noopener noreferrer"
+              className={classnames(
+                styles.LoginBtn,
+                styles['LoginBtn--digidGemachtigd'],
+                isRedirectingAny && styles.LoginBtnDisabled
+              )}
+            >
+              <span className={styles.LoginLogoWrap}>
+                <LogoDigiD />
+              </span>
+              <span className={styles.LoginButtonText}>
+                {isRedirecting
+                  ? 'Bezig met inloggen...'
+                  : 'Inloggen met DigiD als gemachtigde'}
+              </span>
+            </a>
+            <Paragraph>
+              U kunt namens iemand anders inloggen. Vraag hiervoor een
+              machtiging aan.
+              <br />
+              Ga naar{' '}
+              <Link
+                rel="noopener noreferrer"
+                href="https://www.amsterdam.nl/parkeren/test-digid-machtigen/"
+              >
+                DigiD Machtigen.
+              </Link>
+            </Paragraph>
+          </Column>
         </ActionGroup>
-        <Paragraph className="ams-mb-l">
-          Heeft u nog geen DigiD? Regel dit dan eerst.
-          <br />
-          Ga naar{' '}
-          <Link
-            rel="noopener noreferrer"
-            href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen"
-          >
-            DigiD aanvragen
-          </Link>
-        </Paragraph>
 
         {FeatureToggle.eherkenningActive && (
           <>
