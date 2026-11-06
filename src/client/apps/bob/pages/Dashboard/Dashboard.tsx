@@ -1,11 +1,9 @@
 import { useEffect } from 'react';
 
 import {
-  Alert,
   Grid,
   Heading,
   OrderedList,
-  Paragraph,
 } from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
 
@@ -34,6 +32,7 @@ import { useKlantcontactData } from '../Thema/KlantContact/useKlantcontactData.h
 import styles from './Dashboard.module.scss';
 import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Dashboard-config.ts';
 import { DashboardHeader } from './DashboardHeader.tsx';
+import { GemachtigdeAlert } from './GemachtigdeAlert.tsx';
 import { WelcomeHeading } from './WelcomHeading.tsx';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
@@ -49,7 +48,7 @@ export function Dashboard() {
   const navigate = useNavigate();
 
   const appState = useAppStateGetter();
-  const { BRP, NOTIFICATIONS } = appState;
+  const { NOTIFICATIONS } = appState;
   const { notifications, tips, notificationsTotal } = useAppStateNotifications(
     MAX_NOTIFICATIONS_VISIBLE
   );
@@ -71,9 +70,6 @@ export function Dashboard() {
     }
   }, []);
 
-  const aanschrijfwijze = BRP.content?.persoon?.aanschrijfwijze;
-  const geboortedatum = BRP.content?.persoon?.geboortedatum;
-
   return (
     <>
       {!isPhoneScreen && <DashboardHeader />}
@@ -81,20 +77,7 @@ export function Dashboard() {
       {authMethod === 'digidGemachtigd' && (
         <Grid id="page-breadcrumbs" paddingTop={PADDING_TOP}>
           <PageContentCell startWide={1} spanWide={12}>
-            <Alert heading="Ingelogd als gemachtigde" headingLevel={2}>
-              <Paragraph>
-                U bent ingelogd als gemachtigde van{' '}
-                <strong>
-                  {aanschrijfwijze} ({geboortedatum})
-                </strong>
-                . U ziet alleen de gegevens waarvoor u een machtiging heeft
-                gekregen.
-              </Paragraph>
-              <Paragraph>
-                Wilt u uw eigen gegevens zien? Log dan uit en kies ‘Inloggen met
-                DigiD’.
-              </Paragraph>
-            </Alert>
+            <GemachtigdeAlert />
           </PageContentCell>
         </Grid>
       )}
