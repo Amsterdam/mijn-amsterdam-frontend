@@ -20,9 +20,9 @@ import { captureMessage } from '../monitoring.ts';
 import type { DocumentDownloadData } from '../shared/document-download-route-handler.ts';
 import { DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE } from '../shared/document-download-route-handler.ts';
 import {
-  requestProcess as bijstandsuitkeringRequestProcessLabels,
-  getNotifications as getBijstandsuitkeringNotifications,
-} from './content/bijstandsuitkering.ts';
+  getAaanvraagConfig,
+  getWpiAanvragenConfig,
+} from './config-and-types.ts';
 import {
   getNotifications as getSpecificatieNotifications,
   transformIncomeSpecificationItem,
@@ -118,12 +118,13 @@ export async function fetchRequestProcess(
 export async function fetchBijstandsuitkering(
   authProfileAndToken: AuthProfileAndToken
 ) {
+  const wpiAanvragen = getWpiAanvragenConfig();
   const filterResponse: FilterResponse = (response) => {
     return (
       response.content
         ?.filter((requestProcess) => requestProcess !== null)
-        .filter(
-          (requestProcess) => requestProcess?.about === 'Bijstandsuitkering'
+        .filter((requestProcess) =>
+          wpiAanvragen.some((config) => config.about === requestProcess.about)
         )
         .map((requestProcess) => addLink(requestProcess)) ?? []
     );
@@ -131,7 +132,8 @@ export async function fetchBijstandsuitkering(
 
   const response = await fetchRequestProcess(
     authProfileAndToken,
-    () => bijstandsuitkeringRequestProcessLabels,
+    (requestProcess) =>
+      getAaanvraagConfig(requestProcess.about)?.labels ?? null,
     {
       apiConfigName: 'WPI_AANVRAGEN',
       filterResponse,
@@ -261,7 +263,13 @@ export async function fetchWpiNotifications(
       await fetchBijstandsuitkering(authProfileAndToken);
 
     if (status === 'OK' && Array.isArray(content)) {
-      notifications.push(...getBijstandsuitkeringNotifications(content));
+      notifications.push(
+        ...getWpiAanvragenConfig().flatMap(({ about, getNotifications }) =>
+          getNotifications(
+            content.filter((requestProcess) => requestProcess.about === about)
+          )
+        )
+      );
     }
   }
 

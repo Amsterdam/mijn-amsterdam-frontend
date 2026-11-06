@@ -109,6 +109,67 @@
           "datePublished": "2019-05-31T15:05:52+02:00"
         }
       ]
+    },
+    {
+      "id": "b9e1163c6c996490fdc7950b6bb3e1b6",
+      "title": "Bijzondere Bijstand",
+      "about": "Bijzondere Bijstand",
+      "statusId": "besluit",
+      "decision": "toekenning",
+      "datePublished": "2026-11-03T00:00:00+01:00",
+      "dateStart": "2026-10-02T00:00:00+02:00",
+      "dateEnd": "2026-11-03T00:00:00+01:00",
+      "steps": [
+        {
+          "id": "aanvraag",
+          "status": "Aanvraag",
+          "documents": [
+            {
+              "datePublished": "2026-10-02T00:00:00+02:00",
+              "id": "23069346",
+              "title": "Aanvraag Bijzondere Bijstand",
+              "url": "/wpi/document?id=23069346&isBulk=True&isDms=False"
+            }
+          ],
+          "datePublished": "2026-10-02T00:00:00+02:00"
+        },
+        {
+          "id": "inBehandeling",
+          "status": "In behandeling",
+          "documents": [],
+          "datePublished": "2026-10-02T00:00:00+02:00",
+          "dateDecisionExpected": "2026-11-20T00:00:00+01:00"
+        },
+        {
+          "id": "herstelTermijn",
+          "status": "Informatie nodig",
+          "documents": [
+            {
+              "datePublished": "2026-10-15T00:00:00+02:00",
+              "id": "990000027",
+              "title": "verzoek om extra info (hersteltermijn)",
+              "url": "/wpi/document?id=990000027&isBulk=False&isDms=False"
+            }
+          ],
+          "datePublished": "2026-10-15T00:00:00+02:00",
+          "dateDecisionExpected": "2026-11-20T00:00:00+01:00",
+          "dateUserFeedbackExpected": "2026-11-02T00:00:00+01:00"
+        },
+        {
+          "id": "besluit",
+          "status": "Besluit",
+          "documents": [
+            {
+              "datePublished": "2026-11-03T00:00:00+01:00",
+              "id": "990000028",
+              "title": "Besluit Bijzondere Bijstand",
+              "url": "/wpi/document?id=990000028&isBulk=False&isDms=False"
+            }
+          ],
+          "datePublished": "2026-11-03T00:00:00+01:00",
+          "decision": "toekenning"
+        }
+      ]
     }
   ]
 }

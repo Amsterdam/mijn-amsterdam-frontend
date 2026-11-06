@@ -30,6 +30,7 @@ export interface WpiRequestProcess extends ZaakAanvraagDetail {
   id: string;
   title: string;
   about:
+    | 'Bijzondere Bijstand'
     | 'Bijstandsuitkering'
     | 'Tozo 1'
     | 'Tozo 2'
