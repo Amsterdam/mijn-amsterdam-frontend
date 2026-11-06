@@ -22,18 +22,11 @@ export function InkomenDetailBijzondereBijstand() {
     useInkomenDetailData('WPI_AANVRAGEN');
   useHTMLDocumentTitle(themaConfig.detailPageBijzondereBijstand.route);
 
-  const zaakZonderDocumenten = zaak
-    ? {
-        ...zaak,
-        steps: zaak.steps.map((step) => ({ ...step, documents: [] })),
-      }
-    : zaak;
-
   return (
     <ThemaDetailPagina
       themaId={themaConfig.id}
       title={zaak?.title || 'Aanvraag bijzondere bijstand'}
-      zaak={zaakZonderDocumenten}
+      zaak={zaak}
       isError={isError}
       isLoading={isLoading}
       pageContentMain={pageContentTop}
