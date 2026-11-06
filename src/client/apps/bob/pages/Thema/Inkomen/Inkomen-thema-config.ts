@@ -155,7 +155,7 @@ export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 const lopendeAanvragenDisplayProps: DisplayProps<WpiRequestProcess> = {
   props: {
-    detailLinkComponent: '',
+    detailLinkComponent: 'Regeling',
     dateStartFormatted: 'Datum aanvraag',
     displayStatus: 'Status',
   },
@@ -167,7 +167,7 @@ const lopendeAanvragenDisplayProps: DisplayProps<WpiRequestProcess> = {
 
 const afgehandeldeAanvragenDisplayProps: DisplayProps<WpiRequestProcess> = {
   props: {
-    detailLinkComponent: '',
+    detailLinkComponent: 'Regeling',
     dateStartFormatted: 'Datum aanvraag',
     dateEndFormatted: 'Datum besluit',
   },
