@@ -106,7 +106,7 @@ export function LandingPage() {
               <span className={styles.LoginButtonText}>
                 {isRedirecting
                   ? 'Bezig met inloggen...'
-                  : 'Inloggen met DigiD als gemachtigde'}
+                  : 'Inloggen als gemachtigde'}
               </span>
             </a>
             <Paragraph>
