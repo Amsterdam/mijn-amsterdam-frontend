@@ -239,9 +239,10 @@ function ApiDeactivateButton({
               </Paragraph>
               {hasFactuurInTermijnen && (
                 <Paragraph className="ams-mb-s">
-                  Een factuur die in termijnen wordt betaald, betaalt u dan in
-                  één keer. Het bedrag in de lijst is wat nog openstaat. Wilt u
-                  toch in delen betalen? Vraag dan een betalingsregeling aan via{' '}
+                  Een factuur die in termijnen wordt betaald, moet u dan in één
+                  keer betalen. Het bedrag in de lijst is wat nog openstaat.
+                  Wilt u toch in delen betalen? Vraag dan een betalingsregeling
+                  aan via{' '}
                   <Link
                     rel="noreferrer"
                     href="mailto:debiteurenadministratie@amsterdam.nl"

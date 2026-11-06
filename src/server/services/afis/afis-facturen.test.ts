@@ -461,7 +461,7 @@ describe('afis-facturen', async () => {
         ProfitCenterName: 'Profit Center 2',
         ReverseDocument: '',
         SEPAMandate: '',
-        PaymentTerms: '0001',
+        PaymentTerms: 'B123',
       },
       'handmatig-betalen': {
         AccountingDocument: '124',
