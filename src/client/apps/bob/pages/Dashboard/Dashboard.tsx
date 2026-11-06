@@ -1,6 +1,12 @@
 import { useEffect } from 'react';
 
-import { Heading, OrderedList } from '@amsterdam/design-system-react';
+import {
+  Alert,
+  Grid,
+  Heading,
+  OrderedList,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
 
 import { LoadingContent } from '../../../../components/LoadingContent/LoadingContent.tsx';
@@ -9,7 +15,11 @@ import { MyAreaDashboard } from '../../../../components/MyArea/MyAreaDashboard.t
 import { MyNotification } from '../../../../components/MyNotification/MyNotification.tsx';
 import { MyThemasPanel } from '../../../../components/MyThemasPanel/MyThemasPanel.tsx';
 import { MyTipsPanel } from '../../../../components/MyTipsPanel/MyTipsPanel.tsx';
-import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
+import {
+  PADDING_TOP,
+  PageContentCell,
+  PageV2,
+} from '../../../../components/Page/Page.tsx';
 import { getRedactedClass } from '../../../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../../../hooks/media.hook.ts';
 import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
@@ -39,7 +49,7 @@ export function Dashboard() {
   const navigate = useNavigate();
 
   const appState = useAppStateGetter();
-  const { NOTIFICATIONS } = appState;
+  const { BRP, NOTIFICATIONS } = appState;
   const { notifications, tips, notificationsTotal } = useAppStateNotifications(
     MAX_NOTIFICATIONS_VISIBLE
   );
@@ -61,9 +71,33 @@ export function Dashboard() {
     }
   }, []);
 
+  const aanschrijfwijze = BRP.content?.persoon?.aanschrijfwijze;
+  const geboortedatum = BRP.content?.persoon?.geboortedatum;
+
   return (
     <>
       {!isPhoneScreen && <DashboardHeader />}
+
+      {authMethod === 'digidGemachtigd' && (
+        <Grid id="page-breadcrumbs" paddingTop={PADDING_TOP}>
+          <PageContentCell startWide={1} spanWide={12}>
+            <Alert heading="Ingelogd als gemachtigde" headingLevel={2}>
+              <Paragraph>
+                U bent ingelogd als gemachtigde van{' '}
+                <strong>
+                  {aanschrijfwijze} ({geboortedatum})
+                </strong>
+                . U ziet alleen de gegevens waarvoor u een machtiging heeft
+                gekregen.
+              </Paragraph>
+              <Paragraph>
+                Wilt u uw eigen gegevens zien? Log dan uit en kies ‘Inloggen met
+                DigiD’.
+              </Paragraph>
+            </Alert>
+          </PageContentCell>
+        </Grid>
+      )}
       <PageV2
         className={styles.Dashboard}
         heading={<WelcomeHeading />}
