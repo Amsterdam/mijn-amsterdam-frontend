@@ -24,16 +24,21 @@
 
 .LoginBtn--digid {
   .LoginButtonText {
-    background-color: var(--ams-color-feedback-error);
+    background-color: var(--ams-color-interactive);
     &:hover {
-      background-color: color.adjust(#ec0000, $lightness: -5%);
+      background-color: var(--ams-color-interactive-hover);
     }
   }
 }
 
 .LoginBtn--digidGemachtigd {
   .LoginButtonText {
-    background-color: #003677;
+    background-color: var(--ams-color-background);
+    &:hover {
+      border: 2px solid var(--ams-color-interactive-hover);
+    }
+    border: 2px solid var(--ams-color-interactive);
+    color: var(--ams-color-interactive);
   }
 }
 
