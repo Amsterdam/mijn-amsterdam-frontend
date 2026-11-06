@@ -39,8 +39,7 @@ exports[`<Landing /> > Renders without crashing 1`] = `
             Voor particulieren en eenmanszaken
           </h2>
           <div
-            class="ams-action-group ams-mb-l"
-            role="group"
+            class="ams-row ams-row--align-between ams-mb-l"
           >
             <div
               class="ams-column"

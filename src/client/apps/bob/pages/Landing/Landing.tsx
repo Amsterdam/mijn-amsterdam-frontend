@@ -55,7 +55,7 @@ export function LandingPage() {
             Voor particulieren en eenmanszaken
           </Heading>
         )}
-        <ActionGroup className="ams-mb-l">
+        <Row className="ams-mb-l" align="between">
           <Column>
             <Row gap="small">
               <span className={styles.LoginLogoWrap} aria-hidden="true">
@@ -123,7 +123,7 @@ export function LandingPage() {
               </Link>
             </Paragraph>
           </Column>
-        </ActionGroup>
+        </Row>
 
         {FeatureToggle.eherkenningActive && (
           <>
@@ -131,15 +131,15 @@ export function LandingPage() {
               Voor ondernemers
             </Heading>
             <Row gap="small">
-                <span
-                  aria-hidden="true"
-                  className={classnames(
-                    styles.LoginLogoWrap,
-                    styles.LogoEherkenning
-                  )}
-                >
-                  <LogoEherkenning />
-                </span>
+              <span
+                aria-hidden="true"
+                className={classnames(
+                  styles.LoginLogoWrap,
+                  styles.LogoEherkenning
+                )}
+              >
+                <LogoEherkenning />
+              </span>
               <MaButtonLink
                 href={LOGIN_URL_EHERKENNING}
                 role="button"
@@ -151,9 +151,9 @@ export function LandingPage() {
                 variant="primary"
                 isDisabled={isRedirectingAny}
               >
-                  {isRedirectingEherkenning
-                    ? 'Bezig met inloggen...'
-                    : 'Inloggen met eHerkenning'}
+                {isRedirectingEherkenning
+                  ? 'Bezig met inloggen...'
+                  : 'Inloggen met eHerkenning'}
               </MaButtonLink>
             </Row>
             <Paragraph className="ams-mb-l">
