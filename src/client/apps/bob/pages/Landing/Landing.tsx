@@ -130,41 +130,43 @@ export function LandingPage() {
             <Heading className="ams-mb-s" level={2}>
               Voor ondernemers
             </Heading>
-            <Row gap="small">
-              <span
-                aria-hidden="true"
-                className={classnames(
-                  styles.LoginLogoWrap,
-                  styles.LogoEherkenning
-                )}
-              >
-                <LogoEherkenning />
-              </span>
-              <MaButtonLink
-                href={LOGIN_URL_EHERKENNING}
-                role="button"
-                onClick={() => {
-                  setRedirectingEherkenning(true);
-                  window.location.href = LOGIN_URL_EHERKENNING;
-                }}
-                rel="noopener noreferrer"
-                variant="primary"
-                isDisabled={isRedirectingAny}
-              >
-                {isRedirectingEherkenning
-                  ? 'Bezig met inloggen...'
-                  : 'Inloggen met eHerkenning'}
-              </MaButtonLink>
-            </Row>
-            <Paragraph className="ams-mb-l">
-              U heeft eHerkenning niveau 3 nodig om in te loggen.
-              <br />
-              Ga naar{' '}
-              <Link rel="noopener noreferrer" href="https://eherkenning.nl">
-                eherkenning.nl
-              </Link>{' '}
-              voor meer informatie.
-            </Paragraph>
+            <Column>
+              <Row gap="small">
+                <span
+                  aria-hidden="true"
+                  className={classnames(
+                    styles.LoginLogoWrap,
+                    styles.LogoEherkenning
+                  )}
+                >
+                  <LogoEherkenning />
+                </span>
+                <MaButtonLink
+                  href={LOGIN_URL_EHERKENNING}
+                  role="button"
+                  onClick={() => {
+                    setRedirectingEherkenning(true);
+                    window.location.href = LOGIN_URL_EHERKENNING;
+                  }}
+                  rel="noopener noreferrer"
+                  variant="primary"
+                  isDisabled={isRedirectingAny}
+                >
+                  {isRedirectingEherkenning
+                    ? 'Bezig met inloggen...'
+                    : 'Inloggen met eHerkenning'}
+                </MaButtonLink>
+              </Row>
+              <Paragraph className="ams-mb-l">
+                U heeft eHerkenning niveau 3 nodig om in te loggen.
+                <br />
+                Ga naar{' '}
+                <Link rel="noopener noreferrer" href="https://eherkenning.nl">
+                  eherkenning.nl
+                </Link>{' '}
+                voor meer informatie.
+              </Paragraph>
+            </Column>
           </>
         )}
 

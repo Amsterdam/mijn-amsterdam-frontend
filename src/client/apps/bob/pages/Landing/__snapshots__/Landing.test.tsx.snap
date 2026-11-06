@@ -154,77 +154,81 @@ exports[`<Landing /> > Renders without crashing 1`] = `
             Voor ondernemers
           </h2>
           <div
-            class="ams-row ams-row--gap-small"
+            class="ams-column"
           >
-            <span
-              aria-hidden="true"
-              class="_LoginLogoWrap_e9dfb1 _LogoEherkenning_e9dfb1"
+            <div
+              class="ams-row ams-row--gap-small"
             >
-              <svg
-                height="28px"
-                version="1.1"
-                viewBox="0 0 46 28"
-                width="46px"
-                xmlns="http://www.w3.org/2000/svg"
+              <span
+                aria-hidden="true"
+                class="_LoginLogoWrap_e9dfb1 _LogoEherkenning_e9dfb1"
               >
-                <title>
-                  eHerkenning logo
-                </title>
-                <g
-                  fill="#DF0067"
-                  transform="translate(25.134021, 0.000000)"
+                <svg
+                  height="28px"
+                  version="1.1"
+                  viewBox="0 0 46 28"
+                  width="46px"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <rect
-                    height="11.2865979"
-                    width="4.45773196"
-                    x="0.0948453608"
-                    y="15.7443299"
-                  />
-                  <rect
-                    height="11.0020619"
-                    width="4.45773196"
-                    x="0.0948453608"
-                    y="0.331958763"
+                  <title>
+                    eHerkenning logo
+                  </title>
+                  <g
+                    fill="#DF0067"
+                    transform="translate(25.134021, 0.000000)"
+                  >
+                    <rect
+                      height="11.2865979"
+                      width="4.45773196"
+                      x="0.0948453608"
+                      y="15.7443299"
+                    />
+                    <rect
+                      height="11.0020619"
+                      width="4.45773196"
+                      x="0.0948453608"
+                      y="0.331958763"
+                    />
+                    <polygon
+                      points="16.3134021 0.331958763 16.3134021 11.3814433 6.7814433 11.3814433 4.8371134 15.6969072 16.3134021 15.6969072 16.3134021 27.0309278 20.8185567 27.0309278 20.8185567 0.331958763"
+                    />
+                  </g>
+                  <path
+                    d="M7.72989691,27.0309278 C3.69896907,27.0309278 0.379381443,23.7113402 0.379381443,19.6804124 L0.379381443,19.6804124 L0.379381443,7.72989691 C0.379381443,3.65154639 3.65154639,0.379381443 7.72989691,0.379381443 L7.72989691,0.379381443 L21.1505155,0.379381443 L21.1505155,4.97938144 L7.72989691,4.97938144 C6.21237113,4.97938144 4.97938144,6.21237113 4.97938144,7.77731959 L4.97938144,7.77731959 L4.97938144,19.7278351 C4.97938144,21.2453608 6.21237113,22.5257732 7.72989691,22.5257732 L7.72989691,22.5257732 L21.1505155,22.5257732 L21.1505155,27.0309278 L7.72989691,27.0309278 L7.72989691,27.0309278 Z"
+                    fill="#133370"
                   />
                   <polygon
-                    points="16.3134021 0.331958763 16.3134021 11.3814433 6.7814433 11.3814433 4.8371134 15.6969072 16.3134021 15.6969072 16.3134021 27.0309278 20.8185567 27.0309278 20.8185567 0.331958763"
+                    fill="#133370"
+                    points="7.91958763 11.3814433 7.91958763 15.6969072 18.2103093 15.6969072 20.1546392 11.3814433"
                   />
-                </g>
-                <path
-                  d="M7.72989691,27.0309278 C3.69896907,27.0309278 0.379381443,23.7113402 0.379381443,19.6804124 L0.379381443,19.6804124 L0.379381443,7.72989691 C0.379381443,3.65154639 3.65154639,0.379381443 7.72989691,0.379381443 L7.72989691,0.379381443 L21.1505155,0.379381443 L21.1505155,4.97938144 L7.72989691,4.97938144 C6.21237113,4.97938144 4.97938144,6.21237113 4.97938144,7.77731959 L4.97938144,7.77731959 L4.97938144,19.7278351 C4.97938144,21.2453608 6.21237113,22.5257732 7.72989691,22.5257732 L7.72989691,22.5257732 L21.1505155,22.5257732 L21.1505155,27.0309278 L7.72989691,27.0309278 L7.72989691,27.0309278 Z"
-                  fill="#133370"
-                />
-                <polygon
-                  fill="#133370"
-                  points="7.91958763 11.3814433 7.91958763 15.6969072 18.2103093 15.6969072 20.1546392 11.3814433"
-                />
-              </svg>
-            </span>
-            <a
-              aria-disabled="false"
-              class="_MaButtonLink_10c0a4 ams-button ams-button--primary"
-              href="http://bff-api-host/auth/eherkenning/login"
-              rel="noopener noreferrer"
-              role="button"
+                </svg>
+              </span>
+              <a
+                aria-disabled="false"
+                class="_MaButtonLink_10c0a4 ams-button ams-button--primary"
+                href="http://bff-api-host/auth/eherkenning/login"
+                rel="noopener noreferrer"
+                role="button"
+              >
+                Inloggen met eHerkenning
+              </a>
+            </div>
+            <p
+              class="ams-paragraph ams-mb-l"
             >
-              Inloggen met eHerkenning
-            </a>
+              U heeft eHerkenning niveau 3 nodig om in te loggen.
+              <br />
+              Ga naar 
+              <a
+                class="ams-link"
+                href="https://eherkenning.nl"
+                rel="noopener noreferrer"
+              >
+                eherkenning.nl
+              </a>
+               voor meer informatie.
+            </p>
           </div>
-          <p
-            class="ams-paragraph ams-mb-l"
-          >
-            U heeft eHerkenning niveau 3 nodig om in te loggen.
-            <br />
-            Ga naar 
-            <a
-              class="ams-link"
-              href="https://eherkenning.nl"
-              rel="noopener noreferrer"
-            >
-              eherkenning.nl
-            </a>
-             voor meer informatie.
-          </p>
           <h3
             class="ams-heading ams-heading--3"
           >
