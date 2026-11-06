@@ -98,6 +98,10 @@ variables:
     value: true
   - name: btdBuild
     value: ${{ parameters.btdBuild }}
+  - name: btdPush
+    value: true
+  - name: tagAsLatest
+    value: true
   - name: btdTest
     value: ${{ parameters.btdTest }}
   - name: btdMigrate
@@ -125,6 +129,10 @@ variables:
         value: false
 
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+      - name: btdPush
+        value: false
+      - name: tagAsLatest
+        value: false
       - name: btdMigrate
         value: false
       - name: btdDeploy
@@ -148,9 +156,11 @@ jobs:
       pool: ${{ variables.pool }}
       dtapName: ${{ variables.dtapName }}
       btdBuild: ${{ variables.btdBuild }}
+      btdPush: ${{ variables.btdPush }}
       btdTest: ${{ variables.btdTest }}
       btdMigrate: ${{ variables.btdMigrate }}
       btdDeploy: ${{ variables.btdDeploy }}
+      tagAsLatest: ${{ variables.tagAsLatest }}
       # For selecting which app to build and deploy
       btdAppBFF: ${{ parameters.btdAppBFF }}
       btdAppUI: ${{ parameters.btdAppUI }}
