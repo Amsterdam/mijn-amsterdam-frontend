@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import {
   ActionGroup,
@@ -6,6 +6,7 @@ import {
   Heading,
   Link,
   Paragraph,
+  Row,
 } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
@@ -13,6 +14,7 @@ import { FeatureToggle } from '../../../../../universal/config/feature-toggles.t
 import { LogoDigiD } from '../../../../assets/images/LogoDigiD.tsx';
 import { LogoEherkenning } from '../../../../assets/images/LogoEherkenning.tsx';
 import { MaintenanceNotifications } from '../../../../components/MaintenanceNotifications/MaintenanceNotifications.tsx';
+import { MaButtonLink } from '../../../../components/MaLink/MaLink.tsx';
 import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
 import {
@@ -28,7 +30,6 @@ export function LandingPage() {
     documentTitle: DASHBOARD_PAGE_DOCUMENT_TITLE,
   });
 
-  const loginButton = useRef(null);
   const [isRedirecting, setRedirecting] = useState(false);
   const [isRedirectingEherkenning, setRedirectingEherkenning] = useState(false);
   const isRedirectingAny = isRedirecting || isRedirectingEherkenning;
@@ -56,25 +57,25 @@ export function LandingPage() {
         )}
         <ActionGroup className="ams-mb-l">
           <Column>
-            <a
-              ref={loginButton}
-              role="button"
-              href={LOGIN_URL_DIGID}
-              onClick={() => setRedirecting(true)}
-              rel="noopener noreferrer"
-              className={classnames(
-                styles.LoginBtn,
-                styles['LoginBtn--digid'],
-                isRedirectingAny && styles.LoginBtnDisabled
-              )}
-            >
-              <span className={styles.LoginLogoWrap}>
+            <Row gap="small">
+              <span className={styles.LoginLogoWrap} aria-hidden="true">
                 <LogoDigiD />
               </span>
-              <span className={styles.LoginButtonText}>
+
+              <MaButtonLink
+                href={LOGIN_URL_DIGID}
+                role="button"
+                onClick={() => {
+                  setRedirecting(true);
+                  window.location.href = LOGIN_URL_DIGID;
+                }}
+                rel="noopener noreferrer"
+                variant="primary"
+                isDisabled={isRedirectingAny}
+              >
                 {isRedirecting ? 'Bezig met inloggen...' : 'Inloggen met DigiD'}
-              </span>
-            </a>
+              </MaButtonLink>
+            </Row>
             <Paragraph>
               Heeft u nog geen DigiD? Regel dit dan eerst.
               <br />
@@ -88,27 +89,27 @@ export function LandingPage() {
             </Paragraph>
           </Column>
           <Column>
-            <a
-              ref={loginButton}
-              role="button"
-              href={LOGIN_URL_DIGID_GEMACHTIGD}
-              onClick={() => setRedirecting(true)}
-              rel="noopener noreferrer"
-              className={classnames(
-                styles.LoginBtn,
-                styles['LoginBtn--digidGemachtigd'],
-                isRedirectingAny && styles.LoginBtnDisabled
-              )}
-            >
-              <span className={styles.LoginLogoWrap}>
+            <Row gap="small">
+              <span className={styles.LoginLogoWrap} aria-hidden="true">
                 <LogoDigiD />
               </span>
-              <span className={styles.LoginButtonText}>
+              <MaButtonLink
+                href={LOGIN_URL_DIGID_GEMACHTIGD}
+                role="button"
+                onClick={() => {
+                  setRedirecting(true);
+                  window.location.href = LOGIN_URL_DIGID_GEMACHTIGD;
+                }}
+                rel="noopener noreferrer"
+                variant="secondary"
+                isDisabled={isRedirectingAny}
+              >
                 {isRedirecting
                   ? 'Bezig met inloggen...'
                   : 'Inloggen als gemachtigde'}
-              </span>
-            </a>
+              </MaButtonLink>
+            </Row>
+
             <Paragraph>
               U kunt namens iemand anders inloggen. Vraag hiervoor een
               machtiging aan.
@@ -129,20 +130,9 @@ export function LandingPage() {
             <Heading className="ams-mb-s" level={2}>
               Voor ondernemers
             </Heading>
-            <Paragraph>
-              <a
-                ref={loginButton}
-                role="button"
-                href={LOGIN_URL_EHERKENNING}
-                onClick={() => setRedirectingEherkenning(true)}
-                rel="noopener noreferrer"
-                className={classnames(
-                  styles.LoginBtn,
-                  styles['LoginBtn--eherkenning'],
-                  isRedirectingAny && styles.LoginBtnDisabled
-                )}
-              >
+            <Row gap="small">
                 <span
+                  aria-hidden="true"
                   className={classnames(
                     styles.LoginLogoWrap,
                     styles.LogoEherkenning
@@ -150,13 +140,22 @@ export function LandingPage() {
                 >
                   <LogoEherkenning />
                 </span>
-                <span className={styles.LoginButtonText}>
+              <MaButtonLink
+                href={LOGIN_URL_EHERKENNING}
+                role="button"
+                onClick={() => {
+                  setRedirectingEherkenning(true);
+                  window.location.href = LOGIN_URL_EHERKENNING;
+                }}
+                rel="noopener noreferrer"
+                variant="primary"
+                isDisabled={isRedirectingAny}
+              >
                   {isRedirectingEherkenning
                     ? 'Bezig met inloggen...'
                     : 'Inloggen met eHerkenning'}
-                </span>
-              </a>
-            </Paragraph>
+              </MaButtonLink>
+            </Row>
             <Paragraph className="ams-mb-l">
               U heeft eHerkenning niveau 3 nodig om in te loggen.
               <br />
