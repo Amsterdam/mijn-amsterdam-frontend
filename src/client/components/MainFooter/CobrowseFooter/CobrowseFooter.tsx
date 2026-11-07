@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { PageFooter } from '@amsterdam/design-system-react';
+import { usePiwik } from '@amsterdam/piwik-tracker-react';
 
 // https://github.com/import-js/eslint-plugin-import/issues/2876
 import type { CobrowseWidget } from './lib/cobrowse-widget.d.ts';
@@ -17,6 +18,7 @@ declare global {
 }
 
 export function CobrowseFooter() {
+  const { trackVisibility } = usePiwik();
   const licenseKey = import.meta.env.REACT_APP_COBROWSE_LICENSE_KEY;
   const [cobrowseWidget, setCobrowseWidget] = useState<CobrowseWidget | null>(
     null
@@ -36,7 +38,16 @@ export function CobrowseFooter() {
         licenseKey,
         redactedViews,
         language: 'nl',
-        setIsScreensharing,
+        setIsScreensharing: (isScreensharing) => {
+          const wasScreensharing = useCobrowseStore.getState().isScreensharing;
+          setIsScreensharing(isScreensharing);
+          if (isScreensharing !== wasScreensharing) {
+            trackVisibility({
+              action: isScreensharing ? 'getoond' : 'verborgen',
+              nameOfElementBecameVisible: 'cobrowse',
+            });
+          }
+        },
       });
       setCobrowseWidget(widget);
     });
