@@ -108,6 +108,8 @@ variables:
     value: ${{ parameters.dtapName }}
   - name: btdDeploy
     value: ${{ parameters.btdDeploy }}
+  - name: btdAppSharedDependencies
+    value: true
 
   # Overrides if the branch is testen, az-acceptance or main
   - ${{ if eq(parameters.dtapName, 'auto') }}:
@@ -127,6 +129,8 @@ variables:
         value: false
 
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+      - name: btdAppSharedDependencies
+        value: false
       - name: tagAsLatest
         value: false
       - name: btdMigrate
@@ -152,6 +156,7 @@ jobs:
       pool: ${{ variables.pool }}
       dtapName: ${{ variables.dtapName }}
       btdBuild: ${{ variables.btdBuild }}
+      btdAppSharedDependencies: ${{ variables.btdAppSharedDependencies }}
       btdTest: ${{ variables.btdTest }}
       btdMigrate: ${{ variables.btdMigrate }}
       btdDeploy: ${{ variables.btdDeploy }}
