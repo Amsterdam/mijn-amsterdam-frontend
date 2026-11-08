@@ -10,6 +10,7 @@ ENV TZ=Europe/Amsterdam
 ENV CI=true
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
+# The CA certificates can't be fetched with apt-get because non-https sources are blocked.
 COPY --from=alpine:3.23 /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
 # Change source to https as http calls were blocked by Azure firewall
