@@ -55,11 +55,11 @@ COPY admin.html /app/
 
 FROM build-deps AS test-bff
 
-RUN CI=1 pnpm run bff-api:test -- --run --reporter=verbose
+RUN CI=1 pnpm run bff-api:test --reporter=minimal -- --run
 
 FROM build-deps AS test-ui
 
-RUN CI=1 pnpm run test -- --run --reporter=verbose
+RUN CI=1 pnpm run test --reporter=minimal -- --run
 
 ########################################################################################################################
 ########################################################################################################################
