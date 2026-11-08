@@ -4,10 +4,19 @@
 ########################################################################################################################
 ########################################################################################################################
 
-FROM node:26.12.1 AS node-with-pnpm-installed
+FROM node:26.12.1-slim AS node-with-pnpm-installed
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
+ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+
+COPY --from=alpine:3.23 /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+
+# Change source to https as http calls were blocked by Azure firewall
+RUN sed -i 's|http:|https:|' /etc/apt/sources.list.d/*.sources \
+  && apt-get update \
+  && apt-get install -y --no-install-recommends ca-certificates tzdata \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN npm i -g corepack --force
 
@@ -49,9 +58,9 @@ COPY tsconfig.build-fe.json /app/
 COPY tsconfig.build-bff.json /app/
 
 # Copy source files
-COPY src /app/src
 COPY index.html /app/
 COPY admin.html /app/
+COPY src /app/src
 
 FROM build-deps AS test-bff
 
@@ -143,9 +152,6 @@ CMD nginx -g 'daemon off;'
 ########################################################################################################################
 ########################################################################################################################
 FROM node-with-pnpm-installed AS bff-runtime-base
-
-# Change source to https as http calls were blocked by Azure firewall
-RUN sed -i 's|http:|https:|' /etc/apt/sources.list.d/*.sources
 
 RUN apt-get update \
   && apt-get dist-upgrade -y \
