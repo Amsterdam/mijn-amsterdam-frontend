@@ -11,6 +11,7 @@ import { configDefaults } from 'vitest/config';
 const testExclude = [...configDefaults.exclude, '**/__tmp-routes-*/**'];
 
 export default defineConfig({
+  logLevel: JSON.stringify(process.env.CI || '0') === '1' ? 'silent' : 'warn',
   server: {
     port: process.env.port ? parseInt(process.env.port, 10) : 3000,
   },

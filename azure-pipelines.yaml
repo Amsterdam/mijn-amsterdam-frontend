@@ -88,12 +88,18 @@ parameters:
     displayName: UI image tag - used if btdBuild is false. Examples ui-$(Build.BuildId) ui-latest
     type: string
     default: ui-$(Build.BuildId)
+  - name: btdDeploy
+    displayName: DEPLOY - Select if you want to deploy the app.
+    type: boolean
+    default: true
 
 variables:
   - name: system.debug
     value: true
   - name: btdBuild
     value: ${{ parameters.btdBuild }}
+  - name: tagAsLatest
+    value: true
   - name: btdTest
     value: ${{ parameters.btdTest }}
   - name: btdMigrate
@@ -101,6 +107,8 @@ variables:
   - name: dtapName
     value: ${{ parameters.dtapName }}
   - name: btdDeploy
+    value: ${{ parameters.btdDeploy }}
+  - name: btdAppSharedDependencies
     value: true
 
   # Overrides if the branch is testen, az-acceptance or main
@@ -121,6 +129,10 @@ variables:
         value: false
 
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+      - name: btdAppSharedDependencies
+        value: false
+      - name: tagAsLatest
+        value: false
       - name: btdMigrate
         value: false
       - name: btdDeploy
@@ -144,9 +156,11 @@ jobs:
       pool: ${{ variables.pool }}
       dtapName: ${{ variables.dtapName }}
       btdBuild: ${{ variables.btdBuild }}
+      btdAppSharedDependencies: ${{ variables.btdAppSharedDependencies }}
       btdTest: ${{ variables.btdTest }}
       btdMigrate: ${{ variables.btdMigrate }}
       btdDeploy: ${{ variables.btdDeploy }}
+      tagAsLatest: ${{ variables.tagAsLatest }}
       # For selecting which app to build and deploy
       btdAppBFF: ${{ parameters.btdAppBFF }}
       btdAppUI: ${{ parameters.btdAppUI }}
