@@ -76,7 +76,7 @@ export function Dashboard() {
 
       {authMethod === 'digidGemachtigd' && (
         <Grid id="page-breadcrumbs" paddingTop={PADDING_TOP}>
-          <PageContentCell startWide={1} spanWide={12}>
+          <PageContentCell startWide={1} spanWide={8}>
             <GemachtigdeAlert />
           </PageContentCell>
         </Grid>
