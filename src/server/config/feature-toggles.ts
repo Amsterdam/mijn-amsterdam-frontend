@@ -30,6 +30,8 @@ export const featureToggle = {
   'USER_FEEDBACK.service.jira': !IS_PRODUCTION,
   'USER_FEEDBACK.router.protected': !IS_PRODUCTION,
   'USER_FEEDBACK.router.admin': !IS_PRODUCTION,
+  'SERVICE_ALERTS.router.protected': !IS_PRODUCTION,
+  'SERVICE_ALERTS.router.admin': !IS_PRODUCTION,
 };
 // globalThis is used to make sure featureToggles imported from frontend *-thema-configs have access.
 globalThis.MA_FEATURETOGGLES = featureToggle;
