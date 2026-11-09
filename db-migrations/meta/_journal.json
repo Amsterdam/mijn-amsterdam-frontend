@@ -64,6 +64,13 @@
       "when": 1786623769106,
       "tag": "0008_mighty_master_mold",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1794209509101,
+      "tag": "0009_aspiring_sauron",
+      "breakpoints": true
     }
   ]
 }
