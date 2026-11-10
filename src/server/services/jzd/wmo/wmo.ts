@@ -96,6 +96,7 @@ function transformVoorzieningForFrontend(
     id,
     title: capitalizeFirstLetter(aanvraag.titel),
     leverancier: aanvraag.leverancier,
+    leveringsvorm: aanvraag.leveringsVorm,
     isActual: aanvraag.isActueel,
     link: {
       title: 'Meer informatie',

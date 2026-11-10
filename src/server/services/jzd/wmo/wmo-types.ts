@@ -2,7 +2,10 @@ import type {
   GenericDocument,
   ZaakAanvraagDetail,
 } from '../../../../universal/types/App.types.ts';
-import type { ProductSoortCode } from '../../zorgned/zorgned-types.ts';
+import type {
+  LeveringsVormTransformed,
+  ProductSoortCode,
+} from '../../zorgned/zorgned-types.ts';
 import type { VoorzieningActiePropsFrontend } from '../jzd-types.ts';
 
 export type WMOVoorzieningFrontend = ZaakAanvraagDetail &
@@ -16,4 +19,5 @@ export type WMOVoorzieningFrontend = ZaakAanvraagDetail &
     statusDate: string;
     statusDateFormatted: string;
     disclaimer?: string;
+    leveringsvorm: LeveringsVormTransformed;
   };
