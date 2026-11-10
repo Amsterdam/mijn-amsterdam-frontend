@@ -129,8 +129,6 @@ export async function fetchZorgnedAanvragenWMO(
     requestBodyParams,
   });
 
-  console.log(aanvragenResponse);
-
   if (aanvragenResponse.status === 'OK') {
     // Filter the aanvragen that we should show in frontend.
     const aanvragenFiltered = aanvragenResponse.content

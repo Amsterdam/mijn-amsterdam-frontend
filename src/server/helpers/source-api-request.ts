@@ -210,6 +210,11 @@ export async function requestData<T>(
   try {
     const response = await requestPromise;
 
+    if(requestConfig.url?.includes('/acc/webservices/api/inkijkapi/v1/aanvragen')) {
+      console.log('Response:', response);
+    }
+
+
     let responseDataTransformed = response.data;
 
     if (transformers.length > 0) {
