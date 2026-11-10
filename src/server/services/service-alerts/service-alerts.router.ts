@@ -1,12 +1,25 @@
 import { createBFFRouter } from '../../routing/route-helpers.ts';
-import { featureToggle } from './service-alerts.service-config.ts';
+import {
+  handleGetServiceAlerts,
+  handleUpsertServiceAlertRequest,
+} from './service-alerts.route-handlers.ts';
+import { featureToggle, routes } from './service-alerts.service-config.ts';
 
-const serviceAlertsRouterProtected = createBFFRouter({
+const serviceAlertsRouterAdmin = createBFFRouter({
   id: 'protected-service-alerts-router',
   isEnabled: featureToggle.router.protected.isEnabled,
 });
 
-const serviceAlertsRouterAdmin = createBFFRouter({
-  id: 'admin-service-alerts-router',
-  isEnabled: featureToggle.router.admin.isEnabled,
-});
+serviceAlertsRouterAdmin.get(
+  routes.admin.SERVICE_ALERTS_OVERVIEW,
+  handleGetServiceAlerts
+);
+
+serviceAlertsRouterAdmin.post(
+  routes.admin.SERVICE_ALERTS_UPSERT,
+  handleUpsertServiceAlertRequest
+);
+
+export const serviceAlertsRouter = {
+  admin: serviceAlertsRouterAdmin,
+};
