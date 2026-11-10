@@ -39,12 +39,12 @@ export function useProfileType() {
     stateValue
   );
 
-  // If we encounter a profileType stored in the SessionStorage, transfer it to the zustand on first load.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Only run this effect on the first render to sync session storage with zustand.
   useEffect(() => {
     if (profileType !== stateValue && profileType !== null) {
       setState(profileType);
     }
-  }, [stateValue, setState, profileType]);
+  }, []);
 
   useEffect(() => {
     setSessionState(stateValue);
