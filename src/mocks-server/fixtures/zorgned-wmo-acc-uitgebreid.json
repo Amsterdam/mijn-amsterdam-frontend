@@ -1,0 +1,1529 @@
+{
+  "_embedded": {
+    "aanvraag": [
+      {
+        "identificatie": "1618240",
+        "procesIdentificatie": "1618240",
+        "casusIdentificatie": "483005",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2018-01-01"
+        },
+        "datumAanmelding": "2018-01-01",
+        "datumAanvraag": "2018-01-01",
+        "beschikking": {
+          "beschikkingNummer": 300464291,
+          "datumAfgifte": "2018-08-13",
+          "beschikteProducten": [
+            {
+              "identificatie": "487597",
+              "product": {
+                "identificatie": "02A02",
+                "productCode": "02A02",
+                "productsoortCode": "AWBG",
+                "omschrijving": "aanvullende individuele ondersteuning"
+              },
+              "productCategorie": {
+                "code": "02",
+                "omschrijving": "Begeleiding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2018-01-01",
+                "datumEindeGeldigheid": "2018-12-30",
+                "datumCheck": "2021-09-16",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "3",
+                    "omschrijving": "Per vier weken"
+                  },
+                  "omschrijving": "1 stuks (output) per vier weken"
+                },
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "73731562",
+                  "agbcode": "73731562",
+                  "omschrijving": "Stichting Forsa Amsterdam"
+                },
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1593545",
+                    "toewijzingsDatumTijd": "2018-08-13T00:00:00",
+                    "ingangsdatum": "2018-01-01",
+                    "einddatum": "2018-12-30",
+                    "datumOpdracht": "2018-08-13T00:00:00",
+                    "leverancier": {
+                      "identificatie": "73731562",
+                      "agbcode": "73731562",
+                      "omschrijving": "Stichting Forsa Amsterdam"
+                    },
+                    "leveringen": [
+                      {
+                        "begindatum": "2018-01-01",
+                        "einddatum": "2018-12-30",
+                        "redenBeeindiging": {
+                          "code": "03",
+                          "omschrijving": "Overig"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "betrokkenen": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "identificatie": "1649239",
+        "procesIdentificatie": "1649239",
+        "casusIdentificatie": "506168",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2019-01-01"
+        },
+        "datumAanmelding": "2019-01-01",
+        "datumAanvraag": "2019-01-01",
+        "beschikking": {
+          "beschikkingNummer": 300493021,
+          "datumAfgifte": "2019-01-03",
+          "beschikteProducten": [
+            {
+              "identificatie": "520162",
+              "product": {
+                "identificatie": "02A02",
+                "productCode": "02A02",
+                "productsoortCode": "AWBG",
+                "omschrijving": "aanvullende individuele ondersteuning"
+              },
+              "productCategorie": {
+                "code": "02",
+                "omschrijving": "Begeleiding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2019-01-01",
+                "datumEindeGeldigheid": "2019-01-01",
+                "datumCheck": "2019-10-08",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "3",
+                    "omschrijving": "Per vier weken"
+                  },
+                  "omschrijving": "1 stuks (output) per vier weken"
+                },
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "73731562",
+                  "agbcode": "73731562",
+                  "omschrijving": "Stichting Forsa Amsterdam"
+                },
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1615459",
+                    "toewijzingsDatumTijd": "2019-01-03T00:00:00",
+                    "ingangsdatum": "2019-01-01",
+                    "einddatum": "2019-01-01",
+                    "datumOpdracht": "2019-01-03T00:00:00",
+                    "leverancier": {
+                      "identificatie": "73731562",
+                      "agbcode": "73731562",
+                      "omschrijving": "Stichting Forsa Amsterdam"
+                    },
+                    "leveringen": []
+                  }
+                ],
+                "betrokkenen": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "identificatie": "1666694",
+        "procesIdentificatie": "1666694",
+        "casusIdentificatie": "529086",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2018-12-31"
+        },
+        "datumAanmelding": "2018-12-31",
+        "datumAanvraag": "2018-12-31",
+        "beschikking": {
+          "beschikkingNummer": 300499317,
+          "datumAfgifte": "2019-01-31",
+          "beschikteProducten": [
+            {
+              "identificatie": "549280",
+              "product": {
+                "identificatie": "02A02",
+                "productCode": "02A02",
+                "productsoortCode": "AWBG",
+                "omschrijving": "aanvullende individuele ondersteuning"
+              },
+              "productCategorie": {
+                "code": "02",
+                "omschrijving": "Begeleiding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2018-12-31",
+                "datumEindeGeldigheid": "2018-12-31",
+                "datumCheck": "2021-09-16",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "3",
+                    "omschrijving": "Per vier weken"
+                  },
+                  "omschrijving": "1 stuks (output) per vier weken"
+                },
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "22220813",
+                  "agbcode": "22220813",
+                  "omschrijving": "Familysupporters/Forsa"
+                },
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1619935",
+                    "toewijzingsDatumTijd": "2019-01-31T00:00:00",
+                    "ingangsdatum": "2018-12-31",
+                    "einddatum": "2018-12-31",
+                    "datumOpdracht": "2019-01-31T00:00:00",
+                    "leverancier": {
+                      "identificatie": "22220813",
+                      "agbcode": "22220813",
+                      "omschrijving": "Familysupporters/Forsa"
+                    },
+                    "leveringen": [
+                      {
+                        "begindatum": "2018-12-31",
+                        "einddatum": "2018-12-31",
+                        "redenBeeindiging": {
+                          "code": "03",
+                          "omschrijving": "Overig"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "betrokkenen": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "identificatie": "1672588",
+        "procesIdentificatie": "1672588",
+        "casusIdentificatie": "539043",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2019-01-01"
+        },
+        "datumAanmelding": "2019-01-01",
+        "datumAanvraag": "2019-01-01",
+        "beschikking": {
+          "beschikkingNummer": 300499318,
+          "datumAfgifte": "2019-01-31",
+          "beschikteProducten": [
+            {
+              "identificatie": "564235",
+              "product": {
+                "identificatie": "02A02",
+                "productCode": "02A02",
+                "productsoortCode": "AWBG",
+                "omschrijving": "aanvullende individuele ondersteuning"
+              },
+              "productCategorie": {
+                "code": "02",
+                "omschrijving": "Begeleiding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2019-01-01",
+                "datumEindeGeldigheid": "2019-12-08",
+                "datumCheck": "2021-09-16",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "3",
+                    "omschrijving": "Per vier weken"
+                  },
+                  "omschrijving": "1 stuks (output) per vier weken"
+                },
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "22220813",
+                  "agbcode": "22220813",
+                  "omschrijving": "Familysupporters/Forsa"
+                },
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1619936",
+                    "toewijzingsDatumTijd": "2019-01-31T00:00:00",
+                    "ingangsdatum": "2019-01-01",
+                    "einddatum": "2019-12-08",
+                    "datumOpdracht": "2019-01-31T00:00:00",
+                    "leverancier": {
+                      "identificatie": "22220813",
+                      "agbcode": "22220813",
+                      "omschrijving": "Familysupporters/Forsa"
+                    },
+                    "redenWijziging": {
+                      "code": "05",
+                      "omschrijving": "Herbeoordeling: verkorting toewijzing (05)"
+                    },
+                    "leveringen": [
+                      {
+                        "begindatum": "2019-01-01",
+                        "einddatum": "2019-12-08",
+                        "redenBeeindiging": {
+                          "code": "03",
+                          "omschrijving": "Overig"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "betrokkenen": []
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "E460391",
+            "procesIdentificatie": "1672588",
+            "casusIdentificatie": "539043",
+            "omschrijving": "overige correspondentie",
+            "omschrijvingclientportaal": "overige correspondentie",
+            "datumDefinitief": "2019-11-29T11:39:00"
+          }
+        ]
+      },
+      {
+        "identificatie": "1729066",
+        "procesIdentificatie": "1729066",
+        "casusIdentificatie": "599950",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2019-12-12"
+        },
+        "datumAanmelding": "2019-12-12",
+        "datumAanvraag": "2019-12-12",
+        "beschikking": {
+          "beschikkingNummer": 300563847,
+          "datumAfgifte": "2019-12-12",
+          "beschikteProducten": [
+            {
+              "identificatie": "589216",
+              "product": {
+                "identificatie": "02A02",
+                "productCode": "02A02",
+                "productsoortCode": "AWBG",
+                "omschrijving": "aanvullende individuele ondersteuning"
+              },
+              "productCategorie": {
+                "code": "02",
+                "omschrijving": "Begeleiding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2019-12-09",
+                "datumEindeGeldigheid": "2019-12-09",
+                "datumCheck": "2021-09-16",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "3",
+                    "omschrijving": "Per vier weken"
+                  },
+                  "omschrijving": "1 stuks (output) per vier weken"
+                },
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "22220813",
+                  "agbcode": "22220813",
+                  "omschrijving": "Familysupporters/Forsa"
+                },
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1666337",
+                    "toewijzingsDatumTijd": "2019-12-12T00:00:00",
+                    "ingangsdatum": "2019-12-09",
+                    "einddatum": "2019-12-09",
+                    "datumOpdracht": "2019-12-12T00:00:00",
+                    "leverancier": {
+                      "identificatie": "22220813",
+                      "agbcode": "22220813",
+                      "omschrijving": "Familysupporters/Forsa"
+                    },
+                    "leveringen": [
+                      {
+                        "begindatum": "2019-12-09",
+                        "einddatum": "2019-12-09",
+                        "redenBeeindiging": {
+                          "code": "03",
+                          "omschrijving": "Overig"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "betrokkenen": []
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B603981",
+            "procesIdentificatie": "1729066",
+            "casusIdentificatie": "599950",
+            "omschrijving": "Opstellen beschikking wijkzorg HBH/AIO/DB/LO/BT",
+            "omschrijvingclientportaal": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
+            "datumDefinitief": "2019-12-12T16:15:45",
+            "bestandsnaam": "087049AK.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "3698524",
+        "procesIdentificatie": "3698524",
+        "casusIdentificatie": "2117817",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-10-21"
+        },
+        "datumAanmelding": "2026-10-21",
+        "datumAanvraag": "2026-10-21",
+        "beschikking": {
+          "beschikkingNummer": 301264487,
+          "datumAfgifte": "2026-10-21",
+          "beschikteProducten": [
+            {
+              "identificatie": "1775072",
+              "product": {
+                "identificatie": "13H01",
+                "productCode": "13H01",
+                "productsoortCode": "RWT",
+                "omschrijving": "verrijdbare tillift (actief)"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2026-10-21",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "76090985",
+                  "agbcode": "76090985",
+                  "omschrijving": "Medipoint"
+                },
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "2101421",
+                    "toewijzingsDatumTijd": "2026-10-21T11:08:54.6466667",
+                    "ingangsdatum": "2026-10-21",
+                    "datumOpdracht": "2026-10-21T11:08:54.6466667",
+                    "leverancier": {
+                      "identificatie": "76090985",
+                      "agbcode": "76090985",
+                      "omschrijving": "Medipoint"
+                    },
+                    "leveringen": []
+                  }
+                ],
+                "betrokkenen": ["123459965"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B4092857",
+            "procesIdentificatie": "3698524",
+            "casusIdentificatie": "2117817",
+            "omschrijving": "Toekenning hulpmiddel zonder keuze (proces 0,1)",
+            "omschrijvingclientportaal": "Besluit: toekenning hulpmiddel",
+            "datumDefinitief": "2026-10-21T11:08:41.063",
+            "bestandsnaam": "BR4092857.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "3698561",
+        "procesIdentificatie": "3698561",
+        "casusIdentificatie": "2117830",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-10-26"
+        },
+        "datumAanmelding": "2026-10-26",
+        "datumAanvraag": "2026-10-26",
+        "beschikking": {
+          "beschikkingNummer": 301264488,
+          "datumAfgifte": "2026-10-26",
+          "beschikteProducten": [
+            {
+              "identificatie": "1775096",
+              "product": {
+                "identificatie": "730",
+                "productsoortCode": "AOV",
+                "omschrijving": "deur tot deur plus vervoer"
+              },
+              "productCategorie": {
+                "code": "12",
+                "omschrijving": "Vervoervoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2026-10-26",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "leverancier": {
+                  "identificatie": "AOV001",
+                  "agbcode": "11122288",
+                  "omschrijving": "RMC Amsterdam"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["123459965"]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "identificatie": "3698562",
+        "procesIdentificatie": "3698562",
+        "casusIdentificatie": "2117831",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-10-26"
+        },
+        "datumAanmelding": "2026-10-26",
+        "datumAanvraag": "2026-10-26"
+      },
+      {
+        "identificatie": "3698563",
+        "procesIdentificatie": "3698563",
+        "casusIdentificatie": "2117832",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-10-26"
+        },
+        "datumAanmelding": "2026-10-26",
+        "datumAanvraag": "2026-10-26",
+        "beschikking": {
+          "beschikkingNummer": 301264489,
+          "datumAfgifte": "2026-10-26",
+          "beschikteProducten": [
+            {
+              "identificatie": "1775098",
+              "product": {
+                "identificatie": "05669",
+                "productCode": "05669",
+                "productsoortCode": "MVW",
+                "omschrijving": "financiële tegemoetkoming bij huur"
+              },
+              "productCategorie": {
+                "code": "05",
+                "omschrijving": "Woondiensten"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2026-10-26",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["123459965"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B4092888",
+            "procesIdentificatie": "3698563",
+            "casusIdentificatie": "2117832",
+            "omschrijving": "Beschikking ft verhuiz. voorlopig",
+            "omschrijvingclientportaal": "Besluit: toekenning fin. tegemoetkoming verhuizen",
+            "datumDefinitief": "2026-10-28T11:37:11.137",
+            "bestandsnaam": "BR4092888.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "3698564",
+        "procesIdentificatie": "3698564",
+        "casusIdentificatie": "2117833",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-10-26"
+        },
+        "datumAanmelding": "2026-10-26",
+        "datumAanvraag": "2026-10-26",
+        "beschikking": {
+          "beschikkingNummer": 301264490,
+          "datumAfgifte": "2026-10-26",
+          "beschikteProducten": [
+            {
+              "identificatie": "1775099",
+              "product": {
+                "identificatie": "12H13",
+                "productCode": "12H13",
+                "productsoortCode": "FIE",
+                "omschrijving": "drie- of vierwielfiets"
+              },
+              "productCategorie": {
+                "code": "12",
+                "omschrijving": "Vervoervoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2026-10-26",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "76084955",
+                  "agbcode": "76084955",
+                  "omschrijving": "Kersten Hulpmiddelen"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["123459965"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B4092890",
+            "procesIdentificatie": "3698564",
+            "casusIdentificatie": "2117833",
+            "omschrijving": "Herindicatie beschikking hulpmiddel",
+            "omschrijvingclientportaal": "Besluit: toekenning hulpmiddel langer houden",
+            "datumDefinitief": "2026-10-28T11:48:08.04",
+            "bestandsnaam": "BR4092890.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "3698565",
+        "procesIdentificatie": "3698565",
+        "casusIdentificatie": "2117834",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-10-26"
+        },
+        "datumAanmelding": "2026-10-26",
+        "datumAanvraag": "2026-10-26",
+        "beschikking": {
+          "beschikkingNummer": 301264491,
+          "datumAfgifte": "2026-10-26",
+          "beschikteProducten": [
+            {
+              "identificatie": "1775100",
+              "product": {
+                "identificatie": "010",
+                "productCode": "010",
+                "productsoortCode": "AUT",
+                "omschrijving": "bruikleenauto"
+              },
+              "productCategorie": {
+                "code": "12",
+                "omschrijving": "Vervoervoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2026-10-26",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "LH0006",
+                  "agbcode": "11122299",
+                  "omschrijving": "Welzorg"
+                },
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "2101422",
+                    "toewijzingsDatumTijd": "2026-10-26T16:28:22.7833333",
+                    "ingangsdatum": "2026-10-26",
+                    "datumOpdracht": "2026-10-26T16:28:22.7833333",
+                    "leverancier": {
+                      "identificatie": "LH0006",
+                      "agbcode": "11122299",
+                      "omschrijving": "Welzorg"
+                    },
+                    "leveringen": []
+                  }
+                ],
+                "betrokkenen": ["123459965"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B4092864",
+            "procesIdentificatie": "3698565",
+            "casusIdentificatie": "2117834",
+            "omschrijving": "Beschikking bruikleenauto voor 8c",
+            "omschrijvingclientportaal": "Besluit: toekenning bruikleenauto",
+            "datumDefinitief": "2026-10-26T16:28:09.21",
+            "bestandsnaam": "BR4092864.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "3698566",
+        "procesIdentificatie": "3698566",
+        "casusIdentificatie": "2117835",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-10-26"
+        },
+        "datumAanmelding": "2026-10-26",
+        "datumAanvraag": "2026-10-26"
+      },
+      {
+        "identificatie": "3698567",
+        "procesIdentificatie": "3698567",
+        "casusIdentificatie": "2117836",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-10-26"
+        },
+        "datumAanmelding": "2026-10-26",
+        "datumAanvraag": "2026-10-26",
+        "beschikking": {
+          "beschikkingNummer": 301264493,
+          "datumAfgifte": "2026-10-26",
+          "beschikteProducten": [
+            {
+              "identificatie": "1775102",
+              "product": {
+                "identificatie": "13W10",
+                "productCode": "13W10",
+                "productsoortCode": "WRA1",
+                "omschrijving": "Traplift voor een rechte trap"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2026-10-26",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "LA0997",
+                  "agbcode": "11122266",
+                  "omschrijving": "Otolift"
+                },
+                "toelichting": "Traplift op de rechte trap van de &lt;locatie&gt; naar de &lt;locatie&gt; verdieping in de &lt;woning / algemene ruimte&gt;.",
+                "toewijzingen": [],
+                "betrokkenen": ["123459965"]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "identificatie": "3698568",
+        "procesIdentificatie": "3698568",
+        "casusIdentificatie": "2117837",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-10-26"
+        },
+        "datumAanmelding": "2026-10-26",
+        "datumAanvraag": "2026-10-26",
+        "beschikking": {
+          "beschikkingNummer": 301264494,
+          "datumAfgifte": "2026-10-26",
+          "beschikteProducten": [
+            {
+              "identificatie": "1775103",
+              "product": {
+                "identificatie": "12H50",
+                "productCode": "12H50",
+                "productsoortCode": "OVE",
+                "omschrijving": "Autozitje"
+              },
+              "productCategorie": {
+                "code": "12",
+                "omschrijving": "Vervoervoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2026-10-26",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "76090985",
+                  "agbcode": "76090985",
+                  "omschrijving": "Medipoint"
+                },
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "2101423",
+                    "toewijzingsDatumTijd": "2026-10-26T16:44:00.8033333",
+                    "ingangsdatum": "2026-10-26",
+                    "datumOpdracht": "2026-10-26T16:44:00.8033333",
+                    "leverancier": {
+                      "identificatie": "76090985",
+                      "agbcode": "76090985",
+                      "omschrijving": "Medipoint"
+                    },
+                    "leveringen": []
+                  }
+                ],
+                "betrokkenen": ["123459965"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B4092865",
+            "procesIdentificatie": "3698568",
+            "casusIdentificatie": "2117837",
+            "omschrijving": "Toekenning na selectieadvies",
+            "omschrijvingclientportaal": "Besluit: toekenning ander hulpmiddel dan gevraagd",
+            "datumDefinitief": "2026-10-26T16:43:36.557",
+            "bestandsnaam": "BR4092865.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "3698569",
+        "procesIdentificatie": "3698569",
+        "casusIdentificatie": "2117838",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-10-26"
+        },
+        "datumAanmelding": "2026-10-26",
+        "datumAanvraag": "2026-10-26",
+        "procesAanvraag": {
+          "identificatie": "3698569",
+          "omschrijving": "12-PGB Proces",
+          "datumStart": "2026-10-26",
+          "acties": [
+            {
+              "omschrijving": "Melding ontvangen",
+              "status": {
+                "identificatie": "4",
+                "omschrijving": "Klaar"
+              },
+              "datum": "2026-10-26"
+            }
+          ]
+        },
+        "beschikking": {
+          "beschikkingNummer": 301264495,
+          "datumAfgifte": "2026-10-26",
+          "beschikteProducten": [
+            {
+              "identificatie": "1775104",
+              "product": {
+                "identificatie": "01A01",
+                "productCode": "01A01",
+                "productsoortCode": "WMH",
+                "omschrijving": "hulp bij het huishouden"
+              },
+              "productCategorie": {
+                "code": "01",
+                "omschrijving": "Hulp bij het huishouden"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2026-10-26",
+                "datumEindeGeldigheid": "2027-10-25",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "2",
+                    "omschrijving": "Per week"
+                  },
+                  "omschrijving": "1 stuks (output) per week"
+                },
+                "leveringsvorm": "pgb",
+                "toewijzingen": [],
+                "betrokkenen": ["123459965"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B4092866",
+            "procesIdentificatie": "3698569",
+            "casusIdentificatie": "2117838",
+            "omschrijving": "PGB beschikking Hbh punten",
+            "omschrijvingclientportaal": "Besluit: toekenning pgb Hbh",
+            "datumDefinitief": "2026-10-26T16:50:08.587",
+            "bestandsnaam": "BR4092866.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "3698570",
+        "procesIdentificatie": "3698570",
+        "casusIdentificatie": "2117839",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-10-26"
+        },
+        "datumAanmelding": "2026-10-26",
+        "datumAanvraag": "2026-10-26",
+        "procesAanvraag": {
+          "identificatie": "3698570",
+          "omschrijving": "12-PGB Proces",
+          "datumStart": "2026-10-26",
+          "acties": [
+            {
+              "omschrijving": "Melding ontvangen",
+              "status": {
+                "identificatie": "4",
+                "omschrijving": "Klaar"
+              },
+              "datum": "2026-10-26"
+            }
+          ]
+        },
+        "beschikking": {
+          "beschikkingNummer": 301264496,
+          "datumAfgifte": "2026-10-26",
+          "beschikteProducten": [
+            {
+              "identificatie": "1775105",
+              "product": {
+                "identificatie": "08708",
+                "productCode": "08708",
+                "productsoortCode": "VVD",
+                "omschrijving": "rolstoelvervoer bij dagbesteding"
+              },
+              "productCategorie": {
+                "code": "08",
+                "omschrijving": "Vervoerdiensten"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2026-10-26",
+                "datumEindeGeldigheid": "2027-10-26",
+                "actueel": true,
+                "omvang": {
+                  "volume": 2,
+                  "eenheid": {
+                    "code": "14",
+                    "omschrijving": "Etmaal"
+                  },
+                  "frequentie": {
+                    "code": "2",
+                    "omschrijving": "Per week"
+                  },
+                  "omschrijving": "2 etmalen per week"
+                },
+                "leveringsvorm": "pgb",
+                "toewijzingen": [],
+                "betrokkenen": ["123459965"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B4092867",
+            "procesIdentificatie": "3698570",
+            "casusIdentificatie": "2117839",
+            "omschrijving": "PGB beschikking dagbesteding",
+            "omschrijvingclientportaal": "Besluit: toekenning pgb dagbesteding",
+            "datumDefinitief": "2026-10-26T16:53:30.27",
+            "bestandsnaam": "BR4092867.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "3698572",
+        "procesIdentificatie": "3698572",
+        "casusIdentificatie": "2117841",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-10-27"
+        },
+        "datumAanmelding": "2026-10-27",
+        "datumAanvraag": "2026-10-27",
+        "beschikking": {
+          "beschikkingNummer": 301264497,
+          "datumAfgifte": "2026-10-27",
+          "beschikteProducten": [
+            {
+              "identificatie": "1775106",
+              "product": {
+                "identificatie": "12504",
+                "productCode": "12504",
+                "productsoortCode": "AAN",
+                "omschrijving": "aanpassing aan een eigen rolstoel"
+              },
+              "productCategorie": {
+                "code": "12",
+                "omschrijving": "Vervoervoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2026-10-26",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["123459965"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B4092868",
+            "procesIdentificatie": "3698572",
+            "casusIdentificatie": "2117841",
+            "omschrijving": "Toekenning Pgb hulpmiddel na verhuizing",
+            "omschrijvingclientportaal": "Besluit: toekenning meeverhuizen hulpmiddel (pgb)",
+            "datumDefinitief": "2026-10-27T08:02:49.55",
+            "bestandsnaam": "BR4092868.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "3698573",
+        "procesIdentificatie": "3698573",
+        "casusIdentificatie": "2117842",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-10-27"
+        },
+        "datumAanmelding": "2026-10-27",
+        "datumAanvraag": "2026-10-27",
+        "beschikking": {
+          "beschikkingNummer": 301264498,
+          "datumAfgifte": "2026-10-27",
+          "beschikteProducten": [
+            {
+              "identificatie": "1775107",
+              "product": {
+                "identificatie": "13W75",
+                "productCode": "13W75",
+                "productsoortCode": "WRA3",
+                "omschrijving": "Onderrijdbare wastafel"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2026-10-26",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "leveringsvorm": "pgb",
+                "toelichting": "Onderrijdbare wastafel in de badkamer.",
+                "toewijzingen": [],
+                "betrokkenen": ["123459965"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B4092870",
+            "procesIdentificatie": "3698573",
+            "casusIdentificatie": "2117842",
+            "omschrijving": "Toekenning Pgb hulpmiddel na verhuizing",
+            "omschrijvingclientportaal": "Besluit: toekenning meeverhuizen hulpmiddel (pgb)",
+            "datumDefinitief": "2026-10-27T08:09:18.313",
+            "bestandsnaam": "BR4092870.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "3698576",
+        "procesIdentificatie": "3698576",
+        "casusIdentificatie": "2117845",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-10-27"
+        },
+        "datumAanmelding": "2026-10-27",
+        "datumAanvraag": "2026-10-27",
+        "beschikking": {
+          "beschikkingNummer": 301264499,
+          "datumAfgifte": "2026-10-27",
+          "beschikteProducten": [
+            {
+              "identificatie": "1775109",
+              "product": {
+                "identificatie": "12670",
+                "productCode": "12670",
+                "productsoortCode": "MVV",
+                "omschrijving": "financiële tegemoetkoming parkeervoorziening"
+              },
+              "productCategorie": {
+                "code": "12",
+                "omschrijving": "Vervoervoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2026-10-26",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["123459965"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B4092871",
+            "procesIdentificatie": "3698576",
+            "casusIdentificatie": "2117845",
+            "omschrijving": "Beschikking PGB Vervoer",
+            "omschrijvingclientportaal": "Besluit: toekenning pgb hulpmiddel",
+            "datumDefinitief": "2026-10-27T09:04:48.38",
+            "bestandsnaam": "BR4092871.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "3698587",
+        "procesIdentificatie": "3698587",
+        "casusIdentificatie": "2117854",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-10-28"
+        },
+        "datumAanmelding": "2026-10-28",
+        "datumAanvraag": "2026-10-28",
+        "procesAanvraag": {
+          "identificatie": "3698587",
+          "omschrijving": "12-PGB Proces",
+          "datumStart": "2026-10-28",
+          "acties": [
+            {
+              "omschrijving": "Melding ontvangen",
+              "status": {
+                "identificatie": "4",
+                "omschrijving": "Klaar"
+              },
+              "datum": "2026-10-28"
+            }
+          ]
+        },
+        "beschikking": {
+          "beschikkingNummer": 301264503,
+          "datumAfgifte": "2026-10-28",
+          "beschikteProducten": [
+            {
+              "identificatie": "1775119",
+              "product": {
+                "identificatie": "08708",
+                "productCode": "08708",
+                "productsoortCode": "VVD",
+                "omschrijving": "rolstoelvervoer bij dagbesteding"
+              },
+              "productCategorie": {
+                "code": "08",
+                "omschrijving": "Vervoerdiensten"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2025-10-26",
+                "datumEindeGeldigheid": "2026-10-26",
+                "actueel": false,
+                "omvang": {
+                  "volume": 2,
+                  "eenheid": {
+                    "code": "14",
+                    "omschrijving": "Etmaal"
+                  },
+                  "frequentie": {
+                    "code": "2",
+                    "omschrijving": "Per week"
+                  },
+                  "omschrijving": "2 etmalen per week"
+                },
+                "leveringsvorm": "zin",
+                "toewijzingen": [],
+                "betrokkenen": ["123459965"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B4092885",
+            "procesIdentificatie": "3698587",
+            "casusIdentificatie": "2117854",
+            "omschrijving": "PGB beschikking aanvullende ind. ondersteuning",
+            "omschrijvingclientportaal": "Besluit: toekenning pgb voor AIO",
+            "datumDefinitief": "2026-10-28T08:57:56.553",
+            "bestandsnaam": "BR4092885.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "3698588",
+        "procesIdentificatie": "3698588",
+        "casusIdentificatie": "2117855",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-10-28"
+        },
+        "datumAanmelding": "2026-10-28",
+        "datumAanvraag": "2026-10-28",
+        "beschikking": {
+          "beschikkingNummer": 301264504,
+          "datumAfgifte": "2026-10-28",
+          "beschikteProducten": [
+            {
+              "identificatie": "1775120",
+              "product": {
+                "identificatie": "12120",
+                "productCode": "12120",
+                "productsoortCode": "GBW",
+                "omschrijving": "gesloten buitenwagen"
+              },
+              "productCategorie": {
+                "code": "12",
+                "omschrijving": "Vervoervoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2025-10-26",
+                "datumEindeGeldigheid": "2026-10-26",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "LH0006",
+                  "agbcode": "11122299",
+                  "omschrijving": "Welzorg"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["123459965"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B4092886",
+            "procesIdentificatie": "3698588",
+            "casusIdentificatie": "2117855",
+            "omschrijving": "Beschikking gesloten buitenwagen GBW",
+            "omschrijvingclientportaal": "Besluit: toekenning gesloten buitenwagen",
+            "datumDefinitief": "2026-10-28T09:03:56.737",
+            "bestandsnaam": "BR4092886.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "3698589",
+        "procesIdentificatie": "3698589",
+        "casusIdentificatie": "2117856",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-10-28"
+        },
+        "datumAanmelding": "2026-10-28",
+        "datumAanvraag": "2026-10-28",
+        "beschikking": {
+          "beschikkingNummer": 301264505,
+          "datumAfgifte": "2026-10-28",
+          "beschikteProducten": [
+            {
+              "identificatie": "1775121",
+              "product": {
+                "identificatie": "07A08",
+                "productCode": "07A08",
+                "productsoortCode": "DBS",
+                "omschrijving": "dagbesteding meedoen"
+              },
+              "productCategorie": {
+                "code": "07",
+                "omschrijving": "Dagbesteding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2025-10-26",
+                "datumEindeGeldigheid": "2026-10-25",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "73731501",
+                  "agbcode": "73737163",
+                  "omschrijving": "Combiwel"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["123459965"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B4092887",
+            "procesIdentificatie": "3698589",
+            "casusIdentificatie": "2117856",
+            "omschrijving": "Opstellen beschikking wijkzorg HBH/AIO/DB/LO/BT",
+            "omschrijvingclientportaal": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
+            "datumDefinitief": "2026-10-28T09:09:12.203",
+            "bestandsnaam": "BR4092887.pdf"
+          }
+        ]
+      }
+    ]
+  }
+}
