@@ -18,6 +18,12 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
   if (voorziening?.decision) {
     rows.push({ content: voorziening?.decision, label: 'Resultaat' });
   }
+  if (
+    voorziening?.leveringsvorm === 'PGB' ||
+    voorziening?.leveringsvorm === 'ZIN'
+  ) {
+    rows.push({ content: voorziening?.leveringsvorm, label: 'Leveringsvorm' });
+  }
   if (voorziening?.leverancier) {
     rows.push({ content: voorziening?.leverancier, label: 'Aanbieder' });
   }
