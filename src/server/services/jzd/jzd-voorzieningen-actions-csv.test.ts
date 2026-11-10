@@ -196,6 +196,26 @@ function evaluateTestRows(rows: string[][], apiConfig?: JzdApiConfig[]) {
   );
 }
 
+function assertDesiredActions(
+  output: ReturnType<typeof evaluateVoorzieningenInput>,
+  columns: ReturnType<typeof parseVoorzieningenInput>['columns']
+) {
+  const gewenstIndex = output.header.lastIndexOf('gewenst');
+  const geimplementeerdIndex = output.header.lastIndexOf('geimplementeerd');
+
+  for (const row of output.rows) {
+    const gewenst = row[gewenstIndex];
+    const geimplementeerd = row[geimplementeerdIndex];
+
+    expect
+      .soft(
+        geimplementeerd,
+        `Row with leveringsform "${row[columns.leveringsVorm]}", productsoortcode "${row[columns.productsoortCode]}", productIdentificatie "${row[columns.productIdentificatie]}" has an incorrect action`
+      )
+      .toBe(gewenst);
+  }
+}
+
 describe('voorzieningen action CSV', () => {
   test.each([
     ['tripleforms naar zorgned', 'stopzetten'],
@@ -592,19 +612,6 @@ describe('voorzieningen action CSV', () => {
       writeFileSync('jzd-voorzieningen-actions.csv', `${csv}\r\n`, 'utf8');
     }
 
-    const gewenstIndex = header.indexOf('gewenst');
-    const geimplementeerdIndex = header.indexOf('geimplementeerd');
-
-    for (const row of rows) {
-      const gewenst = row[gewenstIndex];
-      const geimplementeerd = row[geimplementeerdIndex];
-
-      expect
-        .soft(
-          geimplementeerd,
-          `Row with leveringsform "${row[original.columns.leveringsVorm]}", productsoortcode "${row[original.columns.productsoortCode]}", productIdentificatie "${row[original.columns.productIdentificatie]}" is expected to have actie "${gewenst}" but evaluated to "${geimplementeerd}"`
-        )
-        .toBe(gewenst);
-    }
+    assertDesiredActions({ header, rows }, original.columns);
   });
 });
