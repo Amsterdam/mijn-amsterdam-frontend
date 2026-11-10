@@ -31,3 +31,15 @@ export const serviceAlertInput = z
   .strict();
 
 export type ServiceAlertInput = z.infer<typeof serviceAlertInput>;
+
+export type ServiceAlertsOverview = {
+  id: string;
+  title: string;
+  body: string;
+  type: (typeof SERVICE_ALERT_TYPES)[number];
+  displayLocation: (typeof SERVICE_ALERT_DISPLAY_LOCATIONS)[number];
+  links: ServiceAlertLinkInput[];
+  environments: (typeof SERVICE_ALERT_ENVIRONMENTS)[number][];
+  dateStart: string;
+  dateEnd?: string | null;
+}[];

@@ -1,7 +1,19 @@
+import type { ServiceAlertsOverview } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
+import { ServiceAlertsPageContent } from '../../../../components/ServiceAlerts/ServiceAlerts.tsx';
 import { ThemaPagina } from '../../../../components/Thema/ThemaPagina.tsx';
+import { useBffApi } from '../../../../hooks/api/useBffApi.ts';
+import { BFFApiUrls } from '../../config/api.ts';
 import { themaConfig } from './ServiceAlerts-thema-config.ts';
 
 export function ServiceAlerts() {
+  const { isLoading, isError, data } = useBffApi<ServiceAlertsOverview>(
+    BFFApiUrls.SERVICE_ALERTS_OVERVIEW
+  );
+
+  if (isError) {
+    return null;
+  }
+
   return (
     <ThemaPagina
       title={themaConfig.title}
@@ -12,9 +24,7 @@ export function ServiceAlerts() {
       pageContentTop={null}
       pageLinks={[]}
       pageContentMain={
-        <>
-          <h1>test</h1>
-        </>
+        <ServiceAlertsPageContent overview={data?.content ?? []} />
       }
     />
   );
