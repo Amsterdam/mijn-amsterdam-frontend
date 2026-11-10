@@ -210,7 +210,7 @@ export function useSelectedFeatureCSS(
   const map = useMapInstance();
   const loadingFeatureId = loadingFeature?.id;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: _features depdency deliberately triggers highlighting after fetched features replaced the map layers
+  // biome-ignore lint/correctness/useExhaustiveDependencies: features dependency deliberately triggers highlighting after fetched features replaced the map layers
   useEffect(() => {
     if (map && '_layers' in map && Array.isArray(map._layers)) {
       for (const layer of Object.values(map._layers)) {
