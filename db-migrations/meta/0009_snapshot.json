@@ -1,5 +1,5 @@
 {
-  "id": "36034efc-bf98-4393-bf4b-30b2192145c4",
+  "id": "5a96e88c-13ca-40d6-aae7-76fcaf09a125",
   "prevId": "5c545c3c-0c0b-4dc6-8b30-d3899a4d892e",
   "version": "7",
   "dialect": "postgresql",
@@ -216,80 +216,6 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.bff_service_alert_links": {
-      "name": "bff_service_alert_links",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "varchar(64)",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "service_alert_id": {
-          "name": "service_alert_id",
-          "type": "varchar(64)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "label": {
-          "name": "label",
-          "type": "varchar(200)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "url": {
-          "name": "url",
-          "type": "varchar(2048)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "sort_order": {
-          "name": "sort_order",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 0
-        }
-      },
-      "indexes": {
-        "bff_service_alert_links_service_alert_id_idx": {
-          "name": "bff_service_alert_links_service_alert_id_idx",
-          "columns": [
-            {
-              "expression": "service_alert_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "bff_service_alert_links_service_alert_id_bff_service_alerts_id_fk": {
-          "name": "bff_service_alert_links_service_alert_id_bff_service_alerts_id_fk",
-          "tableFrom": "bff_service_alert_links",
-          "tableTo": "bff_service_alerts",
-          "columnsFrom": [
-            "service_alert_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.bff_service_alerts": {
       "name": "bff_service_alerts",
       "schema": "",
@@ -319,12 +245,18 @@
           "notNull": true,
           "default": "'info'"
         },
-        "display_locations": {
-          "name": "display_locations",
-          "type": "varchar(20)[]",
+        "display_location": {
+          "name": "display_location",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "links": {
+          "name": "links",
+          "type": "jsonb",
           "primaryKey": false,
           "notNull": true,
-          "default": "'{}'"
+          "default": "'[]'::jsonb"
         },
         "environments": {
           "name": "environments",
@@ -387,21 +319,6 @@
           "columns": [
             {
               "expression": "environments",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "gin",
-          "with": {}
-        },
-        "bff_service_alerts_display_locations_gin_idx": {
-          "name": "bff_service_alerts_display_locations_gin_idx",
-          "columns": [
-            {
-              "expression": "display_locations",
               "isExpression": false,
               "asc": true,
               "nulls": "last"

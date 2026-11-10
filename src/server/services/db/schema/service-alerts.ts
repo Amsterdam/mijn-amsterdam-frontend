@@ -1,7 +1,6 @@
-import { relations } from 'drizzle-orm';
 import {
   index,
-  integer,
+  jsonb,
   pgTable,
   text,
   timestamp,
@@ -9,7 +8,6 @@ import {
 } from 'drizzle-orm/pg-core';
 
 export const SERVICE_ALERTS_TABLE_NAME = 'bff_service_alerts';
-export const SERVICE_ALERT_LINKS_TABLE_NAME = 'bff_service_alert_links';
 
 export const SERVICE_ALERT_TYPES = ['warning', 'info', 'error'] as const;
 export type ServiceAlertType = (typeof SERVICE_ALERT_TYPES)[number];
@@ -26,6 +24,12 @@ export const SERVICE_ALERT_ENVIRONMENTS = ['test', 'acc', 'prod'] as const;
 export type ServiceAlertEnvironment =
   (typeof SERVICE_ALERT_ENVIRONMENTS)[number];
 
+export type ServiceAlertLink = {
+  label: string;
+  url: string;
+  sortOrder: number;
+};
+
 export const serviceAlertsTable = pgTable(
   SERVICE_ALERTS_TABLE_NAME,
   {
@@ -36,11 +40,10 @@ export const serviceAlertsTable = pgTable(
       .$type<ServiceAlertType>()
       .notNull()
       .default('info'),
-    displayLocations: varchar('display_locations', { length: 20 })
-      .array()
-      .$type<ServiceAlertDisplayLocation[]>()
-      .notNull()
-      .default([]),
+    displayLocation: varchar('display_location', { length: 20 })
+      .$type<ServiceAlertDisplayLocation>()
+      .notNull(),
+    links: jsonb('links').$type<ServiceAlertLink[]>().notNull().default([]),
     environments: varchar('environments', { length: 10 })
       .array()
       .$type<ServiceAlertEnvironment[]>()
@@ -64,44 +67,5 @@ export const serviceAlertsTable = pgTable(
       'gin',
       table.environments
     ),
-    index('bff_service_alerts_display_locations_gin_idx').using(
-      'gin',
-      table.displayLocations
-    ),
   ]
-);
-
-export const serviceAlertLinksTable = pgTable(
-  SERVICE_ALERT_LINKS_TABLE_NAME,
-  {
-    id: varchar('id', { length: 64 }).notNull().primaryKey(),
-    serviceAlertId: varchar('service_alert_id', { length: 64 })
-      .notNull()
-      .references(() => serviceAlertsTable.id, { onDelete: 'cascade' }),
-    label: varchar('label', { length: 200 }).notNull(),
-    url: varchar('url', { length: 2048 }).notNull(),
-    sortOrder: integer('sort_order').notNull().default(0),
-  },
-  (table) => [
-    index('bff_service_alert_links_service_alert_id_idx').on(
-      table.serviceAlertId
-    ),
-  ]
-);
-
-export const serviceAlertsRelations = relations(
-  serviceAlertsTable,
-  ({ many }) => ({
-    links: many(serviceAlertLinksTable),
-  })
-);
-
-export const serviceAlertLinksRelations = relations(
-  serviceAlertLinksTable,
-  ({ one }) => ({
-    serviceAlert: one(serviceAlertsTable, {
-      fields: [serviceAlertLinksTable.serviceAlertId],
-      references: [serviceAlertsTable.id],
-    }),
-  })
 );
