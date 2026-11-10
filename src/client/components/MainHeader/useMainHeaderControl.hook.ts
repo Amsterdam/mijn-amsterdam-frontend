@@ -80,10 +80,10 @@ export function useMainHeaderControl() {
 
   useKeyUp(closeByEscapeKey);
 
-  // Close the main menu or search when the route changes
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Close the main menu or search when the route changes
   useEffect(() => {
     closeMenuAndSearch();
-  }, [closeMenuAndSearch]);
+  }, [location.pathname]);
 
   // Close the main menu when a link in the main menu is clicked
   useEffect(() => {
