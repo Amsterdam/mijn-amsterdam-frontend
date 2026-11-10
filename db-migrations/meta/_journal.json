@@ -71,6 +71,13 @@
       "when": 1794300005308,
       "tag": "0009_loose_warlock",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1794344675895,
+      "tag": "0010_low_eternity",
+      "breakpoints": true
     }
   ]
 }

@@ -43,6 +43,9 @@ export const serviceAlertsTable = pgTable(
     displayLocation: varchar('display_location', { length: 20 })
       .$type<ServiceAlertDisplayLocation>()
       .notNull(),
+    themaId: varchar('thema_id', { length: 64 }),
+    createdByEmail: varchar('created_by_email', { length: 320 }),
+    updatedByEmail: varchar('updated_by_email', { length: 320 }),
     links: jsonb('links').$type<ServiceAlertLink[]>().notNull().default([]),
     environments: varchar('environments', { length: 10 })
       .array()
@@ -50,7 +53,7 @@ export const serviceAlertsTable = pgTable(
       .notNull()
       .default([]),
     dateStart: timestamp('date_start', { withTimezone: true }).notNull(),
-    dateEnd: timestamp('date_end', { withTimezone: true }),
+    dateEnd: timestamp('date_end', { withTimezone: true }).notNull(),
     dateUpdated: timestamp('date_updated', { withTimezone: true })
       .notNull()
       .defaultNow(),
