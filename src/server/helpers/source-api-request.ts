@@ -211,8 +211,8 @@ export async function requestData<T>(
     const response = await requestPromise;
 
     if(requestConfig.url?.includes('/acc/webservices/api/inkijkapi/v1/aanvragen')) {
-    console.dir(response.data, { depth: null, maxArrayLength: null });    
-    }
+      console.log(JSON.stringify(response.data, null, 2));   
+     }
 
     let responseDataTransformed = response.data;
 
