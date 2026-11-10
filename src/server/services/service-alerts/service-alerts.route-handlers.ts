@@ -5,6 +5,7 @@ import {
   sendBadRequestInvalidInput,
   sendResponse,
 } from '../../routing/route-helpers.ts';
+import { getUsernameFromSession } from '../admin/admin-helpers.ts';
 import {
   getServiceAlerts,
   handleUpsertServiceAlert,
@@ -31,6 +32,9 @@ export async function handleUpsertServiceAlertRequest(
     return sendBadRequestInvalidInput(res, error);
   }
 
-  const result = await handleUpsertServiceAlert(serviceAlert);
+  const result = await handleUpsertServiceAlert(
+    serviceAlert,
+    getUsernameFromSession(req)
+  );
   return sendResponse(res, apiSuccessResult(result));
 }

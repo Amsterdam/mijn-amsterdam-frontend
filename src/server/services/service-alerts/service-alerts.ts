@@ -17,28 +17,34 @@ export async function getServiceAlerts() {
   return rows;
 }
 
-export async function handleUpsertServiceAlert({
-  id,
-  title,
-  body,
-  type,
-  displayLocation,
-  links,
-  environments,
-  dateStart,
-  dateEnd,
-}: ServiceAlertInput) {
+export async function handleUpsertServiceAlert(
+  {
+    id,
+    title,
+    body,
+    type,
+    displayLocation,
+    themaId,
+    links,
+    environments,
+    dateStart,
+    dateEnd,
+  }: ServiceAlertInput,
+  updatedByEmail: string
+) {
   const drizzleDb = getDrizzleDb();
   const alertData = {
     title,
     body,
     type,
     displayLocation,
+    themaId: themaId ?? null,
     links,
     environments,
     dateStart: new Date(dateStart),
-    dateEnd: dateEnd ? new Date(dateEnd) : null,
+    dateEnd: new Date(dateEnd),
     dateUpdated: new Date(),
+    updatedByEmail,
   };
 
   if (id) {
@@ -52,9 +58,11 @@ export async function handleUpsertServiceAlert({
       throw new Error(`Service alert with id "${id}" was not found`);
     }
   } else {
-    await drizzleDb
-      .insert(serviceAlertsTable)
-      .values({ id: randomUUID(), ...alertData });
+    await drizzleDb.insert(serviceAlertsTable).values({
+      id: randomUUID(),
+      ...alertData,
+      createdByEmail: updatedByEmail,
+    });
   }
 
   return { success: true };

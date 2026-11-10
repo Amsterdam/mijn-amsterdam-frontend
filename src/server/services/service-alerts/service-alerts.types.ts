@@ -23,10 +23,20 @@ export const serviceAlertInput = z
     body: z.string(),
     type: z.enum(SERVICE_ALERT_TYPES).default('info'),
     displayLocation: z.enum(SERVICE_ALERT_DISPLAY_LOCATIONS),
+    themaId: z.string().max(64).nullable().optional(),
     links: z.array(serviceAlertLinkInput).default([]),
     environments: z.array(z.enum(SERVICE_ALERT_ENVIRONMENTS)).default([]),
     dateStart: z.iso.datetime(),
-    dateEnd: z.iso.datetime().nullable().optional(),
+    dateEnd: z.iso.datetime(),
+  })
+  .superRefine(({ displayLocation, themaId }, context) => {
+    if (displayLocation === 'theme' && !themaId) {
+      context.addIssue({
+        code: 'custom',
+        message: 'A theme must be selected for theme alerts.',
+        path: ['themaId'],
+      });
+    }
   })
   .strict();
 
@@ -38,8 +48,11 @@ export type ServiceAlertsOverview = {
   body: string;
   type: (typeof SERVICE_ALERT_TYPES)[number];
   displayLocation: (typeof SERVICE_ALERT_DISPLAY_LOCATIONS)[number];
+  themaId: string | null;
+  createdByEmail: string | null;
+  updatedByEmail: string | null;
   links: ServiceAlertLinkInput[];
   environments: (typeof SERVICE_ALERT_ENVIRONMENTS)[number][];
   dateStart: string;
-  dateEnd?: string | null;
+  dateEnd: string;
 }[];
