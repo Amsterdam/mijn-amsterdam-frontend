@@ -136,8 +136,6 @@ export async function fetchWmo(
     authProfileAndToken.profile.id
   );
 
-  console.log(voorzieningenResponse);
-
   if (voorzieningenResponse.status !== 'OK') {
     return voorzieningenResponse;
   }
