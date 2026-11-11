@@ -70,7 +70,7 @@ export type LeveringsVormTransformed = 'ZIN' | 'PGB' | '';
 export type LeveringsVormUitgeschreven =
   | 'Zorg in natura'
   | 'Persoonsgebonden budget'
-  | '';
+  | null;
 export type ProductSoortCode = string;
 export type ProductIdentificatie = string;
 export type CasusIdentificatie = string;

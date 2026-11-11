@@ -101,7 +101,7 @@ function transformVoorzieningForFrontend(
   > = {
     ZIN: 'Zorg in natura',
     PGB: 'Persoonsgebonden budget',
-    '': '',
+    '': null,
   };
 
   const voorzieningFrontend: WMOVoorzieningFrontend = {

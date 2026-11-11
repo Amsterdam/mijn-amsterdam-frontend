@@ -18,10 +18,7 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
   if (voorziening?.decision) {
     rows.push({ content: voorziening?.decision, label: 'Resultaat' });
   }
-  if (
-    voorziening?.leveringsvormUitgeschreven === 'Persoonsgebonden budget' ||
-    voorziening?.leveringsvormUitgeschreven === 'Zorg in natura'
-  ) {
+  if (voorziening?.leveringsvormUitgeschreven) {
     rows.push({
       content: voorziening?.leveringsvormUitgeschreven,
       label: 'Leveringsvorm',
