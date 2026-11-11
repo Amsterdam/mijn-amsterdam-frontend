@@ -19,31 +19,20 @@ type WpiAanvraagConfig = {
   getNotifications: (
     bijstandsuitkeringAanvragen: WpiRequestProcess[]
   ) => MyNotification<string>[];
+  isActive: boolean;
 }[];
 
-const wpiAanvragen: WpiAanvraagConfig = [
+export const wpiAanvragenConfig: WpiAanvraagConfig = [
   {
     about: 'Bijstandsuitkering',
     labels: bijstandsuitkeringRequestProcessLabels,
     getNotifications: getBijstandsuitkeringNotifications,
+    isActive: true,
   },
   {
     about: 'Bijzondere Bijstand',
     labels: bijzondereBijstandRequestProcessLabels,
     getNotifications: getBijzondereBijstandNotifications,
+    isActive: featureToggle['INKOMEN.bijzondereBijstand'],
   },
 ];
-
-export function getWpiAanvragenConfig(): WpiAanvraagConfig {
-  return featureToggle['INKOMEN.bijzondereBijstand']
-    ? wpiAanvragen
-    : wpiAanvragen.filter(
-        (aanvraag) => aanvraag.about !== 'Bijzondere Bijstand'
-      );
-}
-
-export function getAaanvraagConfig(aanvraagType: WpiRequestProcess['about']) {
-  return getWpiAanvragenConfig().find(
-    (aanvraag) => aanvraag.about === aanvraagType
-  );
-}
