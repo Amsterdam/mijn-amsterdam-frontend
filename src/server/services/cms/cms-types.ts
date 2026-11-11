@@ -3,45 +3,7 @@ import type {
   MyNotification,
 } from '../../../universal/types/App.types.ts';
 
-type Tyd = {
-  Nam: 'Starttijd' | 'Eindtijd';
-  Tyd: string;
-};
-type Website = {
-  Nam: 'Website';
-  Src: string;
-  Wrd: string;
-};
-type Dtm = {
-  Nam: 'Einddatum' | 'Startdatum';
-  Dtm: string;
-};
-type Wrd = {
-  Nam: 'Locatie' | 'Toevoeging';
-  Wrd: string;
-};
-type Src = {
-  Nam: 'Meer informatie' | 'Omschrijving';
-  Src: string;
-};
-export type CMSEventData = {
-  item?: {
-    relUrl: string;
-    page?: {
-      cluster: {
-        veld: Array<Tyd | Website | Dtm | Src | Wrd>;
-      };
-      title: string;
-    };
-  };
-};
-export type CMSFeedItem = {
-  title: string;
-  content: string;
-  feedid: string;
-};
-export const OtapEnvs = ['tst', 'acc', 'prd', 'dev', 'unittest'] as const;
-export type OtapEnv = (typeof OtapEnvs)[number];
+export type OtapEnv = 'tst' | 'acc' | 'prd';
 
 type SeverityLevel = 'error' | 'info' | 'success' | 'warning';
 export type CMSMaintenanceNotification = MyNotification & {
@@ -55,6 +17,7 @@ export type CMSMaintenanceNotification = MyNotification & {
   path: string;
   severity: SeverityLevel;
   otapEnvs: OtapEnv[];
+  displayLocation?: 'theme' | 'dashboard' | 'notification';
   link?: LinkProps;
 };
 export type QueryParamsMaintenanceNotifications = {

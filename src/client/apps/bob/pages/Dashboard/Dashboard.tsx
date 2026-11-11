@@ -4,6 +4,7 @@ import { Heading, OrderedList } from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
 
 import { LoadingContent } from '../../../../components/LoadingContent/LoadingContent.tsx';
+import { MaintenanceNotifications } from '../../../../components/MaintenanceNotifications/MaintenanceNotifications.tsx';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import { MyAreaDashboard } from '../../../../components/MyArea/MyAreaDashboard.tsx';
 import { MyNotification } from '../../../../components/MyNotification/MyNotification.tsx';
@@ -70,6 +71,7 @@ export function Dashboard() {
           pageTitle: 'Dashboard',
         }}
       >
+        <MaintenanceNotifications page="dashboard" />
         <PageContentCell
           spanWide={7}
           className={getRedactedClass(null, 'full')}

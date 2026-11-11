@@ -80,9 +80,10 @@ export function ThemaPagina({
       showUserFeedback
       userFeedbackDetails={userFeedbackDetails}
     >
-      {maintenanceNotificationsPageSlug && (
-        <MaintenanceNotifications page={maintenanceNotificationsPageSlug} />
-      )}
+      <MaintenanceNotifications
+        page={maintenanceNotificationsPageSlug}
+        themaID={id}
+      />
       {pageContentTop}
       {!!visiblePageLinks.length && (
         <PageContentCell className={pageContentTop ? styles.PullUp : ''}>

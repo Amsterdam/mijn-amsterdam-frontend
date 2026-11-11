@@ -25,7 +25,6 @@ import { fetchMyLocations } from './bag/my-locations.ts';
 import { fetchBezwaren } from './bezwaren/bezwaren.ts';
 import { fetchLoodmetingen } from './bodem/loodmetingen.ts';
 import { fetchBrp } from './brp/brp.ts';
-import { fetchActiveMaintenanceNotifications } from './cms/cms-maintenance-notifications.ts';
 import { fetchErfpacht } from './erfpacht/erfpacht.ts';
 import { fetchHLI } from './hli/hli.ts';
 import { fetchHorecaVergunningen } from './horeca/horeca.ts';
@@ -41,6 +40,7 @@ import { fetchBelasting } from './patroon-c/belasting.ts';
 import { fetchMilieuzone, fetchOvertredingen } from './patroon-c/cleopatra.ts';
 import { fetchSubsidie } from './patroon-c/subsidie.ts';
 import { fetchSVWI } from './patroon-c/svwi.ts';
+import { fetchActiveMaintenanceNotifications } from './service-alerts/maintenance-notifications.ts';
 import type { ServiceID_ } from './service-ids.ts';
 import {
   combineNotificationsWithTipsAndSort,

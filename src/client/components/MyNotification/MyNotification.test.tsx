@@ -23,6 +23,13 @@ describe('<MyNotification />', () => {
         to: '/test',
         title: 'More info about Test notification',
       },
+      links: [
+        { to: 'https://example.com/first', title: 'First service alert link' },
+        {
+          to: 'https://example.com/second',
+          title: 'Second service alert link',
+        },
+      ],
       hideDatePublished: false,
       isAlert: false,
       themaTitle: '',
@@ -65,6 +72,15 @@ describe('<MyNotification />', () => {
     render(<Component />);
 
     expect(screen.getByText(/Custom test link/)).toBeInTheDocument();
+    expect(screen.getByText('First service alert link')).toHaveAttribute(
+      'href',
+      'https://example.com/first'
+    );
+    expect(screen.getByText('Second service alert link')).toHaveAttribute(
+      'href',
+      'https://example.com/second'
+    );
+
     await user.click(screen.getByText(/Custom test link/));
     expect(callback).toHaveBeenCalled();
 

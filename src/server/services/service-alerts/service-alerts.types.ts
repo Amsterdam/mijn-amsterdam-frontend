@@ -26,7 +26,7 @@ export const serviceAlertInput = z
     displayLocation: z.enum(SERVICE_ALERT_DISPLAY_LOCATIONS),
     themaId: z.string().max(64).nullable().optional(),
     links: z.array(serviceAlertLinkInput).default([]),
-    environments: z.array(z.enum(SERVICE_ALERT_ENVIRONMENTS)).default([]),
+    environment: z.enum(SERVICE_ALERT_ENVIRONMENTS),
     dateStart: z.iso.datetime(),
     dateEnd: z.iso.datetime(),
   })
@@ -53,7 +53,7 @@ export type ServiceAlertsOverview = {
   createdByEmail: string | null;
   updatedByEmail: string | null;
   links: ServiceAlertLinkInput[];
-  environments: (typeof SERVICE_ALERT_ENVIRONMENTS)[number][];
+  environment: (typeof SERVICE_ALERT_ENVIRONMENTS)[number];
   dateStart: string;
   dateEnd: string;
 }[];

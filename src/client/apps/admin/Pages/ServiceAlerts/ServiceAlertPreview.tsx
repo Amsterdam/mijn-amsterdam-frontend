@@ -32,6 +32,7 @@ export function ServiceAlertPreview({
     title: title || 'Titel van de melding',
     description: body || 'Bericht van de melding',
     isAlert: true,
+    links: links.map(({ label, url }) => ({ title: label, to: url })),
   };
 
   return (
@@ -45,7 +46,6 @@ export function ServiceAlertPreview({
             <MyNotification
               notification={notification}
               trackCategory="Dashboard / Actueel"
-              additionalLinks={links}
             />
           </OrderedList.Item>
         </OrderedList>

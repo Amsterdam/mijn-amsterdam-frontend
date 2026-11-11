@@ -4,7 +4,8 @@ import { useAppStateGetter } from '../useAppStateStore.ts';
 import { useBffApi } from './useBffApi.ts';
 
 export function useCmsMaintenanceNotifications(
-  page: string,
+  page: string | undefined,
+  themaID?: string,
   fromApiDirectly: boolean = false
 ) {
   const { CMS_MAINTENANCE_NOTIFICATIONS } = useAppStateGetter();
@@ -17,6 +18,20 @@ export function useCmsMaintenanceNotifications(
   const notifications = fromApiDirectly
     ? api.data?.content
     : CMS_MAINTENANCE_NOTIFICATIONS?.content;
+
+  if (themaID) {
+    return notifications?.filter(
+      (notification) =>
+        notification.displayLocation === 'theme' &&
+        notification.themaID === themaID
+    );
+  }
+
+  if (page === 'dashboard' || page === 'landingspagina') {
+    return notifications?.filter(
+      (notification) => notification.displayLocation === 'dashboard'
+    );
+  }
 
   if (page) {
     return notifications?.filter(({ path }) => path === `/${page}`);

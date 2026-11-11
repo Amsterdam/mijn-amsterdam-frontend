@@ -273,9 +273,6 @@ const ApiConfig_ = {
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/algemene_onderdelen/xxv/footer-xxv/?AppIdt=app-data`,
     cacheTimeout: 24 * ONE_HOUR_MS, // 24 hours
   },
-  CMS_MAINTENANCE_NOTIFICATIONS: {
-    url: `${getFromEnv('BFF_CMS_BASE_URL')}/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true`,
-  },
   BENK_BRP: {
     url: `${getFromEnv('BFF_BENK_BRP_API_BASE_URL')}`,
     method: 'POST',

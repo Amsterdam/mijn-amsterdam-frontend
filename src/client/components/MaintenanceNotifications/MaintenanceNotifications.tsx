@@ -6,22 +6,24 @@ import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanc
 import { PageContentCell } from '../Page/Page.tsx';
 import styles from './MaintenanceNotifications.module.scss';
 
-const DEFAULT_SEVERITY = 'warning';
 const DEFAULT_HEADING = 'Onderhoudsbericht';
 
 interface MaintenanceNotificationsProps {
-  page: string;
+  page?: string;
+  themaID?: string;
   fromApiDirectly?: boolean;
   className?: string;
 }
 
 export function MaintenanceNotifications({
   page,
+  themaID,
   fromApiDirectly = false,
   className,
 }: MaintenanceNotificationsProps) {
   const maintenanceNotifications = useCmsMaintenanceNotifications(
     page,
+    themaID,
     fromApiDirectly
   );
 
@@ -38,20 +40,21 @@ export function MaintenanceNotifications({
             severity={
               notification.severity === 'info'
                 ? undefined
-                : notification.severity || DEFAULT_SEVERITY
+                : notification.severity
             }
             heading={notification.title || DEFAULT_HEADING}
             headingLevel={4}
             className={classNames(styles.MaintenanceNotification, className)}
           >
             {parseHTML(notification.description)}
-            {notification.link?.to && (
-              <Paragraph>
-                <Link href={notification.link.to}>
-                  {notification.link.title}
-                </Link>
+            {(
+              notification.links ??
+              (notification.link ? [notification.link] : [])
+            ).map(({ title, to }, index) => (
+              <Paragraph key={`${to}-${index}`}>
+                <Link href={to}>{title}</Link>
               </Paragraph>
-            )}
+            ))}
           </Alert>
         );
       })}

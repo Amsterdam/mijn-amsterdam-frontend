@@ -311,7 +311,7 @@ export function AfvalThemaPagina() {
           </>
         )}
       </PageContentCell>
-      <MaintenanceNotifications page="afval" />
+      <MaintenanceNotifications page="afval" themaID={themaConfig.id} />
       {isError(AFVAL) && (
         <PageContentCell>
           <ErrorAlert>

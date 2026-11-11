@@ -25,7 +25,7 @@ function createServiceAlert(
     createdByEmail: null,
     updatedByEmail: null,
     links: [],
-    environments: [],
+    environment: 'test',
     dateStart,
     dateEnd,
   };
