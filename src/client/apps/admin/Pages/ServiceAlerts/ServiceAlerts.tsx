@@ -8,6 +8,7 @@ import {
   TITLE_ADD_STORINGSMELDING,
   themaConfig,
 } from './ServiceAlerts-thema-config.ts';
+import { ServiceAlertUpsertForm } from './ServiceAlertUpsertForm.tsx';
 
 export function ServiceAlerts() {
   const { isError, data } = useBffApi<ServiceAlertsOverview>(
@@ -25,9 +26,7 @@ export function ServiceAlerts() {
       isError={false}
       isLoading={false}
       id="admin-user-feedback"
-      pageContentTop={
-        <PageContentCell>Overzicht van storingsmeldingen</PageContentCell>
-      }
+      pageContentTop={<></>}
       pageLinks={[]}
       pageContentMain={
         <ServiceAlertsPageContent overview={data?.content ?? []} />
@@ -48,7 +47,7 @@ export function ServiceAlertToevoegen() {
         <PageContentCell>Toevoegen van storingsmelding</PageContentCell>
       }
       pageLinks={[]}
-      pageContentMain={<h1> toevoegen</h1>}
+      pageContentMain={<ServiceAlertUpsertForm />}
     />
   );
 }
