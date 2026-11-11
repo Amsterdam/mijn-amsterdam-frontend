@@ -1,13 +1,9 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
 import type { AdminIndexLocals } from '../../../../../server/services/admin/admin-types.ts';
-import type { ServiceAlertInput } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
 import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../../components/Thema/ThemaPagina.tsx';
-import {
-  sendJSONPostRequest,
-  useBffApi,
-} from '../../../../hooks/api/useBffApi.ts';
+import { useBffApi } from '../../../../hooks/api/useBffApi.ts';
 import {
   type SessionData,
   useSessionApiData,
@@ -34,47 +30,10 @@ export function Home() {
   const sessionData = useSessionApiData<
     SessionData & { username: string | null }
   >(AUTH_API_URL);
-  const addServiceAlerts = useBffApi<{ success: boolean }, ServiceAlertInput>(
-    BFFApiUrls.SERVICE_ALERTS_UPSERT,
-    {
-      fetchImmediately: false,
-      sendRequest: sendJSONPostRequest,
-    }
-  );
-  const serviceAlerts = useBffApi(BFFApiUrls.SERVICE_ALERTS_OVERVIEW);
-  console.log('Service alerts:', serviceAlerts.data?.content);
-
   const pageContentMain = (
     <PageContentCell>
       Hoi! Je bent ingelogd met{' '}
       {sessionData?.username ?? 'een onbekend emailadres'}.
-      <button
-        disabled={addServiceAlerts.isLoading}
-        onClick={() =>
-          addServiceAlerts.fetch({
-            method: 'POST',
-            payload: {
-              title: 'Test service alert',
-              body: 'Dit is een voorbeeldmelding om het aanmaken te testen.',
-              type: 'info',
-              displayLocation: 'dashboard',
-              links: [],
-              environments: ['test'],
-              dateStart: new Date().toISOString(),
-              dateEnd: null,
-            },
-          })
-        }
-      >
-        Aanmaken storingsmelding
-      </button>
-      {addServiceAlerts.isLoading && <p>Service alert wordt aangemaakt...</p>}
-      {addServiceAlerts.isError && (
-        <p role="alert">Aanmaken mislukt: {addServiceAlerts.errorData}</p>
-      )}
-      {addServiceAlerts.data?.status === 'OK' && (
-        <p>Service alert aangemaakt.</p>
-      )}
     </PageContentCell>
   );
 
