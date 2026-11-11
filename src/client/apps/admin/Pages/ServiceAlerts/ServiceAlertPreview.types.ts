@@ -5,4 +5,5 @@ export type ServiceAlertPreviewProps = {
   body: string;
   type: ServiceAlertInput['type'];
   displayLocation: ServiceAlertInput['displayLocation'];
+  links: ServiceAlertInput['links'];
 };

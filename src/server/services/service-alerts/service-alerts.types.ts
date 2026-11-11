@@ -1,5 +1,6 @@
 import z from 'zod';
 
+import { isHttpsUrl } from '../../../universal/helpers/url.ts';
 import {
   SERVICE_ALERT_DISPLAY_LOCATIONS,
   SERVICE_ALERT_ENVIRONMENTS,
@@ -8,8 +9,8 @@ import {
 
 export const serviceAlertLinkInput = z
   .object({
-    label: z.string().max(200),
-    url: z.url().max(2048),
+    label: z.string().trim().min(1).max(200),
+    url: z.url().max(2048).refine(isHttpsUrl),
     sortOrder: z.number().int(),
   })
   .strict();

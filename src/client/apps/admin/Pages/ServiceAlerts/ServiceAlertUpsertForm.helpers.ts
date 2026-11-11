@@ -1,3 +1,4 @@
+import { isHttpsUrl } from '../../../../../universal/helpers/url.ts';
 import {
   serviceAlertDisplayLocations,
   serviceAlertEnvironments,
@@ -8,6 +9,32 @@ import type {
   ServiceAlertUpsertFormResult,
   ServiceAlertUpsertFormValues,
 } from './ServiceAlertUpsertForm.types.ts';
+
+export function getServiceAlertLinkValidationMessage({
+  label,
+  url,
+}: {
+  label: string;
+  url: string;
+}) {
+  const trimmedLabel = label.trim();
+  const trimmedUrl = url.trim();
+
+  if (!trimmedLabel && !trimmedUrl) {
+    return 'Vul een linktekst en URL in.';
+  }
+
+  if (
+    !trimmedLabel ||
+    trimmedLabel.length > 200 ||
+    trimmedUrl.length > 2048 ||
+    !isHttpsUrl(trimmedUrl)
+  ) {
+    return 'Vul een linktekst en een geldig https://-adres in.';
+  }
+
+  return null;
+}
 
 function combineDateAndTime(date: Date, time: string) {
   const [hours, minutes] = time.split(':').map(Number);
@@ -26,6 +53,7 @@ export function getServiceAlertUpsertFormResult({
   timeStart,
   timeEnd,
   type: currentType,
+  links,
   serviceAlert,
 }: ServiceAlertUpsertFormValues): ServiceAlertUpsertFormResult {
   const title = formData.get('title');
@@ -40,6 +68,13 @@ export function getServiceAlertUpsertFormResult({
   const environment = serviceAlertEnvironments.find(
     ({ value }) => value === formData.get('environment')
   )?.value;
+  const parsedLinks = links
+    .filter(({ label, url }) => label.trim() || url.trim())
+    .map(({ label, url }, sortOrder) => ({
+      label: label.trim(),
+      url: url.trim(),
+      sortOrder,
+    }));
 
   if (
     typeof title !== 'string' ||
@@ -60,6 +95,14 @@ export function getServiceAlertUpsertFormResult({
     return {
       payload: null,
       validationMessage: 'Vul alle verplichte velden in.',
+    };
+  }
+
+  if (parsedLinks.some((link) => getServiceAlertLinkValidationMessage(link))) {
+    return {
+      payload: null,
+      validationMessage:
+        'Controleer de links. Vul voor elke link zowel een label als een geldig https://-adres in.',
     };
   }
 
@@ -90,7 +133,7 @@ export function getServiceAlertUpsertFormResult({
         displayLocation === 'theme' && typeof formThemaId === 'string'
           ? formThemaId
           : null,
-      links: serviceAlert?.links ?? [],
+      links: parsedLinks,
       environments: serviceAlert
         ? [
             environment,

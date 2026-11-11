@@ -12,7 +12,10 @@ import {
 } from '../../../../hooks/api/useBffApi.ts';
 import { BFFApiUrls } from '../../config/api.ts';
 import { serviceAlertDisplayLocations } from './ServiceAlertUpsertForm.constants.ts';
-import { getServiceAlertUpsertFormResult } from './ServiceAlertUpsertForm.helpers.ts';
+import {
+  getServiceAlertLinkValidationMessage,
+  getServiceAlertUpsertFormResult,
+} from './ServiceAlertUpsertForm.helpers.ts';
 
 function getInitialDateRange(
   serviceAlert?: ServiceAlertsOverview[number]
@@ -38,6 +41,14 @@ export function useServiceAlertUpsertForm(
 ) {
   const [title, setTitle] = useState(serviceAlert?.title ?? '');
   const [body, setBody] = useState(serviceAlert?.body ?? '');
+  const [links, setLinks] = useState<ServiceAlertInput['links']>(
+    () => serviceAlert?.links.map((link) => ({ ...link })) ?? []
+  );
+  const [linkLabel, setLinkLabel] = useState('');
+  const [linkUrl, setLinkUrl] = useState('');
+  const [linkValidationMessage, setLinkValidationMessage] = useState<
+    string | null
+  >(null);
   const [type, setType] = useState<ServiceAlertInput['type']>(
     serviceAlert?.type ?? 'info'
   );
@@ -65,6 +76,48 @@ export function useServiceAlertUpsertForm(
     }
   );
 
+  function handleLinkLabelChange(value: string) {
+    setLinkLabel(value);
+    setLinkValidationMessage(null);
+  }
+
+  function handleLinkUrlChange(value: string) {
+    setLinkUrl(value);
+    setLinkValidationMessage(null);
+  }
+
+  function addLink() {
+    const validationMessage = getServiceAlertLinkValidationMessage({
+      label: linkLabel,
+      url: linkUrl,
+    });
+
+    if (validationMessage) {
+      setLinkValidationMessage(validationMessage);
+      return;
+    }
+
+    setLinks((currentLinks) => [
+      ...currentLinks,
+      {
+        label: linkLabel.trim(),
+        url: linkUrl.trim(),
+        sortOrder: currentLinks.length,
+      },
+    ]);
+    setLinkLabel('');
+    setLinkUrl('');
+    setLinkValidationMessage(null);
+  }
+
+  function removeLink(index: number) {
+    setLinks((currentLinks) =>
+      currentLinks
+        .filter((_link, linkIndex) => linkIndex !== index)
+        .map((link, sortOrder) => ({ ...link, sortOrder }))
+    );
+  }
+
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -74,6 +127,7 @@ export function useServiceAlertUpsertForm(
       timeStart,
       timeEnd,
       type,
+      links,
       serviceAlert,
     });
 
@@ -107,6 +161,11 @@ export function useServiceAlertUpsertForm(
     body,
     dateRange,
     displayLocation,
+    links,
+    addLink,
+    linkLabel,
+    linkUrl,
+    linkValidationMessage,
     handleDisplayLocationChange,
     handleSubmit,
     isError: upsertServiceAlert.isError,
@@ -114,6 +173,9 @@ export function useServiceAlertUpsertForm(
     isSuccess: upsertServiceAlert.data?.status === 'OK',
     setBody,
     setDateRange,
+    setLinkLabel: handleLinkLabelChange,
+    setLinkUrl: handleLinkUrlChange,
+    removeLink,
     setThemaId,
     setTimeEnd,
     setTimeStart,

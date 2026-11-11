@@ -3,6 +3,7 @@ import { useState } from 'react';
 import {
   Alert,
   Heading,
+  Link,
   OrderedList,
   Paragraph,
 } from '@amsterdam/design-system-react';
@@ -20,6 +21,7 @@ export function ServiceAlertPreview({
   body,
   type,
   displayLocation,
+  links,
 }: ServiceAlertPreviewProps) {
   const [datePublished] = useState(() => new Date().toISOString());
   const notification: MyNotificationData = {
@@ -43,6 +45,7 @@ export function ServiceAlertPreview({
             <MyNotification
               notification={notification}
               trackCategory="Dashboard / Actueel"
+              additionalLinks={links}
             />
           </OrderedList.Item>
         </OrderedList>
@@ -53,6 +56,11 @@ export function ServiceAlertPreview({
           severity={type === 'info' ? undefined : type}
         >
           <Paragraph>{body || 'Bericht van de melding'}</Paragraph>
+          {links.map(({ label, url }) => (
+            <Paragraph key={url}>
+              <Link href={url}>{label}</Link>
+            </Paragraph>
+          ))}
         </Alert>
       )}
     </>

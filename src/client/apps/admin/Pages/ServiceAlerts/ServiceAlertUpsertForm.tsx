@@ -1,19 +1,23 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import {
   ActionGroup,
   Button,
+  DataList,
   DatePicker,
   ErrorMessage,
   Field,
   FieldSet,
+  IconButton,
   Label,
+  Link,
   Paragraph,
   Select,
   TextArea,
   TextInput,
   TimeInput,
 } from '@amsterdam/design-system-react';
+import { CloseIcon, PlusIcon } from '@amsterdam/design-system-react-icons';
 
 import { PageContentCell } from '../../../../components/Page/Page.tsx';
 import { ServiceAlertPreview } from './ServiceAlertPreview.tsx';
@@ -47,6 +51,11 @@ function ServiceAlertUpsertFormContent({
     body,
     dateRange,
     displayLocation,
+    links,
+    addLink,
+    linkLabel,
+    linkUrl,
+    linkValidationMessage,
     handleDisplayLocationChange,
     handleSubmit,
     isError,
@@ -54,6 +63,9 @@ function ServiceAlertUpsertFormContent({
     isSuccess,
     setBody,
     setDateRange,
+    setLinkLabel,
+    setLinkUrl,
+    removeLink,
     setThemaId,
     setTimeEnd,
     setTimeStart,
@@ -155,6 +167,64 @@ function ServiceAlertUpsertFormContent({
                 </Select>
               </Field>
             )}
+            <FieldSet legend="Links (optioneel)" className="ams-mb-m">
+              <DataList>
+                {links.map((link, index) => (
+                  <Fragment key={index}>
+                    <DataList.Item>
+                      <DataList.Key>Label</DataList.Key>
+                      <DataList.Value>{link.label}</DataList.Value>
+                    </DataList.Item>
+                    <DataList.Item>
+                      <DataList.Key>URL</DataList.Key>
+                      <DataList.Value>
+                        <Link href={link.url} target="_blank" rel="noreferrer">
+                          {link.url}
+                        </Link>
+                      </DataList.Value>
+                      <DataList.Actions>
+                        <IconButton
+                          label={`Verwijder link ${index + 1}`}
+                          svg={CloseIcon}
+                          onClick={() => removeLink(index)}
+                        />
+                      </DataList.Actions>
+                    </DataList.Item>
+                  </Fragment>
+                ))}
+              </DataList>
+              <Field className="ams-mb-m">
+                <Label htmlFor="service-alert-link-label">Linktekst</Label>
+                <TextInput
+                  id="service-alert-link-label"
+                  value={linkLabel}
+                  onChange={(event) => setLinkLabel(event.currentTarget.value)}
+                  maxLength={200}
+                />
+              </Field>
+              <Field className="ams-mb-m">
+                <Label htmlFor="service-alert-link-url">URL</Label>
+                <TextInput
+                  id="service-alert-link-url"
+                  type="url"
+                  value={linkUrl}
+                  onChange={(event) => setLinkUrl(event.currentTarget.value)}
+                  maxLength={2048}
+                  placeholder="https://"
+                />
+              </Field>
+              {linkValidationMessage && (
+                <ErrorMessage>{linkValidationMessage}</ErrorMessage>
+              )}
+              <Button
+                type="button"
+                icon={<PlusIcon />}
+                variant="secondary"
+                onClick={addLink}
+              >
+                Voeg nog een link toe
+              </Button>
+            </FieldSet>
             <Field className="ams-mb-m">
               <Label htmlFor="service-alert-environment">Omgeving</Label>
               <Select
@@ -253,6 +323,7 @@ function ServiceAlertUpsertFormContent({
           body={body}
           type={type}
           displayLocation={displayLocation}
+          links={links}
         />
       </PageContentCell>
     </>
