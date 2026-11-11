@@ -4,6 +4,7 @@ import type {
 } from '../../../../universal/types/App.types.ts';
 import type {
   LeveringsVormTransformed,
+  LeveringsVormTransUitgeschreven,
   ProductSoortCode,
 } from '../../zorgned/zorgned-types.ts';
 import type { VoorzieningActiePropsFrontend } from '../jzd-types.ts';
@@ -20,4 +21,5 @@ export type WMOVoorzieningFrontend = ZaakAanvraagDetail &
     statusDateFormatted: string;
     disclaimer?: string;
     leveringsvorm: LeveringsVormTransformed;
+    leveringsvormUitgeschreven: LeveringsVormTransUitgeschreven;
   };

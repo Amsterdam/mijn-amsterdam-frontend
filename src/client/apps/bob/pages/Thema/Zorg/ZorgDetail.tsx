@@ -14,15 +14,20 @@ type WMODetailContentProps = {
 };
 
 function WMODetailContent({ voorziening }: WMODetailContentProps) {
+  console.log(voorziening);
+
   const rows = [];
   if (voorziening?.decision) {
     rows.push({ content: voorziening?.decision, label: 'Resultaat' });
   }
   if (
-    voorziening?.leveringsvorm === 'Persoonsgebonden budget' ||
-    voorziening?.leveringsvorm === 'Zorg in natura'
+    voorziening?.leveringsvormUitgeschreven === 'Persoonsgebonden budget' ||
+    voorziening?.leveringsvormUitgeschreven === 'Zorg in natura'
   ) {
-    rows.push({ content: voorziening?.leveringsvorm, label: 'Leveringsvorm' });
+    rows.push({
+      content: voorziening?.leveringsvormUitgeschreven,
+      label: 'Leveringsvorm',
+    });
   }
   if (voorziening?.leverancier) {
     rows.push({ content: voorziening?.leverancier, label: 'Aanbieder' });
