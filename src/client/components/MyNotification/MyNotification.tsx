@@ -16,11 +16,13 @@ import styles from './MyNotification.module.scss';
 type MyNotificationProps = {
   notification: MyNotification;
   trackCategory?: string;
+  additionalLinks?: Array<{ label: string; url: string }>;
 };
 
 export function MyNotification({
   notification,
   trackCategory,
+  additionalLinks = [],
 }: MyNotificationProps) {
   const profileType = useProfileTypeValue();
 
@@ -123,6 +125,11 @@ export function MyNotification({
             )}
           </>
         )}
+        {additionalLinks.map(({ label, url }) => (
+          <Paragraph key={url}>
+            <MaLink href={url}>{label}</MaLink>
+          </Paragraph>
+        ))}
       </div>
     </article>
   );
