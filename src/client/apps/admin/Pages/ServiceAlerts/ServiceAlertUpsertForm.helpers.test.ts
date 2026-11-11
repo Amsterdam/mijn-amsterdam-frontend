@@ -78,6 +78,31 @@ describe('getServiceAlertUpsertFormResult links', () => {
   });
 });
 
+describe('getServiceAlertUpsertFormResult environment', () => {
+  it('uses the single selected environment when updating', () => {
+    const formValues = createFormValues([]);
+    formValues.formData.set('environment', 'acc');
+    formValues.serviceAlert = {
+      id: 'existing-alert',
+      title: 'Testmelding',
+      body: 'Testbericht',
+      type: 'info',
+      displayLocation: 'dashboard',
+      themaId: null,
+      createdByEmail: null,
+      updatedByEmail: null,
+      links: [],
+      environment: 'test',
+      dateStart: '2026-11-11T09:00:00.000Z',
+      dateEnd: '2026-11-12T10:00:00.000Z',
+    };
+
+    const result = getServiceAlertUpsertFormResult(formValues);
+
+    expect(result.payload?.environment).toBe('acc');
+  });
+});
+
 describe('getServiceAlertLinkValidationMessage', () => {
   it('requires a label and an https URL before adding a link', () => {
     expect(

@@ -230,7 +230,7 @@ function ServiceAlertUpsertFormContent({
               <Select
                 id="service-alert-environment"
                 name="environment"
-                defaultValue={serviceAlert?.environments[0] ?? ''}
+                defaultValue={serviceAlert?.environment ?? ''}
                 required
               >
                 <Select.Option value="">Selecteer een omgeving</Select.Option>

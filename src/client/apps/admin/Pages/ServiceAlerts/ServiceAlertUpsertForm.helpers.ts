@@ -134,16 +134,7 @@ export function getServiceAlertUpsertFormResult({
           ? formThemaId
           : null,
       links: parsedLinks,
-      environments: serviceAlert
-        ? [
-            environment,
-            ...serviceAlert.environments
-              .slice(1)
-              .filter(
-                (existingEnvironment) => existingEnvironment !== environment
-              ),
-          ]
-        : [environment],
+      environment,
       dateStart: parsedDateStart.toISOString(),
       dateEnd: parsedDateEnd.toISOString(),
     },

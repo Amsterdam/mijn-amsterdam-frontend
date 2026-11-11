@@ -47,11 +47,9 @@ export const serviceAlertsTable = pgTable(
     createdByEmail: varchar('created_by_email', { length: 320 }),
     updatedByEmail: varchar('updated_by_email', { length: 320 }),
     links: jsonb('links').$type<ServiceAlertLink[]>().notNull().default([]),
-    environments: varchar('environments', { length: 10 })
-      .array()
-      .$type<ServiceAlertEnvironment[]>()
-      .notNull()
-      .default([]),
+    environment: varchar('environments', { length: 10 })
+      .$type<ServiceAlertEnvironment>()
+      .notNull(),
     dateStart: timestamp('date_start', { withTimezone: true }).notNull(),
     dateEnd: timestamp('date_end', { withTimezone: true }).notNull(),
     dateUpdated: timestamp('date_updated', { withTimezone: true })
@@ -66,9 +64,6 @@ export const serviceAlertsTable = pgTable(
       table.dateStart,
       table.dateEnd
     ),
-    index('bff_service_alerts_environments_gin_idx').using(
-      'gin',
-      table.environments
-    ),
+    index('bff_service_alerts_environment_idx').on(table.environment),
   ]
 );

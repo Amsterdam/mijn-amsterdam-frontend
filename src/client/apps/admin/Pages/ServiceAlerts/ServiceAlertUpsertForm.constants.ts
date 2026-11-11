@@ -23,7 +23,7 @@ export const serviceAlertEnvironments = [
   { value: 'acc', label: 'Acceptatie' },
   { value: 'prod', label: 'Productie' },
 ] as const satisfies readonly ServiceAlertSelectOption<
-  ServiceAlertInput['environments'][number]
+  ServiceAlertInput['environment']
 >[];
 
 export const serviceAlertThemas = myThemasMenuItems
