@@ -12,6 +12,7 @@ export type ServiceAlertSelectOption<Value extends string> = {
 
 export type ServiceAlertUpsertFormProps = {
   serviceAlert?: ServiceAlertsOverview[number];
+  readOnly?: boolean;
 };
 
 export type ServiceAlertUpsertFormValues = {

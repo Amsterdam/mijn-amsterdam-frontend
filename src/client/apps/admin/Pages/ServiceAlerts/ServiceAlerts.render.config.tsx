@@ -1,6 +1,11 @@
 import type { ApplicationRouteConfig } from '../../../../../universal/types/thema-types.ts';
-import { ServiceAlerts, ServiceAlertToevoegen } from './ServiceAlerts.tsx';
 import {
+  ServiceAlertDetail,
+  ServiceAlerts,
+  ServiceAlertToevoegen,
+} from './ServiceAlerts.tsx';
+import {
+  routePathDetail,
   routePathToevoegen,
   themaConfig,
 } from './ServiceAlerts-thema-config.ts';
@@ -14,6 +19,11 @@ export const AdminServiceAlertsRoutes = [
   {
     route: routePathToevoegen,
     Component: ServiceAlertToevoegen,
+    isActive: themaConfig.featureToggle.active,
+  },
+  {
+    route: routePathDetail,
+    Component: ServiceAlertDetail,
     isActive: themaConfig.featureToggle.active,
   },
 ] as const satisfies readonly ApplicationRouteConfig[];
