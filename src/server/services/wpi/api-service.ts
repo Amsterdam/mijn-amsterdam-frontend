@@ -38,6 +38,10 @@ import type {
   WpiRequestProcessLabels,
 } from './wpi-types.ts';
 
+const activeWpiAanvragenConfig = wpiAanvragenConfig.filter(
+  ({ isActive }) => isActive
+);
+
 type FilterResponse = (
   response: ApiResponse<(WpiRequestProcess | null)[]>
 ) => WpiRequestProcess[];
@@ -115,13 +119,14 @@ export async function fetchRequestProcess(
 export async function fetchBijstandsuitkering(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const wpiAanvragen = wpiAanvragenConfig.filter(({ isActive }) => isActive);
   const filterResponse: FilterResponse = (response) => {
     return (
       response.content
         ?.filter((requestProcess) => requestProcess !== null)
         .filter((requestProcess) =>
-          wpiAanvragen.some((config) => config.about === requestProcess.about)
+          activeWpiAanvragenConfig.some(
+            (config) => config.about === requestProcess.about
+          )
         )
         .map((requestProcess) => addLink(requestProcess)) ?? []
     );
@@ -130,8 +135,9 @@ export async function fetchBijstandsuitkering(
   const response = await fetchRequestProcess(
     authProfileAndToken,
     (requestProcess) =>
-      wpiAanvragen.find(({ about }) => about === requestProcess.about)
-        ?.labels ?? null,
+      activeWpiAanvragenConfig.find(
+        ({ about }) => about === requestProcess.about
+      )?.labels ?? null,
     {
       apiConfigName: 'WPI_AANVRAGEN',
       filterResponse,
@@ -262,13 +268,11 @@ export async function fetchWpiNotifications(
 
     if (status === 'OK' && Array.isArray(content)) {
       notifications.push(
-        ...wpiAanvragenConfig
-          .filter(({ isActive }) => isActive)
-          .flatMap(({ about, getNotifications }) =>
-            getNotifications(
-              content.filter((requestProcess) => requestProcess.about === about)
-            )
+        ...activeWpiAanvragenConfig.flatMap(({ about, getNotifications }) =>
+          getNotifications(
+            content.filter((requestProcess) => requestProcess.about === about)
           )
+        )
       );
     }
   }
