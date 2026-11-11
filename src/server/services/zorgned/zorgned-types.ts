@@ -65,7 +65,10 @@ export interface ZorgnedStatusLineItemsConfig<
 }
 
 export type LeveringsVorm = 'zin' | 'pgb' | '';
-export type LeveringsVormTransformed = 'ZIN' | 'PGB' | '';
+export type LeveringsVormTransformed =
+  | 'Zorg in natura'
+  | 'Persoonsgebonden budget'
+  | '';
 export type ProductSoortCode = string;
 export type ProductIdentificatie = string;
 export type CasusIdentificatie = string;
