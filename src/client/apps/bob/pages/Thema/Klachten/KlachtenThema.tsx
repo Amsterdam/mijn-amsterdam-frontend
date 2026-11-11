@@ -10,8 +10,9 @@ import { useKlachtenThemaData } from './useKlachtenThemaData.hook.ts';
 const pageContentTop = (
   <PageContentCell spanWide={8}>
     <Paragraph>
-      Hier ziet u een overzicht van de klachten die U heeft ingediend bij
-      gemeente Amsterdam.
+      Hier vindt u een overzicht van de klachten die u via het online formulier
+      met DigiD hebt ingediend bij gemeente Amsterdam. Klachten die u
+      telefonisch of zonder DigiD hebt ingediend, zijn hier niet zichtbaar.
     </Paragraph>
   </PageContentCell>
 );
