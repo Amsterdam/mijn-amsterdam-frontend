@@ -14,8 +14,6 @@ type WMODetailContentProps = {
 };
 
 function WMODetailContent({ voorziening }: WMODetailContentProps) {
-  console.log(voorziening);
-
   const rows = [];
   if (voorziening?.decision) {
     rows.push({ content: voorziening?.decision, label: 'Resultaat' });

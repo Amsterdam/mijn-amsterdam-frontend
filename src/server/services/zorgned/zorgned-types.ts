@@ -67,7 +67,7 @@ export interface ZorgnedStatusLineItemsConfig<
 export type LeveringsVorm = 'zin' | 'pgb' | '';
 export type LeveringsVormTransformed = 'ZIN' | 'PGB' | '';
 
-export type LeveringsVormTransUitgeschreven =
+export type LeveringsVormUitgeschreven =
   | 'Zorg in natura'
   | 'Persoonsgebonden budget'
   | '';
@@ -199,7 +199,7 @@ export interface ZorgnedAanvraagTransformed {
   leverancier: string | null;
   leverancierIdentificatie: string | null;
   leveringsVorm: LeveringsVormTransformed;
-  leveringsVormUitgeschreven: LeveringsVormTransUitgeschreven;
+  leveringsVormUitgeschreven: LeveringsVormUitgeschreven;
   productsoortCode: ProductSoortCode | null;
   productIdentificatie?: ProductIdentificatie;
   beschiktProductIdentificatie: BeschiktProduct['identificatie'] | null;

@@ -23,7 +23,7 @@ import { generateFullApiUrlBFF } from '../../../routing/route-helpers.ts';
 import { getStatusLineItems } from '../../zorgned/zorgned-status-line-items.ts';
 import type {
   LeveringsVormTransformed,
-  LeveringsVormTransUitgeschreven,
+  LeveringsVormUitgeschreven,
   ZorgnedAanvraagTransformed,
 } from '../../zorgned/zorgned-types.ts';
 import { featureToggle, routes } from '../jzd-service-config.ts';
@@ -97,7 +97,7 @@ function transformVoorzieningForFrontend(
   );
   const leveringsvormUitgeschreven: Record<
     LeveringsVormTransformed,
-    LeveringsVormTransUitgeschreven
+    LeveringsVormUitgeschreven
   > = {
     ZIN: 'Zorg in natura',
     PGB: 'Persoonsgebonden budget',
