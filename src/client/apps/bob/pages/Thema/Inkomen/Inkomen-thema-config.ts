@@ -14,7 +14,10 @@ import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app.ts';
-import { isEnabled } from '../../../config/feature-toggles.ts';
+import {
+  isEnabled,
+  propagateFeatureToggles,
+} from '../../../config/feature-toggles.ts';
 
 const THEMA_ID = 'INKOMEN';
 const THEMA_TITLE = 'Inkomen';
@@ -45,13 +48,13 @@ type InkomenThemaConfig = ThemaConfigBase &
   WithDetailPageUitkering &
   WithDetailPageBijzondereBijstand;
 
-export const themaConfig: InkomenThemaConfig = {
+export const themaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
-  featureToggle: {
+  featureToggle: propagateFeatureToggles({
     active: true,
     bijzondereBijstandActive,
-  },
+  }),
   profileTypes: ['private'],
   route: {
     path: '/inkomen',
@@ -134,7 +137,7 @@ export const themaConfig: InkomenThemaConfig = {
       documentTitle: `Bijzondere Bijstand | ${THEMA_TITLE}`,
     },
   },
-};
+} as const satisfies InkomenThemaConfig;
 
 export const REQUEST_PROCESS_COMPLETED_STATUS_IDS = [
   'besluit',

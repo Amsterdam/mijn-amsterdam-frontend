@@ -57,7 +57,7 @@ export const menuItem: ThemaMenuItem = {
   IconSVG: InkomenIcon,
 };
 
-function isInkomenThemaActive(appState: AppState): boolean {
+function isInkomenThemaActive(appState: Partial<AppState>): boolean {
   const { WPI_AANVRAGEN, WPI_SPECIFICATIES, WPI_TOZO, WPI_TONK, WPI_BBZ } =
     appState;
   const { jaaropgaven, uitkeringsspecificaties } =
