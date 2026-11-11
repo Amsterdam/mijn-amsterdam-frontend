@@ -7,9 +7,9 @@ export const TITLE_ADD_STORINGSMELDING = 'Storingsmelding toevoegen';
 
 type AdminStoringsMeldingenThemaConfig = AdminThemaConfig<typeof THEMA_ID>;
 
-export const routePath = 'storings-meldingen';
-export const routePathToevoegen = routePath + '/toevoegen';
-export const routePathDetail = routePath + '/:id';
+export const routePath = '/storings-meldingen';
+export const routePathToevoegen = `${routePath}/toevoegen`;
+export const routePathDetail = `${routePath}/:id`;
 
 export const themaConfig = {
   id: THEMA_ID,
