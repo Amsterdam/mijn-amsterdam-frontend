@@ -1,12 +1,16 @@
 name: "Dependency Review"
-on: [pull_request]
 
 permissions:
   contents: read
+  pull-requests: read
+
+on:
+  pull_request:
 
 jobs:
   dependency-review:
-    runs-on: self-hosted
+    name: "Dependency Review"
+    runs-on: ubuntu-latest
     steps:
       - name: "Checkout Repository"
         uses: actions/checkout@v6
