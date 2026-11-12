@@ -18,9 +18,9 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
   if (voorziening?.decision) {
     rows.push({ content: voorziening?.decision, label: 'Resultaat' });
   }
-  if (voorziening?.leveringsvormUitgeschreven) {
+  if (voorziening.leveringsvormUitgeschreven) {
     rows.push({
-      content: voorziening?.leveringsvormUitgeschreven,
+      content: voorziening.leveringsvormUitgeschreven,
       label: 'Leveringsvorm',
     });
   }
