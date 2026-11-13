@@ -31,7 +31,7 @@ import { ZoomControl } from './Map/ZoomControl.tsx';
 import type { MapLocationMarker } from './MyArea.hooks.ts';
 import { useMapLocations, useSetMapCenterAtLocation } from './MyArea.hooks.ts';
 import styles from './MyArea.module.scss';
-import { routeConfig } from './MyArea-thema-config.ts';
+import { routeConfig, themaId } from './MyArea-thema-config.ts';
 import { MyAreaCustomLocationControlButton } from './MyAreaCustomLocationControlButton.tsx';
 import { MyAreaDatasets } from './MyAreaDatasets.tsx';
 import { HomeControlButton } from './MyAreaHomeControlButton.tsx';
@@ -170,7 +170,7 @@ export function MyArea({
 
   return (
     <div className={styles.Container}>
-      <ServiceAlerts page="buurt" />
+      <ServiceAlerts themaID={themaId} />
       <div className={styles.MapContainer} ref={mapContainerRef}>
         <div className={styles.MapOffset} id="skip-to-id-Map">
           {isReadyToRender && (

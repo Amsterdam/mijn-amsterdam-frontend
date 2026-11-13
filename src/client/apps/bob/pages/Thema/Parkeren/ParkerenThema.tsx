@@ -120,7 +120,6 @@ export function ParkerenThema() {
       pageLinks={themaConfig.pageLinks}
       pageContentMain={tables}
       pageContentBottom={pageContentBottom}
-      serviceAlertsPageSlug="parkeren"
     />
   );
 }

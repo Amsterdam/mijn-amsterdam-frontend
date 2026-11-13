@@ -1,4 +1,4 @@
-import { filterServiceAlerts } from './service-alerts.ts';
+import { filterServiceAlerts, isServiceAlertsPage } from './service-alerts.ts';
 
 const notifications = [
   { id: 'theme-avg', displayLocation: 'theme', themaID: 'AVG', path: '/AVG' },
@@ -6,19 +6,16 @@ const notifications = [
     id: 'dashboard',
     displayLocation: 'dashboard',
     themaID: 'NOTIFICATIONS',
-    path: '/landingspagina',
   },
   {
     id: 'login',
     displayLocation: 'login',
     themaID: 'NOTIFICATIONS',
-    path: '',
   },
   {
     id: 'notification',
     displayLocation: 'notification',
     themaID: 'NOTIFICATIONS',
-    path: '/notifications',
   },
 ];
 
@@ -56,17 +53,17 @@ describe('filterServiceAlerts', () => {
     ]);
   });
 
-  it('matches other pages on path', () => {
-    expect(
-      ids(
-        filterServiceAlerts(notifications, {
-          page: 'notifications',
-        })
-      )
-    ).toEqual(['notification']);
-  });
 
   it('returns nothing without page or thema', () => {
     expect(filterServiceAlerts(notifications, {})).toEqual([]);
+  });
+});
+
+describe('isServiceAlertsPage', () => {
+  it('accepts only pages that have their own alerts', () => {
+    expect(isServiceAlertsPage('dashboard')).toBe(true);
+    expect(isServiceAlertsPage('login')).toBe(true);
+    expect(isServiceAlertsPage('afval')).toBe(false);
+    expect(isServiceAlertsPage(undefined)).toBe(false);
   });
 });

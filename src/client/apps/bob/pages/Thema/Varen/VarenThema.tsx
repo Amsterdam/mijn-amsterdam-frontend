@@ -190,7 +190,6 @@ export function VarenThema() {
       isError={isError}
       pageContentTop={pageContentTop}
       pageContentTopSecondary={actionButtons}
-      serviceAlertsPageSlug="varen"
       pageContentMain={
         <>
           {gegevensRegistratieReder}

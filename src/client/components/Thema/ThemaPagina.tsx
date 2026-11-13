@@ -40,7 +40,6 @@ interface ThemaPaginaProps {
   isError: boolean;
   isPartialError?: boolean;
   isLoading: boolean;
-  serviceAlertsPageSlug?: string;
   themaFeedbackDetails?: object;
 }
 export function ThemaPagina({
@@ -58,7 +57,6 @@ export function ThemaPagina({
   isError,
   isPartialError,
   isLoading,
-  serviceAlertsPageSlug,
   themaFeedbackDetails,
 }: ThemaPaginaProps) {
   const profileType = useProfileTypeValue();
@@ -80,7 +78,7 @@ export function ThemaPagina({
       showUserFeedback
       userFeedbackDetails={userFeedbackDetails}
     >
-      <ServiceAlerts page={serviceAlertsPageSlug} themaID={id} />
+      <ServiceAlerts themaID={id} />
       {pageContentTop}
       {!!visiblePageLinks.length && (
         <PageContentCell className={pageContentTop ? styles.PullUp : ''}>

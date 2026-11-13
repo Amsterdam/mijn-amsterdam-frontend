@@ -83,6 +83,16 @@ describe('service alert maintenance notifications', () => {
     expect(result.content?.map(({ id }) => id)).toEqual(['login']);
   });
 
+  it('returns no alerts for an unknown page', async () => {
+    vi.mocked(getActiveServiceAlertRows).mockResolvedValue([
+      createServiceAlert({ displayLocation: 'dashboard' }),
+    ]);
+
+    const result = await fetchActiveServiceAlerts({ page: 'afval' });
+
+    expect(result.content).toEqual([]);
+  });
+
   it('returns all active alerts when no page is given', async () => {
     vi.mocked(getActiveServiceAlertRows).mockResolvedValue([
       createServiceAlert({ id: 'login', displayLocation: 'login' }),
@@ -128,7 +138,7 @@ describe('service alert maintenance notifications', () => {
     const error = new Error('Database unavailable');
     vi.mocked(getActiveServiceAlertRows).mockRejectedValue(error);
 
-    const result = await fetchActiveServiceAlerts({ page: 'avg' });
+    const result = await fetchActiveServiceAlerts({});
 
     expect(result).toMatchObject({ status: 'OK', content: [] });
     expect(captureException).toHaveBeenCalledWith(error);

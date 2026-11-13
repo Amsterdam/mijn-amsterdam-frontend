@@ -1,6 +1,7 @@
 import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
+import type { ServiceAlertsPage } from '../../../universal/helpers/service-alerts.ts';
 import { parseHTML } from '../../helpers/html-react-parse.tsx';
 import { useServiceAlerts } from '../../hooks/api/useServiceAlerts.ts';
 import { PageContentCell } from '../Page/Page.tsx';
@@ -9,7 +10,7 @@ import styles from './ServiceAlerts.module.scss';
 const DEFAULT_HEADING = 'Onderhoudsbericht';
 
 interface ServiceAlertsProps {
-  page?: string;
+  page?: ServiceAlertsPage;
   themaID?: string;
   fromApiDirectly?: boolean;
   className?: string;

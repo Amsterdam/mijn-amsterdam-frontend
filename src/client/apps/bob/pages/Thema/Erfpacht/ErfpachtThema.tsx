@@ -59,7 +59,6 @@ export function ErfpachtThema() {
       isLoading={isLoading}
       isError={isError}
       pageLinks={themaConfig.pageLinks}
-      serviceAlertsPageSlug="erfpacht"
       pageContentTop={
         <>
           {themaConfig.featureToggle.wijzigingsaanvragenActive && (

@@ -142,7 +142,6 @@ export function MijnGegevensThema() {
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
       pageLinks={pageLinks}
       pageContentTop={pageContentTop}
-      serviceAlertsPageSlug="brp"
       pageContentMain={
         <>
           {brpContent?.bsnTranslation && (

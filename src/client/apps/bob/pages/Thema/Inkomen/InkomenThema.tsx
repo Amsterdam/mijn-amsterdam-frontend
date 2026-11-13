@@ -88,7 +88,6 @@ export function InkomenThema() {
         </>
       }
       pageLinks={pageLinks}
-      serviceAlertsPageSlug="inkomen"
       themaFeedbackDetails={themaPaginaDetails}
     />
   );

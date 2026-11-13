@@ -1,5 +1,8 @@
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
-import { filterServiceAlerts } from '../../../universal/helpers/service-alerts.ts';
+import {
+  filterServiceAlerts,
+  isServiceAlertsPage,
+} from '../../../universal/helpers/service-alerts.ts';
 import { sanitizeCmsContent } from '../cms/cms-content.ts';
 import type { ServiceAlertDisplayLocation } from '../db/schema/service-alerts.ts';
 import { captureException } from '../monitoring.ts';
@@ -89,15 +92,18 @@ async function getActiveServiceAlerts(): Promise<ServiceAlert[]> {
 export async function fetchActiveServiceAlerts(
   queryParams: QueryParamsServiceAlerts = {}
 ) {
-  const alerts = await getActiveServiceAlerts();
+  const { page } = queryParams;
 
-  if (!queryParams.page) {
-    return apiSuccessResult(alerts);
+  if (!page) {
+    return apiSuccessResult(await getActiveServiceAlerts());
   }
 
-  return apiSuccessResult(
-    filterServiceAlerts(alerts, { page: queryParams.page })
-  );
+  if (!isServiceAlertsPage(page)) {
+    return apiSuccessResult([]);
+  }
+
+  const alerts = await getActiveServiceAlerts();
+  return apiSuccessResult(filterServiceAlerts(alerts, { page }));
 }
 
 export async function fetchServiceAlertNotifications() {

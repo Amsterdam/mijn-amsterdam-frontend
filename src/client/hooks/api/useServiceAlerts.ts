@@ -1,11 +1,14 @@
 import type { ServiceAlert } from '../../../server/services/service-alerts/service-alerts.types.ts';
-import { filterServiceAlerts } from '../../../universal/helpers/service-alerts.ts';
+import {
+  filterServiceAlerts,
+  type ServiceAlertsPage,
+} from '../../../universal/helpers/service-alerts.ts';
 import { BFFApiUrls } from '../../apps/bob/config/api.ts';
 import { useAppStateGetter } from '../useAppStateStore.ts';
 import { useBffApi } from './useBffApi.ts';
 
 export function useServiceAlerts(
-  page: string | undefined,
+  page: ServiceAlertsPage | undefined,
   themaID?: string,
   fromApiDirectly: boolean = false
 ) {

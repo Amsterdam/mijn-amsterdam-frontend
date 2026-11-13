@@ -134,7 +134,6 @@ export function HLIThema() {
         title={title}
         pageContentTop={pageContentTop}
         pageLinks={themaConfig.pageLinks}
-        serviceAlertsPageSlug="stadspas"
         pageContentMain={
           <>
             {!!stadspassen?.length && (

@@ -46,7 +46,6 @@ export function BodemThema() {
       }
       pageContentMain={tables}
       pageLinks={pageLinks}
-      serviceAlertsPageSlug="bodem"
     />
   );
 }
