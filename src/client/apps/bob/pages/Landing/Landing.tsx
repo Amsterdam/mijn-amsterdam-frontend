@@ -35,7 +35,7 @@ export function LandingPage() {
         </Paragraph>
         <MaintenanceNotifications
           fromApiDirectly={true}
-          page="landingspagina"
+          page="login"
           className="ams-mb-m"
         />
 

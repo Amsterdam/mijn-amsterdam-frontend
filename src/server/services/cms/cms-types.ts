@@ -16,7 +16,7 @@ export type CMSMaintenanceNotification = MyNotification & {
   description: string;
   path: string;
   severity: SeverityLevel;
-  displayLocation?: 'theme' | 'dashboard' | 'notification';
+  displayLocation?: 'theme' | 'dashboard' | 'notification' | 'login';
   link?: LinkProps;
 };
 export type QueryParamsMaintenanceNotifications = {

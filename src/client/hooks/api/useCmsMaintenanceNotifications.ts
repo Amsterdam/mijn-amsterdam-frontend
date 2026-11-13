@@ -27,9 +27,15 @@ export function useCmsMaintenanceNotifications(
     );
   }
 
-  if (page === 'dashboard' || page === 'landingspagina') {
+  if (page === 'dashboard') {
     return notifications?.filter(
       (notification) => notification.displayLocation === 'dashboard'
+    );
+  }
+
+  if (page === 'login') {
+    return notifications?.filter(
+      (notification) => notification.displayLocation === 'login'
     );
   }
 
