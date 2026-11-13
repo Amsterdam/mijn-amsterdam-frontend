@@ -128,8 +128,8 @@
     "@rollup/rollup-linux-x64-gnu": "4.64.5"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.6.4",
-    "@testcontainers/postgresql": "^12.2.0",
+    "@biomejs/biome": "2.6.5",
+    "@testcontainers/postgresql": "^12.2.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.6.8",
@@ -170,10 +170,10 @@
     "nock": "^13.5.6",
     "nodemon": "^3.1.14",
     "pino-pretty": "^13.2.0",
-    "testcontainers": "^12.2.0",
+    "testcontainers": "^12.2.1",
     "typescript": "^6.0.3",
     "vite": "^6.4.5",
     "vite-plugin-svgr": "^4.5.0",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.12"
   }
 }
