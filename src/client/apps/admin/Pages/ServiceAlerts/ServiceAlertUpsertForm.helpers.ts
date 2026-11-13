@@ -1,3 +1,4 @@
+import type { ServiceAlertInput } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
 import { isHttpsUrl } from '../../../../../universal/helpers/url.ts';
 import {
   serviceAlertDisplayLocations,
@@ -33,6 +34,43 @@ export function getServiceAlertLinkValidationMessage({
   }
 
   return null;
+}
+
+type ServiceAlertLinks = ServiceAlertInput['links'];
+
+function withSortOrder(links: ServiceAlertLinks): ServiceAlertLinks {
+  return links.map((link, sortOrder) => ({ ...link, sortOrder }));
+}
+
+export function sortServiceAlertLinks(links: ServiceAlertLinks) {
+  return withSortOrder(links.toSorted((a, b) => a.sortOrder - b.sortOrder));
+}
+
+export function removeServiceAlertLink(
+  links: ServiceAlertLinks,
+  index: number
+) {
+  return withSortOrder(links.filter((_link, linkIndex) => linkIndex !== index));
+}
+
+export function moveServiceAlertLink(
+  links: ServiceAlertLinks,
+  index: number,
+  direction: 'up' | 'down'
+) {
+  const targetIndex = direction === 'up' ? index - 1 : index + 1;
+
+  if (targetIndex < 0 || targetIndex >= links.length) {
+    return links;
+  }
+
+  const reorderedLinks = [...links];
+  [reorderedLinks[index], reorderedLinks[targetIndex]] = [
+    reorderedLinks[targetIndex],
+    reorderedLinks[index],
+  ];
+
+  return withSortOrder(reorderedLinks);
 }
 
 function combineDateAndTime(date: Date, time: string) {

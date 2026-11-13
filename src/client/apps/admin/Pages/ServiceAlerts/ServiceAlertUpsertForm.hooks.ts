@@ -17,6 +17,9 @@ import { serviceAlertDisplayLocations } from './ServiceAlertUpsertForm.constants
 import {
   getServiceAlertLinkValidationMessage,
   getServiceAlertUpsertFormResult,
+  moveServiceAlertLink,
+  removeServiceAlertLink,
+  sortServiceAlertLinks,
 } from './ServiceAlertUpsertForm.helpers.ts';
 
 function getInitialDateRange(
@@ -45,8 +48,8 @@ export function useServiceAlertUpsertForm(
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [title, setTitle] = useState(serviceAlert?.title ?? '');
   const [body, setBody] = useState(serviceAlert?.body ?? '');
-  const [links, setLinks] = useState<ServiceAlertInput['links']>(
-    () => serviceAlert?.links.map((link) => ({ ...link })) ?? []
+  const [links, setLinks] = useState<ServiceAlertInput['links']>(() =>
+    sortServiceAlertLinks(serviceAlert?.links ?? [])
   );
   const [linkLabel, setLinkLabel] = useState('');
   const [linkUrl, setLinkUrl] = useState('');
@@ -138,10 +141,12 @@ export function useServiceAlertUpsertForm(
   }
 
   function removeLink(index: number) {
+    setLinks((currentLinks) => removeServiceAlertLink(currentLinks, index));
+  }
+
+  function moveLink(index: number, direction: 'up' | 'down') {
     setLinks((currentLinks) =>
-      currentLinks
-        .filter((_link, linkIndex) => linkIndex !== index)
-        .map((link, sortOrder) => ({ ...link, sortOrder }))
+      moveServiceAlertLink(currentLinks, index, direction)
     );
   }
 
@@ -199,6 +204,7 @@ export function useServiceAlertUpsertForm(
     setDateRange,
     setLinkLabel: handleLinkLabelChange,
     setLinkUrl: handleLinkUrlChange,
+    moveLink,
     removeLink,
     setThemaId,
     setTimeEnd,

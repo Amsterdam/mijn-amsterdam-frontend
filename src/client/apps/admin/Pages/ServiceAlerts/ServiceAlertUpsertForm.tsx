@@ -17,7 +17,12 @@ import {
   TextInput,
   TimeInput,
 } from '@amsterdam/design-system-react';
-import { CloseIcon, PlusIcon } from '@amsterdam/design-system-react-icons';
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  CloseIcon,
+  PlusIcon,
+} from '@amsterdam/design-system-react-icons';
 
 import { PageContentCell } from '../../../../components/Page/Page.tsx';
 import { ServiceAlertPreview } from './ServiceAlertPreview.tsx';
@@ -64,6 +69,7 @@ function ServiceAlertUpsertFormContent({
     setDateRange,
     setLinkLabel,
     setLinkUrl,
+    moveLink,
     removeLink,
     setThemaId,
     setTimeEnd,
@@ -183,6 +189,18 @@ function ServiceAlertUpsertFormContent({
                         </Link>
                       </DataList.Value>
                       <DataList.Actions>
+                        <IconButton
+                          label={`Verplaats link ${index + 1} omhoog`}
+                          svg={ChevronUpIcon}
+                          disabled={index === 0}
+                          onClick={() => moveLink(index, 'up')}
+                        />
+                        <IconButton
+                          label={`Verplaats link ${index + 1} omlaag`}
+                          svg={ChevronDownIcon}
+                          disabled={index === links.length - 1}
+                          onClick={() => moveLink(index, 'down')}
+                        />
                         <IconButton
                           label={`Verwijder link ${index + 1}`}
                           svg={CloseIcon}
