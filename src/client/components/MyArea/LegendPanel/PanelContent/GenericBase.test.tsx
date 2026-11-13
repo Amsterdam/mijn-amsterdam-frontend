@@ -25,7 +25,6 @@ describe('GenericContent', () => {
       screen.queryByText('Gegevens kunnen niet worden getoond.')
     ).not.toBeInTheDocument();
   });
-
 });
 
 describe('MyAreaDetailPanel', () => {

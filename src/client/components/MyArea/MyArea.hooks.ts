@@ -183,12 +183,9 @@ export function useFetchPanelFeature() {
     const source = new AbortController();
     const { datasetId, id } = loadingFeature;
 
-    sendFetchRequest<unknown>(
-      `${BFFApiUrls.MAP_DATASETS}/${datasetId}/${id}`,
-      {
-        signal: source.signal,
-      }
-    )
+    sendFetchRequest<unknown>(`${BFFApiUrls.MAP_DATASETS}/${datasetId}/${id}`, {
+      signal: source.signal,
+    })
       .then(({ content }) => {
         if (content) {
           const feature = panelFeatureSchema.parse(content);

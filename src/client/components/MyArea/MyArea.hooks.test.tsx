@@ -67,25 +67,31 @@ describe('MyArea.hooks', () => {
     it.each([
       { name: 'missing id', feature: { name: 'Locatie' } },
       { name: 'invalid id', feature: { id: {} } },
-      { name: 'nested undefined', feature: { id: '123', nested: { value: undefined } } },
+      {
+        name: 'nested undefined',
+        feature: { id: '123', nested: { value: undefined } },
+      },
       { name: 'non-finite number', feature: { id: '123', value: Number.NaN } },
-    ])('rejects a response with $name before storing it', async ({ feature }) => {
-      vi.spyOn(bffApi, 'sendFetchRequest').mockResolvedValueOnce(
-        apiSuccessResult(feature)
-      );
-      useLoadingFeature.setState({
-        loadingFeature: { datasetId: 'test-dataset', id: '123' },
-      });
-
-      renderHook(() => useFetchPanelFeature());
-
-      await waitFor(() => {
-        expect(useLoadingFeature.getState().loadingFeature).toEqual({
-          isError: true,
+    ])(
+      'rejects a response with $name before storing it',
+      async ({ feature }) => {
+        vi.spyOn(bffApi, 'sendFetchRequest').mockResolvedValueOnce(
+          apiSuccessResult(feature)
+        );
+        useLoadingFeature.setState({
+          loadingFeature: { datasetId: 'test-dataset', id: '123' },
         });
-      });
-      expect(useSelectedFeature.getState().selectedFeature).toBeNull();
-    });
+
+        renderHook(() => useFetchPanelFeature());
+
+        await waitFor(() => {
+          expect(useLoadingFeature.getState().loadingFeature).toEqual({
+            isError: true,
+          });
+        });
+        expect(useSelectedFeature.getState().selectedFeature).toBeNull();
+      }
+    );
   });
 
   describe('useMapLocations', () => {
