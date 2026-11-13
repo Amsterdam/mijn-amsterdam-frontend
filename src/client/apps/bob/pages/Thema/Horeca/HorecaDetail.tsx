@@ -76,6 +76,7 @@ export function HorecaDetail() {
             </PageContentCell>
             <PageContentCell spanWide={8}>
               <VergunningDetailDocumentsList
+                vergunning={vergunning}
                 isLoading={isLoadingDocuments}
                 isError={isErrorDocuments}
                 documents={documents}
