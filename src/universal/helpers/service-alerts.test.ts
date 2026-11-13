@@ -53,7 +53,6 @@ describe('filterServiceAlerts', () => {
     ]);
   });
 
-
   it('returns nothing without page or thema', () => {
     expect(filterServiceAlerts(notifications, {})).toEqual([]);
   });
