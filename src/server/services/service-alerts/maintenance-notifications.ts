@@ -39,6 +39,7 @@ function getLocationPath(displayLocation: ServiceAlertDisplayLocation) {
     theme: '',
     dashboard: '/landingspagina',
     notification: '/notifications',
+    login: '',
   }[displayLocation];
 }
 
