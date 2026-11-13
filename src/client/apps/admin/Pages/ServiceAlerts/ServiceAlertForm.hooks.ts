@@ -12,15 +12,16 @@ import {
   useBffApi,
 } from '../../../../hooks/api/useBffApi.ts';
 import { BFFApiUrls } from '../../config/api.ts';
-import { routePath } from './ServiceAlerts-thema-config.ts';
-import { serviceAlertDisplayLocations } from './ServiceAlertUpsertForm.constants.ts';
+import { serviceAlertDisplayLocations } from './ServiceAlertForm.constants.ts';
 import {
+  getServiceAlertFormResult,
   getServiceAlertLinkValidationMessage,
-  getServiceAlertUpsertFormResult,
   moveServiceAlertLink,
   removeServiceAlertLink,
   sortServiceAlertLinks,
-} from './ServiceAlertUpsertForm.helpers.ts';
+} from './ServiceAlertForm.helpers.ts';
+import type { ServiceAlertFormErrors } from './ServiceAlertForm.types.ts';
+import { routePath } from './ServiceAlerts-thema-config.ts';
 
 function getInitialDateRange(
   serviceAlert?: ServiceAlertsOverview[number]
@@ -41,7 +42,7 @@ function getTime(date: string | undefined) {
   return `${String(parsedDate.getHours()).padStart(2, '0')}:${String(parsedDate.getMinutes()).padStart(2, '0')}`;
 }
 
-export function useServiceAlertUpsertForm(
+export function useServiceAlertForm(
   serviceAlert?: ServiceAlertsOverview[number]
 ) {
   const navigate = useNavigate();
@@ -59,9 +60,7 @@ export function useServiceAlertUpsertForm(
   const [type, setType] = useState<ServiceAlertInput['type'] | undefined>(
     serviceAlert?.type
   );
-  const [validationMessage, setValidationMessage] = useState<string | null>(
-    null
-  );
+  const [errors, setErrors] = useState<ServiceAlertFormErrors>({});
   const [dateRange, setDateRange] = useState<DateRange>(() =>
     getInitialDateRange(serviceAlert)
   );
@@ -153,7 +152,7 @@ export function useServiceAlertUpsertForm(
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const result = getServiceAlertUpsertFormResult({
+    const result = getServiceAlertFormResult({
       formData: new FormData(event.currentTarget),
       dateRange,
       timeStart,
@@ -162,12 +161,11 @@ export function useServiceAlertUpsertForm(
       serviceAlert,
     });
 
+    setErrors(result.errors ?? {});
     if (!result.payload) {
-      setValidationMessage(result.validationMessage);
       return;
     }
 
-    setValidationMessage(null);
     setHasSubmitted(true);
     upsertServiceAlert.fetch({
       method: 'POST',
@@ -216,7 +214,7 @@ export function useServiceAlertUpsertForm(
     timeEnd,
     timeStart,
     type,
-    validationMessage,
+    errors,
     errorData: upsertServiceAlert.errorData,
   };
 }

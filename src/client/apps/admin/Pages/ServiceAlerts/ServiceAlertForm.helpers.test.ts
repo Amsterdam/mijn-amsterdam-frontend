@@ -1,14 +1,15 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  getServiceAlertFormResult,
   getServiceAlertLinkValidationMessage,
-  getServiceAlertUpsertFormResult,
-} from './ServiceAlertUpsertForm.helpers.ts';
-import type { ServiceAlertUpsertFormValues } from './ServiceAlertUpsertForm.types.ts';
+  SERVICE_ALERT_FORM_ERROR_MESSAGES,
+} from './ServiceAlertForm.helpers.ts';
+import type { ServiceAlertFormValues } from './ServiceAlertForm.types.ts';
 
 function createFormValues(
-  links: ServiceAlertUpsertFormValues['links']
-): ServiceAlertUpsertFormValues {
+  links: ServiceAlertFormValues['links']
+): ServiceAlertFormValues {
   const formData = new FormData();
   formData.set('title', 'Testmelding');
   formData.set('body', 'Testbericht');
@@ -28,16 +29,76 @@ function createFormValues(
   };
 }
 
-describe('getServiceAlertUpsertFormResult displayLocation', () => {
+describe('getServiceAlertFormResult errors', () => {
+  it('returns no errors for a valid form', () => {
+    const result = getServiceAlertFormResult(createFormValues([]));
+
+    expect(result.errors).toBeNull();
+    expect(result.payload).not.toBeNull();
+  });
+
+  it('returns an error per missing field', () => {
+    const formValues = createFormValues([]);
+    formValues.formData.set('title', ' ');
+    formValues.formData.set('body', '');
+    formValues.dateRange = { start: null, end: null };
+    formValues.timeStart = '';
+    formValues.timeEnd = '';
+
+    const result = getServiceAlertFormResult(formValues);
+
+    expect(result).toEqual({
+      payload: null,
+      errors: {
+        title: SERVICE_ALERT_FORM_ERROR_MESSAGES.title,
+        body: SERVICE_ALERT_FORM_ERROR_MESSAGES.body,
+        period: SERVICE_ALERT_FORM_ERROR_MESSAGES.period,
+        timeStart: SERVICE_ALERT_FORM_ERROR_MESSAGES.timeStart,
+        timeEnd: SERVICE_ALERT_FORM_ERROR_MESSAGES.timeEnd,
+      },
+    });
+  });
+
+  it('requires a thema for theme alerts', () => {
+    const formValues = createFormValues([]);
+    formValues.formData.set('displayLocation', 'theme');
+
+    const result = getServiceAlertFormResult(formValues);
+
+    expect(result.errors).toEqual({
+      themaId: SERVICE_ALERT_FORM_ERROR_MESSAGES.themaId,
+    });
+  });
+
+  it('marks the end time when the end lies before the start', () => {
+    const formValues = createFormValues([]);
+    formValues.dateRange = {
+      start: new Date('2026-11-11T00:00:00.000Z'),
+      end: new Date('2026-11-11T00:00:00.000Z'),
+    };
+    formValues.timeStart = '10:00';
+    formValues.timeEnd = '09:00';
+
+    const result = getServiceAlertFormResult(formValues);
+
+    expect(result.errors).toEqual({
+      timeEnd: SERVICE_ALERT_FORM_ERROR_MESSAGES.timeEndBeforeStart,
+    });
+  });
+});
+
+describe('getServiceAlertFormResult displayLocation', () => {
   it('requires a display location to be chosen', () => {
     const formValues = createFormValues([]);
     formValues.formData.delete('displayLocation');
 
-    const result = getServiceAlertUpsertFormResult(formValues);
+    const result = getServiceAlertFormResult(formValues);
 
     expect(result).toEqual({
       payload: null,
-      validationMessage: 'Vul alle verplichte velden in.',
+      errors: {
+        displayLocation: SERVICE_ALERT_FORM_ERROR_MESSAGES.displayLocation,
+      },
     });
   });
 
@@ -45,22 +106,22 @@ describe('getServiceAlertUpsertFormResult displayLocation', () => {
     const formValues = createFormValues([]);
     formValues.formData.set('displayLocation', 'dashboard');
 
-    const result = getServiceAlertUpsertFormResult(formValues);
+    const result = getServiceAlertFormResult(formValues);
 
     expect(result.payload).toBeNull();
   });
 });
 
-describe('getServiceAlertUpsertFormResult type', () => {
+describe('getServiceAlertFormResult type', () => {
   it('requires a type to be chosen', () => {
     const formValues = createFormValues([]);
     formValues.formData.delete('type');
 
-    const result = getServiceAlertUpsertFormResult(formValues);
+    const result = getServiceAlertFormResult(formValues);
 
     expect(result).toEqual({
       payload: null,
-      validationMessage: 'Vul alle verplichte velden in.',
+      errors: { type: SERVICE_ALERT_FORM_ERROR_MESSAGES.type },
     });
   });
 
@@ -68,7 +129,7 @@ describe('getServiceAlertUpsertFormResult type', () => {
     const formValues = createFormValues([]);
     formValues.formData.set('type', 'error');
 
-    const result = getServiceAlertUpsertFormResult(formValues);
+    const result = getServiceAlertFormResult(formValues);
 
     expect(result.payload).toMatchObject({
       displayLocation: 'notification',
@@ -77,9 +138,9 @@ describe('getServiceAlertUpsertFormResult type', () => {
   });
 });
 
-describe('getServiceAlertUpsertFormResult links', () => {
+describe('getServiceAlertFormResult links', () => {
   it('includes multiple links in their given order', () => {
-    const result = getServiceAlertUpsertFormResult(
+    const result = getServiceAlertFormResult(
       createFormValues([
         {
           label: 'Meer informatie',
@@ -101,18 +162,20 @@ describe('getServiceAlertUpsertFormResult links', () => {
   });
 
   it('rejects links without an https URL or a label', () => {
-    const result = getServiceAlertUpsertFormResult(
+    const result = getServiceAlertFormResult(
       createFormValues([
         { label: 'Onveilige link', url: 'http://example.com', sortOrder: 0 },
       ])
     );
 
     expect(result.payload).toBeNull();
-    expect(result.validationMessage).toContain('https://');
+    expect(result.errors).toEqual({
+      links: SERVICE_ALERT_FORM_ERROR_MESSAGES.links,
+    });
   });
 
   it('ignores a fully empty link row', () => {
-    const result = getServiceAlertUpsertFormResult(
+    const result = getServiceAlertFormResult(
       createFormValues([{ label: '', url: '', sortOrder: 0 }])
     );
 
@@ -120,7 +183,7 @@ describe('getServiceAlertUpsertFormResult links', () => {
   });
 
   it('only includes links that have been added to the list', () => {
-    const result = getServiceAlertUpsertFormResult(createFormValues([]));
+    const result = getServiceAlertFormResult(createFormValues([]));
 
     expect(result.payload?.links).toEqual([]);
   });

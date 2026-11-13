@@ -4,13 +4,13 @@ import type { ServiceAlertsOverview } from '../../../../../server/services/servi
 import { ThemaPagina } from '../../../../components/Thema/ThemaPagina.tsx';
 import { useBffApi } from '../../../../hooks/api/useBffApi.ts';
 import { BFFApiUrls } from '../../config/api.ts';
+import { ServiceAlertForm } from './ServiceAlertForm.tsx';
 import {
   routePath,
   TITLE_ADD_STORINGSMELDING,
   themaConfig,
 } from './ServiceAlerts-thema-config.ts';
 import { ServiceAlertsPageContent } from './ServiceAlertsOverview.tsx';
-import { ServiceAlertUpsertForm } from './ServiceAlertUpsertForm.tsx';
 
 export function ServiceAlerts() {
   const { isError, data } = useBffApi<ServiceAlertsOverview>(
@@ -50,7 +50,7 @@ export function ServiceAlertToevoegen() {
       id="admin-user-feedback"
       pageContentTop={false}
       pageLinks={[]}
-      pageContentMain={<ServiceAlertUpsertForm />}
+      pageContentMain={<ServiceAlertForm />}
     />
   );
 }
@@ -77,7 +77,7 @@ export function ServiceAlertDetail() {
       pageLinks={[]}
       pageContentMain={
         serviceAlert ? (
-          <ServiceAlertUpsertForm serviceAlert={serviceAlert} readOnly />
+          <ServiceAlertForm serviceAlert={serviceAlert} readOnly />
         ) : null
       }
     />

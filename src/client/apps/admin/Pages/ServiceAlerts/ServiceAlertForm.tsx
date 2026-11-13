@@ -2,6 +2,7 @@ import { Fragment, useState } from 'react';
 
 import {
   ActionGroup,
+  Alert,
   Button,
   DataList,
   DatePicker,
@@ -9,6 +10,7 @@ import {
   Field,
   FieldSet,
   IconButton,
+  InvalidFormAlert,
   Label,
   Link,
   Paragraph,
@@ -26,21 +28,26 @@ import {
 } from '@amsterdam/design-system-react-icons';
 
 import { PageContentCell } from '../../../../components/Page/Page.tsx';
-import { ServiceAlertPreview } from './ServiceAlertPreview.tsx';
 import {
   serviceAlertDisplayLocations,
+  serviceAlertFormFieldIds,
   serviceAlertThemas,
   serviceAlertTypes,
-} from './ServiceAlertUpsertForm.constants.ts';
-import { useServiceAlertUpsertForm } from './ServiceAlertUpsertForm.hooks.ts';
-import type { ServiceAlertUpsertFormProps } from './ServiceAlertUpsertForm.types.ts';
+} from './ServiceAlertForm.constants.ts';
+import { useServiceAlertForm } from './ServiceAlertForm.hooks.ts';
+import type {
+  ServiceAlertFormErrors,
+  ServiceAlertFormField,
+  ServiceAlertFormProps,
+} from './ServiceAlertForm.types.ts';
+import { ServiceAlertPreview } from './ServiceAlertPreview.tsx';
 
-export function ServiceAlertUpsertForm({
+export function ServiceAlertForm({
   serviceAlert,
   readOnly = false,
-}: ServiceAlertUpsertFormProps) {
+}: ServiceAlertFormProps) {
   return (
-    <ServiceAlertUpsertFormContent
+    <ServiceAlertFormContent
       key={serviceAlert?.id ?? 'new'}
       serviceAlert={serviceAlert}
       readOnly={readOnly}
@@ -48,10 +55,38 @@ export function ServiceAlertUpsertForm({
   );
 }
 
-function ServiceAlertUpsertFormContent({
+const FIELD_IDS = serviceAlertFormFieldIds;
+
+const LINK_ERROR_ID = 'service-alert-link-error';
+
+function getErrorId(field: ServiceAlertFormField) {
+  return `${FIELD_IDS[field]}-error`;
+}
+
+function getInvalidFormErrors(errors: ServiceAlertFormErrors) {
+  return Object.entries(errors).map(([field, label]) => ({
+    id: `#${FIELD_IDS[field as ServiceAlertFormField]}`,
+    label,
+  }));
+}
+
+function FieldError({
+  errors,
+  field,
+}: {
+  errors: ServiceAlertFormErrors;
+  field: ServiceAlertFormField;
+}) {
+  const message = errors[field];
+  return message ? (
+    <ErrorMessage id={getErrorId(field)}>{message}</ErrorMessage>
+  ) : null;
+}
+
+function ServiceAlertFormContent({
   serviceAlert,
   readOnly = false,
-}: ServiceAlertUpsertFormProps) {
+}: ServiceAlertFormProps) {
   const {
     body,
     dateRange,
@@ -82,47 +117,73 @@ function ServiceAlertUpsertFormContent({
     timeEnd,
     timeStart,
     type,
-    validationMessage,
+    errors,
     errorData,
-  } = useServiceAlertUpsertForm(serviceAlert);
+  } = useServiceAlertForm(serviceAlert);
   const [isEditing, setIsEditing] = useState(!readOnly);
+
+  function getFieldProps(field: ServiceAlertFormField) {
+    const isInvalid = !!errors[field];
+    return {
+      id: FIELD_IDS[field],
+      invalid: isInvalid,
+    };
+  }
 
   return (
     <>
       <PageContentCell spanWide={7}>
-        <form onSubmit={handleSubmit}>
-          <FieldSet legend="Storingsmelding" disabled={!isEditing}>
-            <Field className="ams-mb-m">
-              <Label htmlFor="service-alert-title">Titel</Label>
+        <InvalidFormAlert
+          className="ams-mb-m"
+          errors={getInvalidFormErrors(errors)}
+          headingLevel={2}
+        />
+        <form onSubmit={handleSubmit} noValidate>
+          <FieldSet
+            legend="Storingsmelding"
+            disabled={!isEditing}
+            className="ams-mb-m"
+          >
+            <Field invalid={!!errors.title}>
+              <Label htmlFor={FIELD_IDS.title} inFieldSet>
+                Titel
+              </Label>
+              <FieldError errors={errors} field="title" />
               <TextInput
-                id="service-alert-title"
+                {...getFieldProps('title')}
                 name="title"
                 value={title}
                 onChange={(event) => setTitle(event.currentTarget.value)}
                 maxLength={200}
-                required
+                aria-required="true"
               />
             </Field>
-            <Field className="ams-mb-m">
-              <Label htmlFor="service-alert-body">Bericht</Label>
+            <Field invalid={!!errors.body}>
+              <Label htmlFor={FIELD_IDS.body} inFieldSet>
+                Bericht
+              </Label>
+              <FieldError errors={errors} field="body" />
               <TextArea
-                id="service-alert-body"
+                {...getFieldProps('body')}
                 name="body"
                 value={body}
                 onChange={(event) => setBody(event.currentTarget.value)}
-                required
+                aria-required="true"
               />
             </Field>
-            <Field className="ams-mb-m">
-              <Label htmlFor="service-alert-location">Locatie</Label>
+            <Field invalid={!!errors.displayLocation}>
+              <Label htmlFor={FIELD_IDS.displayLocation} inFieldSet>
+                Locatie
+              </Label>
+              <FieldError errors={errors} field="displayLocation" />
               <Select
-                id="service-alert-location"
+                {...getFieldProps('displayLocation')}
                 name="displayLocation"
                 value={displayLocation ?? ''}
                 onChange={(event) =>
                   handleDisplayLocationChange(event.currentTarget.value)
                 }
-                required
+                aria-required="true"
               >
                 <Select.Option value="">Selecteer een locatie</Select.Option>
                 {serviceAlertDisplayLocations.map(({ value, label }) => (
@@ -133,14 +194,17 @@ function ServiceAlertUpsertFormContent({
               </Select>
             </Field>
             {displayLocation === 'theme' && (
-              <Field className="ams-mb-m">
-                <Label htmlFor="service-alert-thema">Thema</Label>
+              <Field invalid={!!errors.themaId}>
+                <Label htmlFor={FIELD_IDS.themaId} inFieldSet>
+                  Thema
+                </Label>
+                <FieldError errors={errors} field="themaId" />
                 <Select
-                  id="service-alert-thema"
+                  {...getFieldProps('themaId')}
                   name="themaId"
                   value={themaId}
                   onChange={(event) => setThemaId(event.currentTarget.value)}
-                  required
+                  aria-required="true"
                 >
                   <Select.Option value="">Selecteer een thema</Select.Option>
                   {serviceAlertThemas.map(({ value, label }) => (
@@ -151,10 +215,13 @@ function ServiceAlertUpsertFormContent({
                 </Select>
               </Field>
             )}
-            <Field className="ams-mb-m">
-              <Label htmlFor="service-alert-type">Type</Label>
+            <Field invalid={!!errors.type}>
+              <Label htmlFor={FIELD_IDS.type} inFieldSet>
+                Type
+              </Label>
+              <FieldError errors={errors} field="type" />
               <Select
-                id="service-alert-type"
+                {...getFieldProps('type')}
                 name="type"
                 value={type ?? ''}
                 onChange={(event) => {
@@ -164,7 +231,7 @@ function ServiceAlertUpsertFormContent({
                     )?.value
                   );
                 }}
-                required
+                aria-required="true"
               >
                 <Select.Option value="">Selecteer een type</Select.Option>
                 {serviceAlertTypes.map(({ value, label }) => (
@@ -174,7 +241,15 @@ function ServiceAlertUpsertFormContent({
                 ))}
               </Select>
             </Field>
-            <FieldSet legend="Links (optioneel)" className="ams-mb-m">
+            <FieldSet
+              id={FIELD_IDS.links}
+              legend="Links"
+              optional
+              inFieldSet
+              invalid={!!errors.links || !!linkValidationMessage}
+              aria-describedby={errors.links ? getErrorId('links') : undefined}
+            >
+              <FieldError errors={errors} field="links" />
               <DataList>
                 {links.map((link, index) => (
                   <Fragment key={index}>
@@ -212,17 +287,30 @@ function ServiceAlertUpsertFormContent({
                   </Fragment>
                 ))}
               </DataList>
-              <Field className="ams-mb-m">
-                <Label htmlFor="service-alert-link-label">Linktekst</Label>
+              {linkValidationMessage && (
+                <ErrorMessage id={LINK_ERROR_ID}>
+                  {linkValidationMessage}
+                </ErrorMessage>
+              )}
+              <Field invalid={!!linkValidationMessage}>
+                <Label htmlFor="service-alert-link-label" inFieldSet>
+                  Linktekst
+                </Label>
                 <TextInput
                   id="service-alert-link-label"
                   value={linkLabel}
                   onChange={(event) => setLinkLabel(event.currentTarget.value)}
                   maxLength={200}
+                  invalid={!!linkValidationMessage}
+                  aria-describedby={
+                    linkValidationMessage ? LINK_ERROR_ID : undefined
+                  }
                 />
               </Field>
-              <Field className="ams-mb-m">
-                <Label htmlFor="service-alert-link-url">URL</Label>
+              <Field invalid={!!linkValidationMessage}>
+                <Label htmlFor="service-alert-link-url" inFieldSet>
+                  URL
+                </Label>
                 <TextInput
                   id="service-alert-link-url"
                   type="url"
@@ -230,11 +318,12 @@ function ServiceAlertUpsertFormContent({
                   onChange={(event) => setLinkUrl(event.currentTarget.value)}
                   maxLength={2048}
                   placeholder="https://"
+                  invalid={!!linkValidationMessage}
+                  aria-describedby={
+                    linkValidationMessage ? LINK_ERROR_ID : undefined
+                  }
                 />
               </Field>
-              {linkValidationMessage && (
-                <ErrorMessage>{linkValidationMessage}</ErrorMessage>
-              )}
               <Button
                 type="button"
                 icon={<PlusIcon />}
@@ -244,8 +333,16 @@ function ServiceAlertUpsertFormContent({
                 Voeg nog een link toe
               </Button>
             </FieldSet>
-            <Field className="ams-mb-m">
-              <Label>Periode</Label>
+            <FieldSet
+              id={FIELD_IDS.period}
+              legend="Periode"
+              inFieldSet
+              invalid={!!errors.period}
+              aria-describedby={
+                errors.period ? getErrorId('period') : undefined
+              }
+            >
+              <FieldError errors={errors} field="period" />
               <DatePicker
                 mode="range"
                 value={dateRange}
@@ -256,47 +353,67 @@ function ServiceAlertUpsertFormContent({
                 previousYearButtonLabel="Vorig jaar"
                 rangeStartAccessibleName="startdatum"
                 rangeEndAccessibleName="einddatum"
-                aria-label="Selecteer periode"
               />
-            </Field>
-            <Row wrap className="ams-mb-m">
-              <Field>
-                <Label htmlFor="service-alert-time-start">Starttijd</Label>
-                <TimeInput
-                  id="service-alert-time-start"
-                  name="timeStart"
-                  value={timeStart}
-                  onChange={(event) => setTimeStart(event.currentTarget.value)}
-                  required
-                />
-              </Field>
-              <Field>
-                <Label htmlFor="service-alert-time-end">Eindtijd</Label>
-                <TimeInput
-                  id="service-alert-time-end"
-                  name="timeEnd"
-                  value={timeEnd}
-                  onChange={(event) => setTimeEnd(event.currentTarget.value)}
-                  required
-                />
-              </Field>
-            </Row>
+              <Row wrap>
+                <Field invalid={!!errors.timeStart}>
+                  <Label htmlFor={FIELD_IDS.timeStart} inFieldSet>
+                    Starttijd
+                  </Label>
+                  <FieldError errors={errors} field="timeStart" />
+                  <TimeInput
+                    {...getFieldProps('timeStart')}
+                    name="timeStart"
+                    value={timeStart}
+                    onChange={(event) =>
+                      setTimeStart(event.currentTarget.value)
+                    }
+                    aria-required="true"
+                  />
+                </Field>
+                <Field invalid={!!errors.timeEnd}>
+                  <Label htmlFor={FIELD_IDS.timeEnd} inFieldSet>
+                    Eindtijd
+                  </Label>
+                  <FieldError errors={errors} field="timeEnd" />
+                  <TimeInput
+                    {...getFieldProps('timeEnd')}
+                    name="timeEnd"
+                    value={timeEnd}
+                    onChange={(event) => setTimeEnd(event.currentTarget.value)}
+                    aria-required="true"
+                  />
+                </Field>
+              </Row>
+            </FieldSet>
           </FieldSet>
 
-          {validationMessage && (
-            <ErrorMessage>{validationMessage}</ErrorMessage>
-          )}
           {isError && (
-            <ErrorMessage>
-              {isEditing ? 'Opslaan' : 'Aanmaken'} is mislukt: {errorData}
-            </ErrorMessage>
+            <Alert
+              className="ams-mb-m"
+              heading={
+                serviceAlert ? 'Opslaan is mislukt' : 'Aanmaken is mislukt'
+              }
+              headingLevel={2}
+              severity="error"
+            >
+              <Paragraph>
+                {errorData || 'Er is iets misgegaan. Probeer het opnieuw.'}
+              </Paragraph>
+            </Alert>
           )}
           {isSuccess && (
-            <Paragraph role="status" className="ams-mb-m">
-              {isEditing
-                ? 'De storingsmelding is bijgewerkt.'
-                : 'De storingsmelding is aangemaakt.'}
-            </Paragraph>
+            <Alert
+              className="ams-mb-m"
+              heading={
+                serviceAlert
+                  ? 'De storingsmelding is bijgewerkt'
+                  : 'De storingsmelding is aangemaakt'
+              }
+              headingLevel={2}
+              severity="success"
+            >
+              <Paragraph>De wijzigingen zijn opgeslagen.</Paragraph>
+            </Alert>
           )}
           <ActionGroup>
             {readOnly && !isEditing && (
@@ -311,7 +428,7 @@ function ServiceAlertUpsertFormContent({
             {isEditing && (
               <Button type="submit" variant="primary" disabled={isLoading}>
                 {isLoading
-                  ? isEditing && serviceAlert
+                  ? serviceAlert
                     ? 'Bezig met opslaan...'
                     : 'Bezig met aanmaken...'
                   : serviceAlert

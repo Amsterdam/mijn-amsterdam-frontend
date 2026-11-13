@@ -4,11 +4,12 @@ import {
   serviceAlertDisplayLocations,
   serviceAlertThemas,
   serviceAlertTypes,
-} from './ServiceAlertUpsertForm.constants.ts';
+} from './ServiceAlertForm.constants.ts';
 import type {
-  ServiceAlertUpsertFormResult,
-  ServiceAlertUpsertFormValues,
-} from './ServiceAlertUpsertForm.types.ts';
+  ServiceAlertFormErrors,
+  ServiceAlertFormResult,
+  ServiceAlertFormValues,
+} from './ServiceAlertForm.types.ts';
 
 export function getServiceAlertLinkValidationMessage({
   label,
@@ -84,23 +85,48 @@ function combineDateAndTime(date: Date, time: string) {
   );
 }
 
-export function getServiceAlertUpsertFormResult({
+export const SERVICE_ALERT_FORM_ERROR_MESSAGES = {
+  title: 'Vul een titel in.',
+  body: 'Vul een bericht in.',
+  displayLocation: 'Kies waar de storingsmelding getoond wordt.',
+  themaId: 'Kies een thema.',
+  type: 'Kies een type.',
+  links:
+    'Controleer de links. Elke link heeft een linktekst en een geldig https://-adres nodig.',
+  period: 'Kies een startdatum en een einddatum.',
+  timeStart: 'Vul een starttijd in.',
+  timeEnd: 'Vul een eindtijd in.',
+  timeEndBeforeStart:
+    'Vul een einddatum en eindtijd in die na de startdatum en starttijd liggen.',
+} as const;
+
+function getTrimmedText(formData: FormData, name: string) {
+  const value = formData.get(name);
+  return typeof value === 'string' ? value.trim() : '';
+}
+
+export function getServiceAlertFormResult({
   formData,
   dateRange,
   timeStart,
   timeEnd,
   links,
   serviceAlert,
-}: ServiceAlertUpsertFormValues): ServiceAlertUpsertFormResult {
-  const title = formData.get('title');
-  const body = formData.get('body');
+}: ServiceAlertFormValues): ServiceAlertFormResult {
+  const title = getTrimmedText(formData, 'title');
+  const body = getTrimmedText(formData, 'body');
   const displayLocation = serviceAlertDisplayLocations.find(
     ({ value }) => value === formData.get('displayLocation')
   )?.value;
   const type = serviceAlertTypes.find(
     ({ value }) => value === formData.get('type')
   )?.value;
-  const formThemaId = formData.get('themaId');
+  const themaId =
+    displayLocation === 'theme'
+      ? (serviceAlertThemas.find(
+          ({ value }) => value === formData.get('themaId')
+        )?.value ?? null)
+      : null;
   const parsedLinks = links
     .filter(({ label, url }) => label.trim() || url.trim())
     .map(({ label, url }, sortOrder) => ({
@@ -108,66 +134,71 @@ export function getServiceAlertUpsertFormResult({
       url: url.trim(),
       sortOrder,
     }));
+  const dateStart =
+    dateRange.start && timeStart
+      ? combineDateAndTime(dateRange.start, timeStart)
+      : null;
+  const dateEnd =
+    dateRange.end && timeEnd
+      ? combineDateAndTime(dateRange.end, timeEnd)
+      : null;
 
-  if (
-    typeof title !== 'string' ||
-    typeof body !== 'string' ||
-    !title.trim() ||
-    !body.trim() ||
-    !type ||
-    !displayLocation ||
-    (displayLocation === 'theme' &&
-      (typeof formThemaId !== 'string' ||
-        !serviceAlertThemas.some(({ value }) => value === formThemaId))) ||
-    !dateRange.start ||
-    !dateRange.end ||
-    !timeStart ||
-    !timeEnd
-  ) {
-    return {
-      payload: null,
-      validationMessage: 'Vul alle verplichte velden in.',
-    };
+  const errors: ServiceAlertFormErrors = {};
+  const messages = SERVICE_ALERT_FORM_ERROR_MESSAGES;
+
+  if (!title) {
+    errors.title = messages.title;
   }
-
+  if (!body) {
+    errors.body = messages.body;
+  }
+  if (!displayLocation) {
+    errors.displayLocation = messages.displayLocation;
+  }
+  if (displayLocation === 'theme' && !themaId) {
+    errors.themaId = messages.themaId;
+  }
+  if (!type) {
+    errors.type = messages.type;
+  }
   if (parsedLinks.some((link) => getServiceAlertLinkValidationMessage(link))) {
-    return {
-      payload: null,
-      validationMessage:
-        'Controleer de links. Vul voor elke link zowel een label als een geldig https://-adres in.',
-    };
+    errors.links = messages.links;
+  }
+  if (!dateRange.start || !dateRange.end) {
+    errors.period = messages.period;
+  }
+  if (!timeStart) {
+    errors.timeStart = messages.timeStart;
+  }
+  if (!timeEnd) {
+    errors.timeEnd = messages.timeEnd;
+  }
+  if (dateStart && dateEnd && dateEnd < dateStart) {
+    errors.timeEnd = messages.timeEndBeforeStart;
   }
 
-  const parsedDateStart = combineDateAndTime(dateRange.start, timeStart);
-  const parsedDateEnd = combineDateAndTime(dateRange.end, timeEnd);
-
   if (
-    Number.isNaN(parsedDateStart.getTime()) ||
-    Number.isNaN(parsedDateEnd.getTime()) ||
-    parsedDateEnd < parsedDateStart
+    Object.keys(errors).length > 0 ||
+    !displayLocation ||
+    !type ||
+    !dateStart ||
+    !dateEnd
   ) {
-    return {
-      payload: null,
-      validationMessage:
-        'Controleer de start- en einddatum. Vul een geldige einddatum en eindtijd in die niet voor de startdatum liggen.',
-    };
+    return { payload: null, errors };
   }
 
   return {
-    validationMessage: null,
+    errors: null,
     payload: {
-      title: title.trim(),
-      body: body.trim(),
-      type,
       id: serviceAlert?.id,
+      title,
+      body,
+      type,
       displayLocation,
-      themaId:
-        displayLocation === 'theme' && typeof formThemaId === 'string'
-          ? formThemaId
-          : null,
+      themaId,
       links: parsedLinks,
-      dateStart: parsedDateStart.toISOString(),
-      dateEnd: parsedDateEnd.toISOString(),
+      dateStart: dateStart.toISOString(),
+      dateEnd: dateEnd.toISOString(),
     },
   };
 }

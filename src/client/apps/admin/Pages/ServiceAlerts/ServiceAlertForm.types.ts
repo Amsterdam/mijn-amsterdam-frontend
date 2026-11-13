@@ -4,18 +4,19 @@ import type {
   ServiceAlertInput,
   ServiceAlertsOverview,
 } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
+import type { serviceAlertFormFieldIds } from './ServiceAlertForm.constants.ts';
 
 export type ServiceAlertSelectOption<Value extends string> = {
   value: Value;
   label: string;
 };
 
-export type ServiceAlertUpsertFormProps = {
+export type ServiceAlertFormProps = {
   serviceAlert?: ServiceAlertsOverview[number];
   readOnly?: boolean;
 };
 
-export type ServiceAlertUpsertFormValues = {
+export type ServiceAlertFormValues = {
   formData: FormData;
   dateRange: DateRange;
   timeStart: string;
@@ -24,6 +25,12 @@ export type ServiceAlertUpsertFormValues = {
   serviceAlert?: ServiceAlertsOverview[number];
 };
 
-export type ServiceAlertUpsertFormResult =
-  | { payload: ServiceAlertInput; validationMessage: null }
-  | { payload: null; validationMessage: string };
+export type ServiceAlertFormField = keyof typeof serviceAlertFormFieldIds;
+
+export type ServiceAlertFormErrors = Partial<
+  Record<ServiceAlertFormField, string>
+>;
+
+export type ServiceAlertFormResult =
+  | { payload: ServiceAlertInput; errors: null }
+  | { payload: null; errors: ServiceAlertFormErrors };

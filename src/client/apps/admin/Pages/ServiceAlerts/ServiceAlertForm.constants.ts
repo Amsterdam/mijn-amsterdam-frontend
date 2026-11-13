@@ -1,6 +1,6 @@
 import type { ServiceAlertInput } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
 import { myThemasMenuItems } from '../../../bob/config/thema.ts';
-import type { ServiceAlertSelectOption } from './ServiceAlertUpsertForm.types.ts';
+import type { ServiceAlertSelectOption } from './ServiceAlertForm.types.ts';
 
 export const serviceAlertTypes = [
   { value: 'info', label: 'Informatie' },
@@ -24,3 +24,15 @@ export const serviceAlertThemas = myThemasMenuItems
     label: typeof title === 'string' ? title : id,
   }))
   .toSorted((a, b) => a.label.localeCompare(b.label, 'nl'));
+
+export const serviceAlertFormFieldIds = {
+  title: 'service-alert-title',
+  body: 'service-alert-body',
+  displayLocation: 'service-alert-location',
+  themaId: 'service-alert-thema',
+  type: 'service-alert-type',
+  links: 'service-alert-links',
+  period: 'service-alert-period',
+  timeStart: 'service-alert-time-start',
+  timeEnd: 'service-alert-time-end',
+} as const;
