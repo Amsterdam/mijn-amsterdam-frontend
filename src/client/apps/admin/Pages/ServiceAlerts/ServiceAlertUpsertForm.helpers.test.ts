@@ -24,10 +24,58 @@ function createFormValues(
     },
     timeStart: '09:00',
     timeEnd: '10:00',
-    type: 'info',
     links,
   };
 }
+
+describe('getServiceAlertUpsertFormResult displayLocation', () => {
+  it('requires a display location to be chosen', () => {
+    const formValues = createFormValues([]);
+    formValues.formData.delete('displayLocation');
+
+    const result = getServiceAlertUpsertFormResult(formValues);
+
+    expect(result).toEqual({
+      payload: null,
+      validationMessage: 'Vul alle verplichte velden in.',
+    });
+  });
+
+  it('rejects an unknown display location', () => {
+    const formValues = createFormValues([]);
+    formValues.formData.set('displayLocation', 'dashboard');
+
+    const result = getServiceAlertUpsertFormResult(formValues);
+
+    expect(result.payload).toBeNull();
+  });
+});
+
+describe('getServiceAlertUpsertFormResult type', () => {
+  it('requires a type to be chosen', () => {
+    const formValues = createFormValues([]);
+    formValues.formData.delete('type');
+
+    const result = getServiceAlertUpsertFormResult(formValues);
+
+    expect(result).toEqual({
+      payload: null,
+      validationMessage: 'Vul alle verplichte velden in.',
+    });
+  });
+
+  it('uses the chosen type, also for notifications', () => {
+    const formValues = createFormValues([]);
+    formValues.formData.set('type', 'error');
+
+    const result = getServiceAlertUpsertFormResult(formValues);
+
+    expect(result.payload).toMatchObject({
+      displayLocation: 'notification',
+      type: 'error',
+    });
+  });
+});
 
 describe('getServiceAlertUpsertFormResult links', () => {
   it('includes multiple links in their given order', () => {

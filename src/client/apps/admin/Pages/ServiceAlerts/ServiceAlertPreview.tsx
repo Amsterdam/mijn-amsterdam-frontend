@@ -53,7 +53,7 @@ export function ServiceAlertPreview({
         <Alert
           heading={title || 'Titel van de melding'}
           headingLevel={4}
-          severity={type === 'info' ? undefined : type}
+          severity={type === 'info' || !type ? undefined : type}
         >
           <Paragraph>{body || 'Bericht van de melding'}</Paragraph>
           {links.map(({ label, url }) => (

@@ -3,6 +3,7 @@ import {
   pgTable,
   text,
   timestamp,
+  uuid,
   varchar,
 } from 'drizzle-orm/pg-core';
 
@@ -25,30 +26,24 @@ export type ServiceAlertLink = {
   sortOrder: number;
 };
 
-export const serviceAlertsTable = pgTable(
-  SERVICE_ALERTS_TABLE_NAME,
-  {
-    id: varchar('id', { length: 64 }).notNull().primaryKey(),
-    title: varchar('title', { length: 200 }).notNull(),
-    body: text('body').notNull(),
-    type: varchar('type', { length: 20 })
-      .$type<ServiceAlertType>()
-      .notNull()
-      .default('info'),
-    displayLocation: varchar('display_location', { length: 20 })
-      .$type<ServiceAlertDisplayLocation>()
-      .notNull(),
-    themaId: varchar('thema_id', { length: 64 }),
-    createdByEmail: varchar('created_by_email', { length: 320 }),
-    updatedByEmail: varchar('updated_by_email', { length: 320 }),
-    links: jsonb('links').$type<ServiceAlertLink[]>().notNull().default([]),
-    dateStart: timestamp('date_start', { withTimezone: true }).notNull(),
-    dateEnd: timestamp('date_end', { withTimezone: true }).notNull(),
-    dateUpdated: timestamp('date_updated', { withTimezone: true })
-      .notNull()
-      .defaultNow(),
-    dateCreated: timestamp('date_created', { withTimezone: true })
-      .notNull()
-      .defaultNow(),
-  }
-);
+export const serviceAlertsTable = pgTable(SERVICE_ALERTS_TABLE_NAME, {
+  id: uuid('id').primaryKey().defaultRandom(),
+  title: varchar('title', { length: 200 }).notNull(),
+  body: text('body').notNull(),
+  type: varchar('type', { length: 20 }).$type<ServiceAlertType>().notNull(),
+  displayLocation: varchar('display_location', { length: 20 })
+    .$type<ServiceAlertDisplayLocation>()
+    .notNull(),
+  themaId: varchar('thema_id', { length: 64 }),
+  createdByEmail: varchar('created_by_email', { length: 320 }).notNull(),
+  updatedByEmail: varchar('updated_by_email', { length: 320 }).notNull(),
+  links: jsonb('links').$type<ServiceAlertLink[]>().notNull().default([]),
+  dateStart: timestamp('date_start', { withTimezone: true }).notNull(),
+  dateEnd: timestamp('date_end', { withTimezone: true }).notNull(),
+  dateUpdated: timestamp('date_updated', { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  dateCreated: timestamp('date_created', { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});

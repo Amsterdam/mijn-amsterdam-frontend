@@ -20,7 +20,6 @@ export type ServiceAlertUpsertFormValues = {
   dateRange: DateRange;
   timeStart: string;
   timeEnd: string;
-  type: ServiceAlertInput['type'];
   links: ServiceAlertInput['links'];
   serviceAlert?: ServiceAlertsOverview[number];
 };

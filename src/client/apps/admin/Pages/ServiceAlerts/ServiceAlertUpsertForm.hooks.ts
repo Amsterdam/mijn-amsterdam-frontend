@@ -53,8 +53,8 @@ export function useServiceAlertUpsertForm(
   const [linkValidationMessage, setLinkValidationMessage] = useState<
     string | null
   >(null);
-  const [type, setType] = useState<ServiceAlertInput['type']>(
-    serviceAlert?.type ?? 'info'
+  const [type, setType] = useState<ServiceAlertInput['type'] | undefined>(
+    serviceAlert?.type
   );
   const [validationMessage, setValidationMessage] = useState<string | null>(
     null
@@ -69,8 +69,8 @@ export function useServiceAlertUpsertForm(
     serviceAlert ? getTime(serviceAlert.dateEnd) : ''
   );
   const [displayLocation, setDisplayLocation] = useState<
-    ServiceAlertInput['displayLocation']
-  >(serviceAlert?.displayLocation ?? 'notification');
+    ServiceAlertInput['displayLocation'] | undefined
+  >(serviceAlert?.displayLocation);
   const [themaId, setThemaId] = useState(serviceAlert?.themaId ?? '');
   const upsertServiceAlert = useBffApi<{ success: boolean }, ServiceAlertInput>(
     BFFApiUrls.SERVICE_ALERTS_UPSERT,
@@ -153,7 +153,6 @@ export function useServiceAlertUpsertForm(
       dateRange,
       timeStart,
       timeEnd,
-      type,
       links,
       serviceAlert,
     });
@@ -175,9 +174,6 @@ export function useServiceAlertUpsertForm(
     const location = serviceAlertDisplayLocations.find(
       ({ value: optionValue }) => optionValue === value
     )?.value;
-    if (!location) {
-      return;
-    }
 
     setDisplayLocation(location);
     if (location !== 'theme') {

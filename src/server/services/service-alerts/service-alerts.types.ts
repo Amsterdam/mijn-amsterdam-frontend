@@ -21,10 +21,10 @@ export type ServiceAlertLinkInput = z.infer<typeof serviceAlertLinkInput>;
 
 export const serviceAlertInput = z
   .object({
-    id: z.string().max(64).optional(),
+    id: z.uuid().optional(),
     title: z.string().max(200),
     body: z.string(),
-    type: z.enum(SERVICE_ALERT_TYPES).default('info'),
+    type: z.enum(SERVICE_ALERT_TYPES),
     displayLocation: z.enum(SERVICE_ALERT_DISPLAY_LOCATIONS),
     themaId: z.string().max(64).nullable().optional(),
     links: z.array(serviceAlertLinkInput).default([]),
@@ -51,8 +51,8 @@ export type ServiceAlertsOverview = {
   type: (typeof SERVICE_ALERT_TYPES)[number];
   displayLocation: (typeof SERVICE_ALERT_DISPLAY_LOCATIONS)[number];
   themaId: string | null;
-  createdByEmail: string | null;
-  updatedByEmail: string | null;
+  createdByEmail: string;
+  updatedByEmail: string;
   links: ServiceAlertLinkInput[];
   dateStart: string;
   dateEnd: string;

@@ -90,12 +90,18 @@ describe('service alert maintenance notifications', () => {
   it('returns all active alerts when no page is given', async () => {
     vi.mocked(getActiveServiceAlertRows).mockResolvedValue([
       createServiceAlert({ id: 'login', displayLocation: 'login' }),
-      createServiceAlert({ id: 'notification', displayLocation: 'notification' }),
+      createServiceAlert({
+        id: 'notification',
+        displayLocation: 'notification',
+      }),
     ]);
 
     const result = await fetchActiveServiceAlerts({});
 
-    expect(result.content?.map(({ id }) => id)).toEqual(['login', 'notification']);
+    expect(result.content?.map(({ id }) => id)).toEqual([
+      'login',
+      'notification',
+    ]);
   });
 
   it('returns notification alerts for the existing notifications feed', async () => {

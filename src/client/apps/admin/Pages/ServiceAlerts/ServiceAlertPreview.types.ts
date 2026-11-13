@@ -3,7 +3,7 @@ import type { ServiceAlertInput } from '../../../../../server/services/service-a
 export type ServiceAlertPreviewProps = {
   title: string;
   body: string;
-  type: ServiceAlertInput['type'];
-  displayLocation: ServiceAlertInput['displayLocation'];
+  type?: ServiceAlertInput['type'];
+  displayLocation?: ServiceAlertInput['displayLocation'];
   links: ServiceAlertInput['links'];
 };

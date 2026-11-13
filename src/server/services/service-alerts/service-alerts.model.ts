@@ -1,5 +1,3 @@
-import { randomUUID } from 'node:crypto';
-
 import { and, eq, gt, lte } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/node-postgres';
 
@@ -50,7 +48,7 @@ export async function upsertServiceAlert(
     dateStart,
     dateEnd,
   }: ServiceAlertInput,
-  updatedByEmail: string
+  editedByEmail: string
 ) {
   const drizzleDb = getDrizzleDb();
   const alertData = {
@@ -63,7 +61,7 @@ export async function upsertServiceAlert(
     dateStart: new Date(dateStart),
     dateEnd: new Date(dateEnd),
     dateUpdated: new Date(),
-    updatedByEmail,
+    updatedByEmail: editedByEmail,
   };
 
   if (id) {
@@ -78,9 +76,8 @@ export async function upsertServiceAlert(
     }
   } else {
     await drizzleDb.insert(serviceAlertsTable).values({
-      id: randomUUID(),
       ...alertData,
-      createdByEmail: updatedByEmail,
+      createdByEmail: editedByEmail,
     });
   }
 

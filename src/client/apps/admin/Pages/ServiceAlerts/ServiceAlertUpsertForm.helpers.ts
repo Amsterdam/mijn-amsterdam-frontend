@@ -51,7 +51,6 @@ export function getServiceAlertUpsertFormResult({
   dateRange,
   timeStart,
   timeEnd,
-  type: currentType,
   links,
   serviceAlert,
 }: ServiceAlertUpsertFormValues): ServiceAlertUpsertFormResult {
@@ -60,9 +59,9 @@ export function getServiceAlertUpsertFormResult({
   const displayLocation = serviceAlertDisplayLocations.find(
     ({ value }) => value === formData.get('displayLocation')
   )?.value;
-  const type =
-    serviceAlertTypes.find(({ value }) => value === formData.get('type'))
-      ?.value ?? (displayLocation === 'notification' ? currentType : undefined);
+  const type = serviceAlertTypes.find(
+    ({ value }) => value === formData.get('type')
+  )?.value;
   const formThemaId = formData.get('themaId');
   const parsedLinks = links
     .filter(({ label, url }) => label.trim() || url.trim())

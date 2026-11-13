@@ -111,11 +111,13 @@ function ServiceAlertUpsertFormContent({
               <Select
                 id="service-alert-location"
                 name="displayLocation"
-                value={displayLocation}
+                value={displayLocation ?? ''}
                 onChange={(event) =>
                   handleDisplayLocationChange(event.currentTarget.value)
                 }
+                required
               >
+                <Select.Option value="">Selecteer een locatie</Select.Option>
                 {serviceAlertDisplayLocations.map(({ value, label }) => (
                   <Select.Option key={value} value={value}>
                     {label}
@@ -142,30 +144,29 @@ function ServiceAlertUpsertFormContent({
                 </Select>
               </Field>
             )}
-            {displayLocation !== 'notification' && (
-              <Field className="ams-mb-m">
-                <Label htmlFor="service-alert-type">Type</Label>
-                <Select
-                  id="service-alert-type"
-                  name="type"
-                  value={type}
-                  onChange={(event) => {
-                    const selectedType = serviceAlertTypes.find(
+            <Field className="ams-mb-m">
+              <Label htmlFor="service-alert-type">Type</Label>
+              <Select
+                id="service-alert-type"
+                name="type"
+                value={type ?? ''}
+                onChange={(event) => {
+                  setType(
+                    serviceAlertTypes.find(
                       ({ value }) => value === event.currentTarget.value
-                    )?.value;
-                    if (selectedType) {
-                      setType(selectedType);
-                    }
-                  }}
-                >
-                  {serviceAlertTypes.map(({ value, label }) => (
-                    <Select.Option key={value} value={value}>
-                      {label}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Field>
-            )}
+                    )?.value
+                  );
+                }}
+                required
+              >
+                <Select.Option value="">Selecteer een type</Select.Option>
+                {serviceAlertTypes.map(({ value, label }) => (
+                  <Select.Option key={value} value={value}>
+                    {label}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Field>
             <FieldSet legend="Links (optioneel)" className="ams-mb-m">
               <DataList>
                 {links.map((link, index) => (
