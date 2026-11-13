@@ -1,8 +1,9 @@
 import { randomUUID } from 'node:crypto';
 
-import { eq } from 'drizzle-orm';
+import { and, eq, gt, lte } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/node-postgres';
 
+import { IS_DB_ENABLED } from '../db/config.ts';
 import { getPool } from '../db/postgres.ts';
 import { serviceAlertsTable } from '../db/schema/service-alerts.ts';
 import type { ServiceAlertInput } from './service-alerts.types.ts';
@@ -11,13 +12,33 @@ function getDrizzleDb() {
   return drizzle(getPool());
 }
 
-export async function getServiceAlerts() {
+export type ServiceAlertRow = typeof serviceAlertsTable.$inferSelect;
+
+export async function getServiceAlerts(): Promise<ServiceAlertRow[]> {
   const drizzleDb = getDrizzleDb();
-  const rows = await drizzleDb.select().from(serviceAlertsTable);
-  return rows;
+  return drizzleDb.select().from(serviceAlertsTable);
 }
 
-export async function handleUpsertServiceAlert(
+export async function getActiveServiceAlerts(
+  now: Date = new Date()
+): Promise<ServiceAlertRow[]> {
+  if (!IS_DB_ENABLED) {
+    return [];
+  }
+
+  const drizzleDb = getDrizzleDb();
+  return drizzleDb
+    .select()
+    .from(serviceAlertsTable)
+    .where(
+      and(
+        lte(serviceAlertsTable.dateStart, now),
+        gt(serviceAlertsTable.dateEnd, now)
+      )
+    );
+}
+
+export async function upsertServiceAlert(
   {
     id,
     title,

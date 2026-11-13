@@ -33,8 +33,8 @@ import {
   fetchCmsFooter,
   fetchSearchConfig,
 } from '../services/cms/cms-content.ts';
-import type { QueryParamsMaintenanceNotifications } from '../services/cms/cms-types.ts';
 import { fetchActiveMaintenanceNotifications } from '../services/service-alerts/maintenance-notifications.ts';
+import type { QueryParamsMaintenanceNotifications } from '../services/service-alerts/service-alerts.types.ts';
 import { BffEndpoints } from './bff-routes.ts';
 import {
   generateFullApiUrlBFF,

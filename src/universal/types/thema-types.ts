@@ -124,5 +124,4 @@ export type AdminThemaConfig<ID extends string = string> = {
   title: string;
   featureToggle: ThemaFeatureToggle;
   route: ThemaRouteConfig;
-  pageLinks?: LinkConfig[];
 };

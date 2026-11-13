@@ -9,9 +9,6 @@ export const routes = {
 
 export const featureToggle = {
   router: {
-    protected: {
-      isEnabled: isEnabled('SERVICE_ALERTS.router.protected'),
-    },
     admin: {
       isEnabled: isEnabled('SERVICE_ALERTS.router.admin'),
     },

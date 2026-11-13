@@ -1,5 +1,5 @@
-import type { ServiceAlertsOverview } from '../../../server/services/service-alerts/service-alerts.types.ts';
-import { myThemasMenuItems } from '../../apps/bob/config/thema.ts';
+import type { ServiceAlertsOverview } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
+import { myThemasMenuItems } from '../../../bob/config/thema.ts';
 
 const serviceAlertTypeLabels = {
   info: 'Informatie',

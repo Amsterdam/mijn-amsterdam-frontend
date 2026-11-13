@@ -1,9 +1,12 @@
 import z from 'zod';
 
 import { isHttpsUrl } from '../../../universal/helpers/url.ts';
+import type { MyNotification } from '../../../universal/types/App.types.ts';
 import {
   SERVICE_ALERT_DISPLAY_LOCATIONS,
   SERVICE_ALERT_TYPES,
+  type ServiceAlertDisplayLocation,
+  type ServiceAlertType,
 } from '../db/schema/service-alerts.ts';
 
 export const serviceAlertLinkInput = z
@@ -54,3 +57,20 @@ export type ServiceAlertsOverview = {
   dateStart: string;
   dateEnd: string;
 }[];
+
+export type MaintenanceNotification = MyNotification & {
+  title: string;
+  datePublished: string;
+  dateStart: string;
+  dateEnd: string;
+  timeEnd: string;
+  timeStart: string;
+  description: string;
+  path: string;
+  severity: ServiceAlertType;
+  displayLocation: ServiceAlertDisplayLocation;
+};
+
+export type QueryParamsMaintenanceNotifications = {
+  page?: string;
+};

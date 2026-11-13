@@ -2,20 +2,22 @@ import type { ReactNode } from 'react';
 
 import { StandaloneLink } from '@amsterdam/design-system-react';
 
-import type { ServiceAlertsOverview } from '../../../server/services/service-alerts/service-alerts.types.ts';
-import { defaultDateTimeFormat } from '../../../universal/helpers/date.ts';
-import {
-  displayProps,
-  TEXT_NO_CONTENT,
-} from '../../apps/admin/Pages/ServiceAlerts/ServiceAlerts-thema-config.ts';
-import { MaRouterLink } from '../MaLink/MaLink.tsx';
-import { PageContentCell } from '../Page/Page.tsx';
-import { ThemaPaginaDataView } from '../Thema/ThemaPaginaDataView.tsx';
+import type { ServiceAlertsOverview } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
+import { defaultDateTimeFormat } from '../../../../../universal/helpers/date.ts';
+import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
+import { PageContentCell } from '../../../../components/Page/Page.tsx';
+import { ThemaPaginaDataView } from '../../../../components/Thema/ThemaPaginaDataView.tsx';
 import {
   getServiceAlertDisplayLocationLabel,
   getServiceAlertGroups,
   getServiceAlertTypeLabel,
 } from './ServiceAlerts.helpers.ts';
+import {
+  displayProps,
+  routePathToevoegen,
+  TEXT_NO_CONTENT,
+  TITLE_ADD_STORINGSMELDING_LINK,
+} from './ServiceAlerts-thema-config.ts';
 
 export type ServiceAlertOverviewItem = Pick<
   ServiceAlertsOverview[number],
@@ -78,11 +80,8 @@ export function ServiceAlertsPageContent({
   return (
     <>
       <PageContentCell>
-        <StandaloneLink
-          href={`${detailPath}/toevoegen`}
-          linkComponent={MaRouterLink}
-        >
-          Storingsmelding aanmaken
+        <StandaloneLink href={routePathToevoegen} linkComponent={MaRouterLink}>
+          {TITLE_ADD_STORINGSMELDING_LINK}
         </StandaloneLink>
       </PageContentCell>
       <ServiceAlertsTable

@@ -1,7 +1,6 @@
 import { useParams } from 'react-router';
 
 import type { ServiceAlertsOverview } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
-import { ServiceAlertsPageContent } from '../../../../components/ServiceAlerts/ServiceAlerts.tsx';
 import { ThemaPagina } from '../../../../components/Thema/ThemaPagina.tsx';
 import { useBffApi } from '../../../../hooks/api/useBffApi.ts';
 import { BFFApiUrls } from '../../config/api.ts';
@@ -10,6 +9,7 @@ import {
   TITLE_ADD_STORINGSMELDING,
   themaConfig,
 } from './ServiceAlerts-thema-config.ts';
+import { ServiceAlertsPageContent } from './ServiceAlertsOverview.tsx';
 import { ServiceAlertUpsertForm } from './ServiceAlertUpsertForm.tsx';
 
 export function ServiceAlerts() {

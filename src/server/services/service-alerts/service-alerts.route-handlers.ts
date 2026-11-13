@@ -8,8 +8,8 @@ import {
 import { getUsernameFromSession } from '../admin/admin-helpers.ts';
 import {
   getServiceAlerts,
-  handleUpsertServiceAlert,
-} from './service-alerts.ts';
+  upsertServiceAlert,
+} from './service-alerts.model.ts';
 import {
   type ServiceAlertInput,
   serviceAlertInput,
@@ -32,7 +32,7 @@ export async function handleUpsertServiceAlertRequest(
     return sendBadRequestInvalidInput(res, error);
   }
 
-  const result = await handleUpsertServiceAlert(
+  const result = await upsertServiceAlert(
     serviceAlert,
     getUsernameFromSession(req)
   );

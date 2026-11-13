@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import type { ServiceAlertsOverview } from '../../../server/services/service-alerts/service-alerts.types.ts';
-import { myThemasMenuItems } from '../../apps/bob/config/thema.ts';
+import type { ServiceAlertsOverview } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
+import { myThemasMenuItems } from '../../../bob/config/thema.ts';
 import {
   getServiceAlertDisplayLocationLabel,
   getServiceAlertGroups,
@@ -25,7 +25,6 @@ function createServiceAlert(
     createdByEmail: null,
     updatedByEmail: null,
     links: [],
-    environment: 'test',
     dateStart,
     dateEnd,
   };

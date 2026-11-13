@@ -6,6 +6,7 @@ const THEMA_ID = 'AdminStoringsMelding';
 const THEMA_TITLE = 'Storingsmeldingen';
 
 export const TITLE_ADD_STORINGSMELDING = 'Storingsmelding toevoegen';
+export const TITLE_ADD_STORINGSMELDING_LINK = 'Storingsmelding aanmaken';
 export const TEXT_NO_CONTENT = 'Er zijn geen storingsmeldingen';
 
 type ServiceAlertOverviewDisplayItem = ServiceAlertsOverview[number] & {
@@ -45,10 +46,4 @@ export const themaConfig = {
     documentTitle: `Overzicht | ${THEMA_TITLE}`,
     trackingUrl: null,
   },
-  pageLinks: [
-    {
-      to: routePathToevoegen,
-      title: 'Storingsmelding aanmaken',
-    },
-  ],
 } as const satisfies AdminStoringsMeldingenThemaConfig;

@@ -1,12 +1,16 @@
-import { IS_ACCEPTANCE, IS_PRODUCTION } from '../../../universal/config/env.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import { filterMaintenanceNotifications } from '../../../universal/helpers/maintenance-notifications.ts';
 import { sanitizeCmsContent } from '../cms/cms-content.ts';
-import type {
-  CMSMaintenanceNotification,
-  QueryParamsMaintenanceNotifications,
-} from '../cms/cms-types.ts';
 import type { ServiceAlertDisplayLocation } from '../db/schema/service-alerts.ts';
-import { getServiceAlerts } from './service-alerts.ts';
+import { captureException } from '../monitoring.ts';
+import {
+  getActiveServiceAlerts as getActiveServiceAlertRows,
+  type ServiceAlertRow,
+} from './service-alerts.model.ts';
+import type {
+  MaintenanceNotification,
+  QueryParamsMaintenanceNotifications,
+} from './service-alerts.types.ts';
 
 const notificationsThemaId = 'NOTIFICATIONS';
 const notificationsThemaTitle = 'Alle berichten';
@@ -19,20 +23,6 @@ const amsterdamDateTimeFormatter = new Intl.DateTimeFormat('sv-SE', {
   minute: '2-digit',
   hourCycle: 'h23',
 });
-
-function getCurrentEnvironment() {
-  if (IS_PRODUCTION) {
-    return 'prod';
-  }
-  if (IS_ACCEPTANCE) {
-    return 'acc';
-  }
-  return 'test';
-}
-
-function isActiveNow(dateStart: Date, dateEnd: Date, now: Date) {
-  return dateStart <= now && now < dateEnd;
-}
 
 function getLocationPath(displayLocation: ServiceAlertDisplayLocation) {
   return {
@@ -56,8 +46,8 @@ function getAmsterdamDateAndTime(date: Date) {
 }
 
 function toMaintenanceNotification(
-  alert: Awaited<ReturnType<typeof getServiceAlerts>>[number]
-): CMSMaintenanceNotification {
+  alert: ServiceAlertRow
+): MaintenanceNotification {
   const start = new Date(alert.dateStart);
   const end = new Date(alert.dateEnd);
   const startParts = getAmsterdamDateAndTime(start);
@@ -87,31 +77,29 @@ function toMaintenanceNotification(
   };
 }
 
-async function getActiveServiceAlerts(now = new Date()) {
-  const alerts = await getServiceAlerts();
-
-  return alerts
-    .filter((alert) =>
-      isActiveNow(new Date(alert.dateStart), new Date(alert.dateEnd), now)
-    )
-    .map(toMaintenanceNotification);
+async function getActiveServiceAlerts(): Promise<MaintenanceNotification[]> {
+  try {
+    const alerts = await getActiveServiceAlertRows();
+    return alerts.map(toMaintenanceNotification);
+  } catch (error) {
+    captureException(error);
+    return [];
+  }
 }
 
+// Without a page all active alerts are returned, e.g. for the app state. The frontend filters those per page.
 export async function fetchActiveMaintenanceNotifications(
-  queryParams: QueryParamsMaintenanceNotifications
+  queryParams: QueryParamsMaintenanceNotifications = {}
 ) {
   const alerts = await getActiveServiceAlerts();
 
-  if (
-    queryParams.page === 'dashboard' ||
-    queryParams.page === 'landingspagina'
-  ) {
-    return apiSuccessResult(
-      alerts.filter(({ displayLocation }) => displayLocation === 'dashboard')
-    );
+  if (!queryParams.page) {
+    return apiSuccessResult(alerts);
   }
 
-  return apiSuccessResult(alerts);
+  return apiSuccessResult(
+    filterMaintenanceNotifications(alerts, { page: queryParams.page })
+  );
 }
 
 export async function fetchMaintenanceNotificationsDashboard() {
@@ -124,7 +112,5 @@ export async function fetchMaintenanceNotificationsDashboard() {
 }
 
 export const forTesting = {
-  getCurrentEnvironment,
-  isActiveNow,
   toMaintenanceNotification,
 };
