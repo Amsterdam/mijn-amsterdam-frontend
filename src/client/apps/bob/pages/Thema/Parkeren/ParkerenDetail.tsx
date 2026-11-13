@@ -4,6 +4,8 @@ import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaDetailPagina } from '../../../../../components/Thema/ThemaDetailPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { useAuthMethod } from '../../../../../hooks/useProfileType.ts';
+import { GemachtigdeAlert } from '../../Dashboard/GemachtigdeAlert.tsx';
 import { VergunningDetailDocumentsList } from '../Vergunningen/detail-page-content/VergunningDetailDocumentsList.tsx';
 import { useVergunningenDetailData } from '../Vergunningen/useVergunningenDetailData.hook.ts';
 import { BZB } from './detail-page-content/BZB.tsx';
@@ -61,6 +63,7 @@ function DetailPageContent<
 }
 
 export function ParkerenDetail() {
+  const { authMethod } = useAuthMethod();
   const { vergunningen, isLoading, isError, breadcrumbs, themaConfig } =
     useParkerenData();
   const {
@@ -81,18 +84,25 @@ export function ParkerenDetail() {
       isError={isError}
       isLoading={isLoading}
       pageContentMain={
-        vergunning && (
-          <>
-            <DetailPageContent vergunning={vergunning} />
+        <>
+          {authMethod === 'digidGemachtigd' && (
             <PageContentCell spanWide={8}>
-              <VergunningDetailDocumentsList
-                isLoading={isLoadingDocuments}
-                isError={isErrorDocuments}
-                documents={documents}
-              />
+              <GemachtigdeAlert />
             </PageContentCell>
-          </>
-        )
+          )}
+          {vergunning && (
+            <>
+              <DetailPageContent vergunning={vergunning} />
+              <PageContentCell spanWide={8}>
+                <VergunningDetailDocumentsList
+                  isLoading={isLoadingDocuments}
+                  isError={isErrorDocuments}
+                  documents={documents}
+                />
+              </PageContentCell>
+            </>
+          )}
+        </>
       }
       breadcrumbs={breadcrumbs}
     />
