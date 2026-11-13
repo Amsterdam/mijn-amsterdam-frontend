@@ -32,7 +32,7 @@ export interface PageProps extends HTMLProps<HTMLDivElement> {
   } & object;
 }
 
-const PADDING_TOP = 'large';
+export const PADDING_TOP = 'large';
 const PADDING_BOTTOM = 'x-large';
 
 export function PageV2({

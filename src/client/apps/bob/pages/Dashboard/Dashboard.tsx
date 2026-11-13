@@ -1,6 +1,10 @@
 import { useEffect } from 'react';
 
-import { Heading, OrderedList } from '@amsterdam/design-system-react';
+import {
+  Grid,
+  Heading,
+  OrderedList,
+} from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
 
 import { LoadingContent } from '../../../../components/LoadingContent/LoadingContent.tsx';
@@ -9,13 +13,18 @@ import { MyAreaDashboard } from '../../../../components/MyArea/MyAreaDashboard.t
 import { MyNotification } from '../../../../components/MyNotification/MyNotification.tsx';
 import { MyThemasPanel } from '../../../../components/MyThemasPanel/MyThemasPanel.tsx';
 import { MyTipsPanel } from '../../../../components/MyTipsPanel/MyTipsPanel.tsx';
-import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
+import {
+  PADDING_TOP,
+  PageContentCell,
+  PageV2,
+} from '../../../../components/Page/Page.tsx';
 import { getRedactedClass } from '../../../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../../../hooks/media.hook.ts';
 import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
 import { useIsLoading } from '../../../../hooks/useIsLoading.ts';
 import { useAppStateNotifications } from '../../../../hooks/useNotifications.ts';
+import { useAuthMethod } from '../../../../hooks/useProfileType.ts';
 import { useActiveThemaMenuItems } from '../../../../hooks/useThemaMenuItems.ts';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes.ts';
 import { AfsprakenDashboard } from '../Thema/KlantContact/Afspraken/Afspraken.tsx';
@@ -23,6 +32,7 @@ import { useKlantcontactData } from '../Thema/KlantContact/useKlantcontactData.h
 import styles from './Dashboard.module.scss';
 import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Dashboard-config.ts';
 import { DashboardHeader } from './DashboardHeader.tsx';
+import { GemachtigdeAlert } from './GemachtigdeAlert.tsx';
 import { WelcomeHeading } from './WelcomHeading.tsx';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
@@ -31,6 +41,8 @@ export function Dashboard() {
   useHTMLDocumentTitle({
     documentTitle: DASHBOARD_PAGE_DOCUMENT_TITLE,
   });
+
+  const { authMethod } = useAuthMethod();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -61,6 +73,14 @@ export function Dashboard() {
   return (
     <>
       {!isPhoneScreen && <DashboardHeader />}
+
+      {authMethod === 'digidGemachtigd' && (
+        <Grid id="page-breadcrumbs" paddingTop={PADDING_TOP}>
+          <PageContentCell startWide={1} spanWide={8}>
+            <GemachtigdeAlert />
+          </PageContentCell>
+        </Grid>
+      )}
       <PageV2
         className={styles.Dashboard}
         heading={<WelcomeHeading />}
@@ -70,48 +90,50 @@ export function Dashboard() {
           pageTitle: 'Dashboard',
         }}
       >
-        <PageContentCell
-          spanWide={7}
-          className={getRedactedClass(null, 'full')}
-        >
-          {isKlantcontactLoading && <LoadingContent className="ams-mb-l" />}
-          {!isKlantcontactLoading && hasAfspraken && (
-            <AfsprakenDashboard afspraken={afspraken} className="ams-mb-l" />
-          )}
+        {authMethod !== 'digidGemachtigd' && (
+          <PageContentCell
+            spanWide={7}
+            className={getRedactedClass(null, 'full')}
+          >
+            {isKlantcontactLoading && <LoadingContent className="ams-mb-l" />}
+            {!isKlantcontactLoading && hasAfspraken && (
+              <AfsprakenDashboard afspraken={afspraken} className="ams-mb-l" />
+            )}
 
-          <Heading level={2} className="ams-mb-m">
-            Recente berichten{' '}
-            {notificationsTotal > notifications.length && (
-              <MaRouterLink
-                className={styles.LinkToNotifications}
-                href={myNotificationsMenuItem.to}
-              >
-                Toon alle
-              </MaRouterLink>
-            )}
-          </Heading>
-          <OrderedList markers={false}>
-            {isLoadingNotifications && (
-              <OrderedList.Item>
-                <LoadingContent />
-              </OrderedList.Item>
-            )}
-            {!isLoadingNotifications &&
-              notifications.map((notification, index) => {
-                return (
-                  <OrderedList.Item
-                    key={`${notification.themaID}-${notification.id}-${index}`}
-                    className={`ams-mb-m ${notification.className}`}
-                  >
-                    <MyNotification
-                      notification={notification}
-                      trackCategory="Dashboard / Actueel"
-                    />
-                  </OrderedList.Item>
-                );
-              })}
-          </OrderedList>
-        </PageContentCell>
+            <Heading level={2} className="ams-mb-m">
+              Recente berichten{' '}
+              {notificationsTotal > notifications.length && (
+                <MaRouterLink
+                  className={styles.LinkToNotifications}
+                  href={myNotificationsMenuItem.to}
+                >
+                  Toon alle
+                </MaRouterLink>
+              )}
+            </Heading>
+            <OrderedList markers={false}>
+              {isLoadingNotifications && (
+                <OrderedList.Item>
+                  <LoadingContent />
+                </OrderedList.Item>
+              )}
+              {!isLoadingNotifications &&
+                notifications.map((notification, index) => {
+                  return (
+                    <OrderedList.Item
+                      key={`${notification.themaID}-${notification.id}-${index}`}
+                      className={`ams-mb-m ${notification.className}`}
+                    >
+                      <MyNotification
+                        notification={notification}
+                        trackCategory="Dashboard / Actueel"
+                      />
+                    </OrderedList.Item>
+                  );
+                })}
+            </OrderedList>
+          </PageContentCell>
+        )}
         <PageContentCell startWide={8} spanWide={5}>
           <Heading level={2} className="ams-mb-m">
             Mijn thema&apos;s
@@ -119,7 +141,7 @@ export function Dashboard() {
           <MyThemasPanel isLoading={isMyThemasLoading} items={myThemaItems} />
         </PageContentCell>
         <MyTipsPanel tips={tips ?? []} />
-        {!isPhoneScreen && (
+        {authMethod !== 'digidGemachtigd' && !isPhoneScreen && (
           <PageContentCell>
             <MyAreaDashboard />
           </PageContentCell>

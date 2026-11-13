@@ -88,15 +88,6 @@ describe('Parkeren', () => {
     expect(screen.getAllByText(themaConfig.title)[0]).toBeInTheDocument();
   });
 
-  it('should contain the correct links', () => {
-    render(<Component />);
-
-    expect(
-      screen.getByText('Meer over parkeervergunningen')
-    ).toBeInTheDocument();
-
-    expect(screen.getByText(linkButtonTxt)).toBeInTheDocument();
-  });
 
   it('should display the list of parkeervergunningen', async () => {
     const screen = render(<Component />);
@@ -124,21 +115,6 @@ describe('PageContentTop', () => {
     return Component;
   }
 
-  test('Renders button with parkeer vergunningen', () => {
-    const PageContentTop = getPageContentTopComponent(
-      true,
-      EXTERNAL_PARKEREN_URL
-    );
-    const screen = render(
-      <MockApp
-        routeEntry="/"
-        routePath="/"
-        component={PageContentTop}
-        state={testState}
-      />
-    );
-    expect(screen.queryByText(linkButtonTxt)).toBeInTheDocument();
-  });
 
   test('Does not render link when only vergunningen from another source then parkeren are present', () => {
     const PageContentTop = getPageContentTopComponent(

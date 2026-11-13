@@ -1,15 +1,27 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
-import { Heading, Link, Paragraph } from '@amsterdam/design-system-react';
+import {
+  ActionGroup,
+  Column,
+  Heading,
+  Link,
+  Paragraph,
+  Row,
+} from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import { FeatureToggle } from '../../../../../universal/config/feature-toggles.ts';
 import { LogoDigiD } from '../../../../assets/images/LogoDigiD.tsx';
 import { LogoEherkenning } from '../../../../assets/images/LogoEherkenning.tsx';
 import { MaintenanceNotifications } from '../../../../components/MaintenanceNotifications/MaintenanceNotifications.tsx';
+import { MaButtonLink } from '../../../../components/MaLink/MaLink.tsx';
 import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
-import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api.ts';
+import {
+  LOGIN_URL_DIGID,
+  LOGIN_URL_DIGID_GEMACHTIGD,
+  LOGIN_URL_EHERKENNING,
+} from '../../config/api.ts';
 import styles from './Landing.module.scss';
 import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Landing-routes.ts';
 
@@ -18,7 +30,6 @@ export function LandingPage() {
     documentTitle: DASHBOARD_PAGE_DOCUMENT_TITLE,
   });
 
-  const loginButton = useRef(null);
   const [isRedirecting, setRedirecting] = useState(false);
   const [isRedirectingEherkenning, setRedirectingEherkenning] = useState(false);
   const isRedirectingAny = isRedirecting || isRedirectingEherkenning;
@@ -44,58 +55,85 @@ export function LandingPage() {
             Voor particulieren en eenmanszaken
           </Heading>
         )}
-        <Paragraph>
-          <a
-            ref={loginButton}
-            role="button"
-            href={LOGIN_URL_DIGID}
-            onClick={() => setRedirecting(true)}
-            rel="noopener noreferrer"
-            className={classnames(
-              styles.LoginBtn,
-              styles['LoginBtn--digid'],
-              isRedirectingAny && styles.LoginBtnDisabled
-            )}
-          >
-            <span className={styles.LoginLogoWrap}>
-              <LogoDigiD />
-            </span>
-            <span className={styles.LoginButtonText}>
-              {isRedirecting ? 'Bezig met inloggen...' : 'Inloggen met DigiD'}
-            </span>
-          </a>
-        </Paragraph>
-        <Paragraph className="ams-mb-l">
-          Heeft u nog geen DigiD? Regel dit dan eerst.
-          <br />
-          Ga naar{' '}
-          <Link
-            rel="noopener noreferrer"
-            href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen"
-          >
-            DigiD aanvragen
-          </Link>
-        </Paragraph>
+        <Row className="ams-mb-l" align="between">
+          <Column>
+            <Row gap="small">
+              <span className={styles.LoginLogoWrap} aria-hidden="true">
+                <LogoDigiD />
+              </span>
+
+              <MaButtonLink
+                href={LOGIN_URL_DIGID}
+                role="button"
+                onClick={() => {
+                  setRedirecting(true);
+                  window.location.href = LOGIN_URL_DIGID;
+                }}
+                rel="noopener noreferrer"
+                variant="primary"
+                isDisabled={isRedirectingAny}
+              >
+                {isRedirecting ? 'Bezig met inloggen...' : 'Inloggen met DigiD'}
+              </MaButtonLink>
+            </Row>
+            <Paragraph>
+              Heeft u nog geen DigiD? Regel dit dan eerst.
+              <br />
+              Ga naar{' '}
+              <Link
+                rel="noopener noreferrer"
+                href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen"
+              >
+                DigiD aanvragen
+              </Link>
+            </Paragraph>
+          </Column>
+          <Column>
+            <Row gap="small">
+              <span className={styles.LoginLogoWrap} aria-hidden="true">
+                <LogoDigiD />
+              </span>
+              <MaButtonLink
+                href={LOGIN_URL_DIGID_GEMACHTIGD}
+                role="button"
+                onClick={() => {
+                  setRedirecting(true);
+                  window.location.href = LOGIN_URL_DIGID_GEMACHTIGD;
+                }}
+                rel="noopener noreferrer"
+                variant="secondary"
+                isDisabled={isRedirectingAny}
+              >
+                {isRedirecting
+                  ? 'Bezig met inloggen...'
+                  : 'Inloggen als gemachtigde'}
+              </MaButtonLink>
+            </Row>
+
+            <Paragraph>
+              U kunt namens iemand anders inloggen. Vraag hiervoor een
+              machtiging aan.
+              <br />
+              Ga naar{' '}
+              <Link
+                rel="noopener noreferrer"
+                href="https://www.amsterdam.nl/parkeren/test-digid-machtigen/"
+              >
+                DigiD Machtigen.
+              </Link>
+            </Paragraph>
+          </Column>
+        </Row>
 
         {FeatureToggle.eherkenningActive && (
           <>
             <Heading className="ams-mb-s" level={2}>
               Voor ondernemers
             </Heading>
-            <Paragraph>
-              <a
-                ref={loginButton}
-                role="button"
-                href={LOGIN_URL_EHERKENNING}
-                onClick={() => setRedirectingEherkenning(true)}
-                rel="noopener noreferrer"
-                className={classnames(
-                  styles.LoginBtn,
-                  styles['LoginBtn--eherkenning'],
-                  isRedirectingAny && styles.LoginBtnDisabled
-                )}
-              >
+            <Column>
+              <Row gap="small">
                 <span
+                  aria-hidden="true"
                   className={classnames(
                     styles.LoginLogoWrap,
                     styles.LogoEherkenning
@@ -103,22 +141,32 @@ export function LandingPage() {
                 >
                   <LogoEherkenning />
                 </span>
-                <span className={styles.LoginButtonText}>
+                <MaButtonLink
+                  href={LOGIN_URL_EHERKENNING}
+                  role="button"
+                  onClick={() => {
+                    setRedirectingEherkenning(true);
+                    window.location.href = LOGIN_URL_EHERKENNING;
+                  }}
+                  rel="noopener noreferrer"
+                  variant="primary"
+                  isDisabled={isRedirectingAny}
+                >
                   {isRedirectingEherkenning
                     ? 'Bezig met inloggen...'
                     : 'Inloggen met eHerkenning'}
-                </span>
-              </a>
-            </Paragraph>
-            <Paragraph className="ams-mb-l">
-              U heeft eHerkenning niveau 3 nodig om in te loggen.
-              <br />
-              Ga naar{' '}
-              <Link rel="noopener noreferrer" href="https://eherkenning.nl">
-                eherkenning.nl
-              </Link>{' '}
-              voor meer informatie.
-            </Paragraph>
+                </MaButtonLink>
+              </Row>
+              <Paragraph className="ams-mb-l">
+                U heeft eHerkenning niveau 3 nodig om in te loggen.
+                <br />
+                Ga naar{' '}
+                <Link rel="noopener noreferrer" href="https://eherkenning.nl">
+                  eherkenning.nl
+                </Link>{' '}
+                voor meer informatie.
+              </Paragraph>
+            </Column>
           </>
         )}
 

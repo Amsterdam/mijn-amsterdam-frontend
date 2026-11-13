@@ -8,40 +8,22 @@ import { ParagaphSuppressed } from '../../../../../components/ParagraphSuppresse
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
-import { useProfileTypeValue } from '../../../../../hooks/useProfileType.ts';
+import {
+  useAuthMethod,
+  useProfileTypeValue,
+} from '../../../../../hooks/useProfileType.ts';
+import { GemachtigdeAlert } from '../../Dashboard/GemachtigdeAlert.tsx';
 import { useParkerenData } from './useParkerenData.hook.tsx';
 
 type PageContentTopProps = {
-  hasMijnParkerenVergunningen: boolean;
-  parkerenUrlSSO: string;
-  profileType: ProfileType;
+  authMethod: string;
 };
 
-function PageContentTop({
-  hasMijnParkerenVergunningen,
-  parkerenUrlSSO,
-  profileType,
-}: PageContentTopProps) {
-  if (hasMijnParkerenVergunningen) {
-    const profileTypeLabel =
-      profileType === 'commercial' ? 'bedrijven' : 'bewoners';
+function PageContentTop({ authMethod }: PageContentTopProps) {
+  if (authMethod === 'digidGemachtigd') {
     return (
       <PageContentCell spanWide={8}>
-        <Alert
-          heading={`Parkeervergunning voor ${profileTypeLabel}`}
-          headingLevel={4}
-        >
-          <Paragraph>
-            Het inzien, aanvragen of wijzigen van een parkeervergunning voor{' '}
-            {profileTypeLabel} kan via Mijn Parkeren.
-          </Paragraph>
-          <Paragraph>
-            <MaButtonLink href={parkerenUrlSSO}>
-              Ga naar Mijn Parkeren&nbsp;
-              <Icon svg={LinkExternalIcon} size="heading-5" />
-            </MaButtonLink>
-          </Paragraph>
-        </Alert>
+        <GemachtigdeAlert />
       </PageContentCell>
     );
   }
@@ -58,16 +40,14 @@ export function ParkerenThema() {
     title,
     tableConfig,
     vergunningen,
-    hasMijnParkerenVergunningen,
     isLoading,
     isError,
-    parkerenUrlSSO,
     themaConfig,
   } = useParkerenData();
+  const { authMethod } = useAuthMethod();
 
   useHTMLDocumentTitle(themaConfig.route);
 
-  const profileType = useProfileTypeValue();
 
   const tables = Object.entries(tableConfig).map(
     ([
@@ -87,13 +67,7 @@ export function ParkerenThema() {
     }
   );
 
-  const pageContentTop = (
-    <PageContentTop
-      hasMijnParkerenVergunningen={hasMijnParkerenVergunningen}
-      parkerenUrlSSO={parkerenUrlSSO}
-      profileType={profileType}
-    />
-  );
+  const pageContentTop = <PageContentTop authMethod={authMethod} />;
 
   const hasActualGPK = vergunningen.find(
     (vergunning) => !vergunning.processed && vergunning.caseType === 'GPK'

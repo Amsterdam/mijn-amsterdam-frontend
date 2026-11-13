@@ -6,11 +6,13 @@ import { apiSuccessResult } from '../../universal/helpers/api.ts';
 import {
   getReturnToUrl,
   RETURNTO_MAMS_LANDING_DIGID,
+  RETURNTO_MAMS_LANDING_DIGID_GEMACHTIGD,
   RETURNTO_MAMS_LANDING_EHERKENNING,
 } from '../auth/auth-after-redirect-returnto.ts';
 import {
   OIDC_SESSION_COOKIE_NAME,
   oidcConfigDigid,
+  oidcConfigDigidGemachtigd,
   oidcConfigEherkenning,
   openIdAuth,
 } from '../auth/auth-config.ts';
@@ -20,6 +22,7 @@ import {
   hasSessionCookie,
 } from '../auth/auth-helpers.ts';
 import {
+  AUTH_BASE_DIGID_GEMACHTIGD,
   AUTH_BASE_EHERKENNING,
   AUTH_CALLBACK,
   authRoutes,
@@ -45,11 +48,16 @@ oidcRouter.use(nocache);
 
 function getOidcConfigByRequest(req: Request) {
   const isEherkenning = req.url.includes(AUTH_BASE_EHERKENNING);
+  const isGemachtigd = req.url.includes(AUTH_BASE_DIGID_GEMACHTIGD);
 
   let oidConfig: ConfigParams = oidcConfigDigid;
 
   if (isEherkenning) {
     oidConfig = oidcConfigEherkenning;
+  }
+
+  if (isGemachtigd) {
+    oidConfig = oidcConfigDigidGemachtigd;
   }
 
   return oidConfig;
@@ -86,6 +94,17 @@ oidcRouter.get(
 );
 
 oidcRouter.get(
+  authRoutes.AUTH_CALLBACK_DIGID_GEMACHTIGD,
+  (_req: Request, res: Response) => {
+    return res.oidc.callback({
+      redirectUri: generateFullApiUrlBFF(
+        authRoutes.AUTH_CALLBACK_DIGID_GEMACHTIGD
+      ),
+    });
+  }
+);
+
+oidcRouter.get(
   authRoutes.AUTH_LOGIN_DIGID,
   async (req: Request, res: Response) => {
     return res.oidc.login({
@@ -97,6 +116,34 @@ oidcRouter.get(
         redirect_uri: generateFullApiUrlBFF(authRoutes.AUTH_CALLBACK_DIGID),
       },
     });
+  }
+);
+
+oidcRouter.get(
+  authRoutes.AUTH_LOGIN_DIGID_GEMACHTIGD,
+  async (req: Request, res: Response) => {
+    return res.oidc.login({
+      returnTo: getReturnToUrl({
+        returnTo: RETURNTO_MAMS_LANDING_DIGID_GEMACHTIGD,
+        ...req.query,
+      }),
+      authorizationParams: {
+        redirect_uri: generateFullApiUrlBFF(
+          authRoutes.AUTH_CALLBACK_DIGID_GEMACHTIGD
+        ),
+      },
+    });
+  }
+);
+
+oidcRouter.get(
+  authRoutes.AUTH_LOGIN_DIGID_GEMACHTIGD_LANDING,
+  async (req: Request, res: Response) => {
+    const auth = getAuth(req);
+    if (auth?.profile.id) {
+      countLoggedInVisit(auth.profile.id, 'digidGemachtigd');
+    }
+    return res.redirect(generateMaFrontendUrl('/?authMethod=digidGemachtigd'));
   }
 );
 
@@ -160,6 +207,8 @@ async function authCheckHandler(req: Request, res: Response) {
       return verifyAuthenticated('eherkenning', 'commercial')(req, res);
     case 'digid':
       return verifyAuthenticated('digid', 'private')(req, res);
+    case 'digidGemachtigd':
+      return verifyAuthenticated('digidGemachtigd', 'private')(req, res);
   }
 
   return sendUnauthorized(res);
@@ -205,6 +254,11 @@ async function authLogoutHandler(req: Request, res: Response) {
     case 'digid':
       redirectUrl = generateFullApiUrlBFF(authRoutes.AUTH_LOGOUT_DIGID);
       break;
+    case 'digidGemachtigd':
+      redirectUrl = generateFullApiUrlBFF(
+        authRoutes.AUTH_LOGOUT_DIGID_GEMACHTIGD
+      );
+      break;
   }
 
   return res.redirect(redirectUrl);
@@ -214,6 +268,11 @@ oidcRouter.get(authRoutes.AUTH_LOGOUT, authLogoutHandler);
 
 oidcRouter.get(
   authRoutes.AUTH_LOGOUT_DIGID,
+  createLogoutHandler(generateMaFrontendUrl('/'))
+);
+
+oidcRouter.get(
+  authRoutes.AUTH_LOGOUT_DIGID_GEMACHTIGD,
   createLogoutHandler(generateMaFrontendUrl('/'))
 );
 

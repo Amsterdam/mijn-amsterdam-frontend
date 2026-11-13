@@ -83,6 +83,20 @@ export const oidcConfigDigid: ConfigParams = {
   },
 };
 
+export const oidcConfigDigidGemachtigd: ConfigParams = {
+  ...oidcConfigBase,
+  clientID: getFromEnv('BFF_OIDC_CLIENT_ID_DIGID_VRIJ_MACHTIGEN', true),
+  afterCallback: async (_, __, session) => {
+    return {
+      ...session,
+      TMASessionID: session.sid,
+      sid: UID.sync(BYTE_LENGTH),
+      profileType: 'private',
+      authMethod: 'digidGemachtigd',
+    };
+  },
+};
+
 export const oidcConfigEherkenning: ConfigParams = {
   ...oidcConfigBase,
   clientID: getFromEnv('BFF_OIDC_CLIENT_ID_EHERKENNING', true),
@@ -111,6 +125,9 @@ export const EH_ATTR_PRIMARY_ID_LEGACY =
   'urn:etoegang:1.9:EntityConcernedID:KvKnr';
 
 export const DIGID_ATTR_PRIMARY = 'sub';
+export const DIGID_ATTR_MACHTIGINGGEVER = 'urn:nl-eid-gdi:1.0:LegalSubjectID';
+// export const DIGID_ATTR_SERVICE_UUID = 'urn:nl-eid-gdi:1.0:ServiceUUID';
+// export const DIGID_ATTR_GEMACHTIGDE = 'urn:nl-eid-gdi:1.0:ActingSubjectID';
 
 export const OIDC_TOKEN_ID_ATTRIBUTE = {
   eherkenning: (tokenData: TokenData) => {
@@ -131,15 +148,18 @@ export const OIDC_TOKEN_ID_ATTRIBUTE = {
     return EH_ATTR_PRIMARY_ID_LEGACY;
   },
   digid: () => DIGID_ATTR_PRIMARY,
+  digidGemachtigd: () => DIGID_ATTR_MACHTIGINGGEVER,
 };
 
 export type TokenIdAttribute =
   | typeof DIGID_ATTR_PRIMARY
-  | typeof EH_ATTR_PRIMARY_ID;
+  | typeof EH_ATTR_PRIMARY_ID
+  | typeof DIGID_ATTR_MACHTIGINGGEVER;
 
 export const TOKEN_ID_ATTRIBUTE: Record<AuthMethod, TokenIdAttribute> = {
   eherkenning: EH_ATTR_PRIMARY_ID,
   digid: DIGID_ATTR_PRIMARY,
+  digidGemachtigd: DIGID_ATTR_MACHTIGINGGEVER,
 };
 
 export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
@@ -148,5 +168,8 @@ export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
   },
   get digid() {
     return oidcConfigDigid.clientID;
+  },
+  get digidGemachtigd() {
+    return oidcConfigDigidGemachtigd.clientID;
   },
 };

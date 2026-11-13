@@ -22,14 +22,6 @@
   }
 }
 
-.LoginBtn--digid {
-  .LoginButtonText {
-    background-color: var(--ams-color-feedback-error);
-    &:hover {
-      background-color: color.adjust(#ec0000, $lightness: -5%);
-    }
-  }
-}
 .LoginBtn--eherkenning {
   .LoginButtonText {
     background-color: var(--ams-color-interactive-hover);
@@ -62,9 +54,8 @@
 .LoginLogoWrap {
   display: inline-flex;
   align-items: center;
-  height: var(--landing-page-button-size);
-  width: var(--landing-page-button-size);
-  margin-right: 0.5rem;
+  height: calc(var(--landing-page-button-size) + 6px);
+  width: calc(var(--landing-page-button-size) + 6px);
   background-color: #000;
 
   > svg {
