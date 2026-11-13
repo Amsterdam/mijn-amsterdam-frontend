@@ -37,7 +37,8 @@
     "format": "biome format .",
     "format:fix": "biome format . --write",
     "check": "biome check . --error-on-warnings",
-    "check:fix": "biome check . --fix --error-on-warnings"
+    "check:fix": "biome check . --fix --error-on-warnings",
+    "typecheck": "tsc --project tsconfig.typecheck.json --noEmit"
   },
   "browserslist": [">0.2%", "not dead", "not ie > 0", "not op_mini all"],
   "dependencies": {
