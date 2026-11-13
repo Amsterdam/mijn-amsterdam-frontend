@@ -13,5 +13,3 @@ CREATE TABLE "bff_service_alerts" (
 	"date_updated" timestamp with time zone DEFAULT now() NOT NULL,
 	"date_created" timestamp with time zone DEFAULT now() NOT NULL
 );
---> statement-breakpoint
-CREATE INDEX "bff_service_alerts_date_start_end_idx" ON "bff_service_alerts" USING btree ("date_start","date_end");

@@ -1,5 +1,5 @@
 {
-  "id": "ea691354-d83b-4bb6-af80-7e2587b95779",
+  "id": "86fa3c0e-e656-4fd3-88df-f39e0c825d27",
   "prevId": "5c545c3c-0c0b-4dc6-8b30-d3899a4d892e",
   "version": "7",
   "dialect": "postgresql",
@@ -303,29 +303,7 @@
           "default": "now()"
         }
       },
-      "indexes": {
-        "bff_service_alerts_date_start_end_idx": {
-          "name": "bff_service_alerts_date_start_end_idx",
-          "columns": [
-            {
-              "expression": "date_start",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "date_end",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
+      "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},

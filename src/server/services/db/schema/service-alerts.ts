@@ -1,5 +1,4 @@
 import {
-  index,
   jsonb,
   pgTable,
   text,
@@ -51,11 +50,5 @@ export const serviceAlertsTable = pgTable(
     dateCreated: timestamp('date_created', { withTimezone: true })
       .notNull()
       .defaultNow(),
-  },
-  (table) => [
-    index('bff_service_alerts_date_start_end_idx').on(
-      table.dateStart,
-      table.dateEnd
-    ),
-  ]
+  }
 );
