@@ -1,7 +1,6 @@
 import { isHttpsUrl } from '../../../../../universal/helpers/url.ts';
 import {
   serviceAlertDisplayLocations,
-  serviceAlertEnvironments,
   serviceAlertThemas,
   serviceAlertTypes,
 } from './ServiceAlertUpsertForm.constants.ts';
@@ -65,9 +64,6 @@ export function getServiceAlertUpsertFormResult({
     serviceAlertTypes.find(({ value }) => value === formData.get('type'))
       ?.value ?? (displayLocation === 'notification' ? currentType : undefined);
   const formThemaId = formData.get('themaId');
-  const environment = serviceAlertEnvironments.find(
-    ({ value }) => value === formData.get('environment')
-  )?.value;
   const parsedLinks = links
     .filter(({ label, url }) => label.trim() || url.trim())
     .map(({ label, url }, sortOrder) => ({
@@ -86,7 +82,6 @@ export function getServiceAlertUpsertFormResult({
     (displayLocation === 'theme' &&
       (typeof formThemaId !== 'string' ||
         !serviceAlertThemas.some(({ value }) => value === formThemaId))) ||
-    !environment ||
     !dateRange.start ||
     !dateRange.end ||
     !timeStart ||
@@ -134,7 +129,6 @@ export function getServiceAlertUpsertFormResult({
           ? formThemaId
           : null,
       links: parsedLinks,
-      environment,
       dateStart: parsedDateStart.toISOString(),
       dateEnd: parsedDateEnd.toISOString(),
     },

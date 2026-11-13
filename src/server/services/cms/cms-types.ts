@@ -16,7 +16,6 @@ export type CMSMaintenanceNotification = MyNotification & {
   description: string;
   path: string;
   severity: SeverityLevel;
-  otapEnvs: OtapEnv[];
   displayLocation?: 'theme' | 'dashboard' | 'notification';
   link?: LinkProps;
 };

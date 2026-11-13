@@ -18,14 +18,6 @@ export const serviceAlertDisplayLocations = [
   ServiceAlertInput['displayLocation']
 >[];
 
-export const serviceAlertEnvironments = [
-  { value: 'test', label: 'Test' },
-  { value: 'acc', label: 'Acceptatie' },
-  { value: 'prod', label: 'Productie' },
-] as const satisfies readonly ServiceAlertSelectOption<
-  ServiceAlertInput['environment']
->[];
-
 export const serviceAlertThemas = myThemasMenuItems
   .map(({ id, title }) => ({
     value: id,

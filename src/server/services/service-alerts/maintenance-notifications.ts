@@ -3,25 +3,13 @@ import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import { sanitizeCmsContent } from '../cms/cms-content.ts';
 import type {
   CMSMaintenanceNotification,
-  OtapEnv,
   QueryParamsMaintenanceNotifications,
 } from '../cms/cms-types.ts';
-import type {
-  ServiceAlertDisplayLocation,
-  ServiceAlertEnvironment,
-} from '../db/schema/service-alerts.ts';
+import type { ServiceAlertDisplayLocation } from '../db/schema/service-alerts.ts';
 import { getServiceAlerts } from './service-alerts.ts';
 
 const notificationsThemaId = 'NOTIFICATIONS';
 const notificationsThemaTitle = 'Alle berichten';
-const serviceAlertEnvironmentToOtapEnv: Record<
-  ServiceAlertEnvironment,
-  OtapEnv
-> = {
-  test: 'tst',
-  acc: 'acc',
-  prod: 'prd',
-};
 const amsterdamDateTimeFormatter = new Intl.DateTimeFormat('sv-SE', {
   timeZone: 'Europe/Amsterdam',
   year: 'numeric',
@@ -91,7 +79,6 @@ function toMaintenanceNotification(
     themaTitle: isThemeAlert ? (alert.themaId ?? '') : notificationsThemaTitle,
     severity: alert.type,
     isAlert: true,
-    otapEnvs: [serviceAlertEnvironmentToOtapEnv[alert.environment]],
     displayLocation: alert.displayLocation,
     links: alert.links
       .toSorted((a, b) => a.sortOrder - b.sortOrder)
@@ -100,14 +87,11 @@ function toMaintenanceNotification(
 }
 
 async function getActiveServiceAlerts(now = new Date()) {
-  const environment = getCurrentEnvironment();
   const alerts = await getServiceAlerts();
 
   return alerts
-    .filter(
-      (alert) =>
-        alert.environment === environment &&
-        isActiveNow(new Date(alert.dateStart), new Date(alert.dateEnd), now)
+    .filter((alert) =>
+      isActiveNow(new Date(alert.dateStart), new Date(alert.dateEnd), now)
     )
     .map(toMaintenanceNotification);
 }

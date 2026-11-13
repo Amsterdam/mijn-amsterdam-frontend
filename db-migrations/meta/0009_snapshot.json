@@ -1,5 +1,5 @@
 {
-  "id": "5a96e88c-13ca-40d6-aae7-76fcaf09a125",
+  "id": "39653a3a-8bff-410a-8fa5-e9cd3b47b14b",
   "prevId": "5c545c3c-0c0b-4dc6-8b30-d3899a4d892e",
   "version": "7",
   "dialect": "postgresql",
@@ -98,8 +98,12 @@
           "name": "bff_notification_consumer_details_notification_row_id_bff_notifications_id_fk",
           "tableFrom": "bff_notification_consumer_details",
           "tableTo": "bff_notifications",
-          "columnsFrom": ["notification_row_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "notification_row_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -247,19 +251,30 @@
           "primaryKey": false,
           "notNull": true
         },
+        "thema_id": {
+          "name": "thema_id",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_by_email": {
+          "name": "created_by_email",
+          "type": "varchar(320)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_by_email": {
+          "name": "updated_by_email",
+          "type": "varchar(320)",
+          "primaryKey": false,
+          "notNull": false
+        },
         "links": {
           "name": "links",
           "type": "jsonb",
           "primaryKey": false,
           "notNull": true,
           "default": "'[]'::jsonb"
-        },
-        "environments": {
-          "name": "environments",
-          "type": "varchar(10)[]",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'{}'"
         },
         "date_start": {
           "name": "date_start",
@@ -271,7 +286,7 @@
           "name": "date_end",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "date_updated": {
           "name": "date_updated",
@@ -308,21 +323,6 @@
           "isUnique": false,
           "concurrently": false,
           "method": "btree",
-          "with": {}
-        },
-        "bff_service_alerts_environments_gin_idx": {
-          "name": "bff_service_alerts_environments_gin_idx",
-          "columns": [
-            {
-              "expression": "environments",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "gin",
           "with": {}
         }
       },

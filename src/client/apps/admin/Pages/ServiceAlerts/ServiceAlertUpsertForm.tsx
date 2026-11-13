@@ -23,7 +23,6 @@ import { PageContentCell } from '../../../../components/Page/Page.tsx';
 import { ServiceAlertPreview } from './ServiceAlertPreview.tsx';
 import {
   serviceAlertDisplayLocations,
-  serviceAlertEnvironments,
   serviceAlertThemas,
   serviceAlertTypes,
 } from './ServiceAlertUpsertForm.constants.ts';
@@ -225,22 +224,6 @@ function ServiceAlertUpsertFormContent({
                 Voeg nog een link toe
               </Button>
             </FieldSet>
-            <Field className="ams-mb-m">
-              <Label htmlFor="service-alert-environment">Omgeving</Label>
-              <Select
-                id="service-alert-environment"
-                name="environment"
-                defaultValue={serviceAlert?.environment ?? ''}
-                required
-              >
-                <Select.Option value="">Selecteer een omgeving</Select.Option>
-                {serviceAlertEnvironments.map(({ value, label }) => (
-                  <Select.Option key={value} value={value}>
-                    {label}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Field>
             <Field className="ams-mb-m">
               <Label>Periode</Label>
               <DatePicker
