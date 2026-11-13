@@ -1,6 +1,5 @@
 import {
   DatePicker,
-  type DateRange,
   Field,
   FieldSet,
   Label,
@@ -9,7 +8,11 @@ import {
 } from '@amsterdam/design-system-react';
 
 import { serviceAlertFormFieldIds } from './ServiceAlertForm.constants.ts';
-import type { ServiceAlertFormErrors } from './ServiceAlertForm.types.ts';
+import type {
+  ServiceAlertFormErrors,
+  ServiceAlertFormState,
+  SetServiceAlertFormValue,
+} from './ServiceAlertForm.types.ts';
 import {
   FieldError,
   getErrorId,
@@ -18,22 +21,14 @@ import {
 
 type ServiceAlertFormPeriodProps = {
   errors: ServiceAlertFormErrors;
-  dateRange: DateRange;
-  setDateRange: (dateRange: DateRange) => void;
-  timeStart: string;
-  setTimeStart: (time: string) => void;
-  timeEnd: string;
-  setTimeEnd: (time: string) => void;
+  values: Pick<ServiceAlertFormState, 'dateRange' | 'timeStart' | 'timeEnd'>;
+  setValue: SetServiceAlertFormValue;
 };
 
 export function ServiceAlertFormPeriod({
   errors,
-  dateRange,
-  setDateRange,
-  timeStart,
-  setTimeStart,
-  timeEnd,
-  setTimeEnd,
+  values,
+  setValue,
 }: ServiceAlertFormPeriodProps) {
   return (
     <FieldSet
@@ -46,8 +41,8 @@ export function ServiceAlertFormPeriod({
       <FieldError errors={errors} field="period" />
       <DatePicker
         mode="range"
-        value={dateRange}
-        onChange={setDateRange}
+        value={values.dateRange}
+        onChange={(dateRange) => setValue('dateRange', dateRange)}
         nextMonthButtonLabel="Volgende maand"
         nextYearButtonLabel="Volgend jaar"
         previousMonthButtonLabel="Vorige maand"
@@ -63,9 +58,10 @@ export function ServiceAlertFormPeriod({
           <FieldError errors={errors} field="timeStart" />
           <TimeInput
             {...getFieldProps(errors, 'timeStart')}
-            name="timeStart"
-            value={timeStart}
-            onChange={(event) => setTimeStart(event.currentTarget.value)}
+            value={values.timeStart}
+            onChange={(event) =>
+              setValue('timeStart', event.currentTarget.value)
+            }
             aria-required="true"
           />
         </Field>
@@ -76,9 +72,8 @@ export function ServiceAlertFormPeriod({
           <FieldError errors={errors} field="timeEnd" />
           <TimeInput
             {...getFieldProps(errors, 'timeEnd')}
-            name="timeEnd"
-            value={timeEnd}
-            onChange={(event) => setTimeEnd(event.currentTarget.value)}
+            value={values.timeEnd}
+            onChange={(event) => setValue('timeEnd', event.currentTarget.value)}
             aria-required="true"
           />
         </Field>

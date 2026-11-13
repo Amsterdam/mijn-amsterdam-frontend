@@ -1,9 +1,5 @@
 import type { ServiceAlertInput } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
-import {
-  serviceAlertDisplayLocations,
-  serviceAlertThemas,
-  serviceAlertTypes,
-} from './ServiceAlertForm.constants.ts';
+import { serviceAlertThemas } from './ServiceAlertForm.constants.ts';
 import type {
   ServiceAlertFormErrors,
   ServiceAlertFormResult,
@@ -103,32 +99,24 @@ export const SERVICE_ALERT_FORM_ERROR_MESSAGES = {
     'Vul een einddatum en eindtijd in die na de startdatum en starttijd liggen.',
 } as const;
 
-function getTrimmedText(formData: FormData, name: string) {
-  const value = formData.get(name);
-  return typeof value === 'string' ? value.trim() : '';
-}
-
 export function getServiceAlertFormResult({
-  formData,
+  title: rawTitle,
+  body: rawBody,
+  type,
+  displayLocation,
+  themaId: rawThemaId,
   dateRange,
   timeStart,
   timeEnd,
   links,
   serviceAlert,
 }: ServiceAlertFormValues): ServiceAlertFormResult {
-  const title = getTrimmedText(formData, 'title');
-  const body = getTrimmedText(formData, 'body');
-  const displayLocation = serviceAlertDisplayLocations.find(
-    ({ value }) => value === formData.get('displayLocation')
-  )?.value;
-  const type = serviceAlertTypes.find(
-    ({ value }) => value === formData.get('type')
-  )?.value;
+  const title = rawTitle.trim();
+  const body = rawBody.trim();
   const themaId =
     displayLocation === 'theme'
-      ? (serviceAlertThemas.find(
-          ({ value }) => value === formData.get('themaId')
-        )?.value ?? null)
+      ? (serviceAlertThemas.find(({ value }) => value === rawThemaId)?.value ??
+        null)
       : null;
   const parsedLinks = links
     .filter(({ label, url }) => label.trim() || url.trim())

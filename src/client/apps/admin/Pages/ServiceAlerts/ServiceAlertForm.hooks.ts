@@ -1,6 +1,5 @@
 import { type FormEvent, useEffect, useState } from 'react';
 
-import type { DateRange } from '@amsterdam/design-system-react';
 import { useNavigate } from 'react-router';
 
 import type {
@@ -15,21 +14,34 @@ import {
 import { BFFApiUrls } from '../../config/api.ts';
 import { serviceAlertDisplayLocations } from './ServiceAlertForm.constants.ts';
 import { getServiceAlertFormResult } from './ServiceAlertForm.helpers.ts';
-import type { ServiceAlertFormErrors } from './ServiceAlertForm.types.ts';
+import type {
+  ServiceAlertFormErrors,
+  ServiceAlertFormState,
+  SetServiceAlertFormValue,
+} from './ServiceAlertForm.types.ts';
 import { useServiceAlertLinks } from './ServiceAlertFormLinks.hooks.ts';
 import { routePath } from './ServiceAlerts-thema-config.ts';
 
-function getInitialDateRange(
-  serviceAlert?: ServiceAlertsOverview[number]
-): DateRange {
-  return {
-    start: serviceAlert ? new Date(serviceAlert.dateStart) : new Date(),
-    end: serviceAlert ? new Date(serviceAlert.dateEnd) : null,
-  };
-}
-
 function getTime(date: string | undefined) {
   return dateFormat(date ?? new Date(), 'HH:mm');
+}
+
+function getInitialValues(
+  serviceAlert?: ServiceAlertsOverview[number]
+): ServiceAlertFormState {
+  return {
+    title: serviceAlert?.title ?? '',
+    body: serviceAlert?.body ?? '',
+    type: serviceAlert?.type,
+    displayLocation: serviceAlert?.displayLocation,
+    themaId: serviceAlert?.themaId ?? '',
+    dateRange: {
+      start: serviceAlert ? new Date(serviceAlert.dateStart) : new Date(),
+      end: serviceAlert ? new Date(serviceAlert.dateEnd) : null,
+    },
+    timeStart: getTime(serviceAlert?.dateStart),
+    timeEnd: serviceAlert ? getTime(serviceAlert.dateEnd) : '',
+  };
 }
 
 export function useServiceAlertForm(
@@ -37,26 +49,9 @@ export function useServiceAlertForm(
 ) {
   const navigate = useNavigate();
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const [title, setTitle] = useState(serviceAlert?.title ?? '');
-  const [body, setBody] = useState(serviceAlert?.body ?? '');
+  const [values, setValues] = useState(() => getInitialValues(serviceAlert));
   const linkControls = useServiceAlertLinks(serviceAlert?.links);
-  const [type, setType] = useState<ServiceAlertInput['type'] | undefined>(
-    serviceAlert?.type
-  );
   const [errors, setErrors] = useState<ServiceAlertFormErrors>({});
-  const [dateRange, setDateRange] = useState<DateRange>(() =>
-    getInitialDateRange(serviceAlert)
-  );
-  const [timeStart, setTimeStart] = useState(() =>
-    getTime(serviceAlert?.dateStart)
-  );
-  const [timeEnd, setTimeEnd] = useState(() =>
-    serviceAlert ? getTime(serviceAlert.dateEnd) : ''
-  );
-  const [displayLocation, setDisplayLocation] = useState<
-    ServiceAlertInput['displayLocation'] | undefined
-  >(serviceAlert?.displayLocation);
-  const [themaId, setThemaId] = useState(serviceAlert?.themaId ?? '');
   const upsertServiceAlert = useBffApi<{ success: boolean }, ServiceAlertInput>(
     BFFApiUrls.SERVICE_ALERTS_UPSERT,
     {
@@ -92,10 +87,7 @@ export function useServiceAlertForm(
     event.preventDefault();
 
     const result = getServiceAlertFormResult({
-      formData: new FormData(event.currentTarget),
-      dateRange,
-      timeStart,
-      timeEnd,
+      ...values,
       links: linkControls.links,
       serviceAlert,
     });
@@ -117,33 +109,25 @@ export function useServiceAlertForm(
       ({ value: optionValue }) => optionValue === value
     )?.value;
 
-    setDisplayLocation(location);
-    if (location !== 'theme') {
-      setThemaId('');
-    }
+    setValues((currentValues) => ({
+      ...currentValues,
+      displayLocation: location,
+      themaId: location === 'theme' ? currentValues.themaId : '',
+    }));
   }
 
+  const setValue: SetServiceAlertFormValue = (field, value) => {
+    setValues((currentValues) => ({ ...currentValues, [field]: value }));
+  };
+
   return {
-    body,
-    dateRange,
-    displayLocation,
+    values,
+    setValue,
     linkControls,
     handleDisplayLocationChange,
     handleSubmit,
     isLoading: upsertServiceAlert.isLoading,
     isSuccess: upsertServiceAlert.data?.status === 'OK',
-    setBody,
-    setDateRange,
-    setThemaId,
-    setTimeEnd,
-    setTimeStart,
-    setTitle,
-    setType,
-    title,
-    themaId,
-    timeEnd,
-    timeStart,
-    type,
     errors,
     submitError: upsertServiceAlert.isError
       ? upsertServiceAlert.errorData ||

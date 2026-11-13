@@ -1,6 +1,11 @@
 import { useState } from 'react';
 
-import { Alert, Heading, Link, Paragraph } from '@amsterdam/design-system-react';
+import {
+  Alert,
+  Heading,
+  Link,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 
 import type { MyNotification as MyNotificationData } from '../../../../../universal/types/App.types.ts';
 import { MyNotification } from '../../../../components/MyNotification/MyNotification.tsx';

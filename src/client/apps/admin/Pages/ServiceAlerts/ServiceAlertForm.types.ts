@@ -16,11 +16,25 @@ export type ServiceAlertFormProps = {
   readOnly?: boolean;
 };
 
-export type ServiceAlertFormValues = {
-  formData: FormData;
+export type ServiceAlertFormState = {
+  title: string;
+  body: string;
+  type?: ServiceAlertInput['type'];
+  displayLocation?: ServiceAlertInput['displayLocation'];
+  themaId: string;
   dateRange: DateRange;
   timeStart: string;
   timeEnd: string;
+};
+
+export type SetServiceAlertFormValue = <
+  Field extends keyof ServiceAlertFormState,
+>(
+  field: Field,
+  value: ServiceAlertFormState[Field]
+) => void;
+
+export type ServiceAlertFormValues = ServiceAlertFormState & {
   links: ServiceAlertInput['links'];
   serviceAlert?: ServiceAlertsOverview[number];
 };

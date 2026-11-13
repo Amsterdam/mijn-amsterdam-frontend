@@ -10,15 +10,12 @@ import type { ServiceAlertFormValues } from './ServiceAlertForm.types.ts';
 function createFormValues(
   links: ServiceAlertFormValues['links']
 ): ServiceAlertFormValues {
-  const formData = new FormData();
-  formData.set('title', 'Testmelding');
-  formData.set('body', 'Testbericht');
-  formData.set('displayLocation', 'notification');
-  formData.set('type', 'info');
-  formData.set('environment', 'test');
-
   return {
-    formData,
+    title: 'Testmelding',
+    body: 'Testbericht',
+    displayLocation: 'notification',
+    type: 'info',
+    themaId: '',
     dateRange: {
       start: new Date('2026-11-11T00:00:00.000Z'),
       end: new Date('2026-11-12T00:00:00.000Z'),
@@ -39,8 +36,8 @@ describe('getServiceAlertFormResult errors', () => {
 
   it('returns an error per missing field', () => {
     const formValues = createFormValues([]);
-    formValues.formData.set('title', ' ');
-    formValues.formData.set('body', '');
+    formValues.title = ' ';
+    formValues.body = '';
     formValues.dateRange = { start: null, end: null };
     formValues.timeStart = '';
     formValues.timeEnd = '';
@@ -59,9 +56,21 @@ describe('getServiceAlertFormResult errors', () => {
     });
   });
 
+  it('rejects an unknown thema for theme alerts', () => {
+    const formValues = createFormValues([]);
+    formValues.displayLocation = 'theme';
+    formValues.themaId = 'ONBEKEND';
+
+    const result = getServiceAlertFormResult(formValues);
+
+    expect(result.errors).toEqual({
+      themaId: SERVICE_ALERT_FORM_ERROR_MESSAGES.themaId,
+    });
+  });
+
   it('requires a thema for theme alerts', () => {
     const formValues = createFormValues([]);
-    formValues.formData.set('displayLocation', 'theme');
+    formValues.displayLocation = 'theme';
 
     const result = getServiceAlertFormResult(formValues);
 
@@ -90,7 +99,7 @@ describe('getServiceAlertFormResult errors', () => {
 describe('getServiceAlertFormResult displayLocation', () => {
   it('requires a display location to be chosen', () => {
     const formValues = createFormValues([]);
-    formValues.formData.delete('displayLocation');
+    formValues.displayLocation = undefined;
 
     const result = getServiceAlertFormResult(formValues);
 
@@ -101,21 +110,12 @@ describe('getServiceAlertFormResult displayLocation', () => {
       },
     });
   });
-
-  it('rejects an unknown display location', () => {
-    const formValues = createFormValues([]);
-    formValues.formData.set('displayLocation', 'dashboard');
-
-    const result = getServiceAlertFormResult(formValues);
-
-    expect(result.payload).toBeNull();
-  });
 });
 
 describe('getServiceAlertFormResult type', () => {
   it('requires a type to be chosen', () => {
     const formValues = createFormValues([]);
-    formValues.formData.delete('type');
+    formValues.type = undefined;
 
     const result = getServiceAlertFormResult(formValues);
 
@@ -127,7 +127,7 @@ describe('getServiceAlertFormResult type', () => {
 
   it('uses the chosen type, also for notifications', () => {
     const formValues = createFormValues([]);
-    formValues.formData.set('type', 'error');
+    formValues.type = 'error';
 
     const result = getServiceAlertFormResult(formValues);
 

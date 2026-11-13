@@ -46,26 +46,13 @@ export function ServiceAlertForm({
   readOnly = false,
 }: ServiceAlertFormProps) {
   const {
-    body,
-    dateRange,
-    displayLocation,
+    values,
+    setValue,
     linkControls,
     handleDisplayLocationChange,
     handleSubmit,
     isLoading,
     isSuccess,
-    setBody,
-    setDateRange,
-    setThemaId,
-    setTimeEnd,
-    setTimeStart,
-    setTitle,
-    setType,
-    title,
-    themaId,
-    timeEnd,
-    timeStart,
-    type,
     errors,
     submitError,
   } = useServiceAlertForm(serviceAlert);
@@ -92,9 +79,10 @@ export function ServiceAlertForm({
               <FieldError errors={errors} field="title" />
               <TextInput
                 {...getFieldProps(errors, 'title')}
-                name="title"
-                value={title}
-                onChange={(event) => setTitle(event.currentTarget.value)}
+                value={values.title}
+                onChange={(event) =>
+                  setValue('title', event.currentTarget.value)
+                }
                 maxLength={200}
                 aria-required="true"
               />
@@ -106,9 +94,10 @@ export function ServiceAlertForm({
               <FieldError errors={errors} field="body" />
               <TextArea
                 {...getFieldProps(errors, 'body')}
-                name="body"
-                value={body}
-                onChange={(event) => setBody(event.currentTarget.value)}
+                value={values.body}
+                onChange={(event) =>
+                  setValue('body', event.currentTarget.value)
+                }
                 aria-required="true"
               />
             </Field>
@@ -119,8 +108,7 @@ export function ServiceAlertForm({
               <FieldError errors={errors} field="displayLocation" />
               <Select
                 {...getFieldProps(errors, 'displayLocation')}
-                name="displayLocation"
-                value={displayLocation ?? ''}
+                value={values.displayLocation ?? ''}
                 onChange={(event) =>
                   handleDisplayLocationChange(event.currentTarget.value)
                 }
@@ -134,7 +122,7 @@ export function ServiceAlertForm({
                 ))}
               </Select>
             </Field>
-            {displayLocation === 'theme' && (
+            {values.displayLocation === 'theme' && (
               <Field invalid={!!errors.themaId}>
                 <Label htmlFor={FIELD_IDS.themaId} inFieldSet>
                   Thema
@@ -142,9 +130,10 @@ export function ServiceAlertForm({
                 <FieldError errors={errors} field="themaId" />
                 <Select
                   {...getFieldProps(errors, 'themaId')}
-                  name="themaId"
-                  value={themaId}
-                  onChange={(event) => setThemaId(event.currentTarget.value)}
+                  value={values.themaId}
+                  onChange={(event) =>
+                    setValue('themaId', event.currentTarget.value)
+                  }
                   aria-required="true"
                 >
                   <Select.Option value="">Selecteer een thema</Select.Option>
@@ -163,10 +152,10 @@ export function ServiceAlertForm({
               <FieldError errors={errors} field="type" />
               <Select
                 {...getFieldProps(errors, 'type')}
-                name="type"
-                value={type ?? ''}
+                value={values.type ?? ''}
                 onChange={(event) => {
-                  setType(
+                  setValue(
+                    'type',
                     serviceAlertTypes.find(
                       ({ value }) => value === event.currentTarget.value
                     )?.value
@@ -185,12 +174,8 @@ export function ServiceAlertForm({
             <ServiceAlertFormLinks errors={errors} {...linkControls} />
             <ServiceAlertFormPeriod
               errors={errors}
-              dateRange={dateRange}
-              setDateRange={setDateRange}
-              timeStart={timeStart}
-              setTimeStart={setTimeStart}
-              timeEnd={timeEnd}
-              setTimeEnd={setTimeEnd}
+              values={values}
+              setValue={setValue}
             />
           </FieldSet>
 
@@ -246,10 +231,10 @@ export function ServiceAlertForm({
       </PageContentCell>
       <PageContentCell startWide={8} spanWide={5}>
         <ServiceAlertPreview
-          title={title}
-          body={body}
-          type={type}
-          displayLocation={displayLocation}
+          title={values.title}
+          body={values.body}
+          type={values.type}
+          displayLocation={values.displayLocation}
           links={linkControls.links}
         />
       </PageContentCell>
