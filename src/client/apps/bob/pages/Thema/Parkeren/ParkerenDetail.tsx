@@ -84,6 +84,7 @@ export function ParkerenDetail() {
             <DetailPageContent vergunning={vergunning} />
             <PageContentCell spanWide={8}>
               <VergunningDetailDocumentsList
+                vergunning={vergunning}
                 isLoading={isLoadingDocuments}
                 isError={isErrorDocuments}
                 documents={documents}

@@ -4,10 +4,10 @@ import AFSPRAKEN_RESPONSE from '../fixtures/salesforce-afspraken-stadsloket.json
 import CONTACTMOMENTEN_RESPONSE from '../fixtures/salesforce-contactmomenten.json' with {
   type: 'json',
 };
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'get-salesforce-contactmomenten',
     url: `${MOCK_BASE_PATH}/salesforce/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/`,
@@ -28,4 +28,4 @@ export const routes: MockRouteDefinition[] = [
       body: AFSPRAKEN_RESPONSE,
     },
   },
-];
+]);

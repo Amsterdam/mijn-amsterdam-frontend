@@ -6,14 +6,14 @@ import PRODUCTEN_OP_MA from '../fixtures/cms-producten.json' with {
   type: 'json',
 };
 import { loadFixtureAndReplaceBaseUrl } from '../helpers/load-fixture-and-replace-base-url.ts';
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
 const ALLE_RESPONSE = loadFixtureAndReplaceBaseUrl(
   'cms-maintenance-notifications-alle.json'
 );
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'get-cms-maintainance-notifications-alle',
     url: `${MOCK_BASE_PATH}/cms/storingsmeldingen/alle-meldingen-mijn-amsterdam`,
@@ -69,4 +69,4 @@ export const routes: MockRouteDefinition[] = [
       body: FOOTER,
     },
   },
-];
+]);

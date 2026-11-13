@@ -1,16 +1,16 @@
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'get-patroon-c',
     url: `${MOCK_BASE_PATH}/sso/portaal`,
     method: 'GET',
     handler: {
       type: 'middleware',
-      middleware: (req, res) => {
+      middleware: (_req, res) => {
         const htmlResponse = `
-              <h1>${req.params.naamportaal ?? ''}</h1>
+              <h1>${''}</h1>
                <a href="${process.env.MA_FRONTEND_URL}">
                 Mijn Amsterdam
               </a>`;
@@ -34,4 +34,4 @@ export const routes: MockRouteDefinition[] = [
       },
     },
   },
-];
+]);

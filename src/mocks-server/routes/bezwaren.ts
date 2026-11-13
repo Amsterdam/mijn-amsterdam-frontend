@@ -8,10 +8,10 @@ import BEZWAREN_STATUS_RESPONSE from '../fixtures/bezwaren-status.json' with {
   type: 'json',
 };
 import { sendMockDocument } from '../helpers/send-mock-document.ts';
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'post-bezwaren-list',
     url: `${MOCK_BASE_PATH}/bezwaren/zgw/v1/zaken/_zoek`,
@@ -65,4 +65,4 @@ export const routes: MockRouteDefinition[] = [
       body: BEZWAREN_STATUS_RESPONSE,
     },
   },
-];
+]);

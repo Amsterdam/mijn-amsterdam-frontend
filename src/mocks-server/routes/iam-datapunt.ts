@@ -1,7 +1,7 @@
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'post-datapunt-iam-oauth',
     url: `${MOCK_BASE_PATH}/datapunt-iam/openid-connect/token`,
@@ -12,4 +12,4 @@ export const routes: MockRouteDefinition[] = [
       body: { access_token: 'hello-world' },
     },
   },
-];
+]);

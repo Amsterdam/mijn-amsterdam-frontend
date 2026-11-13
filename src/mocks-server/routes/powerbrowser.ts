@@ -17,8 +17,8 @@ import PB_ZAAK_WBTRANSPORT from '../fixtures/powerbrowser-zaak-wbtransport.json'
   type: 'json',
 };
 import { sendMockDocument } from '../helpers/send-mock-document.ts';
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
 type SearchCondition = {
   fieldName: string;
@@ -67,7 +67,7 @@ const PB_SEARCH_DOCUMENTS_PROCESSED = {
   }),
 };
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'post-powerbrowser-token',
     url: `${MOCK_BASE_PATH}/powerbrowser/Token`,
@@ -174,4 +174,4 @@ export const routes: MockRouteDefinition[] = [
       },
     },
   },
-];
+]);

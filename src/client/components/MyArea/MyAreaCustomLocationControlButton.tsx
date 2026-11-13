@@ -21,7 +21,7 @@ export function MyAreaCustomLocationControlButton({
   return (
     <Button
       className={styles.Button}
-      icon={IconPin}
+      icon={<IconPin />}
       variant="tertiary"
       onClick={() => {
         mapInstance.setView(latlng, zoom);

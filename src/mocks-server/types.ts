@@ -1,4 +1,5 @@
-import type { NextFunction, Request, Response } from 'express';
+import type { Express, NextFunction, Request, Response } from 'express';
+import type { RouteParameters } from 'express-serve-static-core';
 
 export type MockHttpMethod =
   | 'GET'
@@ -27,22 +28,33 @@ export interface JsonHandler {
   body: unknown;
 }
 
-export interface MiddlewareHandler {
+export interface MiddlewareHandler<Route extends string = string> {
   type: 'middleware';
   delayMs?: number;
   middleware: (
-    req: Request,
+    req: Request<RouteParameters<Route>>,
     res: Response,
     next: NextFunction,
     core: MockServerCore
   ) => unknown;
 }
 
-export type SupportedHandler = JsonHandler | MiddlewareHandler;
+export type SupportedHandler<Route extends string = string> =
+  | JsonHandler
+  | MiddlewareHandler<Route>;
 
-export interface MockRouteDefinition {
+export interface MockRouteConfig<Route extends string = string> {
   id: string;
-  url: string;
+  url: Route;
   method: MockHttpMethod;
-  handler: SupportedHandler;
+  handler: SupportedHandler<Route>;
 }
+
+export interface RegisteredMockRouteDefinition
+  extends Pick<MockRouteConfig, 'id' | 'url' | 'method'> {
+  register(app: Express): void;
+}
+
+export type MockRouteDefinition =
+  | MockRouteConfig
+  | RegisteredMockRouteDefinition;

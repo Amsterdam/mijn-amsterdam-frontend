@@ -4,10 +4,10 @@ import LOODMETINGEN_RAPPORT_RESPONSE from '../fixtures/loodmeting-rapport.json' 
 import LOODMETINGEN_RESPONSE from '../fixtures/loodmetingen.json' with {
   type: 'json',
 };
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'post-loodmetingen-details',
     url: `${MOCK_BASE_PATH}/loodmetingen/be_getrequestdetails`,
@@ -28,4 +28,4 @@ export const routes: MockRouteDefinition[] = [
       body: LOODMETINGEN_RAPPORT_RESPONSE,
     },
   },
-];
+]);

@@ -1,7 +1,7 @@
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_API_BASE_URL, MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'get-parkeren-external-sso-url',
     url: `${MOCK_BASE_PATH}/parkeren-frontoffice/sso/get_authentication_url`,
@@ -72,4 +72,4 @@ export const routes: MockRouteDefinition[] = [
       },
     },
   },
-];
+]);

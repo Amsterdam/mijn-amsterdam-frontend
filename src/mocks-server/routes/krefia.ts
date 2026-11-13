@@ -1,8 +1,8 @@
 import KREFIA_RESPONSE from '../fixtures/krefia.json' with { type: 'json' };
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'get-krefia',
     url: `${MOCK_BASE_PATH}/krefia-koppel-api/krefia/all`,
@@ -13,4 +13,4 @@ export const routes: MockRouteDefinition[] = [
       body: KREFIA_RESPONSE,
     },
   },
-];
+]);

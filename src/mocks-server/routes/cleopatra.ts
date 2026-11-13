@@ -1,10 +1,10 @@
 import CLEOPATRA_RESPONSE from '../fixtures/cleopatra.json' with {
   type: 'json',
 };
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'post-cleopatra',
     url: `${MOCK_BASE_PATH}/milieuzone`,
@@ -15,4 +15,4 @@ export const routes: MockRouteDefinition[] = [
       body: CLEOPATRA_RESPONSE,
     },
   },
-];
+]);

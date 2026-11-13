@@ -11,8 +11,13 @@ export function ContactMomenten({
 }: {
   contactmomenten: ContactmomentFrontendFinal[];
 }) {
+  const contactmomentRows = contactmomenten.map((contactmoment) => ({
+    ...contactmoment,
+    title: contactmoment.subject,
+  }));
+
   return (
-    <ThemaPaginaDataView<ContactmomentFrontendFinal>
+    <ThemaPaginaDataView
       contentAfterTheTitle={
         <>
           <Paragraph className="ams-mb-m">
@@ -37,7 +42,7 @@ export function ContactMomenten({
           </Paragraph>
         </>
       }
-      zaken={contactmomenten}
+      zaken={contactmomentRows}
       maxItems={tableConfigs.contactmomenten.maxItems}
       displayProps={tableConfigs.contactmomenten.displayProps}
       listPageLinkTitle="Bekijk alle contactmomenten"
