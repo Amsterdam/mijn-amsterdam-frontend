@@ -31,12 +31,19 @@ export const serviceAlertInput = z
     dateStart: z.iso.datetime(),
     dateEnd: z.iso.datetime(),
   })
-  .superRefine(({ displayLocation, themaId }, context) => {
+  .superRefine(({ displayLocation, themaId, dateStart, dateEnd }, context) => {
     if (displayLocation === 'theme' && !themaId) {
       context.addIssue({
         code: 'custom',
         message: 'A theme must be selected for theme alerts.',
         path: ['themaId'],
+      });
+    }
+    if (new Date(dateEnd) <= new Date(dateStart)) {
+      context.addIssue({
+        code: 'custom',
+        message: 'The end date must be after the start date.',
+        path: ['dateEnd'],
       });
     }
   })

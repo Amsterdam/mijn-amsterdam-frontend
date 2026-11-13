@@ -64,24 +64,23 @@ export function useServiceAlertForm(
     { fetchImmediately: false }
   );
 
+  const isSaved =
+    hasSubmitted &&
+    !upsertServiceAlert.isLoading &&
+    upsertServiceAlert.data?.status === 'OK';
+  const isSubmitError =
+    hasSubmitted && !upsertServiceAlert.isLoading && upsertServiceAlert.isError;
+
   useEffect(() => {
-    if (
-      !serviceAlert &&
-      hasSubmitted &&
-      !upsertServiceAlert.isLoading &&
-      upsertServiceAlert.data?.status === 'OK'
-    ) {
-      serviceAlertsOverview.fetch();
+    if (!isSaved) {
+      return;
+    }
+
+    serviceAlertsOverview.fetch();
+    if (!serviceAlert) {
       navigate(routePath);
     }
-  }, [
-    hasSubmitted,
-    navigate,
-    serviceAlert,
-    serviceAlertsOverview.fetch,
-    upsertServiceAlert.data?.status,
-    upsertServiceAlert.isLoading,
-  ]);
+  }, [isSaved, navigate, serviceAlert, serviceAlertsOverview.fetch]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -127,9 +126,9 @@ export function useServiceAlertForm(
     handleDisplayLocationChange,
     handleSubmit,
     isLoading: upsertServiceAlert.isLoading,
-    isSuccess: upsertServiceAlert.data?.status === 'OK',
+    isSuccess: isSaved,
     errors,
-    submitError: upsertServiceAlert.isError
+    submitError: isSubmitError
       ? upsertServiceAlert.errorData ||
         'Er is iets misgegaan. Probeer het opnieuw.'
       : null,

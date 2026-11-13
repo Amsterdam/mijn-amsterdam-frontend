@@ -164,7 +164,7 @@ export function getServiceAlertFormResult({
   if (!timeEnd) {
     errors.timeEnd = messages.timeEnd;
   }
-  if (dateStart && dateEnd && dateEnd < dateStart) {
+  if (dateStart && dateEnd && dateEnd <= dateStart) {
     errors.timeEnd = messages.timeEndBeforeStart;
   }
 

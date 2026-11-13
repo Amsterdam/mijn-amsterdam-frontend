@@ -17,6 +17,7 @@ export function getFieldProps(
   return {
     id: serviceAlertFormFieldIds[field],
     invalid: !!errors[field],
+    'aria-describedby': errors[field] ? getErrorId(field) : undefined,
   };
 }
 

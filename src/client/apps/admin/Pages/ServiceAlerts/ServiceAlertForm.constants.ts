@@ -1,4 +1,8 @@
 import type { ServiceAlertInput } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
+import {
+  themaId as myAreaThemaId,
+  themaTitle as myAreaThemaTitle,
+} from '../../../../components/MyArea/MyArea-thema-config.ts';
 import { myThemasMenuItems } from '../../../bob/config/thema.ts';
 import type { ServiceAlertSelectOption } from './ServiceAlertForm.types.ts';
 
@@ -18,12 +22,14 @@ export const serviceAlertDisplayLocations = [
   ServiceAlertInput['displayLocation']
 >[];
 
-export const serviceAlertThemas = myThemasMenuItems
-  .map(({ id, title }) => ({
+// Mijn buurt is no thema menu item, but has its own page that shows theme alerts.
+export const serviceAlertThemas = [
+  ...myThemasMenuItems.map(({ id, title }) => ({
     value: id,
     label: typeof title === 'string' ? title : id,
-  }))
-  .toSorted((a, b) => a.label.localeCompare(b.label, 'nl'));
+  })),
+  { value: myAreaThemaId, label: myAreaThemaTitle },
+].toSorted((a, b) => a.label.localeCompare(b.label, 'nl'));
 
 export const serviceAlertFormFieldIds = {
   title: 'service-alert-title',
