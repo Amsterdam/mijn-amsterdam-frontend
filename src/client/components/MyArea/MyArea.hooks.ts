@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useMapInstance } from '@amsterdam/react-maps';
 import type { LatLngBoundsLiteral, LatLngLiteral, LeafletEvent } from 'leaflet';
 import { useLocation } from 'react-router';
+import { z } from 'zod';
 import { create } from 'zustand';
 
 import type { BAGLocationExtended } from '../../../server/services/bag/bag.types.ts';
@@ -23,6 +24,7 @@ import {
 } from '../../../universal/config/myarea-datasets.ts';
 import type { LatLngWithAddress } from '../../../universal/helpers/bag.ts';
 import { getFullAddress } from '../../../universal/helpers/brp.ts';
+import type { JSONValue } from '../../../universal/types/App.types.ts';
 import { BFFApiUrls } from '../../apps/bob/config/api.ts';
 import { DEFAULT_MAP_OPTIONS } from '../../apps/bob/config/map.ts';
 import { captureMessage } from '../../helpers/monitoring.ts';
@@ -146,10 +148,14 @@ export const useLoadingFeature = create<LoadingFeatureStore>((set) => ({
   setLoadingFeature: (feature) => set({ loadingFeature: feature }),
 }));
 
+const panelFeatureSchema = z
+  .object({ id: z.union([z.string(), z.number()]) })
+  .catchall(z.json());
+
 export type SelectedFeature = {
   id: string;
   datasetId: string;
-  [string: string]: unknown;
+  [key: string]: JSONValue;
 };
 type SelectedFeatureStore = {
   selectedFeature: SelectedFeature | null;
@@ -177,14 +183,15 @@ export function useFetchPanelFeature() {
     const source = new AbortController();
     const { datasetId, id } = loadingFeature;
 
-    sendFetchRequest<SelectedFeature>(
+    sendFetchRequest<unknown>(
       `${BFFApiUrls.MAP_DATASETS}/${datasetId}/${id}`,
       {
         signal: source.signal,
       }
     )
-      .then(({ content: feature }) => {
-        if (feature) {
+      .then(({ content }) => {
+        if (content) {
+          const feature = panelFeatureSchema.parse(content);
           // Add datasetid to the feature data, used for referencing to other states.
           setSelectedFeature({ ...feature, id: String(feature.id), datasetId });
         }

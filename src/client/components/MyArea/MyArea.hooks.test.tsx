@@ -1,10 +1,18 @@
 import * as reactMaps from '@amsterdam/react-maps';
-import { renderHook } from '@testing-library/react';
-import { describe, expect, it, test, vi } from 'vitest';
+import { renderHook, waitFor } from '@testing-library/react';
+import { afterEach, describe, expect, it, test, vi } from 'vitest';
 
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import type { AppState } from '../../../universal/types/App.types.ts';
 import { MockApp } from '../../apps/bob/pages/MockApp.tsx';
-import { useMapLocations, useSetMapCenterAtLocation } from './MyArea.hooks.ts';
+import * as bffApi from '../../hooks/api/useBffApi.ts';
+import {
+  useFetchPanelFeature,
+  useLoadingFeature,
+  useMapLocations,
+  useSelectedFeature,
+  useSetMapCenterAtLocation,
+} from './MyArea.hooks.ts';
 
 const mapInstanceMock = {
   setView: vi.fn(),
@@ -25,6 +33,59 @@ vi.mock('react-router', async (requireActual) => {
 describe('MyArea.hooks', () => {
   vi.spyOn(reactMaps, 'useMapInstance').mockImplementation(() => {
     return mapInstanceMock;
+  });
+
+  describe('useFetchPanelFeature', () => {
+    afterEach(() => {
+      vi.mocked(bffApi.sendFetchRequest).mockRestore();
+    });
+
+    it('validates JSON data and normalizes the feature id before storing it', async () => {
+      const feature = {
+        id: 123,
+        name: 'Locatie',
+        nested: { values: [null, true, 'tekst', 4.9] },
+      };
+      vi.spyOn(bffApi, 'sendFetchRequest').mockResolvedValueOnce(
+        apiSuccessResult(feature)
+      );
+      useLoadingFeature.setState({
+        loadingFeature: { datasetId: 'test-dataset', id: '123' },
+      });
+
+      renderHook(() => useFetchPanelFeature());
+
+      await waitFor(() => {
+        expect(useSelectedFeature.getState().selectedFeature).toEqual({
+          ...feature,
+          id: '123',
+          datasetId: 'test-dataset',
+        });
+      });
+    });
+
+    it.each([
+      { name: 'missing id', feature: { name: 'Locatie' } },
+      { name: 'invalid id', feature: { id: {} } },
+      { name: 'nested undefined', feature: { id: '123', nested: { value: undefined } } },
+      { name: 'non-finite number', feature: { id: '123', value: Number.NaN } },
+    ])('rejects a response with $name before storing it', async ({ feature }) => {
+      vi.spyOn(bffApi, 'sendFetchRequest').mockResolvedValueOnce(
+        apiSuccessResult(feature)
+      );
+      useLoadingFeature.setState({
+        loadingFeature: { datasetId: 'test-dataset', id: '123' },
+      });
+
+      renderHook(() => useFetchPanelFeature());
+
+      await waitFor(() => {
+        expect(useLoadingFeature.getState().loadingFeature).toEqual({
+          isError: true,
+        });
+      });
+      expect(useSelectedFeature.getState().selectedFeature).toBeNull();
+    });
   });
 
   describe('useMapLocations', () => {
