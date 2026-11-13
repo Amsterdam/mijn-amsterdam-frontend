@@ -10,8 +10,8 @@ import {
   type BarConfig,
   LoadingContent,
 } from '../LoadingContent/LoadingContent.tsx';
-import { MaintenanceNotifications } from '../MaintenanceNotifications/MaintenanceNotifications.tsx';
 import { PageContentCell, PageV2 } from '../Page/Page.tsx';
+import { ServiceAlerts } from '../ServiceAlerts/ServiceAlerts.tsx';
 import styles from './ThemaPagina.module.scss';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
@@ -40,7 +40,7 @@ interface ThemaPaginaProps {
   isError: boolean;
   isPartialError?: boolean;
   isLoading: boolean;
-  maintenanceNotificationsPageSlug?: string;
+  serviceAlertsPageSlug?: string;
   themaFeedbackDetails?: object;
 }
 export function ThemaPagina({
@@ -58,7 +58,7 @@ export function ThemaPagina({
   isError,
   isPartialError,
   isLoading,
-  maintenanceNotificationsPageSlug,
+  serviceAlertsPageSlug,
   themaFeedbackDetails,
 }: ThemaPaginaProps) {
   const profileType = useProfileTypeValue();
@@ -80,10 +80,7 @@ export function ThemaPagina({
       showUserFeedback
       userFeedbackDetails={userFeedbackDetails}
     >
-      <MaintenanceNotifications
-        page={maintenanceNotificationsPageSlug}
-        themaID={id}
-      />
+      <ServiceAlerts page={serviceAlertsPageSlug} themaID={id} />
       {pageContentTop}
       {!!visiblePageLinks.length && (
         <PageContentCell className={pageContentTop ? styles.PullUp : ''}>

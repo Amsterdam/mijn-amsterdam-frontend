@@ -52,7 +52,7 @@ export function HorecaThema() {
       pageContentTop={pageContentTop}
       pageContentMain={tables}
       pageLinks={themaConfig.pageLinks}
-      maintenanceNotificationsPageSlug="horeca"
+      serviceAlertsPageSlug="horeca"
     />
   );
 }

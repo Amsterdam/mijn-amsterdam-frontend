@@ -64,7 +64,7 @@ export function BezwarenThema() {
       pageContentTop={pageContentTop}
       pageContentMain={tables}
       pageLinks={themaConfig.pageLinks}
-      maintenanceNotificationsPageSlug="bezwaren"
+      serviceAlertsPageSlug="bezwaren"
     />
   );
 }

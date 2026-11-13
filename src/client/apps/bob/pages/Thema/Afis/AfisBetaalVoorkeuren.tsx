@@ -279,7 +279,7 @@ export function AfisBetaalVoorkeuren() {
       pageLinks={pageLinks}
       pageContentTop={pageContentTop}
       pageContentMain={!showMultipleVestigingenDisclaimer && pageContentMain}
-      maintenanceNotificationsPageSlug="afis"
+      serviceAlertsPageSlug="afis"
     />
   );
 }

@@ -58,7 +58,7 @@ export type ServiceAlertsOverview = {
   dateEnd: string;
 }[];
 
-export type MaintenanceNotification = MyNotification & {
+export type ServiceAlert = MyNotification & {
   title: string;
   datePublished: string;
   dateStart: string;
@@ -71,6 +71,6 @@ export type MaintenanceNotification = MyNotification & {
   displayLocation: ServiceAlertDisplayLocation;
 };
 
-export type QueryParamsMaintenanceNotifications = {
+export type QueryParamsServiceAlerts = {
   page?: string;
 };

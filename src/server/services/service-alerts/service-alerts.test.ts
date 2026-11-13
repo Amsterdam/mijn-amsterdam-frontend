@@ -2,17 +2,17 @@ import mockdate from 'mockdate';
 
 import { captureException } from '../monitoring.ts';
 import {
-  fetchActiveMaintenanceNotifications,
-  fetchMaintenanceNotificationsDashboard,
-  forTesting,
-} from './maintenance-notifications.ts';
-import {
-  getActiveServiceAlerts,
+  getActiveServiceAlertRows,
   type ServiceAlertRow,
 } from './service-alerts.model.ts';
+import {
+  fetchActiveServiceAlerts,
+  fetchServiceAlertNotifications,
+  forTesting,
+} from './service-alerts.ts';
 
 vi.mock('./service-alerts.model.ts', () => ({
-  getActiveServiceAlerts: vi.fn(),
+  getActiveServiceAlertRows: vi.fn(),
 }));
 
 vi.mock('../monitoring.ts', () => ({
@@ -45,7 +45,7 @@ function createServiceAlert(
 describe('service alert maintenance notifications', () => {
   beforeEach(() => {
     mockdate.set(NOW);
-    vi.mocked(getActiveServiceAlerts).mockResolvedValue([]);
+    vi.mocked(getActiveServiceAlertRows).mockResolvedValue([]);
   });
 
   afterEach(() => {
@@ -54,7 +54,7 @@ describe('service alert maintenance notifications', () => {
   });
 
   it('returns only dashboard alerts for the dashboard banner', async () => {
-    vi.mocked(getActiveServiceAlerts).mockResolvedValue([
+    vi.mocked(getActiveServiceAlertRows).mockResolvedValue([
       createServiceAlert({ displayLocation: 'dashboard' }),
       createServiceAlert({
         id: 'notification',
@@ -62,7 +62,7 @@ describe('service alert maintenance notifications', () => {
       }),
     ]);
 
-    const result = await fetchActiveMaintenanceNotifications({
+    const result = await fetchActiveServiceAlerts({
       page: 'dashboard',
     });
 
@@ -70,13 +70,13 @@ describe('service alert maintenance notifications', () => {
   });
 
   it('returns only login alerts for the login page', async () => {
-    vi.mocked(getActiveServiceAlerts).mockResolvedValue([
+    vi.mocked(getActiveServiceAlertRows).mockResolvedValue([
       createServiceAlert({ id: 'login', displayLocation: 'login' }),
       createServiceAlert({ displayLocation: 'dashboard' }),
       createServiceAlert({ displayLocation: 'theme', themaId: 'AVG' }),
     ]);
 
-    const result = await fetchActiveMaintenanceNotifications({
+    const result = await fetchActiveServiceAlerts({
       page: 'login',
     });
 
@@ -84,18 +84,18 @@ describe('service alert maintenance notifications', () => {
   });
 
   it('returns all active alerts when no page is given', async () => {
-    vi.mocked(getActiveServiceAlerts).mockResolvedValue([
+    vi.mocked(getActiveServiceAlertRows).mockResolvedValue([
       createServiceAlert({ id: 'login', displayLocation: 'login' }),
       createServiceAlert({ id: 'dashboard', displayLocation: 'dashboard' }),
     ]);
 
-    const result = await fetchActiveMaintenanceNotifications({});
+    const result = await fetchActiveServiceAlerts({});
 
     expect(result.content?.map(({ id }) => id)).toEqual(['login', 'dashboard']);
   });
 
   it('returns notification alerts for the existing notifications feed', async () => {
-    vi.mocked(getActiveServiceAlerts).mockResolvedValue([
+    vi.mocked(getActiveServiceAlertRows).mockResolvedValue([
       createServiceAlert({ displayLocation: 'dashboard' }),
       createServiceAlert({
         id: 'notification',
@@ -103,7 +103,7 @@ describe('service alert maintenance notifications', () => {
       }),
     ]);
 
-    const result = await fetchMaintenanceNotificationsDashboard();
+    const result = await fetchServiceAlertNotifications();
 
     expect(result.content?.notifications?.map(({ id }) => id)).toEqual([
       'notification',
@@ -111,11 +111,11 @@ describe('service alert maintenance notifications', () => {
   });
 
   it('maps theme alerts to their thema', async () => {
-    vi.mocked(getActiveServiceAlerts).mockResolvedValue([
+    vi.mocked(getActiveServiceAlertRows).mockResolvedValue([
       createServiceAlert({ displayLocation: 'theme', themaId: 'AVG' }),
     ]);
 
-    const result = await fetchActiveMaintenanceNotifications({});
+    const result = await fetchActiveServiceAlerts({});
 
     expect(result.content?.map(({ id }) => id)).toEqual(['alert-id']);
     expect(result.content?.[0]).toMatchObject({
@@ -126,18 +126,18 @@ describe('service alert maintenance notifications', () => {
 
   it('returns no alerts and reports the error when the database fails', async () => {
     const error = new Error('Database unavailable');
-    vi.mocked(getActiveServiceAlerts).mockRejectedValue(error);
+    vi.mocked(getActiveServiceAlertRows).mockRejectedValue(error);
 
-    const result = await fetchActiveMaintenanceNotifications({ page: 'avg' });
+    const result = await fetchActiveServiceAlerts({ page: 'avg' });
 
     expect(result).toMatchObject({ status: 'OK', content: [] });
     expect(captureException).toHaveBeenCalledWith(error);
   });
 
   it('returns no dashboard notifications when the database fails', async () => {
-    vi.mocked(getActiveServiceAlerts).mockRejectedValue(new Error('Down'));
+    vi.mocked(getActiveServiceAlertRows).mockRejectedValue(new Error('Down'));
 
-    const result = await fetchMaintenanceNotificationsDashboard();
+    const result = await fetchServiceAlertNotifications();
 
     expect(result).toMatchObject({
       status: 'OK',
@@ -146,7 +146,7 @@ describe('service alert maintenance notifications', () => {
   });
 
   it('converts alert timestamps to Amsterdam local dates and times', () => {
-    const notification = forTesting.toMaintenanceNotification(
+    const notification = forTesting.toServiceAlert(
       createServiceAlert({
         dateStart: new Date('2026-01-01T23:30:00.000Z'),
         dateEnd: new Date('2026-01-02T00:30:00.000Z'),
@@ -163,7 +163,7 @@ describe('service alert maintenance notifications', () => {
   });
 
   it('converts all links in sort order for the frontend', () => {
-    const notification = forTesting.toMaintenanceNotification(
+    const notification = forTesting.toServiceAlert(
       createServiceAlert({
         links: [
           {

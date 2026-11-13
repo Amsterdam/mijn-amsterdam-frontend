@@ -52,7 +52,7 @@ export function AVGThema() {
       pageContentTop={pageContentTop}
       pageContentMain={tables}
       pageLinks={themaConfig.pageLinks}
-      maintenanceNotificationsPageSlug="avg"
+      serviceAlertsPageSlug="avg"
     />
   );
 }

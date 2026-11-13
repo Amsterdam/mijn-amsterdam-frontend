@@ -197,7 +197,7 @@ export function AfisThema() {
           </>
         )
       }
-      maintenanceNotificationsPageSlug="afis"
+      serviceAlertsPageSlug="afis"
     />
   );
 }

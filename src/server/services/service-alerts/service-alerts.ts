@@ -1,15 +1,15 @@
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
-import { filterMaintenanceNotifications } from '../../../universal/helpers/maintenance-notifications.ts';
+import { filterServiceAlerts } from '../../../universal/helpers/service-alerts.ts';
 import { sanitizeCmsContent } from '../cms/cms-content.ts';
 import type { ServiceAlertDisplayLocation } from '../db/schema/service-alerts.ts';
 import { captureException } from '../monitoring.ts';
 import {
-  getActiveServiceAlerts as getActiveServiceAlertRows,
+  getActiveServiceAlertRows,
   type ServiceAlertRow,
 } from './service-alerts.model.ts';
 import type {
-  MaintenanceNotification,
-  QueryParamsMaintenanceNotifications,
+  QueryParamsServiceAlerts,
+  ServiceAlert,
 } from './service-alerts.types.ts';
 
 const notificationsThemaId = 'NOTIFICATIONS';
@@ -45,9 +45,7 @@ function getAmsterdamDateAndTime(date: Date) {
   };
 }
 
-function toMaintenanceNotification(
-  alert: ServiceAlertRow
-): MaintenanceNotification {
+function toServiceAlert(alert: ServiceAlertRow): ServiceAlert {
   const start = new Date(alert.dateStart);
   const end = new Date(alert.dateEnd);
   const startParts = getAmsterdamDateAndTime(start);
@@ -77,10 +75,10 @@ function toMaintenanceNotification(
   };
 }
 
-async function getActiveServiceAlerts(): Promise<MaintenanceNotification[]> {
+async function getActiveServiceAlerts(): Promise<ServiceAlert[]> {
   try {
     const alerts = await getActiveServiceAlertRows();
-    return alerts.map(toMaintenanceNotification);
+    return alerts.map(toServiceAlert);
   } catch (error) {
     captureException(error);
     return [];
@@ -88,8 +86,8 @@ async function getActiveServiceAlerts(): Promise<MaintenanceNotification[]> {
 }
 
 // Without a page all active alerts are returned, e.g. for the app state. The frontend filters those per page.
-export async function fetchActiveMaintenanceNotifications(
-  queryParams: QueryParamsMaintenanceNotifications = {}
+export async function fetchActiveServiceAlerts(
+  queryParams: QueryParamsServiceAlerts = {}
 ) {
   const alerts = await getActiveServiceAlerts();
 
@@ -98,11 +96,11 @@ export async function fetchActiveMaintenanceNotifications(
   }
 
   return apiSuccessResult(
-    filterMaintenanceNotifications(alerts, { page: queryParams.page })
+    filterServiceAlerts(alerts, { page: queryParams.page })
   );
 }
 
-export async function fetchMaintenanceNotificationsDashboard() {
+export async function fetchServiceAlertNotifications() {
   const alerts = await getActiveServiceAlerts();
   return apiSuccessResult({
     notifications: alerts.filter(
@@ -112,5 +110,5 @@ export async function fetchMaintenanceNotificationsDashboard() {
 }
 
 export const forTesting = {
-  toMaintenanceNotification,
+  toServiceAlert,
 };

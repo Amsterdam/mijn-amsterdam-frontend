@@ -1,4 +1,4 @@
-import { filterMaintenanceNotifications } from './maintenance-notifications.ts';
+import { filterServiceAlerts } from './service-alerts.ts';
 
 const notifications = [
   { id: 'theme-avg', displayLocation: 'theme', themaID: 'AVG', path: '/AVG' },
@@ -26,17 +26,17 @@ function ids(result: typeof notifications) {
   return result.map(({ id }) => id);
 }
 
-describe('filterMaintenanceNotifications', () => {
+describe('filterServiceAlerts', () => {
   it('returns theme alerts for the given thema', () => {
-    expect(
-      ids(filterMaintenanceNotifications(notifications, { themaID: 'AVG' }))
-    ).toEqual(['theme-avg']);
+    expect(ids(filterServiceAlerts(notifications, { themaID: 'AVG' }))).toEqual(
+      ['theme-avg']
+    );
   });
 
   it('prefers the thema over the page', () => {
     expect(
       ids(
-        filterMaintenanceNotifications(notifications, {
+        filterServiceAlerts(notifications, {
           page: 'dashboard',
           themaID: 'AVG',
         })
@@ -46,20 +46,20 @@ describe('filterMaintenanceNotifications', () => {
 
   it('returns dashboard alerts for the dashboard page', () => {
     expect(
-      ids(filterMaintenanceNotifications(notifications, { page: 'dashboard' }))
+      ids(filterServiceAlerts(notifications, { page: 'dashboard' }))
     ).toEqual(['dashboard']);
   });
 
   it('returns login alerts for the login page', () => {
-    expect(
-      ids(filterMaintenanceNotifications(notifications, { page: 'login' }))
-    ).toEqual(['login']);
+    expect(ids(filterServiceAlerts(notifications, { page: 'login' }))).toEqual([
+      'login',
+    ]);
   });
 
   it('matches other pages on path', () => {
     expect(
       ids(
-        filterMaintenanceNotifications(notifications, {
+        filterServiceAlerts(notifications, {
           page: 'notifications',
         })
       )
@@ -67,6 +67,6 @@ describe('filterMaintenanceNotifications', () => {
   });
 
   it('returns nothing without page or thema', () => {
-    expect(filterMaintenanceNotifications(notifications, {})).toEqual([]);
+    expect(filterServiceAlerts(notifications, {})).toEqual([]);
   });
 });

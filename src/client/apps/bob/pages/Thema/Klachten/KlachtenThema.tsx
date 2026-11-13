@@ -51,7 +51,7 @@ export function KlachtenThema() {
       pageContentTop={pageContentTop}
       pageContentMain={tables}
       pageLinks={pageLinks}
-      maintenanceNotificationsPageSlug="klachten"
+      serviceAlertsPageSlug="klachten"
     />
   );
 }

@@ -11,7 +11,7 @@ import { useWidescreen } from '../../hooks/media.hook.ts';
 import { getElementSize } from '../../hooks/useComponentSize.ts';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle.ts';
 import { AmsMainMenuClassname } from '../MainHeader/MainHeader.tsx';
-import { MaintenanceNotifications } from '../MaintenanceNotifications/MaintenanceNotifications.tsx';
+import { ServiceAlerts } from '../ServiceAlerts/ServiceAlerts.tsx';
 import { LegendPanel } from './LegendPanel/LegendPanel.tsx';
 import {
   PanelState,
@@ -170,7 +170,7 @@ export function MyArea({
 
   return (
     <div className={styles.Container}>
-      <MaintenanceNotifications page="buurt" />
+      <ServiceAlerts page="buurt" />
       <div className={styles.MapContainer} ref={mapContainerRef}>
         <div className={styles.MapOffset} id="skip-to-id-Map">
           {isReadyToRender && (

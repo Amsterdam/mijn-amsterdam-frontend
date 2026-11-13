@@ -40,7 +40,7 @@ import { fetchBelasting } from './patroon-c/belasting.ts';
 import { fetchMilieuzone, fetchOvertredingen } from './patroon-c/cleopatra.ts';
 import { fetchSubsidie } from './patroon-c/subsidie.ts';
 import { fetchSVWI } from './patroon-c/svwi.ts';
-import { fetchActiveMaintenanceNotifications } from './service-alerts/maintenance-notifications.ts';
+import { fetchActiveServiceAlerts } from './service-alerts/service-alerts.ts';
 import type { ServiceID_ } from './service-ids.ts';
 import {
   combineNotificationsWithTipsAndSort,
@@ -121,7 +121,7 @@ export function addServiceResultHandler<
  */
 // Public services
 const CMS_MAINTENANCE_NOTIFICATIONS = callPublicService(
-  fetchActiveMaintenanceNotifications
+  fetchActiveServiceAlerts
 );
 
 // Protected services
@@ -290,13 +290,12 @@ async function storeNotificationsForAmsAppUsers(
     authProfileAndToken?.profile.id &&
     authProfileAndToken.profile.profileType === 'private'
   ) {
-    const resultsWithoutMaintenanceNotifications = omit(
-      notificationsAndTipsResults,
-      ['maintenance']
-    );
+    const resultsWithoutServiceAlerts = omit(notificationsAndTipsResults, [
+      'maintenance',
+    ]);
     await storeNotificationsResponses(
       authProfileAndToken.profile.id,
-      resultsWithoutMaintenanceNotifications,
+      resultsWithoutServiceAlerts,
       { updateLastLoginDate: true }
     ).catch((error) => {
       captureException(error);

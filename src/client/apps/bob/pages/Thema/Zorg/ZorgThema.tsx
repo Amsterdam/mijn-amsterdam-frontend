@@ -93,7 +93,7 @@ export function ZorgThema() {
         }
         isError={isError}
         isLoading={isLoading}
-        maintenanceNotificationsPageSlug="zorg"
+        serviceAlertsPageSlug="zorg"
       />
     </>
   );

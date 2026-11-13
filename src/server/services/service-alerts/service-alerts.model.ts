@@ -19,7 +19,7 @@ export async function getServiceAlerts(): Promise<ServiceAlertRow[]> {
   return drizzleDb.select().from(serviceAlertsTable);
 }
 
-export async function getActiveServiceAlerts(
+export async function getActiveServiceAlertRows(
   now: Date = new Date()
 ): Promise<ServiceAlertRow[]> {
   if (!IS_DB_ENABLED) {

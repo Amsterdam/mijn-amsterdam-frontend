@@ -1,17 +1,18 @@
-type FilterableMaintenanceNotification = {
+type FilterableServiceAlert = {
   displayLocation?: string;
   themaID: string;
   path: string;
 };
 
-export type MaintenanceNotificationsFilter = {
+export type ServiceAlertsFilter = {
   page?: string;
   themaID?: string;
 };
 
-export function filterMaintenanceNotifications<
-  T extends FilterableMaintenanceNotification,
->(notifications: T[], { page, themaID }: MaintenanceNotificationsFilter): T[] {
+export function filterServiceAlerts<T extends FilterableServiceAlert>(
+  notifications: T[],
+  { page, themaID }: ServiceAlertsFilter
+): T[] {
   if (themaID) {
     return notifications.filter(
       (notification) =>

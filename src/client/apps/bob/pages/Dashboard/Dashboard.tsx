@@ -4,13 +4,13 @@ import { Heading, OrderedList } from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
 
 import { LoadingContent } from '../../../../components/LoadingContent/LoadingContent.tsx';
-import { MaintenanceNotifications } from '../../../../components/MaintenanceNotifications/MaintenanceNotifications.tsx';
 import { MaRouterLink } from '../../../../components/MaLink/MaLink.tsx';
 import { MyAreaDashboard } from '../../../../components/MyArea/MyAreaDashboard.tsx';
 import { MyNotification } from '../../../../components/MyNotification/MyNotification.tsx';
 import { MyThemasPanel } from '../../../../components/MyThemasPanel/MyThemasPanel.tsx';
 import { MyTipsPanel } from '../../../../components/MyTipsPanel/MyTipsPanel.tsx';
 import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
+import { ServiceAlerts } from '../../../../components/ServiceAlerts/ServiceAlerts.tsx';
 import { getRedactedClass } from '../../../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../../../hooks/media.hook.ts';
 import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
@@ -71,7 +71,7 @@ export function Dashboard() {
           pageTitle: 'Dashboard',
         }}
       >
-        <MaintenanceNotifications page="dashboard" />
+        <ServiceAlerts page="dashboard" />
         <PageContentCell
           spanWide={7}
           className={getRedactedClass(null, 'full')}

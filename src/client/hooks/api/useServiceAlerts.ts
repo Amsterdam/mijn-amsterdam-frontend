@@ -1,10 +1,10 @@
-import type { MaintenanceNotification } from '../../../server/services/service-alerts/service-alerts.types.ts';
-import { filterMaintenanceNotifications } from '../../../universal/helpers/maintenance-notifications.ts';
+import type { ServiceAlert } from '../../../server/services/service-alerts/service-alerts.types.ts';
+import { filterServiceAlerts } from '../../../universal/helpers/service-alerts.ts';
 import { BFFApiUrls } from '../../apps/bob/config/api.ts';
 import { useAppStateGetter } from '../useAppStateStore.ts';
 import { useBffApi } from './useBffApi.ts';
 
-export function useCmsMaintenanceNotifications(
+export function useServiceAlerts(
   page: string | undefined,
   themaID?: string,
   fromApiDirectly: boolean = false
@@ -12,7 +12,7 @@ export function useCmsMaintenanceNotifications(
   const { CMS_MAINTENANCE_NOTIFICATIONS } = useAppStateGetter();
   const url = new URL(BFFApiUrls.SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL);
   url.searchParams.append('page', page || '');
-  const api = useBffApi<MaintenanceNotification[]>(
+  const api = useBffApi<ServiceAlert[]>(
     fromApiDirectly ? url.toString() : null
   );
 
@@ -20,7 +20,7 @@ export function useCmsMaintenanceNotifications(
     ? api.data?.content
     : CMS_MAINTENANCE_NOTIFICATIONS?.content;
 
-  return filterMaintenanceNotifications(notifications ?? [], {
+  return filterServiceAlerts(notifications ?? [], {
     page,
     themaID,
   });
