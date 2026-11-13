@@ -4,9 +4,13 @@ import { StandaloneLink } from '@amsterdam/design-system-react';
 
 import type { ServiceAlertsOverview } from '../../../server/services/service-alerts/service-alerts.types.ts';
 import { defaultDateTimeFormat } from '../../../universal/helpers/date.ts';
-import { DataView } from '../DataView/DataView.tsx';
+import {
+  displayProps,
+  TEXT_NO_CONTENT,
+} from '../../apps/admin/Pages/ServiceAlerts/ServiceAlerts-thema-config.ts';
 import { MaRouterLink } from '../MaLink/MaLink.tsx';
 import { PageContentCell } from '../Page/Page.tsx';
+import { ThemaPaginaDataView } from '../Thema/ThemaPaginaDataView.tsx';
 import {
   getServiceAlertDisplayLocationLabel,
   getServiceAlertGroups,
@@ -53,24 +57,11 @@ function ServiceAlertsTable({
   }));
 
   return (
-    <DataView<ServiceAlertOverviewItem>
-      items={items}
-      caption={caption}
-      className="ams-mb-l"
-      displayProps={{
-        props: {
-          detailLinkComponent: 'Titel',
-          type: 'Type',
-          displayLocation: 'Locatie',
-          dateStart: 'Start',
-          dateEnd: 'Eind',
-        },
-        enableMobileListView: true,
-        colWidths: {
-          large: ['32%', '14%', '22%', '16%', '16%'],
-          small: ['32%', '14%', '22%', '16%', '16%'],
-        },
-      }}
+    <ThemaPaginaDataView<ServiceAlertOverviewItem>
+      zaken={items}
+      title={caption}
+      textNoContent={TEXT_NO_CONTENT}
+      displayProps={displayProps}
     />
   );
 }
@@ -85,14 +76,15 @@ export function ServiceAlertsPageContent({
   const { active, upcoming, past } = getServiceAlertGroups(overview);
 
   return (
-    <PageContentCell>
-      <StandaloneLink
-        href={`${detailPath}/toevoegen`}
-        linkComponent={MaRouterLink}
-        className="ams-mb-l"
-      >
-        Storingsmelding aanmaken
-      </StandaloneLink>
+    <>
+      <PageContentCell>
+        <StandaloneLink
+          href={`${detailPath}/toevoegen`}
+          linkComponent={MaRouterLink}
+        >
+          Storingsmelding aanmaken
+        </StandaloneLink>
+      </PageContentCell>
       <ServiceAlertsTable
         overview={active}
         detailPath={detailPath}
@@ -108,6 +100,6 @@ export function ServiceAlertsPageContent({
         detailPath={detailPath}
         caption="Afgelopen"
       />
-    </PageContentCell>
+    </>
   );
 }

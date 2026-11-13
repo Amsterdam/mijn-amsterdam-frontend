@@ -1,6 +1,7 @@
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useEffect, useState } from 'react';
 
 import type { DateRange } from '@amsterdam/design-system-react';
+import { useNavigate } from 'react-router';
 
 import type {
   ServiceAlertInput,
@@ -11,6 +12,7 @@ import {
   useBffApi,
 } from '../../../../hooks/api/useBffApi.ts';
 import { BFFApiUrls } from '../../config/api.ts';
+import { routePath } from './ServiceAlerts-thema-config.ts';
 import { serviceAlertDisplayLocations } from './ServiceAlertUpsertForm.constants.ts';
 import {
   getServiceAlertLinkValidationMessage,
@@ -39,6 +41,8 @@ function getTime(date: string | undefined) {
 export function useServiceAlertUpsertForm(
   serviceAlert?: ServiceAlertsOverview[number]
 ) {
+  const navigate = useNavigate();
+  const [hasSubmitted, setHasSubmitted] = useState(false);
   const [title, setTitle] = useState(serviceAlert?.title ?? '');
   const [body, setBody] = useState(serviceAlert?.body ?? '');
   const [links, setLinks] = useState<ServiceAlertInput['links']>(
@@ -75,6 +79,29 @@ export function useServiceAlertUpsertForm(
       sendRequest: sendJSONPostRequest,
     }
   );
+  const serviceAlertsOverview = useBffApi<ServiceAlertsOverview>(
+    BFFApiUrls.SERVICE_ALERTS_OVERVIEW,
+    { fetchImmediately: false }
+  );
+
+  useEffect(() => {
+    if (
+      !serviceAlert &&
+      hasSubmitted &&
+      !upsertServiceAlert.isLoading &&
+      upsertServiceAlert.data?.status === 'OK'
+    ) {
+      serviceAlertsOverview.fetch();
+      navigate(routePath);
+    }
+  }, [
+    hasSubmitted,
+    navigate,
+    serviceAlert,
+    serviceAlertsOverview.fetch,
+    upsertServiceAlert.data?.status,
+    upsertServiceAlert.isLoading,
+  ]);
 
   function handleLinkLabelChange(value: string) {
     setLinkLabel(value);
@@ -137,6 +164,7 @@ export function useServiceAlertUpsertForm(
     }
 
     setValidationMessage(null);
+    setHasSubmitted(true);
     upsertServiceAlert.fetch({
       method: 'POST',
       payload: result.payload,

@@ -123,6 +123,25 @@ function ServiceAlertUpsertFormContent({
                 ))}
               </Select>
             </Field>
+            {displayLocation === 'theme' && (
+              <Field className="ams-mb-m">
+                <Label htmlFor="service-alert-thema">Thema</Label>
+                <Select
+                  id="service-alert-thema"
+                  name="themaId"
+                  value={themaId}
+                  onChange={(event) => setThemaId(event.currentTarget.value)}
+                  required
+                >
+                  <Select.Option value="">Selecteer een thema</Select.Option>
+                  {serviceAlertThemas.map(({ value, label }) => (
+                    <Select.Option key={value} value={value}>
+                      {label}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Field>
+            )}
             {displayLocation !== 'notification' && (
               <Field className="ams-mb-m">
                 <Label htmlFor="service-alert-type">Type</Label>
@@ -140,25 +159,6 @@ function ServiceAlertUpsertFormContent({
                   }}
                 >
                   {serviceAlertTypes.map(({ value, label }) => (
-                    <Select.Option key={value} value={value}>
-                      {label}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Field>
-            )}
-            {displayLocation === 'theme' && (
-              <Field className="ams-mb-m">
-                <Label htmlFor="service-alert-thema">Thema</Label>
-                <Select
-                  id="service-alert-thema"
-                  name="themaId"
-                  value={themaId}
-                  onChange={(event) => setThemaId(event.currentTarget.value)}
-                  required
-                >
-                  <Select.Option value="">Selecteer een thema</Select.Option>
-                  {serviceAlertThemas.map(({ value, label }) => (
                     <Select.Option key={value} value={value}>
                       {label}
                     </Select.Option>

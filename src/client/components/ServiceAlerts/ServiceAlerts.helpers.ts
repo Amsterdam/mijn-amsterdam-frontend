@@ -10,6 +10,7 @@ const serviceAlertTypeLabels = {
 const serviceAlertDisplayLocationLabels = {
   dashboard: 'Dashboard',
   notification: 'Notificatie',
+  login: 'Login',
 } as const satisfies Record<
   Exclude<ServiceAlertsOverview[number]['displayLocation'], 'theme'>,
   string
