@@ -1,31 +1,18 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 
 import {
   ActionGroup,
   Alert,
   Button,
-  DataList,
-  DatePicker,
-  ErrorMessage,
   Field,
   FieldSet,
-  IconButton,
   InvalidFormAlert,
   Label,
-  Link,
   Paragraph,
-  Row,
   Select,
   TextArea,
   TextInput,
-  TimeInput,
 } from '@amsterdam/design-system-react';
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  CloseIcon,
-  PlusIcon,
-} from '@amsterdam/design-system-react-icons';
 
 import { PageContentCell } from '../../../../components/Page/Page.tsx';
 import {
@@ -40,6 +27,9 @@ import type {
   ServiceAlertFormField,
   ServiceAlertFormProps,
 } from './ServiceAlertForm.types.ts';
+import { FieldError, getFieldProps } from './ServiceAlertFormFieldError.tsx';
+import { ServiceAlertFormLinks } from './ServiceAlertFormLinks.tsx';
+import { ServiceAlertFormPeriod } from './ServiceAlertFormPeriod.tsx';
 import { ServiceAlertPreview } from './ServiceAlertPreview.tsx';
 
 export function ServiceAlertForm({
@@ -57,30 +47,11 @@ export function ServiceAlertForm({
 
 const FIELD_IDS = serviceAlertFormFieldIds;
 
-const LINK_ERROR_ID = 'service-alert-link-error';
-
-function getErrorId(field: ServiceAlertFormField) {
-  return `${FIELD_IDS[field]}-error`;
-}
-
 function getInvalidFormErrors(errors: ServiceAlertFormErrors) {
   return Object.entries(errors).map(([field, label]) => ({
     id: `#${FIELD_IDS[field as ServiceAlertFormField]}`,
     label,
   }));
-}
-
-function FieldError({
-  errors,
-  field,
-}: {
-  errors: ServiceAlertFormErrors;
-  field: ServiceAlertFormField;
-}) {
-  const message = errors[field];
-  return message ? (
-    <ErrorMessage id={getErrorId(field)}>{message}</ErrorMessage>
-  ) : null;
 }
 
 function ServiceAlertFormContent({
@@ -91,11 +62,7 @@ function ServiceAlertFormContent({
     body,
     dateRange,
     displayLocation,
-    links,
-    addLink,
-    linkLabel,
-    linkUrl,
-    linkValidationMessage,
+    linkControls,
     handleDisplayLocationChange,
     handleSubmit,
     isError,
@@ -103,10 +70,6 @@ function ServiceAlertFormContent({
     isSuccess,
     setBody,
     setDateRange,
-    setLinkLabel,
-    setLinkUrl,
-    moveLink,
-    removeLink,
     setThemaId,
     setTimeEnd,
     setTimeStart,
@@ -121,14 +84,6 @@ function ServiceAlertFormContent({
     errorData,
   } = useServiceAlertForm(serviceAlert);
   const [isEditing, setIsEditing] = useState(!readOnly);
-
-  function getFieldProps(field: ServiceAlertFormField) {
-    const isInvalid = !!errors[field];
-    return {
-      id: FIELD_IDS[field],
-      invalid: isInvalid,
-    };
-  }
 
   return (
     <>
@@ -150,7 +105,7 @@ function ServiceAlertFormContent({
               </Label>
               <FieldError errors={errors} field="title" />
               <TextInput
-                {...getFieldProps('title')}
+                {...getFieldProps(errors, 'title')}
                 name="title"
                 value={title}
                 onChange={(event) => setTitle(event.currentTarget.value)}
@@ -164,7 +119,7 @@ function ServiceAlertFormContent({
               </Label>
               <FieldError errors={errors} field="body" />
               <TextArea
-                {...getFieldProps('body')}
+                {...getFieldProps(errors, 'body')}
                 name="body"
                 value={body}
                 onChange={(event) => setBody(event.currentTarget.value)}
@@ -177,7 +132,7 @@ function ServiceAlertFormContent({
               </Label>
               <FieldError errors={errors} field="displayLocation" />
               <Select
-                {...getFieldProps('displayLocation')}
+                {...getFieldProps(errors, 'displayLocation')}
                 name="displayLocation"
                 value={displayLocation ?? ''}
                 onChange={(event) =>
@@ -200,7 +155,7 @@ function ServiceAlertFormContent({
                 </Label>
                 <FieldError errors={errors} field="themaId" />
                 <Select
-                  {...getFieldProps('themaId')}
+                  {...getFieldProps(errors, 'themaId')}
                   name="themaId"
                   value={themaId}
                   onChange={(event) => setThemaId(event.currentTarget.value)}
@@ -221,7 +176,7 @@ function ServiceAlertFormContent({
               </Label>
               <FieldError errors={errors} field="type" />
               <Select
-                {...getFieldProps('type')}
+                {...getFieldProps(errors, 'type')}
                 name="type"
                 value={type ?? ''}
                 onChange={(event) => {
@@ -241,150 +196,16 @@ function ServiceAlertFormContent({
                 ))}
               </Select>
             </Field>
-            <FieldSet
-              id={FIELD_IDS.links}
-              legend="Links"
-              optional
-              inFieldSet
-              invalid={!!errors.links || !!linkValidationMessage}
-              aria-describedby={errors.links ? getErrorId('links') : undefined}
-            >
-              <FieldError errors={errors} field="links" />
-              <DataList>
-                {links.map((link, index) => (
-                  <Fragment key={index}>
-                    <DataList.Item>
-                      <DataList.Key>Label</DataList.Key>
-                      <DataList.Value>{link.label}</DataList.Value>
-                    </DataList.Item>
-                    <DataList.Item>
-                      <DataList.Key>URL</DataList.Key>
-                      <DataList.Value>
-                        <Link href={link.url} target="_blank" rel="noreferrer">
-                          {link.url}
-                        </Link>
-                      </DataList.Value>
-                      <DataList.Actions>
-                        <IconButton
-                          label={`Verplaats link ${index + 1} omhoog`}
-                          svg={ChevronUpIcon}
-                          disabled={index === 0}
-                          onClick={() => moveLink(index, 'up')}
-                        />
-                        <IconButton
-                          label={`Verplaats link ${index + 1} omlaag`}
-                          svg={ChevronDownIcon}
-                          disabled={index === links.length - 1}
-                          onClick={() => moveLink(index, 'down')}
-                        />
-                        <IconButton
-                          label={`Verwijder link ${index + 1}`}
-                          svg={CloseIcon}
-                          onClick={() => removeLink(index)}
-                        />
-                      </DataList.Actions>
-                    </DataList.Item>
-                  </Fragment>
-                ))}
-              </DataList>
-              {linkValidationMessage && (
-                <ErrorMessage id={LINK_ERROR_ID}>
-                  {linkValidationMessage}
-                </ErrorMessage>
-              )}
-              <Field invalid={!!linkValidationMessage}>
-                <Label htmlFor="service-alert-link-label" inFieldSet>
-                  Linktekst
-                </Label>
-                <TextInput
-                  id="service-alert-link-label"
-                  value={linkLabel}
-                  onChange={(event) => setLinkLabel(event.currentTarget.value)}
-                  maxLength={200}
-                  invalid={!!linkValidationMessage}
-                  aria-describedby={
-                    linkValidationMessage ? LINK_ERROR_ID : undefined
-                  }
-                />
-              </Field>
-              <Field invalid={!!linkValidationMessage}>
-                <Label htmlFor="service-alert-link-url" inFieldSet>
-                  URL
-                </Label>
-                <TextInput
-                  id="service-alert-link-url"
-                  type="url"
-                  value={linkUrl}
-                  onChange={(event) => setLinkUrl(event.currentTarget.value)}
-                  maxLength={2048}
-                  placeholder="https://"
-                  invalid={!!linkValidationMessage}
-                  aria-describedby={
-                    linkValidationMessage ? LINK_ERROR_ID : undefined
-                  }
-                />
-              </Field>
-              <Button
-                type="button"
-                icon={<PlusIcon />}
-                variant="secondary"
-                onClick={addLink}
-              >
-                Voeg nog een link toe
-              </Button>
-            </FieldSet>
-            <FieldSet
-              id={FIELD_IDS.period}
-              legend="Periode"
-              inFieldSet
-              invalid={!!errors.period}
-              aria-describedby={
-                errors.period ? getErrorId('period') : undefined
-              }
-            >
-              <FieldError errors={errors} field="period" />
-              <DatePicker
-                mode="range"
-                value={dateRange}
-                onChange={setDateRange}
-                nextMonthButtonLabel="Volgende maand"
-                nextYearButtonLabel="Volgend jaar"
-                previousMonthButtonLabel="Vorige maand"
-                previousYearButtonLabel="Vorig jaar"
-                rangeStartAccessibleName="startdatum"
-                rangeEndAccessibleName="einddatum"
-              />
-              <Row wrap>
-                <Field invalid={!!errors.timeStart}>
-                  <Label htmlFor={FIELD_IDS.timeStart} inFieldSet>
-                    Starttijd
-                  </Label>
-                  <FieldError errors={errors} field="timeStart" />
-                  <TimeInput
-                    {...getFieldProps('timeStart')}
-                    name="timeStart"
-                    value={timeStart}
-                    onChange={(event) =>
-                      setTimeStart(event.currentTarget.value)
-                    }
-                    aria-required="true"
-                  />
-                </Field>
-                <Field invalid={!!errors.timeEnd}>
-                  <Label htmlFor={FIELD_IDS.timeEnd} inFieldSet>
-                    Eindtijd
-                  </Label>
-                  <FieldError errors={errors} field="timeEnd" />
-                  <TimeInput
-                    {...getFieldProps('timeEnd')}
-                    name="timeEnd"
-                    value={timeEnd}
-                    onChange={(event) => setTimeEnd(event.currentTarget.value)}
-                    aria-required="true"
-                  />
-                </Field>
-              </Row>
-            </FieldSet>
+            <ServiceAlertFormLinks errors={errors} {...linkControls} />
+            <ServiceAlertFormPeriod
+              errors={errors}
+              dateRange={dateRange}
+              setDateRange={setDateRange}
+              timeStart={timeStart}
+              setTimeStart={setTimeStart}
+              timeEnd={timeEnd}
+              setTimeEnd={setTimeEnd}
+            />
           </FieldSet>
 
           {isError && (
@@ -445,7 +266,7 @@ function ServiceAlertFormContent({
           body={body}
           type={type}
           displayLocation={displayLocation}
-          links={links}
+          links={linkControls.links}
         />
       </PageContentCell>
     </>

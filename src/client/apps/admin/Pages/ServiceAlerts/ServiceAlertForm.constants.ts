@@ -36,3 +36,9 @@ export const serviceAlertFormFieldIds = {
   timeStart: 'service-alert-time-start',
   timeEnd: 'service-alert-time-end',
 } as const;
+
+export const serviceAlertLinkFieldIds = {
+  label: 'service-alert-link-label',
+  url: 'service-alert-link-url',
+  error: 'service-alert-link-error',
+} as const;
