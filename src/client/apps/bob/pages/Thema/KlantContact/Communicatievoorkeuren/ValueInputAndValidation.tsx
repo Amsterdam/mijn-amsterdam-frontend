@@ -1,5 +1,6 @@
 import {
   type ChangeEventHandler,
+  type ComponentType,
   useCallback,
   useEffect,
   useState,
@@ -13,7 +14,7 @@ import {
   Paragraph,
   TextInput,
 } from '@amsterdam/design-system-react';
-import OTPInput from 'react-otp-input';
+import OTPInputModule, { type OTPInputProps } from 'react-otp-input';
 
 import type { ContactgegevenType } from '../../../../../../../server/services/klantcontact/klantcontact-profieldienst-types.ts';
 import { Spinner } from '../../../../../../components/Spinner/Spinner.tsx';
@@ -26,6 +27,8 @@ import {
   useVerifyCommunicatievoorkeur,
 } from './useCommunicatieVoorkeuren.ts';
 import styles from './ValueInputAndValidation.module.scss';
+
+const OTPInput = OTPInputModule as unknown as ComponentType<OTPInputProps>;
 
 const VERIFICATION_CODE_LENGTH = 6;
 
