@@ -1,10 +1,10 @@
 import SEARCH_CONFIG from '../../client/components/Search/search-config.json' with {
   type: 'json',
 };
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'get-search-config',
     url: `${MOCK_BASE_PATH}/search-config`,
@@ -15,4 +15,4 @@ export const routes: MockRouteDefinition[] = [
       body: SEARCH_CONFIG,
     },
   },
-];
+]);

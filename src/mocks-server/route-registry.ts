@@ -111,6 +111,12 @@ export function defineMockRoute<const Route extends string>(
   };
 }
 
+export function defineMockRoutes<const Routes extends readonly string[]>(
+  routes: { [Index in keyof Routes]: MockRouteConfig<Routes[Index]> }
+): RegisteredMockRouteDefinition[] {
+  return routes.map((route) => defineMockRoute(route));
+}
+
 export function registerRoutes(
   app: Express,
   routes: MockRouteDefinition[]

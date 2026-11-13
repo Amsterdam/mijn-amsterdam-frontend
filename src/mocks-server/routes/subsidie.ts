@@ -1,8 +1,8 @@
 import SUBSIDIE_RESPONSE from '../fixtures/subsidie.json' with { type: 'json' };
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'get-subsidie-citizen',
     url: `${MOCK_BASE_PATH}/subsidies/citizen/:token`,
@@ -23,4 +23,4 @@ export const routes: MockRouteDefinition[] = [
       body: SUBSIDIE_RESPONSE,
     },
   },
-];
+]);

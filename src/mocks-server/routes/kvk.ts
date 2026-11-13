@@ -7,14 +7,14 @@ import maatschappelijkeactiviteitenEMZ from '../fixtures/hr-kvk/maatschappelijke
 import vestigingen from '../fixtures/hr-kvk/vestigingen.json' with {
   type: 'json',
 };
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
 function isCommercialUser(cacheKeySupplement?: string): boolean {
   return cacheKeySupplement === 'commercial';
 }
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'get-kvk-maatschappelijkeactiviteiten',
     url: `${MOCK_BASE_PATH}/hr_kvk/maatschappelijkeactiviteiten`,
@@ -59,4 +59,4 @@ export const routes: MockRouteDefinition[] = [
       },
     },
   },
-];
+]);

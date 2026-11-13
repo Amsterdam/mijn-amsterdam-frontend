@@ -13,10 +13,10 @@ import ERFPACHT_ZAAK_DETAIL from '../fixtures/erfpacht/erfpacht-zaak-detail.json
 import ERFPACHT_ZAAK_INFO from '../fixtures/erfpacht/erfpacht-zaak-info.json' with {
   type: 'json',
 };
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'get-erfpacht-v2-erfpachter',
     url: `${MOCK_BASE_PATH}/erfpachtv2/vernise/api/erfpachter`,
@@ -74,4 +74,4 @@ export const routes: MockRouteDefinition[] = [
       body: ERFPACHT_ZAAK_DETAIL,
     },
   },
-];
+]);

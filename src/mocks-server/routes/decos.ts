@@ -20,8 +20,8 @@ import ZAKEN from '../fixtures/decos-vergunningen-zaken-response.json' with {
   type: 'json',
 };
 import { sendMockDocument } from '../helpers/send-mock-document.ts';
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
 type Zaak = {
   key: string;
@@ -71,7 +71,7 @@ function getZaakByKey(key: string): Zaak | undefined {
   return zaken.content.find((zaak) => zaak.key === key);
 }
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'post-decos-address-books',
     url: `${MOCK_BASE_PATH}/decos/search/books`,
@@ -232,4 +232,4 @@ export const routes: MockRouteDefinition[] = [
       },
     },
   },
-];
+]);
