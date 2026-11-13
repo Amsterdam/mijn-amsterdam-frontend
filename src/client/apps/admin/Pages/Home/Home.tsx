@@ -30,6 +30,7 @@ export function Home() {
   const sessionData = useSessionApiData<
     SessionData & { username: string | null }
   >(AUTH_API_URL);
+
   const pageContentMain = (
     <PageContentCell>
       Hoi! Je bent ingelogd met{' '}
