@@ -25,6 +25,7 @@ import {
   isSuccessStatus,
   requestData,
 } from '../../helpers/source-api-request.ts';
+import { getLeveriningsVormUitgeschreven } from './zorgned-helpers.ts';
 import type {
   BeschiktProduct,
   LeveringsVormTransformed,
@@ -179,6 +180,9 @@ function transformZorgnedAanvraag(
     leverancierIdentificatie:
       toegewezenProduct?.leverancier?.identificatie ?? null,
     leveringsVorm,
+    leveringsVormUitgeschreven: leveringsVorm
+      ? getLeveriningsVormUitgeschreven(leveringsVorm)
+      : null,
     productsoortCode: productsoortCode ?? null,
     productIdentificatie,
     beschiktProductIdentificatie: beschiktProduct?.identificatie ?? null,

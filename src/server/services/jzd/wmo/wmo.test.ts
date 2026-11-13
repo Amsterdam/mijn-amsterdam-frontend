@@ -131,6 +131,8 @@ describe('Transform api items', () => {
             dateDecisionFormatted: '09 juli 2022',
             decision: 'Toegewezen',
             displayStatus: 'Einde recht',
+            leveringsvorm: 'ZIN',
+            leveringsvormUitgeschreven: 'Zorg in natura',
             documents: [
               {
                 datePublished: '2022-07-09T10:32:20.7',
@@ -197,6 +199,7 @@ describe('Transform api items', () => {
               },
             ],
             leverancier: 'RMC Amsterdam',
+
             title: 'Wmo product',
           },
         ],
@@ -240,6 +243,8 @@ describe('Transform api items', () => {
       expect(voorziening).toMatchObject({
         id: '357-883696',
         title: 'Wmo product',
+
+        leveringsvormUitgeschreven: 'Zorg in natura',
         leverancier: 'RMC Amsterdam',
         link: { title: 'Meer informatie' },
         itemTypeCode: 'WRA',
@@ -407,6 +412,7 @@ describe('Transform api items', () => {
       datumOpdrachtLevering: '2024-01-01',
       leverancier: 'Test Leverancier',
       leveringsVorm: 'ZIN',
+      leveringsVormUitgeschreven: 'Zorg in natura',
       productsoortCode: 'Test ProductSoortCode',
       productIdentificatie: 'Test ProductIdentificatie',
       resultaat: 'toegewezen',

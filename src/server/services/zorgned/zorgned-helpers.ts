@@ -1,5 +1,8 @@
 import { sanitizeStringTemplate } from '../../helpers/text.ts';
-import type { TextPartContents } from './zorgned-types.ts';
+import type {
+  LeveringsVormTransformed,
+  TextPartContents,
+} from './zorgned-types.ts';
 
 export function parseLabelContent<T>(
   text: TextPartContents<T>,
@@ -15,4 +18,17 @@ export function parseLabelContent<T>(
   }
 
   return rText;
+}
+
+export function getLeveriningsVormUitgeschreven(
+  leveringsVorm: LeveringsVormTransformed
+) {
+  switch (leveringsVorm) {
+    case 'ZIN':
+      return 'Zorg in natura';
+    case 'PGB':
+      return 'Persoonsgebonden budget';
+    default:
+      return null;
+  }
 }
