@@ -11,6 +11,8 @@ export const BFFApiUrls = {
     `${BFF_ADMIN_API_BASE_URL}/user-feedback/${entryId}/delete-ticket`,
   USER_FEEDBACK_HANDOFF_DEPARTMENT: (entryId: number) =>
     `${BFF_ADMIN_API_BASE_URL}/user-feedback/${entryId}/handoff-department`,
+  SERVICE_ALERTS_OVERVIEW: `${BFF_ADMIN_API_BASE_URL}/service-alerts/overview`,
+  SERVICE_ALERTS_UPSERT: `${BFF_ADMIN_API_BASE_URL}/service-alerts/upsert`,
 } as const;
 
 export const LOGIN_URL = `${BFF_ADMIN_API_BASE_URL}/auth/signin`;

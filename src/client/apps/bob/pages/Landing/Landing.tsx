@@ -6,8 +6,8 @@ import classnames from 'classnames';
 import { FeatureToggle } from '../../../../../universal/config/feature-toggles.ts';
 import { LogoDigiD } from '../../../../assets/images/LogoDigiD.tsx';
 import { LogoEherkenning } from '../../../../assets/images/LogoEherkenning.tsx';
-import { MaintenanceNotifications } from '../../../../components/MaintenanceNotifications/MaintenanceNotifications.tsx';
 import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
+import { ServiceAlerts } from '../../../../components/ServiceAlerts/ServiceAlerts.tsx';
 import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle.ts';
 import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api.ts';
 import styles from './Landing.module.scss';
@@ -33,9 +33,9 @@ export function LandingPage() {
         <Paragraph className="ams-mb-m">
           Uw Amsterdamse zaken op 1 plek.
         </Paragraph>
-        <MaintenanceNotifications
+        <ServiceAlerts
           fromApiDirectly={true}
-          page="landingspagina"
+          page="login"
           className="ams-mb-m"
         />
 

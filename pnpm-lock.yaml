@@ -12,20 +12,20 @@ importers:
   .:
     dependencies:
       '@amsterdam/design-system-assets':
-        specifier: 2.6.0
-        version: 2.6.0
+        specifier: 2.7.0
+        version: 2.7.0
       '@amsterdam/design-system-css':
-        specifier: 4.4.0
-        version: 4.4.0(@amsterdam/design-system-assets@2.6.0)(@amsterdam/design-system-tokens@4.3.0)
+        specifier: 4.5.0
+        version: 4.5.0(@amsterdam/design-system-assets@2.7.0)(@amsterdam/design-system-tokens@4.4.0)
       '@amsterdam/design-system-react':
-        specifier: 4.4.0
-        version: 4.4.0(@amsterdam/design-system-css@4.4.0(@amsterdam/design-system-assets@2.6.0)(@amsterdam/design-system-tokens@4.3.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 4.5.0
+        version: 4.5.0(@amsterdam/design-system-css@4.5.0(@amsterdam/design-system-assets@2.7.0)(@amsterdam/design-system-tokens@4.4.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@amsterdam/design-system-react-icons':
-        specifier: 2.2.0
-        version: 2.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 2.3.0
+        version: 2.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@amsterdam/design-system-tokens':
-        specifier: 4.3.0
-        version: 4.3.0
+        specifier: 4.4.0
+        version: 4.4.0
       '@amsterdam/piwik-tracker-react':
         specifier: 3.0.0
         version: 3.0.0(react@18.3.1)
@@ -409,30 +409,30 @@ packages:
   '@adobe/css-tools@4.5.0':
     resolution: {integrity: sha512-6OzddxPio9UiWTCemp4N8cYLV2ZN1ncRnV1cVGtve7dhPOtRkleRyx32GQCYSwDYgaHU3USMm84tNsvKzRCa1Q==}
 
-  '@amsterdam/design-system-assets@2.6.0':
-    resolution: {integrity: sha512-DJ5TP2oUvoD0wOaawJidVfrzxYGqfoQCuOWACBtPvtFKI+FRL2r+M7/+r+5DIY+JOw0/qDhaA4KLCoda/hWwpg==}
+  '@amsterdam/design-system-assets@2.7.0':
+    resolution: {integrity: sha512-O6vBpWhE6dl4hyeL9k//AkQyk1whRQtBU/2dLnS9dtiSr8pH5xZOnxYAJi0drMJUpntdKI82oXNnIvS6EnFF7Q==}
 
-  '@amsterdam/design-system-css@4.4.0':
-    resolution: {integrity: sha512-cxvTcdpNkwUo6y+PZwS4c8NKeClyQH1qWWld78lsezVGEL7YBi0O0MlEumrRBx0nC+8K76S8cB4Q4TIpoLK6hQ==}
+  '@amsterdam/design-system-css@4.5.0':
+    resolution: {integrity: sha512-FGomskU30LOJi0LyQVOdgJheRJ5meexyaXEfn0BiOrWuvZtueel+39fdaeLdbxtVq0dlUB8mnhAexcIcgCrG5Q==}
     peerDependencies:
-      '@amsterdam/design-system-assets': 2.6.0
-      '@amsterdam/design-system-tokens': 4.3.0
+      '@amsterdam/design-system-assets': 2.7.0
+      '@amsterdam/design-system-tokens': 4.4.0
 
-  '@amsterdam/design-system-react-icons@2.2.0':
-    resolution: {integrity: sha512-sE6tEN9wXYJMiGlznwCuGob3m2HoqMPc41JOEFUlGhg26lvBT/TejxERqeclHErdA5OsZIXihfi8fEEBFEW8xg==}
+  '@amsterdam/design-system-react-icons@2.3.0':
+    resolution: {integrity: sha512-Sm4WR3c70bwB9UpQd7VzLI5tnJGeRyBOwzJSlqrafY5wV3ESic2GNx7I9lruO1mJN3t9/6l8826sJpiMhzP9ow==}
     peerDependencies:
       react: 16 - 19
       react-dom: 16 - 19
 
-  '@amsterdam/design-system-react@4.4.0':
-    resolution: {integrity: sha512-SrPQNvNkXCllCPAuO5RR1y73lI6/VGGvS2IQSLndwXU1abx6fNdQa5YmYbGdCkcU0oGKod/P8LzXO/+n+hQDSQ==}
+  '@amsterdam/design-system-react@4.5.0':
+    resolution: {integrity: sha512-dtPhLJCLzEGioOONBicanYBd6ABRt98UCrZYDA8vQOhScrLlcZ/zF2LsVlS9/I4A4oPFDc5vqV5R9i5g8GJzWQ==}
     peerDependencies:
-      '@amsterdam/design-system-css': 4.4.0
+      '@amsterdam/design-system-css': 4.5.0
       react: 16 - 19
       react-dom: 16 - 19
 
-  '@amsterdam/design-system-tokens@4.3.0':
-    resolution: {integrity: sha512-liXQHm6hy1MYoA8wi6n5to+9MDSnqKYl1HtyBatw4YNnmC2dP+Jp/6xevZmO00dhfJp0NoNT8hOY3nXlR2B/KA==}
+  '@amsterdam/design-system-tokens@4.4.0':
+    resolution: {integrity: sha512-RDNfSJ1SHFOJxipGezkGkSAhF1S/Pt83rBzShx0D6vGEhtO/AwHo87h/j+sw+PNyRhJ5UQsOs6UltXsJLKjKvg==}
 
   '@amsterdam/piwik-tracker-react@3.0.0':
     resolution: {integrity: sha512-H6ilew5kWSwWhC22VjXRamEp6L+UJq7RlholatLGFoZdpvaL5avlTiadHMnwKu416Zq35PskJOv1DlwVCGhJQg==}
@@ -594,10 +594,6 @@ packages:
 
   '@babel/runtime@7.29.10':
     resolution: {integrity: sha512-NpugTzbKgGrNe45Ui32cN8vCFFMxVtP/9rtfwv0nP5FRDAjvYBxJcLVpYA9mr1jxP6cnIT7x9LUzuDTbWYYNRA==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/runtime@7.29.7':
-    resolution: {integrity: sha512-Nq8OhGWiZIZGV6hLHoyAKLLcJihP/xFeBMGJoUrxTX2psI8dCifzLhZISFb+VWS3wFMRDmCGw5R+dOySCqPLhw==}
     engines: {node: '>=6.9.0'}
 
   '@babel/template@7.29.7':
@@ -4600,28 +4596,28 @@ snapshots:
 
   '@adobe/css-tools@4.5.0': {}
 
-  '@amsterdam/design-system-assets@2.6.0': {}
+  '@amsterdam/design-system-assets@2.7.0': {}
 
-  '@amsterdam/design-system-css@4.4.0(@amsterdam/design-system-assets@2.6.0)(@amsterdam/design-system-tokens@4.3.0)':
+  '@amsterdam/design-system-css@4.5.0(@amsterdam/design-system-assets@2.7.0)(@amsterdam/design-system-tokens@4.4.0)':
     dependencies:
-      '@amsterdam/design-system-assets': 2.6.0
-      '@amsterdam/design-system-tokens': 4.3.0
+      '@amsterdam/design-system-assets': 2.7.0
+      '@amsterdam/design-system-tokens': 4.4.0
 
-  '@amsterdam/design-system-react-icons@2.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@amsterdam/design-system-react-icons@2.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@amsterdam/design-system-react@4.4.0(@amsterdam/design-system-css@4.4.0(@amsterdam/design-system-assets@2.6.0)(@amsterdam/design-system-tokens@4.3.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@amsterdam/design-system-react@4.5.0(@amsterdam/design-system-css@4.5.0(@amsterdam/design-system-assets@2.7.0)(@amsterdam/design-system-tokens@4.4.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@amsterdam/design-system-css': 4.4.0(@amsterdam/design-system-assets@2.6.0)(@amsterdam/design-system-tokens@4.3.0)
-      '@amsterdam/design-system-react-icons': 2.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@babel/runtime': 7.29.7
+      '@amsterdam/design-system-css': 4.5.0(@amsterdam/design-system-assets@2.7.0)(@amsterdam/design-system-tokens@4.4.0)
+      '@amsterdam/design-system-react-icons': 2.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@babel/runtime': 7.29.10
       clsx: 2.1.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@amsterdam/design-system-tokens@4.3.0': {}
+  '@amsterdam/design-system-tokens@4.4.0': {}
 
   '@amsterdam/piwik-tracker-react@3.0.0(react@18.3.1)':
     dependencies:
@@ -4868,8 +4864,6 @@ snapshots:
       '@babel/helper-plugin-utils': 7.29.7
 
   '@babel/runtime@7.29.10': {}
-
-  '@babel/runtime@7.29.7': {}
 
   '@babel/template@7.29.7':
     dependencies:

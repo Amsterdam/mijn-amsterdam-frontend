@@ -23,13 +23,13 @@ import {
 import { ErrorAlert } from '../../../../../components/Alert/Alert.tsx';
 import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
 import { LoadingContent } from '../../../../../components/LoadingContent/LoadingContent.tsx';
-import { MaintenanceNotifications } from '../../../../../components/MaintenanceNotifications/MaintenanceNotifications.tsx';
 import { MaButtonLink } from '../../../../../components/MaLink/MaLink.tsx';
 import { routeConfig as buurtRouteConfig } from '../../../../../components/MyArea/MyArea-thema-config.ts';
 import {
   PageContentCell,
   PageV2,
 } from '../../../../../components/Page/Page.tsx';
+import { ServiceAlerts } from '../../../../../components/ServiceAlerts/ServiceAlerts.tsx';
 import { parseHTML } from '../../../../../helpers/html-react-parse.tsx';
 import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
@@ -311,7 +311,7 @@ export function AfvalThemaPagina() {
           </>
         )}
       </PageContentCell>
-      <MaintenanceNotifications page="afval" />
+      <ServiceAlerts themaID={themaConfig.id} />
       {isError(AFVAL) && (
         <PageContentCell>
           <ErrorAlert>

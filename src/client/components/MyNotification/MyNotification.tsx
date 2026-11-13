@@ -123,6 +123,11 @@ export function MyNotification({
             )}
           </>
         )}
+        {notification.links?.map(({ title, to }, index) => (
+          <Paragraph key={`${to}-${index}`}>
+            <MaLink href={to}>{title}</MaLink>
+          </Paragraph>
+        ))}
       </div>
     </article>
   );
