@@ -12,6 +12,7 @@ import {
   Label,
   Link,
   Paragraph,
+  Row,
   Select,
   TextArea,
   TextInput,
@@ -258,26 +259,28 @@ function ServiceAlertUpsertFormContent({
                 aria-label="Selecteer periode"
               />
             </Field>
-            <Field className="ams-mb-m">
-              <Label htmlFor="service-alert-time-start">Starttijd</Label>
-              <TimeInput
-                id="service-alert-time-start"
-                name="timeStart"
-                value={timeStart}
-                onChange={(event) => setTimeStart(event.currentTarget.value)}
-                required
-              />
-            </Field>
-            <Field className="ams-mb-m">
-              <Label htmlFor="service-alert-time-end">Eindtijd</Label>
-              <TimeInput
-                id="service-alert-time-end"
-                name="timeEnd"
-                value={timeEnd}
-                onChange={(event) => setTimeEnd(event.currentTarget.value)}
-                required
-              />
-            </Field>
+            <Row wrap className="ams-mb-m">
+              <Field>
+                <Label htmlFor="service-alert-time-start">Starttijd</Label>
+                <TimeInput
+                  id="service-alert-time-start"
+                  name="timeStart"
+                  value={timeStart}
+                  onChange={(event) => setTimeStart(event.currentTarget.value)}
+                  required
+                />
+              </Field>
+              <Field>
+                <Label htmlFor="service-alert-time-end">Eindtijd</Label>
+                <TimeInput
+                  id="service-alert-time-end"
+                  name="timeEnd"
+                  value={timeEnd}
+                  onChange={(event) => setTimeEnd(event.currentTarget.value)}
+                  required
+                />
+              </Field>
+            </Row>
           </FieldSet>
 
           {validationMessage && (
