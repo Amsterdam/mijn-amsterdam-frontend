@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
+import { NOTIFICATION_SERVICE_ALERT_TYPE } from './ServiceAlertForm.constants.ts';
 import {
   getServiceAlertFormResult,
   getServiceAlertLinkValidationMessage,
@@ -113,8 +114,9 @@ describe('getServiceAlertFormResult displayLocation', () => {
 });
 
 describe('getServiceAlertFormResult type', () => {
-  it('requires a type to be chosen', () => {
+  it('requires a type to be chosen for login and theme alerts', () => {
     const formValues = createFormValues([]);
+    formValues.displayLocation = 'login';
     formValues.type = undefined;
 
     const result = getServiceAlertFormResult(formValues);
@@ -125,16 +127,39 @@ describe('getServiceAlertFormResult type', () => {
     });
   });
 
-  it('uses the chosen type, also for notifications', () => {
+  it('uses the chosen type for login and theme alerts', () => {
     const formValues = createFormValues([]);
+    formValues.displayLocation = 'login';
     formValues.type = 'error';
 
     const result = getServiceAlertFormResult(formValues);
 
     expect(result.payload).toMatchObject({
-      displayLocation: 'notification',
+      displayLocation: 'login',
       type: 'error',
     });
+  });
+
+  it('does not require a type for notifications and saves the default type', () => {
+    const formValues = createFormValues([]);
+    formValues.type = undefined;
+
+    const result = getServiceAlertFormResult(formValues);
+
+    expect(result.errors).toBeNull();
+    expect(result.payload).toMatchObject({
+      displayLocation: 'notification',
+      type: NOTIFICATION_SERVICE_ALERT_TYPE,
+    });
+  });
+
+  it('ignores a previously chosen type for notifications', () => {
+    const formValues = createFormValues([]);
+    formValues.type = 'error';
+
+    const result = getServiceAlertFormResult(formValues);
+
+    expect(result.payload?.type).toBe(NOTIFICATION_SERVICE_ALERT_TYPE);
   });
 });
 

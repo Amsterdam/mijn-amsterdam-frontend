@@ -14,6 +14,15 @@ export const serviceAlertTypes = [
   ServiceAlertInput['type']
 >[];
 
+export const NOTIFICATION_SERVICE_ALERT_TYPE =
+  'info' satisfies ServiceAlertInput['type'];
+
+export function hasServiceAlertType(
+  displayLocation: ServiceAlertInput['displayLocation'] | undefined
+) {
+  return displayLocation !== 'notification';
+}
+
 export const serviceAlertDisplayLocations = [
   { value: 'theme', label: 'Thema' },
   { value: 'notification', label: 'Notificatie' },

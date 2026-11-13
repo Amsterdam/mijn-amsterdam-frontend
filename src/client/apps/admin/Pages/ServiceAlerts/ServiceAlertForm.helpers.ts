@@ -1,5 +1,9 @@
 import type { ServiceAlertInput } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
-import { serviceAlertThemas } from './ServiceAlertForm.constants.ts';
+import {
+  hasServiceAlertType,
+  NOTIFICATION_SERVICE_ALERT_TYPE,
+  serviceAlertThemas,
+} from './ServiceAlertForm.constants.ts';
 import type {
   ServiceAlertFormErrors,
   ServiceAlertFormResult,
@@ -102,7 +106,7 @@ export const SERVICE_ALERT_FORM_ERROR_MESSAGES = {
 export function getServiceAlertFormResult({
   title: rawTitle,
   body: rawBody,
-  type,
+  type: rawType,
   displayLocation,
   themaId: rawThemaId,
   dateRange,
@@ -112,6 +116,9 @@ export function getServiceAlertFormResult({
   serviceAlert,
 }: ServiceAlertFormValues): ServiceAlertFormResult {
   const title = rawTitle.trim();
+  const type = hasServiceAlertType(displayLocation)
+    ? rawType
+    : NOTIFICATION_SERVICE_ALERT_TYPE;
   const body = rawBody.trim();
   const themaId =
     displayLocation === 'theme'

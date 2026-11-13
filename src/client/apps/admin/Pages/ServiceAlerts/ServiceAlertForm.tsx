@@ -16,6 +16,7 @@ import {
 
 import { PageContentCell } from '../../../../components/Page/Page.tsx';
 import {
+  hasServiceAlertType,
   serviceAlertDisplayLocations,
   serviceAlertFormFieldIds,
   serviceAlertThemas,
@@ -145,32 +146,34 @@ export function ServiceAlertForm({
                 </Select>
               </Field>
             )}
-            <Field invalid={!!errors.type}>
-              <Label htmlFor={FIELD_IDS.type} inFieldSet>
-                Type
-              </Label>
-              <FieldError errors={errors} field="type" />
-              <Select
-                {...getFieldProps(errors, 'type')}
-                value={values.type ?? ''}
-                onChange={(event) => {
-                  setValue(
-                    'type',
-                    serviceAlertTypes.find(
-                      ({ value }) => value === event.currentTarget.value
-                    )?.value
-                  );
-                }}
-                aria-required="true"
-              >
-                <Select.Option value="">Selecteer een type</Select.Option>
-                {serviceAlertTypes.map(({ value, label }) => (
-                  <Select.Option key={value} value={value}>
-                    {label}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Field>
+            {hasServiceAlertType(values.displayLocation) && (
+              <Field invalid={!!errors.type}>
+                <Label htmlFor={FIELD_IDS.type} inFieldSet>
+                  Type
+                </Label>
+                <FieldError errors={errors} field="type" />
+                <Select
+                  {...getFieldProps(errors, 'type')}
+                  value={values.type ?? ''}
+                  onChange={(event) => {
+                    setValue(
+                      'type',
+                      serviceAlertTypes.find(
+                        ({ value }) => value === event.currentTarget.value
+                      )?.value
+                    );
+                  }}
+                  aria-required="true"
+                >
+                  <Select.Option value="">Selecteer een type</Select.Option>
+                  {serviceAlertTypes.map(({ value, label }) => (
+                    <Select.Option key={value} value={value}>
+                      {label}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Field>
+            )}
             <ServiceAlertFormLinks errors={errors} {...linkControls} />
             <ServiceAlertFormPeriod
               errors={errors}
