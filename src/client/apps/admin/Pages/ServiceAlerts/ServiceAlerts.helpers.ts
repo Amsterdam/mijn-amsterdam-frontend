@@ -1,36 +1,31 @@
 import type { ServiceAlertsOverview } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
-import { myThemasMenuItems } from '../../../bob/config/thema.ts';
+import { isDateInFuture } from '../../../../../universal/helpers/date.ts';
+import {
+  serviceAlertDisplayLocations,
+  serviceAlertThemas,
+  serviceAlertTypes,
+} from './ServiceAlertForm.constants.ts';
 
-const serviceAlertTypeLabels = {
-  info: 'Informatie',
-  warning: 'Waarschuwing',
-  error: 'Storing',
-} as const satisfies Record<ServiceAlertsOverview[number]['type'], string>;
+type ServiceAlert = ServiceAlertsOverview[number];
 
-const serviceAlertDisplayLocationLabels = {
-  notification: 'Notificatie',
-  login: 'Login',
-} as const satisfies Record<
-  Exclude<ServiceAlertsOverview[number]['displayLocation'], 'theme'>,
-  string
->;
-
-export function getServiceAlertTypeLabel(
-  type: ServiceAlertsOverview[number]['type']
-) {
-  return serviceAlertTypeLabels[type];
+export function getServiceAlertTypeLabel(type: ServiceAlert['type']) {
+  return serviceAlertTypes.find(({ value }) => value === type)?.label ?? type;
 }
 
 export function getServiceAlertDisplayLocationLabel(
-  displayLocation: ServiceAlertsOverview[number]['displayLocation'],
-  themaId: ServiceAlertsOverview[number]['themaId']
+  displayLocation: ServiceAlert['displayLocation'],
+  themaId: ServiceAlert['themaId']
 ) {
   if (displayLocation !== 'theme') {
-    return serviceAlertDisplayLocationLabels[displayLocation];
+    return (
+      serviceAlertDisplayLocations.find(
+        ({ value }) => value === displayLocation
+      )?.label ?? displayLocation
+    );
   }
 
-  const thema = myThemasMenuItems.find((item) => item.id === themaId);
-  const themaName = typeof thema?.title === 'string' ? thema.title : themaId;
+  const themaName =
+    serviceAlertThemas.find(({ value }) => value === themaId)?.label ?? themaId;
 
   return themaName ? `Thema: ${themaName}` : 'Thema';
 }
@@ -39,27 +34,21 @@ export function getServiceAlertGroups(
   overview: ServiceAlertsOverview,
   now: Date = new Date()
 ) {
-  const nowTimestamp = now.getTime();
+  const groups = {
+    active: [] as ServiceAlertsOverview,
+    upcoming: [] as ServiceAlertsOverview,
+    past: [] as ServiceAlertsOverview,
+  };
 
-  return overview.reduce(
-    (groups, serviceAlert) => {
-      const dateStart = new Date(serviceAlert.dateStart).getTime();
-      const dateEnd = new Date(serviceAlert.dateEnd).getTime();
-
-      if (dateStart <= nowTimestamp && dateEnd >= nowTimestamp) {
-        groups.active.push(serviceAlert);
-      } else if (dateStart > nowTimestamp) {
-        groups.upcoming.push(serviceAlert);
-      } else {
-        groups.past.push(serviceAlert);
-      }
-
-      return groups;
-    },
-    {
-      active: [] as ServiceAlertsOverview,
-      upcoming: [] as ServiceAlertsOverview,
-      past: [] as ServiceAlertsOverview,
+  for (const serviceAlert of overview) {
+    if (isDateInFuture(serviceAlert.dateStart, now)) {
+      groups.upcoming.push(serviceAlert);
+    } else if (isDateInFuture(serviceAlert.dateEnd, now)) {
+      groups.active.push(serviceAlert);
+    } else {
+      groups.past.push(serviceAlert);
     }
-  );
+  }
+
+  return groups;
 }

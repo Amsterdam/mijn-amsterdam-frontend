@@ -27,6 +27,8 @@ function createServiceAlert(
     links: [],
     dateStart,
     dateEnd,
+    dateUpdated: dateStart,
+    dateCreated: dateStart,
   };
 }
 
@@ -107,9 +109,9 @@ describe('getServiceAlertGroups', () => {
       now.toISOString()
     );
 
-    expect(getServiceAlertGroups([atStart, atEnd], now).active).toEqual([
-      atStart,
-      atEnd,
-    ]);
+    const groups = getServiceAlertGroups([atStart, atEnd], now);
+
+    expect(groups.active).toEqual([atStart]);
+    expect(groups.past).toEqual([atEnd]);
   });
 });

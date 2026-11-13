@@ -7,8 +7,6 @@ import { useServiceAlerts } from '../../hooks/api/useServiceAlerts.ts';
 import { PageContentCell } from '../Page/Page.tsx';
 import styles from './ServiceAlerts.module.scss';
 
-const DEFAULT_HEADING = 'Onderhoudsbericht';
-
 interface ServiceAlertsProps {
   page?: ServiceAlertsPage;
   themaID?: string;
@@ -39,15 +37,12 @@ export function ServiceAlerts({
                 ? undefined
                 : serviceAlert.severity
             }
-            heading={serviceAlert.title || DEFAULT_HEADING}
+            heading={serviceAlert.title}
             headingLevel={4}
             className={classNames(styles.ServiceAlert, className)}
           >
             {parseHTML(serviceAlert.description)}
-            {(
-              serviceAlert.links ??
-              (serviceAlert.link ? [serviceAlert.link] : [])
-            ).map(({ title, to }, index) => (
+            {serviceAlert.links?.map(({ title, to }, index) => (
               <Paragraph key={`${to}-${index}`}>
                 <Link href={to}>{title}</Link>
               </Paragraph>

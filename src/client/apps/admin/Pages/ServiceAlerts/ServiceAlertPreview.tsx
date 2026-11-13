@@ -1,12 +1,6 @@
 import { useState } from 'react';
 
-import {
-  Alert,
-  Heading,
-  Link,
-  OrderedList,
-  Paragraph,
-} from '@amsterdam/design-system-react';
+import { Alert, Heading, Link, Paragraph } from '@amsterdam/design-system-react';
 
 import type { MyNotification as MyNotificationData } from '../../../../../universal/types/App.types.ts';
 import { MyNotification } from '../../../../components/MyNotification/MyNotification.tsx';
@@ -41,14 +35,10 @@ export function ServiceAlertPreview({
         Voorbeeld
       </Heading>
       {displayLocation === 'notification' ? (
-        <OrderedList markers={false}>
-          <OrderedList.Item className="ams-mb-m">
-            <MyNotification
-              notification={notification}
-              trackCategory="Dashboard / Actueel"
-            />
-          </OrderedList.Item>
-        </OrderedList>
+        <MyNotification
+          notification={notification}
+          trackCategory="Dashboard / Actueel"
+        />
       ) : (
         <Alert
           heading={title || 'Titel van de melding'}

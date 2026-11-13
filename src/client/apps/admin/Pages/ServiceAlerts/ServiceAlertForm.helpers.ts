@@ -1,5 +1,4 @@
 import type { ServiceAlertInput } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
-import { isHttpsUrl } from '../../../../../universal/helpers/url.ts';
 import {
   serviceAlertDisplayLocations,
   serviceAlertThemas,
@@ -10,6 +9,10 @@ import type {
   ServiceAlertFormResult,
   ServiceAlertFormValues,
 } from './ServiceAlertForm.types.ts';
+
+function isHttpsUrl(value: string) {
+  return URL.canParse(value) && new URL(value).protocol === 'https:';
+}
 
 export function getServiceAlertLinkValidationMessage({
   label,

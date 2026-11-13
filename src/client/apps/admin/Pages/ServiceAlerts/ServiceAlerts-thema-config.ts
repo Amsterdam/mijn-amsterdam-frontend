@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import type { ServiceAlertsOverview } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
 import type { AdminThemaConfig } from '../../../../../universal/types/thema-types.ts';
 import type { DisplayProps } from '../../../../components/Table/TableV2.types.ts';
@@ -9,12 +11,16 @@ export const TITLE_ADD_STORINGSMELDING = 'Storingsmelding toevoegen';
 export const TITLE_ADD_STORINGSMELDING_LINK = 'Storingsmelding aanmaken';
 export const TEXT_NO_CONTENT = 'Er zijn geen storingsmeldingen';
 
-type ServiceAlertOverviewDisplayItem = ServiceAlertsOverview[number] & {
+export type ServiceAlertOverviewItem = Pick<
+  ServiceAlertsOverview[number],
+  'id' | 'title' | 'dateStart' | 'dateEnd'
+> & {
   type: string;
   displayLocation: string;
+  detailLinkComponent?: ReactNode;
 };
 
-export const displayProps: DisplayProps<ServiceAlertOverviewDisplayItem> = {
+export const displayProps: DisplayProps<ServiceAlertOverviewItem> = {
   props: {
     detailLinkComponent: 'Titel',
     type: 'Type',

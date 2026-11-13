@@ -1,5 +1,3 @@
-import type { ReactNode } from 'react';
-
 import { StandaloneLink } from '@amsterdam/design-system-react';
 
 import type { ServiceAlertsOverview } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
@@ -15,19 +13,10 @@ import {
 import {
   displayProps,
   routePathToevoegen,
+  type ServiceAlertOverviewItem,
   TEXT_NO_CONTENT,
   TITLE_ADD_STORINGSMELDING_LINK,
 } from './ServiceAlerts-thema-config.ts';
-
-export type ServiceAlertOverviewItem = Pick<
-  ServiceAlertsOverview[number],
-  'title' | 'dateStart' | 'dateEnd'
-> & {
-  id: string;
-  type: ReturnType<typeof getServiceAlertTypeLabel>;
-  displayLocation: ReturnType<typeof getServiceAlertDisplayLocationLabel>;
-  detailLinkComponent?: ReactNode;
-};
 
 function ServiceAlertsTable({
   overview,

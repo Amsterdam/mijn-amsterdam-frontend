@@ -7,6 +7,7 @@ import type {
   ServiceAlertInput,
   ServiceAlertsOverview,
 } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
+import { dateFormat } from '../../../../../universal/helpers/date.ts';
 import {
   sendJSONPostRequest,
   useBffApi,
@@ -28,13 +29,7 @@ function getInitialDateRange(
 }
 
 function getTime(date: string | undefined) {
-  if (!date) {
-    const now = new Date();
-    return `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-  }
-
-  const parsedDate = new Date(date);
-  return `${String(parsedDate.getHours()).padStart(2, '0')}:${String(parsedDate.getMinutes()).padStart(2, '0')}`;
+  return dateFormat(date ?? new Date(), 'HH:mm');
 }
 
 export function useServiceAlertForm(
@@ -135,7 +130,6 @@ export function useServiceAlertForm(
     linkControls,
     handleDisplayLocationChange,
     handleSubmit,
-    isError: upsertServiceAlert.isError,
     isLoading: upsertServiceAlert.isLoading,
     isSuccess: upsertServiceAlert.data?.status === 'OK',
     setBody,
@@ -151,6 +145,9 @@ export function useServiceAlertForm(
     timeStart,
     type,
     errors,
-    errorData: upsertServiceAlert.errorData,
+    submitError: upsertServiceAlert.isError
+      ? upsertServiceAlert.errorData ||
+        'Er is iets misgegaan. Probeer het opnieuw.'
+      : null,
   };
 }

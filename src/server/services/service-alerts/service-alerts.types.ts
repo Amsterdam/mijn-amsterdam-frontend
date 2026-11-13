@@ -1,6 +1,5 @@
 import z from 'zod';
 
-import { isHttpsUrl } from '../../../universal/helpers/url.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import {
   SERVICE_ALERT_DISPLAY_LOCATIONS,
@@ -8,11 +7,12 @@ import {
   type ServiceAlertDisplayLocation,
   type ServiceAlertType,
 } from '../db/schema/service-alerts.ts';
+import type { ServiceAlertRow } from './service-alerts.model.ts';
 
 export const serviceAlertLinkInput = z
   .object({
     label: z.string().trim().min(1).max(200),
-    url: z.url().max(2048).refine(isHttpsUrl),
+    url: z.url({ protocol: /^https$/ }).max(2048),
     sortOrder: z.number().int(),
   })
   .strict();
@@ -44,19 +44,16 @@ export const serviceAlertInput = z
 
 export type ServiceAlertInput = z.infer<typeof serviceAlertInput>;
 
-export type ServiceAlertsOverview = {
-  id: string;
-  title: string;
-  body: string;
-  type: (typeof SERVICE_ALERT_TYPES)[number];
-  displayLocation: (typeof SERVICE_ALERT_DISPLAY_LOCATIONS)[number];
-  themaId: string | null;
-  createdByEmail: string;
-  updatedByEmail: string;
-  links: ServiceAlertLinkInput[];
-  dateStart: string;
-  dateEnd: string;
-}[];
+type ServiceAlertDateKey =
+  | 'dateStart'
+  | 'dateEnd'
+  | 'dateUpdated'
+  | 'dateCreated';
+
+export type ServiceAlertsOverview = Array<
+  Omit<ServiceAlertRow, ServiceAlertDateKey> &
+    Record<ServiceAlertDateKey, string>
+>;
 
 export type ServiceAlert = MyNotification & {
   title: string;

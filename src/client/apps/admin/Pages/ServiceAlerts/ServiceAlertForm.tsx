@@ -32,19 +32,6 @@ import { ServiceAlertFormLinks } from './ServiceAlertFormLinks.tsx';
 import { ServiceAlertFormPeriod } from './ServiceAlertFormPeriod.tsx';
 import { ServiceAlertPreview } from './ServiceAlertPreview.tsx';
 
-export function ServiceAlertForm({
-  serviceAlert,
-  readOnly = false,
-}: ServiceAlertFormProps) {
-  return (
-    <ServiceAlertFormContent
-      key={serviceAlert?.id ?? 'new'}
-      serviceAlert={serviceAlert}
-      readOnly={readOnly}
-    />
-  );
-}
-
 const FIELD_IDS = serviceAlertFormFieldIds;
 
 function getInvalidFormErrors(errors: ServiceAlertFormErrors) {
@@ -54,7 +41,7 @@ function getInvalidFormErrors(errors: ServiceAlertFormErrors) {
   }));
 }
 
-function ServiceAlertFormContent({
+export function ServiceAlertForm({
   serviceAlert,
   readOnly = false,
 }: ServiceAlertFormProps) {
@@ -65,7 +52,6 @@ function ServiceAlertFormContent({
     linkControls,
     handleDisplayLocationChange,
     handleSubmit,
-    isError,
     isLoading,
     isSuccess,
     setBody,
@@ -81,7 +67,7 @@ function ServiceAlertFormContent({
     timeStart,
     type,
     errors,
-    errorData,
+    submitError,
   } = useServiceAlertForm(serviceAlert);
   const [isEditing, setIsEditing] = useState(!readOnly);
 
@@ -208,7 +194,7 @@ function ServiceAlertFormContent({
             />
           </FieldSet>
 
-          {isError && (
+          {submitError && (
             <Alert
               className="ams-mb-m"
               heading={
@@ -217,9 +203,7 @@ function ServiceAlertFormContent({
               headingLevel={2}
               severity="error"
             >
-              <Paragraph>
-                {errorData || 'Er is iets misgegaan. Probeer het opnieuw.'}
-              </Paragraph>
+              <Paragraph>{submitError}</Paragraph>
             </Alert>
           )}
           {isSuccess && (
