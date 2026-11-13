@@ -8,9 +8,9 @@ export const routes = defineMockRoutes([
     method: 'GET',
     handler: {
       type: 'middleware',
-      middleware: (req, res) => {
+      middleware: (_req, res) => {
         const htmlResponse = `
-              <h1>${req.params.naamportaal ?? ''}</h1>
+              <h1>${''}</h1>
                <a href="${process.env.MA_FRONTEND_URL}">
                 Mijn Amsterdam
               </a>`;
