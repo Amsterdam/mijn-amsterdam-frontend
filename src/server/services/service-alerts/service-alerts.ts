@@ -1,10 +1,14 @@
+import {
+  themaId as notificationsThemaId,
+  themaTitle as notificationsThemaTitle,
+} from '../../../client/apps/bob/pages/MyNotifications/MyNotifications-config.ts';
 import { apiSuccessResult } from '../../../universal/helpers/api.ts';
+import { dateFormat, isoDateFormat } from '../../../universal/helpers/date.ts';
 import {
   filterServiceAlerts,
   isServiceAlertsPage,
 } from '../../../universal/helpers/service-alerts.ts';
 import { sanitizeCmsContent } from '../cms/cms-content.ts';
-import type { ServiceAlertDisplayLocation } from '../db/schema/service-alerts.ts';
 import { captureException } from '../monitoring.ts';
 import {
   getActiveServiceAlertRows,
@@ -15,43 +19,9 @@ import type {
   ServiceAlert,
 } from './service-alerts.types.ts';
 
-const notificationsThemaId = 'NOTIFICATIONS';
-const notificationsThemaTitle = 'Alle berichten';
-const amsterdamDateTimeFormatter = new Intl.DateTimeFormat('sv-SE', {
-  timeZone: 'Europe/Amsterdam',
-  year: 'numeric',
-  month: '2-digit',
-  day: '2-digit',
-  hour: '2-digit',
-  minute: '2-digit',
-  hourCycle: 'h23',
-});
-
-function getLocationPath(displayLocation: ServiceAlertDisplayLocation) {
-  return {
-    theme: '',
-    notification: '/notifications',
-    login: '',
-  }[displayLocation];
-}
-
-function getAmsterdamDateAndTime(date: Date) {
-  const parts = Object.fromEntries(
-    amsterdamDateTimeFormatter
-      .formatToParts(date)
-      .map(({ type, value }) => [type, value])
-  );
-  return {
-    date: `${parts.year}-${parts.month}-${parts.day}`,
-    time: `${parts.hour}:${parts.minute}`,
-  };
-}
+const TIME_FORMAT = 'HH:mm';
 
 function toServiceAlert(alert: ServiceAlertRow): ServiceAlert {
-  const start = new Date(alert.dateStart);
-  const end = new Date(alert.dateEnd);
-  const startParts = getAmsterdamDateAndTime(start);
-  const endParts = getAmsterdamDateAndTime(end);
   const isThemeAlert = alert.displayLocation === 'theme';
 
   return {
@@ -59,13 +29,10 @@ function toServiceAlert(alert: ServiceAlertRow): ServiceAlert {
     title: alert.title,
     description: sanitizeCmsContent(alert.body),
     datePublished: alert.dateUpdated.toISOString(),
-    dateStart: startParts.date,
-    dateEnd: endParts.date,
-    timeStart: startParts.time,
-    timeEnd: endParts.time,
-    path: isThemeAlert
-      ? `/${alert.themaId}`
-      : getLocationPath(alert.displayLocation),
+    dateStart: isoDateFormat(alert.dateStart),
+    dateEnd: isoDateFormat(alert.dateEnd),
+    timeStart: dateFormat(alert.dateStart, TIME_FORMAT),
+    timeEnd: dateFormat(alert.dateEnd, TIME_FORMAT),
     themaID: isThemeAlert ? (alert.themaId ?? '') : notificationsThemaId,
     themaTitle: isThemeAlert ? (alert.themaId ?? '') : notificationsThemaTitle,
     severity: alert.type,
@@ -87,7 +54,6 @@ async function getActiveServiceAlerts(): Promise<ServiceAlert[]> {
   }
 }
 
-// Without a page all active alerts are returned, e.g. for the app state. The frontend filters those per page.
 export async function fetchActiveServiceAlerts(
   queryParams: QueryParamsServiceAlerts = {}
 ) {

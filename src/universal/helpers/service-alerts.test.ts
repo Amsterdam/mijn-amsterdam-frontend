@@ -1,7 +1,7 @@
 import { filterServiceAlerts, isServiceAlertsPage } from './service-alerts.ts';
 
 const notifications = [
-  { id: 'theme-avg', displayLocation: 'theme', themaID: 'AVG', path: '/AVG' },
+  { id: 'theme-avg', displayLocation: 'theme', themaID: 'AVG' },
   {
     id: 'login',
     displayLocation: 'login',

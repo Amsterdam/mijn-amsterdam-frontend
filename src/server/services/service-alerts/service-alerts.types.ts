@@ -66,7 +66,6 @@ export type ServiceAlert = MyNotification & {
   timeEnd: string;
   timeStart: string;
   description: string;
-  path: string;
   severity: ServiceAlertType;
   displayLocation: ServiceAlertDisplayLocation;
 };

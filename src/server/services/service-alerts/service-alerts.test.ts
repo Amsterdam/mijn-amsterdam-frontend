@@ -130,7 +130,6 @@ describe('service alert maintenance notifications', () => {
     expect(result.content?.map(({ id }) => id)).toEqual(['alert-id']);
     expect(result.content?.[0]).toMatchObject({
       themaID: 'AVG',
-      path: '/AVG',
     });
   });
 
