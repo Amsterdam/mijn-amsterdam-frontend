@@ -1,7 +1,7 @@
 {
-  "editor.formatOnPaste": true,
+  "editor.formatOnPaste": false,
   "editor.formatOnSave": true,
-  "editor.formatOnType": true,
+  "editor.formatOnType": false,
   "editor.suggestSelection": "first",
   "editor.tabSize": 2,
   "js/ts.preferences.quoteStyle": "single",
@@ -47,12 +47,8 @@
     "editor.defaultFormatter": "vscode.html-language-features"
   },
   "biome.enabled": true,
-  "eslint.enable": false,
-  "prettier.enable": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.biome": "explicit",
-    "source.organizeImports.biome": "explicit",
-    "source.action.useSortedAttributes.biome": "explicit",
-    "source.action.useSortedInterfaceMembers.biome": "explicit"
+    "source.organizeImports.biome": "explicit"
   }
 }
