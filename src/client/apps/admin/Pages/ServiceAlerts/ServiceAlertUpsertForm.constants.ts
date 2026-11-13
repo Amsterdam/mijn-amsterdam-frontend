@@ -12,7 +12,6 @@ export const serviceAlertTypes = [
 
 export const serviceAlertDisplayLocations = [
   { value: 'theme', label: 'Thema' },
-  { value: 'dashboard', label: 'Dashboard' },
   { value: 'notification', label: 'Notificatie' },
   { value: 'login', label: 'Login' },
 ] as const satisfies readonly ServiceAlertSelectOption<

@@ -3,7 +3,7 @@ type FilterableServiceAlert = {
   themaID: string;
 };
 
-export const SERVICE_ALERTS_PAGES = ['dashboard', 'login'] as const;
+export const SERVICE_ALERTS_PAGES = ['login'] as const;
 export type ServiceAlertsPage = (typeof SERVICE_ALERTS_PAGES)[number];
 
 export function isServiceAlertsPage(page: unknown): page is ServiceAlertsPage {

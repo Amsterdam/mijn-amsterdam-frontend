@@ -12,7 +12,7 @@ function createFormValues(
   const formData = new FormData();
   formData.set('title', 'Testmelding');
   formData.set('body', 'Testbericht');
-  formData.set('displayLocation', 'dashboard');
+  formData.set('displayLocation', 'notification');
   formData.set('type', 'info');
   formData.set('environment', 'test');
 

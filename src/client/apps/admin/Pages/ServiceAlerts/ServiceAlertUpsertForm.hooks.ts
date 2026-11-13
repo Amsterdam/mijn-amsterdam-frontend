@@ -70,7 +70,7 @@ export function useServiceAlertUpsertForm(
   );
   const [displayLocation, setDisplayLocation] = useState<
     ServiceAlertInput['displayLocation']
-  >(serviceAlert?.displayLocation ?? 'dashboard');
+  >(serviceAlert?.displayLocation ?? 'notification');
   const [themaId, setThemaId] = useState(serviceAlert?.themaId ?? '');
   const upsertServiceAlert = useBffApi<{ success: boolean }, ServiceAlertInput>(
     BFFApiUrls.SERVICE_ALERTS_UPSERT,

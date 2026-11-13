@@ -14,7 +14,6 @@ export type ServiceAlertType = (typeof SERVICE_ALERT_TYPES)[number];
 
 export const SERVICE_ALERT_DISPLAY_LOCATIONS = [
   'theme',
-  'dashboard',
   'login',
   'notification',
 ] as const;

@@ -3,11 +3,6 @@ import { filterServiceAlerts, isServiceAlertsPage } from './service-alerts.ts';
 const notifications = [
   { id: 'theme-avg', displayLocation: 'theme', themaID: 'AVG', path: '/AVG' },
   {
-    id: 'dashboard',
-    displayLocation: 'dashboard',
-    themaID: 'NOTIFICATIONS',
-  },
-  {
     id: 'login',
     displayLocation: 'login',
     themaID: 'NOTIFICATIONS',
@@ -34,17 +29,11 @@ describe('filterServiceAlerts', () => {
     expect(
       ids(
         filterServiceAlerts(notifications, {
-          page: 'dashboard',
+          page: 'login',
           themaID: 'AVG',
         })
       )
     ).toEqual(['theme-avg']);
-  });
-
-  it('returns dashboard alerts for the dashboard page', () => {
-    expect(
-      ids(filterServiceAlerts(notifications, { page: 'dashboard' }))
-    ).toEqual(['dashboard']);
   });
 
   it('returns login alerts for the login page', () => {
@@ -60,8 +49,8 @@ describe('filterServiceAlerts', () => {
 
 describe('isServiceAlertsPage', () => {
   it('accepts only pages that have their own alerts', () => {
-    expect(isServiceAlertsPage('dashboard')).toBe(true);
     expect(isServiceAlertsPage('login')).toBe(true);
+    expect(isServiceAlertsPage('dashboard')).toBe(false);
     expect(isServiceAlertsPage('afval')).toBe(false);
     expect(isServiceAlertsPage(undefined)).toBe(false);
   });

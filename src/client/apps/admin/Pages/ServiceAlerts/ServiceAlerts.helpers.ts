@@ -8,7 +8,6 @@ const serviceAlertTypeLabels = {
 } as const satisfies Record<ServiceAlertsOverview[number]['type'], string>;
 
 const serviceAlertDisplayLocationLabels = {
-  dashboard: 'Dashboard',
   notification: 'Notificatie',
   login: 'Login',
 } as const satisfies Record<

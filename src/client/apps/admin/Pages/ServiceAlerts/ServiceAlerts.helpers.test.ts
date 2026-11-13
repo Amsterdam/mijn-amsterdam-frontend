@@ -81,7 +81,7 @@ describe('getServiceAlertGroups', () => {
 
     it.each([
       ['notification', 'Notificatie'],
-      ['dashboard', 'Dashboard'],
+      ['login', 'Login'],
     ] as const)('translates %s to %s', (displayLocation, label) => {
       expect(getServiceAlertDisplayLocationLabel(displayLocation, null)).toBe(
         label

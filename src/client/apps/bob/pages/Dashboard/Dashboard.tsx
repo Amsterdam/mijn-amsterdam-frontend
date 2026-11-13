@@ -10,7 +10,6 @@ import { MyNotification } from '../../../../components/MyNotification/MyNotifica
 import { MyThemasPanel } from '../../../../components/MyThemasPanel/MyThemasPanel.tsx';
 import { MyTipsPanel } from '../../../../components/MyTipsPanel/MyTipsPanel.tsx';
 import { PageContentCell, PageV2 } from '../../../../components/Page/Page.tsx';
-import { ServiceAlerts } from '../../../../components/ServiceAlerts/ServiceAlerts.tsx';
 import { getRedactedClass } from '../../../../helpers/cobrowse.ts';
 import { useSmallScreen } from '../../../../hooks/media.hook.ts';
 import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
@@ -71,7 +70,6 @@ export function Dashboard() {
           pageTitle: 'Dashboard',
         }}
       >
-        <ServiceAlerts page="dashboard" />
         <PageContentCell
           spanWide={7}
           className={getRedactedClass(null, 'full')}

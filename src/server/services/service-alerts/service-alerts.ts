@@ -30,7 +30,6 @@ const amsterdamDateTimeFormatter = new Intl.DateTimeFormat('sv-SE', {
 function getLocationPath(displayLocation: ServiceAlertDisplayLocation) {
   return {
     theme: '',
-    dashboard: '/landingspagina',
     notification: '/notifications',
     login: '',
   }[displayLocation];
