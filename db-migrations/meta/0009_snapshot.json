@@ -1,5 +1,5 @@
 {
-  "id": "5e0b1ed9-4ed6-47ff-9659-1f3e74eb4076",
+  "id": "9bf42b1a-2fdf-49fc-8573-c870d7e18eca",
   "prevId": "5c545c3c-0c0b-4dc6-8b30-d3899a4d892e",
   "version": "7",
   "dialect": "postgresql",
@@ -98,8 +98,12 @@
           "name": "bff_notification_consumer_details_notification_row_id_bff_notifications_id_fk",
           "tableFrom": "bff_notification_consumer_details",
           "tableTo": "bff_notifications",
-          "columnsFrom": ["notification_row_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "notification_row_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
