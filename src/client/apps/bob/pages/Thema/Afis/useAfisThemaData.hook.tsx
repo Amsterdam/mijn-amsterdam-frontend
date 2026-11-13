@@ -5,7 +5,6 @@ import {
 } from '../../../../../../universal/helpers/api.ts';
 import type { LinkProps } from '../../../../../../universal/types/App.types.ts';
 import type { ThemaRouteConfig } from '../../../../../../universal/types/thema-types.ts';
-import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
 import { useIsLoading } from '../../../../../hooks/useIsLoading.ts';
 import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts';
 import { useThemaMenuItemByThemaID } from '../../../../../hooks/useThemaMenuItems.ts';
@@ -18,6 +17,7 @@ import {
   themaConfig,
 } from './Afis-thema-config.ts';
 import { useTransformFacturen } from './useAfisFacturenApi.tsx';
+import { useAfisAccount } from './AfisAccountSelector.tsx';
 
 export type AfisFacturenThemaContextParams = {
   themaId: string;
@@ -44,14 +44,12 @@ export function useAfisFacturenData(
     tableConfig = facturenTableConfig,
     routeConfigListPage = themaConfig.listPage.route,
   } = themaContextParams || {};
-  const { AFIS } = useAppStateGetter();
-  const businessPartnerIdEncrypted =
-    AFIS.content?.businessPartnerIdEncrypted ?? null;
-  const facturenByState = useTransformFacturen(AFIS.content?.facturen ?? null);
+  const { AFIS, businessPartnerIdEncrypted, facturen, isLoading, isError: isAccountError, response } = useAfisAccount();
+  const facturenByState = useTransformFacturen(facturen);
 
   return {
-    isThemaPaginaError: isError(AFIS, false),
-    isThemaPaginaLoading: useIsLoading(AFIS),
+    isThemaPaginaError: isError(AFIS, false) || isAccountError,
+    isThemaPaginaLoading: useIsLoading(AFIS) || isLoading,
     themaId,
     facturenByState,
     tableConfig,
@@ -62,9 +60,9 @@ export function useAfisFacturenData(
     showMultipleVestigingenDisclaimer:
       AFIS.content?.showMultipleVestigingenDisclaimer ?? false,
     dependencyErrors: {
-      open: hasFailedDependency(AFIS, 'open'),
-      afgehandeld: hasFailedDependency(AFIS, 'afgehandeld'),
-      overgedragen: hasFailedDependency(AFIS, 'overgedragen'),
+      open: hasFailedDependency(response, 'open'),
+      afgehandeld: hasFailedDependency(response, 'afgehandeld'),
+      overgedragen: hasFailedDependency(response, 'overgedragen'),
     },
   };
 }

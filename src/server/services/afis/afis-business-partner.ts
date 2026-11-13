@@ -107,7 +107,7 @@ function transformBusinessPartnerFullNameResponse(
   return null;
 }
 
-async function fetchBusinessPartnerFullName(
+export async function fetchBusinessPartnerFullName(
   businessPartnerId: BusinessPartnerId
 ): Promise<ApiResponse<AfisBusinessPartnerDetails | null>> {
   const additionalConfig: DataRequestConfig = {

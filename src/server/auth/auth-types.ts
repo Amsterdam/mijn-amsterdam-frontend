@@ -1,12 +1,24 @@
 import type { Request } from 'express';
 import type { Session } from 'express-openid-connect';
 
-export interface AuthProfile {
-  authMethod: 'eherkenning' | 'digid';
-  profileType: ProfileType;
+interface AuthProfileBase {
   id: string; // User id (bsn/kvknr)
   sid: SessionID;
 }
+
+export interface AuthProfileEHerkenning extends AuthProfileBase {
+  authMethod: 'eherkenning';
+  profileType: 'commercial';
+  vestigingsnummer?: string;
+}
+
+export interface AuthProfileDigiD extends AuthProfileBase {
+  authMethod: 'digid';
+  profileType: Exclude<ProfileType, 'commercial'>;
+  vestigingsnummer?: never;
+}
+
+export type AuthProfile = AuthProfileEHerkenning | AuthProfileDigiD;
 
 export interface MaSession extends Session {
   sid: SessionID;

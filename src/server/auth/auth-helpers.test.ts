@@ -214,6 +214,25 @@ describe('auth-helpers', () => {
     }
   });
 
+  it('retains the eHerkenning vestiging restriction in the authenticated profile', () => {
+    const profile = getAuthProfile(
+      {
+        authMethod: 'eherkenning',
+        profileType: 'commercial',
+        sid: 'restricted-session',
+      } as MaSession,
+      {
+        [EH_ATTR_PRIMARY_ID]: '69599076',
+        'urn:etoegang:1.9:ServiceRestriction:Vestigingsnr': '000038509490',
+      } as unknown as TokenData
+    );
+
+    expect(profile).toMatchObject({
+      id: '69599076',
+      vestigingsnummer: '000038509490',
+    });
+  });
+
   describe('createLogoutHandler', async () => {
     const authProfileAndToken = getAuthProfileAndToken('commercial');
     const resMock = ResponseMock.new();

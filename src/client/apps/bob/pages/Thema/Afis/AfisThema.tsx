@@ -16,26 +16,19 @@ import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.
 import { AfisFacturenTables } from './AfisFacturenTables.tsx';
 import { getVragenOverFactuurText } from './AfisVragenOverFactuurLink.tsx';
 import { useAfisThemaData } from './useAfisThemaData.hook.tsx';
+import { AfisAccountSelector } from './AfisAccountSelector.tsx';
 
 function PageContentTop({
   urlNaarBelastingen,
-  showMultipleVestigingenDisclaimer,
 }: {
   urlNaarBelastingen: string;
-  showMultipleVestigingenDisclaimer: boolean;
 }) {
   return (
     <PageContentCell spanWide={8}>
-      {showMultipleVestigingenDisclaimer && (
-        <AfisMultipleVestigingenDisclaimer className="ams-mb-m" />
-      )}
+      <AfisAccountSelector />
       <Paragraph className="ams-mb-m">
-        {!showMultipleVestigingenDisclaimer && (
-          <>
-            Hieronder ziet u een overzicht van uw facturen.
-            <br />
-          </>
-        )}
+        Hieronder ziet u een overzicht van uw facturen.
+        <br />
         {getVragenOverFactuurText('Vraag over facturen en betaalvoorkeuren')}
       </Paragraph>
       <Paragraph>
@@ -68,28 +61,6 @@ export function AfisDisclaimer() {
           maken onder vermelding van de gegevens op uw factuur.
         </UnorderedList.Item>
       </UnorderedList>
-    </Alert>
-  );
-}
-
-function AfisMultipleVestigingenDisclaimer({
-  className,
-}: {
-  className?: string;
-}) {
-  return (
-    <Alert
-      className={className}
-      severity="warning"
-      heading="Inzage in uw facturen van de gemeente Amsterdam"
-      headingLevel={2}
-    >
-      <Paragraph>
-        Als bedrijf met meerdere vestigingen krijgt u binnenkort via deze pagina
-        inzage in de facturen die u van de gemeente Amsterdam ontvangt.
-        <br />U kunt dan bijvoorbeeld een kopie van een factuur opvragen. Of
-        controleren of een factuur al is betaald.
-      </Paragraph>
     </Alert>
   );
 }
@@ -129,7 +100,6 @@ export function AfisThema() {
     listPageTitle,
     pageLinks,
     belastingenLinkListItem,
-    showMultipleVestigingenDisclaimer,
     title,
     themaId,
     themaConfig,
@@ -186,16 +156,13 @@ export function AfisThema() {
       pageContentTop={
         <PageContentTop
           urlNaarBelastingen={belastingenLinkListItem.to}
-          showMultipleVestigingenDisclaimer={showMultipleVestigingenDisclaimer}
         />
       }
       pageContentMain={
-        !showMultipleVestigingenDisclaimer && (
-          <>
-            {pageContentSecondary}
-            <AfisFacturenTables />
-          </>
-        )
+        <>
+          {pageContentSecondary}
+          <AfisFacturenTables />
+        </>
       }
       maintenanceNotificationsPageSlug="afis"
     />

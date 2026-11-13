@@ -40,17 +40,41 @@ export function getReturnToUrlZaakStatus(queryParams?: ParsedQs) {
   return redirectUrl;
 }
 
+function getEHerkenningVestigingRestriction(tokenData: TokenData) {
+  const restriction =
+    tokenData['urn:etoegang:1.9:ServiceRestriction:Vestigingsnr'];
+  if (restriction != null && typeof restriction !== 'string') {
+    throw new Error('Invalid eHerkenning vestiging restriction');
+  }
+  return restriction ? { vestigingsnummer: restriction } : {};
+}
+
 export function getAuthProfile(
   maSession: MaSession,
   tokenData: TokenData
 ): AuthProfile {
   const idAttr = OIDC_TOKEN_ID_ATTRIBUTE[maSession.authMethod](tokenData);
-  const id = String(tokenData[idAttr]);
-  return {
-    id,
+  const profile = {
+    id: String(tokenData[idAttr]),
     sid: maSession.sid,
-    authMethod: maSession.authMethod,
-    profileType: maSession.profileType,
+  };
+
+  if (maSession.authMethod === 'eherkenning') {
+    return {
+      ...profile,
+      authMethod: 'eherkenning',
+      profileType: 'commercial',
+      ...getEHerkenningVestigingRestriction(tokenData),
+    };
+  }
+
+  return {
+    ...profile,
+    authMethod: 'digid',
+    profileType:
+      maSession.profileType === 'private-attributes'
+        ? 'private-attributes'
+        : 'private',
   };
 }
 

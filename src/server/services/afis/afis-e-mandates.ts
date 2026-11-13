@@ -345,11 +345,13 @@ function getSignRequestApiUrl(
 function getEmandateApiUrl(
   route: string,
   sessionID: SessionID,
+  businessPartnerId: BusinessPartnerId,
   afisEMandateSource: AfisEMandateSource
 ) {
   const url = generateFullApiUrlBFF(route, [
     {
       payload: encryptPayloadAndSessionID(sessionID, {
+        businessPartnerId,
         IMandateId: afisEMandateSource.IMandateId.toString(),
       }),
     },
@@ -369,11 +371,13 @@ function addEmandateApiUrls(
     eMandate.deactivateUrl = getEmandateApiUrl(
       routes.protected.AFIS_EMANDATES_DEACTIVATE,
       sessionID,
+      businessPartnerId,
       afisEMandateSource
     );
     eMandate.lifetimeUpdateUrl = getEmandateApiUrl(
       routes.protected.AFIS_EMANDATES_UPDATE_LIFETIME,
       sessionID,
+      businessPartnerId,
       afisEMandateSource
     );
   }

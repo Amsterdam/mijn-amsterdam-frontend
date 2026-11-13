@@ -27,6 +27,7 @@ import {
   type EncryptedPayloadAndSessionID,
   getDecryptedPayload,
 } from '../shared/decrypt-route-param.ts';
+import { authorizeAfisAccount } from './afis.ts';
 import {
   createEMandateFromStatusNotificationPayload,
   fetchEmandateSignRequestStatusFromPaymentProvider,
@@ -125,6 +126,14 @@ export function handleAfisRequestWithEncryptedPayloadQueryParam<
     }
 
     const payloadDecrypted = decryptResult.content.payload as QueryPayload;
+
+    const authorization = await authorizeAfisAccount(
+      res.locals.authProfileAndToken,
+      payloadDecrypted.businessPartnerId
+    );
+    if (authorization.status !== 'OK') {
+      return sendResponse(res, authorization);
+    }
 
     // Call the service method with the decrypted payload.
     const serviceMethodResponse = await serviceMethod(

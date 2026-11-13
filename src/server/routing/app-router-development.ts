@@ -103,9 +103,10 @@ authRouterDevelopment.get(
     const sessionID = UID.sync(SESSION_ID_BYTE_LENGTH);
     const authProfile: AuthProfile = {
       id: profileId,
-      authMethod,
-      profileType: authMethod === 'digid' ? 'private' : 'commercial',
       sid: sessionID,
+      ...(authMethod === 'digid'
+        ? { authMethod, profileType: 'private' }
+        : { authMethod, profileType: 'commercial' }),
     };
 
     const session =

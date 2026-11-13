@@ -1,12 +1,13 @@
+import { createHash } from 'node:crypto';
+
 import {
   type ApiResponse,
+  apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
 } from '../../../universal/helpers/api.ts';
-import { omit } from '../../../universal/helpers/utils.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { ONE_MINUTE_MS } from '../../config/app.ts';
-import { isEnabled } from '../../config/azure-appconfiguration.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
 import { encryptPayloadAndSessionID } from '../../helpers/encrypt-decrypt.ts';
 import { getFromEnv } from '../../helpers/env.ts';
@@ -15,11 +16,12 @@ import {
   getApiConfig,
 } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
-import { fetchVestigingen } from '../hr-kvk/hr-kvk.ts';
 import { fetchAuthTokenHeader } from '../iam-oauth/oauth-token.ts';
+import { fetchBusinessPartnerFullName } from './afis-business-partner.ts';
 import { fetchAfisFacturenOverview } from './afis-facturen.ts';
 import { formatBusinessPartnerId, getAfisApiConfig } from './afis-helpers.ts';
 import type {
+  AfisAccount,
   AfisBusinessPartnerCommercialResponseSource,
   AfisBusinessPartnerPrivateResponseSource,
   AfisThemaResponse,
@@ -46,64 +48,67 @@ export async function fetchAfisTokenHeader() {
   return tokenHeaderResponse.content;
 }
 
-function transformBusinessPartnerisKnownResponse(
+type AuthorizedAfisAccount = AfisAccount & { businessPartnerId: string };
+
+function transformBusinessPartnerAccounts(
   response:
     | AfisBusinessPartnerPrivateResponseSource
     | AfisBusinessPartnerCommercialResponseSource
     | string,
-  sessionID: SessionID
-) {
+  auth: AuthProfileAndToken
+): AuthorizedAfisAccount[] | null {
   if (!response || typeof response === 'string') {
     return null;
   }
 
-  let isKnown: boolean = false;
-  let businessPartnerId: string | null = null;
-  let businessPartnerIdEncrypted: string | null = null;
+  const isCommercial = auth.profile.profileType === 'commercial';
+  const records =
+    'Record' in response
+      ? Array.isArray(response.Record)
+        ? response.Record
+        : [response.Record]
+      : 'BSN' in response
+        ? [response]
+        : [];
 
-  if ('Record' in response) {
-    // Responses can include multiple records or just one, for clarity we treat the response as always having an array of Records here.
-    const records = !Array.isArray(response.Record)
-      ? [response.Record]
-      : response.Record;
-
-    const record = records.find((record) => record.Gevonden === 'Ja');
-
-    if (record) {
-      isKnown = true;
-      businessPartnerId = record.Zakenpartnernummer ?? null;
-    }
-  } else if ('BSN' in response) {
-    isKnown = response.Gevonden === 'Ja';
-    businessPartnerId = response.Zakenpartnernummer ?? null;
-  }
-
-  businessPartnerId = businessPartnerId
-    ? formatBusinessPartnerId(businessPartnerId)
-    : null;
-
-  if (businessPartnerId) {
-    businessPartnerIdEncrypted = encryptPayloadAndSessionID(sessionID, {
-      businessPartnerId,
+  return records
+    .filter((record) => {
+      if (record.Gevonden !== 'Ja' || !record.Zakenpartnernummer) {
+        return false;
+      }
+      if (!isCommercial) {
+        return true;
+      }
+      return (
+        record.Blokkade !== 'Ja' &&
+        (!auth.profile.vestigingsnummer ||
+          ('Vestigingsnummer' in record &&
+            record.Vestigingsnummer === auth.profile.vestigingsnummer))
+      );
+    })
+    .map((record) => {
+      const businessPartnerId = formatBusinessPartnerId(
+        record.Zakenpartnernummer
+      );
+      return {
+        id: businessPartnerId,
+        businessPartnerId,
+        businessPartnerIdEncrypted: encryptPayloadAndSessionID(
+          auth.profile.sid,
+          { businessPartnerId }
+        ),
+        vestigingsnummer:
+          'Vestigingsnummer' in record
+            ? (record.Vestigingsnummer ?? null)
+            : null,
+        name: null,
+      };
     });
-  }
-
-  const themaResponseContent: Omit<AfisThemaResponse, 'facturen'> = {
-    isKnown,
-    businessPartnerIdEncrypted,
-  };
-
-  if (isKnown) {
-    themaResponseContent.businessPartnerId = businessPartnerId;
-  }
-
-  return themaResponseContent;
 }
 
-/** Returns if the person logging in, is known in the AFIS source API */
-export async function fetchIsKnownInAFIS(
+export async function fetchAfisAccounts(
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<AfisThemaResponse>> {
+): Promise<ApiResponse<AuthorizedAfisAccount[]>> {
   const profileIdentifierType =
     authProfileAndToken.profile.profileType === 'commercial' ? 'KVK' : 'BSN';
 
@@ -111,15 +116,16 @@ export async function fetchIsKnownInAFIS(
     method: 'post',
     data: {
       [profileIdentifierType]: authProfileAndToken.profile.id,
+      ...(profileIdentifierType === 'KVK' &&
+      authProfileAndToken.profile.vestigingsnummer
+        ? { Vestigingsnummer: authProfileAndToken.profile.vestigingsnummer }
+        : {}),
     },
     transformResponse: (response) =>
-      transformBusinessPartnerisKnownResponse(
-        response,
-        authProfileAndToken.profile.sid
-      ),
+      transformBusinessPartnerAccounts(response, authProfileAndToken),
     cacheKey_UNSAFE: createSessionBasedCacheKey(
       authProfileAndToken.profile.sid,
-      `afis-is-known`
+      `afis-accounts:${authProfileAndToken.profile.id}:${authProfileAndToken.profile.vestigingsnummer ?? ''}`
     ),
     formatUrl(config) {
       return `${config.url}/businesspartner/${profileIdentifierType}/`;
@@ -128,44 +134,73 @@ export async function fetchIsKnownInAFIS(
 
   const dataRequestConfig = await getAfisApiConfig(additionalConfig);
 
-  const response = await requestData<AfisThemaResponse>(
+  return requestData<AuthorizedAfisAccount[]>(
     dataRequestConfig,
     authProfileAndToken
   );
+}
 
+export async function authorizeAfisAccount(
+  auth: AuthProfileAndToken,
+  businessPartnerId: unknown
+) {
+  if (auth.profile.profileType !== 'commercial') {
+    return apiSuccessResult(true);
+  }
+  const accounts = await fetchAfisAccounts(auth);
+  if (accounts.status !== 'OK') {
+    return accounts;
+  }
   if (
-    response.status !== 'OK' ||
-    !response.content ||
-    !response.content.isKnown ||
-    !response.content.businessPartnerId
+    typeof businessPartnerId !== 'string' ||
+    !accounts.content?.some(
+      (account) => account.businessPartnerId === businessPartnerId
+    )
   ) {
+    return apiErrorResult('Not authorized for this AFIS account', null, 403);
+  }
+  return apiSuccessResult(true);
+}
+
+export async function fetchIsKnownInAFIS(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<ApiResponse<AfisThemaResponse>> {
+  const response = await fetchAfisAccounts(authProfileAndToken);
+  if (response.status !== 'OK') {
     return response;
   }
-
-  // MIJN-13618: Hide facturen data for businesses when it is not possible to determine which vestiging is logged in. This is currently the case when there is more than one vestiging associated with the KVK number.
-  if (
-    isEnabled('AFIS.blockDataForMultipleKvKVestigingen') &&
-    profileIdentifierType === 'KVK'
-  ) {
-    const kvkVestigingen = await fetchVestigingen(authProfileAndToken);
-    if (kvkVestigingen.status !== 'OK' || kvkVestigingen.content.length > 1) {
-      return apiSuccessResult(
-        {
-          ...response.content,
-          businessPartnerId: null,
-          businessPartnerIdEncrypted: null,
-          facturen: null,
-          showMultipleVestigingenDisclaimer: true,
-        },
-        getFailedDependencies(kvkVestigingen)
-      );
-    }
+  const accounts = response.content ?? [];
+  const selected =
+    accounts.find((account) => !account.vestigingsnummer) ?? accounts[0];
+  if (!selected) {
+    return apiSuccessResult({
+      isKnown: false,
+      businessPartnerIdEncrypted: null,
+      facturen: null,
+    });
   }
+
+  const isCommercial = authProfileAndToken.profile.profileType === 'commercial';
+  const accountOptions = isCommercial
+    ? await Promise.all(
+        accounts.map(async ({ businessPartnerId, ...account }) => {
+          const nameResponse =
+            await fetchBusinessPartnerFullName(businessPartnerId);
+          return {
+            ...account,
+            name:
+              nameResponse.status === 'OK'
+                ? (nameResponse.content?.fullName ?? null)
+                : null,
+          };
+        })
+      )
+    : undefined;
 
   const facturenResponse = await fetchAfisFacturenOverview(
     authProfileAndToken.profile.sid,
     {
-      businessPartnerID: response.content.businessPartnerId,
+      businessPartnerID: selected.businessPartnerId,
     }
   );
 
@@ -178,7 +213,17 @@ export async function fetchIsKnownInAFIS(
 
   return apiSuccessResult(
     {
-      ...omit(response.content, ['businessPartnerId']),
+      isKnown: true,
+      businessPartnerIdEncrypted: selected.businessPartnerIdEncrypted,
+      ...(isCommercial
+        ? {
+            accounts: accountOptions,
+            isRestricted: !!authProfileAndToken.profile.vestigingsnummer,
+            selectionKey: createHash('sha256')
+              .update(`${authProfileAndToken.profile.sid}:${authProfileAndToken.profile.id}:${authProfileAndToken.profile.vestigingsnummer ?? ''}`)
+              .digest('hex'),
+          }
+        : {}),
       facturen: facturenResponse.content,
     },
     failedDependencies

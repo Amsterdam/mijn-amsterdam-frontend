@@ -49,7 +49,7 @@ describe('Subsidie', () => {
 
     const result = await fetchSubsidieNotifications({
       ...authProfileAndToken,
-      profile: { ...authProfileAndToken.profile, authMethod: 'eherkenning' },
+      profile: getAuthProfileAndToken('commercial').profile,
     });
 
     expect(result.content).toEqual({

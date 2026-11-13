@@ -53,10 +53,20 @@ export type AfisFacturenOverviewResponse = {
   [key in AfisFactuurStateFrontend]: AfisFacturenResponse | null;
 };
 
+export type AfisAccount = {
+  id: string;
+  businessPartnerIdEncrypted: string;
+  vestigingsnummer: string | null;
+  name: string | null;
+};
+
 export type AfisThemaResponse = {
   isKnown: boolean;
   businessPartnerIdEncrypted: string | null;
   businessPartnerId?: string | null;
+  accounts?: AfisAccount[];
+  isRestricted?: boolean;
+  selectionKey?: string;
   showMultipleVestigingenDisclaimer?: boolean;
   facturen: AfisFacturenOverviewResponse | null;
 };

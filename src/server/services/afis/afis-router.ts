@@ -7,6 +7,7 @@ import { createBFFRouter } from '../../routing/route-helpers.ts';
 import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler.ts';
 import { fetchAfisBusinessPartnerDetails } from './afis-business-partner.ts';
 import { fetchAfisDocument } from './afis-documents.ts';
+import { fetchAfisFacturenOverview } from './afis-facturen.ts';
 import {
   deactivateEmandate,
   fetchEMandates,
@@ -42,6 +43,17 @@ attachDocumentDownloadRoute(
 );
 
 const PAYLOAD_QUERY_PARAM_NAME = 'id';
+
+routerProtected.get(
+  routes.protected.AFIS_FACTUREN_OVERVIEW,
+  handleAfisRequestWithEncryptedPayloadQueryParam<
+    BusinessPartnerIdPayload,
+    ReturnType<typeof fetchAfisFacturenOverview>
+  >(
+    (payload, sessionID) => fetchAfisFacturenOverview(sessionID, { businessPartnerID: payload.businessPartnerId }),
+    PAYLOAD_QUERY_PARAM_NAME
+  )
+);
 
 {
   /**

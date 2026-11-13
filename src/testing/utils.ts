@@ -50,12 +50,20 @@ export function getAuthProfileAndToken(
   expiresAtMilliseconds: number = 0
 ): AuthProfileAndToken {
   const authProfileAndToken: AuthProfileAndToken = {
-    profile: {
-      authMethod: profileType === 'private' ? 'digid' : 'eherkenning',
-      profileType,
-      id: 'I.M Mokum',
-      sid: TEST_SESSION_ID,
-    },
+    profile:
+      profileType !== 'commercial'
+        ? {
+            authMethod: 'digid',
+            profileType,
+            id: 'I.M Mokum',
+            sid: TEST_SESSION_ID,
+          }
+        : {
+            authMethod: 'eherkenning',
+            profileType,
+            id: 'I.M Mokum',
+            sid: TEST_SESSION_ID,
+          },
     expiresAtMilliseconds,
     token: 'tttttttttttttttttttttttttttttt',
   };

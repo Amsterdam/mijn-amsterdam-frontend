@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
 import type {
@@ -164,24 +164,54 @@ describe('<Afis />', () => {
     });
   });
 
-  it('Shows multiple vestigingen disclaimer at the top content when enabled', async () => {
-    const stateWithMultipleVestigingen = {
+  it('switches the shared account and replaces the previous invoices', async () => {
+    const stateWithAccounts = {
       ...testState,
       AFIS: {
         ...testState.AFIS,
         content: {
           ...testState.AFIS.content,
-          showMultipleVestigingenDisclaimer: true,
+          accounts: [
+            {
+              id: 'general',
+              name: 'Algemeen',
+              vestigingsnummer: null,
+              businessPartnerIdEncrypted,
+            },
+            {
+              id: 'branch',
+              name: 'Vestiging Oost',
+              vestigingsnummer: '000038509490',
+              businessPartnerIdEncrypted: 'branch-reference',
+            },
+          ],
+          isRestricted: false,
         },
       },
     } as AppState;
+    bffApi
+      .get('/services/afis/facturen/overzicht?id=branch-reference')
+      .reply(200, {
+        status: 'OK',
+        content: {
+          ...mockFacturen,
+          open: { state: 'open', count: 0, facturen: [] },
+          afgehandeld: { state: 'afgehandeld', count: 0, facturen: [] },
+        },
+      });
 
-    const screen = render(<Component state={stateWithMultipleVestigingen} />);
+    const screen = render(<Component state={stateWithAccounts} />);
 
+    expect(screen.getByText('Company A')).toBeInTheDocument();
+    fireEvent.change(screen.getByRole('combobox', { name: 'Vestiging' }), {
+      target: { value: 'branch' },
+    });
+    expect(screen.queryByText('Company A')).not.toBeInTheDocument();
     await waitFor(() => {
-      expect(
-        screen.getByText('Inzage in uw facturen van de gemeente Amsterdam')
-      ).toBeInTheDocument();
+      expect(screen.getByRole('combobox', { name: 'Vestiging' })).toHaveValue(
+        'branch'
+      );
+      expect(screen.queryByText('Company B')).not.toBeInTheDocument();
     });
   });
 });
