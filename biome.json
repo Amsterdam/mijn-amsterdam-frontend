@@ -16,10 +16,18 @@
     "includes": [
       "**",
       "!drizzle",
-      "!vendor",
       "!scripts",
       "!**/*.svg",
-      "!public/js/usabilla*.js"
+      "!!public",
+      "!!**/build",
+      "!!**/build-bff",
+      "!!test-runner-profile",
+      "!!vendor",
+      "!!ca",
+      "!!db-migrations",
+      "!!docs",
+      "!!node_modules",
+      "!!.vscode"
     ]
   },
   "formatter": {
