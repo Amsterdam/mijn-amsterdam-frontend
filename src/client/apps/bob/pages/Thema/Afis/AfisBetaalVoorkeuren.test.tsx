@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
 import type { AfisBusinessPartnerDetailsTransformed } from '../../../../../../server/services/afis/afis-types.ts';
@@ -87,14 +87,54 @@ describe('<AfisBetaalVoorkeuren />', () => {
     });
   });
 
-  test('Shows multiple vestigingen disclaimer when enabled', async () => {
+  test('retries failed account details and e-mandates without changing accounts', async () => {
+    const state = {
+      ...testState,
+      AFIS: {
+        ...testState.AFIS,
+        content: {
+          ...testState.AFIS.content,
+          businessPartnerIdEncrypted: 'retry-reference',
+        },
+      },
+    } as AppState;
+    bffApi
+      .get('/services/afis/businesspartner?id=retry-reference')
+      .reply(500, { status: 'ERROR', content: null, message: 'Unavailable' });
+    bffApi
+      .get('/services/afis/e-mandates?id=retry-reference')
+      .reply(500, { status: 'ERROR', content: null, message: 'Unavailable' });
+    bffApi
+      .get('/services/afis/businesspartner?id=retry-reference')
+      .reply(200, { status: 'OK', content: businessPartnerDetails });
+    bffApi
+      .get('/services/afis/e-mandates?id=retry-reference')
+      .reply(200, { status: 'OK', content: [] });
+    const page = render(<Component state={state} />);
+
+    fireEvent.click(
+      await page.findByRole('button', { name: 'Opnieuw proberen' })
+    );
+
+    expect(await page.findByText('someone@example.org')).toBeInTheDocument();
+  });
+
+  test('shows fixed account context instead of a selector for restricted users', async () => {
     const stateWithMultipleVestigingen = {
       ...testState,
       AFIS: {
         ...testState.AFIS,
         content: {
           ...testState.AFIS.content,
-          showMultipleVestigingenDisclaimer: true,
+          isRestricted: true,
+          accounts: [
+            {
+              id: 'restricted-account',
+              name: 'Vestiging Oost',
+              vestigingsnummer: '000038509490',
+              businessPartnerIdEncrypted,
+            },
+          ],
         },
       },
     } as AppState;
@@ -103,11 +143,13 @@ describe('<AfisBetaalVoorkeuren />', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(
-          'Inzage in uw betaalvoorkeuren van de gemeente Amsterdam'
-        )
+        screen.getByText('Vestiging Oost - 000038509490')
       ).toBeInTheDocument();
+      expect(screen.getByText('someone@example.org')).toBeInTheDocument();
     });
+    expect(
+      screen.queryByRole('combobox', { name: 'Vestiging' })
+    ).not.toBeInTheDocument();
   });
 
   test('Does not show multiple vestigingen disclaimer by default', async () => {

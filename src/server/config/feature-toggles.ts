@@ -3,7 +3,6 @@ import { IS_PRODUCTION } from '../../universal/config/env.ts';
 // Is mutated by the Appconfiguration. Locally this object will be used as is.
 export const featureToggle = {
   'AFIS.EMandates': true,
-  'AFIS.blockDataForMultipleKvKVestigingen': true,
   'AMSAPP.universalAuth': !IS_PRODUCTION,
   'AMSAPP.universalAuth.servicesAllAccess': !IS_PRODUCTION,
   'AMSAPP.notificationService': true,

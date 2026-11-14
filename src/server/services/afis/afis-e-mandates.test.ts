@@ -609,7 +609,7 @@ describe('afis-e-mandates service (with nock)', () => {
         payment_reference: 'ref-123',
         request_id: 'ref-123-2025-07-10T00:00:00.000Z',
         return_url:
-          'http://frontend-host/facturen-en-betalen/betaalvoorkeuren/emandate/test?iban=NL35BOOG9343513650',
+          'http://frontend-host/facturen-en-betalen/betaalvoorkeuren/emandate/test?iban=NL35BOOG9343513650&afisAccount=123',
         variable1: 'NL21RABO0110055004',
         invoices: [
           {
@@ -675,6 +675,7 @@ describe('afis-e-mandates service (with nock)', () => {
       const url = emandates.forTesting.getEmandateApiUrl(
         routes.protected.AFIS_EMANDATES_UPDATE_LIFETIME,
         authProfile.sid,
+        '123',
         validSourceMandate
       );
       expect(
@@ -691,6 +692,7 @@ describe('afis-e-mandates service (with nock)', () => {
       ).toStrictEqual({
         content: {
           payload: {
+            businessPartnerId: '123',
             IMandateId: '1',
           },
           sessionID: 'sid',

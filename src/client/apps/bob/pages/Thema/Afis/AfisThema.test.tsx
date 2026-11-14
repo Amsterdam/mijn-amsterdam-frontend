@@ -9,6 +9,7 @@ import { bffApi } from '../../../../../../testing/utils.ts';
 import type { AppState } from '../../../../../../universal/types/App.types.ts';
 import { MockApp } from '../../MockApp.tsx';
 import { themaConfig } from './Afis-thema-config.ts';
+import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren.tsx';
 import { AfisThema } from './AfisThema.tsx';
 
 const businessPartnerIdEncrypted = 'xxx-123-xxx';
@@ -127,6 +128,33 @@ const testState = {
 } as AppState;
 
 describe('<Afis />', () => {
+  function createAccountState(selectionKey: string): AppState {
+    return {
+      ...testState,
+      AFIS: {
+        ...testState.AFIS,
+        content: {
+          ...testState.AFIS.content,
+          selectionKey,
+          accounts: [
+            {
+              id: 'general',
+              name: 'Algemeen',
+              vestigingsnummer: null,
+              businessPartnerIdEncrypted,
+            },
+            {
+              id: 'branch',
+              name: 'Vestiging Oost',
+              vestigingsnummer: '000038509490',
+              businessPartnerIdEncrypted: 'branch-reference',
+            },
+          ],
+        },
+      },
+    } as AppState;
+  }
+
   const businessPartnerDetails: AfisBusinessPartnerDetailsTransformed = {
     businessPartnerId: '000515177',
     fullName: 'Taxon Expeditions BV',
@@ -164,7 +192,46 @@ describe('<Afis />', () => {
     });
   });
 
-  it('switches the shared account and replaces the previous invoices', async () => {
+  it('keeps the requested account on error and retries without showing previous invoices', async () => {
+    const state = createAccountState('invoice-retry-test');
+    bffApi
+      .get('/services/afis/facturen/overzicht?id=branch-reference')
+      .reply(500, { status: 'ERROR', content: null, message: 'Unavailable' });
+    bffApi
+      .get('/services/afis/facturen/overzicht?id=branch-reference')
+      .reply(200, {
+        status: 'OK',
+        content: {
+          ...mockFacturen,
+          open: {
+            state: 'open',
+            count: 1,
+            facturen: [
+              {
+                ...mockFacturen.open!.facturen[0],
+                afzender: 'Herstelde vestiging',
+              },
+            ],
+          },
+        },
+      });
+    const page = render(<Component state={state} />);
+
+    fireEvent.change(page.getByRole('combobox', { name: 'Vestiging' }), {
+      target: { value: 'branch' },
+    });
+    fireEvent.click(
+      await page.findByRole('button', { name: 'Opnieuw proberen' })
+    );
+
+    expect(page.getByRole('combobox', { name: 'Vestiging' })).toHaveValue(
+      'branch'
+    );
+    expect(page.queryByText('Company A')).not.toBeInTheDocument();
+    expect(await page.findByText('Herstelde vestiging')).toBeInTheDocument();
+  });
+
+  it('shares selection with Betaalvoorkeuren and retains it after remounting', async () => {
     const stateWithAccounts = {
       ...testState,
       AFIS: {
@@ -186,6 +253,7 @@ describe('<Afis />', () => {
             },
           ],
           isRestricted: false,
+          selectionKey: 'invoice-switch-test',
         },
       },
     } as AppState;
@@ -195,7 +263,16 @@ describe('<Afis />', () => {
         status: 'OK',
         content: {
           ...mockFacturen,
-          open: { state: 'open', count: 0, facturen: [] },
+          open: {
+            state: 'open',
+            count: 1,
+            facturen: [
+              {
+                ...mockFacturen.open!.facturen[0],
+                afzender: 'Vestiging Oost factuur',
+              },
+            ],
+          },
           afgehandeld: { state: 'afgehandeld', count: 0, facturen: [] },
         },
       });
@@ -212,6 +289,44 @@ describe('<Afis />', () => {
         'branch'
       );
       expect(screen.queryByText('Company B')).not.toBeInTheDocument();
+      expect(screen.getByText('Vestiging Oost factuur')).toBeInTheDocument();
     });
+    screen.unmount();
+    bffApi
+      .get('/services/afis/businesspartner?id=branch-reference')
+      .times(2)
+      .reply(200, {
+        status: 'OK',
+        content: {
+          businessPartnerId: 'branch',
+          fullName: 'Vestiging Oost',
+          email: 'oost@example.org',
+        },
+      });
+    bffApi
+      .get('/services/afis/e-mandates?id=branch-reference')
+      .times(2)
+      .reply(200, { status: 'OK', content: [] });
+    const betaalvoorkeuren = render(
+      <MockApp
+        routeEntry={themaConfig.detailPageBetaalvoorkeuren.route.path}
+        routePath={themaConfig.detailPageBetaalvoorkeuren.route.path}
+        component={AfisBetaalVoorkeuren}
+        state={stateWithAccounts}
+      />
+    );
+    expect(
+      await betaalvoorkeuren.findByText('oost@example.org')
+    ).toBeInTheDocument();
+    expect(
+      betaalvoorkeuren.getByRole('combobox', { name: 'Vestiging' })
+    ).toHaveValue('branch');
+    betaalvoorkeuren.unmount();
+
+    const invoices = render(<Component state={stateWithAccounts} />);
+    expect(
+      await invoices.findByText('Vestiging Oost factuur')
+    ).toBeInTheDocument();
+    expect(invoices.queryByText('Company A')).not.toBeInTheDocument();
   });
 });

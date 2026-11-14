@@ -28,6 +28,7 @@ export function useAfisBetaalVoorkeurenData(
     businessPartnerDetailsLabels,
     isLoadingBusinessPartnerDetails: api.isLoading,
     hasBusinessPartnerDetailsError: api.isError,
+    refetchBusinessPartnerDetails: () => api.fetch(),
     hasFailedEmailDependency: hasFailedDependency(
       businesspartnerDetailsApiResponse,
       'email'

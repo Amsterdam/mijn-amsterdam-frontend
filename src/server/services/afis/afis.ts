@@ -220,7 +220,9 @@ export async function fetchIsKnownInAFIS(
             accounts: accountOptions,
             isRestricted: !!authProfileAndToken.profile.vestigingsnummer,
             selectionKey: createHash('sha256')
-              .update(`${authProfileAndToken.profile.sid}:${authProfileAndToken.profile.id}:${authProfileAndToken.profile.vestigingsnummer ?? ''}`)
+              .update(
+                `${authProfileAndToken.profile.sid}:${authProfileAndToken.profile.id}:${authProfileAndToken.profile.vestigingsnummer ?? ''}`
+              )
               .digest('hex'),
           }
         : {}),

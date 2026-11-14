@@ -1,7 +1,7 @@
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
 import {
-  apiDependencyError,
   apiSuccessResult,
+  hasFailedDependency,
 } from '../../../universal/helpers/api.ts';
 import {
   type MyNotification,
@@ -9,7 +9,8 @@ import {
 } from '../../../universal/types/App.types.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { sanitizeStringTemplate } from '../../helpers/text.ts';
-import { fetchIsKnownInAFIS } from './afis.ts';
+import { fetchAfisAccounts } from './afis.ts';
+import { fetchAfisFacturenOverview } from './afis-facturen.ts';
 import type { AfisFactuur, AfisFactuurStatus } from './afis-types.ts';
 
 const facturenOpen: AfisFactuurStatus[] = [
@@ -73,21 +74,47 @@ export function createAfisFacturenNotification(
 export async function fetchAfisNotifications(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const afisKnownResponse = await fetchIsKnownInAFIS(authProfileAndToken);
+  const accounts = await fetchAfisAccounts(authProfileAndToken);
+  const results =
+    accounts.status === 'OK'
+      ? await Promise.all(
+          (accounts.content ?? []).map((account) =>
+            fetchAfisFacturenOverview(authProfileAndToken.profile.sid, {
+              businessPartnerID: account.businessPartnerId,
+            })
+          )
+        )
+      : [];
+  const isIncomplete =
+    accounts.status !== 'OK' ||
+    results.some(
+      (result) =>
+        result.status !== 'OK' ||
+        hasFailedDependency(result, 'open') ||
+        !result.content?.open
+    );
 
-  if (afisKnownResponse.status === 'ERROR') {
-    return apiDependencyError({ afis: afisKnownResponse });
+  if (isIncomplete) {
+    const warning: MyNotification = {
+      id: 'facturen-open-notification',
+      themaID: themaConfig.id,
+      themaTitle: themaConfig.title,
+      title: 'Aantal openstaande facturen niet beschikbaar',
+      description:
+        'Wij kunnen het totale aantal openstaande facturen nu niet tonen. Probeer het later opnieuw.',
+      datePublished: new Date().toISOString(),
+      hideDatePublished: true,
+      sortPriority: NOTIFICATION_SORTPRIORITY.high,
+      link: { to: themaConfig.route.path, title: 'Bekijk uw facturen' },
+    };
+    return apiSuccessResult({ notifications: [warning] });
   }
 
-  const facturen = afisKnownResponse.content?.facturen?.open?.facturen ?? [];
-  const notifications = [];
+  const facturen = results.flatMap(
+    (result) => result.content?.open?.facturen ?? []
+  );
   const notification = createAfisFacturenNotification(facturen);
-
-  if (notification) {
-    notifications.push(notification);
-  }
-
   return apiSuccessResult({
-    notifications,
+    notifications: notification ? [notification] : [],
   });
 }

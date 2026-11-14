@@ -1,5 +1,6 @@
 import {
   Alert,
+  Button,
   Grid,
   Heading,
   Link,
@@ -18,13 +19,13 @@ import type { DisplayProps } from '../../../../../components/Table/TableV2.types
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { AfisAccountSelector } from './AfisAccountSelector.tsx';
 import styles from './AfisBetaalVoorkeuren.module.scss';
 import { AfisEmandateRefetchInterval } from './AfisEmandateFetchInterval.tsx';
 import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData.tsx';
 import { useSignRequestPayloadStorage } from './useAfisEMandatesSignRequest.tsx';
 import { useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
 import { useAfisThemaData } from './useAfisThemaData.hook.tsx';
-import { AfisAccountSelector } from './AfisAccountSelector.tsx';
 
 type AfisBusinessPartnerProps = {
   businesspartner: Omit<
@@ -107,6 +108,7 @@ export function AfisBetaalVoorkeuren() {
     businesspartnerDetails,
     businessPartnerDetailsLabels,
     hasBusinessPartnerDetailsError,
+    refetchBusinessPartnerDetails,
     hasFailedFullNameDependency,
     hasFailedPhoneDependency,
     isLoadingBusinessPartnerDetails,
@@ -232,6 +234,21 @@ export function AfisBetaalVoorkeuren() {
       )}
       {hasEMandatesError && (
         <>Wij kunnen nu geen automatische incasso&apos;s laten zien.</>
+      )}
+      {(hasBusinessPartnerDetailsError || hasEMandatesError) && (
+        <Button
+          variant="secondary"
+          onClick={() => {
+            if (hasBusinessPartnerDetailsError) {
+              refetchBusinessPartnerDetails();
+            }
+            if (hasEMandatesError) {
+              fetchEMandates();
+            }
+          }}
+        >
+          Opnieuw proberen
+        </Button>
       )}
     </>
   );

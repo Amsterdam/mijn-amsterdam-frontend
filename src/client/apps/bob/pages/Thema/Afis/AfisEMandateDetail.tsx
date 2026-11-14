@@ -1,12 +1,16 @@
+import { useEffect } from 'react';
+
 import {
   Alert,
   Button,
   Heading,
   Paragraph,
 } from '@amsterdam/design-system-react';
+import { useSearchParams } from 'react-router';
 
 import type { AfisEMandateFrontend } from '../../../../../../server/services/afis/afis-types.ts';
 import { Datalist } from '../../../../../components/Datalist/Datalist.tsx';
+import { LoadingContent } from '../../../../../components/LoadingContent/LoadingContent.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { Spinner } from '../../../../../components/Spinner/Spinner.tsx';
 import { TableV2 } from '../../../../../components/Table/TableV2.tsx';
@@ -18,6 +22,7 @@ import {
   eMandateHistoryDisplayProps,
   themaConfig,
 } from './Afis-thema-config.ts';
+import { useAfisAccount } from './AfisAccountSelector.tsx';
 import styles from './AfisEMandateDetail.module.scss';
 import { AfisEMandateActionButtons } from './AfisEmandateActionButtons.tsx';
 import { DateAdjust } from './AfisEmandateDateAdjust.tsx';
@@ -237,6 +242,39 @@ function EMandate({ eMandate }: EMandateProps) {
 }
 
 export function AfisEMandateDetail() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { account, accounts, selectAccount } = useAfisAccount();
+  const returnAccountId = searchParams.get('afisAccount');
+  const returnAccount = accounts.find(
+    (option) => option.id === returnAccountId
+  );
+
+  useEffect(() => {
+    if (returnAccountId && accounts.length) {
+      if (returnAccount && returnAccount.id !== account?.id) {
+        selectAccount(returnAccount.id);
+      }
+      const nextParams = new URLSearchParams(searchParams);
+      nextParams.delete('afisAccount');
+      setSearchParams(nextParams, { replace: true });
+    }
+  }, [
+    returnAccountId,
+    returnAccount,
+    account?.id,
+    accounts.length,
+    selectAccount,
+    searchParams,
+    setSearchParams,
+  ]);
+
+  if (returnAccount && returnAccount.id !== account?.id) {
+    return <LoadingContent />;
+  }
+  return <AfisEMandateDetailContent />;
+}
+
+function AfisEMandateDetailContent() {
   useHTMLDocumentTitle(themaConfig.detailPageEMandate.route);
 
   const {

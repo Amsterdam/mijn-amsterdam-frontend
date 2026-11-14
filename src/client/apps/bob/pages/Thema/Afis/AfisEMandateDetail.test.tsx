@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
 
@@ -6,9 +6,11 @@ import type {
   AfisEMandateFrontend,
   AfisFacturenOverviewResponse,
 } from '../../../../../../server/services/afis/afis-types.ts';
+import { bffApi } from '../../../../../../testing/utils.ts';
 import { useWidescreen } from '../../../../../hooks/media.hook.ts';
 import { MockApp } from '../../MockApp.tsx';
 import { eMandateTableConfig } from './Afis-thema-config.ts';
+import { AfisAccountSelector } from './AfisAccountSelector.tsx';
 import { AfisEMandateDetail } from './AfisEMandateDetail.tsx';
 import {
   useSignRequestPayloadStorage,
@@ -59,6 +61,72 @@ describe('AfisEMandateDetail', () => {
   beforeEach(() => {
     mockCancel.mockReset();
     vi.clearAllMocks();
+  });
+
+  it('restores the originating account before showing the signing result', async () => {
+    (useSignRequestPayloadStorage as Mock).mockReturnValue({
+      hasPayloads: () => false,
+    });
+    (useEmandateApis as Mock).mockReturnValue({
+      lifetimeUpdateApi: { fetch: vi.fn() },
+    });
+    (useSignRequestStatusCheck as Mock).mockReturnValue({
+      isRequestingStatusCheck: false,
+      isPendingActivation: false,
+    });
+    bffApi
+      .get('/services/afis/facturen/overzicht?id=origin-reference')
+      .reply(200, {
+        status: 'OK',
+        content: { open: { state: 'open', count: 0, facturen: [] } },
+      });
+    render(
+      <MockApp
+        routeEntry="/?afisAccount=origin"
+        routePath="/"
+        component={() => (
+          <>
+            <AfisEMandateDetail />
+            <AfisAccountSelector />
+          </>
+        )}
+        state={{
+          AFIS: {
+            status: 'OK',
+            content: {
+              isKnown: true,
+              businessPartnerIdEncrypted: 'other-reference',
+              selectionKey: 'signing-return-test',
+              facturen: {} as AfisFacturenOverviewResponse,
+              accounts: [
+                {
+                  id: 'origin',
+                  name: 'Oorspronkelijke vestiging',
+                  vestigingsnummer: '000038509490',
+                  businessPartnerIdEncrypted: 'origin-reference',
+                },
+                {
+                  id: 'other',
+                  name: 'Andere vestiging',
+                  vestigingsnummer: null,
+                  businessPartnerIdEncrypted: 'other-reference',
+                },
+              ],
+            },
+          },
+        }}
+      />
+    );
+
+    await waitFor(() => {
+      expect(screen.getByRole('combobox', { name: 'Vestiging' })).toHaveValue(
+        'origin'
+      );
+      expect(
+        screen.queryByText('Inhoud wordt opgehaald...')
+      ).not.toBeInTheDocument();
+    });
+    expect(screen.getByText('ActionButtons')).toBeInTheDocument();
   });
 
   it('shows spinner paragraph while requesting status check', async () => {

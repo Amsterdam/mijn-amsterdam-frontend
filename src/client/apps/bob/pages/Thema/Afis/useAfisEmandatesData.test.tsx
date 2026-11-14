@@ -10,11 +10,20 @@ import type {
 import { bffApiHost } from '../../../../../../testing/setup.ts';
 import { bffApi } from '../../../../../../testing/utils.ts';
 import { useBffApiStateStore } from '../../../../../hooks/api/useBffApi.ts';
-import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
+import {
+  useAppStateGetter,
+  useAppStateStore,
+} from '../../../../../hooks/useAppStateStore.ts';
 import { useEmandateApis } from './useAfisEmandateActionsApi.tsx';
 import { forTesting, useAfisEMandatesApi } from './useAfisEmandatesApi.tsx';
 
 vi.mock('../../../../../hooks/useAppStateStore');
+beforeEach(() => {
+  (useAppStateStore as unknown as Mock).mockImplementation(
+    (selector: (state: ReturnType<typeof useAppStateGetter>) => unknown) =>
+      selector(useAppStateGetter())
+  );
+});
 vi.mock('react-router', async (importActual) => {
   const actual: object = await importActual();
   return {
@@ -31,6 +40,8 @@ describe('updateEmandateById', () => {
       {
         id: '1',
         creditorName: 'Mandate 1',
+        businessPartnerId: 'fixture-account',
+        history: [],
         creditorIBAN: 'NL91ABNA0417164300',
         status: '1' as EmandateStatusCode,
         displayStatus: 'Active',
@@ -46,6 +57,8 @@ describe('updateEmandateById', () => {
       {
         id: '2',
         creditorName: 'Mandate 2',
+        businessPartnerId: 'fixture-account',
+        history: [],
         creditorIBAN: 'NL91ABNA0417164300',
         status: '1' as EmandateStatusCode,
         displayStatus: 'Active',
@@ -306,6 +319,8 @@ describe('useAfisEMandatesData', () => {
 describe('useEmandateApis', () => {
   const eMandate: AfisEMandateFrontend = {
     id: '1',
+    businessPartnerId: 'fixture-account',
+    history: [],
     signRequestUrl: `${bffApiHost}/sign-request`,
     deactivateUrl: `${bffApiHost}/deactivate`,
     lifetimeUpdateUrl: `${bffApiHost}/lifetime-update`,

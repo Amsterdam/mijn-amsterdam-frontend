@@ -8,6 +8,7 @@ import type {
   DocumentDownloadResponse,
 } from '../shared/document-download-route-handler.ts';
 import { DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE } from '../shared/document-download-route-handler.ts';
+import { authorizeAfisAccount } from './afis.ts';
 import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers.ts';
 import type {
   AfisArcDocID,
@@ -17,11 +18,22 @@ import type {
 } from './afis-types.ts';
 
 export async function fetchAfisDocument(
-  _authProfileAndToken: AuthProfileAndToken,
+  authProfileAndToken: AuthProfileAndToken,
   factuurDocumentId: AfisFactuur['factuurDocumentId']
 ): Promise<DocumentDownloadResponse> {
-  const ArchiveDocumentIDResponse =
-    await fetchAfisDocumentID(factuurDocumentId);
+  const [businessPartnerId, documentId] = factuurDocumentId.split('|');
+  if (authProfileAndToken.profile.profileType === 'commercial') {
+    const authorization = await authorizeAfisAccount(
+      authProfileAndToken,
+      documentId ? businessPartnerId : null
+    );
+    if (authorization.status !== 'OK') {
+      return authorization;
+    }
+  }
+  const ArchiveDocumentIDResponse = await fetchAfisDocumentID(
+    documentId ?? factuurDocumentId
+  );
   if (ArchiveDocumentIDResponse.status !== 'OK') {
     return ArchiveDocumentIDResponse;
   }

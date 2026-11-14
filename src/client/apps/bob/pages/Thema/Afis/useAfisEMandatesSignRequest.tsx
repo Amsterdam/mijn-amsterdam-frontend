@@ -7,7 +7,11 @@ import type {
   AfisEMandateSignRequestStatusResponse,
 } from '../../../../../../server/services/afis/afis-types.ts';
 import { useBffApi } from '../../../../../hooks/api/useBffApi.ts';
-import { useLocalStorage } from '../../../../../hooks/storage.hook.ts';
+import {
+  useLocalStorage,
+  useSessionStorage,
+} from '../../../../../hooks/storage.hook.ts';
+import { useAppStateStore } from '../../../../../hooks/useAppStateStore.ts';
 import {
   AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS,
   EMANDATE_SIGN_REQUEST_SUCCESS_STATUSES,
@@ -22,10 +26,27 @@ type AfisEmandateStatusCheckPayload = {
   isReplacement: 'true' | 'false';
 };
 
-export function useSignRequestPayloadStorage() {
+export function useSignRequestPayloadStorage(businessPartnerId?: string) {
+  const content = useAppStateStore((state) => state.AFIS.content);
+  const [selectedId] = useSessionStorage<string | null>(
+    `afis-account:${content?.selectionKey ?? 'legacy'}`,
+    null
+  );
+  const account =
+    content?.accounts?.find(
+      (option) => option.id === (businessPartnerId ?? selectedId)
+    ) ??
+    content?.accounts?.find(
+      (option) =>
+        option.businessPartnerIdEncrypted === content.businessPartnerIdEncrypted
+    );
+  const storageKey =
+    content?.selectionKey && account
+      ? `afis-emandate-status-check-payload:${content.selectionKey}:${account.id}`
+      : 'afis-emandate-status-check-payload';
   const [payloads, setValue] = useLocalStorage<
     AfisEmandateStatusCheckPayload[]
-  >('afis-emandate-status-check-payload', []);
+  >(storageKey, []);
 
   function get(
     eMandateId: AfisEMandateFrontend['id'],
@@ -135,7 +156,9 @@ export function useSignRequestPayloadStorageCleanup(
 // This is primarily relevant for the cancelled singing flow where we don't receive feedback from the eMandate provider and thus need to check the status to know if the signing was cancelled or
 // if the customer just returned to Mijn Amsterdam before completing the signing process.
 export function useSignRequestStatusCheck(eMandate: AfisEMandateFrontend) {
-  const payloadStorage = useSignRequestPayloadStorage();
+  const payloadStorage = useSignRequestPayloadStorage(
+    eMandate.businessPartnerId
+  );
   const payload = payloadStorage.get(eMandate.id)?.getPayload();
 
   // Only perform the status check if there's a payload in storage and the mandate is not active yet (to prevent unnecessary checks after activation).

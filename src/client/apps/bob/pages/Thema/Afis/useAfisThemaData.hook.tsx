@@ -16,8 +16,8 @@ import {
   themaConfig as themaAfis,
   themaConfig,
 } from './Afis-thema-config.ts';
-import { useTransformFacturen } from './useAfisFacturenApi.tsx';
 import { useAfisAccount } from './AfisAccountSelector.tsx';
+import { useTransformFacturen } from './useAfisFacturenApi.tsx';
 
 export type AfisFacturenThemaContextParams = {
   themaId: string;
@@ -44,7 +44,14 @@ export function useAfisFacturenData(
     tableConfig = facturenTableConfig,
     routeConfigListPage = themaConfig.listPage.route,
   } = themaContextParams || {};
-  const { AFIS, businessPartnerIdEncrypted, facturen, isLoading, isError: isAccountError, response } = useAfisAccount();
+  const {
+    AFIS,
+    businessPartnerIdEncrypted,
+    facturen,
+    isLoading,
+    isError: isAccountError,
+    response,
+  } = useAfisAccount();
   const facturenByState = useTransformFacturen(facturen);
 
   return {
@@ -57,8 +64,6 @@ export function useAfisFacturenData(
     routeConfigListPage,
     businessPartnerIdEncrypted,
     businessPartnerId: AFIS.content?.businessPartnerId || null,
-    showMultipleVestigingenDisclaimer:
-      AFIS.content?.showMultipleVestigingenDisclaimer ?? false,
     dependencyErrors: {
       open: hasFailedDependency(response, 'open'),
       afgehandeld: hasFailedDependency(response, 'afgehandeld'),
@@ -83,7 +88,6 @@ export function useAfisThemaData() {
     tableConfig,
     businessPartnerIdEncrypted,
     businessPartnerId,
-    showMultipleVestigingenDisclaimer,
     isThemaPaginaError,
     isThemaPaginaLoading,
     dependencyErrors,
@@ -96,7 +100,6 @@ export function useAfisThemaData() {
     belastingenLinkListItem,
     businessPartnerIdEncrypted,
     businessPartnerId,
-    showMultipleVestigingenDisclaimer,
     facturenByState,
     facturenTableConfig: tableConfig,
     isThemaPaginaError,

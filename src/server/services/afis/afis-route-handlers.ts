@@ -162,6 +162,23 @@ export async function handleAfisEMandateSignRequestStatus(
 
   const payloadDecrypted = decryptResult.content;
 
+  const auth = res.locals.authProfileAndToken;
+  if (auth.profile.profileType === 'commercial') {
+    if (payloadDecrypted.sessionID !== auth.profile.sid) {
+      return sendResponse(
+        res,
+        apiErrorResult('Not authorized for this signing request', null, 403)
+      );
+    }
+    const authorization = await authorizeAfisAccount(
+      auth,
+      payloadDecrypted.businessPartnerId
+    );
+    if (authorization.status !== 'OK') {
+      return sendResponse(res, authorization);
+    }
+  }
+
   // Call the service method with the decrypted payload.
   const serviceMethodResponse =
     await fetchEmandateSignRequestStatusFromPaymentProvider(payloadDecrypted);

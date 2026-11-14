@@ -300,6 +300,28 @@ describe('afis-facturen', async () => {
     expect(response.content?.filename).toStrictEqual('FACTUUR.PDF');
   });
 
+  test('does not download a commercial document bound to an unauthorized account', async () => {
+    const auth = getAuthProfileAndToken('commercial');
+    auth.profile.vestigingsnummer = '000038509490';
+    remoteApi.post('/afis/RESTAdapter/businesspartner/KVK/').reply(200, {
+      Record: {
+        KVK: auth.profile.id,
+        Vestigingsnummer: '000038509490',
+        Zakenpartnernummer: '113',
+        Gevonden: 'Ja',
+        Blokkade: 'Nee',
+      },
+    });
+
+    const response = await fetchAfisDocument(
+      auth,
+      `0000000096|${FACTUUR_NUMMER}`
+    );
+
+    expect(response.status).toBe('ERROR');
+    expect(response).toHaveProperty('code', 403);
+  });
+
   test('getFactuurRequestQueryParams formats URL correctly', () => {
     const params = forTesting.getFactuurRequestQueryParams({
       state: 'open',

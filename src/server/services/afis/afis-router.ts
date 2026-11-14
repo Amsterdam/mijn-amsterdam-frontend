@@ -7,12 +7,12 @@ import { createBFFRouter } from '../../routing/route-helpers.ts';
 import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler.ts';
 import { fetchAfisBusinessPartnerDetails } from './afis-business-partner.ts';
 import { fetchAfisDocument } from './afis-documents.ts';
-import { fetchAfisFacturenOverview } from './afis-facturen.ts';
 import {
   deactivateEmandate,
   fetchEMandates,
   fetchEmandateSignRequestRedirectUrlFromPaymentProvider,
 } from './afis-e-mandates.ts';
+import { fetchAfisFacturenOverview } from './afis-facturen.ts';
 import {
   type AfisFacturenRouteParams,
   handleAfisEMandateSignRequestStatus,
@@ -50,7 +50,10 @@ routerProtected.get(
     BusinessPartnerIdPayload,
     ReturnType<typeof fetchAfisFacturenOverview>
   >(
-    (payload, sessionID) => fetchAfisFacturenOverview(sessionID, { businessPartnerID: payload.businessPartnerId }),
+    (payload, sessionID) =>
+      fetchAfisFacturenOverview(sessionID, {
+        businessPartnerID: payload.businessPartnerId,
+      }),
     PAYLOAD_QUERY_PARAM_NAME
   )
 );

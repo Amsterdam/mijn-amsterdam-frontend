@@ -604,7 +604,10 @@ function createEMandateSignRequestPayload(
     themaConfig.detailPageEMandate.route.path,
     [
       // In development we mock the API responses from the payment provider, for convenience we add the creditor IBAN to the URL so we can determine in the mock API which response to return.
-      IS_DEVELOPMENT ? { iban: creditor.iban } : {},
+      {
+        ...(IS_DEVELOPMENT ? { iban: creditor.iban } : {}),
+        afisAccount: businessPartner.businessPartnerId,
+      },
       { id: slug(creditor.name) },
     ],
     MA_FRONTEND_URL
@@ -658,11 +661,17 @@ function createEMandateSignRequestPayload(
 }
 
 function transformEMandatesRedirectUrlResponse(
-  responseData: POMSignRequestUrlResponseSource
+  responseData: POMSignRequestUrlResponseSource,
+  businessPartnerId?: BusinessPartnerId,
+  sessionID?: SessionID
 ): AfisEMandateSignRequestResponse | null {
   if (responseData?.paylink) {
     const [statusCheckPayload] = encrypt(
-      JSON.stringify({ paylinkId: responseData.paylink_id })
+      JSON.stringify({
+        paylinkId: responseData.paylink_id,
+        businessPartnerId,
+        sessionID,
+      })
     );
     return {
       redirectUrl: responseData.paylink,
@@ -673,7 +682,8 @@ function transformEMandatesRedirectUrlResponse(
 }
 
 export async function fetchEmandateSignRequestRedirectUrlFromPaymentProvider(
-  eMandateSignRequestPayload: EMandateSignRequestPayload
+  eMandateSignRequestPayload: EMandateSignRequestPayload,
+  sessionID?: SessionID
 ) {
   const creditor = EMandateCreditorsGemeenteAmsterdam.find(
     (creditor) => creditor.iban === eMandateSignRequestPayload.creditorIBAN
@@ -700,7 +710,12 @@ export async function fetchEmandateSignRequestRedirectUrlFromPaymentProvider(
     formatUrl: ({ url }) => {
       return `${url}/v3/paylinks`;
     },
-    transformResponse: transformEMandatesRedirectUrlResponse,
+    transformResponse: (response) =>
+      transformEMandatesRedirectUrlResponse(
+        response,
+        eMandateSignRequestPayload.businessPartnerId,
+        sessionID
+      ),
     data: createEMandateSignRequestPayload(
       businessPartnerResponse.content,
       creditor,
@@ -770,7 +785,7 @@ export async function deactivateEmandate(
   }
 
   return updateAfisEMandate(
-    { ...eMandateStatusChangePayload, LifetimeTo },
+    { IMandateId: eMandateStatusChangePayload.IMandateId, LifetimeTo },
     transformResponse
   );
 }

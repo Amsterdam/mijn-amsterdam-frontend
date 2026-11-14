@@ -2,11 +2,20 @@ import { renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it, type Mock, vi } from 'vitest';
 
 import { bffApi } from '../../../../../../testing/utils.ts';
-import { useAppStateGetter } from '../../../../../hooks/useAppStateStore.ts';
+import {
+  useAppStateGetter,
+  useAppStateStore,
+} from '../../../../../hooks/useAppStateStore.ts';
 import type { AfisFactuurFrontend } from './Afis-thema-config.ts';
 import { useAfisListPageData } from './useAfisListPageData.tsx';
 
 vi.mock('../../../../../hooks/useAppStateStore');
+beforeEach(() => {
+  (useAppStateStore as unknown as Mock).mockImplementation(
+    (selector: (state: ReturnType<typeof useAppStateGetter>) => unknown) =>
+      selector(useAppStateGetter())
+  );
+});
 vi.mock('../../../../../hooks/useThemaBreadcrumbs');
 
 const mockAFIS = {

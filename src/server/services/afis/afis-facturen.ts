@@ -253,7 +253,8 @@ function transformFactuur(
   state: AfisFactuurState,
   sourceInvoice: XmlNullable<AfisFactuurPropertiesSource>,
   sessionID: SessionID,
-  deelbetalingen?: AfisFactuurDeelbetalingen
+  deelbetalingen?: AfisFactuurDeelbetalingen,
+  businessPartnerID?: string
 ): AfisFactuur {
   const invoice = replaceXmlNulls(sourceInvoice);
   const accountingDocumentId = String(invoice.AccountingDocument);
@@ -265,7 +266,9 @@ function transformFactuur(
   if (isFactuurCreatedInAFIS(accountingDocumentId)) {
     factuurDocumentIdEncrypted = encryptSessionIdWithRouteIdParam(
       sessionID,
-      factuurDocumentId
+      businessPartnerID
+        ? `${businessPartnerID}|${factuurDocumentId}`
+        : factuurDocumentId
     );
   }
 
@@ -439,7 +442,8 @@ function transformFacturen(
   state: AfisFactuurState,
   responseData: AfisInvoicesSource,
   sessionID: SessionID,
-  deelbetalingen?: AfisFactuurDeelbetalingen
+  deelbetalingen?: AfisFactuurDeelbetalingen,
+  businessPartnerID?: string
 ): AfisFacturenResponse {
   const feedProperties = getFeedEntryProperties(responseData);
   const count = responseData?.feed?.count ?? feedProperties.length;
@@ -457,7 +461,8 @@ function transformFacturen(
         state,
         invoiceProperties,
         sessionID,
-        deelbetalingen
+        deelbetalingen,
+        businessPartnerID
       );
     });
 
@@ -637,7 +642,13 @@ export async function fetchAfisFacturen(
     params: getFactuurRequestQueryParams(params),
     formatUrl: ({ url }) => url + AFIS_FACTUUR_REQUEST_API_PATH,
     transformResponse: (responseData) =>
-      transformFacturen(params.state, responseData, sessionID, deelbetalingen),
+      transformFacturen(
+        params.state,
+        responseData,
+        sessionID,
+        deelbetalingen,
+        params.businessPartnerID
+      ),
   });
 
   return requestData<AfisFacturenResponse>(config);

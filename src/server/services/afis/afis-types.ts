@@ -67,7 +67,6 @@ export type AfisThemaResponse = {
   accounts?: AfisAccount[];
   isRestricted?: boolean;
   selectionKey?: string;
-  showMultipleVestigingenDisclaimer?: boolean;
   facturen: AfisFacturenOverviewResponse | null;
 };
 
@@ -483,7 +482,11 @@ export type BusinessPartnerIdPayload = {
   businessPartnerId: BusinessPartnerId;
 };
 
-export type EMandateSignRequestStatusPayload = { paylinkId: string };
+export type EMandateSignRequestStatusPayload = {
+  paylinkId: string;
+  businessPartnerId?: BusinessPartnerId;
+  sessionID?: SessionID;
+};
 
 export type EMandateUpdatePayload = {
   IMandateId: AfisEMandateUpdatePayload['IMandateId'];

@@ -129,9 +129,9 @@ export async function fetchZakenByUserIDs(
   for (const id of userIDs) {
     const authProfileAndTokenSubject: AuthProfileAndToken = {
       profile: {
-        authMethod:
-          req.query.profileType === 'private' ? 'digid' : 'eherkenning',
-        profileType: req.query.profileType,
+        ...(req.query.profileType === 'private'
+          ? { authMethod: 'digid', profileType: 'private' }
+          : { authMethod: 'eherkenning', profileType: 'commercial' }),
         id,
         sid: res.locals.authProfileAndToken.profile.sid,
       },

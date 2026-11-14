@@ -7,6 +7,7 @@ import type {
 } from '../../../../../../server/services/afis/afis-types.ts';
 import { bffApiHost } from '../../../../../../testing/setup.ts';
 import { ONE_MINUTE_MS } from '../../../../../../universal/config/app.ts';
+import { useAppStateStore } from '../../../../../hooks/useAppStateStore.ts';
 import { AFIS_EMANDATE_LONG_DURATION_THRESHOLD_MS } from './Afis-thema-config.ts';
 import {
   useSignRequestPayloadStorage,
@@ -15,11 +16,58 @@ import {
 } from './useAfisEMandatesSignRequest.tsx';
 
 function clearLocalStorage() {
-  window.localStorage.removeItem('afis-emandate-status-check-payload');
+  const keys = Array.from({ length: window.localStorage.length }, (_, index) =>
+    window.localStorage.key(index)
+  );
+  for (const key of keys) {
+    if (key?.startsWith('afis-emandate-status-check-payload')) {
+      window.localStorage.removeItem(key);
+    }
+  }
 }
 
 describe('useAfisEMandatesSignRequest', () => {
   describe('useSignRequestPayloadStorage', () => {
+    it('keeps signing payloads for the same creditor separate between accounts', () => {
+      useAppStateStore.setState({
+        AFIS: {
+          status: 'OK',
+          content: {
+            isKnown: true,
+            businessPartnerIdEncrypted: 'account-a-reference',
+            selectionKey: 'signing-test-session',
+            facturen: null,
+            accounts: [
+              {
+                id: 'a',
+                name: 'A',
+                vestigingsnummer: null,
+                businessPartnerIdEncrypted: 'account-a-reference',
+              },
+              {
+                id: 'b',
+                name: 'B',
+                vestigingsnummer: '000038509490',
+                businessPartnerIdEncrypted: 'account-b-reference',
+              },
+            ],
+          },
+        },
+      });
+      const { result, rerender } = renderHook(
+        ({ accountId }) => useSignRequestPayloadStorage(accountId),
+        { initialProps: { accountId: 'a' } }
+      );
+      act(() => result.current.add('same-creditor', '1', 'payload-a'));
+      rerender({ accountId: 'b' });
+      expect(result.current.get('same-creditor')).toBeNull();
+      act(() => result.current.add('same-creditor', '2', 'payload-b'));
+      rerender({ accountId: 'a' });
+      expect(result.current.get('same-creditor')?.getPayload()).toBe(
+        'payload-a'
+      );
+    });
+
     beforeAll(() => {
       clearLocalStorage();
       mockdate.set(new Date('2024-06-15'));

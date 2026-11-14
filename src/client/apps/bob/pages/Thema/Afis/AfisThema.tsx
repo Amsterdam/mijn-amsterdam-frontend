@@ -13,10 +13,10 @@ import { MaButtonRouterLink } from '../../../../../components/MaLink/MaLink.tsx'
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { AfisAccountSelector } from './AfisAccountSelector.tsx';
 import { AfisFacturenTables } from './AfisFacturenTables.tsx';
 import { getVragenOverFactuurText } from './AfisVragenOverFactuurLink.tsx';
 import { useAfisThemaData } from './useAfisThemaData.hook.tsx';
-import { AfisAccountSelector } from './AfisAccountSelector.tsx';
 
 function PageContentTop({
   urlNaarBelastingen,
@@ -154,9 +154,7 @@ export function AfisThema() {
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
       pageLinks={pageLinks}
       pageContentTop={
-        <PageContentTop
-          urlNaarBelastingen={belastingenLinkListItem.to}
-        />
+        <PageContentTop urlNaarBelastingen={belastingenLinkListItem.to} />
       }
       pageContentMain={
         <>

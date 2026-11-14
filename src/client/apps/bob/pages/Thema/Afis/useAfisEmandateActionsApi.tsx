@@ -115,7 +115,9 @@ function useLifetimeUpdateApi(
 // All the actions that are performed by these api's (deactivate, update lifetime, request redirect url) result in a state change of the eMandate, so it doesn't make sense to use them in parallel.
 export function useEmandateApis(eMandate: AfisEMandateFrontend) {
   const { optimisticUpdateContent, fetchEMandates } = useAfisEMandatesApi();
-  const payloadStorage = useSignRequestPayloadStorage();
+  const payloadStorage = useSignRequestPayloadStorage(
+    eMandate.businessPartnerId
+  );
 
   const redirectUrlApi = useRedirectUrlApi(eMandate, payloadStorage);
   const deactivateApi = useDeactivateApi(eMandate, optimisticUpdateContent);

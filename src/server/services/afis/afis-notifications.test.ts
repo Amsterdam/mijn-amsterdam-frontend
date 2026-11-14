@@ -5,10 +5,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { themaConfig } from '../../../client/apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
 import { getAuthProfileAndToken } from '../../../testing/utils.ts';
 import type { ApiErrorResponse } from '../../../universal/helpers/api.ts';
-import {
-  apiDependencyError,
-  apiSuccessResult,
-} from '../../../universal/helpers/api.ts';
+import { apiSuccessResult } from '../../../universal/helpers/api.ts';
 import { fetchAfisAccounts } from './afis.ts';
 import { fetchAfisFacturenOverview } from './afis-facturen.ts';
 import {
@@ -123,9 +120,17 @@ describe('fetchAfisNotifications', () => {
   const authProfileAndToken = getAuthProfileAndToken();
 
   beforeEach(() => {
-    (fetchAfisAccounts as Mock).mockResolvedValue(apiSuccessResult([
-      { id: '96', businessPartnerId: '96', businessPartnerIdEncrypted: 'reference-a', vestigingsnummer: null, name: null },
-    ]));
+    (fetchAfisAccounts as Mock).mockResolvedValue(
+      apiSuccessResult([
+        {
+          id: '96',
+          businessPartnerId: '96',
+          businessPartnerIdEncrypted: 'reference-a',
+          vestigingsnummer: null,
+          name: null,
+        },
+      ])
+    );
   });
 
   it('should return notifications if fetchIsKnownInAFIS is successful', async () => {
@@ -170,37 +175,73 @@ describe('fetchAfisNotifications', () => {
 
     const result = await fetchAfisNotifications(authProfileAndToken);
     expect(result.content?.notifications).toEqual([
-      expect.objectContaining({ title: 'Aantal openstaande facturen niet beschikbaar' }),
+      expect.objectContaining({
+        title: 'Aantal openstaande facturen niet beschikbaar',
+      }),
     ]);
   });
 
   it('aggregates invoices from all authorized accounts into a single summary', async () => {
-    (fetchAfisAccounts as Mock).mockResolvedValue(apiSuccessResult([
-      { businessPartnerId: '96' }, { businessPartnerId: '113' },
-    ]));
-    (fetchAfisFacturenOverview as Mock).mockImplementation(async (_sessionID, payload) => apiSuccessResult({
-      open: { facturen: [createAfisFactuur(payload.businessPartnerID, 'openstaand', 'same-invoice-number', '2026-11-13')] },
-    }));
+    (fetchAfisAccounts as Mock).mockResolvedValue(
+      apiSuccessResult([
+        { businessPartnerId: '96' },
+        { businessPartnerId: '113' },
+      ])
+    );
+    (fetchAfisFacturenOverview as Mock).mockImplementation(
+      async (_sessionID, payload) =>
+        apiSuccessResult({
+          open: {
+            facturen: [
+              createAfisFactuur(
+                payload.businessPartnerID,
+                'openstaand',
+                'same-invoice-number',
+                '2026-11-13'
+              ),
+            ],
+          },
+        })
+    );
 
     const result = await fetchAfisNotifications(authProfileAndToken);
 
     expect(result.content?.notifications).toHaveLength(1);
-    expect(result.content?.notifications[0].description).toContain('2 openstaande facturen');
+    expect(result.content?.notifications[0].description).toContain(
+      '2 openstaande facturen'
+    );
   });
 
   it('does not present a partial total when an authorized account fails', async () => {
-    (fetchAfisAccounts as Mock).mockResolvedValue(apiSuccessResult([
-      { businessPartnerId: '96' }, { businessPartnerId: '113' },
-    ]));
+    (fetchAfisAccounts as Mock).mockResolvedValue(
+      apiSuccessResult([
+        { businessPartnerId: '96' },
+        { businessPartnerId: '113' },
+      ])
+    );
     (fetchAfisFacturenOverview as Mock)
-      .mockResolvedValueOnce(apiSuccessResult({ open: { facturen: [createAfisFactuur('1', 'openstaand', '1', '2026-11-13')] } }))
-      .mockResolvedValueOnce({ status: 'ERROR', content: null, message: 'Unavailable' });
+      .mockResolvedValueOnce(
+        apiSuccessResult({
+          open: {
+            facturen: [createAfisFactuur('1', 'openstaand', '1', '2026-11-13')],
+          },
+        })
+      )
+      .mockResolvedValueOnce({
+        status: 'ERROR',
+        content: null,
+        message: 'Unavailable',
+      });
 
     const result = await fetchAfisNotifications(authProfileAndToken);
 
     expect(result.content?.notifications).toEqual([
-      expect.objectContaining({ title: 'Aantal openstaande facturen niet beschikbaar' }),
+      expect.objectContaining({
+        title: 'Aantal openstaande facturen niet beschikbaar',
+      }),
     ]);
-    expect(result.content?.notifications[0].description).not.toContain('1 openstaande');
+    expect(result.content?.notifications[0].description).not.toContain(
+      '1 openstaande'
+    );
   });
 });
