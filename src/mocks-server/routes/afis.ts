@@ -7,6 +7,12 @@ import AFGEHANDELDE_TERMIJN_FACTUREN from '../fixtures/afis/afgehandeldetermijn-
   type: 'json',
 };
 import ARC_DOC_ID from '../fixtures/afis/arc-doc-id.json' with { type: 'json' };
+import BUSINESSPARTNERS from '../fixtures/afis/businesspartners.json' with {
+  type: 'json',
+};
+import BUSINESSPARTNERS_KVK from '../fixtures/afis/businesspartners-kvk.json' with {
+  type: 'json',
+};
 import DOCUMENT_RESPONSE from '../fixtures/afis/document.json' with {
   type: 'json',
 };
@@ -89,15 +95,20 @@ export const routes: MockRouteDefinition[] = [
     url: `${BASE_URL}/businesspartner/KVK`,
     method: 'POST',
     handler: {
-      type: 'json',
-      status: 200,
-      body: {
-        Record: {
-          KVK: 55555555,
-          Zakenpartnernummer: '8888888888',
-          Blokkade: 'Nee',
-          Gevonden: 'Ja',
-        },
+      type: 'middleware',
+      middleware: (req, res) => {
+        const body = req.body as {
+          KVK?: string | number;
+          Vestigingsnummer?: string;
+        };
+        const records = BUSINESSPARTNERS_KVK.Record.filter(
+          (record) =>
+            String(record.KVK) === String(body.KVK) &&
+            (!body.Vestigingsnummer ||
+              ('Vestigingsnummer' in record &&
+                record.Vestigingsnummer === body.Vestigingsnummer))
+        );
+        return res.send({ Record: records });
       },
     },
   },
@@ -106,24 +117,20 @@ export const routes: MockRouteDefinition[] = [
     url: `${BASE_URL}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner`,
     method: 'GET',
     handler: {
-      type: 'json',
-      status: 200,
-      body: {
-        feed: {
-          entry: [
-            {
-              content: {
-                '@type': 'application/xml',
-                properties: {
-                  BusinessPartner: 515177,
-                  BusinessPartnerFullName: 'Gerrit Expeditions BV',
-                  FirstName: 'G.',
-                  LastName: 'Expeditions BV',
-                },
-              },
-            },
-          ],
-        },
+      type: 'middleware',
+      middleware: (req, res) => {
+        const businessPartnerId =
+          queryValue(req.query.$filter)
+            .match(/^BusinessPartner\s+eq\s+'(\d+)'$/)?.[1]
+            .replace(/^0+/, '') || null;
+        const entry = BUSINESSPARTNERS.feed.entry.filter(
+          (partner) =>
+            String(partner.content.properties.BusinessPartner).replace(
+              /^0+/,
+              ''
+            ) === businessPartnerId
+        );
+        return res.send({ feed: { entry } });
       },
     },
   },

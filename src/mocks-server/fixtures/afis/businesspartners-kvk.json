@@ -1,0 +1,44 @@
+{
+  "Record": [
+    {
+      "KVK": 999999999,
+      "Zakenpartnernummer": "0000000001",
+      "Blokkade": "Nee",
+      "Gevonden": "Ja"
+    },
+    {
+      "KVK": 999999999,
+      "Vestigingsnummer": "000021946485",
+      "Zakenpartnernummer": "0000000002",
+      "Blokkade": "Nee",
+      "Gevonden": "Ja"
+    },
+    {
+      "KVK": 999999999,
+      "Vestigingsnummer": "000020353707",
+      "Zakenpartnernummer": "0000000003",
+      "Blokkade": "Ja",
+      "Gevonden": "Ja"
+    },
+    {
+      "KVK": 999999999,
+      "Zakenpartnernummer": "0000000004",
+      "Blokkade": "Nee",
+      "Gevonden": "Ja"
+    },
+    {
+      "KVK": 999999999,
+      "Vestigingsnummer": "000038509490",
+      "Zakenpartnernummer": "0000000005",
+      "Blokkade": "Nee",
+      "Gevonden": "Ja"
+    },
+    {
+      "KVK": 999999999,
+      "Vestigingsnummer": "000007678487",
+      "Zakenpartnernummer": "0000000006",
+      "Blokkade": "Nee",
+      "Gevonden": "Ja"
+    }
+  ]
+}

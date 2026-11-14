@@ -1,0 +1,83 @@
+{
+  "feed": {
+    "entry": [
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "BusinessPartner": 1,
+            "BusinessPartnerFullName": "Voorbeeld Bedrijf A BV",
+            "FirstName": "Alex",
+            "LastName": "Voorbeeld"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "BusinessPartner": 2,
+            "BusinessPartnerFullName": "Voorbeeld Bedrijf B BV",
+            "FirstName": "Robin",
+            "LastName": "Voorbeeld"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "BusinessPartner": 3,
+            "BusinessPartnerFullName": "Voorbeeld Bedrijf C BV",
+            "FirstName": "Sam",
+            "LastName": "Voorbeeld"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "BusinessPartner": 4,
+            "BusinessPartnerFullName": null,
+            "FirstName": null,
+            "LastName": null
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "BusinessPartner": 5,
+            "BusinessPartnerFullName": null,
+            "FirstName": null,
+            "LastName": null
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "BusinessPartner": 6,
+            "BusinessPartnerFullName": "Voorbeeld Bedrijf D BV",
+            "FirstName": "Jamie",
+            "LastName": "Voorbeeld"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "BusinessPartner": 67899,
+            "BusinessPartnerFullName": "Sam Voorbeeld",
+            "FirstName": "Sam",
+            "LastName": "Voorbeeld"
+          }
+        }
+      }
+    ]
+  }
+}
