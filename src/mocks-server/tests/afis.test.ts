@@ -20,6 +20,142 @@ function requestMockRoute(id: string, request: Partial<Request>) {
 }
 
 describe('AFIS local account mocks', () => {
+  it('returns different invoices for different customers and keeps counts before pagination', () => {
+    const first = requestMockRoute('get-afis-facturen', {
+      query: { $filter: "Customer eq '0000000001' and IsCleared eq false" },
+    });
+    const second = requestMockRoute('get-afis-facturen', {
+      query: { $filter: "Customer eq '0000000002' and IsCleared eq false" },
+    });
+    const limited = requestMockRoute('get-afis-facturen', {
+      query: {
+        $filter: "Customer eq '0000000001' and IsCleared eq false",
+        $top: '1',
+      },
+    });
+
+    expect(first.feed.entry.length).toBeGreaterThan(1);
+    expect(second.feed.entry.length).toBeGreaterThan(0);
+    const firstDocuments = first.feed.entry.map(
+      (entry: { content: { properties: { AccountingDocument: string } } }) =>
+        entry.content.properties.AccountingDocument
+    );
+    for (const entry of second.feed.entry) {
+      expect(firstDocuments).not.toContain(
+        entry.content.properties.AccountingDocument
+      );
+      expect(entry.content.properties.Customer).toBe('0000000002');
+    }
+    expect(limited.feed.entry).toHaveLength(1);
+    expect(limited.feed.count).toBe(first.feed.entry.length);
+  });
+
+  it.each([
+    'IsCleared eq false',
+    "IsCleared eq true and (DunningLevel ne '3' or ReverseDocument ne '')",
+    "IsCleared eq true and DunningLevel eq '3'",
+    "PaymentTerms gt 'B' and SEPAMandate ne '' and IsCleared eq true and (DunningLevel ne '3' or ReverseDocument ne '')",
+  ])(
+    'does not expose another account through invoice filter %s',
+    (stateFilter) => {
+      const response = requestMockRoute('get-afis-facturen', {
+        query: { $filter: `Customer eq '0000099413' and ${stateFilter}` },
+      });
+
+      expect(response.feed).toEqual({ entry: [], count: 0 });
+    }
+  );
+
+  it('matches padded and unpadded customer and sender identifiers', () => {
+    for (const [routeId, field] of [
+      ['get-afis-facturen', 'Customer'],
+      ['get-afis-emandates', 'SndId'],
+    ]) {
+      const stateFilter = field === 'Customer' ? ' and IsCleared eq false' : '';
+      const padded = requestMockRoute(routeId, {
+        query: { $filter: `${field} eq '0000000002'${stateFilter}` },
+      });
+      const unpadded = requestMockRoute(routeId, {
+        query: { $filter: `${field} eq '2'${stateFilter}` },
+      });
+      expect(padded).toEqual(unpadded);
+    }
+  });
+
+  it('returns only the selected account mandates', () => {
+    const first = requestMockRoute('get-afis-emandates', {
+      query: { $filter: "SndId eq '0000000001'" },
+    });
+    const second = requestMockRoute('get-afis-emandates', {
+      query: { $filter: "SndId eq '0000000002'" },
+    });
+
+    expect(first.feed.entry.length).toBeGreaterThan(0);
+    expect(second.feed.entry.length).toBeGreaterThan(0);
+    expect(
+      first.feed.entry.every(
+        (entry: { content: { properties: { SndId: string } } }) =>
+          entry.content.properties.SndId === '0000000001'
+      )
+    ).toBe(true);
+    expect(
+      second.feed.entry.every(
+        (entry: { content: { properties: { SndId: string } } }) =>
+          entry.content.properties.SndId === '0000000002'
+      )
+    ).toBe(true);
+    const firstIds = first.feed.entry.map(
+      (entry: { content: { properties: { IMandateId: string } } }) =>
+        entry.content.properties.IMandateId
+    );
+    for (const entry of second.feed.entry) {
+      expect(firstIds).not.toContain(entry.content.properties.IMandateId);
+    }
+  });
+
+  it('returns no mandates for an unknown account', () => {
+    const response = requestMockRoute('get-afis-emandates', {
+      query: { $filter: "SndId eq '0000099413'" },
+    });
+    expect(response.feed).toEqual({ entry: [], count: 0 });
+  });
+
+  it('keeps mandate creation and updates isolated to the selected account', () => {
+    const otherAccountRequest = { query: { $filter: "SndId eq '0000000002'" } };
+    const otherAccountBefore = structuredClone(
+      requestMockRoute('get-afis-emandates', otherAccountRequest)
+    );
+    const created = requestMockRoute('post-afis-emandates', {
+      body: {
+        SndId: '0000000001',
+        SndDebtorId: 'AFVAL',
+        SndName1: 'Voorbeeld Test',
+        SndIban: 'NL21RABO0110055004',
+      },
+    });
+    requestMockRoute('put-afis-emandates', {
+      body: { IMandateId: created.content.properties.IMandateId, Status: '0' },
+    });
+    const selectedAccount = requestMockRoute('get-afis-emandates', {
+      query: { $filter: "SndId eq '0000000001'" },
+    });
+
+    expect(selectedAccount.feed.entry).toContainEqual(
+      expect.objectContaining({
+        content: expect.objectContaining({
+          properties: expect.objectContaining({
+            IMandateId: created.content.properties.IMandateId,
+            SndId: '0000000001',
+            Status: '0',
+          }),
+        }),
+      })
+    );
+    expect(requestMockRoute('get-afis-emandates', otherAccountRequest)).toEqual(
+      otherAccountBefore
+    );
+  });
+
   it('returns sequential accounts for the default local eHerkenning KvK', () => {
     const response = requestMockRoute('post-afis-businesspartner-kvk', {
       body: { KVK: '999999999' },

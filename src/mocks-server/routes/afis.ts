@@ -40,12 +40,64 @@ type MandatesResponse = {
 
 type FacturenResponse = {
   feed: {
-    entry: Array<Record<string, unknown>>;
+    entry: MandateEntry[];
     count?: number;
   };
 };
 
-const eMandates = E_MANDATES as MandatesResponse;
+const accountIds = [
+  ...BUSINESSPARTNERS_KVK.Record.map((record) => record.Zakenpartnernummer),
+  '0000067899',
+];
+const invoiceOwners = new Map<string, string>();
+const mandateOwners = new Map<string, string>();
+
+function normalizeBusinessPartnerId(value: unknown) {
+  return String(value).replace(/^0+(?=\d)/, '');
+}
+
+function seedFacturen(response: FacturenResponse): FacturenResponse {
+  const result = structuredClone(response);
+  for (const entry of result.feed.entry) {
+    const properties = entry.content.properties;
+    const documentId = String(properties.AccountingDocument);
+    if (!invoiceOwners.has(documentId)) {
+      invoiceOwners.set(
+        documentId,
+        accountIds[invoiceOwners.size % accountIds.length]
+      );
+    }
+    const accountId = invoiceOwners.get(documentId)!;
+    properties.Customer = accountId;
+    if (
+      typeof properties.SEPAMandate === 'string' ||
+      typeof properties.SEPAMandate === 'number'
+    ) {
+      mandateOwners.set(
+        normalizeBusinessPartnerId(properties.SEPAMandate),
+        accountId
+      );
+    }
+  }
+  return result;
+}
+
+const facturenByState: Record<string, FacturenResponse> = {
+  openstaande: seedFacturen(OPENSTAANDE_FACTUREN as FacturenResponse),
+  afgehandelde: seedFacturen(AFGEHANDELDE_FACTUREN as FacturenResponse),
+  afgehandeldetermijn: seedFacturen(
+    AFGEHANDELDE_TERMIJN_FACTUREN as FacturenResponse
+  ),
+  overgedragen: seedFacturen(OVERGEDRAGEN_FACTUREN as FacturenResponse),
+};
+
+const eMandates = structuredClone(E_MANDATES) as MandatesResponse;
+for (const [index, entry] of eMandates.feed.entry.entries()) {
+  const properties = entry.content.properties;
+  properties.SndId =
+    mandateOwners.get(normalizeBusinessPartnerId(properties.IMandateId)) ??
+    accountIds[index % accountIds.length];
+}
 
 const BASE = '/afis';
 const REST_BASE = `${BASE}/RESTAdapter`;
@@ -57,6 +109,16 @@ function queryValue(value: unknown): string {
   }
 
   return typeof value === 'string' ? value : '';
+}
+
+function businessPartnerFromFilter(
+  value: unknown,
+  field: 'Customer' | 'SndId'
+) {
+  const match = queryValue(value).match(
+    new RegExp(`(?:^|\\s|\\()${field}\\s+eq\\s+'(\\d+)'(?=\\s|\\)|$)`)
+  );
+  return match ? normalizeBusinessPartnerId(match[1]) : null;
 }
 
 export const routes: MockRouteDefinition[] = [
@@ -241,15 +303,30 @@ export const routes: MockRouteDefinition[] = [
           return res.status(httpConstants.HTTP_STATUS_FORBIDDEN).end();
         }
 
-        const facturenByState: Record<string, FacturenResponse> = {
-          openstaande: OPENSTAANDE_FACTUREN as FacturenResponse,
-          afgehandelde: AFGEHANDELDE_FACTUREN as FacturenResponse,
-          afgehandeldetermijn:
-            AFGEHANDELDE_TERMIJN_FACTUREN as FacturenResponse,
-          overgedragen: OVERGEDRAGEN_FACTUREN as FacturenResponse,
-        };
-
-        let feedEntries = [...facturenByState[stateName].feed.entry];
+        const customer = businessPartnerFromFilter(filterQuery, 'Customer');
+        const includedDocuments = Array.from(
+          filterQuery.matchAll(/AccountingDocument eq '([^']+)'/g),
+          (match) => match[1]
+        );
+        const excludedDocuments = Array.from(
+          filterQuery.matchAll(/AccountingDocument ne '([^']+)'/g),
+          (match) => match[1]
+        );
+        let feedEntries = facturenByState[stateName].feed.entry.filter(
+          (entry) => {
+            const properties = entry.content.properties;
+            const documentId = String(properties.AccountingDocument);
+            return (
+              normalizeBusinessPartnerId(properties.Customer) === customer &&
+              (!includedDocuments.length ||
+                includedDocuments.includes(documentId)) &&
+              !excludedDocuments.includes(documentId) &&
+              (!filterQuery.includes("InvoiceReference ne ''") ||
+                (typeof properties.InvoiceReference === 'string' &&
+                  properties.InvoiceReference !== ''))
+            );
+          }
+        );
         const count = feedEntries.length;
 
         const topValue = Number(queryValue(req.query?.$top));
@@ -305,8 +382,14 @@ export const routes: MockRouteDefinition[] = [
     method: 'GET',
     handler: {
       type: 'middleware',
-      middleware: (_req, res) => {
-        return res.send(eMandates);
+      middleware: (req, res) => {
+        const senderId = businessPartnerFromFilter(req.query.$filter, 'SndId');
+        const entry = eMandates.feed.entry.filter(
+          (mandate) =>
+            normalizeBusinessPartnerId(mandate.content.properties.SndId) ===
+            senderId
+        );
+        return res.send({ feed: { entry, count: entry.length } });
       },
     },
   },
@@ -320,11 +403,17 @@ export const routes: MockRouteDefinition[] = [
         const body = req.body as Record<string, unknown>;
         const lastMandate =
           eMandates.feed.entry[eMandates.feed.entry.length - 1];
-        const lastId = String(lastMandate.content.properties.IMandateId);
+        const lastId = Math.max(
+          ...eMandates.feed.entry.map((mandate) =>
+            Number(mandate.content.properties.IMandateId)
+          )
+        );
         const existingMandate = eMandates.feed.entry.find(
           (mandate) =>
+            normalizeBusinessPartnerId(mandate.content.properties.SndId) ===
+              normalizeBusinessPartnerId(body.SndId) &&
             String(mandate.content.properties.SndDebtorId) ===
-            String(body.SndDebtorId)
+              String(body.SndDebtorId)
         );
 
         const mandateBase = existingMandate ?? lastMandate;
@@ -336,7 +425,7 @@ export const routes: MockRouteDefinition[] = [
             properties: {
               ...mandateBase.content.properties,
               ...body,
-              IMandateId: String(parseInt(lastId, 10) + 1),
+              IMandateId: String(lastId + 1),
               Status: '1',
             },
           },
