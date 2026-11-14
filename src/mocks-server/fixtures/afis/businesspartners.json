@@ -17,7 +17,7 @@
           "@type": "application/xml",
           "properties": {
             "BusinessPartner": 2,
-            "BusinessPartnerFullName": "Voorbeeld Bedrijf B BV",
+            "BusinessPartnerFullName": "Personeelsvoorziening begraafplaats Carspelhof",
             "FirstName": "Robin",
             "LastName": "Voorbeeld"
           }
@@ -61,8 +61,74 @@
           "@type": "application/xml",
           "properties": {
             "BusinessPartner": 6,
-            "BusinessPartnerFullName": "Voorbeeld Bedrijf D BV",
+            "BusinessPartnerFullName": "Fort Ossenmarkt",
             "FirstName": "Jamie",
+            "LastName": "Voorbeeld"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "BusinessPartner": 7,
+            "BusinessPartnerFullName": "Sanitair voorziening Korte Stammerdijk",
+            "FirstName": "Alex",
+            "LastName": "Voorbeeld"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "BusinessPartner": 8,
+            "BusinessPartnerFullName": "Gebouw Papelaan 99",
+            "FirstName": "Robin",
+            "LastName": "Voorbeeld"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "BusinessPartner": 9,
+            "BusinessPartnerFullName": "Verenigingsgebouw De Klomp",
+            "FirstName": "Sam",
+            "LastName": "Voorbeeld"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "BusinessPartner": 10,
+            "BusinessPartnerFullName": "De toren van de Grote Kerk te Weesp",
+            "FirstName": "Jamie",
+            "LastName": "Voorbeeld"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "BusinessPartner": 11,
+            "BusinessPartnerFullName": "Sporthal Aetsveld",
+            "FirstName": "Alex",
+            "LastName": "Voorbeeld"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "BusinessPartner": 12,
+            "BusinessPartnerFullName": "Het bibliotheekgebouw",
+            "FirstName": "Robin",
             "LastName": "Voorbeeld"
           }
         }

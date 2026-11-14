@@ -1,6 +1,9 @@
 import type { Request, Response } from 'express';
 import { describe, expect, it, vi } from 'vitest';
 
+import BENK_VESTIGINGEN from '../fixtures/hr-kvk/vestigingen.json' with {
+  type: 'json',
+};
 import { routes } from '../routes/afis.ts';
 import type { MockServerCore } from '../types.ts';
 
@@ -20,6 +23,28 @@ function requestMockRoute(id: string, request: Partial<Request>) {
 }
 
 describe('AFIS local account mocks', () => {
+  it('uses the same vestigingsnummers and names as the BENK vestigingen fixture', () => {
+    const response = requestMockRoute('post-afis-businesspartner-kvk', {
+      body: { KVK: '999999999' },
+    });
+    for (const vestiging of BENK_VESTIGINGEN._embedded.vestigingen) {
+      const account = response.Record.find(
+        (record: { Vestigingsnummer?: string }) =>
+          record.Vestigingsnummer === vestiging.vestigingsnummer
+      );
+      expect(account, vestiging.vestigingsnummer).toBeDefined();
+      const details = requestMockRoute('get-afis-businesspartner-details', {
+        query: {
+          $filter: `BusinessPartner eq '${account.Zakenpartnernummer}'`,
+        },
+      });
+      expect(
+        details.feed.entry[0].content.properties.BusinessPartnerFullName
+      ).toBe(vestiging.naam ?? vestiging.eersteHandelsnaam);
+      expect(account.Blokkade).toBe('Nee');
+    }
+  });
+
   it('returns different invoices for different customers and keeps counts before pagination', () => {
     const first = requestMockRoute('get-afis-facturen', {
       query: { $filter: "Customer eq '0000000001' and IsCleared eq false" },
@@ -172,6 +197,12 @@ describe('AFIS local account mocks', () => {
       '0000000004',
       '0000000005',
       '0000000006',
+      '0000000007',
+      '0000000008',
+      '0000000009',
+      '0000000010',
+      '0000000011',
+      '0000000012',
     ]);
     expect(
       response.Record.every(
@@ -187,13 +218,13 @@ describe('AFIS local account mocks', () => {
 
   it('honors a restricted vestigingsnummer', () => {
     const response = requestMockRoute('post-afis-businesspartner-kvk', {
-      body: { KVK: '999999999', Vestigingsnummer: '000021946485' },
+      body: { KVK: '999999999', Vestigingsnummer: '000006363601' },
     });
 
     expect(response.Record).toEqual([
       expect.objectContaining({
         Zakenpartnernummer: '0000000002',
-        Vestigingsnummer: '000021946485',
+        Vestigingsnummer: '000006363601',
       }),
     ]);
   });
@@ -210,7 +241,8 @@ describe('AFIS local account mocks', () => {
           content: expect.objectContaining({
             properties: expect.objectContaining({
               BusinessPartner: 2,
-              BusinessPartnerFullName: 'Voorbeeld Bedrijf B BV',
+              BusinessPartnerFullName:
+                'Personeelsvoorziening begraafplaats Carspelhof',
             }),
           }),
         }),

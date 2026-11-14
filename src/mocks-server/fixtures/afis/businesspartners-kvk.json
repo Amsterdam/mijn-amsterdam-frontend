@@ -8,7 +8,7 @@
     },
     {
       "KVK": 999999999,
-      "Vestigingsnummer": "000021946485",
+      "Vestigingsnummer": "000006363601",
       "Zakenpartnernummer": "0000000002",
       "Blokkade": "Nee",
       "Gevonden": "Ja"
@@ -37,6 +37,48 @@
       "KVK": 999999999,
       "Vestigingsnummer": "000007678487",
       "Zakenpartnernummer": "0000000006",
+      "Blokkade": "Nee",
+      "Gevonden": "Ja"
+    },
+    {
+      "KVK": 999999999,
+      "Vestigingsnummer": "000006363652",
+      "Zakenpartnernummer": "0000000007",
+      "Blokkade": "Nee",
+      "Gevonden": "Ja"
+    },
+    {
+      "KVK": 999999999,
+      "Vestigingsnummer": "000006363687",
+      "Zakenpartnernummer": "0000000008",
+      "Blokkade": "Nee",
+      "Gevonden": "Ja"
+    },
+    {
+      "KVK": 999999999,
+      "Vestigingsnummer": "000006363709",
+      "Zakenpartnernummer": "0000000009",
+      "Blokkade": "Nee",
+      "Gevonden": "Ja"
+    },
+    {
+      "KVK": 999999999,
+      "Vestigingsnummer": "000006363717",
+      "Zakenpartnernummer": "0000000010",
+      "Blokkade": "Nee",
+      "Gevonden": "Ja"
+    },
+    {
+      "KVK": 999999999,
+      "Vestigingsnummer": "000006363733",
+      "Zakenpartnernummer": "0000000011",
+      "Blokkade": "Nee",
+      "Gevonden": "Ja"
+    },
+    {
+      "KVK": 999999999,
+      "Vestigingsnummer": "000006363768",
+      "Zakenpartnernummer": "0000000012",
       "Blokkade": "Nee",
       "Gevonden": "Ja"
     }
