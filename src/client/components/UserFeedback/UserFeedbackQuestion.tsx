@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import {
-  CharacterCount,
   Field,
+  FormFieldStatus,
   Paragraph,
   TextArea,
   TextInput,
@@ -34,10 +34,12 @@ function UserFeedbackFormTextarea({
         defaultValue={value}
       />
       {!!question?.maxCharacters && (
-        <CharacterCount
-          length={characterCount}
-          maxLength={question?.maxCharacters}
-        />
+        <FormFieldStatus>
+          <FormFieldStatus.CharacterCount
+            length={characterCount}
+            maxLength={question?.maxCharacters}
+          />
+        </FormFieldStatus>
       )}
     </>
   );
