@@ -497,7 +497,7 @@ function isDownloadAvailable(documentDate: string): boolean {
 }
 
 const DUNNING_BLOCKING_LEVEL_OVERGEDRAGEN_AAN_BELASTINGEN = 3;
-const paymentTermsRegex = /(B|0)\d{3}/;
+const paymentTermsRegex = /B\d{3}/;
 
 function determineFactuurStatus(
   sourceInvoice: AfisFactuurPropertiesSource,
