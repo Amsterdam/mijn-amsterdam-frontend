@@ -7,6 +7,7 @@ import type {
 import { isLoading } from '../../../../../helpers/api.ts';
 import { themaConfig } from './Inkomen-thema-config.ts';
 import { InkomenDetailBbz } from './InkomenDetailBbz.tsx';
+import { InkomenDetailBijzondereBijstand } from './InkomenDetailBijzondereBijstand.tsx';
 import { InkomenDetailTonk } from './InkomenDetailTonk.tsx';
 import { InkomenDetailTozo } from './InkomenDetailTozo.tsx';
 import { InkomenDetailUitkering } from './InkomenDetailUitkering.tsx';
@@ -33,6 +34,11 @@ export const InkomenRoutes = [
     Component: InkomenDetailUitkering,
   },
   {
+    route: themaConfig.detailPageBijzondereBijstand.route.path,
+    Component: InkomenDetailBijzondereBijstand,
+    isActive: themaConfig.featureToggle.bijzondereBijstandActive,
+  },
+  {
     route: themaConfig.detailPageBbz.route.path,
     Component: InkomenDetailBbz,
     isActive: FeatureToggle.inkomenBBZActive,
@@ -51,7 +57,7 @@ export const menuItem: ThemaMenuItem = {
   IconSVG: InkomenIcon,
 };
 
-function isInkomenThemaActive(appState: AppState): boolean {
+function isInkomenThemaActive(appState: Partial<AppState>): boolean {
   const { WPI_AANVRAGEN, WPI_SPECIFICATIES, WPI_TOZO, WPI_TONK, WPI_BBZ } =
     appState;
   const { jaaropgaven, uitkeringsspecificaties } =

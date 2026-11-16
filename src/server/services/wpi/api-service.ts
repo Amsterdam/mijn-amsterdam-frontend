@@ -19,10 +19,7 @@ import { requestData } from '../../helpers/source-api-request.ts';
 import { captureMessage } from '../monitoring.ts';
 import type { DocumentDownloadData } from '../shared/document-download-route-handler.ts';
 import { DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE } from '../shared/document-download-route-handler.ts';
-import {
-  requestProcess as bijstandsuitkeringRequestProcessLabels,
-  getNotifications as getBijstandsuitkeringNotifications,
-} from './content/bijstandsuitkering.ts';
+import { wpiAanvragenConfig } from './config-and-types.ts';
 import {
   getNotifications as getSpecificatieNotifications,
   transformIncomeSpecificationItem,
@@ -40,6 +37,10 @@ import type {
   WpiRequestProcess,
   WpiRequestProcessLabels,
 } from './wpi-types.ts';
+
+const activeWpiAanvragenConfig = wpiAanvragenConfig.filter(
+  ({ isActive }) => isActive
+);
 
 type FilterResponse = (
   response: ApiResponse<(WpiRequestProcess | null)[]>
@@ -122,8 +123,10 @@ export async function fetchBijstandsuitkering(
     return (
       response.content
         ?.filter((requestProcess) => requestProcess !== null)
-        .filter(
-          (requestProcess) => requestProcess?.about === 'Bijstandsuitkering'
+        .filter((requestProcess) =>
+          activeWpiAanvragenConfig.some(
+            (config) => config.about === requestProcess.about
+          )
         )
         .map((requestProcess) => addLink(requestProcess)) ?? []
     );
@@ -131,7 +134,10 @@ export async function fetchBijstandsuitkering(
 
   const response = await fetchRequestProcess(
     authProfileAndToken,
-    () => bijstandsuitkeringRequestProcessLabels,
+    (requestProcess) =>
+      activeWpiAanvragenConfig.find(
+        ({ about }) => about === requestProcess.about
+      )?.labels ?? null,
     {
       apiConfigName: 'WPI_AANVRAGEN',
       filterResponse,
@@ -261,7 +267,13 @@ export async function fetchWpiNotifications(
       await fetchBijstandsuitkering(authProfileAndToken);
 
     if (status === 'OK' && Array.isArray(content)) {
-      notifications.push(...getBijstandsuitkeringNotifications(content));
+      notifications.push(
+        ...activeWpiAanvragenConfig.flatMap(({ about, getNotifications }) =>
+          getNotifications(
+            content.filter((requestProcess) => requestProcess.about === about)
+          )
+        )
+      );
     }
   }
 

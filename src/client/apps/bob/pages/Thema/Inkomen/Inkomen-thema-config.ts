@@ -14,14 +14,21 @@ import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app.ts';
+import {
+  isEnabled,
+  propagateFeatureToggles,
+} from '../../../config/feature-toggles.ts';
 
 const THEMA_ID = 'INKOMEN';
 const THEMA_TITLE = 'Inkomen';
+const bijzondereBijstandActive = isEnabled('INKOMEN.bijzondereBijstand');
 
 export const wpiLinks = {
   BIJSTANDSUITKERING:
     'https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/',
   BBZ: 'https://www.amsterdam.nl/ondernemen/ondersteuning/bijstand-lening-aanvragen-ondernemers/',
+  BIJZONDERE_BIJSTAND:
+    'https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/bijzondere-bijstand/',
 };
 
 type WithlistPageSpecificaties = PageConfig<'listPageSpecificaties'>;
@@ -29,6 +36,8 @@ type WithDetailPageBbz = PageConfig<'detailPageBbz'>;
 type WithDetailPageTonk = PageConfig<'detailPageTonk'>;
 type WithDetailPageTozo = PageConfig<'detailPageTozo'>;
 type WithDetailPageUitkering = PageConfig<'detailPageUitkering'>;
+type WithDetailPageBijzondereBijstand =
+  PageConfig<'detailPageBijzondereBijstand'>;
 
 type InkomenThemaConfig = ThemaConfigBase &
   WithListPage &
@@ -36,14 +45,16 @@ type InkomenThemaConfig = ThemaConfigBase &
   WithDetailPageBbz &
   WithDetailPageTonk &
   WithDetailPageTozo &
-  WithDetailPageUitkering;
+  WithDetailPageUitkering &
+  WithDetailPageBijzondereBijstand;
 
-export const themaConfig: InkomenThemaConfig = {
+export const themaConfig = {
   id: THEMA_ID,
   title: THEMA_TITLE,
-  featureToggle: {
+  featureToggle: propagateFeatureToggles({
     active: true,
-  },
+    bijzondereBijstandActive,
+  }),
   profileTypes: ['private'],
   route: {
     path: '/inkomen',
@@ -65,7 +76,7 @@ export const themaConfig: InkomenThemaConfig = {
     {
       title: THEMA_TITLE,
       listItems: [
-        'Uw aanvraag voor een bijstandsuitkering of bijstand voor zelfstandigen (Bbz)',
+        `Uw aanvraag voor een bijstandsuitkering${bijzondereBijstandActive ? ', bijzondere bijstand' : ''} of bijstand voor zelfstandigen (Bbz)`,
         'De uitkeringsspecificaties en jaaropgaven van uw bijstandsuitkering of bijstand voor zelfstandigen (Bbz)',
         'Uw aanvraag voor de Tijdelijke overbruggingsregeling zelfstandig ondernemers (Tozo 1, 2, 3, 4 en 5)',
         'Uw aanvraag voor de Tijdelijke Ondersteuning Noodzakelijke Kosten (TONK)',
@@ -119,7 +130,14 @@ export const themaConfig: InkomenThemaConfig = {
       documentTitle: `Bijstandsuitkering | ${THEMA_TITLE}`,
     },
   },
-};
+  detailPageBijzondereBijstand: {
+    route: {
+      path: '/inkomen/bijzondere-bijstand/:id',
+      trackingUrl: '/inkomen/bijzondere-bijstand',
+      documentTitle: `Bijzondere Bijstand | ${THEMA_TITLE}`,
+    },
+  },
+} as const satisfies InkomenThemaConfig;
 
 export const REQUEST_PROCESS_COMPLETED_STATUS_IDS = [
   'besluit',
@@ -140,7 +158,7 @@ export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 const lopendeAanvragenDisplayProps: DisplayProps<WpiRequestProcess> = {
   props: {
-    detailLinkComponent: '',
+    detailLinkComponent: 'Regeling',
     dateStartFormatted: 'Datum aanvraag',
     displayStatus: 'Status',
   },
@@ -152,7 +170,7 @@ const lopendeAanvragenDisplayProps: DisplayProps<WpiRequestProcess> = {
 
 const afgehandeldeAanvragenDisplayProps: DisplayProps<WpiRequestProcess> = {
   props: {
-    detailLinkComponent: '',
+    detailLinkComponent: 'Regeling',
     dateStartFormatted: 'Datum aanvraag',
     dateEndFormatted: 'Datum besluit',
   },

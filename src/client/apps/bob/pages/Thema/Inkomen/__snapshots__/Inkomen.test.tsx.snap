@@ -167,9 +167,12 @@ exports[`<Inkomen /> > with items from AANVRAGEN, BBZ, TONK, TOZO and SPECIFICAT
                 <tr
                   class="ams-table__row"
                 >
-                  <td
-                    class="ams-table__cell"
-                  />
+                  <th
+                    class="ams-table__header-cell"
+                    style="width: 50%;"
+                  >
+                    Regeling
+                  </th>
                   <th
                     class="ams-table__header-cell"
                     style="width: 25%;"
@@ -276,9 +279,12 @@ exports[`<Inkomen /> > with items from AANVRAGEN, BBZ, TONK, TOZO and SPECIFICAT
                 <tr
                   class="ams-table__row"
                 >
-                  <td
-                    class="ams-table__cell"
-                  />
+                  <th
+                    class="ams-table__header-cell"
+                    style="width: 50%;"
+                  >
+                    Regeling
+                  </th>
                   <th
                     class="ams-table__header-cell"
                     style="width: 25%;"

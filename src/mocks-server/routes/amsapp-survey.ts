@@ -1,8 +1,8 @@
 import survey from '../fixtures/amsapp/survey.json' with { type: 'json' };
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'get-amsapp-survey',
     url: `${MOCK_BASE_PATH}/amsapp/survey/:id/versions/:version`,
@@ -175,4 +175,4 @@ export const routes: MockRouteDefinition[] = [
       },
     },
   },
-];
+]);

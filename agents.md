@@ -7,6 +7,13 @@ Attach **one** playbook to the agent (not both):
 
 Tell the agent the target path + expected behavior.
 
+## Reading typecheck output
+
+Run `pnpm run typecheck` from the repository root and wait for completion.
+Read the terminal diagnostics and exit code directly; do not redirect to a file.
+The script header alone is not a result. Report success only after confirming
+exit code `0`; if completion cannot be confirmed, report the check as unverified.
+
 ## Running tests without watch mode (Vitest)
 
 For any `pnpm run` script that executes `vitest`, prepend `CI=1` and append `-- --run --reporter=verbose`.
