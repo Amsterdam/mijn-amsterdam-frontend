@@ -21,10 +21,11 @@ import {
 } from '../../../helpers/zaken.ts';
 import { generateFullApiUrlBFF } from '../../../routing/route-helpers.ts';
 import { getStatusLineItems } from '../../zorgned/zorgned-status-line-items.ts';
-import type {
-  LeveringsVormTransformed,
-  LeveringsVormUitgeschreven,
-  ZorgnedAanvraagTransformed,
+import {
+  LEVERINGSVORM_MAPPING,
+  type LeveringsVormTransformed,
+  type LeveringsVormUitgeschreven,
+  type ZorgnedAanvraagTransformed,
 } from '../../zorgned/zorgned-types.ts';
 import { featureToggle, routes } from '../jzd-service-config.ts';
 import type { ZorgnedAanvraagTransformedWithMaApiProps } from '../jzd-types.ts';
@@ -95,22 +96,13 @@ function transformVoorzieningForFrontend(
     aanvraag,
     aanvragen
   );
-  const leveringsvormUitgeschreven: Record<
-    LeveringsVormTransformed,
-    LeveringsVormUitgeschreven
-  > = {
-    ZIN: 'Zorg in natura',
-    PGB: 'Persoonsgebonden budget',
-    '': null,
-  };
 
   const voorzieningFrontend: WMOVoorzieningFrontend = {
     id,
     title: capitalizeFirstLetter(aanvraag.titel),
     leverancier: aanvraag.leverancier,
     leveringsvorm: aanvraag.leveringsVorm,
-    leveringsvormUitgeschreven:
-      leveringsvormUitgeschreven[aanvraag.leveringsVorm],
+    leveringsvormUitgeschreven: LEVERINGSVORM_MAPPING[aanvraag.leveringsVorm],
     isActual: aanvraag.isActueel,
     link: {
       title: 'Meer informatie',

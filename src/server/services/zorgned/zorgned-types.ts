@@ -71,6 +71,15 @@ export type LeveringsVormUitgeschreven =
   | 'Zorg in natura'
   | 'Persoonsgebonden budget'
   | null;
+
+export const LEVERINGSVORM_MAPPING: Record<
+  LeveringsVormTransformed,
+  LeveringsVormUitgeschreven
+> = {
+  ZIN: 'Zorg in natura',
+  PGB: 'Persoonsgebonden budget',
+  '': null,
+};
 export type ProductSoortCode = string;
 export type ProductIdentificatie = string;
 export type CasusIdentificatie = string;
