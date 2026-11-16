@@ -62,7 +62,7 @@ export function MyThemasPanel({
                 <span className={styles.ThemaLink}>
                   {IconSVG && (
                     <Icon
-                      svg={IconSVG}
+                      svg={<IconSVG />}
                       size="heading-3"
                       className={styles.ThemaLinkIcon}
                       square

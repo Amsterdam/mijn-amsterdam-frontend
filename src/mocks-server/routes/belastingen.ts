@@ -1,8 +1,8 @@
 import BELASTINGEN from '../fixtures/belastingen.json' with { type: 'json' };
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'get-belastingen',
     url: `${MOCK_BASE_PATH}/belastingen`,
@@ -13,4 +13,4 @@ export const routes: MockRouteDefinition[] = [
       body: BELASTINGEN,
     },
   },
-];
+]);

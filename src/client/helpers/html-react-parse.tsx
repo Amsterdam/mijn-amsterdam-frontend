@@ -129,5 +129,5 @@ export function parseHTML(
   if (!html) {
     return null;
   }
-  return domToReact(htmlToDOM(html, options.htmlparser2), options);
+  return domToReact(htmlToDOM(html), options);
 }

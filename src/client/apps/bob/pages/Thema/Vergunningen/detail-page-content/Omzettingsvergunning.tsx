@@ -1,6 +1,5 @@
 import type {
   Omzettingsvergunning,
-  OmzettingsvergunningDecos,
   ZaakFrontendCombined,
 } from '../../../../../../../server/services/vergunningen/config-and-types.ts';
 import { Datalist } from '../../../../../../components/Datalist/Datalist.tsx';
@@ -9,9 +8,7 @@ import { commonTransformers, getRows } from './fields-config.tsx';
 export function Omzettingsvergunning({
   vergunning,
 }: {
-  vergunning: ZaakFrontendCombined<
-    Omzettingsvergunning | OmzettingsvergunningDecos
-  >;
+  vergunning: ZaakFrontendCombined<Omzettingsvergunning>;
 }) {
   const rows = getRows(vergunning, [
     commonTransformers.identifier,

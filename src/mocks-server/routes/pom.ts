@@ -2,8 +2,8 @@ import { randomUUID } from 'node:crypto';
 
 import axios from 'axios';
 
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_API_BASE_URL, MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
 const getPomPortaalUrlMock = (baseUrlOrPath: string): string =>
   `${baseUrlOrPath}/pom/portaal/emandate-scherm`;
@@ -49,7 +49,7 @@ function getNextIban(): { iban: string; bankCode: string } {
   return { iban: iban.iban, bankCode: iban.bankCode };
 }
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'get-pom-mandate-page',
     url: getPomPortaalUrlMock(MOCK_BASE_PATH),
@@ -147,4 +147,4 @@ export const routes: MockRouteDefinition[] = [
       },
     },
   },
-];
+]);

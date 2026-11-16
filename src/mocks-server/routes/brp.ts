@@ -9,10 +9,10 @@ import BRP_PERSOONSGEGEVENS from '../fixtures/brp/test-personen.json' with {
 import BRP_VERBLIJFPLAATSHISTORIE from '../fixtures/brp/verblijfplaatshistorie.json' with {
   type: 'json',
 };
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'post-brp-persoonsgegevens',
     url: `${MOCK_BASE_PATH}/benk-brp/personen`,
@@ -67,4 +67,4 @@ export const routes: MockRouteDefinition[] = [
       },
     },
   },
-];
+]);

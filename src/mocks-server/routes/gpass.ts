@@ -7,8 +7,8 @@ import RESPONSES_STADSPAS from '../fixtures/gpass-stadspas.json' with {
 import RESPONSES_TRANSACTIES from '../fixtures/gpass-transacties.json' with {
   type: 'json',
 };
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
 type Stadspas = {
   pasnummer: number;
@@ -133,7 +133,7 @@ const subPassen = (pashoudersResponse.sub_pashouders as SubPashouder[]).flatMap(
 );
 const allPasses = (pashoudersResponse.passen as Stadspas[]).concat(subPassen);
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'get-gpass-pashouders',
     url: `${MOCK_BASE_PATH}/gpass/rest/sales/v1/pashouder`,
@@ -208,4 +208,4 @@ export const routes: MockRouteDefinition[] = [
       },
     },
   },
-];
+]);

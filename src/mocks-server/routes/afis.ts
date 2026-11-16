@@ -17,8 +17,8 @@ import OPENSTAANDE_FACTUREN from '../fixtures/afis/openstaande-facturen.json' wi
 import OVERGEDRAGEN_FACTUREN from '../fixtures/afis/overgedragen-facturen.json' with {
   type: 'json',
 };
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
 type MandateEntry = {
   content: {
@@ -53,7 +53,7 @@ function queryValue(value: unknown): string {
   return typeof value === 'string' ? value : '';
 }
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'post-afis-auth-token',
     url: `${BASE_URL}/OAuthServer`,
@@ -415,4 +415,4 @@ export const routes: MockRouteDefinition[] = [
       },
     },
   },
-];
+]);
