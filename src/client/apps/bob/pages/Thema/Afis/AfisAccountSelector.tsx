@@ -3,6 +3,7 @@ import { useCallback, useEffect } from 'react';
 import {
   Alert,
   Button,
+  Field,
   Label,
   Paragraph,
   Select,
@@ -107,7 +108,7 @@ export function AfisAccountSelector() {
       {AFIS.content?.isRestricted ? (
         <Paragraph>{account && getAfisAccountLabel(account)}</Paragraph>
       ) : (
-        <>
+        <Field>
           <Label htmlFor="afis-account">Vestiging</Label>
           <Select
             id="afis-account"
@@ -120,7 +121,7 @@ export function AfisAccountSelector() {
               </option>
             ))}
           </Select>
-        </>
+        </Field>
       )}
       {isLoading && <LoadingContent />}
       {isError && (
