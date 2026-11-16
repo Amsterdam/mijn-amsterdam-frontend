@@ -50,12 +50,12 @@
     "@amsterdam/piwik-tracker-react": "3.0.0",
     "@amsterdam/react-maps": "^1.1.1",
     "@azure/app-configuration": "^1.13.1",
-    "@azure/msal-node": "^7.1.2",
+    "@azure/msal-node": "^7.2.1",
     "@microsoft/applicationinsights-react-js": "^17.3.6",
-    "@microsoft/applicationinsights-web": "^3.4.5",
+    "@microsoft/applicationinsights-web": "^3.4.6",
     "@react-spring/web": "^9.7.5",
     "applicationinsights": "2.9.8",
-    "axios": "^1.21.0",
+    "axios": "^1.21.1",
     "classnames": "^2.5.1",
     "compression": "^1.8.2",
     "connect-pg-simple": "^10.0.0",
@@ -112,7 +112,7 @@
     "react-test-renderer": "^18.3.1",
     "recoil": "^0.7.7",
     "sanitize-html": "^2.18.1",
-    "sass": "^1.107.1",
+    "sass": "^1.108.1",
     "slugme": "^1.1.1",
     "supercluster": "^7.1.5",
     "thenby": "^1.4.1",
@@ -123,10 +123,10 @@
     "use-debounce": "^10.1.1",
     "xlsx": "file:vendor/xlsx-0.20.2.tgz",
     "zod": "^4.6.7",
-    "zustand": "^5.0.16"
+    "zustand": "^5.1.0"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.67.4"
+    "@rollup/rollup-linux-x64-gnu": "4.68.2"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.4",
