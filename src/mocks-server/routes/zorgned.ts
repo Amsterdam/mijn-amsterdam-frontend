@@ -15,9 +15,6 @@ import ZORGNED_LLV_AANVRAGEN_RESPONSE from '../fixtures/zorgned-leerlingenvervoe
 import ZORGNED_WMO_AANVRAGEN_RESPONSE from '../fixtures/zorgned-wmo-aanvragen.json' with {
   type: 'json',
 };
-import ZORGNED_WMO_AANVRAGEN_ACC_RESPONSE_EXTENDED from '../fixtures/zorgned-wmo-acc-uitgebreid.json' with {
-  type: 'json',
-};
 import { MOCK_BASE_PATH, MOCK_DOCUMENT_B64 } from '../settings.ts';
 import type { MockRouteDefinition } from '../types.ts';
 
@@ -66,7 +63,7 @@ export const routes: MockRouteDefinition[] = [
           case 'WMO':
             return res
               .status(HttpStatusCode.Ok)
-              .send(ZORGNED_WMO_AANVRAGEN_ACC_RESPONSE_EXTENDED);
+              .send(ZORGNED_WMO_AANVRAGEN_RESPONSE);
           case 'LLV':
             return res
               .status(HttpStatusCode.Ok)
