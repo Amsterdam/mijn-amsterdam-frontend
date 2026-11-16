@@ -23,8 +23,6 @@ import { generateFullApiUrlBFF } from '../../../routing/route-helpers.ts';
 import { getStatusLineItems } from '../../zorgned/zorgned-status-line-items.ts';
 import {
   LEVERINGSVORM_MAPPING,
-  type LeveringsVormTransformed,
-  type LeveringsVormUitgeschreven,
   type ZorgnedAanvraagTransformed,
 } from '../../zorgned/zorgned-types.ts';
 import { featureToggle, routes } from '../jzd-service-config.ts';
