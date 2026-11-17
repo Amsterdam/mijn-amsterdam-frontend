@@ -5,7 +5,7 @@ import { useAppStateGetter } from '../../../../hooks/useAppStateStore.ts';
 export function GemachtigdeAlert() {
   const { BRP } = useAppStateGetter();
   const aanschrijfwijze = BRP.content?.persoon?.aanschrijfwijze;
-  const geboortedatum = BRP.content?.persoon?.geboortedatum;
+  const geboortedatum = BRP.content?.persoon?.geboortedatumFormatted;
 
   return (
     <Alert heading="Ingelogd als gemachtigde" headingLevel={2}>

@@ -8,7 +8,7 @@ vi.mock('../../../../hooks/useAppStateStore.ts', () => ({
       content: {
         persoon: {
           aanschrijfwijze: 'J. Jansen',
-          geboortedatum: '1 januari 1980',
+          geboortedatumFormatted: '1 januari 1980',
         },
       },
     },
