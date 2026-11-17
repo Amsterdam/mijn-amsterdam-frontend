@@ -95,8 +95,9 @@ export function Dashboard() {
           spanWide={7}
           className={getRedactedClass(null, 'full')}
         >
-          {isKlantcontactLoading && <LoadingContent className="ams-mb-l" />}
-          {!isKlantcontactLoading && hasAfspraken && (
+
+          {authMethod !== 'digidGemachtigd' && isKlantcontactLoading && <LoadingContent className="ams-mb-l" />}
+          {authMethod !== 'digidGemachtigd' && !isKlantcontactLoading && hasAfspraken && (
             <AfsprakenDashboard afspraken={afspraken} className="ams-mb-l" />
           )}
 
@@ -139,7 +140,7 @@ export function Dashboard() {
           </Heading>
           <MyThemasPanel isLoading={isMyThemasLoading} items={myThemaItems} />
         </PageContentCell>
-        <MyTipsPanel tips={tips ?? []} />
+        {authMethod !== 'digidGemachtigd' && <MyTipsPanel tips={tips ?? []} />}
         {authMethod !== 'digidGemachtigd' && !isPhoneScreen && (
           <PageContentCell>
             <MyAreaDashboard />

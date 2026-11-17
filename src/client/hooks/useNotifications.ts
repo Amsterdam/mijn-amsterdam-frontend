@@ -5,8 +5,10 @@ import { WelcomeNotification } from '../apps/bob/config/staticData.tsx';
 import { themaConfig } from '../apps/bob/pages/MyTips/MyTips-config.ts';
 import { getRedactedClass } from '../helpers/cobrowse.ts';
 import { useAppStateStore } from './useAppStateStore.ts';
+import { useAuthMethod } from './useProfileType.ts';
 
 export function useAppStateNotifications(top?: number) {
+  const { authMethod } = useAuthMethod();
   const { isReady, NOTIFICATIONS } = useAppStateStore();
   const notifications_: MyNotification[] = useMemo(
     () => NOTIFICATIONS?.content ?? [],
@@ -18,15 +20,28 @@ export function useAppStateNotifications(top?: number) {
     [isReady, notifications_]
   );
 
+  // For the purpose of the POC, the filtering of notifications based on the auth method is done at the client.
+  // Implementation for production should be done in the server.
+  const notificationsForAuthMethod = useMemo(
+    () =>
+      authMethod === 'digidGemachtigd'
+        ? notificationsWithWelcomeNotification.filter(
+            (notification) =>
+              notification.isTip || notification.description?.includes('(GPK)')
+          )
+        : notificationsWithWelcomeNotification,
+    [authMethod, notificationsWithWelcomeNotification]
+  );
+
   const notificationsWithRedactionClass = useMemo(
     () =>
-      notificationsWithWelcomeNotification.map((n) => ({
+      notificationsForAuthMethod.map((n) => ({
         ...n,
         className: n.isTip
           ? getRedactedClass(null, 'content') // Tips can contain information from multiple thema's. Redact by default
           : getRedactedClass(n.themaID, 'content'),
       })),
-    [notificationsWithWelcomeNotification]
+    [notificationsForAuthMethod]
   );
 
   if (!themaConfig.featureToggle.enableNewTipsDesign) {
