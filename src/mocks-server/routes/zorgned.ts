@@ -15,8 +15,8 @@ import ZORGNED_LLV_AANVRAGEN_RESPONSE from '../fixtures/zorgned-leerlingenvervoe
 import ZORGNED_WMO_AANVRAGEN_RESPONSE from '../fixtures/zorgned-wmo-aanvragen.json' with {
   type: 'json',
 };
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH, MOCK_DOCUMENT_B64 } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
 type ZorgnedApiUser = 'AV' | 'JZD' | 'LLV';
 
@@ -26,7 +26,7 @@ function hasApiUserHeader(
   return 'x-cache-key-supplement' in headers;
 }
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'post-zorgned-aanvragen',
     url: `${MOCK_BASE_PATH}/zorgned/aanvragen`,
@@ -108,4 +108,4 @@ export const routes: MockRouteDefinition[] = [
       body: { inhoud: MOCK_DOCUMENT_B64 },
     },
   },
-];
+]);

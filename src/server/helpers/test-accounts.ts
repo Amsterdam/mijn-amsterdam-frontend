@@ -3,9 +3,9 @@ import { uniqueArray } from '../../universal/helpers/utils.ts';
 import type { AuthProfile } from '../auth/auth-types.ts';
 import { getFromEnv, getValueMapFromEnv } from './env.ts';
 
-export type TestUserData = {
+export type TestUserData<TAccount = TestUserAccount> = {
   tableHeaders: TableHeader[];
-  accounts: TestUserAccount[];
+  accounts: TAccount[];
 };
 type TableHeader = {
   displayName: string;
@@ -93,9 +93,9 @@ export function getTestAccountsBaseFromEnvMap(
   };
 }
 
-export function mergeWithDynamicTableHeaders(
-  accountData: TestUserData
-): TestUserData['tableHeaders'] {
+export function mergeWithDynamicTableHeaders<
+  TAccount extends Pick<TestUserAccount, 'username' | 'profileId'>,
+>(accountData: TestUserData<TAccount>): TestUserData['tableHeaders'] {
   const tableHeaders = accountData.tableHeaders;
   const accounts = accountData.accounts;
 

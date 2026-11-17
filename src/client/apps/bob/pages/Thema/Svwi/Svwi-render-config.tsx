@@ -21,7 +21,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
     return (
       featureToggle.svwiActive &&
       !isLoading(appState.SVWI) &&
-      !!appState.SVWI.content?.isKnown
+      !!appState.SVWI?.content?.isKnown
     );
   },
   IconSVG: SvwiIcon,

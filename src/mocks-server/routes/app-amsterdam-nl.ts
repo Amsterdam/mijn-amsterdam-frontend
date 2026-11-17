@@ -1,7 +1,7 @@
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'post-amsapp-administratienummer',
     url: `${MOCK_BASE_PATH}/amsapp/session/credentials`,
@@ -22,4 +22,4 @@ export const routes: MockRouteDefinition[] = [
       body: { status: 'OK' },
     },
   },
-];
+]);

@@ -1,9 +1,6 @@
 import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
-import type {
-  LVVRegistratie,
-  ToeristischeVerhuurVergunning,
-} from '../../../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
+import type { ToeristischeVerhuurVergunning } from '../../../../../../server/services/toeristische-verhuur/toeristische-verhuur.types.ts';
 import { entries } from '../../../../../../universal/helpers/utils.ts';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
@@ -92,11 +89,15 @@ export function ToeristischeVerhuurThema() {
     }
   );
 
+  const lvvRegistrationRows = lvvRegistraties.map((registration) => ({
+    ...registration,
+    title: registration.registrationNumber,
+  }));
   const registratieTable = (
-    <ThemaPaginaDataView<LVVRegistratie>
+    <ThemaPaginaDataView
       key="lvv-registraties"
       title={tableConfigLVVRegistraties.title}
-      zaken={lvvRegistraties}
+      zaken={lvvRegistrationRows}
       maxItems={-1}
       displayProps={tableConfigLVVRegistraties.displayProps}
     />

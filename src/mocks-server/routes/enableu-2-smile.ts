@@ -6,8 +6,8 @@ import AVG_THEMAS_RESPONSE from '../fixtures/avg-themas.json' with {
 };
 import KLACHTEN_RESPONSE from '../fixtures/klachten.json' with { type: 'json' };
 import { parseMultipartForm } from '../helpers/formidable.ts';
+import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
-import type { MockRouteDefinition } from '../types.ts';
 
 for (const responseObj of [
   AVG_THEMAS_RESPONSE,
@@ -27,7 +27,7 @@ function firstFieldValue(
   return value;
 }
 
-export const routes: MockRouteDefinition[] = [
+export const routes = defineMockRoutes([
   {
     id: 'post-enableu2smile-klachten',
     url: `${MOCK_BASE_PATH}/smile`,
@@ -70,4 +70,4 @@ export const routes: MockRouteDefinition[] = [
       },
     },
   },
-];
+]);
