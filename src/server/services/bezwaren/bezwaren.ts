@@ -62,6 +62,7 @@ async function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
     exp: Math.ceil(
       now.setMinutes(now.getMinutes() + MINUTES_TO_EXPIRE) / ONE_SECOND_MS
     ),
+    azp: process.env.BFF_BEZWAREN_AZP,
   };
 
   if (authProfileAndToken.profile.authMethod === 'digid') {
