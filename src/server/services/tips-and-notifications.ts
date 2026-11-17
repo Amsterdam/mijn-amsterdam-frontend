@@ -182,9 +182,11 @@ export async function fetchNotificationsAndTipsFromServices(
   if (authProfileAndToken.profile.authMethod === 'digidGemachtigd') {
     filteredServices = Object.fromEntries(
       Object.entries(services).filter(([serviceId]) =>
-        serviceId === 'parkeren' // Example: only include 'parkeren' service for this auth method
+        serviceId === 'parkeren'
       )
     );
+  } else {
+    filteredServices = services;
   }
 
   const serviceResults = await Promise.allSettled(
