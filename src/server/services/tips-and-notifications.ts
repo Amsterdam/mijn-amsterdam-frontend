@@ -177,8 +177,18 @@ export async function fetchNotificationsAndTipsFromServices(
     return {};
   }
 
+  let filteredServices: Partial<ServiceList> = {};
+
+  if (authProfileAndToken.profile.authMethod === 'digidGemachtigd') {
+    filteredServices = Object.fromEntries(
+      Object.entries(services).filter(([serviceId]) =>
+        serviceId === 'parkeren' // Example: only include 'parkeren' service for this auth method
+      )
+    );
+  }
+
   const serviceResults = await Promise.allSettled(
-    entries(services).map(async ([serviceId, fetchNotifications]) => {
+    entries(filteredServices).map(async ([serviceId, fetchNotifications]) => {
       const result = await fetchNotifications!(authProfileAndToken).catch(
         (error: string | Error) => {
           const errorMessage = `Error in fetchNotifications for service ${serviceId}: ${error instanceof Error ? error.message : String(error)}`;
