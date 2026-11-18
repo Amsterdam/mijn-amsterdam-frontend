@@ -20,11 +20,9 @@ import {
   getLatestStatusDate,
 } from '../../../helpers/zaken.ts';
 import { generateFullApiUrlBFF } from '../../../routing/route-helpers.ts';
+import { getLeveriningsVormUitgeschreven } from '../../zorgned/zorgned-helpers.ts';
 import { getStatusLineItems } from '../../zorgned/zorgned-status-line-items.ts';
-import {
-  LEVERINGSVORM_MAPPING,
-  type ZorgnedAanvraagTransformed,
-} from '../../zorgned/zorgned-types.ts';
+import type { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
 import { featureToggle, routes } from '../jzd-service-config.ts';
 import type { ZorgnedAanvraagTransformedWithMaApiProps } from '../jzd-types.ts';
 import { transformVoorzieningForFrontendWithMaApiProps } from '../jzd-voorzieningen-api-service.ts';
@@ -100,7 +98,9 @@ function transformVoorzieningForFrontend(
     title: capitalizeFirstLetter(aanvraag.titel),
     leverancier: aanvraag.leverancier,
     leveringsvorm: aanvraag.leveringsVorm,
-    leveringsvormUitgeschreven: LEVERINGSVORM_MAPPING[aanvraag.leveringsVorm],
+    leveringsvormUitgeschreven: getLeveriningsVormUitgeschreven(
+      aanvraag.leveringsVorm
+    ),
     isActual: aanvraag.isActueel,
     link: {
       title: 'Meer informatie',
