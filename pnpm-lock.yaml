@@ -36,14 +36,14 @@ importers:
         specifier: ^1.12.1
         version: 1.13.1(supports-color@5.5.0)
       '@azure/msal-node':
-        specifier: ^7.1.2
-        version: 7.1.2
+        specifier: ^7.2.1
+        version: 7.2.1
       '@microsoft/applicationinsights-react-js':
         specifier: ^17.3.6
         version: 17.3.6(history@5.3.0)(react@18.3.1)(tslib@2.8.1)
       '@microsoft/applicationinsights-web':
-        specifier: ^3.4.5
-        version: 3.4.5(tslib@2.8.1)
+        specifier: ^3.4.6
+        version: 3.4.6(tslib@2.8.1)
       '@react-spring/web':
         specifier: ^9.7.5
         version: 9.7.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -51,8 +51,8 @@ importers:
         specifier: 2.9.8
         version: 2.9.8(supports-color@5.5.0)
       axios:
-        specifier: ^1.21.0
-        version: 1.21.0(debug@4.4.3(supports-color@5.5.0))(supports-color@5.5.0)
+        specifier: ^1.21.1
+        version: 1.21.1(debug@4.4.3(supports-color@5.5.0))(supports-color@5.5.0)
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -222,8 +222,8 @@ importers:
         specifier: ^2.18.1
         version: 2.18.1
       sass:
-        specifier: ^1.107.1
-        version: 1.107.1
+        specifier: ^1.108.1
+        version: 1.108.1
       slugme:
         specifier: ^1.1.1
         version: 1.1.1
@@ -255,8 +255,8 @@ importers:
         specifier: ^4.6.7
         version: 4.6.7
       zustand:
-        specifier: ^5.0.16
-        version: 5.0.16(@types/react@18.3.31)(react@18.3.1)
+        specifier: ^5.1.0
+        version: 5.1.0(@types/react@18.3.31)(react@18.3.1)
     devDependencies:
       '@biomejs/biome':
         specifier: 2.6.4
@@ -359,7 +359,7 @@ importers:
         version: 2.1.5
       '@vitejs/plugin-react':
         specifier: ^4.7.0
-        version: 4.7.0(supports-color@5.5.0)(vite@6.4.5(@types/node@22.20.5)(sass@1.107.1)(tsx@4.23.15)(yaml@2.9.1))
+        version: 4.7.0(supports-color@5.5.0)(vite@6.4.5(@types/node@22.20.5)(sass@1.108.1)(tsx@4.23.15)(yaml@2.9.1))
       concurrently:
         specifier: ^10.0.6
         version: 10.0.6
@@ -392,17 +392,17 @@ importers:
         version: 6.0.3
       vite:
         specifier: ^6.4.5
-        version: 6.4.5(@types/node@22.20.5)(sass@1.107.1)(tsx@4.23.15)(yaml@2.9.1)
+        version: 6.4.5(@types/node@22.20.5)(sass@1.108.1)(tsx@4.23.15)(yaml@2.9.1)
       vite-plugin-svgr:
         specifier: ^4.5.0
-        version: 4.5.0(rollup@4.64.1)(supports-color@5.5.0)(typescript@6.0.3)(vite@6.4.5(@types/node@22.20.5)(sass@1.107.1)(tsx@4.23.15)(yaml@2.9.1))
+        version: 4.5.0(rollup@4.64.1)(supports-color@5.5.0)(typescript@6.0.3)(vite@6.4.5(@types/node@22.20.5)(sass@1.108.1)(tsx@4.23.15)(yaml@2.9.1))
       vitest:
         specifier: ^4.1.11
-        version: 4.1.11(@opentelemetry/api@1.9.1)(@types/node@22.20.5)(happy-dom@21.0.4)(vite@6.4.5(@types/node@22.20.5)(sass@1.107.1)(tsx@4.23.15)(yaml@2.9.1))
+        version: 4.1.11(@opentelemetry/api@1.9.1)(@types/node@22.20.5)(happy-dom@21.0.4)(vite@6.4.5(@types/node@22.20.5)(sass@1.108.1)(tsx@4.23.15)(yaml@2.9.1))
     optionalDependencies:
       '@rollup/rollup-linux-x64-gnu':
-        specifier: 4.67.4
-        version: 4.67.4
+        specifier: 4.68.2
+        version: 4.68.2
 
 packages:
 
@@ -509,12 +509,12 @@ packages:
     resolution: {integrity: sha512-rbAE25KUfjU/s3XHUdJgceoCP5dEOpMx85J04kF+QMdta73XkuG9JGHHinch+XIoKpBdqljin+KqURpJriSzLA==}
     engines: {node: '>=22.0.0'}
 
-  '@azure/msal-common@16.15.0':
-    resolution: {integrity: sha512-lwdLb1B9Q5nEhPLVIKe78XH5wFMN15fCiDkY7ylPDSWZuWcD93G3jpJajrKhO3CQld8SLKz0sHiOi24mxdvtsg==}
+  '@azure/msal-common@16.16.1':
+    resolution: {integrity: sha512-dSKdL9h/iercb4GumsKFh+wVvLe1ohuDPiviklgnQVHnY2FYNUlbQJ3E1Qd37vkof9CfraK9BQpCW1hoOg0znQ==}
     engines: {node: '>=0.8.0'}
 
-  '@azure/msal-node@7.1.2':
-    resolution: {integrity: sha512-52hKQLGpEQzwNufIXG1SPVU+wQ3RIe7Rp2+g+VdAmZojCAZ6yCdGEffzQEQ6RnBZGBEs40nl14rWBmfJpCoHsg==}
+  '@azure/msal-node@7.2.1':
+    resolution: {integrity: sha512-6mntsfCNq7H1eAPSZik74jT3C5at4nRqiVk7OC+D5Hy3Pe3s76uwE4+J0xvDvlVPmoX2kasf3mSwUmzeq9rW/A==}
     engines: {node: '>=20'}
 
   '@azure/opentelemetry-instrumentation-azure-sdk@1.0.0':
@@ -1203,18 +1203,18 @@ packages:
   '@kwsites/file-exists@1.1.1':
     resolution: {integrity: sha512-m9/5YGR18lIwxSFDwfE3oA7bWuq9kdau6ugN4H2rJeyhFQZcG9AgSHkQtSD15a8WvTgfz9aikZMrKPHvbpqFiw==}
 
-  '@microsoft/applicationinsights-analytics-js@3.4.5':
-    resolution: {integrity: sha512-IWQIfCyypZvmSkXI9iWgOjEx7l8hGLzX2V+7xj9OFueCPAoeEFHqffgKMAxlQ4b8q4ZfKHDc4EtJE8r90o7Iug==}
+  '@microsoft/applicationinsights-analytics-js@3.4.6':
+    resolution: {integrity: sha512-KOvJg5cDIP5EC27qrgiF5+cx/Ah5TJ1B1ImPbvzkxzQ+HI7FMNfKf5hHsQljJmI1Z6jjLckZtMmo//s5uxyg0g==}
     peerDependencies:
       tslib: '>= 1.0.0'
 
-  '@microsoft/applicationinsights-cfgsync-js@3.4.5':
-    resolution: {integrity: sha512-0y5C86x7vkc8DSwSC0bGq0ogheqHBeIc1AijyRQpD/MREbUe7VzfdP01M6SDtxXRKKIw6zrpc5l9TgqVTlYtbg==}
+  '@microsoft/applicationinsights-cfgsync-js@3.4.6':
+    resolution: {integrity: sha512-UstnIciZfBA8xzmOfmr7iXkkuTllo8RxsaAJP7B66rnIS96AyTUV9jxQfH5xi2amrIRcE+6eiHANlKSGQM1jcw==}
     peerDependencies:
       tslib: '>= 1.0.0'
 
-  '@microsoft/applicationinsights-channel-js@3.4.5':
-    resolution: {integrity: sha512-+HO5AngiAD0dCdLgablA2NYuxX8B7RjBWsidd5RPjqXm7vaw38bMW9lJ8i598D1QJx1rCV0jZ9t8qTS/Et2Xew==}
+  '@microsoft/applicationinsights-channel-js@3.4.6':
+    resolution: {integrity: sha512-cDCDsQqvd6/4bp5X4f/IRDmiBRaHEcLxFefVkqb9nUPslXeA62NXloGBXK4CtRfN43ULg3R7NM/atY4TkzC3iw==}
     peerDependencies:
       tslib: '>= 1.0.0'
 
@@ -1228,13 +1228,18 @@ packages:
     peerDependencies:
       tslib: '>= 1.0.0'
 
-  '@microsoft/applicationinsights-dependencies-js@3.4.5':
-    resolution: {integrity: sha512-vw93uGKZRZzYuBVbThChUbgPGEmQTwVr+X0oeqRxKiTA8VoREsAm2UkTAITi71y1G47IaO9Wi/2bZnDzFnCT6Q==}
+  '@microsoft/applicationinsights-core-js@3.4.6':
+    resolution: {integrity: sha512-YPvGUCgcpQa0MkUnJAcWi/SPDBabAohXSoa85c/GDkFiXWPsjihN8RcVj43r5I6nY4Y3+gHRvGVT6hBPTumKJg==}
     peerDependencies:
       tslib: '>= 1.0.0'
 
-  '@microsoft/applicationinsights-properties-js@3.4.5':
-    resolution: {integrity: sha512-o7AzTgs//Jg36xs/X/XVfgGvMbF+vCkdqOQR66RkarDLtTer1wXpDEFnLVsftgifn7TEatGwDHfqOy+U09+A0Q==}
+  '@microsoft/applicationinsights-dependencies-js@3.4.6':
+    resolution: {integrity: sha512-8VUgZmGrin8DSlBxbpxSooPgY1tHfWLeuaBTymJj+E9Tz6jZZNGBl84/dsRD5janLrw4z2/wxLREvhsBS8StfQ==}
+    peerDependencies:
+      tslib: '>= 1.0.0'
+
+  '@microsoft/applicationinsights-properties-js@3.4.6':
+    resolution: {integrity: sha512-AqT4Z4DBQzjYFpCqcREXLuOBmFEeuG/tpY+ECDTRdmcsxbw99oLeqvvrBMi5sOBzNpvXFZFtS+b+lBUD2FzaqQ==}
     peerDependencies:
       tslib: '>= 1.0.0'
 
@@ -1251,8 +1256,8 @@ packages:
   '@microsoft/applicationinsights-web-snippet@1.0.1':
     resolution: {integrity: sha512-2IHAOaLauc8qaAitvWS+U931T+ze+7MNWrDHY47IENP5y2UA0vqJDu67kWZDdpCN1fFC77sfgfB+HV7SrKshnQ==}
 
-  '@microsoft/applicationinsights-web@3.4.5':
-    resolution: {integrity: sha512-ZXfOjlrccdIxTap04GbswmXOQdHD5406x93jB5egqMYQs2EhCWoyX9DVJ/p6qPeikytqiDaldywt1ACIl6Zl2Q==}
+  '@microsoft/applicationinsights-web@3.4.6':
+    resolution: {integrity: sha512-qcdl7D7a/PnkoQNo1ZZIrb+U72fRHnvV1X0APufPuCJ27GO/4HHJ+gc5LpTCwk/Ar3GL9jxeZmZlZGUz5FU6YQ==}
     peerDependencies:
       tslib: '>= 1.0.0'
 
@@ -1613,8 +1618,8 @@ packages:
     os: [linux]
     libc: [glibc]
 
-  '@rollup/rollup-linux-x64-gnu@4.67.4':
-    resolution: {integrity: sha512-wL7MS4r0fYcxluF3ne2plofHZiB/LsqNCnyaUlyiKpAJLb6agPSFz7DEFCfkonWAZXMrLwCmC08b2ZEnEdJkog==}
+  '@rollup/rollup-linux-x64-gnu@4.68.2':
+    resolution: {integrity: sha512-3Btp4Lca/WzsmbaKu9Lh9d/XwyRDIegd/5khRBusHGw/Ll6SoF5Shn63OrjPdkLcpNi2PGDApXzNmxriRxGYjA==}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
@@ -2134,8 +2139,8 @@ packages:
     resolution: {integrity: sha512-kNOjDqAh7px0XWNI+4QbzoiR/nTkHAWNud2uvnJquD1/x5a7EQZMJT0AczqK0Qn67oY/TTQ1LbUKajZpp3I9tQ==}
     engines: {node: '>=8.0.0'}
 
-  axios@1.21.0:
-    resolution: {integrity: sha512-YCzXMB53Q9PZBsh7yN7wtapit4WepwcHS2fP8QhGsBxSz5YtgYobV7GGlWlAJi+RxfU77GQTQi2DSLUma42EYA==}
+  axios@1.21.1:
+    resolution: {integrity: sha512-6eI5Q/Y4u/Um9dDlsRoq5pY2rxnUTv+L4PpLitnbk/i4jb3MxLZ5CsN5Ih3IysbeRYK4pR+P7qfMsOQl9fwwFQ==}
 
   b4a@1.9.0:
     resolution: {integrity: sha512-dpfcF9fDNR6++cthXR67iyhgqWy9CBouAvIWhIntzBG6cvK/cnIPiZQjBwi/ZqjjBEDGfoNDtmB0kTjroOJ3pQ==}
@@ -4016,8 +4021,8 @@ packages:
     resolution: {integrity: sha512-2X5lC8fYla8YaT8g73Nj+HcLWXan5dLyCWLgVvaOmfw7JI78IRsyNtIDytTHdn7hBQbIkCah7Zbmd5jabzeDig==}
     engines: {node: '>=22.12.0'}
 
-  sass@1.107.1:
-    resolution: {integrity: sha512-aJ1/LvxOOb04YhmiBjzZn3jVwdHKol+OVhoMV6fFl02fF9T3i+5Mg9l/CnzqtM+NX5Jn5o3lAbs/ZJivTCLHfQ==}
+  sass@1.108.1:
+    resolution: {integrity: sha512-sIYgSvOPeD9wABwDS/ofNjHASSck+7h3jLkk7wG1NPFL3XeS6vOQjBlAFSmRV09kZr1yt/Tuayt6kKtBbLjHNQ==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -4574,8 +4579,8 @@ packages:
   zod@4.6.7:
     resolution: {integrity: sha512-g8W2D2kU6a8untc053fX1uVBKzM7yqAxW/3zwk83+6RyF2+SKOuV+c0wBDhUwzV1PaGapmZH+rmcUzPf+3CGwg==}
 
-  zustand@5.0.16:
-    resolution: {integrity: sha512-Uv7e327ihlCfayfja3hDc0M64Upev1LWBKpRobdK4NyovDDPeeX4imWXc/wzC1yc6fkYPoAY/ncKVPAs2jrtQw==}
+  zustand@5.1.0:
+    resolution: {integrity: sha512-ciJZlP48M1PTQbVQq81CGVFxHTLpZNrFjKqwjtCU34AWuXTZT/jrF3p9+fI84Cf1eSCMLapxqBy/SNTfwOBuqA==}
     engines: {node: '>=12.20.0'}
     peerDependencies:
       '@types/react': '>=18.0.0'
@@ -4755,11 +4760,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@azure/msal-common@16.15.0': {}
+  '@azure/msal-common@16.16.1': {}
 
-  '@azure/msal-node@7.1.2':
+  '@azure/msal-node@7.2.1':
     dependencies:
-      '@azure/msal-common': 16.15.0
+      '@azure/msal-common': 16.16.1
       jsonwebtoken: 9.0.3
 
   '@azure/opentelemetry-instrumentation-azure-sdk@1.0.0(supports-color@5.5.0)':
@@ -5257,26 +5262,26 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@microsoft/applicationinsights-analytics-js@3.4.5(tslib@2.8.1)':
+  '@microsoft/applicationinsights-analytics-js@3.4.6(tslib@2.8.1)':
     dependencies:
-      '@microsoft/applicationinsights-core-js': 3.4.5(tslib@2.8.1)
+      '@microsoft/applicationinsights-core-js': 3.4.6(tslib@2.8.1)
       '@microsoft/applicationinsights-shims': 3.0.1
       '@microsoft/dynamicproto-js': 2.0.5
       '@nevware21/ts-utils': 0.16.0
       tslib: 2.8.1
 
-  '@microsoft/applicationinsights-cfgsync-js@3.4.5(tslib@2.8.1)':
+  '@microsoft/applicationinsights-cfgsync-js@3.4.6(tslib@2.8.1)':
     dependencies:
-      '@microsoft/applicationinsights-core-js': 3.4.5(tslib@2.8.1)
+      '@microsoft/applicationinsights-core-js': 3.4.6(tslib@2.8.1)
       '@microsoft/applicationinsights-shims': 3.0.1
       '@microsoft/dynamicproto-js': 2.0.5
       '@nevware21/ts-async': 0.5.5
       '@nevware21/ts-utils': 0.16.0
       tslib: 2.8.1
 
-  '@microsoft/applicationinsights-channel-js@3.4.5(tslib@2.8.1)':
+  '@microsoft/applicationinsights-channel-js@3.4.6(tslib@2.8.1)':
     dependencies:
-      '@microsoft/applicationinsights-core-js': 3.4.5(tslib@2.8.1)
+      '@microsoft/applicationinsights-core-js': 3.4.6(tslib@2.8.1)
       '@microsoft/applicationinsights-shims': 3.0.1
       '@microsoft/dynamicproto-js': 2.0.5
       '@nevware21/ts-async': 0.5.5
@@ -5299,18 +5304,26 @@ snapshots:
       '@nevware21/ts-utils': 0.16.0
       tslib: 2.8.1
 
-  '@microsoft/applicationinsights-dependencies-js@3.4.5(tslib@2.8.1)':
+  '@microsoft/applicationinsights-core-js@3.4.6(tslib@2.8.1)':
     dependencies:
-      '@microsoft/applicationinsights-core-js': 3.4.5(tslib@2.8.1)
       '@microsoft/applicationinsights-shims': 3.0.1
       '@microsoft/dynamicproto-js': 2.0.5
       '@nevware21/ts-async': 0.5.5
       '@nevware21/ts-utils': 0.16.0
       tslib: 2.8.1
 
-  '@microsoft/applicationinsights-properties-js@3.4.5(tslib@2.8.1)':
+  '@microsoft/applicationinsights-dependencies-js@3.4.6(tslib@2.8.1)':
     dependencies:
-      '@microsoft/applicationinsights-core-js': 3.4.5(tslib@2.8.1)
+      '@microsoft/applicationinsights-core-js': 3.4.6(tslib@2.8.1)
+      '@microsoft/applicationinsights-shims': 3.0.1
+      '@microsoft/dynamicproto-js': 2.0.5
+      '@nevware21/ts-async': 0.5.5
+      '@nevware21/ts-utils': 0.16.0
+      tslib: 2.8.1
+
+  '@microsoft/applicationinsights-properties-js@3.4.6(tslib@2.8.1)':
+    dependencies:
+      '@microsoft/applicationinsights-core-js': 3.4.6(tslib@2.8.1)
       '@microsoft/applicationinsights-shims': 3.0.1
       '@microsoft/dynamicproto-js': 2.0.5
       '@nevware21/ts-utils': 0.16.0
@@ -5333,14 +5346,14 @@ snapshots:
 
   '@microsoft/applicationinsights-web-snippet@1.0.1': {}
 
-  '@microsoft/applicationinsights-web@3.4.5(tslib@2.8.1)':
+  '@microsoft/applicationinsights-web@3.4.6(tslib@2.8.1)':
     dependencies:
-      '@microsoft/applicationinsights-analytics-js': 3.4.5(tslib@2.8.1)
-      '@microsoft/applicationinsights-cfgsync-js': 3.4.5(tslib@2.8.1)
-      '@microsoft/applicationinsights-channel-js': 3.4.5(tslib@2.8.1)
-      '@microsoft/applicationinsights-core-js': 3.4.5(tslib@2.8.1)
-      '@microsoft/applicationinsights-dependencies-js': 3.4.5(tslib@2.8.1)
-      '@microsoft/applicationinsights-properties-js': 3.4.5(tslib@2.8.1)
+      '@microsoft/applicationinsights-analytics-js': 3.4.6(tslib@2.8.1)
+      '@microsoft/applicationinsights-cfgsync-js': 3.4.6(tslib@2.8.1)
+      '@microsoft/applicationinsights-channel-js': 3.4.6(tslib@2.8.1)
+      '@microsoft/applicationinsights-core-js': 3.4.6(tslib@2.8.1)
+      '@microsoft/applicationinsights-dependencies-js': 3.4.6(tslib@2.8.1)
+      '@microsoft/applicationinsights-properties-js': 3.4.6(tslib@2.8.1)
       '@microsoft/applicationinsights-shims': 3.0.1
       '@microsoft/dynamicproto-js': 2.0.5
       '@nevware21/ts-async': 0.5.5
@@ -5615,7 +5628,7 @@ snapshots:
   '@rollup/rollup-linux-x64-gnu@4.64.1':
     optional: true
 
-  '@rollup/rollup-linux-x64-gnu@4.67.4':
+  '@rollup/rollup-linux-x64-gnu@4.68.2':
     optional: true
 
   '@rollup/rollup-linux-x64-musl@4.64.1':
@@ -6011,7 +6024,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-react@4.7.0(supports-color@5.5.0)(vite@6.4.5(@types/node@22.20.5)(sass@1.107.1)(tsx@4.23.15)(yaml@2.9.1))':
+  '@vitejs/plugin-react@4.7.0(supports-color@5.5.0)(vite@6.4.5(@types/node@22.20.5)(sass@1.108.1)(tsx@4.23.15)(yaml@2.9.1))':
     dependencies:
       '@babel/core': 7.29.7(supports-color@5.5.0)
       '@babel/plugin-transform-react-jsx-self': 7.29.7(@babel/core@7.29.7(supports-color@5.5.0))
@@ -6019,7 +6032,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-beta.27
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 6.4.5(@types/node@22.20.5)(sass@1.107.1)(tsx@4.23.15)(yaml@2.9.1)
+      vite: 6.4.5(@types/node@22.20.5)(sass@1.108.1)(tsx@4.23.15)(yaml@2.9.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -6032,13 +6045,13 @@ snapshots:
       chai: 6.3.0
       tinyrainbow: 3.2.0
 
-  '@vitest/mocker@4.1.11(vite@6.4.5(@types/node@22.20.5)(sass@1.107.1)(tsx@4.23.15)(yaml@2.9.1))':
+  '@vitest/mocker@4.1.11(vite@6.4.5(@types/node@22.20.5)(sass@1.108.1)(tsx@4.23.15)(yaml@2.9.1))':
     dependencies:
       '@vitest/spy': 4.1.11
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 6.4.5(@types/node@22.20.5)(sass@1.107.1)(tsx@4.23.15)(yaml@2.9.1)
+      vite: 6.4.5(@types/node@22.20.5)(sass@1.108.1)(tsx@4.23.15)(yaml@2.9.1)
 
   '@vitest/pretty-format@4.1.11':
     dependencies:
@@ -6193,7 +6206,7 @@ snapshots:
 
   atomic-sleep@1.0.0: {}
 
-  axios@1.21.0(debug@4.4.3(supports-color@5.5.0))(supports-color@5.5.0):
+  axios@1.21.1(debug@4.4.3(supports-color@5.5.0))(supports-color@5.5.0):
     dependencies:
       follow-redirects: 1.16.2(debug@4.4.3(supports-color@5.5.0))
       form-data: 4.0.6
@@ -8184,7 +8197,7 @@ snapshots:
       parse-srcset: 1.0.2
       postcss: 8.5.29
 
-  sass@1.107.1:
+  sass@1.108.1:
     dependencies:
       chokidar: 5.0.0
       immutable: 5.1.9
@@ -8589,18 +8602,18 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vite-plugin-svgr@4.5.0(rollup@4.64.1)(supports-color@5.5.0)(typescript@6.0.3)(vite@6.4.5(@types/node@22.20.5)(sass@1.107.1)(tsx@4.23.15)(yaml@2.9.1)):
+  vite-plugin-svgr@4.5.0(rollup@4.64.1)(supports-color@5.5.0)(typescript@6.0.3)(vite@6.4.5(@types/node@22.20.5)(sass@1.108.1)(tsx@4.23.15)(yaml@2.9.1)):
     dependencies:
       '@rollup/pluginutils': 5.4.0(rollup@4.64.1)
       '@svgr/core': 8.1.0(supports-color@5.5.0)(typescript@6.0.3)
       '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(supports-color@5.5.0)(typescript@6.0.3))(supports-color@5.5.0)
-      vite: 6.4.5(@types/node@22.20.5)(sass@1.107.1)(tsx@4.23.15)(yaml@2.9.1)
+      vite: 6.4.5(@types/node@22.20.5)(sass@1.108.1)(tsx@4.23.15)(yaml@2.9.1)
     transitivePeerDependencies:
       - rollup
       - supports-color
       - typescript
 
-  vite@6.4.5(@types/node@22.20.5)(sass@1.107.1)(tsx@4.23.15)(yaml@2.9.1):
+  vite@6.4.5(@types/node@22.20.5)(sass@1.108.1)(tsx@4.23.15)(yaml@2.9.1):
     dependencies:
       esbuild: 0.25.12
       fdir: 6.5.0(picomatch@4.0.7)
@@ -8611,14 +8624,14 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.20.5
       fsevents: 2.3.3
-      sass: 1.107.1
+      sass: 1.108.1
       tsx: 4.23.15
       yaml: 2.9.1
 
-  vitest@4.1.11(@opentelemetry/api@1.9.1)(@types/node@22.20.5)(happy-dom@21.0.4)(vite@6.4.5(@types/node@22.20.5)(sass@1.107.1)(tsx@4.23.15)(yaml@2.9.1)):
+  vitest@4.1.11(@opentelemetry/api@1.9.1)(@types/node@22.20.5)(happy-dom@21.0.4)(vite@6.4.5(@types/node@22.20.5)(sass@1.108.1)(tsx@4.23.15)(yaml@2.9.1)):
     dependencies:
       '@vitest/expect': 4.1.11
-      '@vitest/mocker': 4.1.11(vite@6.4.5(@types/node@22.20.5)(sass@1.107.1)(tsx@4.23.15)(yaml@2.9.1))
+      '@vitest/mocker': 4.1.11(vite@6.4.5(@types/node@22.20.5)(sass@1.108.1)(tsx@4.23.15)(yaml@2.9.1))
       '@vitest/pretty-format': 4.1.11
       '@vitest/runner': 4.1.11
       '@vitest/snapshot': 4.1.11
@@ -8635,7 +8648,7 @@ snapshots:
       tinyexec: 1.3.1
       tinyglobby: 0.2.17
       tinyrainbow: 3.2.0
-      vite: 6.4.5(@types/node@22.20.5)(sass@1.107.1)(tsx@4.23.15)(yaml@2.9.1)
+      vite: 6.4.5(@types/node@22.20.5)(sass@1.108.1)(tsx@4.23.15)(yaml@2.9.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@opentelemetry/api': 1.9.1
@@ -8735,7 +8748,7 @@ snapshots:
 
   zod@4.6.7: {}
 
-  zustand@5.0.16(@types/react@18.3.31)(react@18.3.1):
+  zustand@5.1.0(@types/react@18.3.31)(react@18.3.1):
     optionalDependencies:
       '@types/react': 18.3.31
       react: 18.3.1
