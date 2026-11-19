@@ -25,25 +25,10 @@ describe('filterServiceAlerts', () => {
     );
   });
 
-  it('prefers the thema over the page', () => {
-    expect(
-      ids(
-        filterServiceAlerts(notifications, {
-          page: 'login',
-          themaID: 'AVG',
-        })
-      )
-    ).toEqual(['theme-avg']);
-  });
-
   it('returns login alerts for the login page', () => {
     expect(ids(filterServiceAlerts(notifications, { page: 'login' }))).toEqual([
       'login',
     ]);
-  });
-
-  it('returns nothing without page or thema', () => {
-    expect(filterServiceAlerts(notifications, {})).toEqual([]);
   });
 });
 

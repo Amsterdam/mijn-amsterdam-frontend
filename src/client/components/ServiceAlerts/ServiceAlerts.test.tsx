@@ -38,7 +38,7 @@ describe('<ServiceAlerts />', () => {
   it('renders nothing when there are no alerts', () => {
     vi.mocked(useServiceAlerts).mockReturnValue([]);
 
-    const { container } = render(<ServiceAlerts />);
+    const { container } = render(<ServiceAlerts themaID="AVG" />);
 
     expect(container).toBeEmptyDOMElement();
   });
@@ -46,7 +46,7 @@ describe('<ServiceAlerts />', () => {
   it('renders the title and description of an alert', () => {
     vi.mocked(useServiceAlerts).mockReturnValue([createServiceAlert()]);
 
-    render(<ServiceAlerts />);
+    render(<ServiceAlerts themaID="AVG" />);
 
     expect(
       screen.getByRole('heading', { level: 4, name: 'Storing' })
@@ -64,7 +64,7 @@ describe('<ServiceAlerts />', () => {
       }),
     ]);
 
-    render(<ServiceAlerts />);
+    render(<ServiceAlerts themaID="AVG" />);
 
     const links = screen.getAllByRole('link');
     expect(links.map((link) => link.textContent)).toEqual([
@@ -80,7 +80,7 @@ describe('<ServiceAlerts />', () => {
   it('renders no links when the alert has none', () => {
     vi.mocked(useServiceAlerts).mockReturnValue([createServiceAlert()]);
 
-    render(<ServiceAlerts />);
+    render(<ServiceAlerts themaID="AVG" />);
 
     expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });
@@ -97,18 +97,21 @@ describe('<ServiceAlerts />', () => {
       }),
     ]);
 
-    render(<ServiceAlerts />);
+    render(<ServiceAlerts themaID="AVG" />);
 
     expect(screen.getAllByRole('heading', { level: 4 })).toHaveLength(2);
     expect(screen.getByRole('link', { name: 'Link A' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Link B' })).toBeInTheDocument();
   });
 
-  it('passes page, themaID and fromApiDirectly to the hook', () => {
+  it('passes the filter and fromApiDirectly to the hook', () => {
     vi.mocked(useServiceAlerts).mockReturnValue([]);
 
-    render(<ServiceAlerts page="login" themaID="AVG" fromApiDirectly />);
+    render(<ServiceAlerts themaID="AVG" fromApiDirectly />);
 
-    expect(useServiceAlerts).toHaveBeenCalledWith('login', 'AVG', true);
+    expect(useServiceAlerts).toHaveBeenCalledWith(
+      { page: undefined, themaID: 'AVG' },
+      true
+    );
   });
 });

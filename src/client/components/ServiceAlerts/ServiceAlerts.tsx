@@ -1,18 +1,16 @@
 import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
-import type { ServiceAlertsPage } from '../../../universal/helpers/service-alerts.ts';
+import type { ServiceAlertsFilter } from '../../../universal/helpers/service-alerts.ts';
 import { parseHTML } from '../../helpers/html-react-parse.tsx';
 import { useServiceAlerts } from '../../hooks/api/useServiceAlerts.ts';
 import { PageContentCell } from '../Page/Page.tsx';
 import styles from './ServiceAlerts.module.scss';
 
-interface ServiceAlertsProps {
-  page?: ServiceAlertsPage;
-  themaID?: string;
+type ServiceAlertsProps = ServiceAlertsFilter & {
   fromApiDirectly?: boolean;
   className?: string;
-}
+};
 
 export function ServiceAlerts({
   page,
@@ -20,7 +18,10 @@ export function ServiceAlerts({
   fromApiDirectly = false,
   className,
 }: ServiceAlertsProps) {
-  const serviceAlerts = useServiceAlerts(page, themaID, fromApiDirectly);
+  const serviceAlerts = useServiceAlerts(
+    { page, themaID } as ServiceAlertsFilter,
+    fromApiDirectly
+  );
 
   if (!serviceAlerts?.length) {
     return null;

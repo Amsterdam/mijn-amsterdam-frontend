@@ -10,16 +10,16 @@ export function isServiceAlertsPage(page: unknown): page is ServiceAlertsPage {
   return SERVICE_ALERTS_PAGES.includes(page as ServiceAlertsPage);
 }
 
-export type ServiceAlertsFilter = {
-  page?: ServiceAlertsPage;
-  themaID?: string;
-};
+export type ServiceAlertsFilter =
+  | { page: ServiceAlertsPage; themaID?: never }
+  | { themaID: string; page?: never };
 
 export function filterServiceAlerts<T extends FilterableServiceAlert>(
   notifications: T[],
-  { page, themaID }: ServiceAlertsFilter
+  filter: ServiceAlertsFilter
 ): T[] {
-  if (themaID) {
+  if (filter.themaID !== undefined) {
+    const { themaID } = filter;
     return notifications.filter(
       (notification) =>
         notification.displayLocation === 'theme' &&
@@ -27,11 +27,7 @@ export function filterServiceAlerts<T extends FilterableServiceAlert>(
     );
   }
 
-  if (page) {
-    return notifications.filter(
-      (notification) => notification.displayLocation === page
-    );
-  }
-
-  return [];
+  return notifications.filter(
+    (notification) => notification.displayLocation === filter.page
+  );
 }
