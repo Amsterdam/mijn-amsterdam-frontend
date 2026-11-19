@@ -23,8 +23,8 @@ export type ServiceAlertLinkInput = z.infer<typeof serviceAlertLinkInput>;
 export const serviceAlertInput = z
   .object({
     id: z.uuid().optional(),
-    title: z.string().max(200),
-    body: z.string().transform(sanitizeToPlainText),
+    title: z.string().min(1).max(200),
+    body: z.string().min(1).transform(sanitizeToPlainText),
     type: z.enum(SERVICE_ALERT_TYPES),
     displayLocation: z.enum(SERVICE_ALERT_DISPLAY_LOCATIONS),
     themaId: z.string().max(64).nullable().optional(),
