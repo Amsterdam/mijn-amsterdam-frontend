@@ -80,6 +80,32 @@ describe('getServiceAlertFormResult errors', () => {
     });
   });
 
+  it('uses the start date as end date when no end date is selected', () => {
+    const formValues = createFormValues([]);
+    formValues.dateRange = {
+      start: new Date('2026-11-11T00:00:00.000Z'),
+      end: null,
+    };
+
+    const result = getServiceAlertFormResult(formValues);
+
+    expect(result.errors).toBeNull();
+    expect(result.payload?.dateStart.slice(0, 10)).toBe(
+      result.payload?.dateEnd.slice(0, 10)
+    );
+  });
+
+  it('requires a start date', () => {
+    const formValues = createFormValues([]);
+    formValues.dateRange = { start: null, end: null };
+
+    const result = getServiceAlertFormResult(formValues);
+
+    expect(result.errors).toEqual({
+      period: SERVICE_ALERT_FORM_ERROR_MESSAGES.period,
+    });
+  });
+
   it('marks the end time when the end lies before the start', () => {
     const formValues = createFormValues([]);
     formValues.dateRange = {
@@ -114,9 +140,9 @@ describe('getServiceAlertFormResult displayLocation', () => {
 });
 
 describe('getServiceAlertFormResult type', () => {
-  it('requires a type to be chosen for login and theme alerts', () => {
+  it('requires a type to be chosen for landingspagina and theme alerts', () => {
     const formValues = createFormValues([]);
-    formValues.displayLocation = 'login';
+    formValues.displayLocation = 'landingspagina';
     formValues.type = undefined;
 
     const result = getServiceAlertFormResult(formValues);
@@ -127,15 +153,15 @@ describe('getServiceAlertFormResult type', () => {
     });
   });
 
-  it('uses the chosen type for login and theme alerts', () => {
+  it('uses the chosen type for landingspagina and theme alerts', () => {
     const formValues = createFormValues([]);
-    formValues.displayLocation = 'login';
+    formValues.displayLocation = 'landingspagina';
     formValues.type = 'error';
 
     const result = getServiceAlertFormResult(formValues);
 
     expect(result.payload).toMatchObject({
-      displayLocation: 'login',
+      displayLocation: 'landingspagina',
       type: 'error',
     });
   });

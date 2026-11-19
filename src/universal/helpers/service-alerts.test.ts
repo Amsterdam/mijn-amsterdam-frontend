@@ -3,8 +3,8 @@ import { filterServiceAlerts, isServiceAlertsPage } from './service-alerts.ts';
 const notifications = [
   { id: 'theme-avg', displayLocation: 'theme', themaID: 'AVG' },
   {
-    id: 'login',
-    displayLocation: 'login',
+    id: 'landingspagina',
+    displayLocation: 'landingspagina',
     themaID: 'NOTIFICATIONS',
   },
   {
@@ -25,16 +25,16 @@ describe('filterServiceAlerts', () => {
     );
   });
 
-  it('returns login alerts for the login page', () => {
-    expect(ids(filterServiceAlerts(notifications, { page: 'login' }))).toEqual([
-      'login',
-    ]);
+  it('returns landingspagina alerts for the landingspagina page', () => {
+    expect(
+      ids(filterServiceAlerts(notifications, { page: 'landingspagina' }))
+    ).toEqual(['landingspagina']);
   });
 });
 
 describe('isServiceAlertsPage', () => {
   it('accepts only pages that have their own alerts', () => {
-    expect(isServiceAlertsPage('login')).toBe(true);
+    expect(isServiceAlertsPage('landingspagina')).toBe(true);
     expect(isServiceAlertsPage('dashboard')).toBe(false);
     expect(isServiceAlertsPage('afval')).toBe(false);
     expect(isServiceAlertsPage(undefined)).toBe(false);

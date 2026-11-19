@@ -54,18 +54,21 @@ describe('service alert maintenance notifications', () => {
     vi.clearAllMocks();
   });
 
-  it('returns only login alerts for the login page', async () => {
+  it('returns only landingspagina alerts for the landingspagina page', async () => {
     vi.mocked(getActiveServiceAlertRows).mockResolvedValue([
-      createServiceAlert({ id: 'login', displayLocation: 'login' }),
+      createServiceAlert({
+        id: 'landingspagina',
+        displayLocation: 'landingspagina',
+      }),
       createServiceAlert({ displayLocation: 'notification' }),
       createServiceAlert({ displayLocation: 'theme', themaId: 'AVG' }),
     ]);
 
     const result = await fetchActiveServiceAlerts({
-      page: 'login',
+      page: 'landingspagina',
     });
 
-    expect(result.content?.map(({ id }) => id)).toEqual(['login']);
+    expect(result.content?.map(({ id }) => id)).toEqual(['landingspagina']);
   });
 
   it('returns no alerts for the removed dashboard page', async () => {
@@ -90,7 +93,10 @@ describe('service alert maintenance notifications', () => {
 
   it('returns all active alerts when no page is given', async () => {
     vi.mocked(getActiveServiceAlertRows).mockResolvedValue([
-      createServiceAlert({ id: 'login', displayLocation: 'login' }),
+      createServiceAlert({
+        id: 'landingspagina',
+        displayLocation: 'landingspagina',
+      }),
       createServiceAlert({
         id: 'notification',
         displayLocation: 'notification',
@@ -100,14 +106,14 @@ describe('service alert maintenance notifications', () => {
     const result = await fetchActiveServiceAlerts({});
 
     expect(result.content?.map(({ id }) => id)).toEqual([
-      'login',
+      'landingspagina',
       'notification',
     ]);
   });
 
   it('returns notification alerts for the existing notifications feed', async () => {
     vi.mocked(getActiveServiceAlertRows).mockResolvedValue([
-      createServiceAlert({ displayLocation: 'login' }),
+      createServiceAlert({ displayLocation: 'landingspagina' }),
       createServiceAlert({
         id: 'notification',
         displayLocation: 'notification',

@@ -9,7 +9,7 @@ const BODY =
   '<p><strong>Safe text</strong></p><iframe srcdoc="&lt;script&gt;alert(1)&lt;/script&gt;"></iframe><img src=x onerror=alert(1)><script>alert(1)</script>';
 
 describe('<ServiceAlertPreview />', () => {
-  test.each(['notification', 'login'] as const)(
+  test.each(['notification', 'landingspagina'] as const)(
     'sanitizes HTML for the %s preview',
     (displayLocation) => {
       render(

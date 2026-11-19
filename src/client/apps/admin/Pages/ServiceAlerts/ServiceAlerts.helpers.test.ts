@@ -38,13 +38,19 @@ describe('getServiceAlertPreviewPeriod', () => {
     ).toBe('Getoond op maandag 12 februari van 12:22 tot 13:22');
   });
 
-  it('returns null for an incomplete period', () => {
+  it('uses the start date as end date when no end date is selected', () => {
     expect(
       getServiceAlertPreviewPeriod(
         { start: new Date(2024, 1, 12), end: null },
         '12:22',
         '13:22'
       )
+    ).toBe('Getoond op maandag 12 februari van 12:22 tot 13:22');
+  });
+
+  it('returns null without a start date', () => {
+    expect(
+      getServiceAlertPreviewPeriod({ start: null, end: null }, '12:22', '13:22')
     ).toBeNull();
   });
 });
@@ -124,7 +130,7 @@ describe('getServiceAlertGroups', () => {
 
     it.each([
       ['notification', 'Notificatie'],
-      ['login', 'Login'],
+      ['landingspagina', 'Landingspagina'],
     ] as const)('translates %s to %s', (displayLocation, label) => {
       expect(getServiceAlertDisplayLocationLabel(displayLocation, null)).toBe(
         label

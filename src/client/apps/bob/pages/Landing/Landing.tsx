@@ -35,7 +35,7 @@ export function LandingPage() {
         </Paragraph>
         <ServiceAlerts
           fromApiDirectly={true}
-          page="login"
+          page="landingspagina"
           className="ams-mb-m"
         />
 

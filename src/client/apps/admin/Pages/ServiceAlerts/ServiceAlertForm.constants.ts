@@ -30,7 +30,7 @@ export function hasServiceAlertType(
 export const serviceAlertDisplayLocations = [
   { value: 'theme', label: 'Thema' },
   { value: 'notification', label: 'Notificatie' },
-  { value: 'login', label: 'Login' },
+  { value: 'landingspagina', label: 'Landingspagina' },
 ] as const satisfies readonly ServiceAlertSelectOption<
   ServiceAlertInput['displayLocation']
 >[];
