@@ -18,6 +18,7 @@ import {
   getErrorId,
   getFieldProps,
 } from './ServiceAlertFormFieldError.tsx';
+import { ServiceAlertTimezoneWarning } from './ServiceAlertTimezoneWarning.tsx';
 
 type ServiceAlertFormPeriodProps = {
   errors: ServiceAlertFormErrors;
@@ -39,6 +40,7 @@ export function ServiceAlertFormPeriod({
       aria-describedby={errors.period ? getErrorId('period') : undefined}
     >
       <FieldError errors={errors} field="period" />
+      <ServiceAlertTimezoneWarning />
       <DatePicker
         mode="range"
         value={values.dateRange}
