@@ -20,6 +20,7 @@ import {
   getLatestStatusDate,
 } from '../../../helpers/zaken.ts';
 import { generateFullApiUrlBFF } from '../../../routing/route-helpers.ts';
+import { getLeveriningsVormUitgeschreven } from '../../zorgned/zorgned-helpers.ts';
 import { getStatusLineItems } from '../../zorgned/zorgned-status-line-items.ts';
 import type { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
 import { featureToggle, routes } from '../jzd-service-config.ts';
@@ -96,6 +97,10 @@ function transformVoorzieningForFrontend(
     id,
     title: capitalizeFirstLetter(aanvraag.titel),
     leverancier: aanvraag.leverancier,
+    leveringsvorm: aanvraag.leveringsVorm,
+    leveringsvormUitgeschreven: getLeveriningsVormUitgeschreven(
+      aanvraag.leveringsVorm
+    ),
     isActual: aanvraag.isActueel,
     link: {
       title: 'Meer informatie',

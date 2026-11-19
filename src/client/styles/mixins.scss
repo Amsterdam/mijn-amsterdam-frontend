@@ -41,8 +41,12 @@
   background-color: var(--ams-color-background);
   background-image: url("../assets/icons/Chevron-Down.svg");
   background-repeat: no-repeat, repeat;
-  background-position: right 0.7em top 50%, 0 0;
-  background-size: 0.85em auto, 100%;
+  background-position:
+    right 0.7em top 50%,
+    0 0;
+  background-size:
+    0.85em auto,
+    100%;
 
   &::-ms-expand {
     display: none;

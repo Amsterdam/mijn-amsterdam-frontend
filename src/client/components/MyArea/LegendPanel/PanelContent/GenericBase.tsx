@@ -7,6 +7,7 @@ import {
   DATASETS,
   getDatasetCategoryId,
 } from '../../../../../universal/config/myarea-datasets.ts';
+import type { JSONValue } from '../../../../../universal/types/App.types.ts';
 import { useSmallScreen } from '../../../../hooks/media.hook.ts';
 import styles from './GenericBase.module.scss';
 import { JsonString } from './JsonString.tsx';
@@ -17,7 +18,7 @@ type GenericBaseProps = PropsWithChildren<{
 }>;
 
 interface GenericContentProps {
-  panelItem: Record<string, unknown>;
+  panelItem: Record<string, JSONValue>;
   datasetId: string;
 }
 

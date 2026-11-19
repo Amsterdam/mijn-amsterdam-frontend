@@ -46,6 +46,7 @@ export function getAanvraagTransformed(
     leverancier: 'Woningpartner',
     leverancierIdentificatie: 'leverancier-1',
     leveringsVorm: 'ZIN',
+    leveringsVormUitgeschreven: 'Zorg in natura',
     productsoortCode: 'WRA',
     beschiktProductIdentificatie: 'beschikt-product-1',
     beschikkingNummer: 1,
