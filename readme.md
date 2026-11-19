@@ -40,6 +40,7 @@ pnpm bff-api:watch
 The `mock-server` script starts the custom TypeScript mock server from `src/mocks-server`.
 
 To run our database and an admin panel set `BFF_DB_ENABLED` to `true` and run:
+
 ```bash
 docker compose up
 ```
@@ -51,6 +52,7 @@ pnpm db:migrate
 ```
 
 You can also include the BFF, but this is a work in progress, meaning connections to the DB, frontend, and mock server should still be made.
+
 ```bash
 BFF_SSH_PASSWD=root:admin docker compose --profile dev up
 ```
@@ -173,6 +175,7 @@ Rule format for each entry:
 `urlPart|paramsPart;paramPart2|responsePart`
 
 Current matching behavior:
+
 - If one rule matches, the response is logged
 - The three parts of each rule are combined with AND.
 - `;` inside each part means AND (all sub-terms must be present).

@@ -129,11 +129,11 @@
     "@rollup/rollup-linux-x64-gnu": "4.68.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.6.4",
-    "@testcontainers/postgresql": "^12.2.0",
+    "@biomejs/biome": "2.6.6",
+    "@testcontainers/postgresql": "^12.2.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.3",
-    "@testing-library/user-event": "^14.6.8",
+    "@testing-library/user-event": "^14.6.9",
     "@types/compression": "^1.8.1",
     "@types/connect-pg-simple": "^7.0.3",
     "@types/cookie-parser": "^1.4.10",
@@ -163,7 +163,7 @@
     "@types/throttle-debounce": "^5.0.2",
     "@types/uid-safe": "^2.1.5",
     "@vitejs/plugin-react": "^4.7.0",
-    "concurrently": "^10.0.6",
+    "concurrently": "^10.0.7",
     "drizzle-kit": "^0.31.11",
     "formidable": "^3.5.4",
     "happy-dom": "^21.0.4",
@@ -171,10 +171,10 @@
     "nock": "^13.5.6",
     "nodemon": "^3.1.14",
     "pino-pretty": "^13.2.0",
-    "testcontainers": "^12.2.0",
+    "testcontainers": "^12.2.1",
     "typescript": "^6.0.3",
-    "vite": "^6.4.5",
+    "vite": "^6.4.6",
     "vite-plugin-svgr": "^4.5.0",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.12"
   }
 }
