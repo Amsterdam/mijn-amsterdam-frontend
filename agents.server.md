@@ -83,7 +83,6 @@ Tooling: Vitest (usually `node` env). Global setup: `src/testing/setup.ts`.
 
 - Default is “enabled”. To test “off”: `vi.resetModules()` → `vi.doMock(...)` → import after.
 
-
 ## Backend test recipes
 
 Two common approaches:
@@ -98,12 +97,10 @@ Prefer the simplest approach that proves the behavior.
 - This repo is ESM (`"type": "module"`). Avoid `require()` patterns.
 - Avoid side effects at module load in `src/jobs/**` and `src/scripts/**`; guard runnable entrypoints (e.g. `import.meta.main`) so importing a module from a test doesn’t start servers or make HTTP calls.
 
-
 ## Auth/time helpers (if needed)
 
 - Auth: `getAuthProfileAndToken()` from `src/testing/utils.ts`.
 - Time: `mockdate` (`MockDate.set(...)`).
-
 
 ## Definition of done (backend)
 
