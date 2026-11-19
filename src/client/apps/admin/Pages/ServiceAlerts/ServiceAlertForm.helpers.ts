@@ -96,7 +96,7 @@ export const SERVICE_ALERT_FORM_ERROR_MESSAGES = {
   type: 'Kies een type.',
   links:
     'Controleer de links. Elke link heeft een linktekst en een geldig https://-adres nodig.',
-  period: 'Kies een startdatum en een einddatum.',
+  period: 'Kies een startdatum.',
   timeStart: 'Vul een starttijd in.',
   timeEnd: 'Vul een eindtijd in.',
   timeEndBeforeStart:
@@ -136,10 +136,10 @@ export function getServiceAlertFormResult({
     dateRange.start && timeStart
       ? combineDateAndTime(dateRange.start, timeStart)
       : null;
+  // Without an end date the alert is shown on the start date only.
+  const endDate = dateRange.end ?? dateRange.start;
   const dateEnd =
-    dateRange.end && timeEnd
-      ? combineDateAndTime(dateRange.end, timeEnd)
-      : null;
+    endDate && timeEnd ? combineDateAndTime(endDate, timeEnd) : null;
 
   const errors: ServiceAlertFormErrors = {};
   const messages = SERVICE_ALERT_FORM_ERROR_MESSAGES;
@@ -162,7 +162,7 @@ export function getServiceAlertFormResult({
   if (parsedLinks.some((link) => getServiceAlertLinkValidationMessage(link))) {
     errors.links = messages.links;
   }
-  if (!dateRange.start || !dateRange.end) {
+  if (!dateRange.start) {
     errors.period = messages.period;
   }
   if (!timeStart) {

@@ -36,7 +36,7 @@ function getInitialValues(
     displayLocation: serviceAlert?.displayLocation,
     themaId: serviceAlert?.themaId ?? '',
     dateRange: {
-      start: serviceAlert ? new Date(serviceAlert.dateStart) : new Date(),
+      start: serviceAlert ? new Date(serviceAlert.dateStart) : null,
       end: serviceAlert ? new Date(serviceAlert.dateEnd) : null,
     },
     timeStart: getTime(serviceAlert?.dateStart),

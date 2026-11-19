@@ -19,7 +19,8 @@ export function getServiceAlertPreviewPeriod(
   timeEnd: string | undefined
 ) {
   const startDate = dateRange?.start;
-  const endDate = dateRange?.end;
+  // Without an end date the alert is shown on the start date only.
+  const endDate = dateRange?.end ?? startDate;
 
   if (!startDate || !endDate || !timeStart || !timeEnd) {
     return null;
