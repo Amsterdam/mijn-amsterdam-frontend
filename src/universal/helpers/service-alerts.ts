@@ -1,3 +1,5 @@
+import type { ServiceAlertThemaID } from '../../client/apps/bob/config/service-alert-themas.ts';
+
 type FilterableServiceAlert = {
   displayLocation?: string;
   themaID: string;
@@ -12,7 +14,7 @@ export function isServiceAlertsPage(page: unknown): page is ServiceAlertsPage {
 
 export type ServiceAlertsFilter =
   | { page: ServiceAlertsPage; themaID?: never }
-  | { themaID: string; page?: never };
+  | { themaID: ServiceAlertThemaID; page?: never };
 
 export function filterServiceAlerts<T extends FilterableServiceAlert>(
   notifications: T[],

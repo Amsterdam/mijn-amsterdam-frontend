@@ -11,6 +11,7 @@ import {
   LoadingContent,
 } from '../LoadingContent/LoadingContent.tsx';
 import { PageContentCell, PageV2 } from '../Page/Page.tsx';
+import { isServiceAlertThemaID } from '../../apps/bob/config/service-alert-themas.ts';
 import { ServiceAlerts } from '../ServiceAlerts/ServiceAlerts.tsx';
 import styles from './ThemaPagina.module.scss';
 
@@ -78,7 +79,7 @@ export function ThemaPagina({
       showUserFeedback
       userFeedbackDetails={userFeedbackDetails}
     >
-      <ServiceAlerts themaID={id} />
+      {isServiceAlertThemaID(id) && <ServiceAlerts themaID={id} />}
       {pageContentTop}
       {!!visiblePageLinks.length && (
         <PageContentCell className={pageContentTop ? styles.PullUp : ''}>

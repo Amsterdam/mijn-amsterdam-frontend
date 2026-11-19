@@ -1,5 +1,6 @@
 import z from 'zod';
 
+import { SERVICE_ALERT_THEMA_IDS } from '../../../client/apps/bob/config/service-alert-themas.ts';
 import { sanitizeToPlainText } from '../../../universal/helpers/sanitize-to-plain-text.ts';
 import type {
   LinkProps,
@@ -30,7 +31,7 @@ export const serviceAlertInput = z
     body: z.string().min(1).transform(sanitizeToPlainText),
     type: z.enum(SERVICE_ALERT_TYPES),
     displayLocation: z.enum(SERVICE_ALERT_DISPLAY_LOCATIONS),
-    themaId: z.string().max(64).nullable().optional(),
+    themaId: z.enum(SERVICE_ALERT_THEMA_IDS).nullable().optional(),
     links: z.array(serviceAlertLinkInput).default([]),
     dateStart: z.iso.datetime(),
     dateEnd: z.iso.datetime(),
