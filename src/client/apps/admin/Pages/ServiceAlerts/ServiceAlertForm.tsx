@@ -239,6 +239,9 @@ export function ServiceAlertForm({
           type={values.type}
           displayLocation={values.displayLocation}
           links={linkControls.links}
+          dateRange={values.dateRange}
+          timeStart={values.timeStart}
+          timeEnd={values.timeEnd}
         />
       </PageContentCell>
     </>

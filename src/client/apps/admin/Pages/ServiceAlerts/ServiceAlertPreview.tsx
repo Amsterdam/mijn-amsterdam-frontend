@@ -15,6 +15,7 @@ import {
   themaTitle as notificationsThemaTitle,
 } from '../../../bob/pages/MyNotifications/MyNotifications-config.ts';
 import type { ServiceAlertPreviewProps } from './ServiceAlertPreview.types.ts';
+import { getServiceAlertPreviewPeriod } from './ServiceAlerts.helpers.ts';
 
 export function ServiceAlertPreview({
   title,
@@ -22,9 +23,13 @@ export function ServiceAlertPreview({
   type,
   displayLocation,
   links,
+  dateRange,
+  timeStart,
+  timeEnd,
 }: ServiceAlertPreviewProps) {
   const [datePublished] = useState(() => new Date().toISOString());
   const description = sanitizeToPlainText(body || 'Bericht van de melding');
+  const period = getServiceAlertPreviewPeriod(dateRange, timeStart, timeEnd);
   const notification: MyNotificationData = {
     id: 'service-alert-preview',
     themaID: notificationsThemaId,
@@ -41,6 +46,7 @@ export function ServiceAlertPreview({
       <Heading level={2} className="ams-mb-m">
         Voorbeeld
       </Heading>
+      {period && <Paragraph className="ams-mb-m">{period}</Paragraph>}
       {displayLocation === 'notification' ? (
         <MyNotification
           notification={notification}

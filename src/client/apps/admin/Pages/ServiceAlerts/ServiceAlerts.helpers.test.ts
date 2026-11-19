@@ -5,8 +5,49 @@ import { myThemasMenuItems } from '../../../bob/config/thema.ts';
 import {
   getServiceAlertDisplayLocationLabel,
   getServiceAlertGroups,
+  getServiceAlertPreviewPeriod,
   getServiceAlertTypeLabel,
 } from './ServiceAlerts.helpers.ts';
+
+describe('getServiceAlertPreviewPeriod', () => {
+  it('formats the display period', () => {
+    expect(
+      getServiceAlertPreviewPeriod(
+        {
+          start: new Date(2024, 1, 12),
+          end: new Date(2024, 1, 14),
+        },
+        '12:22',
+        '13:22'
+      )
+    ).toBe(
+      'Getoond van maandag 12 februari om 12:22 tot woensdag 14 februari om 13:22'
+    );
+  });
+
+  it('formats a period within the same day', () => {
+    expect(
+      getServiceAlertPreviewPeriod(
+        {
+          start: new Date(2024, 1, 12),
+          end: new Date(2024, 1, 12),
+        },
+        '12:22',
+        '13:22'
+      )
+    ).toBe('Getoond op maandag 12 februari van 12:22 tot 13:22');
+  });
+
+  it('returns null for an incomplete period', () => {
+    expect(
+      getServiceAlertPreviewPeriod(
+        { start: new Date(2024, 1, 12), end: null },
+        '12:22',
+        '13:22'
+      )
+    ).toBeNull();
+  });
+});
 
 const now = new Date('2026-11-11T12:00:00.000Z');
 

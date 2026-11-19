@@ -1,5 +1,10 @@
+import type { DateRange } from '@amsterdam/design-system-react';
+
 import type { ServiceAlertsOverview } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
-import { isDateInFuture } from '../../../../../universal/helpers/date.ts';
+import {
+  dateFormat,
+  isDateInFuture,
+} from '../../../../../universal/helpers/date.ts';
 import {
   serviceAlertDisplayLocations,
   serviceAlertThemas,
@@ -7,6 +12,27 @@ import {
 } from './ServiceAlertForm.constants.ts';
 
 type ServiceAlert = ServiceAlertsOverview[number];
+
+export function getServiceAlertPreviewPeriod(
+  dateRange: DateRange | undefined,
+  timeStart: string | undefined,
+  timeEnd: string | undefined
+) {
+  const startDate = dateRange?.start;
+  const endDate = dateRange?.end;
+
+  if (!startDate || !endDate || !timeStart || !timeEnd) {
+    return null;
+  }
+
+  if (
+    dateFormat(startDate, 'yyyy-MM-dd') === dateFormat(endDate, 'yyyy-MM-dd')
+  ) {
+    return `Getoond op ${dateFormat(startDate, 'EEEE d MMMM')} van ${timeStart} tot ${timeEnd}`;
+  }
+
+  return `Getoond van ${dateFormat(startDate, 'EEEE d MMMM')} om ${timeStart} tot ${dateFormat(endDate, 'EEEE d MMMM')} om ${timeEnd}`;
+}
 
 export function getServiceAlertTypeLabel(type: ServiceAlert['type']) {
   return serviceAlertTypes.find(({ value }) => value === type)?.label ?? type;
