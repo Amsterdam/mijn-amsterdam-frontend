@@ -47,19 +47,16 @@ export const router = express.Router();
 /**
  * Serves the maintenance and outage notifications.
  */
-router.get(
-  BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
-  async (req, res, next) => {
-    try {
-      const response = await fetchActiveServiceAlerts(
-        queryParams<QueryParamsServiceAlerts>(req)
-      );
-      return res.json(response);
-    } catch (error) {
-      next(error);
-    }
+router.get(BffEndpoints.SERVICE_ALERTS, async (req, res, next) => {
+  try {
+    const response = await fetchActiveServiceAlerts(
+      queryParams<QueryParamsServiceAlerts>(req)
+    );
+    return res.json(response);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 /**
  * This endpoint serves the Footer content (html in json).

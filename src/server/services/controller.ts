@@ -120,9 +120,7 @@ export function addServiceResultHandler<
  * The service methods
  */
 // Public services
-const CMS_MAINTENANCE_NOTIFICATIONS = callPublicService(
-  fetchActiveServiceAlerts
-);
+const SERVICE_ALERTS = callPublicService(fetchActiveServiceAlerts);
 
 // Protected services
 const AFIS = callAuthenticatedService(fetchIsKnownInAFIS);
@@ -202,7 +200,7 @@ export const servicesByProfileType = {
     BEZWAREN,
     BODEM,
     BRP,
-    CMS_MAINTENANCE_NOTIFICATIONS,
+    SERVICE_ALERTS,
     ERFPACHT,
     HLI,
     HORECA,
@@ -230,7 +228,7 @@ export const servicesByProfileType = {
     KTO,
   },
   'private-attributes': {
-    CMS_MAINTENANCE_NOTIFICATIONS,
+    SERVICE_ALERTS,
     NOTIFICATIONS,
   },
   commercial: {
@@ -239,7 +237,7 @@ export const servicesByProfileType = {
     AFVALPUNTEN,
     BEZWAREN,
     BODEM,
-    CMS_MAINTENANCE_NOTIFICATIONS,
+    SERVICE_ALERTS,
     ERFPACHT,
     HORECA,
     KVK,

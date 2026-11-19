@@ -12,7 +12,7 @@ export function useServiceAlerts(
   themaID?: string,
   fromApiDirectly: boolean = false
 ) {
-  const { CMS_MAINTENANCE_NOTIFICATIONS } = useAppStateGetter();
+  const { SERVICE_ALERTS } = useAppStateGetter();
   const url = new URL(BFFApiUrls.SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL);
   url.searchParams.append('page', page || '');
   const api = useBffApi<ServiceAlert[]>(
@@ -21,7 +21,7 @@ export function useServiceAlerts(
 
   const notifications = fromApiDirectly
     ? api.data?.content
-    : CMS_MAINTENANCE_NOTIFICATIONS?.content;
+    : SERVICE_ALERTS?.content;
 
   return filterServiceAlerts(notifications ?? [], {
     page,
