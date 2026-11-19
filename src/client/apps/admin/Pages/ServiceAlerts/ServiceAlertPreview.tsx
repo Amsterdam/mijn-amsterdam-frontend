@@ -30,7 +30,7 @@ export function ServiceAlertPreview({
     themaID: notificationsThemaId,
     themaTitle: notificationsThemaTitle,
     datePublished,
-    title: title || 'Titel van de melding',
+    title,
     description,
     isAlert: true,
     links: links.map(({ label, url }) => ({ title: label, to: url })),
