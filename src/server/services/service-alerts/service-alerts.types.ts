@@ -1,5 +1,6 @@
 import z from 'zod';
 
+import { sanitizeToPlainText } from '../../../universal/helpers/sanitize-to-plain-text.ts';
 import type { MyNotification } from '../../../universal/types/App.types.ts';
 import {
   SERVICE_ALERT_DISPLAY_LOCATIONS,
@@ -23,7 +24,7 @@ export const serviceAlertInput = z
   .object({
     id: z.uuid().optional(),
     title: z.string().max(200),
-    body: z.string(),
+    body: z.string().transform(sanitizeToPlainText),
     type: z.enum(SERVICE_ALERT_TYPES),
     displayLocation: z.enum(SERVICE_ALERT_DISPLAY_LOCATIONS),
     themaId: z.string().max(64).nullable().optional(),

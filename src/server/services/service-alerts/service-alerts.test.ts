@@ -10,6 +10,7 @@ import {
   fetchServiceAlertNotifications,
   forTesting,
 } from './service-alerts.ts';
+import { serviceAlertInput } from './service-alerts.types.ts';
 
 vi.mock('./service-alerts.model.ts', () => ({
   getActiveServiceAlertRows: vi.fn(),
@@ -193,5 +194,19 @@ describe('service alert maintenance notifications', () => {
       { title: 'First link', to: 'https://example.com/first' },
       { title: 'Second link', to: 'https://example.com/second' },
     ]);
+  });
+
+  it('stores service alert bodies as plain text', () => {
+    const parsed = serviceAlertInput.parse({
+      title: 'Storing',
+      body: '<p>Er is een <strong>storing</strong>.</p>',
+      type: 'warning',
+      displayLocation: 'notification',
+      links: [],
+      dateStart: '2026-11-10T11:00:00.000Z',
+      dateEnd: '2026-11-10T13:00:00.000Z',
+    });
+
+    expect(parsed.body).toBe('Er is een storing.');
   });
 });

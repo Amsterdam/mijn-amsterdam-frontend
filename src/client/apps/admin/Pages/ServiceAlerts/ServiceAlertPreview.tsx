@@ -7,6 +7,7 @@ import {
   Paragraph,
 } from '@amsterdam/design-system-react';
 
+import { sanitizeToPlainText } from '../../../../../universal/helpers/sanitize-to-plain-text.ts';
 import type { MyNotification as MyNotificationData } from '../../../../../universal/types/App.types.ts';
 import { MyNotification } from '../../../../components/MyNotification/MyNotification.tsx';
 import {
@@ -23,13 +24,14 @@ export function ServiceAlertPreview({
   links,
 }: ServiceAlertPreviewProps) {
   const [datePublished] = useState(() => new Date().toISOString());
+  const description = sanitizeToPlainText(body || 'Bericht van de melding');
   const notification: MyNotificationData = {
     id: 'service-alert-preview',
     themaID: notificationsThemaId,
     themaTitle: notificationsThemaTitle,
     datePublished,
     title: title || 'Titel van de melding',
-    description: body || 'Bericht van de melding',
+    description,
     isAlert: true,
     links: links.map(({ label, url }) => ({ title: label, to: url })),
   };
@@ -50,7 +52,7 @@ export function ServiceAlertPreview({
           headingLevel={4}
           severity={type === 'info' || !type ? undefined : type}
         >
-          <Paragraph>{body || 'Bericht van de melding'}</Paragraph>
+          <Paragraph>{description}</Paragraph>
           {links.map(({ label, url }) => (
             <Paragraph key={url}>
               <Link href={url}>{label}</Link>
