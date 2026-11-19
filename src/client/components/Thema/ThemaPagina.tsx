@@ -4,6 +4,7 @@ import { LinkList } from '@amsterdam/design-system-react';
 
 import type { LinkProps } from '../../../universal/types/App.types.ts';
 import type { LinkConfig } from '../../../universal/types/thema-types.ts';
+import { isServiceAlertThemaID } from '../../apps/bob/config/service-alert-themas.ts';
 import { useProfileTypeValue } from '../../hooks/useProfileType.ts';
 import { ErrorAlert } from '../Alert/Alert.tsx';
 import {
@@ -11,7 +12,6 @@ import {
   LoadingContent,
 } from '../LoadingContent/LoadingContent.tsx';
 import { PageContentCell, PageV2 } from '../Page/Page.tsx';
-import { isServiceAlertThemaID } from '../../apps/bob/config/service-alert-themas.ts';
 import { ServiceAlerts } from '../ServiceAlerts/ServiceAlerts.tsx';
 import styles from './ThemaPagina.module.scss';
 
