@@ -13,20 +13,16 @@ import {
 import { ServiceAlertsPageContent } from './ServiceAlertsOverview.tsx';
 
 export function ServiceAlerts() {
-  const { isError, data } = useBffApi<ServiceAlertsOverview>(
+  const { isError, isLoading, data } = useBffApi<ServiceAlertsOverview>(
     BFFApiUrls.SERVICE_ALERTS_OVERVIEW
   );
-
-  if (isError) {
-    return null;
-  }
 
   return (
     <ThemaPagina
       title={themaConfig.title}
       showBreadcrumbs={false}
-      isError={false}
-      isLoading={false}
+      isError={isError}
+      isLoading={isLoading}
       id="admin-user-feedback"
       pageContentTop={<></>}
       pageLinks={[]}
