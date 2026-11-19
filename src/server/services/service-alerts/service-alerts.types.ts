@@ -1,7 +1,10 @@
 import z from 'zod';
 
 import { sanitizeToPlainText } from '../../../universal/helpers/sanitize-to-plain-text.ts';
-import type { MyNotification } from '../../../universal/types/App.types.ts';
+import type {
+  LinkProps,
+  MyNotification,
+} from '../../../universal/types/App.types.ts';
 import {
   SERVICE_ALERT_DISPLAY_LOCATIONS,
   SERVICE_ALERT_TYPES,
@@ -73,6 +76,7 @@ export type ServiceAlert = MyNotification & {
   description: string;
   severity: ServiceAlertType;
   displayLocation: ServiceAlertDisplayLocation;
+  links: LinkProps[];
 };
 
 export type QueryParamsServiceAlerts = {

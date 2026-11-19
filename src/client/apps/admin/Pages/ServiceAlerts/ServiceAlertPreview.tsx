@@ -8,8 +8,10 @@ import {
 } from '@amsterdam/design-system-react';
 
 import { sanitizeToPlainText } from '../../../../../universal/helpers/sanitize-to-plain-text.ts';
-import type { MyNotification as MyNotificationData } from '../../../../../universal/types/App.types.ts';
-import { MyNotification } from '../../../../components/MyNotification/MyNotification.tsx';
+import {
+  MyNotification,
+  type MyNotificationWithLinks,
+} from '../../../../components/MyNotification/MyNotification.tsx';
 import {
   themaId as notificationsThemaId,
   themaTitle as notificationsThemaTitle,
@@ -30,7 +32,7 @@ export function ServiceAlertPreview({
   const [datePublished] = useState(() => new Date().toISOString());
   const description = sanitizeToPlainText(body || 'Bericht van de melding');
   const period = getServiceAlertPreviewPeriod(dateRange, timeStart, timeEnd);
-  const notification: MyNotificationData = {
+  const notification: MyNotificationWithLinks = {
     id: 'service-alert-preview',
     themaID: notificationsThemaId,
     themaTitle: notificationsThemaTitle,

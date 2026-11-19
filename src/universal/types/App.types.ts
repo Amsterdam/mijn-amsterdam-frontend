@@ -69,7 +69,6 @@ export interface MyNotification<ID extends string = string> {
   sortPriority?: (typeof NOTIFICATION_SORTPRIORITY)[keyof typeof NOTIFICATION_SORTPRIORITY];
   isAlert?: boolean;
   link?: LinkProps;
-  links?: LinkProps[];
   subject?: string;
   title: string;
 

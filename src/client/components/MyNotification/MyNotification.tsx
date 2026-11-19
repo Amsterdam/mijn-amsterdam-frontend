@@ -4,7 +4,10 @@ import { Heading, Paragraph } from '@amsterdam/design-system-react';
 
 import { MIJN_AMSTERDAM } from '../../../universal/config/app.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
-import type { MyNotification } from '../../../universal/types/App.types.ts';
+import type {
+  LinkProps,
+  MyNotification,
+} from '../../../universal/types/App.types.ts';
 import { parseHTML } from '../../helpers/html-react-parse.tsx';
 import { trackEvent } from '../../helpers/monitoring.ts';
 import { isInteralUrl } from '../../helpers/utils.ts';
@@ -13,8 +16,13 @@ import { DocumentLink } from '../DocumentList/DocumentLink.tsx';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink.tsx';
 import styles from './MyNotification.module.scss';
 
+/** Service alerts can be notifications that can have multiple links, other notifications have a single link. */
+export type MyNotificationWithLinks = MyNotification & {
+  links?: LinkProps[];
+};
+
 type MyNotificationProps = {
-  notification: MyNotification;
+  notification: MyNotificationWithLinks;
   trackCategory?: string;
 };
 
