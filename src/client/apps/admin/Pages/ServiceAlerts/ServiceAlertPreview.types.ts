@@ -1,5 +1,6 @@
-import type { ServiceAlertInput } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
 import type { DateRange } from '@amsterdam/design-system-react';
+
+import type { ServiceAlertInput } from '../../../../../server/services/service-alerts/service-alerts.types.ts';
 
 export type ServiceAlertPreviewProps = {
   title: string;
