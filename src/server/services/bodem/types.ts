@@ -55,6 +55,7 @@ export type LoodMetingen = LoodMetingFrontend[];
 export interface LoodMetingFrontend
   extends ZaakAanvraagDetail<LoodMetingStatus> {
   adres: string;
+  adresVolledig: string; // adres including postcode and city
   datumAanvraag: string; // RequestedOn
   datumAanvraagFormatted: string;
   datumInbehandeling: string | null; // Workordercreatedon

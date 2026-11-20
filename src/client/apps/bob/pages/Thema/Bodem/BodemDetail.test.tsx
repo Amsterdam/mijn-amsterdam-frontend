@@ -11,6 +11,7 @@ const metingen: LoodMetingFrontend[] = [
   {
     processed: false,
     adres: 'Schipluidenlaan 12A',
+    adresVolledig: 'Schipluidenlaan 12A 1234AB Amsterdam',
     datumAanvraag: '2022-12-01T09:53:11Z',
     datumAanvraagFormatted: '2022-12-01T09:53:11Z',
     decision: null,
@@ -57,6 +58,7 @@ const metingen: LoodMetingFrontend[] = [
   {
     processed: true,
     adres: 'Schipluidenlaan 16A',
+    adresVolledig: 'Schipluidenlaan 16A 1234AB Amsterdam',
     datumAanvraag: '2022-11-29T09:54:22Z',
     datumAanvraagFormatted: '29 november 2022',
     datumInbehandeling: '2022-11-29T09:54:44Z',
@@ -103,6 +105,7 @@ const metingen: LoodMetingFrontend[] = [
   {
     processed: true,
     adres: 'Schipluidenlaan 16A',
+    adresVolledig: 'Schipluidenlaan 16A 1234AB Amsterdam',
     datumAanvraag: '2022-11-28T12:14:55Z',
     datumAanvraagFormatted: '28 november 2022',
     datumInbehandeling: '2022-11-28T12:24:20Z',

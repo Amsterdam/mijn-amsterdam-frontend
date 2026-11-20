@@ -65,6 +65,7 @@ describe('Loodmeting', () => {
       expect(mostCompleteMeting).toStrictEqual({
         aanvraagNummer: 'AV-001480',
         adres: 'Insulindeweg 26A',
+        adresVolledig: 'Insulindeweg 26A 1062HK Amsterdam',
         datumAanvraag: '2023-07-12T12:39:15Z',
         datumAanvraagFormatted: '12 juli 2023',
         datumAfgehandeld: '2023-07-19T12:14:20Z',
@@ -154,6 +155,19 @@ describe('Loodmeting', () => {
       expect(res).toStrictEqual({
         content: {
           notifications: [
+            {
+              datePublished: '2023-08-02T14:31:55Z',
+              description:
+                'Uw aanvraag lood in de bodem-check voor Emmastraat 21 is afgehandeld.',
+              id: 'OL-001535',
+              link: {
+                title: 'Bekijk details',
+                to: '/bodem/lood-meting/OL-001535',
+              },
+              themaID: 'BODEM',
+              themaTitle: 'Bodem',
+              title: 'Aanvraag lood in de bodem-check afgehandeld',
+            },
             {
               datePublished: '2023-07-19T12:16:23Z',
               description:
