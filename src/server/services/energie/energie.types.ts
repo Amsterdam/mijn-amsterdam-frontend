@@ -1,6 +1,6 @@
 export interface EnergieLabelTransformed {
-  energieklasse: string;
-  metingGeldigTot: string;
+  energieklasse: string | null;
+  geldigTotDatum: string | null;
 }
 
 /**

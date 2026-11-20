@@ -2,6 +2,7 @@ import {
   apiDependencyError,
   apiErrorResult,
 } from '../../../universal/helpers/api.ts';
+import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
@@ -36,7 +37,7 @@ export async function fetchEnergie(authProfileAndToken: AuthProfileAndToken) {
     return fetchEnergieLabel(verblijfsobjectIdentificatie);
 }
 
-export async function fetchEnergieLabel(bagVerblijfsobjectId: string) {
+async function fetchEnergieLabel(bagVerblijfsobjectId: string) {
   const params = {
     bagVerblijfsobjectId,
   };
@@ -51,14 +52,21 @@ export async function fetchEnergieLabel(bagVerblijfsobjectId: string) {
   return energieLabelData;
 }
 
-export function transformEnergieLabelDataResponse(
+function transformEnergieLabelDataResponse(
   energieLabelSourceData: EnergieLabelSourceData
-): EnergieLabelTransformed[] {
+): EnergieLabelTransformed {
   const energieLabelFractions =
     energieLabelSourceData._embedded?.energielabel ?? [];
 
-  return energieLabelFractions.map((fractionData) => ({
-    energieklasse: fractionData.energieklasse,
-    metingGeldigTot: fractionData.metingGeldigTot,
-  }));
+  const firstFractionData = energieLabelFractions[0];
+  return {
+    energieklasse: firstFractionData?.energieklasse ?? null,
+    geldigTotDatum: firstFractionData?.metingGeldigTot
+      ? defaultDateFormat(firstFractionData.metingGeldigTot)
+      : null,
+  };
 }
+
+export const forTesting = {
+  transformEnergieLabelDataResponse,
+};
