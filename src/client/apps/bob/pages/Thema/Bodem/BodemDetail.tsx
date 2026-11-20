@@ -17,7 +17,12 @@ function BodemDetailContent({ meting }: { meting: LoodMetingFrontend }) {
     if (meting.adres) {
       rows.push({
         label: 'Locatie',
-        content: <AddressDisplayAndModal address={meting.adres} />,
+        content: (
+          <AddressDisplayAndModal
+            address={meting.adresVolledig}
+            label={meting.adres}
+          />
+        ),
       });
     }
 

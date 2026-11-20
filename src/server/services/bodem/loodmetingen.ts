@@ -111,12 +111,18 @@ function transformLood365Response(
         const decision = statusToDecisionMapping[lowercaseStatus];
 
         const datumAfgehandeld = location?.Reportsenton ?? location?.ReviewedOn;
+        const adres = `${location.Street} ${location.Housenumber}${
+          location?.Houseletter ?? ''
+        }`;
         const loodMeting: LoodMetingFrontend = {
           id: location.Reference,
           title: 'Lood in de bodem-check',
-          adres: `${location.Street} ${location.Housenumber}${
-            location?.Houseletter ?? ''
-          }`,
+          adres,
+          // Include postcode and city so the address can be located correctly on the map.
+          // The same street name can exist in both Amsterdam and Weesp.
+          adresVolledig: [adres, location?.Postalcode, location?.City]
+            .filter(Boolean)
+            .join(' '),
           datumAanvraag: request.RequestedOn,
           datumAanvraagFormatted: request.RequestedOn
             ? defaultDateFormat(request.RequestedOn)
