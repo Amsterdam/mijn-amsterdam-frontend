@@ -58,8 +58,8 @@ function AppNotAuthenticated() {
       <Page className={styles.App}>
         <MainHeader isAuthenticated={false} />
         <PublicRoutes />
+        <MainFooter />
       </Page>
-      <MainFooter />
     </>
   );
 }
@@ -97,9 +97,9 @@ function AppAuthenticated() {
         <ErrorMessages />
         {isScreensharing && <CobrowseScreenshareAlert />}
         <PrivateRoutes />
+        {/** Remove the footer on the Map view for better UX */}
+        {!isBuurt && <MainFooter id="page-main-footer" />}
       </Page>
-      {/** Remove the footer on the Map view for better UX */}
-      {!isBuurt && <MainFooter id="page-main-footer" />}
     </>
   );
 }
