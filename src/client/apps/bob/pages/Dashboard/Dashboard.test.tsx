@@ -103,7 +103,7 @@ describe('<Dashboard />', () => {
   });
 
   it('Renders dashboard correctly', async () => {
-    bffApi.get('/services/cms/footer').reply(200);
+    bffApi.get('/services/footer').reply(200);
     const Component = createDashboardComponent(testState);
     render(<Component />);
 
@@ -225,7 +225,7 @@ describe('<Dashboard />', () => {
         notification.title,
         toDateFormatted(notification.datePublished),
       ]) || [];
-    bffApi.get('/services/cms/footer').times(notifications.length).reply(200);
+    bffApi.get('/services/footer').times(notifications.length).reply(200);
     const Component = createDashboardComponent(state);
 
     test.each(notifications)(

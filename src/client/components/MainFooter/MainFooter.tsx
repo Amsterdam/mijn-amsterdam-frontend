@@ -6,40 +6,40 @@ import {
 } from '@amsterdam/design-system-react';
 
 import type {
-  CMSFooter,
-  CMSFooterSection,
-} from '../../../server/services/cms/cms-content.ts';
+  Footer,
+  FooterLink,
+  FooterSection,
+} from '../../../server/services/footer/footer.ts';
 import { useCanonmatigingFooterLink } from '../../apps/bob/pages/Thema/Erfpacht/Erfpacht-render-config.tsx';
 import { themaConfig } from '../../apps/bob/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
 import { BFF_API_BASE_URL } from '../../apps/config.ts';
 import { useBffApi } from '../../hooks/api/useBffApi.ts';
-import {
-  CobrowseFooter,
-  LABEL_HULP_SCHERMDELEN,
-} from './CobrowseFooter/CobrowseFooter.tsx';
-import styles from './MainFooter.module.scss';
+import { CobrowseFooter } from './CobrowseFooter/CobrowseFooter.tsx';
 
-function useCustomFooterSections(
-  sections: CMSFooterSection[],
-  sectionFinder: (section: CMSFooterSection, index: number) => boolean,
-  customLinks: CMSFooterSection['links']
-) {
-  return sections.map((section, index) => {
-    return {
-      ...section,
-      links: sectionFinder(section, index)
-        ? [...section.links, ...customLinks]
-        : section.links,
-    };
-  });
+type FooterBlockProps = Omit<FooterSection, 'title'> & { title?: string };
+
+function addLinksToFirstSection(
+  sections: FooterSection[],
+  customLinks: FooterLink[]
+): FooterBlockProps[] {
+  if (!sections.length) {
+    return customLinks.length ? [{ links: customLinks }] : [];
+  }
+  return sections.map((section, index) =>
+    index === 0
+      ? { ...section, links: [...section.links, ...customLinks] }
+      : section
+  );
 }
 
-function FooterBlock({ title, links }: CMSFooterSection) {
+function FooterBlock({ title, links }: FooterBlockProps) {
   return (
-    <Grid.Cell key={title} span={4}>
-      <Heading color="inverse" level={3} className="ams-mb-s">
-        {title}
-      </Heading>
+    <Grid.Cell span={4} className="ams-prose">
+      {title && (
+        <Heading color="inverse" level={2} size="level-3">
+          {title}
+        </Heading>
+      )}
       {!!links.length && (
         <LinkList>
           {links.map((link) => (
@@ -54,9 +54,7 @@ function FooterBlock({ title, links }: CMSFooterSection) {
 }
 
 export function MainFooter({ id }: { id?: string }) {
-  const { data } = useBffApi<CMSFooter>(
-    `${BFF_API_BASE_URL}/services/cms/footer`
-  );
+  const { data } = useBffApi<Footer>(`${BFF_API_BASE_URL}/services/footer`);
 
   const canonmatigingLink = useCanonmatigingFooterLink();
 
@@ -65,36 +63,30 @@ export function MainFooter({ id }: { id?: string }) {
       ? [canonmatigingLink]
       : [];
 
-  const customSections = useCustomFooterSections(
-    data?.content?.sections || [],
-    (_section, index) => index === 0,
+  const sections = addLinksToFirstSection(
+    data?.content?.sections ?? [],
     customLinks
   );
+  const bottomLinks = data?.content?.bottomLinks ?? [];
 
   return (
-    <PageFooter id={id} className={styles.MainFooter}>
-      <PageFooter.Spotlight>
-        <Grid gapVertical="large" paddingVertical="large">
-          {customSections.map((footerItem) => (
-            <FooterBlock key={footerItem.title} {...footerItem} />
-          ))}
-        </Grid>
-      </PageFooter.Spotlight>
+    <PageFooter id={id}>
+      {!!sections.length && (
+        <PageFooter.Spotlight>
+          <Grid paddingVertical="x-large">
+            {sections.map((section, index) => (
+              <FooterBlock key={section.title ?? index} {...section} />
+            ))}
+          </Grid>
+        </PageFooter.Spotlight>
+      )}
 
       <PageFooter.Menu>
-        {data?.content?.bottomLinks
-          .filter(
-            (link) =>
-              typeof link.label === 'string' &&
-              link.label.toLowerCase() !== LABEL_HULP_SCHERMDELEN.toLowerCase()
-          )
-          .map((link) => {
-            return (
-              <PageFooter.MenuLink key={link.label} href={link.url}>
-                {link.label}
-              </PageFooter.MenuLink>
-            );
-          })}
+        {bottomLinks.map((link) => (
+          <PageFooter.MenuLink key={link.label} href={link.url}>
+            {link.label}
+          </PageFooter.MenuLink>
+        ))}
         <CobrowseFooter />
       </PageFooter.Menu>
     </PageFooter>

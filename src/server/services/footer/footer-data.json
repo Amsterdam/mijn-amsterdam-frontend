@@ -1,0 +1,85 @@
+{
+  "sections": [
+    {
+      "title": "Contact",
+      "links": [
+        {
+          "label": "Contactformulier",
+          "url": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/contactformulier.aspx/"
+        },
+        {
+          "label": "14 020",
+          "url": "tel:14020"
+        },
+        {
+          "label": "Adressen en openingstijden",
+          "url": "https://www.amsterdam.nl/contact/adressen-openingstijden-stadsloketten/"
+        }
+      ]
+    },
+    {
+      "title": "Volg ons",
+      "links": [
+        {
+          "label": "Facebook",
+          "url": "https://www.facebook.com/gemeenteamsterdam"
+        },
+        {
+          "label": "Instagram",
+          "url": "https://www.instagram.com/gemeenteamsterdam/"
+        },
+        {
+          "label": "LinkedIn",
+          "url": "https://www.linkedin.com/company/gemeente-amsterdam"
+        },
+        {
+          "label": "Mastodon",
+          "url": "https://social.amsterdam.nl/@gemeenteamsterdam"
+        },
+        {
+          "label": "De Amsterdam App",
+          "url": "https://www.amsterdam.nl/contact/amsterdam-app/"
+        },
+        {
+          "label": "Nieuwsbrieven",
+          "url": "https://www.amsterdam.nl/nieuws/volg-de-gemeente/nieuwsbrief-amsterdam/"
+        }
+      ]
+    },
+    {
+      "title": "Doen in de stad",
+      "links": [
+        {
+          "label": "Bijeenkomsten en activiteiten",
+          "url": "https://activiteiten.amsterdam.nl/"
+        },
+        {
+          "label": "Uit in Amsterdam",
+          "url": "https://www.iamsterdam.com/"
+        },
+        {
+          "label": "Amsterdam 750 jaar",
+          "url": "https://amsterdam750.nl/"
+        }
+      ]
+    }
+  ],
+  "bottomLinks": [
+    {
+      "label": "Over deze site",
+      "url": "https://www.amsterdam.nl/overdezesite/"
+    },
+    {
+      "label": "Privacy",
+      "url": "https://www.amsterdam.nl/privacy/"
+    },
+    {
+      "label": "Webarchief",
+      "url": "https://amsterdam.archiefweb.eu/"
+    },
+    {
+      "label": "Vacatures",
+      "url": "https://werkenbij.amsterdam.nl/"
+    }
+  ]
+}
