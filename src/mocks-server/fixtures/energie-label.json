@@ -1,0 +1,51 @@
+{
+  "_embedded": {
+    "energielabel": [
+      {
+        "id": "20250101~1111AA~1~~~~0363010000806440~98,16",
+        "registratiedatum": "2024-01-01",
+        "opnamedatum": "2024-01-01",
+        "metingGeldigTot": "2034-01-01",
+        "certificaathouder": "Energia",
+        "opnametype": "Basisopname",
+        "status": "Bestaand",
+        "berekeningstype": "NTA 8800:2023 (basisopname woningbouw)",
+        "isOpBasisVanReferentieGebouw": null,
+        "gebouwklasse": "W",
+        "gebouwtype": "Rijwoning tussen",
+        "gebouwsubtype": null,
+        "sbicode": null,
+        "postcode": "1111AA",
+        "huisnummer": 1,
+        "huisletter": null,
+        "huisnummertoevoeging": null,
+        "detailaanduiding": null,
+        "bagVerblijfsobjectId": "0363010000806441",
+        "bagLigplaatsId": null,
+        "bagStandplaatsId": null,
+        "bagPandIds": ["0363100012086421"],
+        "projectnaam": null,
+        "projectobject": null,
+        "bouwjaar": 1931,
+        "gebruiksoppervlakteThermischeZone": "98,16",
+        "compactheid": "1,55",
+        "energieklasse": "C",
+        "energieindex": null,
+        "energieindexMetEmgForfaitair": null,
+        "eisEnergiebehoefte": null,
+        "primaireFossieleEnergie": "201,62",
+        "primaireFossieleEnergieEmgForfaitair": "201,62",
+        "aandeelHernieuwbareEnergie": "0,0",
+        "aandeelHernieuwbareEnergieEmgForfaitair": null,
+        "temperatuuroverschrijding": "2,29",
+        "warmtebehoefte": "130,00",
+        "energiebehoefte": "150,18",
+        "eisPrimaireFossieleEnergie": null,
+        "eisAandeelHernieuwbareEnergie": null,
+        "eisTemperatuuroverschrijding": null,
+        "berekendeCo2Emissie": "30,07",
+        "berekendeEnergieverbruik": "150,54"
+      }
+    ]
+  }
+}
