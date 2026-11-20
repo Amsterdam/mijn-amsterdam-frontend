@@ -57,7 +57,7 @@ describe('App', () => {
   });
 
   it('Renders Landing Page', async () => {
-    bffApi.get('/services/cms/footer').reply(200);
+    bffApi.get('/services/footer').reply(200);
     bffApi
       .get('/services/cms/maintenance-notifications?page=landingspagina')
       .reply(200);
@@ -77,7 +77,7 @@ describe('App', () => {
   });
 
   it('Renders Dashboard', async () => {
-    bffApi.get('/services/cms/footer').reply(200);
+    bffApi.get('/services/footer').reply(200);
     bffApi.get('/services/all').reply(200);
     bffApi.get('/services/search-config').reply(200);
 

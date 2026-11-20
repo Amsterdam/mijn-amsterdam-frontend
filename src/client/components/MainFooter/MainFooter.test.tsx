@@ -6,7 +6,7 @@ import * as Erfpacht from '../../apps/bob/pages/Thema/Erfpacht/useErfpachtThemaD
 import { MainFooter } from './MainFooter.tsx';
 
 export function mockFooterRequest() {
-  bffApi.get('/services/cms/footer').reply(200, {
+  bffApi.get('/services/footer').reply(200, {
     content: {
       sections: [
         {

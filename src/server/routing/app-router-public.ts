@@ -29,18 +29,12 @@ import {
 } from '../services/buurt/buurt.ts';
 import { getDatasetEndpointConfig } from '../services/buurt/helpers.ts';
 import { loadClusterDatasets } from '../services/buurt/supercluster.ts';
-import {
-  fetchCmsFooter,
-  fetchSearchConfig,
-} from '../services/cms/cms-content.ts';
+import { fetchSearchConfig } from '../services/cms/cms-content.ts';
 import { fetchActiveMaintenanceNotifications } from '../services/cms/cms-maintenance-notifications.ts';
 import type { QueryParamsMaintenanceNotifications } from '../services/cms/cms-types.ts';
+import { getFooter } from '../services/footer/footer.ts';
 import { BffEndpoints } from './bff-routes.ts';
-import {
-  generateFullApiUrlBFF,
-  queryParams,
-  type RequestWithQueryParams,
-} from './route-helpers.ts';
+import { generateFullApiUrlBFF, queryParams } from './route-helpers.ts';
 
 export const router = express.Router();
 
@@ -62,19 +56,11 @@ router.get(
 );
 
 /**
- * This endpoint serves the Footer content (html in json).
+ * Serves the Footer content
  */
-router.get(
-  BffEndpoints.CMS_FOOTER,
-  async (req: RequestWithQueryParams<{ renewCache?: 'true' }>, res, next) => {
-    try {
-      const response = await fetchCmsFooter(req.query.renewCache === 'true');
-      return res.json(response);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
+router.get(BffEndpoints.FOOTER, (_req: Request, res: Response) => {
+  return res.json(getFooter());
+});
 
 router.get(
   BffEndpoints.SEARCH_CONFIG,
