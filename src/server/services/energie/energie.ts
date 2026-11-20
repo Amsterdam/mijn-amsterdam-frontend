@@ -1,41 +1,46 @@
-import type { LatLngLiteral } from 'leaflet';
-
 import {
   apiDependencyError,
-  apiSuccessResult,
+  apiErrorResult,
 } from '../../../universal/helpers/api.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
-import { fetchMyLocations } from '../bag/my-locations.ts';
-import type { EnergieLabelSourceData, EnergieLabelTransformed } from './energie.types.ts';
+import type { BAGLocation } from '../bag/bag.types.ts';
+import { fetchPrivate } from '../bag/my-locations.ts';
+import type {
+  EnergieLabelSourceData,
+  EnergieLabelTransformed,
+} from './energie.types.ts';
 
 export async function fetchEnergie(authProfileAndToken: AuthProfileAndToken) {
-  const MY_LOCATION = await fetchMyLocations(authProfileAndToken);
+  const bagResponse = await fetchPrivate(authProfileAndToken);
 
-  if (MY_LOCATION.status === 'OK') {
-    const primaryLocation = MY_LOCATION.content?.[0];
-    const bagID = primaryLocation?.bagNummeraanduidingId ?? null;
-
-    if (!bagID) {
-      return apiSuccessResult([]);
-    }
-
-    return fetchEnergieLabel(bagID);
+  if (bagResponse.status === 'ERROR') {
+    return apiDependencyError({ bagResponse });
   }
 
-  return apiDependencyError({ MY_LOCATION });
+  if (bagResponse.status === 'POSTPONE') {
+    return bagResponse;
+  }
+
+  const bagLocations: BAGLocation[] = bagResponse.content ?? [];
+  const verblijfsobjectIdentificatie =
+    bagLocations?.[0]?.bagAddress?.verblijfsobjectIdentificatie;
+
+  if (!verblijfsobjectIdentificatie) {
+    return apiErrorResult(
+      'No valid BAG verblijfsobjectIdentificatie found for the primary BAG location of the user',
+      null
+    );
+  }
+    return fetchEnergieLabel(verblijfsobjectIdentificatie);
 }
 
-export async function fetchEnergieLabel(
-  bagID: string,
-) {
+export async function fetchEnergieLabel(bagVerblijfsobjectId: string) {
   const params = {
-    bagNummeraanduidingId: bagID,
+    bagVerblijfsobjectId,
   };
-  const energieLabelData = await requestData<
-    EnergieLabelTransformed[]
-  >(
+  const energieLabelData = await requestData<EnergieLabelTransformed[]>(
     getApiConfig('ENERGIE', {
       params,
       transformResponse: (energieLabelSourceData: EnergieLabelSourceData) =>
@@ -47,14 +52,13 @@ export async function fetchEnergieLabel(
 }
 
 export function transformEnergieLabelDataResponse(
-  energieLabelSourceData: EnergieLabelSourceData,
+  energieLabelSourceData: EnergieLabelSourceData
 ): EnergieLabelTransformed[] {
-
-  const energieLabelFractions = energieLabelSourceData._embedded?.energielabel ?? [];
+  const energieLabelFractions =
+    energieLabelSourceData._embedded?.energielabel ?? [];
 
   return energieLabelFractions.map((fractionData) => ({
     energieklasse: fractionData.energieklasse,
     metingGeldigTot: fractionData.metingGeldigTot,
   }));
 }
-
