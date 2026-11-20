@@ -25,7 +25,6 @@ import { fetchMyLocations } from './bag/my-locations.ts';
 import { fetchBezwaren } from './bezwaren/bezwaren.ts';
 import { fetchLoodmetingen } from './bodem/loodmetingen.ts';
 import { fetchBrp } from './brp/brp.ts';
-import { fetchActiveMaintenanceNotifications } from './cms/cms-maintenance-notifications.ts';
 import { fetchErfpacht } from './erfpacht/erfpacht.ts';
 import { fetchHLI } from './hli/hli.ts';
 import { fetchHorecaVergunningen } from './horeca/horeca.ts';
@@ -41,6 +40,7 @@ import { fetchBelasting } from './patroon-c/belasting.ts';
 import { fetchMilieuzone, fetchOvertredingen } from './patroon-c/cleopatra.ts';
 import { fetchSubsidie } from './patroon-c/subsidie.ts';
 import { fetchSVWI } from './patroon-c/svwi.ts';
+import { fetchActiveServiceAlerts } from './service-alerts/service-alerts.ts';
 import type { ServiceID_ } from './service-ids.ts';
 import {
   combineNotificationsWithTipsAndSort,
@@ -120,9 +120,7 @@ export function addServiceResultHandler<
  * The service methods
  */
 // Public services
-const CMS_MAINTENANCE_NOTIFICATIONS = callPublicService(
-  fetchActiveMaintenanceNotifications
-);
+const SERVICE_ALERTS = callPublicService(fetchActiveServiceAlerts);
 
 // Protected services
 const AFIS = callAuthenticatedService(fetchIsKnownInAFIS);
@@ -202,7 +200,7 @@ export const servicesByProfileType = {
     BEZWAREN,
     BODEM,
     BRP,
-    CMS_MAINTENANCE_NOTIFICATIONS,
+    SERVICE_ALERTS,
     ERFPACHT,
     HLI,
     HORECA,
@@ -230,7 +228,7 @@ export const servicesByProfileType = {
     KTO,
   },
   'private-attributes': {
-    CMS_MAINTENANCE_NOTIFICATIONS,
+    SERVICE_ALERTS,
     NOTIFICATIONS,
   },
   commercial: {
@@ -239,7 +237,7 @@ export const servicesByProfileType = {
     AFVALPUNTEN,
     BEZWAREN,
     BODEM,
-    CMS_MAINTENANCE_NOTIFICATIONS,
+    SERVICE_ALERTS,
     ERFPACHT,
     HORECA,
     KVK,
@@ -290,13 +288,12 @@ async function storeNotificationsForAmsAppUsers(
     authProfileAndToken?.profile.id &&
     authProfileAndToken.profile.profileType === 'private'
   ) {
-    const resultsWithoutMaintenanceNotifications = omit(
-      notificationsAndTipsResults,
-      ['maintenance']
-    );
+    const resultsWithoutServiceAlerts = omit(notificationsAndTipsResults, [
+      'maintenance',
+    ]);
     await storeNotificationsResponses(
       authProfileAndToken.profile.id,
-      resultsWithoutMaintenanceNotifications,
+      resultsWithoutServiceAlerts,
       { updateLastLoginDate: true }
     ).catch((error) => {
       captureException(error);

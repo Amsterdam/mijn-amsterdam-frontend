@@ -13,7 +13,7 @@ export const BffEndpoints = {
   MAP_DATASETS: '/map/datasets{/:datasetId{/:id}}',
   SEARCH_CONFIG: '/services/search-config',
   CMS_FOOTER: '/services/cms/footer',
-  CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
+  SERVICE_ALERTS: '/services/cms/maintenance-notifications',
   STATUS_HEALTH: '/status/health',
   PROXY: '/proxy',
 

@@ -5,8 +5,12 @@
   }
 }
 
-.MaintenanceNotification {
+.ServiceAlert {
   p {
     margin: 0;
   }
+}
+
+.ServiceAlert + .ServiceAlert {
+  margin-block-start: var(--ams-space-m);
 }

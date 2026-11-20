@@ -4,12 +4,14 @@ import type { ApplicationRouteConfig } from '../../../universal/types/thema-type
 import { ApplicationRoutes } from '../../components/ApplicationRoutes/ApplicationRoutes.tsx';
 import { AdminAccountRoutes } from './Pages/Account/Account-render-config.tsx';
 import { AdminHomeRoutes } from './Pages/Home/Home-render-config.tsx';
+import { AdminServiceAlertsRoutes } from './Pages/ServiceAlerts/ServiceAlerts.render.config.tsx';
 import { AdminUserFeedbackRoutes } from './Pages/UserFeedback/UserFeedback-render-config.tsx';
 
 const routeComponents: ApplicationRouteConfig[] = [
   AdminHomeRoutes,
   AdminAccountRoutes,
   AdminUserFeedbackRoutes,
+  AdminServiceAlertsRoutes,
 ].flat();
 
 export const privateRoutes = routeComponents.filter(

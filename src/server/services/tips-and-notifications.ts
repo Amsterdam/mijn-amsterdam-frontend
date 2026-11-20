@@ -21,7 +21,6 @@ import { fetchBezwarenNotifications } from './bezwaren/bezwaren.ts';
 import { fetchLoodMetingNotifications } from './bodem/loodmetingen.ts';
 import { fetchBrpNotifications } from './brp/brp-notifications.ts';
 import { sanitizeCmsContent } from './cms/cms-content.ts';
-import { fetchMaintenanceNotificationsDashboard } from './cms/cms-maintenance-notifications.ts';
 import type { ServiceResults } from './content-tips/tip-types.ts';
 import {
   fetchContentTips,
@@ -40,6 +39,7 @@ import {
 } from './patroon-c/cleopatra.ts';
 import { fetchSubsidieNotifications } from './patroon-c/subsidie.ts';
 import { fetchSVWINotifications } from './patroon-c/svwi.ts';
+import { fetchServiceAlertNotifications } from './service-alerts/service-alerts.ts';
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur-notifications.ts';
 import { fetchVarenNotifications } from './varen/varen-notifications.ts';
 import { fetchVergunningenNotifications } from './vergunningen/vergunningen-notifications.ts';
@@ -81,7 +81,7 @@ export const notificationServices = {
     overtredingen: fetchOvertredingenNotifications,
     vergunningen: fetchVergunningenNotifications,
     horeca: fetchHorecaNotifications,
-    maintenanceNotifications: fetchMaintenanceNotificationsDashboard,
+    maintenanceNotifications: fetchServiceAlertNotifications,
     subsidie: fetchSubsidieNotifications,
     toeristischeVerhuur: (authProfileAndToken: AuthProfileAndToken) =>
       fetchToeristischeVerhuurNotifications(authProfileAndToken, new Date()),
@@ -105,7 +105,7 @@ export const notificationServices = {
     fetchWpi: fetchWpiNotifications,
     horeca: fetchHorecaNotifications,
     klachten: fetchKlachtenNotifications,
-    maintenance: fetchMaintenanceNotificationsDashboard,
+    maintenance: fetchServiceAlertNotifications,
     milieuzone: fetchMilieuzoneNotifications,
     overtredingen: fetchOvertredingenNotifications,
     subsidie: fetchSubsidieNotifications,

@@ -41,6 +41,14 @@ vi.mock('../services/admin/admin-router.ts', () => {
   };
 });
 
+vi.mock('../services/service-alerts/service-alerts.router.ts', () => {
+  return {
+    serviceAlertsRouter: {
+      admin: createMockBffRouter('router-service-alerts-admin'),
+    },
+  };
+});
+
 vi.mock('../services/user-feedback/user-feedback.router.ts', () => {
   return {
     userFeedbackRouter: {
@@ -203,6 +211,7 @@ describe('app-router-admin', () => {
         adminRouterPublic,
         authenticationMiddleware,
         adminRouterProtected,
+        serviceAlertsAdmin,
         userFeedbackAdmin,
         amsappNotificationsAdmin,
       ] = router.stack as ILayer[];
@@ -216,6 +225,10 @@ describe('app-router-admin', () => {
         'BFF_ID' in adminRouterProtected.handle &&
           adminRouterProtected.handle.BFF_ID
       ).toBe('ma-admin-router-protected');
+      expect(
+        'BFF_ID' in serviceAlertsAdmin.handle &&
+          serviceAlertsAdmin.handle.BFF_ID
+      ).toBe('router-service-alerts-admin');
       expect(
         'BFF_ID' in userFeedbackAdmin.handle && userFeedbackAdmin.handle.BFF_ID
       ).toBe('router-user-feedback-admin');

@@ -1,0 +1,85 @@
+import z from 'zod';
+
+import { SERVICE_ALERT_THEMA_IDS } from '../../../client/apps/bob/config/service-alert-themas.ts';
+import { sanitizeToPlainText } from '../../../universal/helpers/sanitize-to-plain-text.ts';
+import type {
+  LinkProps,
+  MyNotification,
+} from '../../../universal/types/App.types.ts';
+import {
+  SERVICE_ALERT_DISPLAY_LOCATIONS,
+  SERVICE_ALERT_TYPES,
+  type ServiceAlertDisplayLocation,
+  type ServiceAlertType,
+} from '../db/schema/service-alerts.ts';
+import type { ServiceAlertRow } from './service-alerts.model.ts';
+
+export const serviceAlertLinkInput = z
+  .object({
+    label: z.string().trim().min(1).max(200),
+    url: z.url({ protocol: /^https$/ }).max(2048),
+    sortOrder: z.number().int(),
+  })
+  .strict();
+
+export type ServiceAlertLinkInput = z.infer<typeof serviceAlertLinkInput>;
+
+export const serviceAlertInput = z
+  .object({
+    id: z.uuid().optional(),
+    title: z.string().min(1).max(200),
+    body: z.string().min(1).transform(sanitizeToPlainText),
+    type: z.enum(SERVICE_ALERT_TYPES),
+    displayLocation: z.enum(SERVICE_ALERT_DISPLAY_LOCATIONS),
+    themaId: z.enum(SERVICE_ALERT_THEMA_IDS).nullable().optional(),
+    links: z.array(serviceAlertLinkInput).default([]),
+    dateStart: z.iso.datetime(),
+    dateEnd: z.iso.datetime(),
+  })
+  .superRefine(({ displayLocation, themaId, dateStart, dateEnd }, context) => {
+    if (displayLocation === 'theme' && !themaId) {
+      context.addIssue({
+        code: 'custom',
+        message: 'A theme must be selected for theme alerts.',
+        path: ['themaId'],
+      });
+    }
+    if (new Date(dateEnd) <= new Date(dateStart)) {
+      context.addIssue({
+        code: 'custom',
+        message: 'The end date must be after the start date.',
+        path: ['dateEnd'],
+      });
+    }
+  })
+  .strict();
+
+export type ServiceAlertInput = z.infer<typeof serviceAlertInput>;
+
+type ServiceAlertDateKey =
+  | 'dateStart'
+  | 'dateEnd'
+  | 'dateUpdated'
+  | 'dateCreated';
+
+export type ServiceAlertsOverview = Array<
+  Omit<ServiceAlertRow, ServiceAlertDateKey> &
+    Record<ServiceAlertDateKey, string>
+>;
+
+export type ServiceAlert = MyNotification & {
+  title: string;
+  datePublished: string;
+  dateStart: string;
+  dateEnd: string;
+  timeEnd: string;
+  timeStart: string;
+  description: string;
+  severity: ServiceAlertType;
+  displayLocation: ServiceAlertDisplayLocation;
+  links: LinkProps[];
+};
+
+export type QueryParamsServiceAlerts = {
+  page?: string;
+};

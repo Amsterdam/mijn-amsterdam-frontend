@@ -69,7 +69,6 @@ export function KrefiaThema() {
       pageContentTop={pageContentTop}
       pageContentMain={krefiaTables}
       pageLinks={linkListItems}
-      maintenanceNotificationsPageSlug="krefia"
     />
   );
 }
