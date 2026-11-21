@@ -1,4 +1,6 @@
-import ENERGIE_LABEL from '../fixtures/energie-label.json' with { type: 'json' };
+import ENERGIE_LABEL from '../fixtures/energie-label.json' with {
+  type: 'json',
+};
 import { defineMockRoutes } from '../route-registry.ts';
 import { MOCK_BASE_PATH } from '../settings.ts';
 

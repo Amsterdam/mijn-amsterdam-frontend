@@ -9,8 +9,8 @@ export interface EnergieLabelTransformed {
  *  See https://api.data.amsterdam.nl/v1/duurzaamheid/energielabel for documentation
  */
 export interface EnergieLabelFractionData {
-  metingGeldigTot: string,
-  energieklasse: string,
+  metingGeldigTot: string;
+  energieklasse: string;
 }
 
 export interface EnergieLabelSourceData {
@@ -18,5 +18,3 @@ export interface EnergieLabelSourceData {
     energielabel: EnergieLabelFractionData[];
   };
 }
-
-
