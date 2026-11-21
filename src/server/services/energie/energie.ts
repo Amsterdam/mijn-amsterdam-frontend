@@ -59,5 +59,6 @@ function transformEnergieLabelDataResponse(
 }
 
 export const forTesting = {
+  fetchEnergieLabel,
   transformEnergieLabelDataResponse,
 };
