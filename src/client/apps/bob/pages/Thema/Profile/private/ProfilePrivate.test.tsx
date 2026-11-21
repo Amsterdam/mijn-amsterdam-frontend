@@ -75,15 +75,17 @@ describe('<Profile />', () => {
 
   function Component({
     state,
+    wonen,
   }: {
     state?: PartialDeep<BrpFrontend, { recurseIntoArrays: true }>;
+    wonen?: WonenDataFrontend;
   }) {
     return (
       <MockApp
         routeEntry={routeEntry}
         routePath={routeEntry}
         component={MijnGegevensThema}
-        state={testState(state) as AppState}
+        state={testState(state, wonen) as AppState}
       />
     );
   }
@@ -124,6 +126,13 @@ describe('<Profile />', () => {
           ],
           fetchUrlAantalIngeschrevenPersonen: `${bffApiHost}/aantal-bewoners`,
         }}
+        wonen={{
+          vve: null,
+          energieLabel: {
+            energieklasse: 'A',
+            geldigTotDatum: '31 december 2024',
+          },
+        }}
       />
     );
     expect(
@@ -133,6 +142,9 @@ describe('<Profile />', () => {
     ).toBeInTheDocument();
     expect(screen.getByText('Mooier')).toBeInTheDocument();
     expect(screen.getByText('Neverland')).toBeInTheDocument();
+    expect(
+      screen.getByText('A - geldig tot 31 december 2024')
+    ).toBeInTheDocument();
 
     const panelHeadings = [
       'Persoonlijke gegevens',
