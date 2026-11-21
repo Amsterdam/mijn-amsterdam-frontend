@@ -1,7 +1,7 @@
 import * as request from '../../helpers/source-api-request.ts';
 import type { Adres } from '../brp/brp-types.ts';
-import { forTesting } from './energie.ts';
-import type { EnergieLabelSourceData } from './energie.types.ts';
+import { forTesting } from './energie-label.ts';
+import type { EnergieLabelSourceData } from './energie-label.types.ts';
 
 describe('fetchEnergieLabel', () => {
   const requestData = vi.spyOn(request, 'requestData');

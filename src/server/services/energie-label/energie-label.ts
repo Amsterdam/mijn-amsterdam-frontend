@@ -11,7 +11,7 @@ import type { Adres } from '../brp/brp-types.ts';
 import type {
   EnergieLabelSourceData,
   EnergieLabelTransformed,
-} from './energie.types.ts';
+} from './energie-label.types.ts';
 
 export async function fetchEnergieLabel(
   authProfileAndToken: AuthProfileAndToken
