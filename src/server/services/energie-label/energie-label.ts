@@ -45,6 +45,9 @@ async function fetchEnergieLabelForAddress(adress: Adres) {
   const params = {
     postcode: adress.postcode,
     huisnummer: adress.huisnummer,
+    ...(adress.huisletter !== null && {
+      huisletter: adress.huisletter,
+    }),
     ...(adress.huisnummertoevoeging !== null && {
       huisnummertoevoeging: adress.huisnummertoevoeging,
     }),
