@@ -1,4 +1,7 @@
-import { apiDependencyError } from '../../../universal/helpers/api.ts';
+import {
+  type ApiResponse,
+  apiDependencyError,
+} from '../../../universal/helpers/api.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
@@ -17,8 +20,22 @@ export async function fetchEnergie(authProfileAndToken: AuthProfileAndToken) {
     return apiDependencyError({ BrpResponse });
   }
 
-  if (BrpResponse.status === 'POSTPONE' || !BrpResponse.content.adres) {
+  if (BrpResponse.status === 'POSTPONE') {
     return BrpResponse;
+  }
+
+  if (!BrpResponse.content.adres) {
+    const emptyResponse: ApiResponse<EnergieLabelTransformed[]> = {
+      status: 'OK',
+      content: [
+        {
+          energieklasse: null,
+          geldigTotDatum: null,
+        },
+      ],
+    };
+
+    return emptyResponse;
   }
 
   return fetchEnergieLabel(BrpResponse.content.adres);
@@ -45,17 +62,19 @@ async function fetchEnergieLabel(adress: Adres) {
 
 function transformEnergieLabelDataResponse(
   energieLabelSourceData: EnergieLabelSourceData
-): EnergieLabelTransformed {
+): EnergieLabelTransformed[] {
   const energieLabelFractions =
     energieLabelSourceData._embedded?.energielabel ?? [];
 
   const firstFractionData = energieLabelFractions[0];
-  return {
-    energieklasse: firstFractionData?.energieklasse ?? null,
-    geldigTotDatum: firstFractionData?.metingGeldigTot
-      ? defaultDateFormat(firstFractionData.metingGeldigTot)
-      : null,
-  };
+  return [
+    {
+      energieklasse: firstFractionData?.energieklasse ?? null,
+      geldigTotDatum: firstFractionData?.metingGeldigTot
+        ? defaultDateFormat(firstFractionData.metingGeldigTot)
+        : null,
+    },
+  ];
 }
 
 export const forTesting = {

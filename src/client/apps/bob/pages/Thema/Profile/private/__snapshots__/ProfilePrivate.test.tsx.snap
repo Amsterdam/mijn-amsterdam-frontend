@@ -291,6 +291,26 @@ exports[`<Profile /> > Lives in Mokum + verbintenis: displays all data 1`] = `
                 <dt
                   class="_Datalist__title_240c86 _Label_d05464"
                 >
+                  Energielabel
+                </dt>
+                <dd
+                  class="_Datalist__description_240c86 _Content_d05464 redacted"
+                >
+                  Onbekend
+                </dd>
+                <dt
+                  class="_Datalist__title_240c86 _Label_d05464"
+                >
+                  Geldig tot
+                </dt>
+                <dd
+                  class="_Datalist__description_240c86 _Content_d05464 redacted"
+                >
+                  Onbekend
+                </dd>
+                <dt
+                  class="_Datalist__title_240c86 _Label_d05464"
+                >
                   WOZ-waarde
                 </dt>
                 <dd

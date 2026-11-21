@@ -163,6 +163,8 @@ const adres: ProfileLabels<
       return null;
     },
   ],
+  energieLabel: ['Energielabel', (value) => (value ? value : 'Onbekend')],
+  geldigTotDatum: ['Geldig tot', (value) => (value ? value : 'Onbekend')],
   wozWaarde: [
     'WOZ-waarde',
     (_value, adres) => {

@@ -58,9 +58,11 @@ describe('transformEnergieLabelDataResponse', () => {
 
     expect(
       forTesting.transformEnergieLabelDataResponse(sourceData)
-    ).toStrictEqual({
-      energieklasse: 'A',
-      geldigTotDatum: '01 januari 2030',
-    });
+    ).toStrictEqual([
+      {
+        energieklasse: 'A',
+        geldigTotDatum: '01 januari 2030',
+      },
+    ]);
   });
 });

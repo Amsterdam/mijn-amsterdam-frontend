@@ -7,7 +7,7 @@ import {
 import { useIngeschrevenPersonenOpAdres } from './useAantalIngeschrevenPersonen.hook.ts';
 
 export function useProfileData() {
-  const { BRP, WONEN } = useAppStateGetter();
+  const { BRP, WONEN, ENERGIE } = useAppStateGetter();
   const aantalIngeschrevenPersonen = useIngeschrevenPersonenOpAdres(
     BRP.content?.fetchUrlAantalIngeschrevenPersonen ?? null
   );
@@ -24,6 +24,8 @@ export function useProfileData() {
       adres: {
         ...BRP.content.adres,
         vveNaam: WONEN?.content?.vve?.name,
+        energieLabel: ENERGIE?.content?.[0]?.energieklasse ?? null,
+        geldigTotDatum: ENERGIE?.content?.[0]?.geldigTotDatum ?? null,
         aantalIngeschrevenPersonen,
       },
     };
