@@ -1,45 +1,36 @@
-import {
-  apiDependencyError,
-  apiErrorResult,
-} from '../../../universal/helpers/api.ts';
+import { apiDependencyError } from '../../../universal/helpers/api.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
-import type { BAGLocation } from '../bag/bag.types.ts';
-import { fetchPrivate } from '../bag/my-locations.ts';
+import { fetchBrp } from '../brp/brp.ts';
+import type { Adres } from '../brp/brp-types.ts';
 import type {
   EnergieLabelSourceData,
   EnergieLabelTransformed,
 } from './energie.types.ts';
 
 export async function fetchEnergie(authProfileAndToken: AuthProfileAndToken) {
-  const bagResponse = await fetchPrivate(authProfileAndToken);
+  const BrpResponse = await fetchBrp(authProfileAndToken);
 
-  if (bagResponse.status === 'ERROR') {
-    return apiDependencyError({ bagResponse });
+  if (BrpResponse.status === 'ERROR') {
+    return apiDependencyError({ BrpResponse });
   }
 
-  if (bagResponse.status === 'POSTPONE') {
-    return bagResponse;
+  if (BrpResponse.status === 'POSTPONE' || !BrpResponse.content.adres) {
+    return BrpResponse;
   }
 
-  const bagLocations: BAGLocation[] = bagResponse.content ?? [];
-  const verblijfsobjectIdentificatie =
-    bagLocations?.[0]?.bagAddress?.verblijfsobjectIdentificatie;
-
-  if (!verblijfsobjectIdentificatie) {
-    return apiErrorResult(
-      'No valid BAG verblijfsobjectIdentificatie found for the primary BAG location of the user',
-      null
-    );
-  }
-    return fetchEnergieLabel(verblijfsobjectIdentificatie);
+  return fetchEnergieLabel(BrpResponse.content.adres);
 }
 
-async function fetchEnergieLabel(bagVerblijfsobjectId: string) {
+async function fetchEnergieLabel(adress: Adres) {
   const params = {
-    bagVerblijfsobjectId,
+    postcode: adress.postcode,
+    huisnummer: adress.huisnummer,
+    ...(adress.huisnummertoevoeging !== null && {
+      huisnummertoevoeging: adress.huisnummertoevoeging,
+    }),
   };
   const energieLabelData = await requestData<EnergieLabelTransformed[]>(
     getApiConfig('ENERGIE', {
