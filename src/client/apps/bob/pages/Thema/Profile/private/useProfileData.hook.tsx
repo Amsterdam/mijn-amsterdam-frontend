@@ -7,7 +7,7 @@ import {
 import { useIngeschrevenPersonenOpAdres } from './useAantalIngeschrevenPersonen.hook.ts';
 
 export function useProfileData() {
-  const { BRP, WONEN, ENERGIE_LABEL } = useAppStateGetter();
+  const { BRP, WONEN } = useAppStateGetter();
   const aantalIngeschrevenPersonen = useIngeschrevenPersonenOpAdres(
     BRP.content?.fetchUrlAantalIngeschrevenPersonen ?? null
   );
@@ -24,8 +24,8 @@ export function useProfileData() {
       adres: {
         ...BRP.content.adres,
         vveNaam: WONEN?.content?.vve?.name,
-        energieLabel: ENERGIE_LABEL?.content?.[0]?.energieklasse ?? null,
-        geldigTotDatum: ENERGIE_LABEL?.content?.[0]?.geldigTotDatum ?? null,
+        energieLabel: WONEN?.content?.energieLabel?.energieklasse ?? null,
+        geldigTotDatum: WONEN?.content?.energieLabel?.geldigTotDatum ?? null,
         aantalIngeschrevenPersonen,
       },
     };

@@ -9,8 +9,8 @@ import { requestData } from '../../helpers/source-api-request.ts';
 import { fetchBrp } from '../brp/brp.ts';
 import type { Adres } from '../brp/brp-types.ts';
 import type {
+  EnergieLabelFrontend,
   EnergieLabelSourceData,
-  EnergieLabelTransformed,
 } from './energie-label.types.ts';
 
 export async function fetchEnergieLabel(
@@ -27,14 +27,12 @@ export async function fetchEnergieLabel(
   }
 
   if (!BrpResponse.content.adres) {
-    const emptyResponse: ApiResponse<EnergieLabelTransformed[]> = {
+    const emptyResponse: ApiResponse<EnergieLabelFrontend> = {
       status: 'OK',
-      content: [
-        {
-          energieklasse: null,
-          geldigTotDatum: null,
-        },
-      ],
+      content: {
+        energieklasse: null,
+        geldigTotDatum: null,
+      },
     };
 
     return emptyResponse;
@@ -51,7 +49,7 @@ async function fetchEnergieLabelForAddress(adress: Adres) {
       huisnummertoevoeging: adress.huisnummertoevoeging,
     }),
   };
-  const energieLabelData = await requestData<EnergieLabelTransformed[]>(
+  const energieLabelData = await requestData<EnergieLabelFrontend>(
     getApiConfig('ENERGIE_LABEL', {
       params,
       transformResponse: (energieLabelSourceData: EnergieLabelSourceData) =>
@@ -64,19 +62,17 @@ async function fetchEnergieLabelForAddress(adress: Adres) {
 
 function transformEnergieLabelDataResponse(
   energieLabelSourceData: EnergieLabelSourceData
-): EnergieLabelTransformed[] {
+): EnergieLabelFrontend {
   const energieLabelFractions =
     energieLabelSourceData._embedded?.energielabel ?? [];
 
   const firstFractionData = energieLabelFractions[0];
-  return [
-    {
-      energieklasse: firstFractionData?.energieklasse ?? null,
-      geldigTotDatum: firstFractionData?.metingGeldigTot
-        ? defaultDateFormat(firstFractionData.metingGeldigTot)
-        : null,
-    },
-  ];
+  return {
+    energieklasse: firstFractionData?.energieklasse ?? null,
+    geldigTotDatum: firstFractionData?.metingGeldigTot
+      ? defaultDateFormat(firstFractionData.metingGeldigTot)
+      : null,
+  };
 }
 
 export const forTesting = {

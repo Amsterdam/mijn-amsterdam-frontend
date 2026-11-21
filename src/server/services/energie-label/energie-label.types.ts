@@ -1,4 +1,4 @@
-export interface EnergieLabelTransformed {
+export interface EnergieLabelFrontend {
   energieklasse: string | null;
   geldigTotDatum: string | null;
 }

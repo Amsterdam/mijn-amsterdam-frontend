@@ -26,7 +26,6 @@ import { fetchBezwaren } from './bezwaren/bezwaren.ts';
 import { fetchLoodmetingen } from './bodem/loodmetingen.ts';
 import { fetchBrp } from './brp/brp.ts';
 import { fetchActiveMaintenanceNotifications } from './cms/cms-maintenance-notifications.ts';
-import { fetchEnergieLabel } from './energie-label/energie-label.ts';
 import { fetchErfpacht } from './erfpacht/erfpacht.ts';
 import { fetchHLI } from './hli/hli.ts';
 import { fetchHorecaVergunningen } from './horeca/horeca.ts';
@@ -159,7 +158,6 @@ const WONEN = callAuthenticatedService(fetchWonen);
 
 // Location, address, based services
 const AFVAL = callAuthenticatedService(fetchAfval);
-const ENERGIE_LABEL = callAuthenticatedService(fetchEnergieLabel);
 const AFVALPUNTEN = callAuthenticatedService(fetchAfvalPunten);
 const MY_LOCATION = callAuthenticatedService(fetchMyLocations);
 
@@ -206,7 +204,6 @@ export const servicesByProfileType = {
     BRP,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
-    ENERGIE_LABEL,
     HLI,
     HORECA,
     KLACHTEN,
