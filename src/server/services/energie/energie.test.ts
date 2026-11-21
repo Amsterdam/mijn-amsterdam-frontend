@@ -30,7 +30,7 @@ describe('fetchEnergieLabel', () => {
         isBriefadres: false,
       };
 
-      await forTesting.fetchEnergieLabel(adres);
+      await forTesting.fetchEnergieLabelForAddress(adres);
 
       expect(requestData).toHaveBeenCalledWith(
         expect.objectContaining({ params: expectedParams })

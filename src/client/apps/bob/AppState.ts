@@ -124,7 +124,7 @@ export const PRISTINE_APPSTATE = {
     }
   ),
   AFVAL: apiPristineResult([]),
-  ENERGIE: apiPristineResult([]),
+  ENERGIE_LABEL: apiPristineResult([]),
   AFVALPUNTEN: apiPristineResult({
     centers: [],
     datePublished: '',

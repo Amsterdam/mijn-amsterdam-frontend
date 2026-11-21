@@ -13,7 +13,9 @@ import type {
   EnergieLabelTransformed,
 } from './energie.types.ts';
 
-export async function fetchEnergie(authProfileAndToken: AuthProfileAndToken) {
+export async function fetchEnergieLabel(
+  authProfileAndToken: AuthProfileAndToken
+) {
   const BrpResponse = await fetchBrp(authProfileAndToken);
 
   if (BrpResponse.status === 'ERROR') {
@@ -38,10 +40,10 @@ export async function fetchEnergie(authProfileAndToken: AuthProfileAndToken) {
     return emptyResponse;
   }
 
-  return fetchEnergieLabel(BrpResponse.content.adres);
+  return fetchEnergieLabelForAddress(BrpResponse.content.adres);
 }
 
-async function fetchEnergieLabel(adress: Adres) {
+async function fetchEnergieLabelForAddress(adress: Adres) {
   const params = {
     postcode: adress.postcode,
     huisnummer: adress.huisnummer,
@@ -50,7 +52,7 @@ async function fetchEnergieLabel(adress: Adres) {
     }),
   };
   const energieLabelData = await requestData<EnergieLabelTransformed[]>(
-    getApiConfig('ENERGIE', {
+    getApiConfig('ENERGIE_LABEL', {
       params,
       transformResponse: (energieLabelSourceData: EnergieLabelSourceData) =>
         transformEnergieLabelDataResponse(energieLabelSourceData),
@@ -78,6 +80,6 @@ function transformEnergieLabelDataResponse(
 }
 
 export const forTesting = {
-  fetchEnergieLabel,
+  fetchEnergieLabelForAddress,
   transformEnergieLabelDataResponse,
 };

@@ -302,9 +302,9 @@ const ApiConfig_ = {
     url: `https://api.data.amsterdam.nl/v1/afvalwijzer/afvalwijzer/`,
     headers: { 'X-Api-Key': getFromEnv('BFF_DATA_AMSTERDAM_API_KEY ', false) },
   },
-  ENERGIE: {
+  ENERGIE_LABEL: {
     url:
-      getFromEnv('BFF_ENERGIE_API_URL', false) ||
+      getFromEnv('BFF_ENERGIE_LABEL_API_URL', false) ||
       'https://api.data.amsterdam.nl/v1/duurzaamheid/energielabel',
     headers: { 'X-Api-Key': getFromEnv('BFF_DATA_AMSTERDAM_API_KEY', false) },
   },
