@@ -26,7 +26,11 @@ export async function fetchEnergieLabel(
     return BrpResponse;
   }
 
-  if (!BrpResponse.content.adres) {
+  if (
+    !BrpResponse.content.adres ||
+    !BrpResponse.content.adres.postcode ||
+    !BrpResponse.content.adres.huisnummer
+  ) {
     const emptyResponse: ApiResponse<EnergieLabelFrontend> = {
       status: 'OK',
       content: {
