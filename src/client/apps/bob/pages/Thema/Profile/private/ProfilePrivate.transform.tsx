@@ -115,7 +115,12 @@ delete persoonSecundair.nationaliteiten;
 delete persoonSecundair.indicatieGeheim;
 
 const adres: ProfileLabels<
-  Partial<Adres> & { aantalIngeschrevenPersonen: string; vveNaam?: string },
+  Partial<Adres> & {
+    aantalIngeschrevenPersonen: string;
+    vveNaam?: string;
+    energieLabel?: string | null;
+    geldigTotDatum?: string | null;
+  },
   AppState['BRP']['content']
 > = {
   locatiebeschrijving: 'Locatie',
@@ -163,8 +168,17 @@ const adres: ProfileLabels<
       return null;
     },
   ],
-  energieLabel: ['Energielabel', (value) => (value ? value : 'Onbekend')],
-  geldigTotDatum: ['Geldig tot', (value) => (value ? value : 'Onbekend')],
+  energieLabel: [
+    'Energielabel',
+    (value, adres) => {
+      if (!value) {
+        return null;
+      }
+      return adres.geldigTotDatum
+        ? `${value} - geldig tot ${adres.geldigTotDatum}`
+        : value;
+    },
+  ],
   wozWaarde: [
     'WOZ-waarde',
     (_value, adres) => {

@@ -34,6 +34,45 @@ const panelHeadings = [
 describe('<Profile />', () => {
   const routeEntry = themaConfig.BRP.route.path;
 
+  test.each([
+    ['A', '01 januari 2030', 'A - geldig tot 01 januari 2030'],
+    [null, null, null],
+    ['A', null, 'A'],
+  ])(
+    'displays energy class %s with validity date %s',
+    (energieklasse, geldigTotDatum, expectedValue) => {
+      render(
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routeEntry}
+          component={MijnGegevensThema}
+          state={
+            {
+              ...testState(
+                {
+                  persoon: { mokum: false },
+                  adres: { straatnaam: 'Mooie Straat', huisnummer: '1' },
+                },
+                {
+                  vve: null,
+                  energieLabel: { energieklasse, geldigTotDatum },
+                }
+              ),
+            } as AppState
+          }
+        />
+      );
+
+      if (expectedValue) {
+        expect(screen.getByText('Energielabel')).toBeInTheDocument();
+        expect(screen.getByText(expectedValue)).toBeInTheDocument();
+      } else {
+        expect(screen.queryByText('Energielabel')).not.toBeInTheDocument();
+      }
+      expect(screen.queryByText('Geldig tot')).not.toBeInTheDocument();
+    }
+  );
+
   function Component({
     state,
   }: {
