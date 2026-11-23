@@ -4,7 +4,10 @@ import {
 } from '../../../universal/helpers/api.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import { getApiConfig } from '../../helpers/source-api-helpers.ts';
+import type { DataRequestConfig } from '../../config/source-api.ts';
+import {
+  getCustomApiConfig,
+} from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import { fetchBrp } from '../brp/brp.ts';
 import type { Adres } from '../brp/brp-types.ts';
@@ -12,6 +15,17 @@ import type {
   EnergieLabelFrontend,
   EnergieLabelSourceData,
 } from './energie-label.types.ts';
+import { EnergieLabelRequestConfig } from './wonen-service-config.ts';
+
+async function fetchEnergieLabel_<T>(
+  dataRequestConfigSpecific: DataRequestConfig
+) {
+  const dataRequestConfigBase = getCustomApiConfig(
+    EnergieLabelRequestConfig,
+    dataRequestConfigSpecific
+  );
+  return requestData<T>(dataRequestConfigBase);
+}
 
 export async function fetchEnergieLabel(
   authProfileAndToken: AuthProfileAndToken
@@ -56,15 +70,13 @@ async function fetchEnergieLabelForAddress(adress: Adres) {
       huisnummertoevoeging: adress.huisnummertoevoeging,
     }),
   };
-  const energieLabelData = await requestData<EnergieLabelFrontend>(
-    getApiConfig('ENERGIE_LABEL', {
-      params,
-      transformResponse: (energieLabelSourceData: EnergieLabelSourceData) =>
-        transformEnergieLabelDataResponse(energieLabelSourceData),
-    })
-  );
 
-  return energieLabelData;
+    const requestConfig: DataRequestConfig = {
+      params,
+      transformResponse:  transformEnergieLabelDataResponse
+    };
+
+    return fetchEnergieLabel_<EnergieLabelFrontend>(requestConfig);
 }
 
 function transformEnergieLabelDataResponse(

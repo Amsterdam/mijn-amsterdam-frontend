@@ -4,7 +4,7 @@ import {
   getFailedDependencies,
 } from '../../../universal/helpers/api.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
-import { fetchEnergieLabel } from '../energie-label/energie-label.ts';
+import { fetchEnergieLabel } from './energie-label.ts';
 import type { WonenDataFrontend } from './wonen.types.ts';
 import { fetchVVEData } from './zwd.ts';
 
