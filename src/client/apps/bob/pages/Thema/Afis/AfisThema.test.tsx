@@ -330,9 +330,7 @@ describe('<Afis />', () => {
       expect(
         page
           .getAllByRole('link', { name: 'Facturen en betalen' })
-          .some(
-            (link) => link.getAttribute('href') === '/facturen-en-betalen'
-          )
+          .some((link) => link.getAttribute('href') === '/facturen-en-betalen')
       ).toBe(true);
       expect(
         page.getByRole('link', { name: 'Ga naar betaalvoorkeuren' })
@@ -352,6 +350,12 @@ describe('<Afis />', () => {
       );
       expect(
         page.getByRole('heading', { name: 'Automatische incasso' })
+      ).toBeInTheDocument();
+      expect(
+        page
+          .getByRole('heading', { name: 'Automatische incasso' })
+          .closest('.ams-grid__cell')
+          ?.previousElementSibling?.querySelector('.ams-link-list')
       ).toBeInTheDocument();
     });
 

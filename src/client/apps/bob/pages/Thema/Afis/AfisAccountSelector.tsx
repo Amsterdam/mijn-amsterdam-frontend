@@ -188,6 +188,11 @@ export function AfisAccountSelector() {
     }
   }, [accounts, isAccountRoute, navigate, zakenpartnernummer]);
 
+  const showAccountTable = accounts.length > 1 && !zakenpartnernummer;
+  if (!showAccountTable && !isLoading && !isError) {
+    return null;
+  }
+
   const rows: AfisAccountTableRow[] = accounts.map((option) => ({
     id: option.id,
     vestiging: (
@@ -208,14 +213,10 @@ export function AfisAccountSelector() {
     ),
   }));
 
-  if (accounts.length < 2 && !isLoading && !isError) {
-    return null;
-  }
-
   return (
     <PageContentCell>
       <div className="ams-mb-m">
-        {accounts.length > 1 && !zakenpartnernummer && (
+        {showAccountTable && (
           <TableV2
             caption="Kies een vestiging"
             items={rows}

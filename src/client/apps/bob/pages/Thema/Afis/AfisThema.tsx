@@ -103,7 +103,6 @@ export function AfisThema() {
     isThemaPaginaLoading,
     listPageTitle,
     pageLinks,
-    breadcrumbs,
     belastingenLinkListItem,
     accountRoutePath,
     isAccountSelected,
@@ -185,7 +184,7 @@ export function AfisThema() {
       breadcrumbs={
         selectedAccountRoutePath
           ? [{ to: themaConfig.route.path, title: themaConfig.title }]
-          : breadcrumbs
+          : undefined
       }
       pageContentTop={
         <PageContentTop urlNaarBelastingen={belastingenLinkListItem.to} />

@@ -42,16 +42,6 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
               <a
                 class="ams-breadcrumb__link"
                 href="/facturen-en-betalen"
-              >
-                Facturen en betalen
-              </a>
-            </li>
-            <li
-              class="ams-breadcrumb__item"
-            >
-              <a
-                class="ams-breadcrumb__link"
-                href="/facturen-en-betalen"
                 tabindex="-1"
               >
                 <span
