@@ -16,11 +16,9 @@ export const ZWDApiReqestConfig: DataRequestConfig = {
   headers: { Authorization: `Token ${getFromEnv('BFF_ZWD_API_TOKEN')}` },
 } as const;
 
-
 export const EnergieLabelRequestConfig: DataRequestConfig = {
   url:
     getFromEnv('BFF_ENERGIE_LABEL_API_URL', false) ||
     'https://api.data.amsterdam.nl/v1/duurzaamheid/energielabel',
   headers: { 'X-Api-Key': getFromEnv('BFF_DATA_AMSTERDAM_API_KEY', false) },
 } as const;
-

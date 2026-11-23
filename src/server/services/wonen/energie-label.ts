@@ -5,9 +5,7 @@ import {
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
-import {
-  getCustomApiConfig,
-} from '../../helpers/source-api-helpers.ts';
+import { getCustomApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
 import { fetchBrp } from '../brp/brp.ts';
 import type { Adres } from '../brp/brp-types.ts';
@@ -71,12 +69,12 @@ async function fetchEnergieLabelForAddress(adress: Adres) {
     }),
   };
 
-    const requestConfig: DataRequestConfig = {
-      params,
-      transformResponse:  transformEnergieLabelDataResponse
-    };
+  const requestConfig: DataRequestConfig = {
+    params,
+    transformResponse: transformEnergieLabelDataResponse,
+  };
 
-    return fetchEnergieLabel_<EnergieLabelFrontend>(requestConfig);
+  return fetchEnergieLabel_<EnergieLabelFrontend>(requestConfig);
 }
 
 function transformEnergieLabelDataResponse(
