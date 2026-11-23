@@ -26,7 +26,9 @@ type AfisEmandateStatusCheckPayload = {
   isReplacement: 'true' | 'false';
 };
 
-export function useSignRequestPayloadStorage(businessPartnerId?: string) {
+export function useSignRequestPayloadStorage(
+  businessPartnerId?: string | null
+) {
   const content = useAppStateStore((state) => state.AFIS.content);
   const [selectedId] = useSessionStorage<string | null>(
     `afis-account:${content?.selectionKey ?? 'legacy'}`,
@@ -127,9 +129,10 @@ export function useSignRequestPayloadStorage(businessPartnerId?: string) {
 }
 
 export function useSignRequestPayloadStorageCleanup(
-  EMandatesSource: AfisEMandateFrontend[]
+  EMandatesSource: AfisEMandateFrontend[],
+  businessPartnerId?: string | null
 ) {
-  const payloadStorage = useSignRequestPayloadStorage();
+  const payloadStorage = useSignRequestPayloadStorage(businessPartnerId);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Preserve the existing hook dependency exclusion.
   useEffect(() => {

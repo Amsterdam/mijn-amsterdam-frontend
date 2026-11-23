@@ -48,12 +48,14 @@ function getTermijnenTable(factuur: AfisFactuurFrontend) {
 type FactuurDetailContentProps = {
   factuurNummer: AfisFactuurFrontend['factuurNummer'];
   state: AfisFactuurStateFrontend;
+  overviewPath: string;
   themaContextParams?: AfisFacturenThemaContextParams;
 };
 
 function FactuurDetailContent({
   factuurNummer,
   state,
+  overviewPath,
   themaContextParams,
 }: FactuurDetailContentProps) {
   const { facturen, isListPageLoading } = useAfisListPageData(
@@ -83,7 +85,7 @@ function FactuurDetailContent({
         headingLevel={3}
       >
         We kunnen de gevraagde factuur niet vinden.{' '}
-        <MaRouterLink href={themaConfig.route.path}>
+        <MaRouterLink href={overviewPath}>
           Ga terug naar het overzicht
         </MaRouterLink>
       </Alert>
@@ -136,10 +138,15 @@ export function AfisFactuur({ themaContextParams }: AfisListProps) {
   const {
     routeConfigDetailPage,
     themaId,
+    accountRoutePath,
     isThemaPaginaError,
     isThemaPaginaLoading,
   } = useAfisFacturenData(themaContextParams);
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = useThemaBreadcrumbs(themaId).map((breadcrumb) =>
+    accountRoutePath && breadcrumb.to === themaConfig.route.path
+      ? { ...breadcrumb, to: accountRoutePath }
+      : breadcrumb
+  );
 
   const { factuurNummer, state } = useParams<{
     factuurNummer: AfisFactuurFrontend['factuurNummer'];
@@ -166,6 +173,7 @@ export function AfisFactuur({ themaContextParams }: AfisListProps) {
               <FactuurDetailContent
                 factuurNummer={factuurNummer}
                 state={state}
+                overviewPath={accountRoutePath ?? themaConfig.route.path}
                 themaContextParams={themaContextParams}
               />
             </PageContentCell>

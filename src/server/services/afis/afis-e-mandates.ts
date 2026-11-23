@@ -4,7 +4,10 @@ import { generatePath } from 'react-router';
 import slug from 'slugme';
 import thenBy from 'thenby';
 
-import { themaConfig } from '../../../client/apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
+import {
+  getAfisAccountRoutePath,
+  themaConfig,
+} from '../../../client/apps/bob/pages/Thema/Afis/Afis-thema-config.ts';
 import { IS_DEVELOPMENT } from '../../../universal/config/env.ts';
 import {
   type ApiResponse,
@@ -601,12 +604,14 @@ function createEMandateSignRequestPayload(
   signRequestPayload: EMandateSignRequestPayload
 ): POMSignRequestUrlPayload {
   const returnUrl = generateFullApiUrlBFF(
-    themaConfig.detailPageEMandate.route.path,
+    getAfisAccountRoutePath(
+      themaConfig.detailPageEMandate.route.path,
+      businessPartner.businessPartnerId
+    ),
     [
       // In development we mock the API responses from the payment provider, for convenience we add the creditor IBAN to the URL so we can determine in the mock API which response to return.
       {
         ...(IS_DEVELOPMENT ? { iban: creditor.iban } : {}),
-        afisAccount: businessPartner.businessPartnerId,
       },
       { id: slug(creditor.name) },
     ],

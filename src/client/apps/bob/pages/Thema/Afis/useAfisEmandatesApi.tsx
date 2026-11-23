@@ -11,6 +11,7 @@ import { useThemaBreadcrumbs } from '../../../../../hooks/useThemaBreadcrumbs.ts
 import { generateApiUrl } from './Afis-helpers.ts';
 import {
   eMandateTableConfig,
+  getAfisAccountRoutePath,
   themaConfig,
   titleBetaalvoorkeurenPage,
   titleEMandaatPage,
@@ -43,8 +44,14 @@ function mergePayloadIntoEmandateById(
 export function useAfisEMandatesApi() {
   const isSmallScreen = useSmallScreen();
 
-  const { businessPartnerIdEncrypted, themaId, isThemaPaginaLoading } =
-    useAfisThemaData();
+  const {
+    businessPartnerIdEncrypted,
+    businessPartnerId,
+    themaId,
+    isThemaPaginaLoading,
+    isThemaPaginaError,
+    accountRoutePath,
+  } = useAfisThemaData();
 
   const {
     isError,
@@ -65,11 +72,18 @@ export function useAfisEMandatesApi() {
     [eMandatesApiResponse?.content]
   );
 
-  useSignRequestPayloadStorageCleanup(EMandatesSource);
+  useSignRequestPayloadStorageCleanup(EMandatesSource, businessPartnerId);
 
   const eMandates = EMandatesSource.map((eMandate) => {
     return {
       ...eMandate,
+      link: {
+        ...eMandate.link,
+        to:
+          accountRoutePath && businessPartnerId
+            ? getAfisAccountRoutePath(eMandate.link.to, businessPartnerId)
+            : eMandate.link.to,
+      },
       detailLinkComponent: (
         <>
           <MaRouterLink maVariant="fatNoUnderline" href={eMandate.link.to}>
@@ -85,9 +99,19 @@ export function useAfisEMandatesApi() {
   });
 
   const breadcrumbs = [
-    ...useThemaBreadcrumbs(themaId),
+    ...useThemaBreadcrumbs(themaId).map((breadcrumb) =>
+      accountRoutePath && breadcrumb.to === themaConfig.route.path
+        ? { ...breadcrumb, to: accountRoutePath }
+        : breadcrumb
+    ),
     {
-      to: themaConfig.detailPageBetaalvoorkeuren.route.path,
+      to:
+        accountRoutePath && businessPartnerId
+          ? getAfisAccountRoutePath(
+              themaConfig.detailPageBetaalvoorkeuren.route.path,
+              businessPartnerId
+            )
+          : themaConfig.detailPageBetaalvoorkeuren.route.path,
       title: titleBetaalvoorkeurenPage,
     },
   ];
@@ -103,6 +127,7 @@ export function useAfisEMandatesApi() {
     eMandates,
     eMandateTableConfig,
     hasEMandatesError: isError,
+    isThemaPaginaError,
     isLoadingEMandates: isThemaPaginaLoading || (!isDirty && isLoading), // Show loading only on first load.
     optimisticUpdateContent: (
       eMandateId: string,

@@ -7,12 +7,14 @@ import {
   Paragraph,
   UnorderedList,
 } from '@amsterdam/design-system-react';
+import { useParams } from 'react-router';
 
 import { entries } from '../../../../../../universal/helpers/utils.ts';
 import { MaButtonRouterLink } from '../../../../../components/MaLink/MaLink.tsx';
 import { PageContentCell } from '../../../../../components/Page/Page.tsx';
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
+import { getAfisAccountRoutePath } from './Afis-thema-config.ts';
 import { AfisAccountSelector } from './AfisAccountSelector.tsx';
 import { AfisFacturenTables } from './AfisFacturenTables.tsx';
 import { getVragenOverFactuurText } from './AfisVragenOverFactuurLink.tsx';
@@ -25,7 +27,6 @@ function PageContentTop({
 }) {
   return (
     <PageContentCell spanWide={8}>
-      <AfisAccountSelector />
       <Paragraph className="ams-mb-m">
         Hieronder ziet u een overzicht van uw facturen.
         <br />
@@ -93,17 +94,29 @@ export function AfisDisclaimerOvergedragenFacturen() {
 }
 
 export function AfisThema() {
+  const { zakenpartnernummer } = useParams<{
+    zakenpartnernummer?: string;
+  }>();
   const {
     dependencyErrors,
     isThemaPaginaError,
     isThemaPaginaLoading,
     listPageTitle,
     pageLinks,
+    breadcrumbs,
     belastingenLinkListItem,
+    accountRoutePath,
+    isAccountSelected,
+    isAccountInvalid,
     title,
     themaId,
     themaConfig,
   } = useAfisThemaData();
+  const selectedAccountRoutePath =
+    accountRoutePath ??
+    (zakenpartnernummer
+      ? getAfisAccountRoutePath(themaConfig.route.path, zakenpartnernummer)
+      : null);
 
   useHTMLDocumentTitle(themaConfig.route);
 
@@ -111,20 +124,26 @@ export function AfisThema() {
     ([, hasError]) => hasError
   );
 
-  const pageContentSecondary = (
+  const pageContentSecondary = isAccountSelected && (
     <>
       <PageContentCell>
         <Heading level={2}>Automatische incasso</Heading>
         <Paragraph className="ams-mb-s">
           Facturatiegegevens bekijken en een automatische incasso instellen.
         </Paragraph>
-        <MaButtonRouterLink
-          className="ams-mb-m"
-          variant="secondary"
-          href={themaConfig.detailPageBetaalvoorkeuren.route.path}
-        >
-          Ga naar betaalvoorkeuren
-        </MaButtonRouterLink>
+        {(selectedAccountRoutePath || isAccountSelected) && (
+          <MaButtonRouterLink
+            className="ams-mb-m"
+            variant="secondary"
+            href={
+              selectedAccountRoutePath
+                ? `${selectedAccountRoutePath}/betaalvoorkeuren`
+                : themaConfig.detailPageBetaalvoorkeuren.route.path
+            }
+          >
+            Ga naar betaalvoorkeuren
+          </MaButtonRouterLink>
+        )}
 
         <AfisDisclaimer />
       </PageContentCell>
@@ -133,14 +152,24 @@ export function AfisThema() {
 
   const pageContentErrorAlert = (
     <>
-      We kunnen niet alle gegevens tonen.{' '}
-      {entries(dependencyErrors)
-        .filter(([, hasError]) => hasError)
-        .map(([state]) => (
-          <React.Fragment key={state}>
-            <br />- {listPageTitle[state]} kunnen nu niet getoond worden.
-          </React.Fragment>
-        ))}
+      {isAccountInvalid && (
+        <>
+          Deze vestiging is niet beschikbaar. Kies een vestiging via het
+          overzicht.
+        </>
+      )}
+      {!isAccountInvalid && (
+        <>
+          We kunnen niet alle gegevens tonen.{' '}
+          {entries(dependencyErrors)
+            .filter(([, hasError]) => hasError)
+            .map(([state]) => (
+              <React.Fragment key={state}>
+                <br />- {listPageTitle[state]} kunnen nu niet getoond worden.
+              </React.Fragment>
+            ))}
+        </>
+      )}
     </>
   );
 
@@ -153,13 +182,19 @@ export function AfisThema() {
       errorAlertContent={pageContentErrorAlert}
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
       pageLinks={pageLinks}
+      breadcrumbs={
+        selectedAccountRoutePath
+          ? [{ to: themaConfig.route.path, title: themaConfig.title }]
+          : breadcrumbs
+      }
       pageContentTop={
         <PageContentTop urlNaarBelastingen={belastingenLinkListItem.to} />
       }
+      pageContentTopSecondary={<AfisAccountSelector />}
       pageContentMain={
         <>
           {pageContentSecondary}
-          <AfisFacturenTables />
+          {isAccountSelected && <AfisFacturenTables />}
         </>
       }
       maintenanceNotificationsPageSlug="afis"

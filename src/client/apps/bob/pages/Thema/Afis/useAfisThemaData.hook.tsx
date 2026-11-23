@@ -12,6 +12,8 @@ import { themaConfig as themaBelastingen } from '../Belastingen/Belastingen-them
 import {
   type AfisFactuurFrontend,
   facturenTableConfig,
+  getAfisAccountRoutePath,
+  getFacturenTableConfig,
   listPageTitle,
   themaConfig as themaAfis,
   themaConfig,
@@ -41,33 +43,83 @@ export function useAfisFacturenData(
   const {
     routeConfigDetailPage = themaConfig.detailPage.route,
     themaId = themaAfis.id,
-    tableConfig = facturenTableConfig,
+    tableConfig: contextTableConfig = facturenTableConfig,
     routeConfigListPage = themaConfig.listPage.route,
   } = themaContextParams || {};
   const {
     AFIS,
+    account,
+    accounts,
     businessPartnerIdEncrypted,
     facturen,
     isLoading,
     isError: isAccountError,
+    isAccountSelected,
+    isAccountInvalid,
+    zakenpartnernummer: urlZakenpartnernummer,
     response,
-  } = useAfisAccount();
-  const facturenByState = useTransformFacturen(facturen);
+  } = useAfisAccount({ accountFromUrl: themaId === themaAfis.id });
+  const isAfisRoute = themaId === themaAfis.id;
+  const accountId = account?.id ?? urlZakenpartnernummer;
+  const accountRoutePath =
+    isAfisRoute && accountId
+      ? getAfisAccountRoutePath(themaConfig.route.path, accountId)
+      : null;
+  const selectedRouteConfigDetailPage =
+    isAfisRoute && accountId
+      ? {
+          ...themaConfig.detailPage.route,
+          path: getAfisAccountRoutePath(
+            themaConfig.detailPage.route.path,
+            accountId
+          ),
+        }
+      : routeConfigDetailPage;
+  const selectedRouteConfigListPage =
+    isAfisRoute && accountId
+      ? {
+          ...themaConfig.listPage.route,
+          path: getAfisAccountRoutePath(
+            themaConfig.listPage.route.path,
+            accountId
+          ),
+        }
+      : routeConfigListPage;
+  const selectedTableConfig =
+    isAfisRoute && accountId
+      ? getFacturenTableConfig({
+          listPagePath: selectedRouteConfigListPage.path,
+        })
+      : contextTableConfig;
+  const facturenByState = useTransformFacturen(
+    facturen,
+    isAfisRoute ? accountId : undefined
+  );
+  const selectedResponse = isAccountSelected ? response : null;
 
   return {
-    isThemaPaginaError: isError(AFIS, false) || isAccountError,
+    isThemaPaginaError:
+      isError(AFIS, false) ||
+      isAccountInvalid ||
+      (isAccountSelected && isAccountError),
     isThemaPaginaLoading: useIsLoading(AFIS) || isLoading,
     themaId,
-    facturenByState,
-    tableConfig,
-    routeConfigDetailPage,
-    routeConfigListPage,
+    facturenByState: isAccountSelected ? facturenByState : null,
+    tableConfig: selectedTableConfig,
+    routeConfigDetailPage: selectedRouteConfigDetailPage,
+    routeConfigListPage: selectedRouteConfigListPage,
     businessPartnerIdEncrypted,
-    businessPartnerId: AFIS.content?.businessPartnerId || null,
+    businessPartnerId: accountId ?? AFIS.content?.businessPartnerId ?? null,
+    zakenpartnernummer: isAfisRoute ? accountId : undefined,
+    account,
+    accounts,
+    accountRoutePath,
+    isAccountSelected,
+    isAccountInvalid,
     dependencyErrors: {
-      open: hasFailedDependency(response, 'open'),
-      afgehandeld: hasFailedDependency(response, 'afgehandeld'),
-      overgedragen: hasFailedDependency(response, 'overgedragen'),
+      open: hasFailedDependency(selectedResponse, 'open'),
+      afgehandeld: hasFailedDependency(selectedResponse, 'afgehandeld'),
+      overgedragen: hasFailedDependency(selectedResponse, 'overgedragen'),
     },
   };
 }
@@ -92,6 +144,9 @@ export function useAfisThemaData() {
     isThemaPaginaLoading,
     dependencyErrors,
     themaId,
+    accountRoutePath,
+    isAccountSelected,
+    isAccountInvalid,
   } = useAfisFacturenData();
 
   return {
@@ -107,6 +162,9 @@ export function useAfisThemaData() {
     listPageTitle,
     pageLinks: [...themaConfig.pageLinks, belastingenLinkListItem],
     breadcrumbs,
+    accountRoutePath,
+    isAccountSelected,
+    isAccountInvalid,
     dependencyErrors,
     themaConfig,
   };

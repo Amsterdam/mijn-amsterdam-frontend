@@ -19,7 +19,6 @@ import type { DisplayProps } from '../../../../../components/Table/TableV2.types
 import { ThemaPagina } from '../../../../../components/Thema/ThemaPagina.tsx';
 import { ThemaPaginaDataView } from '../../../../../components/Thema/ThemaPaginaDataView.tsx';
 import { useHTMLDocumentTitle } from '../../../../../hooks/useHTMLDocumentTitle.ts';
-import { AfisAccountSelector } from './AfisAccountSelector.tsx';
 import styles from './AfisBetaalVoorkeuren.module.scss';
 import { AfisEmandateRefetchInterval } from './AfisEmandateFetchInterval.tsx';
 import { useAfisBetaalVoorkeurenData } from './useAfisBetaalVoorkeurenData.tsx';
@@ -92,6 +91,7 @@ function AfisBusinessPartnerDetails({
 export function AfisBetaalVoorkeuren() {
   const {
     businessPartnerIdEncrypted,
+    businessPartnerId,
     isThemaPaginaError,
     isThemaPaginaLoading,
     pageLinks,
@@ -99,6 +99,7 @@ export function AfisBetaalVoorkeuren() {
     themaConfig,
     themaId,
     belastingenLinkListItem,
+    accountRoutePath,
   } = useAfisThemaData();
 
   useHTMLDocumentTitle(themaConfig.detailPageBetaalvoorkeuren.route);
@@ -122,8 +123,12 @@ export function AfisBetaalVoorkeuren() {
     fetchEMandates,
   } = useAfisEMandatesApi();
 
-  const payloadStorage = useSignRequestPayloadStorage();
-
+  const payloadStorage = useSignRequestPayloadStorage(businessPartnerId);
+  const accountBreadcrumbs = breadcrumbs.map((breadcrumb) =>
+    accountRoutePath && breadcrumb.to === themaConfig.route.path
+      ? { ...breadcrumb, to: accountRoutePath }
+      : breadcrumb
+  );
   const isLoadingAllAPis =
     isThemaPaginaLoading ||
     isLoadingBusinessPartnerDetails ||
@@ -166,7 +171,6 @@ export function AfisBetaalVoorkeuren() {
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
-      <AfisAccountSelector />
       <Paragraph className="ams-mb-m">
         Hieronder kunt u uw gegevens bekijken en een automatische incasso
         instellen per afdeling van de gemeente. Voor bijvoorbeeld een
@@ -270,7 +274,7 @@ export function AfisBetaalVoorkeuren() {
       }
       errorAlertContent={errorAlertContent}
       isLoading={isLoadingAllAPis}
-      breadcrumbs={breadcrumbs}
+      breadcrumbs={accountBreadcrumbs}
       pageLinks={pageLinks}
       pageContentTop={pageContentTop}
       pageContentMain={pageContentMain}

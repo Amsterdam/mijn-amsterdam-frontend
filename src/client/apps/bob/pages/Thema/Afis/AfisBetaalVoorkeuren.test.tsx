@@ -119,7 +119,7 @@ describe('<AfisBetaalVoorkeuren />', () => {
     expect(await page.findByText('someone@example.org')).toBeInTheDocument();
   });
 
-  test('shows fixed account context instead of a selector for restricted users', async () => {
+  test('shows account data without an account selector for restricted users', async () => {
     const stateWithMultipleVestigingen = {
       ...testState,
       AFIS: {
@@ -139,14 +139,21 @@ describe('<AfisBetaalVoorkeuren />', () => {
       },
     } as AppState;
 
-    const screen = render(<Component state={stateWithMultipleVestigingen} />);
+    const screen = render(
+      <MockApp
+        routeEntry="/facturen-en-betalen/vestiging/restricted-account/betaalvoorkeuren"
+        routePath="/facturen-en-betalen/vestiging/:zakenpartnernummer/betaalvoorkeuren"
+        component={AfisBetaalVoorkeuren}
+        state={stateWithMultipleVestigingen}
+      />
+    );
 
     await waitFor(() => {
-      expect(
-        screen.getByText('Vestiging Oost - 000038509490')
-      ).toBeInTheDocument();
       expect(screen.getByText('someone@example.org')).toBeInTheDocument();
     });
+    expect(
+      screen.queryByRole('combobox', { name: 'Vestiging' })
+    ).not.toBeInTheDocument();
     expect(
       screen.queryByRole('combobox', { name: 'Vestiging' })
     ).not.toBeInTheDocument();

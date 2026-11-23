@@ -609,7 +609,7 @@ describe('afis-e-mandates service (with nock)', () => {
         payment_reference: 'ref-123',
         request_id: 'ref-123-2025-07-10T00:00:00.000Z',
         return_url:
-          'http://frontend-host/facturen-en-betalen/betaalvoorkeuren/emandate/test?iban=NL35BOOG9343513650&afisAccount=123',
+          'http://frontend-host/facturen-en-betalen/vestiging/123/betaalvoorkeuren/emandate/test?iban=NL35BOOG9343513650',
         variable1: 'NL21RABO0110055004',
         invoices: [
           {

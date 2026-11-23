@@ -1,9 +1,11 @@
+import { Navigate } from 'react-router';
+
 import type {
   ThemaMenuItem,
   ThemaRenderRouteConfig,
 } from '../../../../../../universal/types/thema-types.ts';
 import { isLoading } from '../../../../../helpers/api.ts';
-import { themaConfig } from './Afis-thema-config.ts';
+import { afisAccountRoutePatterns, themaConfig } from './Afis-thema-config.ts';
 import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren.tsx';
 import { AfisEMandateDetail } from './AfisEMandateDetail.tsx';
 import { AfisFactuur } from './AfisFactuur.tsx';
@@ -13,23 +15,48 @@ import { AfisThema } from './AfisThema.tsx';
 
 export const AfisRoutes = [
   {
-    route: themaConfig.listPage.route.path,
+    route: afisAccountRoutePatterns.overview,
+    Component: AfisThema,
+    isActive: themaConfig.featureToggle.active,
+  },
+  {
+    route: afisAccountRoutePatterns.listPage,
     Component: AfisList,
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: themaConfig.detailPage.route.path,
+    route: afisAccountRoutePatterns.detailPage,
     Component: AfisFactuur,
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: themaConfig.detailPageBetaalvoorkeuren.route.path,
+    route: afisAccountRoutePatterns.betaalVoorkeuren,
     Component: AfisBetaalVoorkeuren,
     isActive: themaConfig.featureToggle.active,
   },
   {
-    route: themaConfig.detailPageEMandate.route.path,
+    route: afisAccountRoutePatterns.eMandate,
     Component: AfisEMandateDetail,
+    isActive: themaConfig.featureToggle.emandates.active,
+  },
+  {
+    route: themaConfig.listPage.route.path,
+    Component: () => <Navigate to={themaConfig.route.path} replace />,
+    isActive: themaConfig.featureToggle.active,
+  },
+  {
+    route: themaConfig.detailPage.route.path,
+    Component: () => <Navigate to={themaConfig.route.path} replace />,
+    isActive: themaConfig.featureToggle.active,
+  },
+  {
+    route: themaConfig.detailPageBetaalvoorkeuren.route.path,
+    Component: () => <Navigate to={themaConfig.route.path} replace />,
+    isActive: themaConfig.featureToggle.active,
+  },
+  {
+    route: themaConfig.detailPageEMandate.route.path,
+    Component: () => <Navigate to={themaConfig.route.path} replace />,
     isActive: themaConfig.featureToggle.emandates.active,
   },
   {

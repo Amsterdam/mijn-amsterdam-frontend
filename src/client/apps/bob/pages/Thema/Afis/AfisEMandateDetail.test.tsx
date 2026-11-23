@@ -1,16 +1,15 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
+import { useLocation } from 'react-router';
 import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
 
 import type {
   AfisEMandateFrontend,
   AfisFacturenOverviewResponse,
 } from '../../../../../../server/services/afis/afis-types.ts';
-import { bffApi } from '../../../../../../testing/utils.ts';
 import { useWidescreen } from '../../../../../hooks/media.hook.ts';
 import { MockApp } from '../../MockApp.tsx';
 import { eMandateTableConfig } from './Afis-thema-config.ts';
-import { AfisAccountSelector } from './AfisAccountSelector.tsx';
 import { AfisEMandateDetail } from './AfisEMandateDetail.tsx';
 import {
   useSignRequestPayloadStorage,
@@ -63,7 +62,7 @@ describe('AfisEMandateDetail', () => {
     vi.clearAllMocks();
   });
 
-  it('restores the originating account before showing the signing result', async () => {
+  it('keeps the originating account in the URL without an account selector', async () => {
     (useSignRequestPayloadStorage as Mock).mockReturnValue({
       hasPayloads: () => false,
     });
@@ -74,22 +73,62 @@ describe('AfisEMandateDetail', () => {
       isRequestingStatusCheck: false,
       isPendingActivation: false,
     });
-    bffApi
-      .get('/services/afis/facturen/overzicht?id=origin-reference')
-      .reply(200, {
-        status: 'OK',
-        content: { open: { state: 'open', count: 0, facturen: [] } },
-      });
+    (useAfisEMandatesApi as Mock).mockReturnValue({
+      title: 'Incassomachtiging',
+      themaId: 'AFIS',
+      eMandate: {
+        id: 'em1',
+        businessPartnerId: 'origin',
+        eMandateIdSource: '00002',
+        creditorName: 'Stad',
+        creditorIBAN: 'NL00BANK0123456789',
+        status: '1',
+        displayStatus: 'Actief',
+        history: [
+          {
+            eMandateIdSource: '00001',
+            status: '0',
+            senderName: 'Jan Jansen',
+            senderIBAN: 'NL00BANK0123456789',
+            dateValidFromFormatted: '1 januari 2024',
+            dateValidToFormatted: '31 december 2024',
+            dateValidFrom: '2024-01-01',
+            dateValidTo: '2024-12-31',
+          },
+        ],
+        senderIBAN: null,
+        senderName: null,
+        dateValidFrom: null,
+        dateValidFromFormatted: null,
+        dateValidTo: null,
+        dateValidToFormatted: null,
+        link: {
+          to: '/facturen-en-betalen/vestiging/origin/betaalvoorkeuren/emandate/test',
+          title: 'Bekijk incassomachtiging',
+        },
+      } as AfisEMandateFrontend,
+      breadcrumbs: [],
+      hasEMandatesError: false,
+      isThemaPaginaError: false,
+      isLoadingEMandates: false,
+      fetchEMandates: vi.fn(),
+    });
+
+    function RoutedDetail() {
+      const { pathname } = useLocation();
+      return (
+        <>
+          <output data-testid="current-path">{pathname}</output>
+          <AfisEMandateDetail />
+        </>
+      );
+    }
+
     render(
       <MockApp
-        routeEntry="/?afisAccount=origin"
-        routePath="/"
-        component={() => (
-          <>
-            <AfisEMandateDetail />
-            <AfisAccountSelector />
-          </>
-        )}
+        routeEntry="/facturen-en-betalen/vestiging/origin/betaalvoorkeuren/emandate/test"
+        routePath="/facturen-en-betalen/vestiging/:zakenpartnernummer/betaalvoorkeuren/emandate/:id"
+        component={RoutedDetail}
         state={{
           AFIS: {
             status: 'OK',
@@ -118,14 +157,12 @@ describe('AfisEMandateDetail', () => {
       />
     );
 
-    await waitFor(() => {
-      expect(screen.getByRole('combobox', { name: 'Vestiging' })).toHaveValue(
-        'origin'
-      );
-      expect(
-        screen.queryByText('Inhoud wordt opgehaald...')
-      ).not.toBeInTheDocument();
-    });
+    expect(screen.getByTestId('current-path')).toHaveTextContent(
+      '/facturen-en-betalen/vestiging/origin/betaalvoorkeuren/emandate/test'
+    );
+    expect(
+      screen.queryByRole('combobox', { name: 'Vestiging' })
+    ).not.toBeInTheDocument();
     expect(screen.getByText('ActionButtons')).toBeInTheDocument();
   });
 

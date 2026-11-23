@@ -22,6 +22,7 @@ import type {
   AfisFacturenByStateFrontend,
   AfisFactuurFrontend,
 } from './Afis-thema-config.ts';
+import { getAfisAccountRoutePath } from './Afis-thema-config.ts';
 
 // A very basic helper that performs a simple check to see if the text contains HTML tags.
 // Some of the status descriptions may contain HTML tags that need to be rendered as React components.
@@ -82,8 +83,16 @@ export function getFactuurNummerLink(
   );
 }
 
-function transformFactuur(factuur: AfisFactuur): AfisFactuurFrontend {
-  const factuurNummerEl: ReactNode = getFactuurNummerLink(factuur);
+function transformFactuur(
+  factuur: AfisFactuur,
+  zakenpartnernummer?: string
+): AfisFactuurFrontend {
+  const factuurNummerEl: ReactNode = getFactuurNummerLink(
+    factuur,
+    zakenpartnernummer
+      ? getAfisAccountRoutePath(factuur.link.to, zakenpartnernummer)
+      : undefined
+  );
 
   return {
     ...factuur,
@@ -93,7 +102,8 @@ function transformFactuur(factuur: AfisFactuur): AfisFactuurFrontend {
 }
 
 export function useTransformFacturen(
-  facturenByState: Partial<AfisFacturenOverviewResponse> | null
+  facturenByState: Partial<AfisFacturenOverviewResponse> | null,
+  zakenpartnernummer?: string
 ): AfisFacturenByStateFrontend | null {
   const facturenByStateTransformed: AfisFacturenByStateFrontend | null =
     useMemo(() => {
@@ -114,14 +124,14 @@ export function useTransformFacturen(
                 ...omit(facturenResponse, ['facturen']),
                 facturen:
                   facturenResponse?.facturen?.map((factuur) =>
-                    transformFactuur(factuur)
+                    transformFactuur(factuur, zakenpartnernummer)
                   ) ?? [],
               },
             ])
         );
       }
       return null;
-    }, [facturenByState]);
+    }, [facturenByState, zakenpartnernummer]);
 
   return facturenByStateTransformed;
 }
@@ -135,7 +145,8 @@ export function useAfisFacturenApi(
   businessPartnerIdEncrypted:
     | AfisThemaResponse['businessPartnerIdEncrypted']
     | undefined,
-  state: AfisFactuurState
+  state: AfisFactuurState,
+  zakenpartnernummer?: string
 ) {
   const url =
     businessPartnerIdEncrypted && state && state !== 'open'
@@ -156,7 +167,8 @@ export function useAfisFacturenApi(
       ? {
           [facturenResponse.state]: facturenResponse,
         }
-      : null
+      : null,
+    zakenpartnernummer
   );
 
   return {

@@ -16,12 +16,18 @@ export function useAfisListPageData(
     tableConfig,
     routeConfigListPage,
     businessPartnerIdEncrypted,
+    zakenpartnernummer,
+    accountRoutePath,
     facturenByState,
     isThemaPaginaError,
     isThemaPaginaLoading,
   } = useAfisFacturenData(themaContextParams);
 
-  const api = useAfisFacturenApi(businessPartnerIdEncrypted, state);
+  const api = useAfisFacturenApi(
+    businessPartnerIdEncrypted,
+    state,
+    zakenpartnernummer
+  );
 
   const facturen =
     (state === 'open'
@@ -30,7 +36,11 @@ export function useAfisListPageData(
       : (api.facturenByState?.[state] ?? null)
     )?.facturen ?? [];
 
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
+  const breadcrumbs = (useThemaBreadcrumbs(themaId) ?? []).map((breadcrumb) =>
+    accountRoutePath && breadcrumb.to === '/facturen-en-betalen'
+      ? { ...breadcrumb, to: accountRoutePath }
+      : breadcrumb
+  );
 
   return {
     themaId,

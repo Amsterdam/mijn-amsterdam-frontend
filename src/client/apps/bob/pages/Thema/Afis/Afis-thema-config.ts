@@ -95,6 +95,26 @@ export const themaConfig = {
   },
 } as const satisfies AfisThemaConfig;
 
+const AFIS_ACCOUNT_ROUTE_SEGMENT = '/vestiging/:zakenpartnernummer';
+
+export const afisAccountRoutePatterns = {
+  overview: `${themaConfig.route.path}${AFIS_ACCOUNT_ROUTE_SEGMENT}`,
+  listPage: `${themaConfig.route.path}${AFIS_ACCOUNT_ROUTE_SEGMENT}/facturen/lijst/:state/:page?`,
+  detailPage: `${themaConfig.route.path}${AFIS_ACCOUNT_ROUTE_SEGMENT}/factuur/:state/:factuurNummer`,
+  betaalVoorkeuren: `${themaConfig.route.path}${AFIS_ACCOUNT_ROUTE_SEGMENT}/betaalvoorkeuren`,
+  eMandate: `${themaConfig.route.path}${AFIS_ACCOUNT_ROUTE_SEGMENT}/betaalvoorkeuren/emandate/:id`,
+} as const;
+
+export function getAfisAccountRoutePath(
+  path: string,
+  zakenpartnernummer: string
+) {
+  return path.replace(
+    themaConfig.route.path,
+    `${themaConfig.route.path}/vestiging/${encodeURIComponent(zakenpartnernummer)}`
+  );
+}
+
 // E-Mandates are always recurring and have a default date far in the future!
 export const EMANDATE_ENDDATE_INDICATOR = '9999';
 
