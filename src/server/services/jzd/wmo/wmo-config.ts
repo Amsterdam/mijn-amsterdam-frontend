@@ -3,6 +3,8 @@ import { parseISO } from 'date-fns';
 import type { BeschikkingsResultaat } from '../../zorgned/zorgned-types.ts';
 
 export const ACTIE_VERZOEK_MEER_INFORMATIE = 'verzoek om meer informatie';
+// Action "In behandeling bij gemeente" means that the additional information been received
+export const ACTIE_IN_BEHANDELING = 'in behandeling bij gemeente';
 
 export const ZORGNED_WMO_API_CONFIG_KEY = 'ZORGNED_WMO' as const;
 export const DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH = 'Verzoek:' as const; // Documents starting with this token correspond to the 'meer informatie' step.

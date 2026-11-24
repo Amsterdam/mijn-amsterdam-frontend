@@ -211,9 +211,7 @@ describe('fetchLeerlingenvervoer', () => {
 
     const descriptions = first.steps.map((step) => step.description);
     expect(descriptions[0]).toMatch(/Ontvangen op 27 maart 2025/);
-    expect(descriptions[1]).toMatch(
-      /Uw melding is in behandeling bij de gemeente./
-    );
+    expect(descriptions[1]).toMatch(/Uw melding is in behandeling./);
     expect(descriptions[2]).toMatch(
       /U krijgt aangepast groepsvervoer per 01 april 2025./
     );
@@ -289,7 +287,13 @@ describe('fetchLeerlingenvervoer', () => {
         {
           status: 'Meer informatie nodig',
           datePublished: '2026-10-08',
-          isActive: true,
+          isActive: false,
+          isChecked: true,
+        },
+        {
+          status: 'Meer informatie ontvangen',
+          datePublished: '2026-08-10',
+          isActive: false,
           isChecked: true,
         },
       ],
@@ -297,8 +301,8 @@ describe('fetchLeerlingenvervoer', () => {
     expect(melding.isActive).toBe(false);
     expect(melding.datePublished).toBe('2026-05-19');
     expect(behandeling.datePublished).toBe('2026-05-19');
-    expect(voorziening.statusDate).toBe('2026-10-08');
-    expect(voorziening.statusDateFormatted).toBe('08 oktober 2026');
+    expect(voorziening.statusDate).toBe('2026-08-10');
+    expect(voorziening.statusDateFormatted).toBe('10 augustus 2026');
   });
 
   test('Shows when submitted additional information is being processed', async () => {
@@ -362,7 +366,14 @@ describe('fetchLeerlingenvervoer', () => {
       substeps: [
         {
           status: 'Meer informatie nodig',
-          isActive: true,
+          datePublished: '',
+          isActive: false,
+          isChecked: true,
+        },
+        {
+          status: 'Meer informatie ontvangen',
+          datePublished: '2026-08-10',
+          isActive: false,
           isChecked: true,
         },
       ],

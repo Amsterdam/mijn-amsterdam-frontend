@@ -7,25 +7,15 @@ import type {
 import {
   AANVRAAG,
   EINDE_RECHT,
+  getActionDate,
   getTransformerConfigBesluit,
+  hasAction,
   hasDecision,
-  hasMeerInformatieNodig,
   IN_BEHANDELING,
   isDecisionStatusActive,
   MEER_INFORMATIE,
+  MEER_INFORMATIE_ONTVANGEN,
 } from '../wmo/status-line-items/wmo-generic.ts';
-import { ACTIE_VERZOEK_MEER_INFORMATIE } from '../wmo/wmo-config.ts';
-
-export function getMeerInformatieDate(
-  aanvraag: ZorgnedAanvraagTransformed
-): string {
-  const actie = aanvraag?.procesAanvraagActies?.find(
-    (actie) =>
-      actie.omschrijving.toLowerCase() === ACTIE_VERZOEK_MEER_INFORMATIE
-  );
-
-  return actie?.datum ?? '';
-}
 
 const ONTVANGEN = {
   ...AANVRAAG,
@@ -47,16 +37,19 @@ const BEHANDELING_INDICATIEADVISEUR = {
     {
       ...MEER_INFORMATIE,
       datePublished: (aanvraag: ZorgnedAanvraagTransformed) =>
-        getMeerInformatieDate(aanvraag),
-      hideDatePublished: true,
+        getActionDate(aanvraag, 'verzoek om meer informatie') ?? '',
       isActive: (aanvraag: ZorgnedAanvraagTransformed) =>
-        hasMeerInformatieNodig(aanvraag) && !hasDecision(aanvraag),
+        hasAction(aanvraag, 'verzoek om meer informatie') &&
+        !hasAction(aanvraag, 'in behandeling bij gemeente'),
       description: `
 <p>Wij kunnen uw melding nog niet beoordelen. Het kan zijn dat u nog informatie moet aanleveren. Dat kan door het op te sturen naar ons gratis antwoordnummer:</p>
 <p>Gemeente Amsterdam<br />
 Services & Data<br />
 Antwoordnummer 9087<br />
 1000 VV Amsterdam</p>`,
+    },
+    {
+      ...MEER_INFORMATIE_ONTVANGEN,
     },
   ],
 };

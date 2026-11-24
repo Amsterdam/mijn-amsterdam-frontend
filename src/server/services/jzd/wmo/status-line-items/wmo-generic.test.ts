@@ -4,10 +4,12 @@ import {
   EINDE_RECHT,
   EINDE_RECHT_PGB,
   FAKE_DECISION_DOCUMENT_ID,
+  getActionDate,
   getDecisionDocument,
   getDocumentDecisionDate,
   getDocumentMeerInformatieDate,
   getTransformerConfigBesluit,
+  hasAction,
   hasDecision,
   hasMeerInformatieNodig,
   isCancelled,
@@ -57,11 +59,6 @@ describe('wmo-generic', () => {
       documenten: [DOC_MEER_INFORMATIE],
       datumAanvraag: '2024-01-01',
     });
-    const aanvraagWithRequestAction = getAanvraagTransformed({
-      documenten: [],
-      datumAanvraag: '2024-01-01',
-      procesAanvraagActieOmschrijvingen: ['Verzoek om meer informatie'],
-    });
     const cancelledAanvraag = getAanvraagTransformed({
       datumIngangGeldigheid: '2024-06-14',
       datumEindeGeldigheid: '2024-06-14',
@@ -92,8 +89,96 @@ describe('wmo-generic', () => {
       expect(hasMeerInformatieNodig(aanvraagWithRequest)).toBe(true);
     });
 
-    it('hasMeerInformatieNodig is true when the request action exists without a document', () => {
-      expect(hasMeerInformatieNodig(aanvraagWithRequestAction)).toBe(true);
+    it('getActionDate returns the date for the matching action', () => {
+      const aanvraag = getAanvraagTransformed({
+        procesAanvraagActies: [
+          {
+            omschrijving: 'Verzoek om meer informatie',
+            datum: '2024-06-09',
+          },
+          {
+            omschrijving: 'In behandeling bij gemeente',
+            datum: '2024-06-12',
+          },
+        ],
+      });
+
+      expect(getActionDate(aanvraag, 'in behandeling bij gemeente')).toBe(
+        '2024-06-12'
+      );
+    });
+
+    it('getActionDate matches action descriptions case-insensitively', () => {
+      const aanvraag = getAanvraagTransformed({
+        procesAanvraagActies: [
+          {
+            omschrijving: 'VERZOEK OM MEER INFORMATIE',
+            datum: '2024-06-09',
+          },
+        ],
+      });
+
+      expect(getActionDate(aanvraag, 'verzoek om meer informatie')).toBe(
+        '2024-06-09'
+      );
+    });
+
+    it('getActionDate is undefined when the action or date is missing', () => {
+      const withoutAction = getAanvraagTransformed({
+        procesAanvraagActies: [
+          {
+            omschrijving: 'Verzoek om meer informatie',
+            datum: '2024-06-09',
+          },
+        ],
+      });
+      const withoutDate = getAanvraagTransformed({
+        procesAanvraagActies: [
+          {
+            omschrijving: 'In behandeling bij gemeente',
+          },
+        ],
+      });
+
+      expect(
+        getActionDate(withoutAction, 'in behandeling bij gemeente')
+      ).toBeUndefined();
+      expect(
+        getActionDate(withoutDate, 'in behandeling bij gemeente')
+      ).toBeUndefined();
+      expect(
+        getActionDate(
+          getAanvraagTransformed({ procesAanvraagActies: undefined }),
+          'verzoek om meer informatie'
+        )
+      ).toBeUndefined();
+    });
+
+    it('hasAction is true for a matching action regardless of casing', () => {
+      const aanvraag = getAanvraagTransformed({
+        procesAanvraagActieOmschrijvingen: [
+          'Melding ontvangen',
+          'Verzoek om meer informatie',
+        ],
+      });
+
+      expect(hasAction(aanvraag, 'verzoek om meer informatie')).toBe(true);
+    });
+
+    it('hasAction is false when no matching action or action list exists', () => {
+      const withoutAction = getAanvraagTransformed({
+        procesAanvraagActieOmschrijvingen: ['Melding ontvangen'],
+      });
+      const withoutActions = getAanvraagTransformed({
+        procesAanvraagActieOmschrijvingen: undefined,
+      });
+
+      expect(hasAction(withoutAction, 'in behandeling bij gemeente')).toBe(
+        false
+      );
+      expect(hasAction(withoutActions, 'verzoek om meer informatie')).toBe(
+        false
+      );
     });
 
     it('isDocumentDecisionDateActive is true after WCAG threshold', () => {

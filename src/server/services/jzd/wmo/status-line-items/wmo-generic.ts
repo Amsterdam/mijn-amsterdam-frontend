@@ -7,11 +7,11 @@ import {
 } from '../../../../../universal/helpers/date.ts';
 import type { GenericDocument } from '../../../../../universal/types/App.types.ts';
 import type {
+  ActieOmschrijvingen,
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../../zorgned/zorgned-types.ts';
 import {
-  ACTIE_VERZOEK_MEER_INFORMATIE,
   DOCUMENT_PGB_BESLUIT,
   DOCUMENT_TITLE_BESLUIT_STARTS_WITH,
   DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH,
@@ -67,6 +67,8 @@ function getDecisionDate(
   return decisionDate ?? null;
 }
 
+// This is used for theme "Zorg en ondersteuning", which is still based on documents.
+// When we can use the actions for this theme, make use of getActionDate
 export function getDocumentMeerInformatieDate(documents: GenericDocument[]) {
   return (
     getLastDocumentStartsWithTitle(
@@ -76,18 +78,30 @@ export function getDocumentMeerInformatieDate(documents: GenericDocument[]) {
   );
 }
 
-function hasMeerInformatieActie(aanvraag: ZorgnedAanvraagTransformed) {
-  return (aanvraag.procesAanvraagActieOmschrijvingen ?? []).some((actie) => {
-    const normalizedActie = actie.trim().toLowerCase();
-    return normalizedActie === ACTIE_VERZOEK_MEER_INFORMATIE;
-  });
+export function hasMeerInformatieNodig(aanvraag: ZorgnedAanvraagTransformed) {
+  return aanvraag.documenten.some((document) =>
+    document.title.startsWith(DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH)
+  );
 }
 
-export function hasMeerInformatieNodig(aanvraag: ZorgnedAanvraagTransformed) {
-  return (
-    aanvraag.documenten.some((document) =>
-      document.title.startsWith(DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH)
-    ) || hasMeerInformatieActie(aanvraag)
+export function getActionDate(
+  aanvraag: ZorgnedAanvraagTransformed,
+  actieOmschrijving: ActieOmschrijvingen
+) {
+  return aanvraag.procesAanvraagActies?.find(
+    (aanvraagActie) =>
+      aanvraagActie.omschrijving.toLowerCase() === actieOmschrijving
+  )?.datum;
+}
+
+export function hasAction(
+  aanvraag: ZorgnedAanvraagTransformed,
+  actieOmschrijving: ActieOmschrijvingen
+) {
+  return !!aanvraag?.procesAanvraagActieOmschrijvingen?.some(
+    (aanvraagActie) => {
+      return aanvraagActie.toLowerCase() === actieOmschrijving;
+    }
   );
 }
 
@@ -164,6 +178,24 @@ export const MEER_INFORMATIE: ZorgnedStatusLineItemTransformerConfig = {
       1000 VV Amsterdam</p>`;
   },
 };
+
+// Currently only used for "Onderwijs en Jeugd (LLV)", later this can be used for "Zorg en Ondersteuning"
+export const MEER_INFORMATIE_ONTVANGEN: ZorgnedStatusLineItemTransformerConfig =
+  {
+    status: 'Meer informatie ontvangen',
+    isVisible: (aanvraag) =>
+      hasAction(aanvraag, 'in behandeling bij gemeente') &&
+      hasAction(aanvraag, 'verzoek om meer informatie'),
+    datePublished: (aanvraag) =>
+      getActionDate(aanvraag, 'in behandeling bij gemeente') ?? '',
+    isChecked: () => true,
+    isActive: (aanvraag) =>
+      !hasDecision(aanvraag) &&
+      !hasAction(aanvraag, 'in behandeling bij gemeente'),
+    description: () => {
+      return '<p>Bedankt voor de aanvullende gegevens. Uw melding wordt nu behandeld.</p>';
+    },
+  };
 
 export const IN_BEHANDELING: ZorgnedStatusLineItemTransformerConfig = {
   status: 'In behandeling',
