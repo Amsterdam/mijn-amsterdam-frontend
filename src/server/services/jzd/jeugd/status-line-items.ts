@@ -41,7 +41,7 @@ const BEHANDELING_INDICATIEADVISEUR = {
   ...IN_BEHANDELING,
   datePublished: (aanvraag: ZorgnedAanvraagTransformed) =>
     aanvraag.datumAanvraag,
-  description: () => '<p>Uw melding is in behandeling bij de gemeente.</p>',
+  description: () => '<p>Uw melding is in behandeling.</p>',
   isActive: (aanvraag: ZorgnedAanvraagTransformed) => !hasDecision(aanvraag),
   substeps: [
     {
