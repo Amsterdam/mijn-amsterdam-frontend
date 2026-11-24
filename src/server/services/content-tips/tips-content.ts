@@ -382,7 +382,7 @@ export const contentTips: ContentTipSource[] = [
     id: 'mijn-67',
     active: true,
     dateActiveStart: '2026-11-23',
-    dateActiveEnd: '2026-11-30',
+    dateActiveEnd: '2026-12-07',
     datePublished: '2026-11-23',
     owner: '',
     title: 'Tip: Meld uw kind aan voor de basisschool',
