@@ -7,6 +7,7 @@ import {
   hasBijstandsuitkering,
   hasBnBVergunning,
   hasKidsBetweenAges,
+  hasKidsBornBetweenDates,
   hasOldestKidBornFrom2016,
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
@@ -375,6 +376,29 @@ export const contentTips: ContentTipSource[] = [
       title:
         'Bekijk hier een lijst van de belangrijkste dingen die je zelf kunt regelen',
       to: 'https://www.amsterdam.nl/jeugdhulp/word-18/',
+    },
+  },
+  {
+    id: 'mijn-67',
+    active: true,
+    dateActiveStart: '2026-11-23',
+    dateActiveEnd: '2026-11-30',
+    datePublished: '2026-11-23',
+    owner: '',
+    title: 'Tip: Meld uw kind aan voor de basisschool',
+    profileTypes: ['private'],
+    themaID: profileThemaConfig.BRP.id,
+    description:
+      'U heeft een brief ontvangen met informatie om uw kind aan te melden voor de basisschool. Doe dit voor de deadline. Voor meer informatie en een video, kijk hier.',
+    predicates: [
+      hasKidsBornBetweenDates({ from: '2023-09-01', to: '2024-08-31' }),
+      isMokum,
+    ],
+    reason:
+      'We tonen deze tip omdat u een kind heeft gekregen tussen 1 september 2023 en 31 augustus 2024. Deze groep is aan de beurt om aangemeld te worden voor de basisschool. Vanwege privacyregels kunnen wij uw persoonlijke situatie niet inzien. Is deze tip niet op u van toepassing, dan spijt het ons dat u deze tip krijgt.',
+    link: {
+      title: 'Kijk hier',
+      to: 'https://schoolwijzer.amsterdam.nl/nl/po/procedure/',
     },
   },
 ];
