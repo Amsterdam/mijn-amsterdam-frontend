@@ -25,6 +25,7 @@ import {
   isSuccessStatus,
   requestData,
 } from '../../helpers/source-api-request.ts';
+import { ZORGNED_REDEN_AFSLUITEN_VERVALLEN } from './zorgned-config.ts';
 import { getLeveriningsVormUitgeschreven } from './zorgned-helpers.ts';
 import type {
   BeschiktProduct,
@@ -224,6 +225,13 @@ export function transformZorgnedAanvragen(
   const aanvragenTransformed: ZorgnedAanvraagTransformed[] = [];
 
   for (const aanvraagSource of aanvragenSource) {
+    if (
+      aanvraagSource.procesMelding?.redenAfsluiten?.omschrijving ===
+      ZORGNED_REDEN_AFSLUITEN_VERVALLEN
+    ) {
+      continue;
+    }
+
     const beschikking = aanvraagSource?.beschikking;
 
     const beschikteProducten = beschikking?.beschikteProducten ?? [];
