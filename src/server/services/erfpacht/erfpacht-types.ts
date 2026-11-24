@@ -109,6 +109,10 @@ export type ErfpachtDossierDetailKadastraleAanduiding = {
   samengesteld: string;
 };
 
+export type ErfpachtDossierDetailPlaatselijkeAanduiding = {
+  samengesteld: string;
+};
+
 export type ErfpachtDossierDetailRelatie = {
   relatieNaam: string;
   betaler: boolean;
@@ -151,6 +155,8 @@ export type ErfpachtDossiersDetailSource = {
   titelKopFinancieel: string;
   kadastraleaanduidingen?: ErfpachtDossierDetailKadastraleAanduiding[];
   titelKadastraleAanduiding: string;
+  plaatselijkeaanduidingen?: ErfpachtDossierDetailPlaatselijkeAanduiding[];
+  titelPlaatselijkeaanduidingen: string;
   relaties?: ErfpachtDossierDetailRelatie[];
   titelBetaler: string;
   juridisch?: ErfpachtDossierDetailJuridisch;

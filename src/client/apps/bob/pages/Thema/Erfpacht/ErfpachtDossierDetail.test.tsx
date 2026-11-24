@@ -92,6 +92,11 @@ describe('<Erfpacht/DossierDetail />', () => {
           name: 'E123/456: Dit en dat plein 22 H',
         })
       ).toBeInTheDocument();
+      expect(
+        screen
+          .getByText((_, element) => element?.textContent ===
+            'Dit en dat plein 22  H 1234HK Amsterdam')
+      ).toBeInTheDocument();
       expect(screen.getByText('12132/345345/456757/ff')).toBeInTheDocument();
       expect(screen.getByText('H.J de Gruyter')).toBeInTheDocument();
       expect(screen.getByText('Persoon Wegan')).toBeInTheDocument();

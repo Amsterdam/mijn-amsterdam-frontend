@@ -15,6 +15,13 @@ export function DatalistGeneral({
   relatieCode,
   debiteurNummer,
 }: ErfpachtDatalistProps) {
+  const plaatselijkeAanduiding = dossier.plaatselijkeaanduidingen?.find(
+    ({ samengesteld }) => samengesteld?.trim()
+  );
+  const address = plaatselijkeAanduiding
+    ? plaatselijkeAanduiding.samengesteld
+    : dossier.voorkeursadres;
+
   const rows = [
     {
       label: dossier.titelDossierNummer,
@@ -22,7 +29,7 @@ export function DatalistGeneral({
     },
     {
       label: dossier.titelVoorkeursadres,
-      content: <AddressDisplayAndModal address={dossier.voorkeursadres} />,
+      content: <AddressDisplayAndModal address={address} label={address} />,
     },
     {
       label: dossier.titelKadastraleAanduiding,
