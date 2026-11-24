@@ -118,8 +118,10 @@ const adres: ProfileLabels<
   Partial<Adres> & {
     aantalIngeschrevenPersonen: string;
     vveNaam?: string;
-    energieLabel?: string | null;
-    energieLabelGeldigTotDatum?: string | null;
+    energieLabel?: {
+      energieKlasse?: string | null;
+      geldigTotDatum?: string | null;
+    };
   },
   AppState['BRP']['content']
 > = {
@@ -170,13 +172,16 @@ const adres: ProfileLabels<
   ],
   energieLabel: [
     'Energielabel',
-    (value, adres) => {
-      if (!value) {
+    (_value, adres) => {
+      const energieKlasse = adres?.energieLabel?.energieKlasse;
+      const geldigTotDatum = adres?.energieLabel?.geldigTotDatum;
+
+      if (!energieKlasse) {
         return null;
       }
-      return adres.energieLabelGeldigTotDatum
-        ? `${value} - geldig tot ${adres.energieLabelGeldigTotDatum}`
-        : value;
+      return geldigTotDatum
+        ? `${energieKlasse} - geldig tot ${geldigTotDatum}`
+        : energieKlasse;
     },
   ],
   wozWaarde: [
