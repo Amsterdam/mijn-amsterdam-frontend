@@ -30,11 +30,7 @@ export async function fetchEnergieLabel(
 ) {
   const BrpResponse = await fetchBrp(authProfileAndToken);
 
-  if (BrpResponse.status === 'ERROR') {
-    return apiDependencyError({ BrpResponse });
-  }
-
-  if (BrpResponse.status === 'POSTPONE') {
+  if (BrpResponse.status !== 'OK') {
     return BrpResponse;
   }
 
