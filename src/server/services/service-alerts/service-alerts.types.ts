@@ -28,7 +28,10 @@ export const serviceAlertInput = z
   .object({
     id: z.uuid().optional(),
     title: z.string().min(1).max(200),
-    body: z.string().min(1).transform(sanitizeToPlainText),
+    body: z
+      .string()
+      .transform(sanitizeToPlainText)
+      .pipe(z.string().trim().min(1)),
     type: z.enum(SERVICE_ALERT_TYPES),
     displayLocation: z.enum(SERVICE_ALERT_DISPLAY_LOCATIONS),
     themaId: z.enum(SERVICE_ALERT_THEMA_IDS).nullable().optional(),
