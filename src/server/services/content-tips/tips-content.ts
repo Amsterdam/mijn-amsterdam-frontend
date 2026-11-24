@@ -389,7 +389,7 @@ export const contentTips: ContentTipSource[] = [
     profileTypes: ['private'],
     themaID: profileThemaConfig.BRP.id,
     description:
-      'U heeft een brief ontvangen met informatie om uw kind aan te melden voor de basisschool. Doe dit voor de deadline. Voor meer informatie en een video, kijk hier.',
+      'U heeft een brief ontvangen met informatie om uw kind aan te melden voor de basisschool. Doe dit voor de deadline.',
     predicates: [
       hasKidsBornBetweenDates({ from: '2023-09-01', to: '2024-08-31' }),
       isMokum,
@@ -397,7 +397,7 @@ export const contentTips: ContentTipSource[] = [
     reason:
       'We tonen deze tip omdat u een kind heeft gekregen tussen 1 september 2023 en 31 augustus 2024. Deze groep is aan de beurt om aangemeld te worden voor de basisschool. Vanwege privacyregels kunnen wij uw persoonlijke situatie niet inzien. Is deze tip niet op u van toepassing, dan spijt het ons dat u deze tip krijgt.',
     link: {
-      title: 'Kijk hier',
+      title: 'Kijk hier voor meer informatie en een video',
       to: 'https://schoolwijzer.amsterdam.nl/nl/po/procedure/',
     },
   },
