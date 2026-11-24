@@ -148,6 +148,27 @@ export function hasKidsBetweenAges({
   return hasKidsBetweenAgesFromTo;
 }
 
+export function hasKidsBornBetweenDates({
+  from,
+  to,
+}: {
+  from: string;
+  to: string;
+}): TipsPredicateFN {
+  const startDate = parseISO(from);
+  const endDate = parseISO(to);
+
+  return (appState) =>
+    !!appState.BRP?.content?.kinderen?.some((kind: Kind) => {
+      if (!kind.geboortedatum) {
+        return false;
+      }
+
+      const birthDate = parseISO(kind.geboortedatum);
+      return birthDate >= startDate && birthDate <= endDate;
+    });
+}
+
 /** This is inclusive e.q. {from: 18, to: 19} will be true for someone of 19.9 years old */
 export function isBetweenAges({
   from,
