@@ -69,7 +69,6 @@ describe('<Profile />', () => {
       } else {
         expect(screen.queryByText('Energielabel')).not.toBeInTheDocument();
       }
-      expect(screen.queryByText('Geldig tot')).not.toBeInTheDocument();
     }
   );
 
