@@ -1,7 +1,4 @@
-import {
-  type ApiResponse,
-  apiDependencyError,
-} from '../../../universal/helpers/api.ts';
+import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import { defaultDateFormat } from '../../../universal/helpers/date.ts';
 import type { AuthProfileAndToken } from '../../auth/auth-types.ts';
 import type { DataRequestConfig } from '../../config/source-api.ts';
