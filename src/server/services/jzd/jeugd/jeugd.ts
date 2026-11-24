@@ -81,6 +81,7 @@ export type LeerlingenvervoerVoorzieningFrontend = ZaakAanvraagDetail &
       | 'Ontvangen'
       | 'In behandeling'
       | 'Meer informatie nodig'
+      | 'Meer informatie ontvangen'
       | 'Besluit genomen'
       | 'Einde recht';
     statusDate: string;
@@ -109,6 +110,16 @@ function transformVoorzieningenForFrontend(
           ?.datePublished ?? '';
       const id = aanvraag.prettyID;
       const statusDate = getLatestStatusDate(lineItems);
+      const latestStatus = getLatestStatus(
+        lineItems
+      ) as LeerlingenvervoerVoorzieningFrontend['displayStatus'];
+
+      // TODO: This shouldn't be harcoded. We are doing this everywhere with the statusses currently.
+      // Will clean this up in a later commit
+      const displayStatus =
+        latestStatus === 'Meer informatie ontvangen'
+          ? 'In behandeling'
+          : latestStatus;
 
       const voorzieningFrontend: LeerlingenvervoerVoorzieningFrontend = {
         id,
@@ -139,9 +150,7 @@ function transformVoorzieningenForFrontend(
           aanvraag,
           routes.protected.LLV_DOCUMENT_DOWNLOAD
         ),
-        displayStatus: getLatestStatus(
-          lineItems
-        ) as LeerlingenvervoerVoorzieningFrontend['displayStatus'],
+        displayStatus,
         statusDate,
         statusDateFormatted: defaultDateFormat(statusDate),
         maActieUrls: (aanvraag.maActieUrls as Record<string, string>) ?? {},

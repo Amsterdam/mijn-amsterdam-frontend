@@ -27,7 +27,7 @@ const ONTVANGEN = {
     '<p>Ontvangen op ' + defaultDateFormat(aanvraag.datumAanvraag) + '</p>',
 };
 
-const BEHANDELING_INDICATIEADVISEUR = {
+const MELDING_IN_BEHANDELING = {
   ...IN_BEHANDELING,
   datePublished: (aanvraag: ZorgnedAanvraagTransformed) =>
     aanvraag.datumAanvraag,
@@ -56,7 +56,7 @@ Antwoordnummer 9087<br />
 
 const transformers: ZorgnedStatusLineItemTransformerConfig[] = [
   ONTVANGEN,
-  BEHANDELING_INDICATIEADVISEUR,
+  MELDING_IN_BEHANDELING,
   getTransformerConfigBesluit(isDecisionStatusActive, false),
   EINDE_RECHT,
 ];
