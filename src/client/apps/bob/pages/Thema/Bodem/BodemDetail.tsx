@@ -20,7 +20,7 @@ function BodemDetailContent({ meting }: { meting: LoodMetingFrontend }) {
         content: (
           <AddressDisplayAndModal
             address={meting.adresVolledig}
-            label={meting.adres}
+            label={meting.adresVolledig}
           />
         ),
       });
