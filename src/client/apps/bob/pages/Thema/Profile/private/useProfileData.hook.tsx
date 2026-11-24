@@ -25,7 +25,8 @@ export function useProfileData() {
         ...BRP.content.adres,
         vveNaam: WONEN?.content?.vve?.name,
         energieLabel: WONEN?.content?.energieLabel?.energieklasse ?? null,
-        geldigTotDatum: WONEN?.content?.energieLabel?.geldigTotDatum ?? null,
+        energieLabelGeldigTotDatum:
+          WONEN?.content?.energieLabel?.geldigTotDatum ?? null,
         aantalIngeschrevenPersonen,
       },
     };

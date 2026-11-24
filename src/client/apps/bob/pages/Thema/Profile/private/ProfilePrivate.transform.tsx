@@ -119,7 +119,7 @@ const adres: ProfileLabels<
     aantalIngeschrevenPersonen: string;
     vveNaam?: string;
     energieLabel?: string | null;
-    geldigTotDatum?: string | null;
+    energieLabelGeldigTotDatum?: string | null;
   },
   AppState['BRP']['content']
 > = {
@@ -174,8 +174,8 @@ const adres: ProfileLabels<
       if (!value) {
         return null;
       }
-      return adres.geldigTotDatum
-        ? `${value} - geldig tot ${adres.geldigTotDatum}`
+      return adres.energieLabelGeldigTotDatum
+        ? `${value} - geldig tot ${adres.energieLabelGeldigTotDatum}`
         : value;
     },
   ],
