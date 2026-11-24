@@ -12,6 +12,7 @@ import {
   MyNotification,
   type MyNotificationWithLinks,
 } from '../../../../components/MyNotification/MyNotification.tsx';
+import { parseHTML } from '../../../../helpers/html-react-parse.tsx';
 import {
   themaId as notificationsThemaId,
   themaTitle as notificationsThemaTitle,
@@ -60,7 +61,7 @@ export function ServiceAlertPreview({
           headingLevel={4}
           severity={type === 'info' || !type ? undefined : type}
         >
-          <Paragraph>{description}</Paragraph>
+          <Paragraph>{parseHTML(description)}</Paragraph>
           {links.map(({ label, url }) => (
             <Paragraph key={url}>
               <Link href={url}>{label}</Link>
