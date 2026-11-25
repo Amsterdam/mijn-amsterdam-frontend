@@ -723,6 +723,120 @@
             "bestandsnaam": "BR4092836.pdf"
           }
         ]
+      },
+      {
+        "identificatie": "4139017",
+        "procesIdentificatie": "4139017",
+        "casusIdentificatie": "2456887",
+        "regeling": {
+          "identificatie": "LLV",
+          "omschrijving": "Leerlingenvervoer"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-11-17"
+        },
+        "datumAanmelding": "2026-11-17",
+        "datumAanvraag": "2026-11-17",
+        "procesAanvraag": {
+          "identificatie": "4139017",
+          "casusIdentificatie": "2456887",
+          "omschrijving": "Leerlingenvervoer",
+          "datumStart": "2026-11-17",
+          "soort": {
+            "identificatie": "3",
+            "omschrijving": "Beschikken"
+          },
+          "regeling": {
+            "identificatie": "LLV",
+            "omschrijving": "Leerlingenvervoer"
+          },
+          "datumBeschikking": "2026-11-17",
+          "acties": [
+            {
+              "omschrijving": "Melding ontvangen",
+              "status": {
+                "identificatie": "4",
+                "omschrijving": "Klaar"
+              },
+              "datum": "2026-11-17"
+            },
+            {
+              "omschrijving": "Verzoek om meer informatie",
+              "status": {
+                "identificatie": "4",
+                "omschrijving": "Klaar"
+              },
+              "datum": "2026-11-17"
+            },
+            {
+              "omschrijving": "In behandeling bij gemeente",
+              "status": {
+                "identificatie": "4",
+                "omschrijving": "Klaar"
+              },
+              "datum": "2026-11-17"
+            }
+          ],
+          "documenten": [
+            {
+              "documentidentificatie": "4746540",
+              "procesIdentificatie": "4139017",
+              "casusIdentificatie": "2456887",
+              "omschrijving": "NV, V.o.i DTS met kmgrens",
+              "omschrijvingclientportaal": "Verzoek: extra info voor beoordelen aanvraag LLV",
+              "datumDefinitief": "2026-11-17T15:42:28.04",
+              "bestandsnaam": "BR4746540.pdf"
+            }
+          ]
+        },
+        "beschikking": {
+          "beschikkingNummer": 301373417,
+          "datumAfgifte": "2026-11-17",
+          "toelichting": "Omdat de bandjes vol zijn met wind",
+          "beschikteProducten": [
+            {
+              "identificatie": "2053945",
+              "product": {
+                "identificatie": "LLVEV",
+                "productsoortCode": "LLV",
+                "omschrijving": "eigen vervoer"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2026-11-01",
+                "datumEindeGeldigheid": "2026-11-30",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "toelichting": "Fiets vergoeding drie wieler",
+                "toewijzingen": [],
+                "betrokkenen": []
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "4746540",
+            "procesIdentificatie": "4139017",
+            "casusIdentificatie": "2456887",
+            "omschrijving": "NV, V.o.i DTS met kmgrens",
+            "omschrijvingclientportaal": "Verzoek: extra info voor beoordelen aanvraag LLV",
+            "datumDefinitief": "2026-11-17T15:42:28.04",
+            "bestandsnaam": "BR4746540.pdf"
+          }
+        ]
       }
     ]
   }
