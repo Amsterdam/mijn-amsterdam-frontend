@@ -1,4 +1,5 @@
 import { defaultDateFormat } from '../../../../universal/helpers/date.ts';
+import { isEnabled } from '../../../config/azure-appconfiguration.ts';
 import type {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
@@ -59,9 +60,10 @@ Antwoordnummer 9087<br />
   ],
 };
 
+const showLlvInBehandeling = isEnabled('JZD.llvInBehandeling');
+
 const transformers: ZorgnedStatusLineItemTransformerConfig[] = [
-  ONTVANGEN,
-  MELDING_IN_BEHANDELING,
+  ...(showLlvInBehandeling ? [ONTVANGEN, MELDING_IN_BEHANDELING] : []),
   getTransformerConfigBesluit(isDecisionStatusActive, false),
   EINDE_RECHT,
 ];
