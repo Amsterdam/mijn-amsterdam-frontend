@@ -105,6 +105,51 @@ export function hasAction(
   );
 }
 
+function isMeerInformatieVerzoekAfterDecision(
+  aanvraag: ZorgnedAanvraagTransformed
+) {
+  const dateVerzoek = getActionDate(aanvraag, 'verzoek om meer informatie');
+  const dateBesluit = getDecisionDate(aanvraag);
+
+  return (
+    !!dateVerzoek &&
+    !!dateBesluit &&
+    isAfter(parseISO(dateVerzoek), parseISO(dateBesluit))
+  );
+}
+
+export function isMeerInformatieOntvangenVisible(
+  aanvraag: ZorgnedAanvraagTransformed
+) {
+  if (!hasAction(aanvraag, 'verzoek om meer informatie')) {
+    return false;
+  }
+
+  if (isMeerInformatieVerzoekAfterDecision(aanvraag)) {
+    return false;
+  }
+
+  if (hasDecision(aanvraag)) {
+    return true;
+  }
+
+  if (!hasAction(aanvraag, 'in behandeling bij gemeente')) {
+    return false;
+  }
+
+  const dateInBehandeling = getActionDate(
+    aanvraag,
+    'in behandeling bij gemeente'
+  );
+  const dateVerzoek = getActionDate(aanvraag, 'verzoek om meer informatie');
+
+  return !(
+    dateInBehandeling &&
+    dateVerzoek &&
+    isAfter(parseISO(dateVerzoek), parseISO(dateInBehandeling))
+  );
+}
+
 export function isAfterWCAGValidDocumentsDate(date: string) {
   return isAfter(parseISO(date), MINIMUM_REQUEST_DATE_FOR_DOCUMENTS);
 }
@@ -163,7 +208,9 @@ export const AANVRAAG: ZorgnedStatusLineItemTransformerConfig = {
 
 export const MEER_INFORMATIE: ZorgnedStatusLineItemTransformerConfig = {
   status: 'Meer informatie nodig',
-  isVisible: (aanvraag) => hasMeerInformatieNodig(aanvraag),
+  isVisible: (aanvraag) =>
+    hasMeerInformatieNodig(aanvraag) &&
+    !isMeerInformatieVerzoekAfterDecision(aanvraag),
   datePublished: (aanvraag) =>
     getDocumentMeerInformatieDate(aanvraag.documenten) ?? '',
   isChecked: () => true,
@@ -183,9 +230,7 @@ export const MEER_INFORMATIE: ZorgnedStatusLineItemTransformerConfig = {
 export const MEER_INFORMATIE_ONTVANGEN: ZorgnedStatusLineItemTransformerConfig =
   {
     status: 'Meer informatie ontvangen',
-    isVisible: (aanvraag) =>
-      hasAction(aanvraag, 'in behandeling bij gemeente') &&
-      hasAction(aanvraag, 'verzoek om meer informatie'),
+    isVisible: (aanvraag) => isMeerInformatieOntvangenVisible(aanvraag),
     datePublished: (aanvraag) =>
       getActionDate(aanvraag, 'in behandeling bij gemeente') ?? '',
     isChecked: () => true,

@@ -429,19 +429,13 @@ describe('fetchLeerlingenvervoer', () => {
           isActive: false,
           isChecked: true,
         },
-        {
-          status: 'Meer informatie ontvangen',
-          datePublished: '2026-08-10',
-          isActive: false,
-          isChecked: true,
-        },
       ],
     });
     expect(melding.isActive).toBe(false);
     expect(melding.datePublished).toBe('2026-05-19');
     expect(behandeling.datePublished).toBe('2026-05-19');
-    expect(voorziening.statusDate).toBe('2026-08-10');
-    expect(voorziening.statusDateFormatted).toBe('10 augustus 2026');
+    expect(voorziening.statusDate).toBe('2026-10-08');
+    expect(voorziening.statusDateFormatted).toBe('08 oktober 2026');
   });
 
   test('Shows when submitted additional information is being processed', async () => {
@@ -628,4 +622,113 @@ describe('fetchLeerlingenvervoer', () => {
       status: 'ERROR',
     });
   });
+});
+
+test('Does not show "more information" substeps when the request is after the decision date', async () => {
+  (fetchAanvragen as Mock).mockResolvedValueOnce({
+    content: [
+      getLLVAanvraag({
+        ...ASSIGNED_PRODUCT_OVERRIDES,
+        datumAanvraag: '2026-11-01',
+        datumBesluit: '2026-11-10',
+        documenten: [
+          LLV_REQUEST_DOCUMENT,
+          {
+            ...LLV_DECISION_DOCUMENT,
+            datePublished: '2026-11-10T10:00:00.000',
+          },
+        ],
+        procesAanvraagActieOmschrijvingen: [
+          'Melding ontvangen',
+          'In behandeling bij gemeente',
+          'Verzoek om meer informatie',
+        ],
+        procesAanvraagActies: [
+          { omschrijving: 'Melding ontvangen', datum: '2026-11-01' },
+          { omschrijving: 'In behandeling bij gemeente', datum: '2026-11-02' },
+          { omschrijving: 'Verzoek om meer informatie', datum: '2026-11-17' },
+        ],
+      }),
+    ],
+    status: 'OK',
+  });
+
+  const response = await fetchLeerlingenvervoer(AUTH_PROFILE_AND_TOKEN);
+  const [voorziening] = response.content!;
+  const behandeling = voorziening.steps.find(
+    (step) => step.status === 'In behandeling'
+  );
+  const substepStatuses =
+    behandeling?.substeps?.map((step) => step.status) ?? [];
+
+  expect(substepStatuses).not.toContain('Meer informatie nodig');
+  expect(substepStatuses).not.toContain('Meer informatie ontvangen');
+  expect(substepStatuses).toEqual([]);
+});
+
+test('Shows "information received" when there is a decision but no more information is in progress', async () => {
+  (fetchAanvragen as Mock).mockResolvedValueOnce({
+    content: [
+      getLLVAanvraag({
+        ...ASSIGNED_PRODUCT_OVERRIDES,
+        datumAanvraag: '2026-11-01',
+        datumBesluit: '2026-11-17',
+        documenten: [LLV_REQUEST_DOCUMENT, LLV_DECISION_DOCUMENT],
+        procesAanvraagActieOmschrijvingen: [
+          'Melding ontvangen',
+          'Verzoek om meer informatie',
+        ],
+        procesAanvraagActies: [
+          { omschrijving: 'Melding ontvangen', datum: '2026-11-01' },
+          { omschrijving: 'Verzoek om meer informatie', datum: '2026-11-05' },
+        ],
+      }),
+    ],
+    status: 'OK',
+  });
+
+  const response = await fetchLeerlingenvervoer(AUTH_PROFILE_AND_TOKEN);
+  const [voorziening] = response.content!;
+  const behandeling = voorziening.steps.find(
+    (step) => step.status === 'In behandeling'
+  );
+
+  expect(voorziening.decision).toBe('Toegewezen');
+  expect(behandeling?.substeps?.map((step) => step.status)).toEqual([
+    'Meer informatie nodig',
+    'Meer informatie ontvangen',
+  ]);
+});
+
+test('Does not show "information received" when the request is after the received date and there is no decision yet', async () => {
+  (fetchAanvragen as Mock).mockResolvedValueOnce({
+    content: [
+      getLLVAanvraag({
+        datumAanvraag: '2026-11-01',
+        documenten: [LLV_REQUEST_DOCUMENT],
+        procesAanvraagActieOmschrijvingen: [
+          'Melding ontvangen',
+          'In behandeling bij gemeente',
+          'Verzoek om meer informatie',
+        ],
+        procesAanvraagActies: [
+          { omschrijving: 'Melding ontvangen', datum: '2026-11-01' },
+          { omschrijving: 'In behandeling bij gemeente', datum: '2026-11-05' },
+          { omschrijving: 'Verzoek om meer informatie', datum: '2026-11-10' },
+        ],
+      }),
+    ],
+    status: 'OK',
+  });
+
+  const response = await fetchLeerlingenvervoer(AUTH_PROFILE_AND_TOKEN);
+  const [voorziening] = response.content!;
+  const behandeling = voorziening.steps.find(
+    (step) => step.status === 'In behandeling'
+  );
+
+  expect(voorziening.decision).toBe('');
+  expect(behandeling?.substeps?.map((step) => step.status)).toEqual([
+    'Meer informatie nodig',
+  ]);
 });

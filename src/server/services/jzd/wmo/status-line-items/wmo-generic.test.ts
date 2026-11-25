@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
+import type {
+  ZorgnedAanvraagTransformed,
+  ZorgnedStatusLineItemTransformerConfig,
+} from '../../../zorgned/zorgned-types.ts';
 import {
   EINDE_RECHT,
   EINDE_RECHT_PGB,
@@ -22,8 +26,11 @@ import {
   isDocumentDecisionDateActive,
   isEindeGeldigheidVerstreken,
   isGeleverdVisible,
+  isMeerInformatieOntvangenVisible,
   isOpdrachtGegeven,
   isOpdrachtGegevenVisible,
+  MEER_INFORMATIE,
+  MEER_INFORMATIE_ONTVANGEN,
 } from './wmo-generic.ts';
 import {
   DOC_BESLUIT,
@@ -31,6 +38,19 @@ import {
   getAanvraagTransformed,
   today,
 } from './wmo-status-line-items.test-utils.ts';
+
+function isStepVisible(
+  config: ZorgnedStatusLineItemTransformerConfig,
+  aanvraag: ZorgnedAanvraagTransformed
+) {
+  const { isVisible } = config;
+
+  if (typeof isVisible === 'function') {
+    return isVisible(aanvraag, new Date(), [aanvraag]);
+  }
+
+  return isVisible ?? true;
+}
 
 describe('wmo-generic', () => {
   describe('decision and document helpers', () => {
@@ -179,6 +199,146 @@ describe('wmo-generic', () => {
       expect(hasAction(withoutActions, 'verzoek om meer informatie')).toBe(
         false
       );
+    });
+
+    it('isMeerInformatieOntvangen is false when In behandeling predates Verzoek without a decision', () => {
+      const aanvraag = getAanvraagTransformed({
+        resultaat: null,
+        procesAanvraagActieOmschrijvingen: [
+          'In behandeling bij gemeente',
+          'Verzoek om meer informatie',
+        ],
+        procesAanvraagActies: [
+          {
+            omschrijving: 'In behandeling bij gemeente',
+            datum: '2024-06-08',
+          },
+          {
+            omschrijving: 'Verzoek om meer informatie',
+            datum: '2024-06-09',
+          },
+        ],
+      });
+
+      expect(isMeerInformatieOntvangenVisible(aanvraag)).toBe(false);
+    });
+
+    it('isMeerInformatieOntvangen is true when In behandeling follows Verzoek without a decision', () => {
+      const aanvraag = getAanvraagTransformed({
+        resultaat: null,
+        procesAanvraagActieOmschrijvingen: [
+          'In behandeling bij gemeente',
+          'Verzoek om meer informatie',
+        ],
+        procesAanvraagActies: [
+          {
+            omschrijving: 'Verzoek om meer informatie',
+            datum: '2024-06-09',
+          },
+          {
+            omschrijving: 'In behandeling bij gemeente',
+            datum: '2024-06-12',
+          },
+        ],
+      });
+
+      expect(isMeerInformatieOntvangenVisible(aanvraag)).toBe(true);
+    });
+
+    it('isMeerInformatieOntvangen is true when the action dates are equal', () => {
+      const aanvraag = getAanvraagTransformed({
+        resultaat: null,
+        procesAanvraagActieOmschrijvingen: [
+          'In behandeling bij gemeente',
+          'Verzoek om meer informatie',
+        ],
+        procesAanvraagActies: [
+          {
+            omschrijving: 'Verzoek om meer informatie',
+            datum: '2024-06-09',
+          },
+          {
+            omschrijving: 'In behandeling bij gemeente',
+            datum: '2024-06-09',
+          },
+        ],
+      });
+
+      expect(isMeerInformatieOntvangenVisible(aanvraag)).toBe(true);
+    });
+
+    it('isMeerInformatieOntvangen is true when Verzoek has no date and there is no decision', () => {
+      const aanvraag = getAanvraagTransformed({
+        resultaat: null,
+        procesAanvraagActieOmschrijvingen: [
+          'In behandeling bij gemeente',
+          'Verzoek om meer informatie',
+        ],
+        procesAanvraagActies: [
+          {
+            omschrijving: 'In behandeling bij gemeente',
+            datum: '2024-06-12',
+          },
+        ],
+      });
+
+      expect(isMeerInformatieOntvangenVisible(aanvraag)).toBe(true);
+    });
+
+    it('isMeerInformatieOntvangen is true when a decision exists and Verzoek is present', () => {
+      const aanvraag = getAanvraagTransformed({
+        documenten: [DOC_BESLUIT],
+        procesAanvraagActieOmschrijvingen: ['Verzoek om meer informatie'],
+      });
+
+      expect(isMeerInformatieOntvangenVisible(aanvraag)).toBe(true);
+    });
+
+    it('hides both information steps when the request action is later than the decision', () => {
+      const aanvraag = getAanvraagTransformed({
+        documenten: [DOC_BESLUIT, DOC_MEER_INFORMATIE],
+        procesAanvraagActieOmschrijvingen: [
+          'Verzoek om meer informatie',
+          'In behandeling bij gemeente',
+        ],
+        procesAanvraagActies: [
+          {
+            omschrijving: 'Verzoek om meer informatie',
+            datum: '2024-06-11',
+          },
+          {
+            omschrijving: 'In behandeling bij gemeente',
+            datum: '2024-06-12',
+          },
+        ],
+      });
+
+      expect(isStepVisible(MEER_INFORMATIE, aanvraag)).toBe(false);
+      expect(isStepVisible(MEER_INFORMATIE_ONTVANGEN, aanvraag)).toBe(false);
+      expect(isMeerInformatieOntvangenVisible(aanvraag)).toBe(false);
+    });
+
+    it('isMeerInformatieOntvangen is false when Verzoek is missing', () => {
+      const aanvraag = getAanvraagTransformed({
+        procesAanvraagActieOmschrijvingen: ['In behandeling bij gemeente'],
+        procesAanvraagActies: [
+          {
+            omschrijving: 'In behandeling bij gemeente',
+            datum: '2024-06-12',
+          },
+        ],
+      });
+
+      expect(isMeerInformatieOntvangenVisible(aanvraag)).toBe(false);
+    });
+
+    it('isMeerInformatieOntvangen is false when In behandeling is missing and there is no decision', () => {
+      const aanvraag = getAanvraagTransformed({
+        resultaat: null,
+        procesAanvraagActieOmschrijvingen: ['Verzoek om meer informatie'],
+      });
+
+      expect(isMeerInformatieOntvangenVisible(aanvraag)).toBe(false);
     });
 
     it('isDocumentDecisionDateActive is true after WCAG threshold', () => {

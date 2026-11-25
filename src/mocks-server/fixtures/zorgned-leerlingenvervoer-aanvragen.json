@@ -837,6 +837,162 @@
             "bestandsnaam": "BR4746540.pdf"
           }
         ]
+      },
+      {
+        "identificatie": "4139100",
+        "procesIdentificatie": "4139100",
+        "casusIdentificatie": "2456900",
+        "regeling": {
+          "identificatie": "LLV",
+          "omschrijving": "Leerlingenvervoer"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-11-01"
+        },
+        "datumAanmelding": "2026-11-01",
+        "datumAanvraag": "2026-11-01",
+        "procesAanvraag": {
+          "identificatie": "4139100",
+          "omschrijving": "Leerlingenvervoer",
+          "datumStart": "2026-11-01",
+          "acties": [
+            {
+              "omschrijving": "Verzoek om meer informatie",
+              "status": {
+                "identificatie": "4",
+                "omschrijving": "Klaar"
+              },
+              "datum": "2026-11-17"
+            },
+            {
+              "omschrijving": "In behandeling bij gemeente",
+              "status": {
+                "identificatie": "4",
+                "omschrijving": "Klaar"
+              },
+              "datum": "2026-11-02"
+            },
+            {
+              "omschrijving": "Melding ontvangen",
+              "status": {
+                "identificatie": "4",
+                "omschrijving": "Klaar"
+              },
+              "datum": "2026-11-01"
+            }
+          ]
+        },
+        "beschikking": {
+          "beschikkingNummer": 301373500,
+          "datumAfgifte": "2026-11-10",
+          "beschikteProducten": [
+            {
+              "identificatie": "2053950",
+              "product": {
+                "identificatie": "LLVEV",
+                "productsoortCode": "LLV",
+                "omschrijving": "eigen vervoer"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2026-11-01",
+                "datumEindeGeldigheid": "2026-11-30",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "toewijzingen": [],
+                "betrokkenen": []
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "4746600",
+            "procesIdentificatie": "4139100",
+            "casusIdentificatie": "2456900",
+            "omschrijving": "NV, V.o.i DTS met kmgrens",
+            "omschrijvingclientportaal": "Verzoek: extra info voor beoordelen aanvraag LLV",
+            "datumDefinitief": "2026-11-17T10:00:00.000",
+            "bestandsnaam": "BR4746600.pdf"
+          },
+          {
+            "documentidentificatie": "4746601",
+            "procesIdentificatie": "4139100",
+            "casusIdentificatie": "2456900",
+            "omschrijving": "NV, Toekenning Eigen vervoer",
+            "omschrijvingclientportaal": "Besluit: toekenning Leerlingenvervoer (EV)",
+            "datumDefinitief": "2026-11-10T10:00:00.000",
+            "bestandsnaam": "BR4746601.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "4139101",
+        "procesIdentificatie": "4139101",
+        "casusIdentificatie": "2456901",
+        "regeling": {
+          "identificatie": "LLV",
+          "omschrijving": "Leerlingenvervoer"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2026-11-01"
+        },
+        "datumAanmelding": "2026-11-01",
+        "datumAanvraag": "2026-11-01",
+        "procesAanvraag": {
+          "identificatie": "4139101",
+          "omschrijving": "Leerlingenvervoer",
+          "datumStart": "2026-11-01",
+          "acties": [
+            {
+              "omschrijving": "Verzoek om meer informatie",
+              "status": {
+                "identificatie": "4",
+                "omschrijving": "Klaar"
+              },
+              "datum": "2026-11-10"
+            },
+            {
+              "omschrijving": "In behandeling bij gemeente",
+              "status": {
+                "identificatie": "4",
+                "omschrijving": "Klaar"
+              },
+              "datum": "2026-11-05"
+            },
+            {
+              "omschrijving": "Melding ontvangen",
+              "status": {
+                "identificatie": "4",
+                "omschrijving": "Klaar"
+              },
+              "datum": "2026-11-01"
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "4746610",
+            "procesIdentificatie": "4139101",
+            "casusIdentificatie": "2456901",
+            "omschrijving": "NV, V.o.i DTS met kmgrens",
+            "omschrijvingclientportaal": "Verzoek: extra info voor beoordelen aanvraag LLV",
+            "datumDefinitief": "2026-11-10T10:00:00.000",
+            "bestandsnaam": "BR4746610.pdf"
+          }
+        ]
       }
     ]
   }
