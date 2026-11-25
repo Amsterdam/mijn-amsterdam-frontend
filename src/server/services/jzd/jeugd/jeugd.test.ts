@@ -4,10 +4,149 @@ import type { Mock } from 'vitest';
 import { getAuthProfileAndToken } from '../../../../testing/utils.ts';
 import { apiErrorResult } from '../../../../universal/helpers/api.ts';
 import { fetchAanvragen } from '../../zorgned/zorgned-service.ts';
+import type { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
 import { fetchLeerlingenvervoer } from './jeugd.ts';
 
 const AUTH_PROFILE_AND_TOKEN = getAuthProfileAndToken();
 const VOORZIENING_ID = '1610585298';
+const LLV_REQUEST_DOCUMENT = {
+  id: 'request-document',
+  title: 'Verzoek: extra info voor beoordelen aanvraag LLV',
+  url: '',
+  datePublished: '2026-11-17T15:42:28.04',
+};
+const LLV_DECISION_DOCUMENT = {
+  id: 'decision-document',
+  title: 'Besluit: toekenning Leerlingenvervoer (EV)',
+  url: '',
+  datePublished: '2026-11-17T15:56:30.263',
+};
+const LLV_ACTION_DESCRIPTIONS = [
+  'Melding ontvangen',
+  'Verzoek om meer informatie',
+  'In behandeling bij gemeente',
+];
+const LLV_ACTIONS = [
+  { omschrijving: 'Melding ontvangen', datum: '2026-11-17' },
+  { omschrijving: 'Verzoek om meer informatie', datum: '2026-11-17' },
+  { omschrijving: 'In behandeling bij gemeente', datum: '2026-11-17' },
+];
+
+function getLLVAanvraag(
+  overrides: Partial<ZorgnedAanvraagTransformed> = {}
+): ZorgnedAanvraagTransformed {
+  return {
+    betrokkenen: [],
+    datumAanvraag: '2026-11-17',
+    datumBeginLevering: null,
+    datumBesluit: '',
+    datumEindeGeldigheid: null,
+    datumEindeLevering: null,
+    datumIngangGeldigheid: null,
+    datumOpdrachtLevering: null,
+    datumToewijzing: null,
+    procesAanvraagOmschrijving: 'Leerlingenvervoer',
+    documenten: [],
+    id: 'aanvraag-1',
+    prettyID: 'aanvraag-1',
+    procesIdentificatie: 'proces-1',
+    procesMeldingIdentificatie: null,
+    isActueel: false,
+    leverancier: null,
+    leverancierIdentificatie: null,
+    leveringsVorm: '',
+    leveringsVormUitgeschreven: null,
+    productsoortCode: 'LLV',
+    productIdentificatie: undefined,
+    beschiktProductIdentificatie: null,
+    beschikkingNummer: null,
+    regelingIdentificatie: 'LLV',
+    procesAanvraagActieOmschrijvingen: [],
+    procesAanvraagActies: [],
+    resultaat: null,
+    titel: 'Ontvangen op 17 november 2026',
+    ...overrides,
+  };
+}
+
+const ASSIGNED_PRODUCT_OVERRIDES: Partial<ZorgnedAanvraagTransformed> = {
+  datumBesluit: '2026-11-17',
+  datumEindeGeldigheid: '2026-11-30',
+  datumIngangGeldigheid: '2026-11-01',
+  isActueel: true,
+  beschiktProductIdentificatie: 'product-1',
+  beschikkingNummer: 1,
+  productIdentificatie: 'LLVEV',
+  resultaat: 'toegewezen',
+  titel: 'eigen vervoer',
+};
+
+const LLV_STATUS_SCENARIOS = [
+  {
+    scenario: 'In behandeling na ontvangst',
+    aanvraag: getLLVAanvraag({
+      documenten: [LLV_REQUEST_DOCUMENT],
+      procesAanvraagActieOmschrijvingen: LLV_ACTION_DESCRIPTIONS,
+      procesAanvraagActies: LLV_ACTIONS,
+    }),
+    displayStatus: 'In behandeling',
+    decision: '',
+    decisionChecked: false,
+    substepStatuses: ['Meer informatie nodig', 'Meer informatie ontvangen'],
+  },
+  {
+    scenario: 'Aanvraag ontvangen',
+    aanvraag: getLLVAanvraag({
+      procesAanvraagActieOmschrijvingen: ['Melding ontvangen'],
+      procesAanvraagActies: [LLV_ACTIONS[0]],
+    }),
+    displayStatus: 'In behandeling',
+    decision: '',
+    decisionChecked: false,
+    substepStatuses: [],
+  },
+  {
+    scenario: 'Toegewezen zonder besluitbrief',
+    aanvraag: getLLVAanvraag({
+      ...ASSIGNED_PRODUCT_OVERRIDES,
+      documenten: [LLV_REQUEST_DOCUMENT],
+      procesAanvraagActieOmschrijvingen: LLV_ACTION_DESCRIPTIONS,
+      procesAanvraagActies: LLV_ACTIONS,
+    }),
+    displayStatus: 'In behandeling',
+    decision: '',
+    decisionChecked: false,
+    substepStatuses: ['Meer informatie nodig', 'Meer informatie ontvangen'],
+  },
+  {
+    scenario: 'Aanvullende stukken gevraagd',
+    aanvraag: getLLVAanvraag({
+      documenten: [LLV_REQUEST_DOCUMENT],
+      procesAanvraagActieOmschrijvingen: [
+        'Melding ontvangen',
+        'Verzoek om meer informatie',
+      ],
+      procesAanvraagActies: LLV_ACTIONS.slice(0, 2),
+    }),
+    displayStatus: 'Meer informatie nodig',
+    decision: '',
+    decisionChecked: false,
+    substepStatuses: ['Meer informatie nodig'],
+  },
+  {
+    scenario: 'Besluitdocument toegevoegd',
+    aanvraag: getLLVAanvraag({
+      ...ASSIGNED_PRODUCT_OVERRIDES,
+      documenten: [LLV_REQUEST_DOCUMENT, LLV_DECISION_DOCUMENT],
+      procesAanvraagActieOmschrijvingen: LLV_ACTION_DESCRIPTIONS,
+      procesAanvraagActies: LLV_ACTIONS,
+    }),
+    displayStatus: 'Besluit genomen',
+    decision: 'Toegewezen',
+    decisionChecked: true,
+    substepStatuses: ['Meer informatie nodig', 'Meer informatie ontvangen'],
+  },
+];
 
 vi.mock('../../zorgned/zorgned-service', async (importOriginal) => ({
   ...(await importOriginal()),
@@ -444,6 +583,38 @@ describe('fetchLeerlingenvervoer', () => {
       )
     ).toHaveLength(1);
   });
+
+  test.each(LLV_STATUS_SCENARIOS)(
+    '$scenario',
+    async ({
+      aanvraag,
+      displayStatus,
+      decision,
+      decisionChecked,
+      substepStatuses,
+    }) => {
+      (fetchAanvragen as Mock).mockResolvedValueOnce({
+        content: [aanvraag],
+        status: 'OK',
+      });
+
+      const response = await fetchLeerlingenvervoer(AUTH_PROFILE_AND_TOKEN);
+      const [voorziening] = response.content!;
+      const behandeling = voorziening.steps.find(
+        (step) => step.status === 'In behandeling'
+      );
+      const besluit = voorziening.steps.find(
+        (step) => step.status === 'Besluit genomen'
+      );
+
+      expect(voorziening.displayStatus).toBe(displayStatus);
+      expect(voorziening.decision).toBe(decision);
+      expect(besluit?.isChecked).toBe(decisionChecked);
+      expect(behandeling?.substeps?.map((step) => step.status) ?? []).toEqual(
+        substepStatuses
+      );
+    }
+  );
 
   test('Returns error response "as is" from fetchAanvragen', async () => {
     (fetchAanvragen as Mock).mockResolvedValueOnce(
