@@ -380,6 +380,71 @@ describe('fetchLeerlingenvervoer', () => {
     });
   });
 
+  test('Shows only one "Meer informatie nodig" step when multiple request documents exist', async () => {
+    (fetchAanvragen as Mock).mockResolvedValueOnce({
+      content: [
+        {
+          id: '3695853',
+          prettyID: '3695853',
+          datumAanvraag: '2026-05-19',
+          datumBeginLevering: null,
+          datumBesluit: '',
+          datumEindeGeldigheid: null,
+          datumEindeLevering: null,
+          datumIngangGeldigheid: null,
+          datumOpdrachtLevering: null,
+          datumToewijzing: null,
+          documenten: [
+            {
+              id: 'B4092578',
+              title: 'Verzoek: extra info voor beoordelen aanvraag LLV',
+              url: '',
+              datePublished: '2026-08-10T15:56:15.467',
+            },
+            {
+              id: 'B4092599',
+              title: 'Verzoek: aanvullende informatie voor aanvraag LLV',
+              url: '',
+              datePublished: '2026-09-10T15:56:15.467',
+            },
+          ],
+          isActueel: false,
+          leverancier: '',
+          leveringsVorm: '',
+          productsoortCode: 'LLV',
+          regelingIdentificatie: 'LLV',
+          procesAanvraagActieOmschrijvingen: [
+            'Verzoek om meer informatie',
+            'In behandeling bij gemeente',
+          ],
+          resultaat: null,
+          titel: 'Leerlingenvervoer',
+          betrokkenen: [],
+          procesAanvraagActies: [
+            {
+              omschrijving: 'Verzoek om meer informatie',
+              datum: '2026-07-10',
+            },
+            {
+              omschrijving: 'In behandeling bij gemeente',
+              datum: '2026-08-10',
+            },
+          ],
+        },
+      ],
+      status: 'OK',
+    });
+
+    const response = await fetchLeerlingenvervoer(AUTH_PROFILE_AND_TOKEN);
+    const [, behandeling] = response.content![0].steps;
+
+    expect(
+      behandeling.substeps?.filter(
+        (step) => step.status === 'Meer informatie nodig'
+      )
+    ).toHaveLength(1);
+  });
+
   test('Returns error response "as is" from fetchAanvragen', async () => {
     (fetchAanvragen as Mock).mockResolvedValueOnce(
       apiErrorResult('', null, 404)
