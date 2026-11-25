@@ -1,10 +1,29 @@
 import { parseISO } from 'date-fns';
 
 import type { BeschikkingsResultaat } from '../../zorgned/zorgned-types.ts';
+import type { DisplayStatus } from './wmo-types.ts';
 
 export const ACTIE_VERZOEK_MEER_INFORMATIE = 'verzoek om meer informatie';
 // Action "In behandeling bij gemeente" means that the additional information been received
 export const ACTIE_IN_BEHANDELING = 'in behandeling bij gemeente';
+
+export const REDEN_AFSLUITEN_VERVALLEN = 'Vervallen' as const;
+
+export const STATUS_AANVRAAG_ONTVANGEN = 'Aanvraag ontvangen' as const;
+export const STATUS_ONTVANGEN = 'Ontvangen' as const;
+export const STATUS_MEER_INFORMATIE_NODIG = 'Meer informatie nodig' as const;
+export const STATUS_MEER_INFORMATIE_ONTVANGEN =
+  'Meer informatie ontvangen' as const;
+export const STATUS_IN_BEHANDELING = 'In behandeling' as const;
+export const STATUS_BESLUIT_GENOMEN = 'Besluit genomen' as const;
+export const STATUS_EINDE_RECHT = 'Einde recht' as const;
+
+// We display "Meer informatie ontvangen" as "In behandeling" on the theme page.
+export function toDisplayStatus(status: DisplayStatus) {
+  return status === STATUS_MEER_INFORMATIE_ONTVANGEN
+    ? STATUS_IN_BEHANDELING
+    : status;
+}
 
 export const ZORGNED_WMO_API_CONFIG_KEY = 'ZORGNED_WMO' as const;
 export const DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH = 'Verzoek:' as const; // Documents starting with this token correspond to the 'meer informatie' step.

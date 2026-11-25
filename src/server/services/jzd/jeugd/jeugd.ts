@@ -33,6 +33,15 @@ import type {
 import { transformVoorzieningForFrontendWithMaApiProps } from '../jzd-voorzieningen-api-service.ts';
 import { hasDecision } from '../wmo/status-line-items/wmo-generic.ts';
 import { getDocuments } from '../wmo/wmo.ts';
+import {
+  STATUS_BESLUIT_GENOMEN,
+  type STATUS_EINDE_RECHT,
+  type STATUS_IN_BEHANDELING,
+  type STATUS_MEER_INFORMATIE_NODIG,
+  type STATUS_MEER_INFORMATIE_ONTVANGEN,
+  type STATUS_ONTVANGEN,
+  toDisplayStatus,
+} from '../wmo/wmo-config.ts';
 import { jeugdStatusLineItemsConfig } from './status-line-items.ts';
 
 export async function fetchZorgnedAanvragenJeugd(
@@ -78,12 +87,12 @@ export type LeerlingenvervoerVoorzieningFrontend = ZaakAanvraagDetail &
     isActual: boolean;
     itemTypeCode: ProductSoortCode;
     displayStatus:
-      | 'Ontvangen'
-      | 'In behandeling'
-      | 'Meer informatie nodig'
-      | 'Meer informatie ontvangen'
-      | 'Besluit genomen'
-      | 'Einde recht';
+      | typeof STATUS_ONTVANGEN
+      | typeof STATUS_IN_BEHANDELING
+      | typeof STATUS_MEER_INFORMATIE_NODIG
+      | typeof STATUS_MEER_INFORMATIE_ONTVANGEN
+      | typeof STATUS_BESLUIT_GENOMEN
+      | typeof STATUS_EINDE_RECHT;
     statusDate: string;
     statusDateFormatted: string;
   };
@@ -106,7 +115,7 @@ function transformVoorzieningenForFrontend(
 
     if (lineItems?.length) {
       const dateDecision =
-        lineItems.find((step) => step.status === 'Besluit genomen')
+        lineItems.find((step) => step.status === STATUS_BESLUIT_GENOMEN)
           ?.datePublished ?? '';
       const id = aanvraag.prettyID;
       const statusDate = getLatestStatusDate(lineItems);
@@ -114,12 +123,7 @@ function transformVoorzieningenForFrontend(
         lineItems
       ) as LeerlingenvervoerVoorzieningFrontend['displayStatus'];
 
-      // TODO: This shouldn't be harcoded. We are doing this everywhere with the statusses currently.
-      // Will clean this up in a later commit
-      const displayStatus =
-        latestStatus === 'Meer informatie ontvangen'
-          ? 'In behandeling'
-          : latestStatus;
+      const displayStatus = toDisplayStatus(latestStatus);
 
       const voorzieningFrontend: LeerlingenvervoerVoorzieningFrontend = {
         id,

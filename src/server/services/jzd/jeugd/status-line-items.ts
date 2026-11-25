@@ -16,10 +16,15 @@ import {
   MEER_INFORMATIE,
   MEER_INFORMATIE_ONTVANGEN,
 } from '../wmo/status-line-items/wmo-generic.ts';
+import {
+  ACTIE_IN_BEHANDELING,
+  ACTIE_VERZOEK_MEER_INFORMATIE,
+  STATUS_ONTVANGEN,
+} from '../wmo/wmo-config.ts';
 
 const ONTVANGEN = {
   ...AANVRAAG,
-  status: 'Ontvangen',
+  status: STATUS_ONTVANGEN,
   datePublished: (aanvraag: ZorgnedAanvraagTransformed) =>
     aanvraag.datumAanvraag,
   hideDatePublished: true,
@@ -37,10 +42,10 @@ const MELDING_IN_BEHANDELING = {
     {
       ...MEER_INFORMATIE,
       datePublished: (aanvraag: ZorgnedAanvraagTransformed) =>
-        getActionDate(aanvraag, 'verzoek om meer informatie') ?? '',
+        getActionDate(aanvraag, ACTIE_VERZOEK_MEER_INFORMATIE) ?? '',
       isActive: (aanvraag: ZorgnedAanvraagTransformed) =>
-        hasAction(aanvraag, 'verzoek om meer informatie') &&
-        !hasAction(aanvraag, 'in behandeling bij gemeente'),
+        hasAction(aanvraag, ACTIE_VERZOEK_MEER_INFORMATIE) &&
+        !hasAction(aanvraag, ACTIE_IN_BEHANDELING),
       description: `
 <p>Wij kunnen uw melding nog niet beoordelen. Het kan zijn dat u nog informatie moet aanleveren. Dat kan door het op te sturen naar ons gratis antwoordnummer:</p>
 <p>Gemeente Amsterdam<br />

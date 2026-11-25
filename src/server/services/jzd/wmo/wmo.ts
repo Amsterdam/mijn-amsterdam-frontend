@@ -34,6 +34,7 @@ import {
   getHulpmiddelenDisclaimer,
   hulpmiddelenDisclaimerConfig,
 } from './status-line-items/wmo-hulpmiddelen.ts';
+import { STATUS_BESLUIT_GENOMEN } from './wmo-config.ts';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items.ts';
 import type { WMOVoorzieningFrontend } from './wmo-types.ts';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service.ts';
@@ -84,8 +85,8 @@ function transformVoorzieningForFrontend(
   });
 
   const dateDecision =
-    steps.find((step) => step.status === 'Besluit genomen')?.datePublished ??
-    '';
+    steps.find((step) => step.status === STATUS_BESLUIT_GENOMEN)
+      ?.datePublished ?? '';
 
   const disclaimer = getHulpmiddelenDisclaimer(
     hulpmiddelenDisclaimerConfig,
