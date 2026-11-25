@@ -95,7 +95,7 @@ const displayPropsInBehandeling: DisplayProps<LeerlingenvervoerVoorzieningFronte
   {
     enableMobileListView: true,
     props: {
-      detailLinkComponent: 'Ontvangen op',
+      detailLinkComponent: 'Ontvangen op / voorziening',
       displayStatus: 'Status',
       statusDateFormatted: 'Laatst bijgewerkt op',
     },
