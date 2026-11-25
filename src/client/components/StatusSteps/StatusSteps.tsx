@@ -91,7 +91,7 @@ function Step({
       status={getStepStatus(item)}
       className={styles.Step}
       aria-label={getStepAriaLabel(item)}
-      hasSubsteps={!!item.substeps?.length}
+      {...(!isSubstep ? { hasSubsteps: !!item.substeps?.length } : {})}
     >
       {isSubstep && showSubstepHeading && (
         <>
