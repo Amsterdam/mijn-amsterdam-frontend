@@ -382,7 +382,7 @@ export const contentTips: ContentTipSource[] = [
     id: 'mijn-67',
     active: true,
     dateActiveStart: '2026-11-23',
-    dateActiveEnd: '2026-12-07',
+    dateActiveEnd: '2026-03-11',
     datePublished: '2026-11-23',
     owner: '',
     title: 'Tip: Meld uw kind aan voor de basisschool',
@@ -395,7 +395,7 @@ export const contentTips: ContentTipSource[] = [
       isMokum,
     ],
     reason:
-      'We tonen deze tip omdat u een kind heeft gekregen tussen 1 september 2023 en 31 augustus 2024. Deze groep is aan de beurt om aangemeld te worden voor de basisschool. Vanwege privacyregels kunnen wij uw persoonlijke situatie niet inzien. Is deze tip niet op u van toepassing, dan spijt het ons dat u deze tip krijgt.',
+      'U ziet deze tip omdat uw kind geboren is tussen 1 september 2023 en 31 augustus 2024. U kunt uw kind nu aanmelden voor de basisschool. Wij kennen uw persoonlijke situatie niet. Door privacyregels mogen wij die niet bekijken. Past deze tip niet bij uw situatie? Dan hoeft u niets te doen.',
     link: {
       title: 'Kijk hier voor meer informatie en een video',
       to: 'https://schoolwijzer.amsterdam.nl/nl/po/procedure/',
