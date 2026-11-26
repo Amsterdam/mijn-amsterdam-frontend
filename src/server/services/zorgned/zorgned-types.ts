@@ -1,6 +1,10 @@
 import type { GenericDocument } from '../../../universal/types/App.types.ts';
 import type { AuthProfile } from '../../auth/auth-types.ts';
 import { GEMEENTE_CODE_AMSTERDAM } from '../brp/brp-config.ts';
+import type {
+  ACTIE_IN_BEHANDELING,
+  ACTIE_VERZOEK_MEER_INFORMATIE,
+} from '../jzd/wmo/wmo-config.ts';
 
 export const ZORGNED_GEMEENTE_CODE = GEMEENTE_CODE_AMSTERDAM;
 
@@ -75,6 +79,10 @@ export type LeveringsVormUitgeschreven =
 export type ProductSoortCode = string;
 export type ProductIdentificatie = string;
 export type CasusIdentificatie = string;
+
+export type ActieOmschrijvingen =
+  | typeof ACTIE_VERZOEK_MEER_INFORMATIE
+  | typeof ACTIE_IN_BEHANDELING;
 
 export interface Levering {
   begindatum: string | null;

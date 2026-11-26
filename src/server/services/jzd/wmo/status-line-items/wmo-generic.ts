@@ -7,16 +7,24 @@ import {
 } from '../../../../../universal/helpers/date.ts';
 import type { GenericDocument } from '../../../../../universal/types/App.types.ts';
 import type {
+  ActieOmschrijvingen,
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../../zorgned/zorgned-types.ts';
 import {
+  ACTIE_IN_BEHANDELING,
   ACTIE_VERZOEK_MEER_INFORMATIE,
   DOCUMENT_PGB_BESLUIT,
   DOCUMENT_TITLE_BESLUIT_STARTS_WITH,
   DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH,
   DOCUMENT_UPLOAD_LINK_MEER_INFORMATIE,
   MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
+  STATUS_AANVRAAG_ONTVANGEN,
+  STATUS_BESLUIT_GENOMEN,
+  STATUS_EINDE_RECHT,
+  STATUS_IN_BEHANDELING,
+  STATUS_MEER_INFORMATIE_NODIG,
+  STATUS_MEER_INFORMATIE_ONTVANGEN,
 } from '../wmo-config.ts';
 
 export const FAKE_DECISION_DOCUMENT_ID = 'besluit-document-mist';
@@ -67,6 +75,8 @@ function getDecisionDate(
   return decisionDate ?? null;
 }
 
+// This is used for theme "Zorg en ondersteuning", which is still based on documents.
+// When we can use the actions for this theme, make use of getActionDate
 export function getDocumentMeerInformatieDate(documents: GenericDocument[]) {
   return (
     getLastDocumentStartsWithTitle(
@@ -76,18 +86,72 @@ export function getDocumentMeerInformatieDate(documents: GenericDocument[]) {
   );
 }
 
-function hasMeerInformatieActie(aanvraag: ZorgnedAanvraagTransformed) {
-  return (aanvraag.procesAanvraagActieOmschrijvingen ?? []).some((actie) => {
-    const normalizedActie = actie.trim().toLowerCase();
-    return normalizedActie === ACTIE_VERZOEK_MEER_INFORMATIE;
-  });
+export function hasMeerInformatieNodig(aanvraag: ZorgnedAanvraagTransformed) {
+  return aanvraag.documenten.some((document) =>
+    document.title.startsWith(DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH)
+  );
 }
 
-export function hasMeerInformatieNodig(aanvraag: ZorgnedAanvraagTransformed) {
+export function getActionDate(
+  aanvraag: ZorgnedAanvraagTransformed,
+  actieOmschrijving: ActieOmschrijvingen
+) {
+  return aanvraag.procesAanvraagActies?.find(
+    (aanvraagActie) =>
+      aanvraagActie.omschrijving.toLowerCase() === actieOmschrijving
+  )?.datum;
+}
+
+export function hasAction(
+  aanvraag: ZorgnedAanvraagTransformed,
+  actieOmschrijving: ActieOmschrijvingen
+) {
+  return !!aanvraag?.procesAanvraagActieOmschrijvingen?.some(
+    (aanvraagActie) => {
+      return aanvraagActie.toLowerCase() === actieOmschrijving;
+    }
+  );
+}
+
+function isMeerInformatieVerzoekAfterDecision(
+  aanvraag: ZorgnedAanvraagTransformed
+) {
+  const dateVerzoek = getActionDate(aanvraag, ACTIE_VERZOEK_MEER_INFORMATIE);
+  const dateBesluit = getDecisionDate(aanvraag);
+
   return (
-    aanvraag.documenten.some((document) =>
-      document.title.startsWith(DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH)
-    ) || hasMeerInformatieActie(aanvraag)
+    !!dateVerzoek &&
+    !!dateBesluit &&
+    isAfter(parseISO(dateVerzoek), parseISO(dateBesluit))
+  );
+}
+
+export function isMeerInformatieOntvangenVisible(
+  aanvraag: ZorgnedAanvraagTransformed
+) {
+  if (!hasAction(aanvraag, ACTIE_VERZOEK_MEER_INFORMATIE)) {
+    return false;
+  }
+
+  if (isMeerInformatieVerzoekAfterDecision(aanvraag)) {
+    return false;
+  }
+
+  if (hasDecision(aanvraag)) {
+    return true;
+  }
+
+  if (!hasAction(aanvraag, ACTIE_IN_BEHANDELING)) {
+    return false;
+  }
+
+  const dateInBehandeling = getActionDate(aanvraag, ACTIE_IN_BEHANDELING);
+  const dateVerzoek = getActionDate(aanvraag, ACTIE_VERZOEK_MEER_INFORMATIE);
+
+  return !(
+    dateInBehandeling &&
+    dateVerzoek &&
+    isAfter(parseISO(dateVerzoek), parseISO(dateInBehandeling))
   );
 }
 
@@ -138,7 +202,7 @@ export function decisionParagraph(aanvraag: ZorgnedAanvraagTransformed) {
 }
 
 export const AANVRAAG: ZorgnedStatusLineItemTransformerConfig = {
-  status: 'Aanvraag ontvangen',
+  status: STATUS_AANVRAAG_ONTVANGEN,
   datePublished: '',
   isChecked: () => true,
   isActive: () => false,
@@ -148,8 +212,10 @@ export const AANVRAAG: ZorgnedStatusLineItemTransformerConfig = {
 };
 
 export const MEER_INFORMATIE: ZorgnedStatusLineItemTransformerConfig = {
-  status: 'Meer informatie nodig',
-  isVisible: (aanvraag) => hasMeerInformatieNodig(aanvraag),
+  status: STATUS_MEER_INFORMATIE_NODIG,
+  isVisible: (aanvraag) =>
+    hasMeerInformatieNodig(aanvraag) &&
+    !isMeerInformatieVerzoekAfterDecision(aanvraag),
   datePublished: (aanvraag) =>
     getDocumentMeerInformatieDate(aanvraag.documenten) ?? '',
   isChecked: () => true,
@@ -165,8 +231,23 @@ export const MEER_INFORMATIE: ZorgnedStatusLineItemTransformerConfig = {
   },
 };
 
+// Currently only used for "Onderwijs en Jeugd (LLV)", later this can be used for "Zorg en Ondersteuning"
+export const MEER_INFORMATIE_ONTVANGEN: ZorgnedStatusLineItemTransformerConfig =
+  {
+    status: STATUS_MEER_INFORMATIE_ONTVANGEN,
+    isVisible: (aanvraag) => isMeerInformatieOntvangenVisible(aanvraag),
+    datePublished: (aanvraag) =>
+      getActionDate(aanvraag, ACTIE_IN_BEHANDELING) ?? '',
+    isChecked: () => true,
+    isActive: (aanvraag) =>
+      !hasDecision(aanvraag) && !hasAction(aanvraag, ACTIE_IN_BEHANDELING),
+    description: () => {
+      return '<p>Bedankt voor de aanvullende gegevens. Uw melding wordt nu behandeld.</p>';
+    },
+  };
+
 export const IN_BEHANDELING: ZorgnedStatusLineItemTransformerConfig = {
-  status: 'In behandeling',
+  status: STATUS_IN_BEHANDELING,
   datePublished: (aanvraag) => aanvraag.datumBesluit || '', // NOTE: Zorgneds datumAfgifte is used by OJZD to set status to  "In behandeling"
   isChecked: (aanvraag) => !!aanvraag.datumBesluit,
   isActive: (aanvraag) =>
@@ -183,7 +264,7 @@ export function getTransformerConfigBesluit(
   useAsProduct: boolean
 ): ZorgnedStatusLineItemTransformerConfig {
   return {
-    status: 'Besluit genomen',
+    status: STATUS_BESLUIT_GENOMEN,
     datePublished: (aanvraag) => getDecisionDate(aanvraag) ?? '',
     isChecked: (aanvraag) => hasDecision(aanvraag),
     isActive,
@@ -211,7 +292,7 @@ export function getTransformerConfigBesluit(
 }
 
 export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
-  status: 'Einde recht',
+  status: STATUS_EINDE_RECHT,
   datePublished: (aanvraag) =>
     (aanvraag.isActueel ? '' : aanvraag.datumEindeGeldigheid) || '',
   isVisible: (aanvraag) => {

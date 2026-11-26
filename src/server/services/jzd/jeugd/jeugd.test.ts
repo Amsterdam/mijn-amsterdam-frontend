@@ -4,10 +4,149 @@ import type { Mock } from 'vitest';
 import { getAuthProfileAndToken } from '../../../../testing/utils.ts';
 import { apiErrorResult } from '../../../../universal/helpers/api.ts';
 import { fetchAanvragen } from '../../zorgned/zorgned-service.ts';
+import type { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types.ts';
 import { fetchLeerlingenvervoer } from './jeugd.ts';
 
 const AUTH_PROFILE_AND_TOKEN = getAuthProfileAndToken();
 const VOORZIENING_ID = '1610585298';
+const LLV_REQUEST_DOCUMENT = {
+  id: 'request-document',
+  title: 'Verzoek: extra info voor beoordelen aanvraag LLV',
+  url: '',
+  datePublished: '2026-11-17T15:42:28.04',
+};
+const LLV_DECISION_DOCUMENT = {
+  id: 'decision-document',
+  title: 'Besluit: toekenning Leerlingenvervoer (EV)',
+  url: '',
+  datePublished: '2026-11-17T15:56:30.263',
+};
+const LLV_ACTION_DESCRIPTIONS = [
+  'Melding ontvangen',
+  'Verzoek om meer informatie',
+  'In behandeling bij gemeente',
+];
+const LLV_ACTIONS = [
+  { omschrijving: 'Melding ontvangen', datum: '2026-11-17' },
+  { omschrijving: 'Verzoek om meer informatie', datum: '2026-11-17' },
+  { omschrijving: 'In behandeling bij gemeente', datum: '2026-11-17' },
+];
+
+function getLLVAanvraag(
+  overrides: Partial<ZorgnedAanvraagTransformed> = {}
+): ZorgnedAanvraagTransformed {
+  return {
+    betrokkenen: [],
+    datumAanvraag: '2026-11-17',
+    datumBeginLevering: null,
+    datumBesluit: '',
+    datumEindeGeldigheid: null,
+    datumEindeLevering: null,
+    datumIngangGeldigheid: null,
+    datumOpdrachtLevering: null,
+    datumToewijzing: null,
+    procesAanvraagOmschrijving: 'Leerlingenvervoer',
+    documenten: [],
+    id: 'aanvraag-1',
+    prettyID: 'aanvraag-1',
+    procesIdentificatie: 'proces-1',
+    procesMeldingIdentificatie: null,
+    isActueel: false,
+    leverancier: null,
+    leverancierIdentificatie: null,
+    leveringsVorm: '',
+    leveringsVormUitgeschreven: null,
+    productsoortCode: 'LLV',
+    productIdentificatie: undefined,
+    beschiktProductIdentificatie: null,
+    beschikkingNummer: null,
+    regelingIdentificatie: 'LLV',
+    procesAanvraagActieOmschrijvingen: [],
+    procesAanvraagActies: [],
+    resultaat: null,
+    titel: 'Ontvangen op 17 november 2026',
+    ...overrides,
+  };
+}
+
+const ASSIGNED_PRODUCT_OVERRIDES: Partial<ZorgnedAanvraagTransformed> = {
+  datumBesluit: '2026-11-17',
+  datumEindeGeldigheid: '2026-11-30',
+  datumIngangGeldigheid: '2026-11-01',
+  isActueel: true,
+  beschiktProductIdentificatie: 'product-1',
+  beschikkingNummer: 1,
+  productIdentificatie: 'LLVEV',
+  resultaat: 'toegewezen',
+  titel: 'eigen vervoer',
+};
+
+const LLV_STATUS_SCENARIOS = [
+  {
+    scenario: 'In behandeling na ontvangst',
+    aanvraag: getLLVAanvraag({
+      documenten: [LLV_REQUEST_DOCUMENT],
+      procesAanvraagActieOmschrijvingen: LLV_ACTION_DESCRIPTIONS,
+      procesAanvraagActies: LLV_ACTIONS,
+    }),
+    displayStatus: 'In behandeling',
+    decision: '',
+    decisionChecked: false,
+    substepStatuses: ['Meer informatie nodig', 'Meer informatie ontvangen'],
+  },
+  {
+    scenario: 'Aanvraag ontvangen',
+    aanvraag: getLLVAanvraag({
+      procesAanvraagActieOmschrijvingen: ['Melding ontvangen'],
+      procesAanvraagActies: [LLV_ACTIONS[0]],
+    }),
+    displayStatus: 'In behandeling',
+    decision: '',
+    decisionChecked: false,
+    substepStatuses: [],
+  },
+  {
+    scenario: 'Toegewezen zonder besluitbrief',
+    aanvraag: getLLVAanvraag({
+      ...ASSIGNED_PRODUCT_OVERRIDES,
+      documenten: [LLV_REQUEST_DOCUMENT],
+      procesAanvraagActieOmschrijvingen: LLV_ACTION_DESCRIPTIONS,
+      procesAanvraagActies: LLV_ACTIONS,
+    }),
+    displayStatus: 'In behandeling',
+    decision: '',
+    decisionChecked: false,
+    substepStatuses: ['Meer informatie nodig', 'Meer informatie ontvangen'],
+  },
+  {
+    scenario: 'Aanvullende stukken gevraagd',
+    aanvraag: getLLVAanvraag({
+      documenten: [LLV_REQUEST_DOCUMENT],
+      procesAanvraagActieOmschrijvingen: [
+        'Melding ontvangen',
+        'Verzoek om meer informatie',
+      ],
+      procesAanvraagActies: LLV_ACTIONS.slice(0, 2),
+    }),
+    displayStatus: 'Meer informatie nodig',
+    decision: '',
+    decisionChecked: false,
+    substepStatuses: ['Meer informatie nodig'],
+  },
+  {
+    scenario: 'Besluitdocument toegevoegd',
+    aanvraag: getLLVAanvraag({
+      ...ASSIGNED_PRODUCT_OVERRIDES,
+      documenten: [LLV_REQUEST_DOCUMENT, LLV_DECISION_DOCUMENT],
+      procesAanvraagActieOmschrijvingen: LLV_ACTION_DESCRIPTIONS,
+      procesAanvraagActies: LLV_ACTIONS,
+    }),
+    displayStatus: 'Besluit genomen',
+    decision: 'Toegewezen',
+    decisionChecked: true,
+    substepStatuses: ['Meer informatie nodig', 'Meer informatie ontvangen'],
+  },
+];
 
 vi.mock('../../zorgned/zorgned-service', async (importOriginal) => ({
   ...(await importOriginal()),
@@ -211,9 +350,7 @@ describe('fetchLeerlingenvervoer', () => {
 
     const descriptions = first.steps.map((step) => step.description);
     expect(descriptions[0]).toMatch(/Ontvangen op 27 maart 2025/);
-    expect(descriptions[1]).toMatch(
-      /Uw melding is in behandeling bij de gemeente./
-    );
+    expect(descriptions[1]).toMatch(/Uw melding is in behandeling./);
     expect(descriptions[2]).toMatch(
       /U krijgt aangepast groepsvervoer per 01 april 2025./
     );
@@ -289,7 +426,7 @@ describe('fetchLeerlingenvervoer', () => {
         {
           status: 'Meer informatie nodig',
           datePublished: '2026-10-08',
-          isActive: true,
+          isActive: false,
           isChecked: true,
         },
       ],
@@ -362,12 +499,116 @@ describe('fetchLeerlingenvervoer', () => {
       substeps: [
         {
           status: 'Meer informatie nodig',
-          isActive: true,
+          datePublished: '',
+          isActive: false,
+          isChecked: true,
+        },
+        {
+          status: 'Meer informatie ontvangen',
+          datePublished: '2026-08-10',
+          isActive: false,
           isChecked: true,
         },
       ],
     });
   });
+
+  test('Shows only one "Meer informatie nodig" step when multiple request documents exist', async () => {
+    (fetchAanvragen as Mock).mockResolvedValueOnce({
+      content: [
+        {
+          id: '3695853',
+          prettyID: '3695853',
+          datumAanvraag: '2026-05-19',
+          datumBeginLevering: null,
+          datumBesluit: '',
+          datumEindeGeldigheid: null,
+          datumEindeLevering: null,
+          datumIngangGeldigheid: null,
+          datumOpdrachtLevering: null,
+          datumToewijzing: null,
+          documenten: [
+            {
+              id: 'B4092578',
+              title: 'Verzoek: extra info voor beoordelen aanvraag LLV',
+              url: '',
+              datePublished: '2026-08-10T15:56:15.467',
+            },
+            {
+              id: 'B4092599',
+              title: 'Verzoek: aanvullende informatie voor aanvraag LLV',
+              url: '',
+              datePublished: '2026-09-10T15:56:15.467',
+            },
+          ],
+          isActueel: false,
+          leverancier: '',
+          leveringsVorm: '',
+          productsoortCode: 'LLV',
+          regelingIdentificatie: 'LLV',
+          procesAanvraagActieOmschrijvingen: [
+            'Verzoek om meer informatie',
+            'In behandeling bij gemeente',
+          ],
+          resultaat: null,
+          titel: 'Leerlingenvervoer',
+          betrokkenen: [],
+          procesAanvraagActies: [
+            {
+              omschrijving: 'Verzoek om meer informatie',
+              datum: '2026-07-10',
+            },
+            {
+              omschrijving: 'In behandeling bij gemeente',
+              datum: '2026-08-10',
+            },
+          ],
+        },
+      ],
+      status: 'OK',
+    });
+
+    const response = await fetchLeerlingenvervoer(AUTH_PROFILE_AND_TOKEN);
+    const [, behandeling] = response.content![0].steps;
+
+    expect(
+      behandeling.substeps?.filter(
+        (step) => step.status === 'Meer informatie nodig'
+      )
+    ).toHaveLength(1);
+  });
+
+  test.each(LLV_STATUS_SCENARIOS)(
+    '$scenario',
+    async ({
+      aanvraag,
+      displayStatus,
+      decision,
+      decisionChecked,
+      substepStatuses,
+    }) => {
+      (fetchAanvragen as Mock).mockResolvedValueOnce({
+        content: [aanvraag],
+        status: 'OK',
+      });
+
+      const response = await fetchLeerlingenvervoer(AUTH_PROFILE_AND_TOKEN);
+      const [voorziening] = response.content!;
+      const behandeling = voorziening.steps.find(
+        (step) => step.status === 'In behandeling'
+      );
+      const besluit = voorziening.steps.find(
+        (step) => step.status === 'Besluit genomen'
+      );
+
+      expect(voorziening.displayStatus).toBe(displayStatus);
+      expect(voorziening.decision).toBe(decision);
+      expect(besluit?.isChecked).toBe(decisionChecked);
+      expect(behandeling?.substeps?.map((step) => step.status) ?? []).toEqual(
+        substepStatuses
+      );
+    }
+  );
 
   test('Returns error response "as is" from fetchAanvragen', async () => {
     (fetchAanvragen as Mock).mockResolvedValueOnce(
@@ -381,4 +622,113 @@ describe('fetchLeerlingenvervoer', () => {
       status: 'ERROR',
     });
   });
+});
+
+test('Does not show "more information" substeps when the request is after the decision date', async () => {
+  (fetchAanvragen as Mock).mockResolvedValueOnce({
+    content: [
+      getLLVAanvraag({
+        ...ASSIGNED_PRODUCT_OVERRIDES,
+        datumAanvraag: '2026-11-01',
+        datumBesluit: '2026-11-10',
+        documenten: [
+          LLV_REQUEST_DOCUMENT,
+          {
+            ...LLV_DECISION_DOCUMENT,
+            datePublished: '2026-11-10T10:00:00.000',
+          },
+        ],
+        procesAanvraagActieOmschrijvingen: [
+          'Melding ontvangen',
+          'In behandeling bij gemeente',
+          'Verzoek om meer informatie',
+        ],
+        procesAanvraagActies: [
+          { omschrijving: 'Melding ontvangen', datum: '2026-11-01' },
+          { omschrijving: 'In behandeling bij gemeente', datum: '2026-11-02' },
+          { omschrijving: 'Verzoek om meer informatie', datum: '2026-11-17' },
+        ],
+      }),
+    ],
+    status: 'OK',
+  });
+
+  const response = await fetchLeerlingenvervoer(AUTH_PROFILE_AND_TOKEN);
+  const [voorziening] = response.content!;
+  const behandeling = voorziening.steps.find(
+    (step) => step.status === 'In behandeling'
+  );
+  const substepStatuses =
+    behandeling?.substeps?.map((step) => step.status) ?? [];
+
+  expect(substepStatuses).not.toContain('Meer informatie nodig');
+  expect(substepStatuses).not.toContain('Meer informatie ontvangen');
+  expect(substepStatuses).toEqual([]);
+});
+
+test('Shows "information received" when there is a decision but no more information is in progress', async () => {
+  (fetchAanvragen as Mock).mockResolvedValueOnce({
+    content: [
+      getLLVAanvraag({
+        ...ASSIGNED_PRODUCT_OVERRIDES,
+        datumAanvraag: '2026-11-01',
+        datumBesluit: '2026-11-17',
+        documenten: [LLV_REQUEST_DOCUMENT, LLV_DECISION_DOCUMENT],
+        procesAanvraagActieOmschrijvingen: [
+          'Melding ontvangen',
+          'Verzoek om meer informatie',
+        ],
+        procesAanvraagActies: [
+          { omschrijving: 'Melding ontvangen', datum: '2026-11-01' },
+          { omschrijving: 'Verzoek om meer informatie', datum: '2026-11-05' },
+        ],
+      }),
+    ],
+    status: 'OK',
+  });
+
+  const response = await fetchLeerlingenvervoer(AUTH_PROFILE_AND_TOKEN);
+  const [voorziening] = response.content!;
+  const behandeling = voorziening.steps.find(
+    (step) => step.status === 'In behandeling'
+  );
+
+  expect(voorziening.decision).toBe('Toegewezen');
+  expect(behandeling?.substeps?.map((step) => step.status)).toEqual([
+    'Meer informatie nodig',
+    'Meer informatie ontvangen',
+  ]);
+});
+
+test('Does not show "information received" when the request is after the received date and there is no decision yet', async () => {
+  (fetchAanvragen as Mock).mockResolvedValueOnce({
+    content: [
+      getLLVAanvraag({
+        datumAanvraag: '2026-11-01',
+        documenten: [LLV_REQUEST_DOCUMENT],
+        procesAanvraagActieOmschrijvingen: [
+          'Melding ontvangen',
+          'In behandeling bij gemeente',
+          'Verzoek om meer informatie',
+        ],
+        procesAanvraagActies: [
+          { omschrijving: 'Melding ontvangen', datum: '2026-11-01' },
+          { omschrijving: 'In behandeling bij gemeente', datum: '2026-11-05' },
+          { omschrijving: 'Verzoek om meer informatie', datum: '2026-11-10' },
+        ],
+      }),
+    ],
+    status: 'OK',
+  });
+
+  const response = await fetchLeerlingenvervoer(AUTH_PROFILE_AND_TOKEN);
+  const [voorziening] = response.content!;
+  const behandeling = voorziening.steps.find(
+    (step) => step.status === 'In behandeling'
+  );
+
+  expect(voorziening.decision).toBe('');
+  expect(behandeling?.substeps?.map((step) => step.status)).toEqual([
+    'Meer informatie nodig',
+  ]);
 });

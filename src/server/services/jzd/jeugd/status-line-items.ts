@@ -4,32 +4,28 @@ import type {
   ZorgnedStatusLineItemsConfig,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types.ts';
+import { featureToggle } from '../jzd-service-config.ts';
 import {
   AANVRAAG,
   EINDE_RECHT,
+  getActionDate,
   getTransformerConfigBesluit,
+  hasAction,
   hasDecision,
-  hasMeerInformatieNodig,
   IN_BEHANDELING,
   isDecisionStatusActive,
   MEER_INFORMATIE,
+  MEER_INFORMATIE_ONTVANGEN,
 } from '../wmo/status-line-items/wmo-generic.ts';
-import { ACTIE_VERZOEK_MEER_INFORMATIE } from '../wmo/wmo-config.ts';
-
-export function getMeerInformatieDate(
-  aanvraag: ZorgnedAanvraagTransformed
-): string {
-  const actie = aanvraag?.procesAanvraagActies?.find(
-    (actie) =>
-      actie.omschrijving.toLowerCase() === ACTIE_VERZOEK_MEER_INFORMATIE
-  );
-
-  return actie?.datum ?? '';
-}
+import {
+  ACTIE_IN_BEHANDELING,
+  ACTIE_VERZOEK_MEER_INFORMATIE,
+  STATUS_ONTVANGEN,
+} from '../wmo/wmo-config.ts';
 
 const ONTVANGEN = {
   ...AANVRAAG,
-  status: 'Ontvangen',
+  status: STATUS_ONTVANGEN,
   datePublished: (aanvraag: ZorgnedAanvraagTransformed) =>
     aanvraag.datumAanvraag,
   hideDatePublished: true,
@@ -37,20 +33,20 @@ const ONTVANGEN = {
     '<p>Ontvangen op ' + defaultDateFormat(aanvraag.datumAanvraag) + '</p>',
 };
 
-const BEHANDELING_INDICATIEADVISEUR = {
+const MELDING_IN_BEHANDELING = {
   ...IN_BEHANDELING,
   datePublished: (aanvraag: ZorgnedAanvraagTransformed) =>
     aanvraag.datumAanvraag,
-  description: () => '<p>Uw melding is in behandeling bij de gemeente.</p>',
+  description: () => '<p>Uw melding is in behandeling.</p>',
   isActive: (aanvraag: ZorgnedAanvraagTransformed) => !hasDecision(aanvraag),
   substeps: [
     {
       ...MEER_INFORMATIE,
       datePublished: (aanvraag: ZorgnedAanvraagTransformed) =>
-        getMeerInformatieDate(aanvraag),
-      hideDatePublished: true,
+        getActionDate(aanvraag, ACTIE_VERZOEK_MEER_INFORMATIE) ?? '',
       isActive: (aanvraag: ZorgnedAanvraagTransformed) =>
-        hasMeerInformatieNodig(aanvraag) && !hasDecision(aanvraag),
+        hasAction(aanvraag, ACTIE_VERZOEK_MEER_INFORMATIE) &&
+        !hasAction(aanvraag, ACTIE_IN_BEHANDELING),
       description: `
 <p>Wij kunnen uw melding nog niet beoordelen. Het kan zijn dat u nog informatie moet aanleveren. Dat kan door het op te sturen naar ons gratis antwoordnummer:</p>
 <p>Gemeente Amsterdam<br />
@@ -58,12 +54,16 @@ Services & Data<br />
 Antwoordnummer 9087<br />
 1000 VV Amsterdam</p>`,
     },
+    {
+      ...MEER_INFORMATIE_ONTVANGEN,
+    },
   ],
 };
 
+const showLlvInBehandeling = featureToggle.service.llvInBehandeling;
+
 const transformers: ZorgnedStatusLineItemTransformerConfig[] = [
-  ONTVANGEN,
-  BEHANDELING_INDICATIEADVISEUR,
+  ...(showLlvInBehandeling ? [ONTVANGEN, MELDING_IN_BEHANDELING] : []),
   getTransformerConfigBesluit(isDecisionStatusActive, false),
   EINDE_RECHT,
 ];

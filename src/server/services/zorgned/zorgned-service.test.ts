@@ -224,6 +224,59 @@ describe('zorgned-service', () => {
       });
     });
 
+    test('excludes expired applications', () => {
+      const response: ZorgnedResponseDataSource = {
+        _embedded: {
+          aanvraag: [
+            {
+              identificatie: 'active-aanvraag',
+              datumAanvraag: '2025-03-01',
+              documenten: [],
+              regeling: {
+                identificatie: 'OTHER',
+                omschrijving: 'Other regulation',
+              },
+              procesIdentificatie: '',
+              casusIdentificatie: null,
+              beschikking: {
+                beschikkingNummer: 1,
+                beschikteProducten: [],
+              },
+            },
+            {
+              identificatie: 'vervallen-aanvraag',
+              datumAanvraag: '2025-03-02',
+              documenten: [],
+              regeling: {
+                identificatie: 'OTHER',
+                omschrijving: 'Other regulation',
+              },
+              procesIdentificatie: '',
+              casusIdentificatie: null,
+              procesMelding: {
+                identificatie: 'proces-melding-1',
+                omschrijving: '',
+                datumStart: '',
+                datumAfsluiten: '',
+                redenAfsluiten: { omschrijving: 'Vervallen' },
+                omschrijvingAfsluiten: '',
+              },
+              beschikking: {
+                beschikkingNummer: 2,
+                beschikteProducten: [],
+              },
+            },
+          ],
+        },
+      };
+
+      const transformed = forTesting.transformZorgnedAanvragen(response, {
+        includeAanvragenWithoutBeschiktProduct: true,
+      });
+
+      expect(transformed.map(({ id }) => id)).toEqual(['active-aanvraag']);
+    });
+
     test('should not mutate source or result arrays', () => {
       const response: ZorgnedResponseDataSource =
         ZORGNED_WMO_AANVRAGEN as unknown as ZorgnedResponseDataSource;
