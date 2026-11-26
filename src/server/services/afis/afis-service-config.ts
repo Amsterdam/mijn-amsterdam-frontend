@@ -18,13 +18,13 @@ export const featureToggle = {
 export const OAUTH_ROLE_AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY =
   'afis.e-mandates.sign-request-status-notify' as const;
 
-const externalConsumerRoutes = {
+const integrationRoutes = {
   AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY: `/services/afis/e-mandates/sign-request-status-notify`,
 } as const;
 
 export const routes = {
-  private: externalConsumerRoutes,
-  external: externalConsumerRoutes,
+  private: integrationRoutes,
+  integrations: integrationRoutes,
   protected: {
     AFIS_BUSINESSPARTNER: '/services/afis/businesspartner',
     AFIS_EMANDATES: '/services/afis/e-mandates',

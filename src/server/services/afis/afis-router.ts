@@ -178,12 +178,12 @@ routerPrivate.post(
   handleAfisEMandateSignRequestStatusNotification
 );
 
-const routerExternal = createBFFRouter({
-  id: 'external-consumer-api-afis',
+const routerIntegrations = createBFFRouter({
+  id: 'integration-api-afis',
 });
 
-routerExternal.post(
-  routes.external.AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY,
+routerIntegrations.post(
+  routes.integrations.AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY,
   enableUToMamsApiKeyVerificationHandler,
   conditional(
     IS_TAP,
@@ -195,7 +195,7 @@ routerExternal.post(
 );
 
 export const afisRouter = {
-  external: routerExternal,
+  integrations: routerIntegrations,
   private: routerPrivate,
   protected: routerProtected,
 };

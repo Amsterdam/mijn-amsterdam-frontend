@@ -2,7 +2,7 @@ import { IS_AP, IS_OT } from '../../universal/config/env.ts';
 import { logger } from '../logging.ts';
 import { router as adminRouter } from './app-router-admin.ts';
 import { authRouterDevelopment } from './app-router-development.ts';
-import { router as routerExternalConsumer } from './app-router-external-consumer.ts';
+import { router as routerIntegrations } from './app-router-integrations.ts';
 import { oidcRouter } from './app-router-oidc.ts';
 import { router as privateNetworkRouter } from './app-router-private.ts';
 import { router as protectedRouter } from './app-router-protected.ts';
@@ -11,6 +11,7 @@ import { router as routerPublicExternalConsumer } from './app-router-public-exte
 import {
   BFF_BASE_PATH,
   BFF_BASE_PATH_ADMIN,
+  BFF_BASE_PATH_INTEGRATIONS,
   BFF_BASE_PATH_PRIVATE,
   BffEndpoints,
 } from './bff-routes.ts';
@@ -48,8 +49,8 @@ export function createMainRouter({ isOT, isAP }: CreateMainRouterOptions) {
 
   router.use(BFF_BASE_PATH, nocache, routerPublicExternalConsumer);
 
-  // Router meant for external services calling the BFF API. These routes require authentication/authorization middleware
-  router.use(BFF_BASE_PATH, nocache, routerExternalConsumer);
+  // Routes for external services, with their own authentication/authorization middleware.
+  router.use(BFF_BASE_PATH_INTEGRATIONS, nocache, routerIntegrations);
 
   // Routes mounted at BFF_BASE_PATH_ADMIN are for the admin panel.
   // These routes require authentication but are separate from the other protected routes, and have their own authentication middleware defined in app-router-admin.ts

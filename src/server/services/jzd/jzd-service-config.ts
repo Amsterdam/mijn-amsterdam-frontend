@@ -25,14 +25,14 @@ export const featureToggle = {
 
 export const OAUTH_ROLE_JZD_VOORZIENINGEN = 'wmo.voorzieningen' as const;
 
-const externalConsumerRoutes = {
+const integrationRoutes = {
   JZD_VOORZIENINGEN: `/services/jzd/voorzieningen`,
   JZD_VOORZIENING_DETAIL: `/services/jzd/voorziening`,
 } as const;
 
 export const routes = {
-  private: externalConsumerRoutes,
-  external: externalConsumerRoutes,
+  private: integrationRoutes,
+  integrations: integrationRoutes,
   protected: {
     WMO_DOCUMENT_DOWNLOAD: `/services/wmo/document`,
     WMO_DOCUMENTS_LIST_RAW: `/services/wmo/raw/documents`,

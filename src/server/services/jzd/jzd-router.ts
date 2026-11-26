@@ -39,18 +39,18 @@ jzdRouterPrivateNetwork.post(
   handleVoorzieningDetailRequest
 );
 
-const jzdRouterExternal = createBFFRouter({
-  id: 'external-consumer-oauth-api-jzd',
+const jzdRouterIntegrations = createBFFRouter({
+  id: 'integration-api-jzd',
 });
 
-jzdRouterExternal.post(
-  routes.external.JZD_VOORZIENINGEN,
+jzdRouterIntegrations.post(
+  routes.integrations.JZD_VOORZIENINGEN,
   enableUToMamsApiKeyVerificationHandler,
   conditional(IS_TAP, OAuthVerificationHandler(OAUTH_ROLE_JZD_VOORZIENINGEN)),
   handleVoorzieningenRequest
 );
-jzdRouterExternal.post(
-  routes.external.JZD_VOORZIENING_DETAIL,
+jzdRouterIntegrations.post(
+  routes.integrations.JZD_VOORZIENING_DETAIL,
   enableUToMamsApiKeyVerificationHandler,
   conditional(IS_TAP, OAuthVerificationHandler(OAUTH_ROLE_JZD_VOORZIENINGEN)),
   handleVoorzieningDetailRequest
@@ -82,7 +82,7 @@ jzdRouterProtected.get(
 );
 
 export const jzdRouter = {
-  external: jzdRouterExternal,
+  integrations: jzdRouterIntegrations,
   private: jzdRouterPrivateNetwork,
   protected: jzdRouterProtected,
 };

@@ -4,8 +4,8 @@ import { jzdRouter } from '../services/jzd/jzd-router.ts';
 import { createBFFRouter } from './route-helpers.ts';
 
 export const router = createBFFRouter({
-  id: 'router-external-consumer',
+  id: 'router-integration',
   isEnabled: isEnabled('ENABLEU.apiRoutes'),
 });
 
-router.use(jzdRouter.external, afisRouter.external);
+router.use(jzdRouter.integrations, afisRouter.integrations);
