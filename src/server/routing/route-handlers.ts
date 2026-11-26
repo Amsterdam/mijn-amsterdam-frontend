@@ -74,11 +74,34 @@ export function apiKeyVerificationHandler(
     getFromEnv('BFF_EXTERNAL_CONSUMER_API_KEY_2'),
   ];
 
-  if (apiKey && externalKeys.includes(apiKey)) {
-    return next();
+  if (!externalKeys.every(Boolean)) {
+    return sendServiceUnavailable(res, 'API key is not configured');
   }
 
-  return sendUnauthorized(res, 'Api key ongeldig');
+  if (!apiKey || !externalKeys.includes(apiKey)) {
+    return sendUnauthorized(res, 'Api key ongeldig');
+  }
+
+  return next();
+}
+
+export function enableUToMamsApiKeyVerificationHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const apiKey = req.headers['x-api-key'];
+  const expectedApiKey = getFromEnv('BFF_ENABLEU_INCOMING_API_KEY');
+
+  if (!expectedApiKey) {
+    return sendServiceUnavailable(res, 'API key is not configured');
+  }
+
+  if (typeof apiKey !== 'string' || apiKey !== expectedApiKey) {
+    return sendUnauthorized(res, 'Api key ongeldig');
+  }
+
+  return next();
 }
 
 export function OAuthVerificationHandler(role?: string) {

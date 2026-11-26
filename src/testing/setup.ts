@@ -94,6 +94,7 @@ process.env.BFF_API_BASE_URL = `${bffApiHost}/api/v1`;
 process.env.BFF_API_BASE_URL_ADMIN = `${process.env.BFF_API_BASE_URL}/admin`;
 process.env.BFF_ADMIN_FRONTEND_URL = `${frontentHost}/admin`;
 process.env.BFF_DATA_AMSTERDAM_API_KEY = '';
+process.env.BFF_ENABLEU_INCOMING_API_KEY = 'test-enableu-incoming-api-key';
 
 process.env.BFF_DISABLE_MOCK_ADAPTER = 'true';
 process.env.BFF_REQUEST_CACHE_ENABLED = 'false';

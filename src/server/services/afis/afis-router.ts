@@ -2,7 +2,10 @@ import express from 'express';
 
 import { IS_TAP } from '../../../universal/config/env.ts';
 import { conditional } from '../../helpers/middleware.ts';
-import { OAuthVerificationHandler } from '../../routing/route-handlers.ts';
+import {
+  enableUToMamsApiKeyVerificationHandler,
+  OAuthVerificationHandler,
+} from '../../routing/route-handlers.ts';
 import { createBFFRouter } from '../../routing/route-helpers.ts';
 import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler.ts';
 import { fetchAfisBusinessPartnerDetails } from './afis-business-partner.ts';
@@ -175,7 +178,24 @@ routerPrivate.post(
   handleAfisEMandateSignRequestStatusNotification
 );
 
+const routerIntegrations = createBFFRouter({
+  id: 'integration-api-afis',
+});
+
+routerIntegrations.post(
+  routes.integrations.AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY,
+  enableUToMamsApiKeyVerificationHandler,
+  conditional(
+    IS_TAP,
+    OAuthVerificationHandler(
+      OAUTH_ROLE_AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY
+    )
+  ),
+  handleAfisEMandateSignRequestStatusNotification
+);
+
 export const afisRouter = {
+  integrations: routerIntegrations,
   private: routerPrivate,
   protected: routerProtected,
 };

@@ -12,6 +12,7 @@ import {
 } from '../../testing/utils.ts';
 import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config.ts';
 import {
+  enableUToMamsApiKeyVerificationHandler,
   handleIsAuthenticated,
   OAuthVerificationHandler,
   requestID,
@@ -99,6 +100,71 @@ describe('routing.route-handlers', () => {
 
   afterEach(() => {
     vi.resetAllMocks();
+  });
+
+  describe('enableUToMamsApiKeyVerificationHandler', () => {
+    afterEach(() => {
+      vi.unstubAllEnvs();
+    });
+    test('accepts the configured EnableU-to-MAMS API key', () => {
+      const reqMock = RequestMock.new().get();
+      reqMock.headers = {
+        ...reqMock.headers,
+        'x-api-key': process.env.BFF_ENABLEU_INCOMING_API_KEY,
+      };
+      const resMock = ResponseMock.new();
+      const nextMock = vi.fn();
+
+      enableUToMamsApiKeyVerificationHandler(reqMock, resMock, nextMock);
+
+      expect(nextMock).toHaveBeenCalledOnce();
+    });
+
+    test.each([undefined, 'invalid-key'])(
+      'rejects a missing or invalid API key',
+      (apiKey) => {
+        const reqMock = RequestMock.new().get();
+        reqMock.headers = {
+          ...reqMock.headers,
+          'x-api-key': apiKey,
+        };
+        const resMock = ResponseMock.new();
+        const nextMock = vi.fn();
+
+        enableUToMamsApiKeyVerificationHandler(reqMock, resMock, nextMock);
+
+        expect(nextMock).not.toHaveBeenCalled();
+        expect(resMock.status).toHaveBeenCalledWith(
+          HttpStatusCode.Unauthorized
+        );
+      }
+    );
+
+    test('fails closed when the API key is not configured', () => {
+      const configuredApiKey = process.env.BFF_ENABLEU_INCOMING_API_KEY;
+      delete process.env.BFF_ENABLEU_INCOMING_API_KEY;
+
+      try {
+        const reqMock = RequestMock.new().get();
+        reqMock.headers = {
+          ...reqMock.headers,
+          'x-api-key': 'provided-key',
+        };
+        const resMock = ResponseMock.new();
+        const nextMock = vi.fn();
+
+        enableUToMamsApiKeyVerificationHandler(reqMock, resMock, nextMock);
+
+        expect(nextMock).not.toHaveBeenCalled();
+        expect(resMock.send).toHaveBeenCalledWith(
+          expect.objectContaining({ code: 503 })
+        );
+      } finally {
+        if (configuredApiKey) {
+          process.env.BFF_ENABLEU_INCOMING_API_KEY = configuredApiKey;
+        }
+      }
+    });
   });
 
   describe('OAuthVerificationHandler', () => {

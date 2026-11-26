@@ -1,6 +1,9 @@
 import { IS_TAP } from '../../../universal/config/env.ts';
 import { conditional } from '../../helpers/middleware.ts';
-import { OAuthVerificationHandler } from '../../routing/route-handlers.ts';
+import {
+  enableUToMamsApiKeyVerificationHandler,
+  OAuthVerificationHandler,
+} from '../../routing/route-handlers.ts';
 import { createBFFRouter } from '../../routing/route-helpers.ts';
 import { attachDocumentDownloadRoute } from '../shared/document-download-route-handler.ts';
 import { fetchZorgnedDocumentLLV } from './jeugd/route-handlers.ts';
@@ -36,6 +39,23 @@ jzdRouterPrivateNetwork.post(
   handleVoorzieningDetailRequest
 );
 
+const jzdRouterIntegrations = createBFFRouter({
+  id: 'integration-api-jzd',
+});
+
+jzdRouterIntegrations.post(
+  routes.integrations.JZD_VOORZIENINGEN,
+  enableUToMamsApiKeyVerificationHandler,
+  conditional(IS_TAP, OAuthVerificationHandler(OAUTH_ROLE_JZD_VOORZIENINGEN)),
+  handleVoorzieningenRequest
+);
+jzdRouterIntegrations.post(
+  routes.integrations.JZD_VOORZIENING_DETAIL,
+  enableUToMamsApiKeyVerificationHandler,
+  conditional(IS_TAP, OAuthVerificationHandler(OAUTH_ROLE_JZD_VOORZIENINGEN)),
+  handleVoorzieningDetailRequest
+);
+
 const jzdRouterProtected = createBFFRouter({ id: 'protected-jzd' });
 
 // LLV Zorgned Doc download
@@ -62,6 +82,7 @@ jzdRouterProtected.get(
 );
 
 export const jzdRouter = {
+  integrations: jzdRouterIntegrations,
   private: jzdRouterPrivateNetwork,
   protected: jzdRouterProtected,
 };

@@ -47,6 +47,12 @@ vi.mock('./app-router-private.ts', () => {
   };
 });
 
+vi.mock('./app-router-integrations.ts', () => {
+  return {
+    router: createMockBffRouter('router-integration'),
+  };
+});
+
 vi.mock('./app-router-public-external-consumer.ts', () => {
   return {
     router: createMockBffRouter('router-public-external-consumer'),
@@ -103,6 +109,7 @@ describe('app-router-main', () => {
       'router-oidc': false,
       'router-protected': true,
       'router-private-network': true,
+      'router-integration': true,
       'router-admin': true,
     });
   });
@@ -114,6 +121,7 @@ describe('app-router-main', () => {
       'router-oidc': true,
       'router-protected': true,
       'router-private-network': true,
+      'router-integration': true,
       'router-admin': true,
     });
 
@@ -122,5 +130,22 @@ describe('app-router-main', () => {
         (x: object) => 'name' in x && x.name === 'handleIsAuthenticated'
       )
     ).toBe(true);
+
+    const externalConsumerIndex = router.stack.findIndex(
+      (layer: ILayer) =>
+        'BFF_ID' in layer.handle &&
+        layer.handle.BFF_ID === 'router-public-external-consumer'
+    );
+    const authenticatedRoutesIndex = router.stack.findIndex(
+      (layer: ILayer) =>
+        'name' in layer && layer.name === 'handleIsAuthenticated'
+    );
+    expect(externalConsumerIndex).toBeLessThan(authenticatedRoutesIndex);
+
+    const integrationIndex = router.stack.findIndex(
+      (layer: ILayer) =>
+        'BFF_ID' in layer.handle && layer.handle.BFF_ID === 'router-integration'
+    );
+    expect(integrationIndex).toBeLessThan(authenticatedRoutesIndex);
   });
 });

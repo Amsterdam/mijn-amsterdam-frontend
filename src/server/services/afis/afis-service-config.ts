@@ -18,13 +18,13 @@ export const featureToggle = {
 export const OAUTH_ROLE_AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY =
   'afis.e-mandates.sign-request-status-notify' as const;
 
+const integrationRoutes = {
+  AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY: `/services/afis/e-mandates/sign-request-status-notify`,
+} as const;
+
 export const routes = {
-  private: {
-    // This endpoint is reached over the private network from the EnableU network.
-    // It's used to notify us about the status of e-mandate signing requests. Sent by the Payment Service Provider.
-    // The requesting side is allways a server side request from the PSP.
-    AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY: `/services/afis/e-mandates/sign-request-status-notify`,
-  },
+  private: integrationRoutes,
+  integrations: integrationRoutes,
   protected: {
     AFIS_BUSINESSPARTNER: '/services/afis/businesspartner',
     AFIS_EMANDATES: '/services/afis/e-mandates',
