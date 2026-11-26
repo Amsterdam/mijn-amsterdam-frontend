@@ -1,7 +1,6 @@
 import type { IOptions } from 'sanitize-html';
 import sanitizeHtml from 'sanitize-html';
 
-import type { ApiResponse } from '../../../universal/helpers/api.ts';
 import { ONE_HOUR_MS } from '../../config/app.ts';
 import { getApiConfig } from '../../helpers/source-api-helpers.ts';
 import { requestData } from '../../helpers/source-api-request.ts';
@@ -48,12 +47,6 @@ export function sanitizeCmsContent(
 ) {
   const config = Object.assign(DEFAULT_CONFIG, options);
   return sanitizeHtml(content, config);
-}
-
-type CMSPart = 'footer';
-
-function getCmsCacheKey(part: CMSPart): `cms-${CMSPart}-${string}` {
-  return `cms-${part}-${Date.now()}`;
 }
 
 type StaticSearchEntry = {
@@ -103,95 +96,6 @@ export async function fetchSearchConfig() {
   return requestData<SearchConfigRemote>(
     getApiConfig('SEARCH_CONFIG', {
       cacheTimeout: SEARCH_CONFIG_CACHE_TIMEOUT_MS,
-    })
-  );
-}
-
-type CMSFooterLink = {
-  label: string;
-  url: string;
-};
-
-type CMSFooterLinkSource = {
-  link: CMSFooterLink;
-};
-
-type CMSFooterSectionSource = {
-  omschrijving?: { titel: string };
-  verwijzing: [
-    {
-      extern?: CMSFooterLinkSource | CMSFooterLinkSource[];
-      intern?: CMSFooterLinkSource | CMSFooterLinkSource[];
-    },
-  ];
-};
-
-type CMSFooterSource = {
-  applicatie: {
-    blok: {
-      zijbalk: [
-        {
-          lijst: CMSFooterSectionSource[];
-        },
-      ];
-    };
-  };
-};
-
-export type CMSFooterSection = {
-  title?: string;
-  links: CMSFooterLink[];
-};
-
-export type CMSFooter = {
-  sections: CMSFooterSection[];
-  bottomLinks: CMSFooterLink[];
-};
-
-function getLinks(links: CMSFooterLinkSource | CMSFooterLinkSource[]) {
-  return Array.isArray(links) ? links.map((link) => link.link) : [links.link];
-}
-
-const EXCLUDE_BOTTOM_LINKS = ['Cookies op deze site'];
-
-let cmsFooterCacheKey = getCmsCacheKey('footer');
-
-export async function fetchCmsFooter(
-  renewCache: boolean = false
-): Promise<ApiResponse<CMSFooter>> {
-  if (renewCache) {
-    cmsFooterCacheKey = getCmsCacheKey('footer');
-  }
-  return requestData<CMSFooter>(
-    getApiConfig('CMS_CONTENT_FOOTER', {
-      cacheKey_UNSAFE: cmsFooterCacheKey,
-      transformResponse: (responseData: CMSFooterSource | null) => {
-        if (!responseData?.applicatie) {
-          return {
-            sections: [],
-            bottomLinks: [],
-          };
-        }
-        const sections: CMSFooterSection[] =
-          responseData.applicatie.blok.zijbalk[0].lijst.map((section) => {
-            const title = section.omschrijving?.titel;
-            const links = section.verwijzing.flatMap((ref) => {
-              const externLinks = ref.extern ? getLinks(ref.extern) : [];
-              const internLinks = ref.intern ? getLinks(ref.intern) : [];
-              return [...externLinks, ...internLinks];
-            });
-            return {
-              title,
-              links: links.filter((link) => link.url && link.label),
-            };
-          });
-        return {
-          sections: sections.filter((section) => !!section.title),
-          bottomLinks: (
-            sections.find((section) => !section.title)?.links ?? []
-          ).filter((link) => !EXCLUDE_BOTTOM_LINKS.includes(link.label)),
-        };
-      },
     })
   );
 }

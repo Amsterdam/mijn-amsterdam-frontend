@@ -269,10 +269,6 @@ const ApiConfig_ = {
       apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
     },
   },
-  CMS_CONTENT_FOOTER: {
-    url: `${getFromEnv('BFF_CMS_BASE_URL')}/algemene_onderdelen/xxv/footer-xxv/?AppIdt=app-data`,
-    cacheTimeout: 24 * ONE_HOUR_MS, // 24 hours
-  },
   CMS_MAINTENANCE_NOTIFICATIONS: {
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true`,
   },

@@ -1,4 +1,3 @@
-import FOOTER from '../fixtures/cms-footer.json' with { type: 'json' };
 import DETAIL_RESPONSE from '../fixtures/cms-maintenance-notifications-item.json' with {
   type: 'json',
 };
@@ -57,16 +56,6 @@ export const routes = defineMockRoutes([
         }
         return res.send(PRODUCTEN_OP_MA);
       },
-    },
-  },
-  {
-    id: 'get-cms-footer',
-    url: `${MOCK_BASE_PATH}/cms/algemene_onderdelen/xxv/footer-xxv/`,
-    method: 'GET',
-    handler: {
-      type: 'json',
-      status: 200,
-      body: FOOTER,
     },
   },
 ]);
