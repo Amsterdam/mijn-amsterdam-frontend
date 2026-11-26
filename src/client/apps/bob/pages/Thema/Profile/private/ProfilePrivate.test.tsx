@@ -34,17 +34,57 @@ const panelHeadings = [
 describe('<Profile />', () => {
   const routeEntry = themaConfig.BRP.route.path;
 
+  test.each([
+    ['A', '01 januari 2030', 'A - geldig tot 01 januari 2030'],
+    [null, null, null],
+    ['A', null, 'A'],
+  ])(
+    'displays energy class %s with validity date %s',
+    (energieklasse, geldigTotDatum, expectedValue) => {
+      render(
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routeEntry}
+          component={MijnGegevensThema}
+          state={
+            {
+              ...testState(
+                {
+                  persoon: { mokum: false },
+                  adres: { straatnaam: 'Mooie Straat', huisnummer: '1' },
+                },
+                {
+                  vve: null,
+                  energieLabel: { energieklasse, geldigTotDatum },
+                }
+              ),
+            } as AppState
+          }
+        />
+      );
+
+      if (expectedValue) {
+        expect(screen.getByText('Energielabel')).toBeInTheDocument();
+        expect(screen.getByText(expectedValue)).toBeInTheDocument();
+      } else {
+        expect(screen.queryByText('Energielabel')).not.toBeInTheDocument();
+      }
+    }
+  );
+
   function Component({
     state,
+    wonen,
   }: {
     state?: PartialDeep<BrpFrontend, { recurseIntoArrays: true }>;
+    wonen?: WonenDataFrontend;
   }) {
     return (
       <MockApp
         routeEntry={routeEntry}
         routePath={routeEntry}
         component={MijnGegevensThema}
-        state={testState(state) as AppState}
+        state={testState(state, wonen) as AppState}
       />
     );
   }
@@ -85,6 +125,13 @@ describe('<Profile />', () => {
           ],
           fetchUrlAantalIngeschrevenPersonen: `${bffApiHost}/aantal-bewoners`,
         }}
+        wonen={{
+          vve: null,
+          energieLabel: {
+            energieklasse: 'A',
+            geldigTotDatum: '31 december 2024',
+          },
+        }}
       />
     );
     expect(
@@ -94,6 +141,9 @@ describe('<Profile />', () => {
     ).toBeInTheDocument();
     expect(screen.getByText('Mooier')).toBeInTheDocument();
     expect(screen.getByText('Neverland')).toBeInTheDocument();
+    expect(
+      screen.getByText('A - geldig tot 31 december 2024')
+    ).toBeInTheDocument();
 
     const panelHeadings = [
       'Persoonlijke gegevens',

@@ -28,6 +28,7 @@ export const PRISTINE_APPSTATE = {
   WONEN: apiPristineResult(
     {
       vve: null,
+      energieLabel: null,
     },
     {
       profileTypes: ['private'],
