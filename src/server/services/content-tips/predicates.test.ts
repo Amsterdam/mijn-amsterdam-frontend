@@ -16,6 +16,7 @@ import {
   hasBudget,
   hasDutchNationality,
   hasKidsBetweenAges,
+  hasKidsBornBetweenDates,
   hasOldestKidBornFrom2016,
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
@@ -199,6 +200,26 @@ describe('predicates', () => {
           );
         }
       );
+    });
+
+    describe('hasKidsBornBetweenDates', () => {
+      const predicate = hasKidsBornBetweenDates({
+        from: '2023-09-01',
+        to: '2024-08-31',
+      });
+      const createMockAppState = (children: { geboortedatum?: string }[]) =>
+        ({
+          BRP: brpApiResponse<BrpFrontend>({ kinderen: children }),
+        }) as AppState;
+
+      test.each([
+        [true, [{ geboortedatum: '2023-09-01' }]],
+        [true, [{ geboortedatum: '2024-08-31' }]],
+        [false, [{ geboortedatum: '2023-08-31' }]],
+        [false, [{ geboortedatum: '2024-09-01' }]],
+      ])('returns %s for children %j', (expected, children) => {
+        expect(predicate(createMockAppState(children))).toBe(expected);
+      });
     });
 
     describe('isBetweenAges', () => {

@@ -94,7 +94,30 @@
         "adresregel1": "Science Park 650",
         "adresregel2": "1098 XH  AMSTERDAM"
       },
-      "kinderen": [],
+      "kinderen": [
+        {
+          "naam": {
+            "voornamen": "Maria",
+            "geslachtsnaam": "De Roos",
+            "voorletters": "M."
+          },
+          "geboorte": {
+            "land": {
+              "code": "6030",
+              "omschrijving": "Nederland"
+            },
+            "plaats": {
+              "code": "0363",
+              "omschrijving": "Amsterdam"
+            },
+            "datum": {
+              "type": "Datum",
+              "datum": "2024-01-15",
+              "langFormaat": "15 januari 2024"
+            }
+          }
+        }
+      ],
       "ouders": [
         {
           "naam": {
