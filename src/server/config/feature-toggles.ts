@@ -9,6 +9,7 @@ export const featureToggle = {
   'AMSAPP.notificationService': true,
   'BRP.aantalBewonersOpAdresTonen': true,
   'BRP.verblijfplaatshistorie': true,
+  'ENABLEU.apiRoutes': !IS_PRODUCTION,
   'USER_FEEDBACK.fetchSurvey': true,
   cobrowse: false,
   'MA_ADMIN.router': !IS_PRODUCTION,
