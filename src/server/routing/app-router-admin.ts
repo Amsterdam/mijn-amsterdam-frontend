@@ -45,6 +45,9 @@ export async function createAdminRouter({
   const { amsappNotificationsRouter } = await import(
     '../services/amsapp/notifications/amsapp-notifications-router.ts'
   );
+  const { serviceAlertsRouter } = await import(
+    '../services/service-alerts/service-alerts.router.ts'
+  );
 
   router.use(
     session({
@@ -71,6 +74,7 @@ export async function createAdminRouter({
           next();
         },
     adminRouter.protected,
+    serviceAlertsRouter.admin,
     userFeedbackRouter.admin,
     amsappNotificationsRouter.admin
   );

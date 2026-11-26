@@ -3,6 +3,7 @@ import { useLocation } from 'react-router';
 
 import { MaRouterLink } from '../../components/MaLink/MaLink.tsx';
 import { themaConfig as themaConfigHome } from './Pages/Home/Home-thema-config.ts';
+import { themaConfig as themaConfigStoringsMeldingen } from './Pages/ServiceAlerts/ServiceAlerts-thema-config.ts';
 import { themaConfig as themaConfigUserFeedback } from './Pages/UserFeedback/UserFeedback-thema-config.ts';
 
 const appTabLinks = [
@@ -13,6 +14,10 @@ const appTabLinks = [
   {
     title: themaConfigUserFeedback.title,
     href: themaConfigUserFeedback.route.path,
+  },
+  {
+    title: themaConfigStoringsMeldingen.title,
+    href: themaConfigStoringsMeldingen.route.path,
   },
 ];
 

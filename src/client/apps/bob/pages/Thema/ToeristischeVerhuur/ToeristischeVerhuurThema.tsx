@@ -109,7 +109,6 @@ export function ToeristischeVerhuurThema() {
       title={title}
       pageContentTop={pageContentTop}
       pageLinks={pageLinks}
-      maintenanceNotificationsPageSlug="toeristische-verhuur"
       pageContentMain={
         <>
           {(hasBothVerleend || (!hasRegistrations && hasPermits)) && (
